@@ -1,0 +1,9 @@
+name: UHC
+author: AlphaHelix
+version: 1.0
+main: de.alpha.uhc.Core
+
+commands:
+  uhc:
+    usage: /uhc
+    description: The Basic UHC Command.
