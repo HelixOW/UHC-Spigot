@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
-import de.alpha.uhc.files.KitFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;

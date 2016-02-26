@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import de.alpha.uhc.files.KitFileManager;
 import net.minetopix.library.main.item.ItemCreator;
 
 public class GUI {

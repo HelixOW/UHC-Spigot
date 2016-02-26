@@ -1,4 +1,4 @@
-package de.alpha.uhc.manager;
+package de.alpha.uhc.kits;
 
 import java.util.Map;
 import java.util.Map.Entry;

@@ -7,6 +7,7 @@ import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.ScoreboardManager;
+import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.Timer;
 import net.minetopix.library.main.file.SimpleFile;
 
@@ -59,11 +60,15 @@ public class MessageFileManager {
 		file.setDefault("Kits.GUI.Bought", "&aYou bought &6[Kit] for &c[Coins] Coins");
 		file.setDefault("Kits.GUI.No Coins", "&aYou need more Coins");
 		
+		file.setDefault("Teams.GUI.Title", "&7[&aTeams&7]");
+		
 		file.setDefault("Reward", "&aYou got [Coins] Coins.");
 	}
 	
 	public void loadMessages() {
 		SimpleFile file = getMSGFile();
+		
+		TeamSel.title = file.getColorString("Teams.GUI.Title");
 		
 		LobbyListener.sel = file.getColorString("Kits.GUI.Selected");
 		LobbyListener.bought = file.getColorString("Kits.GUI.Bought");

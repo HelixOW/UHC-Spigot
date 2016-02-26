@@ -1,10 +1,9 @@
-package de.alpha.uhc.files;
+package de.alpha.uhc.kits;
 
 import java.util.ArrayList;
 
 import org.bukkit.inventory.Inventory;
 
-import de.alpha.uhc.manager.KitManager;
 import net.minetopix.library.main.file.SimpleFile;
 
 public class KitFileManager {
