@@ -18,6 +18,7 @@ import de.alpha.uhc.files.PlayerFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
+import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Timer;
 import net.minetopix.library.main.item.ItemCreator;
@@ -34,6 +35,8 @@ public class PlayerJoinListener implements Listener {
 	public static Material kitItem;
 	public static String kitName;
 	public static boolean kitMode;
+	
+	public static boolean teamMode;
 	
 	private int apc;
 	public static int mpc;
@@ -66,7 +69,7 @@ public class PlayerJoinListener implements Listener {
 				MySQLManager.exUpdateQry("UHC", "UUID", e.getPlayer().getUniqueId().toString(), "Player", e.getPlayer().getName());
 			}
 		} else {
-			if(!(new PlayerFileManager().getPlayerFile().contains("Player: "+ e.getPlayer().getName()))) {
+			if(!(PlayerFileManager.getPlayerFile().contains("Player: "+ e.getPlayer().getName()))) {
 				new PlayerFileManager().addPlayer(e.getPlayer());
 			}
 		}
@@ -114,6 +117,12 @@ public class PlayerJoinListener implements Listener {
 				e.getPlayer().getInventory().setItemInHand(new ItemCreator(kitItem).setName(kitName).build());
 		
 			}
+		}
+		
+		if(teamMode == true) {
+			
+			TeamSel.give(e.getPlayer());
+			
 		}
 		
 		if(SpawnFileManager.getLobby() == null) {

@@ -23,6 +23,8 @@ import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.kits.GUI;
+import de.alpha.uhc.teams.TeamListener;
+import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.MapReset;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
@@ -54,6 +56,7 @@ public class Core extends JavaPlugin {
 		
 		ofm.addOptions();
 		ofm.loadOptions();
+		ofm.registerTeams();
 			
 		mfm.addMessages();
 		mfm.loadMessages();
@@ -65,6 +68,7 @@ public class Core extends JavaPlugin {
 		registerEvents();
 		
 		GUI.fill();
+		TeamSel.fill();
 		
 		if(isMySQLActive == true) {
 			try {
@@ -140,6 +144,7 @@ public class Core extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new MapReset(), this);
 		Bukkit.getPluginManager().registerEvents(new Spectator(), this);
 		Bukkit.getPluginManager().registerEvents(new Regions(), this);
+		Bukkit.getPluginManager().registerEvents(new TeamListener(), this);
 	}
 	
 	public static ArrayList<Player> getInGamePlayers() {

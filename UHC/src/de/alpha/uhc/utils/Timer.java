@@ -224,8 +224,8 @@ public class Timer {
 	}
 	
 	public static void setCountdownTime() {
-		high = new OptionsFileManager().getConfigFile().getInt("Countdown.lobby");
-		gracetime = new OptionsFileManager().getConfigFile().getInt("Countdown.graceperiod");
+		high = OptionsFileManager.getConfigFile().getInt("Countdown.lobby");
+		gracetime = OptionsFileManager.getConfigFile().getInt("Countdown.graceperiod");
 	}
 	
 	private static void giveCompass(Player p) {

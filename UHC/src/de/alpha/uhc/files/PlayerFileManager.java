@@ -7,7 +7,7 @@ import net.minetopix.library.main.file.SimpleFile;
 
 public class PlayerFileManager {
 	
-	public SimpleFile getPlayerFile() {
+	public static SimpleFile getPlayerFile() {
         return new SimpleFile("plugins/UHC", "players.yml");
     }
 	

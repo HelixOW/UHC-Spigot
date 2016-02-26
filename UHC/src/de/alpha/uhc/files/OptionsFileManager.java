@@ -1,5 +1,7 @@
 package de.alpha.uhc.files;
 
+import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 
 import de.alpha.border.Border;
@@ -10,6 +12,9 @@ import de.alpha.uhc.Listener.MiningListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.manager.BorderManager;
+import de.alpha.uhc.teams.Team;
+import de.alpha.uhc.teams.TeamManager;
+import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Timer;
 import net.minetopix.library.main.file.SimpleFile;
@@ -18,7 +23,7 @@ public class OptionsFileManager {
 	
 	//TODO: Scoreboard mit Prefix als Titel, Spieler left, Specs left
 	
-	public SimpleFile getConfigFile() {
+	public static SimpleFile getConfigFile() {
         return new SimpleFile("plugins/UHC", "options.yml");
     }
 
@@ -54,7 +59,14 @@ public class OptionsFileManager {
         file.setDefault("Kits", true);
         
         file.setDefault("Kit.item", "chest");
-        file.setDefault("Kit.name", "§aKits");
+        file.setDefault("Kit.name", "&aKits");
+        
+        file.setDefault("TeamMode", true);
+        
+        file.setDefault("Team.item", "blaze_rod");
+        file.setDefault("Team.name", "&bTeams");
+        file.setDefault("Team.GUI.blocks", "stained_clay");
+        file.setDefault("Team.max Players", 2);
         
         file.setDefault("Coins.on Win", 100);
         file.setDefault("Coins.on Death", 5);
@@ -64,10 +76,38 @@ public class OptionsFileManager {
         file.setDefault("Lobby.region", true);
         file.setDefault("Lobby.createTool", "wooden_axe");
         
+        if(!file.isSet("Teams")) {
+			//Teamname
+			file.setDefault("Teams.White.color", "WHITE");
+			file.setDefault("Teams.Red.color", "RED");
+			file.setDefault("Teams.Green.color", "GREEN");
+			file.setDefault("Teams.Yellow.color", "YELLOW");
+			file.setDefault("Teams.Black.color", "BLACK");
+			
+			file.setDefault("Teams.White.data", 3);
+			file.setDefault("Teams.Red.data", 3);
+			file.setDefault("Teams.Green.data", 3);
+			file.setDefault("Teams.Yellow.data", 3);
+			file.setDefault("Teams.Black.data", 3);
+			
+			file.setDefault("Teams.White.name", "White");
+			file.setDefault("Teams.Red.name", "Red");
+			file.setDefault("Teams.Green.name", "Green");
+			file.setDefault("Teams.Yellow.name", "Yellow");
+			file.setDefault("Teams.Black.name", "Black");
+		}
+        
     }
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		PlayerJoinListener.teamMode = file.getBoolean("TeamMode");
+		
+		TeamSel.m = file.getString("Team.item");
+		TeamSel.itemName = file.getColorString("Team.name");
+		TeamSel.block = Material.getMaterial(file.getString("Team.GUI.blocks").toUpperCase());
+		TeamSel.names = file.getColorString("Team.colors");
 		
 		Regions.material = file.getString("Lobby.createTool");
 		Regions.lobby = file.getBoolean("Lobby.region");
@@ -106,5 +146,23 @@ public class OptionsFileManager {
 		 MiningListener.gold = file.getBoolean("Mine.GoldOre");
 		 MiningListener.dia = file.getBoolean("Mine.DiamondOre");
 	}
-
+	
+	public void registerTeams() {
+		SimpleFile file = getConfigFile();
+		
+		if(!file.isSet("Teams")) {
+			Bukkit.getConsoleSender().sendMessage("1");
+			return;
+		}
+		for(String teamName : file.getConfigurationSection("Teams").getKeys(false)) {
+			String pathToTeam = "Teams."+ teamName;
+			
+			String teamName2 = file.getString(pathToTeam + ".name").replaceAll("&", "§");
+			int teamSize = file.getInt("Team.max Players");
+			DyeColor color = DyeColor.valueOf(file.getString(pathToTeam + ".color"));
+			
+			TeamManager.addTeam(new Team(teamName2 , teamSize , color));
+			
+		}
+	}
 }
