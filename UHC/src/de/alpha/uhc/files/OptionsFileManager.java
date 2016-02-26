@@ -69,7 +69,7 @@ public class OptionsFileManager {
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
 		
-		Regions.material = file.getString("Spawn.createTool");
+		Regions.material = file.getString("Lobby.createTool");
 		Regions.lobby = file.getBoolean("Lobby.region");
 		
 		Timer.max = file.getInt("Spawnradius");

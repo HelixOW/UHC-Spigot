@@ -101,37 +101,32 @@ public class SpawnFileManager {
 	
 	public static void addRegion(Location loc1, Location loc2) {
 		
-		int id = cfg.getKeys(false).size();
-		cfg.set(id + ".pos1.world", loc1.getWorld().getName());
-		cfg.set(id + ".pos1.x", loc1.getBlockX());
-		cfg.set(id + ".pos1.y", loc1.getBlockY());
-		cfg.set(id + ".pos1.z", loc1.getBlockZ());
+		cfg.set("Lobbyregion.pos1.world", loc1.getWorld().getName());
+		cfg.set("Lobbyregion.pos1.x", loc1.getBlockX());
+		cfg.set("Lobbyregion.pos1.y", loc1.getBlockY());
+		cfg.set("Lobbyregion.pos1.z", loc1.getBlockZ());
 		
-		cfg.set(id + ".pos2.world", loc2.getWorld().getName());
-		cfg.set(id + ".pos2.x", loc2.getBlockX());
-		cfg.set(id + ".pos2.y", loc2.getBlockY());
-		cfg.set(id + ".pos2.z", loc2.getBlockZ());
+		cfg.set("Lobbyregion.pos2.world", loc2.getWorld().getName());
+		cfg.set("Lobbyregion.pos2.x", loc2.getBlockX());
+		cfg.set("Lobbyregion.pos2.y", loc2.getBlockY());
+		cfg.set("Lobbyregion.pos2.z", loc2.getBlockZ());
 		saveCfg();
 	}
 	
-	public void registerRegions() {
+	public static void registerRegions() {
 		
-		for(int i = 0; i < cfg.getKeys(false).size(); i++) {
+		Regions.addRegion(new Cuboid(getRegionLoc("pos1"), getRegionLoc("pos2")));
 			
-			Regions.addRegion(new Cuboid(getRegionLoc(i, "pos1"), getRegionLoc(i, "pos2")));
-			
-		}
-		
 	}
 	
-	public Location getRegionLoc(int id, String name) {
+	public static Location getRegionLoc(String name) {
 		
-		World w =  Bukkit.getWorld(cfg.getString(id + "." + name + ".world"));
+		World w =  Bukkit.getWorld(cfg.getString("Lobbyregion." + name + ".world"));
 		
 		return new Location(w,
-				cfg.getInt(id+"."+name+".x"),
-				cfg.getInt(id+"."+name+".y"),
-				cfg.getInt(id+"."+name+".z"));
+				cfg.getInt("Lobbyregion."+name+".x"),
+				cfg.getInt("Lobbyregion."+name+".y"),
+				cfg.getInt("Lobbyregion."+name+".z"));
 	}
 
 }

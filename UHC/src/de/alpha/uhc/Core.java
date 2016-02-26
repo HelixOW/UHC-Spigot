@@ -24,6 +24,7 @@ import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.utils.MapReset;
+import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Timer;
 import net.minetopix.mysqlapi.MySQLAPI;
@@ -58,6 +59,7 @@ public class Core extends JavaPlugin {
 		mfm.loadMessages();
 		
 		SpawnFileManager.saveCfg();
+		SpawnFileManager.registerRegions();
 		
 		registerCommands();
 		registerEvents();
@@ -137,6 +139,7 @@ public class Core extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new SoupListener(), this);
 		Bukkit.getPluginManager().registerEvents(new MapReset(), this);
 		Bukkit.getPluginManager().registerEvents(new Spectator(), this);
+		Bukkit.getPluginManager().registerEvents(new Regions(), this);
 	}
 	
 	public static ArrayList<Player> getInGamePlayers() {

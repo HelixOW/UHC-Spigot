@@ -116,7 +116,7 @@ public class PlayerJoinListener implements Listener {
 			}
 		}
 		
-		if(SpawnFileManager.getSpawn() == null) {
+		if(SpawnFileManager.getLobby() == null) {
 			e.getPlayer().teleport(e.getPlayer().getWorld().getSpawnLocation());
 		} else {
 			e.getPlayer().teleport(SpawnFileManager.getLobby());
