@@ -80,7 +80,7 @@ public class MiningListener implements Listener {
 			}
 			
 			if(m.equals(Material.GOLD_ORE)) {
-				if(gold == true) {
+				if(gold == false) {
 					e.setCancelled(true);
 					return;
 				}
@@ -90,7 +90,7 @@ public class MiningListener implements Listener {
 			}
 			
 			if(m.equals(Material.DIAMOND_ORE)) {
-				if(dia == true) {
+				if(dia == false) {
 					e.setCancelled(true);
 					return;
 				}
@@ -100,7 +100,7 @@ public class MiningListener implements Listener {
 			}
 			
 			if(m.equals(Material.COAL_ORE)) {
-				if(coal == true) {
+				if(coal == false) {
 					e.setCancelled(true);
 					return;
 				}
