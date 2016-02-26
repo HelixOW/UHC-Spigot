@@ -77,6 +77,14 @@ public class SpawnFileManager {
 		
 	}
 	
+    public static Location getRandomLocation(Location player, int Xminimum, int Xmaximum, int Zminimum, int Zmaximum) {
+        World world = player.getWorld();
+        int randomZ = Zminimum + ((int) (Math.random() * ((double) ((Zmaximum - Zminimum) + 1))));
+        double x = Double.parseDouble(Integer.toString(Xminimum + ((int) (Math.random() * ((double) ((Xmaximum - Xminimum) + 1)))))) + 0.5d;
+        double z = Double.parseDouble(Integer.toString(randomZ)) + 0.5d;
+        return new Location(world, x, (double) world.getHighestBlockYAt(new Location(world, x, player.getY(), z)), z);
+    }
+	
 	public static String getSpawnWorldName() {
 		
 		if(cfg.getString("Spawn.world") == null) {

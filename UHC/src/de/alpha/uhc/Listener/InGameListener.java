@@ -121,7 +121,6 @@ public class InGameListener implements Listener {
 					@Override
 					public void run() {
 
-						Bukkit.getConsoleSender().sendMessage("§cPlaying World unloaded.");
 						Bukkit.reload();
 
 					}
@@ -130,6 +129,8 @@ public class InGameListener implements Listener {
 			}
 			
 			for(Player winner: Core.getInGamePlayers()) {
+				
+				GState.setGameState(GState.LOBBY);
 				
 				win = win.replace("[Player]", winner.getDisplayName());
 				

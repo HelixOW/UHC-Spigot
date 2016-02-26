@@ -17,6 +17,7 @@ import de.alpha.uhc.GState;
 import de.alpha.uhc.files.KitFileManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.kits.GUI;
+import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.utils.Stats;
 
 public class LobbyListener implements Listener {
@@ -58,6 +59,7 @@ public class LobbyListener implements Listener {
 	public void onInterAct(PlayerInteractEvent e) {
 		
 		if(!(GState.isState(GState.LOBBY))) return;
+		if(e.getItem() == null) return;
 		if(!(e.getItem().getType().equals(PlayerJoinListener.kitItem))) return;
 		
 		e.setCancelled(true);
@@ -99,6 +101,7 @@ public class LobbyListener implements Listener {
 					p.sendMessage(Core.getPrefix() + bought);
 					bought = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Bought");
 					p.closeInventory();
+					ScoreboardManager.setLobbyBoard(p);
 					break;
 				} else {
 					p.sendMessage(Core.getPrefix()+coinsneed);

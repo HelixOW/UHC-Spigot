@@ -90,7 +90,4 @@ public class ScoreboardManager {
 		p.setScoreboard(s);
 		
 	}
-	
-	
-
 }

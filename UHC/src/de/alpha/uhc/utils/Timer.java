@@ -1,6 +1,7 @@
 package de.alpha.uhc.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -63,28 +64,40 @@ public class Timer {
 								
 								if(Bukkit.getOnlinePlayers().size() >= pc) {
 									
-									for(final Player all : Bukkit.getOnlinePlayers()) {
+									for(Player all : Core.getInGamePlayers()) {
 										
 										all.setLevel(high);
 										
 										if(high % 10 == 0 && high > 10 && high != 0) {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
-											Bukkit.broadcastMessage(Core.getPrefix() + countmsg);
+											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendTitle(all, 10, 20, 10, " ", countmsg);
-											countmsg = MessageFileManager.getMSGFile().getColorString("Announcements.Countdown");
 											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
-											return;
+											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
+												
+												@Override
+												public void run() {
+													
+													countmsg = MessageFileManager.getMSGFile().getColorString("Announcements.Countdown");
+													
+												}
+											}, 2);
 										}
 										
 										if(high % 1 == 0 && high < 10 && high != 0) {
 											
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
-											Bukkit.broadcastMessage(Core.getPrefix() + countmsg);
+											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendAction(all, countmsg);
-											countmsg = MessageFileManager.getMSGFile().getColorString("Announcements.Countdown");
-											
 											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
-											return;
+											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
+												
+												@Override
+												public void run() {
+													
+													countmsg = MessageFileManager.getMSGFile().getColorString("Announcements.Countdown");
+												}
+											}, 2);
 										}
 											
 											
@@ -97,7 +110,11 @@ public class Timer {
 												if(SpawnFileManager.getSpawn() == null) {
 													ig.teleport(ig.getWorld().getSpawnLocation());
 												} else {
-													ig.teleport(SpawnFileManager.getSpawn());
+													Location l = SpawnFileManager.getSpawn();
+													
+													l = SpawnFileManager.getRandomLocation(l, l.getBlockX()-20,l.getBlockX()+20, l.getBlockZ()-20,l.getBlockZ()+20);
+															
+													ig.teleport(l);
 												}
 												b.cancel();
 												
