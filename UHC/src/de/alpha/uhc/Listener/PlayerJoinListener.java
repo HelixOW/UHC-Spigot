@@ -55,6 +55,10 @@ public class PlayerJoinListener implements Listener {
 			return;
 		}
 		
+		for(Player all : Bukkit.getOnlinePlayers()) {
+			all.showPlayer(e.getPlayer());
+		}
+		
 		if(Core.isMySQLActive == true) {
 			if(MySQLManager.getObjectConditionResult("UHC", "UUID", e.getPlayer().getUniqueId().toString(), "UUID") == null) {
 				MySQLManager.exInsertQry("UHC", e.getPlayer().getName(), e.getPlayer().getUniqueId().toString(), "0", "0");

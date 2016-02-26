@@ -36,6 +36,7 @@ public class Timer {
 	
 	 static int high;
 	 static int gracetime;
+	 public	static int max;
 	
 	private static   BukkitTask a;
 	private  static  BukkitTask b;
@@ -112,7 +113,7 @@ public class Timer {
 												} else {
 													Location l = SpawnFileManager.getSpawn();
 													
-													l = SpawnFileManager.getRandomLocation(l, l.getBlockX()-20,l.getBlockX()+20, l.getBlockZ()-20,l.getBlockZ()+20);
+													l = SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max);
 															
 													ig.teleport(l);
 												}
@@ -128,7 +129,9 @@ public class Timer {
 												} else {
 													for(ItemStack is : new KitFileManager().getContents(LobbyListener.getSelKit(ig)).getContents()) {
 														if(is != null) {
-															ig.getInventory().addItem(is);
+															if(!(ig.getInventory().contains(is))) {
+																ig.getInventory().addItem(is);
+															}
 														}
 													}
 												}

@@ -58,10 +58,14 @@ public class OptionsFileManager {
         file.setDefault("Coins.on Win", 100);
         file.setDefault("Coins.on Death", 5);
         
+        file.setDefault("Spawnradius", 20);
+        
     }
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		Timer.max = file.getInt("Spawnradius");
 		
 		InGameListener.reward = file.getInt("Coins.on Win");
 		InGameListener.deathreward = file.getInt("Coins.on Death");

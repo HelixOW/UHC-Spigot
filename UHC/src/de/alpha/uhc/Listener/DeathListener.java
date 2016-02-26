@@ -10,6 +10,7 @@ import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Spider;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -31,6 +32,11 @@ public class DeathListener implements Listener {
 		if(mobs == true) {
 			
 			if(p instanceof Pig) {
+				e.getDrops().clear();
+				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.GRILLED_PORK, 3));
+			}
+			
+			if(p instanceof Zombie) {
 				e.getDrops().clear();
 				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.GRILLED_PORK, 3));
 			}

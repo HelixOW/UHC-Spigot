@@ -83,9 +83,9 @@ public class InGameListener implements Listener {
 		new Stats(p).addDeath();
 		rew = rew.replace("[Coins]", Integer.toString(deathreward));
 		new Stats(p).addCoins(deathreward);
-		rew = MessageFileManager.getMSGFile().getColorString("Reward");
 		p.sendMessage(Core.getPrefix() + rew);
 		TitleManager.sendTitle(p, 10, 20, 10, " ", rew);
+		rew = MessageFileManager.getMSGFile().getColorString("Reward");
 		for(Player all : Bukkit.getOnlinePlayers()) {
 			ScoreboardManager.setInGameBoard(all);
 		}
@@ -241,7 +241,6 @@ public class InGameListener implements Listener {
 						@Override
 						public void run() {
 
-							Bukkit.getConsoleSender().sendMessage("§cPlaying World unloaded.");
 							Bukkit.reload();
 
 						}
@@ -251,9 +250,18 @@ public class InGameListener implements Listener {
 				
 				for(Player winner: Core.getInGamePlayers()) {
 					
+					GState.setGameState(GState.LOBBY);
+					
 					win = win.replace("[Player]", winner.getDisplayName());
 					
 					Bukkit.broadcastMessage(Core.getPrefix() + win);
+					for(Player all : Bukkit.getOnlinePlayers()) {
+						TitleManager.sendTitle(all, 10, 20, 10, " ", win);
+					}
+					new Stats(winner).addCoins(reward);
+					rew = rew.replace("[Coins]", Integer.toString(reward));
+					winner.sendMessage(Core.getPrefix() + rew);
+					rew = MessageFileManager.getMSGFile().getColorString("Reward");
 					
 					win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
 					

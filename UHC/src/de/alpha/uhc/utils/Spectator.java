@@ -10,12 +10,13 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
 
 public class Spectator implements Listener{
 	
-	public void setSpec(Player p) {
+	public void setSpec(final Player p) {
 		
 		Core.addSpec(p);
 		p.setCanPickupItems(false);
@@ -23,9 +24,20 @@ public class Spectator implements Listener{
 		p.setHealth(20);
 		p.setVelocity(p.getVelocity().setY(20D));
 		p.setTotalExperience(0);
-		p.setGameMode(GameMode.SPECTATOR);
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				p.setGameMode(GameMode.SPECTATOR);
+
+				
+			}
+		}.runTaskLater(Core.getInstance(), 20);
 		
 		p.setPlayerListName("§7[§4X§7] §c" + p.getDisplayName());
+		for(Player ig : Core.getInGamePlayers()) {
+			ig.hidePlayer(p);
+		}
 		
 		
 	}
