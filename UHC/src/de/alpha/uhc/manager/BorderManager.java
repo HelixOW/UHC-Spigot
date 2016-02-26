@@ -1,6 +1,7 @@
 package de.alpha.uhc.manager;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.border.Border;
@@ -27,8 +28,12 @@ public class BorderManager {
 			public void run() {
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + moved);
+				for(Player all : Bukkit.getOnlinePlayers()) {
+					TitleManager.sendTitle(all, 10, 20, 10, " ", moved);
+				}
 				size = size - moving;
 				new Border().changesize(size);
+				
 				
 			}
 		}.runTaskTimer(Core.getInstance(), 0, time);

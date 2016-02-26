@@ -20,6 +20,7 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.manager.ScoreboardManager;
+import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Stats;
 import de.alpha.uhc.utils.Timer;
@@ -84,6 +85,7 @@ public class InGameListener implements Listener {
 		new Stats(p).addCoins(deathreward);
 		rew = MessageFileManager.getMSGFile().getColorString("Reward");
 		p.sendMessage(Core.getPrefix() + rew);
+		TitleManager.sendTitle(p, 10, 20, 10, " ", rew);
 		for(Player all : Bukkit.getOnlinePlayers()) {
 			ScoreboardManager.setInGameBoard(all);
 		}
@@ -135,6 +137,9 @@ public class InGameListener implements Listener {
 				win = win.replace("[Player]", winner.getDisplayName());
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + win);
+				for(Player all : Bukkit.getOnlinePlayers()) {
+					TitleManager.sendTitle(all, 10, 20, 10, " ", win);
+				}
 				new Stats(winner).addCoins(reward);
 				rew = rew.replace("[Coins]", Integer.toString(reward));
 				winner.sendMessage(Core.getPrefix() + rew);
@@ -302,6 +307,7 @@ public class InGameListener implements Listener {
 			track = track.replace("[distance]", Integer.toString(blocks));
 			
 			p.sendMessage(Core.getPrefix() + track);
+			TitleManager.sendTitle(p, 10, 20, 10, " ", track);
 			p.setCompassTarget(getNearest(p).getLocation());
 			
 			track = MessageFileManager.getMSGFile().getColorString("Compass.PlayerInRange");

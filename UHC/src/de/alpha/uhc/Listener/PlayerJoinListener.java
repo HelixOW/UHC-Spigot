@@ -144,7 +144,7 @@ public class PlayerJoinListener implements Listener {
 		
 		ScoreboardManager.setLobbyBoard(e.getPlayer());
 		
-		if(Bukkit.getOnlinePlayers().size() >= Timer.pc) {
+		if(Bukkit.getOnlinePlayers().size() == Timer.pc) {
 			
 			new BukkitRunnable() {
 				

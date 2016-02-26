@@ -83,9 +83,6 @@ public class LobbyListener implements Listener {
 		for(String kits : new KitFileManager().getAllKits()) {
 			if(e.getCurrentItem().getType().equals(Material.getMaterial(new KitFileManager().getMaterial(kits).toUpperCase()))) {
 				if(new Stats(p).getKits().contains(kits)) {
-					if(kit.containsKey(p)) {
-						kit.remove(p);
-					}
 					kit.put(p, kits);
 					sel = sel.replace("[Kit]", kits);
 					p.sendMessage(Core.getPrefix() + sel);
@@ -95,6 +92,9 @@ public class LobbyListener implements Listener {
 				} else if(new Stats(p).getCoins() >= new KitFileManager().getPrice(kits)) {
 					new Stats(p).removeCoins(new KitFileManager().getPrice(kits));
 					new Stats(p).addKit(kits);
+					if(kit.containsKey(p)) {
+						kit.remove(p);
+					}
 					kit.put(p, kits);
 					bought = bought.replace("[Kit]", kits);
 					bought = bought.replace("[Coins]", Integer.toString(new KitFileManager().getPrice(kits)));
