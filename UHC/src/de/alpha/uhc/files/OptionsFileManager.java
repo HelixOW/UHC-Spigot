@@ -1,6 +1,5 @@
 package de.alpha.uhc.files;
 
-import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 
@@ -151,7 +150,6 @@ public class OptionsFileManager {
 		SimpleFile file = getConfigFile();
 		
 		if(!file.isSet("Teams")) {
-			Bukkit.getConsoleSender().sendMessage("1");
 			return;
 		}
 		for(String teamName : file.getConfigurationSection("Teams").getKeys(false)) {
