@@ -1,8 +1,10 @@
 package de.alpha.uhc.files;
 
 import de.alpha.uhc.Listener.InGameListener;
+import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.commands.UHCCommand;
+import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.utils.Timer;
@@ -42,14 +44,26 @@ public class MessageFileManager {
 		file.setDefault("Scoreboard.Lobby.Title", "[Player]'s §astats");
 		file.setDefault("Scoreboard.Lobby.Kills", "&aYour Kills:");
 		file.setDefault("Scoreboard.Lobby.Deaths", "&cYour Deaths:");
+		file.setDefault("Scoreboard.Lobby.Coins", "&6Your Coins:");
 		
 		file.setDefault("Scoreboard.Ingame.Title", "[Player]");
 		file.setDefault("Scoreboard.Ingame.Player Living", "&aLiving Players:");
 		file.setDefault("Scoreboard.Ingame.Spectators", "&cSpectators:");
+		
+		file.setDefault("Kits.GUI.Title", "&7[&6Kits&7]");
+		file.setDefault("Kits.GUI.Selected", "&aYou selected &6[Kit]");
+		file.setDefault("Kits.GUI.Bought", "&aYou bought &6[Kit] for &c[Coins] Coins");
+		file.setDefault("Kits.GUI.No Coins", "&aYou need more Coins");
+		
+		file.setDefault("Reward", "&aYou got [Coins] Coins.");
 	}
 	
 	public void loadMessages() {
 		SimpleFile file = getMSGFile();
+		
+		LobbyListener.sel = file.getColorString("Kits.GUI.Selected");
+		LobbyListener.bought = file.getColorString("Kits.GUI.Bought");
+		LobbyListener.coinsneed = file.getColorString("Kits.GUI.No Coins");
 		
 		UHCCommand.noplayer = file.getColorString("Commands.Warns.OnlyPlayers");
 		 UHCCommand.noperms = file.getColorString("Commands.Warns.NoPermissions");
@@ -65,6 +79,7 @@ public class MessageFileManager {
 		 InGameListener.kick = file.getColorString("Announcements.Restart");
 		 InGameListener.ntrack = file.getColorString("Compass.NoPlayerInRange");
 		 InGameListener.track = file.getColorString("Compass.PlayerInRange");
+		 InGameListener.rew = file.getColorString("Reward");
 		 PlayerJoinListener.join = file.getColorString("Announcements.Join");
 		 PlayerJoinListener.full = file.getColorString("Warns.FullServer");
 		 PlayerJoinListener.title = file.getColorString("Join.Title");
@@ -74,11 +89,14 @@ public class MessageFileManager {
 		 ScoreboardManager.lobbytitle = file.getColorString("Scoreboard.Lobby.Title");
 		 ScoreboardManager.lobbyKills = file.getColorString("Scoreboard.Lobby.Kills");
 		 ScoreboardManager.lobbyDeaths = file.getColorString("Scoreboard.Lobby.Deaths");
+		 ScoreboardManager.lobbyCoins = file.getColorString("Scoreboard.Lobby.Coins");
 		 
 		 ScoreboardManager.ingametitle = file.getColorString("Scoreboard.Ingame.Title");
 		 ScoreboardManager.ingamePlayersLiving = file.getColorString("Scoreboard.Ingame.Player Living");
 		 ScoreboardManager.ingameSpectators = file.getColorString("Scoreboard.Ingame.Spectators");
 		
+		 GUI.title = file.getColorString("Kits.GUI.Title");
+		 
 	}
 
 }

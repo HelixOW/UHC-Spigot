@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
+import de.alpha.uhc.files.KitFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.utils.Stats;
 import de.alpha.uhc.utils.WorldPopulator;
@@ -42,19 +43,20 @@ public class UHCCommand implements CommandExecutor {
 				}
 			}
 			
-			if(args.length == 0 || args.length > 2) {
+			if(args.length == 0) {
 				if(p.hasPermission("uhc.admin")) {
 					p.sendMessage("§8---===UHC===---");
 					p.sendMessage("§7 /uhc setSpawn - Set your Arena");
-					p.sendMessage("§7 /uhc setLobby - Set your Lobby, where the Players will wait.");
-					p.sendMessage("§7 /uhc createWorld [Name] - create a new random World");
-					p.sendMessage("§7 /uhc reload - reload the Server to restart UHC");
-					p.sendMessage("§7 /uhc stats - See your stats");
+					p.sendMessage("§7 /uhc setLobby - Set your Lobby, where the players will wait.");
+					p.sendMessage("§7 /uhc createWorld [name] - create a new random world");
+					p.sendMessage("§7 /uhc reload - reload the server to restart UHC");
+					p.sendMessage("§7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
+					p.sendMessage("§7 /uhc stats - see your stats");
 					p.sendMessage("§8---===XXX===---");
 					return true;
 				} else {
 					p.sendMessage("§8---===UHC===---");
-					p.sendMessage("§7 /uhc stats - See your Stats");
+					p.sendMessage("§7 /uhc stats - see your stats");
 					p.sendMessage("§8---===XXX===---");
 					return true;
 				}
@@ -67,11 +69,12 @@ public class UHCCommand implements CommandExecutor {
 							
 							@Override
 							public void run() {
-								Bukkit.spigot().restart();
+								Bukkit.reload();
 							}
 						}.runTaskLater(Core.getInstance(), 20);
 						return true;
 					}
+					
 					if(args[0].equalsIgnoreCase("setSpawn")) {
 						
 						sfm.SetSpawn(p.getLocation().getX(),
@@ -113,6 +116,21 @@ public class UHCCommand implements CommandExecutor {
 								
 							}
 						}.runTaskLater(Core.getInstance(), 200);
+						return true;
+					}
+				}
+				
+				String lore = "";
+				if(args.length >= 6) {
+					if(args[0].equalsIgnoreCase("addKit")) { 
+						
+						for(int i = 5; i < args.length; i++) {
+							lore = lore + args[i] + " ";
+						}
+						
+						new KitFileManager().addKit(args[1], p.getInventory(), args[2], Integer.parseInt(args[3]), lore, Integer.parseInt(args[4]));
+						p.sendMessage(Core.getPrefix()+"§7You have set the kit §a"+args[1]+" §7with GUI-block §a"+args[2]+"§7 on GUI-slot §a"+args[3]+"§7 with the price of §a"+args[4]+" §7and the lore §a"+lore);
+						lore = "";
 						return true;
 					}
 				}

@@ -22,6 +22,7 @@ import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.utils.MapReset;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Timer;
@@ -57,15 +58,21 @@ public class Core extends JavaPlugin {
 			
 		mfm.addMessages();
 		mfm.loadMessages();
-			
+		
 		sfm.saveCfg();
 		
 		registerCommands();
 		registerEvents();
 		
+		GUI.fill();
+		
 		if(isMySQLActive == true) {
-			MySQLAPI.initMySQLAPI(this);
-			createTables();
+			try {
+				MySQLAPI.initMySQLAPI(this);
+				createTables();
+			} catch(Exception e) {
+				isMySQLActive = false;
+			}
 		}
 		
 		if(Bukkit.getOnlinePlayers().size() != 0) {
@@ -75,8 +82,8 @@ public class Core extends JavaPlugin {
 		}
 		
 		GState.setGameState(GState.LOBBY);
-		new Border().border();
-		new Timer().setCountdownTime();
+		Border.border();
+		Timer.setCountdownTime();
 		
 		if(Timer.pc <= 1) {
 			Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");
@@ -114,7 +121,9 @@ public class Core extends JavaPlugin {
 				MySQLManager.createColumn("Player", MySQLDataType.VARCHAR, 50),
 				MySQLManager.createColumn("UUID", MySQLDataType.VARCHAR, 75),
 				MySQLManager.createColumn("Kills", MySQLDataType.VARCHAR, 500),
-				MySQLManager.createColumn("Deaths", MySQLDataType.VARCHAR, 500));
+				MySQLManager.createColumn("Deaths", MySQLDataType.VARCHAR, 500),
+				MySQLManager.createColumn("Coins", MySQLDataType.VARCHAR, 500),
+				MySQLManager.createColumn("Kits", MySQLDataType.VARCHAR, 500));
 		
 		
 	}

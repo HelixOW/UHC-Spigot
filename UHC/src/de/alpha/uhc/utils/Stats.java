@@ -17,6 +17,14 @@ public class Stats {
 		isMysql = Core.isMySQLActive;
 	}
 	
+	public int getCoins() {
+		if(isMysql == true) {
+			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", p.getUniqueId().toString(), "Coins").toString();
+			return Integer.parseInt(sql);
+		}
+		return new PlayerFileManager().getPlayerCoins(p);
+	}
+	
 	public int getKills() {
 		if(isMysql == true) {
 			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", p.getUniqueId().toString(), "Kills").toString();
@@ -31,6 +39,23 @@ public class Stats {
 			return Integer.parseInt(sql);
 		}
 		return new PlayerFileManager().getPlayerDeaths(p);
+	}
+	
+	public String getKits() {
+		if(isMysql == true) {
+			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", p.getUniqueId().toString(), "Kits").toString();
+			sql = sql.replaceAll(",", "");
+			return sql;
+		}
+		return new PlayerFileManager().getPlayerKits(p);
+	}
+	
+	public void addKit(String kit) {
+		if(isMysql == true) {
+			MySQLManager.exUpdateQry("UHC", "UUID", p.getUniqueId().toString(), "Kits", getKits()+kit+" ,");
+			return;
+		}
+		new PlayerFileManager().addPlayerKit(p, kit);
 	}
 	
 	
@@ -49,12 +74,28 @@ public class Stats {
 		new PlayerFileManager().addPlayerDeath(p);
 	}
 	
+	public void addCoins(int amount) {
+		if(isMysql == true) {
+			MySQLManager.exUpdateQry("UHC", "UUID", p.getUniqueId().toString(), "Coins", Integer.toString(getCoins()+amount));
+		}
+		new PlayerFileManager().addPlayerCoins(p, amount);
+	}
+	
+	public void removeCoins(int amount) {
+		if(isMysql == true) {
+			MySQLManager.exUpdateQry("UHC", "UUID", p.getUniqueId().toString(), "Coins", Integer.toString(getCoins()-amount));
+		}
+		new PlayerFileManager().removePlayerCoins(p, amount);
+	}
+	
 	public void sendStats() {
 		
 		p.sendMessage("§8---===XXX===---\n"
 				    + "§6Player§7: " + p.getDisplayName() + "\n"
 				    + "§6Kills§7: §a"+ new Stats(p).getKills() + "\n"
 				    + "§6Deaths§7: §c"+ new Stats(p).getDeaths() + "\n"
+				    + "§6Coins§7: §c"+ new Stats(p).getCoins() + "\n"
+				    + "§6Kits§7: §c"+ new Stats(p).getKits() + "\n"
 				    + "§8---===XXX===---");
 		
 	}

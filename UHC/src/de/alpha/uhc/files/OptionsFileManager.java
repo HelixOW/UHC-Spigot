@@ -1,5 +1,7 @@
 package de.alpha.uhc.files;
 
+import org.bukkit.Material;
+
 import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.Listener.DeathListener;
@@ -48,10 +50,21 @@ public class OptionsFileManager {
         
         file.setDefault("MySQL", false);
         
+        file.setDefault("Kits", true);
+        
+        file.setDefault("Kit.item", "chest");
+        file.setDefault("Kit.name", "§aKits");
+        
+        file.setDefault("Coins.on Win", 100);
+        file.setDefault("Coins.on Death", 5);
+        
     }
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		InGameListener.reward = file.getInt("Coins.on Win");
+		InGameListener.deathreward = file.getInt("Coins.on Death");
 		
 		 Border.size = file.getInt("Border.size");
 		 InGameListener.size = file.getInt("Border.size");
@@ -62,6 +75,10 @@ public class OptionsFileManager {
 		
 		Timer.pc = file.getInt("Countdown.minimum_Player_Count");
 		PlayerJoinListener.mpc = file.getInt("Countdown.maximum_Player_Count");
+		
+		PlayerJoinListener.kitItem = Material.getMaterial(file.getString("Kit.item").toUpperCase());
+		PlayerJoinListener.kitName = file.getColorString("Kit.name");
+		PlayerJoinListener.kitMode = file.getBoolean("Kits");
 		
 		MiningListener.wood = file.getBoolean("Drops.wood");
 		 MiningListener.ore = file.getBoolean("Drops.ores");

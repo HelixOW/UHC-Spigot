@@ -17,12 +17,12 @@ public class Border {
 	public static int size;
 	public static double dmg;
 	
-	private int random(Integer d, Integer x) {
+	private static int random(Integer d, Integer x) {
 		Random r = new Random();
 		return r.nextInt(x-d+1)+d;
 	}
 	
-	public void border() {
+	public static void border() {
 		
 		new BukkitRunnable() {
 			

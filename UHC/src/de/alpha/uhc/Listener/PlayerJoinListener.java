@@ -2,6 +2,7 @@ package de.alpha.uhc.Listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,7 @@ import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Timer;
+import net.minetopix.library.main.item.ItemCreator;
 import net.minetopix.mysqlapi.MySQLManager;
 
 public class PlayerJoinListener implements Listener {
@@ -28,6 +30,10 @@ public class PlayerJoinListener implements Listener {
 	
 	public static String title;
 	public static String subtitle;
+	
+	public static Material kitItem;
+	public static String kitName;
+	public static boolean kitMode;
 	
 	private int apc;
 	public static int mpc;
@@ -73,7 +79,6 @@ public class PlayerJoinListener implements Listener {
 			
 		}
 		
-		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 			
 			@Override
@@ -96,6 +101,16 @@ public class PlayerJoinListener implements Listener {
 		
 		e.getPlayer().getInventory().clear();
 		e.getPlayer().getInventory().setArmorContents(null);
+		
+		if(kitMode == true) {
+			if(kitItem == null || kitName == null) {
+				Bukkit.getConsoleSender().sendMessage(Core.getPrefix()+"§cYou don't have any Kits in your kits.yml");
+			} else {
+				e.getPlayer().getInventory().setHeldItemSlot(0);
+				e.getPlayer().getInventory().setItemInHand(new ItemCreator(kitItem).setName(kitName).build());
+		
+			}
+		}
 		
 		if(SpawnFileManager.getSpawn() == null) {
 			e.getPlayer().teleport(e.getPlayer().getWorld().getSpawnLocation());

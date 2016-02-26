@@ -11,10 +11,13 @@ import org.bukkit.scheduler.BukkitTask;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.Listener.LobbyListener;
+import de.alpha.uhc.files.KitFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.ScoreboardManager;
+import net.minetopix.library.main.item.ItemCreator;
 
 
 public class Timer {
@@ -76,9 +79,7 @@ public class Timer {
 											
 										if(high == 0) {
 											
-											System.out.println("Hello1111");
 											a.cancel();
-											System.out.println("Hello");
 													
 											for(Player ig : Core.getInGamePlayers()) {
 												
@@ -93,6 +94,17 @@ public class Timer {
 												grace = true;
 												startGracePeriod();
 												GState.setGameState(GState.INGAME);
+												
+												if(!(LobbyListener.hasSelKit(ig))) {
+													ig.getInventory().addItem(new ItemCreator(Material.APPLE).build());
+												} else {
+													for(ItemStack is : new KitFileManager().getContents(LobbyListener.getSelKit(ig)).getContents()) {
+														if(is != null) {
+															ig.getInventory().addItem(is);
+														}
+													}
+												}
+												
 												ScoreboardManager.setInGameBoard(ig);
 												new BukkitRunnable() {
 													
@@ -134,8 +146,8 @@ public class Timer {
 				if(!(kill instanceof Player)) {
 					kill.remove();
 				}
-				
 			}
+			all.getInventory().clear();
 		}
 		
 		c = new BukkitRunnable() {
@@ -179,7 +191,7 @@ public class Timer {
 		}.runTaskTimer(Core.getInstance(), 0, 20);
 	}
 	
-	public void setCountdownTime() {
+	public static void setCountdownTime() {
 		high = new OptionsFileManager().getConfigFile().getInt("Countdown.lobby");
 		gracetime = new OptionsFileManager().getConfigFile().getInt("Countdown.graceperiod");
 	}

@@ -15,6 +15,7 @@ public class ScoreboardManager {
 	public static String lobbytitle;
 	public static String lobbyKills;
 	public static String lobbyDeaths;
+	public static String lobbyCoins;
 	
 	public static String ingametitle;
 	public static String ingamePlayersLiving;
@@ -41,6 +42,11 @@ public class ScoreboardManager {
 		{
 			Score a = o.getScore(lobbyDeaths);
 			a.setScore(new Stats(p).getDeaths());
+		}
+		
+		{
+			Score a = o.getScore(lobbyCoins);
+			a.setScore(new Stats(p).getCoins());
 		}
 		
 		

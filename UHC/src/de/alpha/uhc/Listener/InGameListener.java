@@ -20,11 +20,11 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.manager.ScoreboardManager;
-import de.alpha.uhc.utils.SkullData;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Stats;
 import de.alpha.uhc.utils.Timer;
-import de.alpha.uhc.utils.WrongDataException;
+import net.minetopix.library.main.item.data.SkullData;
+import net.minetopix.library.main.item.data.WrongDataException;
 
 public class InGameListener implements Listener {
 	
@@ -34,10 +34,13 @@ public class InGameListener implements Listener {
 	public static String kick;
 	public static String ntrack;
 	public static String track;
+	public static String rew;
 	
 	private int apc;
 	public static  int opc;
 	public static int size;
+	public static int reward;
+	public static int deathreward;
 	
 	
 	public ArrayList<Player> ig = new ArrayList<Player>();
@@ -77,6 +80,10 @@ public class InGameListener implements Listener {
 		}
 		
 		new Stats(p).addDeath();
+		rew = rew.replace("[Coins]", Integer.toString(deathreward));
+		new Stats(p).addCoins(deathreward);
+		rew = MessageFileManager.getMSGFile().getColorString("Reward");
+		p.sendMessage(Core.getPrefix() + rew);
 		for(Player all : Bukkit.getOnlinePlayers()) {
 			ScoreboardManager.setInGameBoard(all);
 		}
@@ -127,6 +134,10 @@ public class InGameListener implements Listener {
 				win = win.replace("[Player]", winner.getDisplayName());
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + win);
+				new Stats(winner).addCoins(reward);
+				rew = rew.replace("[Coins]", Integer.toString(reward));
+				winner.sendMessage(Core.getPrefix() + rew);
+				rew = MessageFileManager.getMSGFile().getColorString("Reward");
 				
 				win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
 				
