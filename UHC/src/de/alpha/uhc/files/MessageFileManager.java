@@ -49,6 +49,7 @@ public class MessageFileManager {
 		file.setDefault("Scoreboard.Ingame.Title", "[Player]");
 		file.setDefault("Scoreboard.Ingame.Player Living", "&aLiving Players:");
 		file.setDefault("Scoreboard.Ingame.Spectators", "&cSpectators:");
+		file.setDefault("Scoreboard.Ingame.Selected Kit", "&6Kit:");
 		
 		file.setDefault("Kits.GUI.Title", "&7[&6Kits&7]");
 		file.setDefault("Kits.GUI.Selected", "&aYou selected &6[Kit]");
@@ -94,7 +95,8 @@ public class MessageFileManager {
 		 ScoreboardManager.ingametitle = file.getColorString("Scoreboard.Ingame.Title");
 		 ScoreboardManager.ingamePlayersLiving = file.getColorString("Scoreboard.Ingame.Player Living");
 		 ScoreboardManager.ingameSpectators = file.getColorString("Scoreboard.Ingame.Spectators");
-		
+		 ScoreboardManager.ingameKit = file.getColorString("Scoreboard.Ingame.Selected Kit");
+		 
 		 GUI.title = file.getColorString("Kits.GUI.Title");
 		 
 	}

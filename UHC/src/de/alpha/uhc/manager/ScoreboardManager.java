@@ -8,6 +8,7 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
 import de.alpha.uhc.Core;
+import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.utils.Stats;
 
 public class ScoreboardManager {
@@ -20,6 +21,7 @@ public class ScoreboardManager {
 	public static String ingametitle;
 	public static String ingamePlayersLiving;
 	public static String ingameSpectators;
+	public static String ingameKit;
 	
 	public static void setLobbyBoard(Player p) {
 		Scoreboard s = Bukkit.getScoreboardManager().getNewScoreboard();
@@ -74,6 +76,14 @@ public class ScoreboardManager {
 		{
 			Score a = o.getScore(ingameSpectators);
 			a.setScore(Core.getSpecs().size());
+		}
+		{
+			Score a = o.getScore(ingameKit);
+			a.setScore(-1);
+		}
+		{
+			Score a = o.getScore("§7 "+LobbyListener.getSelKit(p));
+			a.setScore(-2);
 		}
 		
 		
