@@ -65,10 +65,12 @@ public class Timer {
 									
 									for(final Player all : Bukkit.getOnlinePlayers()) {
 										
+										all.setLevel(high);
+										
 										if(high % 10 == 0 && high > 10 && high != 0) {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											Bukkit.broadcastMessage(Core.getPrefix() + countmsg);
-											TitleManager.sendTitle(all, 20, 20, 20, " ", countmsg);
+											TitleManager.sendTitle(all, 10, 20, 10, " ", countmsg);
 											countmsg = MessageFileManager.getMSGFile().getColorString("Announcements.Countdown");
 											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
 											return;
