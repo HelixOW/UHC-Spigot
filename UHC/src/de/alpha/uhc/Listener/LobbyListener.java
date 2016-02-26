@@ -3,6 +3,7 @@ package de.alpha.uhc.Listener;
 import java.util.HashMap;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +13,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
@@ -19,6 +22,7 @@ import de.alpha.uhc.files.KitFileManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.manager.ScoreboardManager;
+import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
 
 public class LobbyListener implements Listener {
@@ -32,6 +36,22 @@ public class LobbyListener implements Listener {
 		
 		if(GState.isState(GState.LOBBY)) {
 			e.setFoodLevel(20);
+		}
+		
+	}
+	
+	@EventHandler
+	public void onMove(PlayerMoveEvent e) {
+		
+		Player p = e.getPlayer();
+		
+		if(!(e.getFrom().equals(e.getTo()))) return;
+		if(!(Regions.isInRegion(e.getTo()))) {
+			Vector plV = p.getLocation().toVector();
+			Vector spV = p.getWorld().getSpawnLocation().toVector();
+			Vector v = spV.clone().subtract(plV).multiply(2.0 / spV.distance(plV)).setY(0.5);
+			p.setVelocity(v);
+			p.getWorld().playSound(p.getLocation(), Sound.BURP, 1F, 0.8F);
 		}
 		
 	}
