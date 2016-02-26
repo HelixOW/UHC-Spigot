@@ -36,7 +36,6 @@ public class Core extends JavaPlugin {
 	public static String prefix;
 	private OptionsFileManager ofm;
 	private MessageFileManager mfm;
-	private SpawnFileManager sfm;
 	
 	public static boolean isMySQLActive;
 	
@@ -49,7 +48,6 @@ public class Core extends JavaPlugin {
 		instance = this;
 		ofm = new OptionsFileManager();
 		mfm = new MessageFileManager();
-		sfm = new SpawnFileManager();
 		ig = new ArrayList<Player>();
 		spectator = new ArrayList<Player>();
 		
@@ -59,7 +57,7 @@ public class Core extends JavaPlugin {
 		mfm.addMessages();
 		mfm.loadMessages();
 		
-		sfm.saveCfg();
+		SpawnFileManager.saveCfg();
 		
 		registerCommands();
 		registerEvents();

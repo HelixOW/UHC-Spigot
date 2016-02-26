@@ -9,12 +9,15 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import de.alpha.uhc.utils.Cuboid;
+import de.alpha.uhc.utils.Regions;
+
 public class SpawnFileManager {
 	
 	private static File f = new File("plugins/UHC", "locations.yml");
 	private static FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
 	
-	public void saveCfg() {
+	public static void saveCfg() {
 		try {
 			cfg.save(f);
 		} catch (IOException ignore) {}
@@ -92,6 +95,43 @@ public class SpawnFileManager {
 		}
 		
 		return cfg.getString("Spawn.world");
+	}
+	
+	
+	
+	public static void addRegion(Location loc1, Location loc2) {
+		
+		int id = cfg.getKeys(false).size();
+		cfg.set(id + ".pos1.world", loc1.getWorld().getName());
+		cfg.set(id + ".pos1.x", loc1.getBlockX());
+		cfg.set(id + ".pos1.y", loc1.getBlockY());
+		cfg.set(id + ".pos1.z", loc1.getBlockZ());
+		
+		cfg.set(id + ".pos2.world", loc2.getWorld().getName());
+		cfg.set(id + ".pos2.x", loc2.getBlockX());
+		cfg.set(id + ".pos2.y", loc2.getBlockY());
+		cfg.set(id + ".pos2.z", loc2.getBlockZ());
+		saveCfg();
+	}
+	
+	public void registerRegions() {
+		
+		for(int i = 0; i < cfg.getKeys(false).size(); i++) {
+			
+			Regions.addRegion(new Cuboid(getRegionLoc(i, "pos1"), getRegionLoc(i, "pos2")));
+			
+		}
+		
+	}
+	
+	public Location getRegionLoc(int id, String name) {
+		
+		World w =  Bukkit.getWorld(cfg.getString(id + "." + name + ".world"));
+		
+		return new Location(w,
+				cfg.getInt(id+"."+name+".x"),
+				cfg.getInt(id+"."+name+".y"),
+				cfg.getInt(id+"."+name+".z"));
 	}
 
 }

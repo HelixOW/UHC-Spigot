@@ -10,6 +10,7 @@ import de.alpha.uhc.Listener.MiningListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.manager.BorderManager;
+import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Timer;
 import net.minetopix.library.main.file.SimpleFile;
 
@@ -60,10 +61,16 @@ public class OptionsFileManager {
         
         file.setDefault("Spawnradius", 20);
         
+        file.setDefault("Lobby.region", true);
+        file.setDefault("Lobby.createTool", "wooden_axe");
+        
     }
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		Regions.material = file.getString("Spawn.createTool");
+		Regions.lobby = file.getBoolean("Lobby.region");
 		
 		Timer.max = file.getInt("Spawnradius");
 		

@@ -12,6 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.files.KitFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.utils.Cuboid;
+import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
 import de.alpha.uhc.utils.WorldPopulator;
 
@@ -48,6 +50,7 @@ public class UHCCommand implements CommandExecutor {
 					p.sendMessage("§8---===UHC===---");
 					p.sendMessage("§7 /uhc setSpawn - Set your Arena");
 					p.sendMessage("§7 /uhc setLobby - Set your Lobby, where the players will wait.");
+					p.sendMessage("§7 /uhc createLobby - Create a lobbyregion, which Player won't be able to leave");
 					p.sendMessage("§7 /uhc createWorld [name] - create a new random world");
 					p.sendMessage("§7 /uhc reload - reload the server to restart UHC");
 					p.sendMessage("§7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
@@ -95,6 +98,21 @@ public class UHCCommand implements CommandExecutor {
 						p.sendMessage(Core.getPrefix() + lobbyset);
 						return true;
 						
+					}
+					
+					if(args[0].equalsIgnoreCase("createLobby")) {
+						if(Regions.getDefined(p)) {
+							
+							Regions.addRegion((new Cuboid(Regions.getPos1(p), Regions.getPos2(p))));
+							SpawnFileManager.addRegion(Regions.getPos1(p), Regions.getPos2(p));
+							
+							p.sendMessage(Core.getPrefix() + "§7You have created a lobbyregion.");
+							return true;
+							
+						} else {
+							p.sendMessage(Core.getPrefix() + "§7You have to definde 2 lobbypoints first.");
+							return true;
+						}
 					}
 				}
 				
