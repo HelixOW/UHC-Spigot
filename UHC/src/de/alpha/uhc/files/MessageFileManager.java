@@ -24,9 +24,10 @@ public class MessageFileManager {
 		file.setDefault("Commands.Warns.NoPermissions", "&cYou don't have Permission to execute this Command.");
 		file.setDefault("Commands.Admin.SpawnSet", "&aYou have sucessfully set the Spawn.");
 		file.setDefault("Commands.Admin.LobbySet", "&aYou have sucessfully set the Lobby.");
-		file.setDefault("Announcements.Countdown", "&aGame starts in ");
+		
+		file.setDefault("Announcements.Countdown", "&aGame starts in &7[time]&8 seconds");
 		file.setDefault("Announcements.NotEnoughPlayers", "§cCountdown reloaded! Not enough Players online.");
-		file.setDefault("Announcements.Peaceperiod.timer", "§aThe damage is enabled in");
+		file.setDefault("Announcements.Peaceperiod.timer", "§aThe damage is enabled in &7[time] &8seconds");
 		file.setDefault("Announcements.Peaceperiod.end", "&cThe Damage is now on. Be Careful!");
 		file.setDefault("Announcements.Death", "&6[Player]&c had died. [PlayerCount]");
 		file.setDefault("Announcements.Leave", "&6[Player]&c had left. [PlayerCount]");
@@ -34,7 +35,9 @@ public class MessageFileManager {
 		file.setDefault("Announcements.Win", "&6[Player]&a has won UHC.");
 		file.setDefault("Announcements.Border.Move", "&c The Border has moved!");
 		file.setDefault("Announcements.Restart", "&cThe Server is now restarting to load UHC again!");
+		
 		file.setDefault("Warns.FullServer", "&cYou're not allowed to join. The Server is full.");
+		
 		file.setDefault("Compass.NoPlayerInRange", "&cThere is no Player in your Range!");
 		file.setDefault("Compass.PlayerInRange", "&6[Player] &ais §7[distance] blocks &aaway from you.");
 		

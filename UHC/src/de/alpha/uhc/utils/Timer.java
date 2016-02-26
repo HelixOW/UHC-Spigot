@@ -13,10 +13,12 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.files.KitFileManager;
+import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.ScoreboardManager;
+import de.alpha.uhc.manager.TitleManager;
 import net.minetopix.library.main.item.ItemCreator;
 
 
@@ -64,14 +66,21 @@ public class Timer {
 									for(final Player all : Bukkit.getOnlinePlayers()) {
 										
 										if(high % 10 == 0 && high > 10 && high != 0) {
-											Bukkit.broadcastMessage(Core.getPrefix() + countmsg + "§7" + high + "§8 seconds");
+											countmsg = countmsg.replace("[time]", Integer.toString(high));
+											Bukkit.broadcastMessage(Core.getPrefix() + countmsg);
+											TitleManager.sendTitle(all, 20, 20, 20, " ", countmsg);
+											countmsg = MessageFileManager.getMSGFile().getColorString("Announcements.Countdown");
 											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
 											return;
 										}
 										
 										if(high % 1 == 0 && high < 10 && high != 0) {
 											
-											Bukkit.broadcastMessage(Core.getPrefix() + countmsg + "§7" + high + "§8 seconds");
+											countmsg = countmsg.replace("[time]", Integer.toString(high));
+											Bukkit.broadcastMessage(Core.getPrefix() + countmsg);
+											TitleManager.sendAction(all, countmsg);
+											countmsg = MessageFileManager.getMSGFile().getColorString("Announcements.Countdown");
+											
 											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
 											return;
 										}
@@ -165,8 +174,9 @@ public class Timer {
 						public void run() {
 							
 							if(gracetime % 10 == 0 && gracetime > 0) {
-								
-								Bukkit.broadcastMessage(Core.getPrefix() + gracemsg + "§7 " + gracetime + "§8 seconds");
+								gracemsg = gracemsg.replace("[time]", Integer.toString(gracetime));
+								Bukkit.broadcastMessage(Core.getPrefix() + gracemsg);
+								gracemsg = MessageFileManager.getMSGFile().getColorString("Announcements.Peaceperiod.timer");
 								return;
 							}
 							

@@ -88,6 +88,7 @@ public class LobbyListener implements Listener {
 					sel = sel.replace("[Kit]", kits);
 					p.sendMessage(Core.getPrefix() + sel);
 					sel = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Selected");
+					p.closeInventory();
 					break;
 				} else if(new Stats(p).getCoins() >= new KitFileManager().getPrice(kits)) {
 					new Stats(p).removeCoins(new KitFileManager().getPrice(kits));
@@ -97,6 +98,7 @@ public class LobbyListener implements Listener {
 					bought = bought.replace("[Coins]", Integer.toString(new KitFileManager().getPrice(kits)));
 					p.sendMessage(Core.getPrefix() + bought);
 					bought = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Bought");
+					p.closeInventory();
 					break;
 				} else {
 					p.sendMessage(Core.getPrefix()+coinsneed);
