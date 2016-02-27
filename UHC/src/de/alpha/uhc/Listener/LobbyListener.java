@@ -46,6 +46,7 @@ public class LobbyListener implements Listener {
 		
 		if(GState.isState(GState.INGAME)) return;
 		if(Regions.lobby == false) return;
+		
 		if(Regions.isInRegion(e.getTo()) == false) {
 			if(SpawnFileManager.getLobby() == null) {
 				p.teleport(p.getWorld().getSpawnLocation());

@@ -12,6 +12,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.alpha.uhc.Core;
+import de.alpha.uhc.files.SpawnFileManager;
 
 public class Regions implements Listener {
 	
@@ -48,6 +49,8 @@ public class Regions implements Listener {
 	}
 	
 	public static boolean isInRegion(Location loc) {
+		
+		if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobbyregion"))) return true;
 		
 		for(Cuboid c : regions) {
 			

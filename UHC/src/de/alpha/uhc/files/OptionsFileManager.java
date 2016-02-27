@@ -70,6 +70,8 @@ public class OptionsFileManager {
         file.setDefault("Coins.on Win", 100);
         file.setDefault("Coins.on Death", 5);
         
+        file.setDefault("Worldreset", true);
+        
         file.setDefault("Spawnradius", 20);
         
         file.setDefault("Lobby.region", true);
@@ -100,6 +102,8 @@ public class OptionsFileManager {
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		InGameListener.newWorld = file.getBoolean("Worldreset");
 		
 		PlayerJoinListener.teamMode = file.getBoolean("TeamMode");
 		

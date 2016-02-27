@@ -1,10 +1,12 @@
 package de.alpha.uhc.Listener;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,6 +44,8 @@ public class InGameListener implements Listener {
 	public static int size;
 	public static int reward;
 	public static int deathreward;
+	
+	public static boolean newWorld;
 	
 	
 	public ArrayList<Player> ig = new ArrayList<Player>();
@@ -104,6 +108,9 @@ public class InGameListener implements Listener {
 		p.getWorld().strikeLightningEffect(p.getLocation());
 		
 		if(Core.getInGamePlayers().size() <= 1) {
+			if(newWorld == true) {
+				delete = p.getWorld();
+			}
 			if(Core.getInGamePlayers().size() == 0) {
 				new Core();
 				new BukkitRunnable() {
@@ -113,6 +120,10 @@ public class InGameListener implements Listener {
 						
 						for(Player all : Bukkit.getOnlinePlayers()) {
 							all.kickPlayer(Core.getPrefix() + kick);
+						}
+						if(newWorld == true) {
+							File deleteFolder = delete.getWorldFolder();
+							deleteWorld(deleteFolder);
 						}
 						
 					}
@@ -146,7 +157,9 @@ public class InGameListener implements Listener {
 				rew = MessageFileManager.getMSGFile().getColorString("Reward");
 				
 				win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
-				
+				if(newWorld == true) {
+					delete = winner.getWorld();
+				}
 				new BukkitRunnable() {
 					
 					@Override
@@ -154,6 +167,10 @@ public class InGameListener implements Listener {
 						
 						for(Player all : Bukkit.getOnlinePlayers()) {
 							all.kickPlayer(Core.getPrefix() + kick);
+						}
+						if(newWorld == true) {
+							File deleteFolder = delete.getWorldFolder();
+							deleteWorld(deleteFolder);
 						}
 						
 					}
@@ -173,6 +190,8 @@ public class InGameListener implements Listener {
 			}
 		}
 	}
+	
+	private World delete;
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
@@ -220,9 +239,9 @@ public class InGameListener implements Listener {
 			p.setGameMode(GameMode.SURVIVAL);
 			
 			if(Core.getInGamePlayers().size() <= 1) {
-				
-				Bukkit.getConsoleSender().sendMessage(""+Core.getInGamePlayers());
-				
+				if(newWorld == true) {
+					delete = p.getWorld();
+				}
 				if(Core.getInGamePlayers().size() == 0) {
 					new BukkitRunnable() {
 						
@@ -231,6 +250,10 @@ public class InGameListener implements Listener {
 							
 							for(Player all : Bukkit.getOnlinePlayers()) {
 								all.kickPlayer(Core.getPrefix() + kick);
+							}
+							if(newWorld == true) {
+								File deleteFolder = delete.getWorldFolder();
+								deleteWorld(deleteFolder);
 							}
 							
 						}
@@ -265,6 +288,9 @@ public class InGameListener implements Listener {
 					
 					win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
 					
+					if(newWorld == true) {
+						delete = winner.getWorld();
+					}
 					new BukkitRunnable() {
 						
 						@Override
@@ -273,7 +299,10 @@ public class InGameListener implements Listener {
 							for(Player all : Bukkit.getOnlinePlayers()) {
 								all.kickPlayer(Core.getPrefix() + kick);
 							}
-							
+							if(newWorld == true) {
+								File deleteFolder = delete.getWorldFolder();
+								deleteWorld(deleteFolder);
+							}
 						}
 					}.runTaskLater(Core.getInstance(), 200);
 					
@@ -343,6 +372,20 @@ public class InGameListener implements Listener {
 		}
 		return target;
 		
+	}
+	
+	public boolean deleteWorld(File path) {
+	      if(path.exists()) {
+	          File files[] = path.listFiles();
+	          for(int i=0; i<files.length; i++) {
+	              if(files[i].isDirectory()) {
+	                  deleteWorld(files[i]);
+	              } else {
+	                  files[i].delete();
+	              }
+	          }
+	      }
+	      return(path.delete());
 	}
 	
 }

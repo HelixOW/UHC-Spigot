@@ -9,8 +9,10 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.Regions;
+import net.minetopix.library.main.file.SimpleFile;
 
 public class SpawnFileManager {
 	
@@ -22,6 +24,10 @@ public class SpawnFileManager {
 			cfg.save(f);
 		} catch (IOException ignore) {}
 		
+	}
+	
+	public static SimpleFile getSpawnFile() {
+		return new SimpleFile(f);
 	}
 	
 	public void SetLobby(double x, double y, double z, World w) {
@@ -115,11 +121,18 @@ public class SpawnFileManager {
 	
 	public static void registerRegions() {
 		
+		if(!cfg.isConfigurationSection("Lobbyregion")) {
+			Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cYou haven't created a Lobbyregion."); 
+			return;
+		}
+		
 		Regions.addRegion(new Cuboid(getRegionLoc("pos1"), getRegionLoc("pos2")));
 			
 	}
 	
 	public static Location getRegionLoc(String name) {
+		
+		if(!cfg.isConfigurationSection("Lobbyregion")) {Regions.lobby = false; return null;}
 		
 		World w =  Bukkit.getWorld(cfg.getString("Lobbyregion." + name + ".world"));
 		
