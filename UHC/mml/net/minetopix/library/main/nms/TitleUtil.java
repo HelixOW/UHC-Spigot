@@ -3,9 +3,9 @@ package net.minetopix.library.main.nms;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import net.minetopix.library.main.utils.ReflectionUtil;
-
 import org.bukkit.entity.Player;
+
+import net.minetopix.library.main.utils.ReflectionUtil;
 
 public class TitleUtil {
 	

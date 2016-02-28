@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.minetopix.library.main.item.data.ItemData;
-import net.minetopix.library.main.item.data.WrongDataException;
-
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import net.minetopix.library.main.item.data.ItemData;
+import net.minetopix.library.main.item.data.WrongDataException;
 
 public class ItemCreator {
 	

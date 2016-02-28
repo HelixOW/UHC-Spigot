@@ -103,6 +103,15 @@ public class SpawnFileManager {
 		return cfg.getString("Spawn.world");
 	}
 	
+	public static String getLobbyWorldName() {
+		
+		if(cfg.getString("Lobby.world") == null) {
+			return null;
+		}
+		
+		return cfg.getString("Lobby.world");
+	}
+	
 	
 	
 	public static void addRegion(Location loc1, Location loc2) {

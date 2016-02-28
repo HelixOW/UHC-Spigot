@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.Listener.LobbyListener;
@@ -122,6 +123,7 @@ public class Timer {
 												all.getWorld().setGameRuleValue("naturalRegeneration", "false");
 												grace = true;
 												startGracePeriod();
+												Border.border();
 												GState.setGameState(GState.INGAME);
 												
 												if(!(LobbyListener.hasSelKit(ig))) {
@@ -221,6 +223,10 @@ public class Timer {
 				}
 			}
 		}.runTaskTimer(Core.getInstance(), 0, 20);
+	}
+	
+	public static void changeTime() {
+		high = 10;
 	}
 	
 	public static void setCountdownTime() {

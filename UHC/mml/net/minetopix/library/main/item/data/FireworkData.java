@@ -3,12 +3,12 @@ package net.minetopix.library.main.item.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minetopix.library.main.item.simplemeta.SimpleFireworkEffect;
-
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+
+import net.minetopix.library.main.item.simplemeta.SimpleFireworkEffect;
 
 public class FireworkData extends ItemData {
 	private List<FireworkEffect> allEffects = new ArrayList<FireworkEffect>();

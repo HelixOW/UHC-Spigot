@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import net.minetopix.library.main.utils.PacketUtil;
-import net.minetopix.library.main.utils.PacketUtil.EquipmentSlot;
-import net.minetopix.library.main.utils.ReflectionUtil;
-
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import net.minetopix.library.main.utils.PacketUtil;
+import net.minetopix.library.main.utils.PacketUtil.EquipmentSlot;
+import net.minetopix.library.main.utils.ReflectionUtil;
 
 public class DisguiseAPI {
 

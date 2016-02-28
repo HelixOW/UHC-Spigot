@@ -15,6 +15,7 @@ import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
+import de.alpha.uhc.utils.Timer;
 import de.alpha.uhc.utils.WorldPopulator;
 
 public class UHCCommand implements CommandExecutor {
@@ -43,10 +44,20 @@ public class UHCCommand implements CommandExecutor {
 					new Stats(p).sendStats();
 					return true;
 				}
+				
+				if(p.hasPermission("UHC.start")) {
+					if(args[0].equalsIgnoreCase("start")) {
+						Timer.changeTime();
+						return true;
+					}
+				} else {
+					p.sendMessage(Core.getPrefix() + noperms);
+					return true;
+				}
 			}
 			
 			if(args.length == 0) {
-				if(p.hasPermission("uhc.admin")) {
+				if(p.hasPermission("UHC.admin")) {
 					p.sendMessage("§8---===UHC===---");
 					p.sendMessage("§7 /uhc setSpawn - Set your Arena");
 					p.sendMessage("§7 /uhc setLobby - Set your Lobby, where the players will wait.");
@@ -54,6 +65,7 @@ public class UHCCommand implements CommandExecutor {
 					p.sendMessage("§7 /uhc createWorld [name] - create a new random world");
 					p.sendMessage("§7 /uhc reload - reload the server to restart UHC");
 					p.sendMessage("§7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
+					p.sendMessage("§7 /uhc start - short the countdown to 10 seconds");
 					p.sendMessage("§7 /uhc stats - see your stats");
 					p.sendMessage("§8---===XXX===---");
 					return true;
@@ -65,7 +77,7 @@ public class UHCCommand implements CommandExecutor {
 				}
 			}
 			
-			if(p.hasPermission("uhc.admin")) {	
+			if(p.hasPermission("UHC.admin")) {	
 				if(args.length == 1) {
 					if(args[0].equalsIgnoreCase("rl")) {
 						new BukkitRunnable() {
@@ -77,6 +89,7 @@ public class UHCCommand implements CommandExecutor {
 						}.runTaskLater(Core.getInstance(), 20);
 						return true;
 					}
+					
 					
 					if(args[0].equalsIgnoreCase("setSpawn")) {
 						

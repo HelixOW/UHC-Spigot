@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,6 +23,7 @@ import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
+import de.alpha.uhc.teams.TeamManager;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Stats;
 import de.alpha.uhc.utils.Timer;
@@ -37,6 +38,7 @@ public class InGameListener implements Listener {
 	public static String kick;
 	public static String ntrack;
 	public static String track;
+	public static String trackteam;
 	public static String rew;
 	
 	private int apc;
@@ -49,6 +51,14 @@ public class InGameListener implements Listener {
 	
 	
 	public ArrayList<Player> ig = new ArrayList<Player>();
+	
+	@EventHandler
+	public void onMove(PlayerMoveEvent e) {
+		
+		if(GState.isState(GState.LOBBY)) return;
+		ScoreboardManager.updateInGameBoard(e.getPlayer());
+		
+	}
 	
 	@EventHandler
 	public void onDMG(EntityDamageEvent e) {
@@ -108,9 +118,6 @@ public class InGameListener implements Listener {
 		p.getWorld().strikeLightningEffect(p.getLocation());
 		
 		if(Core.getInGamePlayers().size() <= 1) {
-			if(newWorld == true) {
-				delete = p.getWorld();
-			}
 			if(Core.getInGamePlayers().size() == 0) {
 				new Core();
 				new BukkitRunnable() {
@@ -121,11 +128,6 @@ public class InGameListener implements Listener {
 						for(Player all : Bukkit.getOnlinePlayers()) {
 							all.kickPlayer(Core.getPrefix() + kick);
 						}
-						if(newWorld == true) {
-							File deleteFolder = delete.getWorldFolder();
-							deleteWorld(deleteFolder);
-						}
-						
 					}
 				}.runTaskLater(Core.getInstance(), 200);
 				
@@ -137,7 +139,7 @@ public class InGameListener implements Listener {
 						Bukkit.reload();
 
 					}
-				}.runTaskLater(Core.getInstance(), 240);
+				}.runTaskLater(Core.getInstance(), 300);
 				return;
 			}
 			
@@ -157,9 +159,6 @@ public class InGameListener implements Listener {
 				rew = MessageFileManager.getMSGFile().getColorString("Reward");
 				
 				win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
-				if(newWorld == true) {
-					delete = winner.getWorld();
-				}
 				new BukkitRunnable() {
 					
 					@Override
@@ -168,11 +167,6 @@ public class InGameListener implements Listener {
 						for(Player all : Bukkit.getOnlinePlayers()) {
 							all.kickPlayer(Core.getPrefix() + kick);
 						}
-						if(newWorld == true) {
-							File deleteFolder = delete.getWorldFolder();
-							deleteWorld(deleteFolder);
-						}
-						
 					}
 				}.runTaskLater(Core.getInstance(), 200);
 				
@@ -181,17 +175,14 @@ public class InGameListener implements Listener {
 					@Override
 					public void run() {
 						
-						Bukkit.getConsoleSender().sendMessage("§cPlaying World unloaded.");
 						Bukkit.reload();
 						
 					}
-				}, 240);
+				}, 300);
 				
 			}
 		}
 	}
-	
-	private World delete;
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
@@ -239,9 +230,6 @@ public class InGameListener implements Listener {
 			p.setGameMode(GameMode.SURVIVAL);
 			
 			if(Core.getInGamePlayers().size() <= 1) {
-				if(newWorld == true) {
-					delete = p.getWorld();
-				}
 				if(Core.getInGamePlayers().size() == 0) {
 					new BukkitRunnable() {
 						
@@ -250,10 +238,6 @@ public class InGameListener implements Listener {
 							
 							for(Player all : Bukkit.getOnlinePlayers()) {
 								all.kickPlayer(Core.getPrefix() + kick);
-							}
-							if(newWorld == true) {
-								File deleteFolder = delete.getWorldFolder();
-								deleteWorld(deleteFolder);
 							}
 							
 						}
@@ -267,7 +251,7 @@ public class InGameListener implements Listener {
 							Bukkit.reload();
 
 						}
-					}.runTaskLater(Core.getInstance(), 240);
+					}.runTaskLater(Core.getInstance(), 300);
 					return;
 				}
 				
@@ -288,9 +272,6 @@ public class InGameListener implements Listener {
 					
 					win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
 					
-					if(newWorld == true) {
-						delete = winner.getWorld();
-					}
 					new BukkitRunnable() {
 						
 						@Override
@@ -298,10 +279,6 @@ public class InGameListener implements Listener {
 							
 							for(Player all : Bukkit.getOnlinePlayers()) {
 								all.kickPlayer(Core.getPrefix() + kick);
-							}
-							if(newWorld == true) {
-								File deleteFolder = delete.getWorldFolder();
-								deleteWorld(deleteFolder);
 							}
 						}
 					}.runTaskLater(Core.getInstance(), 200);
@@ -311,11 +288,10 @@ public class InGameListener implements Listener {
 						@Override
 						public void run() {
 
-							Bukkit.getConsoleSender().sendMessage("§cPlaying World unloaded.");
 							Bukkit.reload();
 
 						}
-					}.runTaskLater(Core.getInstance(), 240);
+					}.runTaskLater(Core.getInstance(), 300);
 					
 					
 					
@@ -337,32 +313,47 @@ public class InGameListener implements Listener {
 				return;
 			}
 			
-			track = track.replace("[Player]", target.getDisplayName());
+			if(TeamManager.hasTeam(p) == true && TeamManager.hasTeam(target) == true) {
+				if(TeamManager.getTeam(p).getAllPlayers().contains(target)) {
+					trackteam = trackteam.replace("[Player]", target.getDisplayName());
+					
+					int blocks = (int) p.getLocation().distance(getNearest(p).getLocation());
+							
+					trackteam = trackteam.replace("[distance]", Integer.toString(blocks));
+							
+					p.sendMessage(Core.getPrefix() + trackteam);
+					TitleManager.sendTitle(p, 10, 20, 10, " ", trackteam);
+					p.setCompassTarget(getNearest(p).getLocation());
+						
+					trackteam = MessageFileManager.getMSGFile().getColorString("Compass.TeamPlayerInRange");
+					return;
+				}
+			}
 			
-			int blocks = (int) p.getLocation().distance(getNearest(p).getLocation());
-			
-			track = track.replace("[distance]", Integer.toString(blocks));
-			
-			p.sendMessage(Core.getPrefix() + track);
-			TitleManager.sendTitle(p, 10, 20, 10, " ", track);
-			p.setCompassTarget(getNearest(p).getLocation());
-			
-			track = MessageFileManager.getMSGFile().getColorString("Compass.PlayerInRange");
-			
+				track = track.replace("[Player]", target.getDisplayName());
+						
+				int blocks = (int) p.getLocation().distance(getNearest(p).getLocation());
+						
+				track = track.replace("[distance]", Integer.toString(blocks));
+						
+				p.sendMessage(Core.getPrefix() + track);
+				TitleManager.sendTitle(p, 10, 20, 10, " ", track);
+				p.setCompassTarget(getNearest(p).getLocation());
+					
+				track = MessageFileManager.getMSGFile().getColorString("Compass.PlayerInRange");
 		}
-		
 	}
 	
 	private Player getNearest(Player p) {
 		
 		double distance = Double.MAX_VALUE;
 		Player target = null;
-		
+			
 		for(Entity entity : p.getNearbyEntities(size, size, size)) {
 			if(entity instanceof Player) {
-				
+					
 				double dis = p.getLocation().distance(entity.getLocation());
-				
+					
 				if(dis < distance) {
 					distance = dis;
 					target = (Player) entity;
@@ -371,7 +362,6 @@ public class InGameListener implements Listener {
 			}
 		}
 		return target;
-		
 	}
 	
 	public boolean deleteWorld(File path) {

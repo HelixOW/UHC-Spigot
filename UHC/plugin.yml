@@ -1,6 +1,6 @@
 name: UHC
 author: AlphaHelix
-version: 1.7
+version: 2.5
 main: de.alpha.uhc.Core
 
 commands:

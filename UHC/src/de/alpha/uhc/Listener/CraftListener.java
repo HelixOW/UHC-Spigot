@@ -18,7 +18,16 @@ public class CraftListener implements Listener {
 		if(r.equals(Material.WOOD_AXE)) {
 			e.setCancelled(true);
 			e.getRecipe().getResult().setType(Material.AIR);
-			e.getInventory().clear();
+			for(int i = 0; i < e.getInventory().getSize(); i++){
+				ItemStack itm = e.getInventory().getItem(i);
+				if(!(itm == null)) {
+					int amt = itm.getAmount() - 1;
+					itm.setAmount(amt);
+					e.getInventory().setItem(i, amt > 0 ? itm : null);
+					p.updateInventory();
+					break;
+				}
+			}
 			p.getInventory().addItem(new ItemStack(Material.STONE_AXE));
 			
 		}
@@ -26,7 +35,16 @@ public class CraftListener implements Listener {
 		if(r.equals(Material.WOOD_HOE)) {
 			e.setCancelled(true);
 			e.getRecipe().getResult().setType(Material.AIR);
-			e.getInventory().clear();
+			for(int i = 0; i < e.getInventory().getSize(); i++){
+				ItemStack itm = e.getInventory().getItem(i);
+				if(!(itm == null)) {
+					int amt = itm.getAmount() - 1;
+					itm.setAmount(amt);
+					e.getInventory().setItem(i, amt > 0 ? itm : null);
+					p.updateInventory();
+					break;
+				}
+			}
 			p.getInventory().addItem(new ItemStack(Material.STONE_HOE));
 			
 		}
@@ -34,7 +52,16 @@ public class CraftListener implements Listener {
 		if(r.equals(Material.WOOD_SPADE)) {
 			e.setCancelled(true);
 			e.getRecipe().getResult().setType(Material.AIR);
-			e.getInventory().clear();
+			for(int i = 0; i < e.getInventory().getSize(); i++){
+				ItemStack itm = e.getInventory().getItem(i);
+				if(!(itm == null)) {
+					int amt = itm.getAmount() - 1;
+					itm.setAmount(amt);
+					e.getInventory().setItem(i, amt > 0 ? itm : null);
+					p.updateInventory();
+					break;
+				}
+			}
 			p.getInventory().addItem(new ItemStack(Material.STONE_SPADE));
 			
 		}
@@ -42,7 +69,16 @@ public class CraftListener implements Listener {
 		if(r.equals(Material.WOOD_PICKAXE)) {
 			e.setCancelled(true);
 			e.getRecipe().getResult().setType(Material.AIR);
-			e.getInventory().clear();
+			for(int i = 0; i < e.getInventory().getSize(); i++){
+				ItemStack itm = e.getInventory().getItem(i);
+				if(!(itm == null)) {
+					int amt = itm.getAmount() - 1;
+					itm.setAmount(amt);
+					e.getInventory().setItem(i, amt > 0 ? itm : null);
+					p.updateInventory();
+					break;
+				}
+			}
 			p.getInventory().addItem(new ItemStack(Material.STONE_PICKAXE));
 			
 		}
@@ -50,7 +86,16 @@ public class CraftListener implements Listener {
 		if(r.equals(Material.STONE_SWORD)) {
 			if(!(p.getInventory().containsAtLeast(new ItemStack(Material.IRON_INGOT), 2))) {
 				e.setCancelled(true);
-				e.getInventory().clear();
+				for(int i = 0; i < e.getInventory().getSize(); i++){
+					ItemStack itm = e.getInventory().getItem(i);
+					if(!(itm == null)) {
+						int amt = itm.getAmount() - 1;
+						itm.setAmount(amt);
+						e.getInventory().setItem(i, amt > 0 ? itm : null);
+						p.updateInventory();
+						break;
+					}
+				}
 				e.getRecipe().getResult().setType(Material.AIR);
 				p.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
 			}

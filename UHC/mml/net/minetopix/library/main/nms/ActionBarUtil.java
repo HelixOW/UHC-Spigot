@@ -2,10 +2,10 @@ package net.minetopix.library.main.nms;
 
 import java.util.List;
 
-import net.minetopix.library.main.utils.ReflectionUtil;
-
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import net.minetopix.library.main.utils.ReflectionUtil;
 
 public class ActionBarUtil {
 

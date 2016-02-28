@@ -3,9 +3,9 @@ package net.minetopix.library.main.netty;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import net.minetopix.library.main.utils.ReflectionUtil;
-
 import org.bukkit.entity.Player;
+
+import net.minetopix.library.main.utils.ReflectionUtil;
 
 public class PacketHandler {
 	

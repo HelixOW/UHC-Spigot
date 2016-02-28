@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.alpha.uhc.GState;
 
@@ -101,22 +101,15 @@ public class MapReset implements Listener {
 	 }
 	 
 	@EventHandler
-	public void onInterAct(StructureGrowEvent e) {
-			
-		if(GState.isState(GState.INGAME)) {
-			for(int i = 0; i < e.getBlocks().size(); i++) {
-				
-				Block b = (Block) e.getBlocks().get(i);
-				String block = b.getTypeId() + ":" + b.getData() + ":" + b.getWorld().getName() +
-						":" + b.getX() + ":" + b.getY() + ":" + b.getZ();
-						
-				breaked.add(block);
+	public void onInterAct(PlayerInteractEvent e) {
+		
+		if(e.getItem() == null) return;
+		
+		if(e.getItem().getType().equals(Material.INK_SACK)) {
+			if(e.getItem().getDurability() == 15) {
+				e.setCancelled(true);
 			}
 		}
-				
 			
 	}
-	
-	
-
 }

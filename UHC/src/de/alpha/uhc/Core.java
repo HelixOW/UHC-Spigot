@@ -9,7 +9,6 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.alpha.border.Border;
 import de.alpha.uhc.Listener.ChatListener;
 import de.alpha.uhc.Listener.CraftListener;
 import de.alpha.uhc.Listener.DeathListener;
@@ -29,6 +28,7 @@ import de.alpha.uhc.utils.MapReset;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Timer;
+import de.alpha.uhc.utils.WorldUtil;
 import net.minetopix.mysqlapi.MySQLAPI;
 import net.minetopix.mysqlapi.MySQLDataType;
 import net.minetopix.mysqlapi.MySQLManager;
@@ -42,7 +42,6 @@ public class Core extends JavaPlugin {
 	
 	public static boolean isMySQLActive;
 	
-	
 	private static ArrayList<Player> ig;
 	private static ArrayList<Player> spectator;
 	
@@ -53,7 +52,7 @@ public class Core extends JavaPlugin {
 		mfm = new MessageFileManager();
 		ig = new ArrayList<Player>();
 		spectator = new ArrayList<Player>();
-		
+			
 		ofm.addOptions();
 		ofm.loadOptions();
 		ofm.registerTeams();
@@ -85,8 +84,8 @@ public class Core extends JavaPlugin {
 			}
 		}
 		
+		WorldUtil.WorldReset();
 		GState.setGameState(GState.LOBBY);
-		Border.border();
 		Timer.setCountdownTime();
 		
 		if(Timer.pc <= 1) {
@@ -178,5 +177,5 @@ public class Core extends JavaPlugin {
 	public static String getPrefix() {
 		return prefix;
 	}
-
+	
 }

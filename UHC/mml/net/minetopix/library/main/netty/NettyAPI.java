@@ -1,8 +1,8 @@
 package net.minetopix.library.main.netty;
 
-import net.minetopix.library.main.netty.NettyHandler.PacketInjection;
-
 import org.bukkit.entity.Player;
+
+import net.minetopix.library.main.netty.NettyHandler.PacketInjection;
 
 public class NettyAPI {
 

@@ -57,7 +57,7 @@ public class LobbyListener implements Listener {
 		
 	}
 	
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void onHurt(EntityDamageEvent e) {
 		
 		if(e.getEntity() instanceof Player) {

@@ -2,11 +2,11 @@ package net.minetopix.library.main.item.data;
 
 import java.util.ArrayList;
 
-import net.minetopix.library.main.item.simplemeta.SimplePotionEffect;
-
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
+
+import net.minetopix.library.main.item.simplemeta.SimplePotionEffect;
 
 public class PotionData extends ItemData{
 	

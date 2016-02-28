@@ -42,6 +42,7 @@ public class MessageFileManager {
 		
 		file.setDefault("Compass.NoPlayerInRange", "&cThere is no Player in your Range!");
 		file.setDefault("Compass.PlayerInRange", "&6[Player] &ais §7[distance] blocks &aaway from you.");
+		file.setDefault("Compass.TeamPlayerInRange", "§aYour Teammate &6[Player] &ais §7[distance] blocks &aaway from you.");
 		
 		file.setDefault("Join.Title", "&aHello [Player]");
 		file.setDefault("Join.Subtitle", "&7and welcome to UHC");
@@ -55,6 +56,9 @@ public class MessageFileManager {
 		file.setDefault("Scoreboard.Ingame.Player Living", "&aLiving Players:");
 		file.setDefault("Scoreboard.Ingame.Spectators", "&cSpectators:");
 		file.setDefault("Scoreboard.Ingame.Selected Kit", "&6Kit:");
+		file.setDefault("Scoreboard.Ingame.Distance to Center", "&2Center:");
+		file.setDefault("Scoreboard.Ingame.Your Team", "&5Team:");
+		file.setDefault("Scoreboard.InGame.No Team", "&7none");
 		
 		file.setDefault("Kits.GUI.Title", "&7[&bKits&7]");
 		file.setDefault("Kits.GUI.Selected", "&aYou selected &6[Kit]");
@@ -96,6 +100,7 @@ public class MessageFileManager {
 		 InGameListener.kick = file.getColorString("Announcements.Restart");
 		 InGameListener.ntrack = file.getColorString("Compass.NoPlayerInRange");
 		 InGameListener.track = file.getColorString("Compass.PlayerInRange");
+		 InGameListener.trackteam = file.getColorString("Compass.TeamPlayerInRange");
 		 InGameListener.rew = file.getColorString("Reward");
 		 PlayerJoinListener.join = file.getColorString("Announcements.Join");
 		 PlayerJoinListener.full = file.getColorString("Warns.FullServer");
@@ -112,6 +117,9 @@ public class MessageFileManager {
 		 ScoreboardManager.ingamePlayersLiving = file.getColorString("Scoreboard.Ingame.Player Living");
 		 ScoreboardManager.ingameSpectators = file.getColorString("Scoreboard.Ingame.Spectators");
 		 ScoreboardManager.ingameKit = file.getColorString("Scoreboard.Ingame.Selected Kit");
+		 ScoreboardManager.center = file.getColorString("Scoreboard.Ingame.Distance to Center");
+		 ScoreboardManager.team = file.getColorString("Scoreboard.Ingame.Your Team");
+		 ScoreboardManager.noTeam = file.getColorString("Scoreboard.InGame.No Team");
 		 
 		 GUI.title = file.getColorString("Kits.GUI.Title");
 		 

@@ -1,15 +1,14 @@
 package net.minetopix.library.main.netty;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelDuplexHandler;
-import io.netty.channel.ChannelHandlerContext;
-
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-import net.minetopix.library.main.utils.ReflectionUtil;
-
 import org.bukkit.entity.Player;
+
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandlerContext;
+import net.minetopix.library.main.utils.ReflectionUtil;
 
 public class NettyHandler {
 
