@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import de.alpha.uhc.Core;
 import net.minetopix.library.main.item.ItemCreator;
 
 public class GUI {
@@ -17,15 +18,19 @@ public class GUI {
 
 		for(String kitName : new KitFileManager().getAllKits()) {
 			
-			int slot = new KitFileManager().getSlot(kitName);
-			Material m = Material.getMaterial(new KitFileManager().getMaterial(kitName).toUpperCase());
-			String lore = new KitFileManager().getLore(kitName);
-			
-			kits.setItem(slot,
-					new ItemCreator(m)
-					.setName(kitName)
-					.setLore(new String[]{lore})
-					.build());
+			try {
+				int slot = new KitFileManager().getSlot(kitName);
+				Material m = Material.getMaterial(new KitFileManager().getMaterial(kitName).toUpperCase());
+				String lore = new KitFileManager().getLore(kitName);
+				
+				kits.setItem(slot,
+						new ItemCreator(m)
+						.setName(kitName)
+						.setLore(new String[]{lore})
+						.build());
+			} catch (NullPointerException e) {
+				Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cYour Kits.yml is invalid. Block has to be a valid Material [google Bukkit materials]");
+			}
 		}
 	}
 	

@@ -1,6 +1,5 @@
 package de.alpha.uhc.Listener;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
@@ -17,6 +16,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
@@ -40,6 +42,7 @@ public class InGameListener implements Listener {
 	public static String track;
 	public static String trackteam;
 	public static String rew;
+	public static String BungeeServer;
 	
 	private int apc;
 	public static  int opc;
@@ -48,6 +51,7 @@ public class InGameListener implements Listener {
 	public static int deathreward;
 	
 	public static boolean newWorld;
+	public static boolean BungeeMode;
 	
 	
 	public ArrayList<Player> ig = new ArrayList<Player>();
@@ -126,7 +130,16 @@ public class InGameListener implements Listener {
 					public void run() {
 						
 						for(Player all : Bukkit.getOnlinePlayers()) {
-							all.kickPlayer(Core.getPrefix() + kick);
+							if(BungeeMode == true) {
+								ByteArrayDataOutput out = ByteStreams.newDataOutput();
+								
+								out.writeUTF("Connect");
+								out.writeUTF(BungeeServer);
+								
+								all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
+							} else {
+								all.kickPlayer(Core.getPrefix() + kick);
+							}
 						}
 					}
 				}.runTaskLater(Core.getInstance(), 200);
@@ -165,7 +178,16 @@ public class InGameListener implements Listener {
 					public void run() {
 						
 						for(Player all : Bukkit.getOnlinePlayers()) {
-							all.kickPlayer(Core.getPrefix() + kick);
+							if(BungeeMode == true) {
+								ByteArrayDataOutput out = ByteStreams.newDataOutput();
+								
+								out.writeUTF("Connect");
+								out.writeUTF(BungeeServer);
+								
+								all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
+							} else {
+								all.kickPlayer(Core.getPrefix() + kick);
+							}
 						}
 					}
 				}.runTaskLater(Core.getInstance(), 200);
@@ -237,7 +259,16 @@ public class InGameListener implements Listener {
 						public void run() {
 							
 							for(Player all : Bukkit.getOnlinePlayers()) {
-								all.kickPlayer(Core.getPrefix() + kick);
+								if(BungeeMode == true) {
+									ByteArrayDataOutput out = ByteStreams.newDataOutput();
+									
+									out.writeUTF("Connect");
+									out.writeUTF(BungeeServer);
+									
+									all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
+								} else {
+									all.kickPlayer(Core.getPrefix() + kick);
+								}
 							}
 							
 						}
@@ -278,7 +309,16 @@ public class InGameListener implements Listener {
 						public void run() {
 							
 							for(Player all : Bukkit.getOnlinePlayers()) {
-								all.kickPlayer(Core.getPrefix() + kick);
+								if(BungeeMode == true) {
+									ByteArrayDataOutput out = ByteStreams.newDataOutput();
+									
+									out.writeUTF("Connect");
+									out.writeUTF(BungeeServer);
+									
+									all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
+								} else {
+									all.kickPlayer(Core.getPrefix() + kick);
+								}
 							}
 						}
 					}.runTaskLater(Core.getInstance(), 200);
@@ -362,20 +402,6 @@ public class InGameListener implements Listener {
 			}
 		}
 		return target;
-	}
-	
-	public boolean deleteWorld(File path) {
-	      if(path.exists()) {
-	          File files[] = path.listFiles();
-	          for(int i=0; i<files.length; i++) {
-	              if(files[i].isDirectory()) {
-	                  deleteWorld(files[i]);
-	              } else {
-	                  files[i].delete();
-	              }
-	          }
-	      }
-	      return(path.delete());
 	}
 	
 }

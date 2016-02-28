@@ -8,6 +8,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.PluginMessageListener;
+
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 
 import de.alpha.uhc.Listener.ChatListener;
 import de.alpha.uhc.Listener.CraftListener;
@@ -33,7 +37,7 @@ import net.minetopix.mysqlapi.MySQLAPI;
 import net.minetopix.mysqlapi.MySQLDataType;
 import net.minetopix.mysqlapi.MySQLManager;
 
-public class Core extends JavaPlugin {
+public class Core extends JavaPlugin implements PluginMessageListener{
 	
 	private static Core instance;
 	public static String prefix;
@@ -108,7 +112,16 @@ public class Core extends JavaPlugin {
 		}
 		
 		for(Player all : Bukkit.getOnlinePlayers()) {
-			all.kickPlayer(prefix + InGameListener.kick);
+			if(InGameListener.BungeeMode == true) {
+				ByteArrayDataOutput out = ByteStreams.newDataOutput();
+				
+				out.writeUTF("Connect");
+				out.writeUTF(InGameListener.BungeeServer);
+				
+				all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
+			} else {
+				all.kickPlayer(Core.getPrefix() + InGameListener.kick);
+			}
 		}
 		MapReset.restore();
 		Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC by AlphaHelix is now disabled!");
@@ -176,6 +189,14 @@ public class Core extends JavaPlugin {
 	
 	public static String getPrefix() {
 		return prefix;
+	}
+	
+	@Override
+	public void onPluginMessageReceived(String arg0, Player arg1, byte[] arg2) {
+		if(!arg0.equalsIgnoreCase("BungeeCord")) {
+			return;
+		}
+		
 	}
 	
 }

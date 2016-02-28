@@ -64,7 +64,7 @@ public class PlayerJoinListener implements Listener {
 		
 		if(Core.isMySQLActive == true) {
 			if(MySQLManager.getObjectConditionResult("UHC", "UUID", e.getPlayer().getUniqueId().toString(), "UUID") == null) {
-				MySQLManager.exInsertQry("UHC", e.getPlayer().getName(), e.getPlayer().getUniqueId().toString(), "0", "0");
+				MySQLManager.exInsertQry("UHC", e.getPlayer().getName(), e.getPlayer().getUniqueId().toString(), "0", "0", "0", "");
 			} else if(MySQLManager.getObjectConditionResult("UHC", "UUID ", e.getPlayer().getUniqueId().toString(), "UUID") != null) {
 				MySQLManager.exUpdateQry("UHC", "UUID", e.getPlayer().getUniqueId().toString(), "Player", e.getPlayer().getName());
 			}

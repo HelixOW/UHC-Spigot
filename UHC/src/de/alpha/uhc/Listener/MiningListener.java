@@ -9,7 +9,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.alpha.uhc.GState;
-import de.alpha.uhc.utils.MapReset;
 
 public class MiningListener implements Listener {
 	
@@ -48,13 +47,6 @@ public class MiningListener implements Listener {
 								inWood = true;
 							}
 							loc.getBlock().breakNaturally();
-							Block bbb = loc.getBlock();
-							@SuppressWarnings("deprecation")
-							String block = bbb.getTypeId() + ":" + bbb.getData() + ":" + bbb.getWorld().getName() +
-									":" + bbb.getX() + ":" + bbb.getY() + ":" + bbb.getZ();
-							
-							MapReset.breaked.add(block);
-							
 						}
 					}
 				}

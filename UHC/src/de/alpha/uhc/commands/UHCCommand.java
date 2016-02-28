@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.Regions;
@@ -162,6 +163,7 @@ public class UHCCommand implements CommandExecutor {
 						new KitFileManager().addKit(args[1], p.getInventory(), args[2], Integer.parseInt(args[3]), lore, Integer.parseInt(args[4]));
 						p.sendMessage(Core.getPrefix()+"§7You have set the kit §a"+args[1]+" §7with GUI-block §a"+args[2]+"§7 on GUI-slot §a"+args[3]+"§7 with the price of §a"+args[4]+" §7and the lore §a"+lore);
 						lore = "";
+						GUI.fill();
 						return true;
 					}
 				}

@@ -30,6 +30,8 @@ public class OptionsFileManager {
         SimpleFile file = getConfigFile();
         
         file.setDefault("Prefix", "&7[&bUHC&7] ");
+        file.setDefault("BungeeMode", false);
+        file.setDefault("BungeeServer", "lobby");
         
         file.setDefault("Border.size", 3000);
         file.setDefault("Border.getCloser", true);
@@ -102,6 +104,9 @@ public class OptionsFileManager {
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		InGameListener.BungeeMode = file.getBoolean("BungeeMode");
+		InGameListener.BungeeServer = file.getString("BungeeServer");
 		
 		InGameListener.newWorld = file.getBoolean("Worldreset");
 		

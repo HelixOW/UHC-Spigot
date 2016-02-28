@@ -1,6 +1,7 @@
 package de.alpha.uhc.utils;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -60,7 +61,9 @@ public class WorldUtil {
 				Bukkit.createWorld(new WorldCreator(name)
 						.generateStructures(false)
 						.type(WorldType.NORMAL));
-						
+				
+				changeBiome("PLAINS");
+				
 				Bukkit.getWorld(name).getPopulators().add(new WorldPopulator());
 				Bukkit.getConsoleSender().sendMessage("§aPlaying World reseted");
 				
@@ -81,5 +84,32 @@ public class WorldUtil {
 		delWorld(spawn.getWorldFolder());
 		createWorld();
 	}
+	
+	@SuppressWarnings("rawtypes")
+	private static void changeBiome(String Biome){
+        try {
+                String mojangPath = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+                Class clazz = Class.forName(mojangPath + ".BiomeBase");
+
+                Field plainsField = clazz.getDeclaredField(Biome);
+                plainsField.setAccessible(true);
+                Object plainsBiome = plainsField.get(null);
+
+                // Biomes liste auslesen
+                Field biomesField = clazz.getDeclaredField("biomes");
+                biomesField.setAccessible(true);
+                Object[] biomes = (Object[]) biomesField.get(null);
+
+                // Ocean auf Plains setzen
+                for(int i = 0;i<biomes.length;i++){
+                biomes[i] = plainsBiome;
+                }
+                biomesField.set(null, biomes);
+                
+        } catch (Exception e) {
+                // Error
+        }
+       
+        }
 
 }
