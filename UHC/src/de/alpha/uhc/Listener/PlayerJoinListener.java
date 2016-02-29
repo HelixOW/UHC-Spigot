@@ -19,6 +19,7 @@ import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.teams.TeamSel;
+import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Timer;
 import net.minetopix.library.main.item.ItemCreator;
@@ -108,6 +109,8 @@ public class PlayerJoinListener implements Listener {
 		
 		e.getPlayer().getInventory().clear();
 		e.getPlayer().getInventory().setArmorContents(null);
+		
+		new HoloUtil().showHologram(e.getPlayer());
 		
 		if(kitMode == true) {
 			if(kitItem == null || kitName == null) {

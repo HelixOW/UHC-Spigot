@@ -16,6 +16,7 @@ import de.alpha.uhc.teams.TeamManager;
 import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Timer;
+import de.alpha.uhc.utils.WorldUtil;
 import net.minetopix.library.main.file.SimpleFile;
 
 public class OptionsFileManager {
@@ -77,7 +78,8 @@ public class OptionsFileManager {
         file.setDefault("Spawnradius", 20);
         
         file.setDefault("Lobby.region", false);
-        file.setDefault("Lobby.createTool", "wooden_axe");
+        file.setDefault("Lobby.createTool", "wood_axe");
+        file.setDefault("Lobby.asSchematic", true);
         
         if(!file.isSet("Teams")) {
 			//Teamname
@@ -104,6 +106,8 @@ public class OptionsFileManager {
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		WorldUtil.lobbySchematic = file.getBoolean("Lobby.asSchematic");
 		
 		InGameListener.BungeeMode = file.getBoolean("BungeeMode");
 		InGameListener.BungeeServer = file.getString("BungeeServer");

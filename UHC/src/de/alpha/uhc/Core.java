@@ -22,6 +22,7 @@ import de.alpha.uhc.Listener.MiningListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.commands.UHCCommand;
+import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
@@ -67,6 +68,8 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		SpawnFileManager.saveCfg();
 		SpawnFileManager.registerRegions();
 		
+		HologramFileManager.getHologramFile().save();
+		
 		registerCommands();
 		registerEvents();
 		
@@ -88,6 +91,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 			}
 		}
 		
+		if()
 		WorldUtil.WorldReset();
 		GState.setGameState(GState.LOBBY);
 		Timer.setCountdownTime();

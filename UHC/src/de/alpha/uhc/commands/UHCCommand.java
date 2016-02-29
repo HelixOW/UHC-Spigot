@@ -10,10 +10,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
+import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.utils.Cuboid;
+import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
 import de.alpha.uhc.utils.Timer;
@@ -63,7 +65,8 @@ public class UHCCommand implements CommandExecutor {
 					p.sendMessage("§7 /uhc setSpawn - Set your Arena");
 					p.sendMessage("§7 /uhc setLobby - Set your Lobby, where the players will wait.");
 					p.sendMessage("§7 /uhc createLobby - Create a lobbyregion, which Player won't be able to leave");
-					p.sendMessage("§7 /uhc createWorld [name] - create a new random world");
+					p.sendMessage("§7 /uhc createWorld <name> - create a new random world");
+					p.sendMessage("§7 /uhc createHologram <name> - create a hologram with Player stats");
 					p.sendMessage("§7 /uhc reload - reload the server to restart UHC");
 					p.sendMessage("§7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
 					p.sendMessage("§7 /uhc start - short the countdown to 10 seconds");
@@ -153,6 +156,24 @@ public class UHCCommand implements CommandExecutor {
 				}
 				
 				String lore = "";
+				String name = "";
+				if(args.length >= 2) {
+					if(args[0].equalsIgnoreCase("createHologram")) {
+						for(Player all : Bukkit.getOnlinePlayers()) {
+							for(int i = 1; i < args.length; i++) {
+								name = name + args[i] + " ";
+							}
+							
+							new HologramFileManager().addHoloram(name, p.getLocation());
+							
+							for (int i = 0; i < new HologramFileManager().holocount(); i++) {
+								new HoloUtil().createHologram(all, i);
+							}
+						}
+						p.sendMessage(Core.getPrefix() + "§7You have created a new Hologram");
+						return true;
+					}
+				}
 				if(args.length >= 6) {
 					if(args[0].equalsIgnoreCase("addKit")) { 
 						
