@@ -1,25 +1,23 @@
 package de.alpha.uhc.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.Map;
-import java.util.zip.GZIPInputStream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
-import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jnbt.ByteArrayTag;
-import org.jnbt.CompoundTag;
-import org.jnbt.NBTInputStream;
-import org.jnbt.ShortTag;
-import org.jnbt.StringTag;
-import org.jnbt.Tag;
+
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.MaxChangedBlocksException;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
+import com.sk89q.worldedit.world.DataException;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.files.SpawnFileManager;
@@ -67,13 +65,13 @@ public class WorldUtil {
 			public void run() {
 				
 				if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) {
-					if(lobbySchematic == false) {
+					if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
 						return;
 					}
 				}
 				if(SpawnFileManager.getSpawn() == null) return;
 				if(SpawnFileManager.getSpawnWorldName().equals(SpawnFileManager.getLobbyWorldName())) {
-					if(lobbySchematic == false) {
+					if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
 						return;
 					}
 				}
@@ -89,21 +87,18 @@ public class WorldUtil {
 				Bukkit.getWorld(name).getPopulators().add(new WorldPopulator());
 				Bukkit.getConsoleSender().sendMessage("§aPlaying World reseted");
 				
-				if(lobbySchematic == true) {
-					if(new File("plugins/UHC/schematics", "lobby.gz") != null) {
+				if(lobbySchematic == true && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
+					if(new File("plugins/UHC/schematics", "lobby.schematic") != null) {
 					
 						try {
-							StructureAPI schematic = loadSchematic(new File("plugins/UHC/schematics", "lobby.gz"));
-							
 							World w = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
 							Location loc = new Location(w, 0, 200, 0);
 							
-							pasteSchematic(w, loc, schematic);
+							pasteLobby(loc);
 							new SpawnFileManager().SetLobby(0, 200, 0, w);
 							return;
-						} catch (IOException e) {
-							Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.gz inside UHC/schematics folder");
-							e.printStackTrace();
+						} catch (Exception e) {
+							Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
 						}
 					}
 				}
@@ -116,9 +111,17 @@ public class WorldUtil {
 	
 	public static void WorldReset() {
 		
-		if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) return;
+		if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) {
+			if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
+				return;
+			}
+		}
 		if(SpawnFileManager.getSpawn() == null) return;
-		if(SpawnFileManager.getSpawnWorldName().equals(SpawnFileManager.getLobbyWorldName())) return;
+		if(SpawnFileManager.getSpawnWorldName().equals(SpawnFileManager.getLobbyWorldName())) {
+			if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
+				return;
+			}
+		}
 		World spawn = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
 		
 		unloadWorld(spawn);
@@ -150,82 +153,26 @@ public class WorldUtil {
         } catch (Exception e) {
                 // Error
         }
-       
 	}
 	
-	
-	
 	@SuppressWarnings("deprecation")
-	public static void pasteSchematic(World world, Location loc, StructureAPI schematic)
-    {
-        byte[] blocks = schematic.getBlocks();
-        byte[] blockData = schematic.getData();
- 
-        short length = schematic.getLenght();
-        short width = schematic.getWidth();
-        short height = schematic.getHeight();
- 
-        for (int x = 0; x < width; ++x) {
-            for (int y = 0; y < height; ++y) {
-                for (int z = 0; z < length; ++z) {
-                    int index = y * width * length + z * width + x;
-                    Block block = new Location(world, x + loc.getX(), y + loc.getY(), z + loc.getZ()).getBlock();
-                    block.setTypeIdAndData(blocks[index], blockData[index], true);
-                }
-            }
-        }
-    }
- 
-    @SuppressWarnings("resource")
-	public static StructureAPI loadSchematic(File file) throws IOException
-    {
-        FileInputStream stream = new FileInputStream(file);
-        NBTInputStream nbtStream = new NBTInputStream(new GZIPInputStream(stream));
- 
-        CompoundTag schematicTag = (CompoundTag) nbtStream.readTag();
-        if (!schematicTag.getName().equals("Schematic")) {
-            throw new IllegalArgumentException("Tag \"Schematic\" does not exist or is not first");
-        }
- 
-        Map<String, Tag> schematic = schematicTag.getValue();
-        if (!schematic.containsKey("Blocks")) {
-            throw new IllegalArgumentException("Schematic file is missing a \"Blocks\" tag");
-        }
- 
-        short width = getChildTag(schematic, "Width", ShortTag.class).getValue();
-        short length = getChildTag(schematic, "Length", ShortTag.class).getValue();
-        short height = getChildTag(schematic, "Height", ShortTag.class).getValue();
- 
-        String materials = getChildTag(schematic, "Materials", StringTag.class).getValue();
-        if (!materials.equals("Alpha")) {
-            throw new IllegalArgumentException("Schematic file is not an Alpha schematic");
-        }
- 
-        byte[] blocks = getChildTag(schematic, "Blocks", ByteArrayTag.class).getValue();
-        byte[] blockData = getChildTag(schematic, "Data", ByteArrayTag.class).getValue();
-        return new StructureAPI(blocks, blockData, width, length, height);
-    }
- 
-    /**
-    * Get child tag of a NBT structure.
-    *
-    * @param items The parent tag map
-    * @param key The name of the tag to get
-    * @param expected The expected type of the tag
-    * @return child tag casted to the expected type
-    * @throws DataException if the tag does not exist or the tag is not of the
-    * expected type
-    */
-    private static <T extends Tag> T getChildTag(Map<String, Tag> items, String key, Class<T> expected) throws IllegalArgumentException
-    {
-        if (!items.containsKey(key)) {
-            throw new IllegalArgumentException("Schematic file is missing a \"" + key + "\" tag");
-        }
-        Tag tag = items.get(key);
-        if (!expected.isInstance(tag)) {
-            throw new IllegalArgumentException(key + " tag is not of tag type " + expected.getName());
-        }
-        return expected.cast(tag);
-    }
+	private static void pasteLobby(Location loc) {
+		try {
+	        WorldEditPlugin we = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
+	        File schematic = new File("plugins/UHC/schematics/lobby.schematic");
+			EditSession session = we.getWorldEdit().getEditSessionFactory().getEditSession(new BukkitWorld(loc.getWorld()), 999999);
+	        try {
+	            MCEditSchematicFormat.getFormat(schematic).load(schematic).paste(session, new Vector(0,200,0), false);
+	            return;
+	        } catch (MaxChangedBlocksException
+	                | DataException | IOException e) {
+	        	Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
+				return;
+	        }
+		} catch (Exception ignore) {
+			Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
+			
+		}
+	}
 
 }

@@ -2,8 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Eclipse/API/spigot-19.jar"/>
 	<classpathentry kind="src" path="Border"/>
 	<classpathentry kind="src" path="mml"/>
+	<classpathentry kind="lib" path="C:/Eclipse/API/spigot.jar" sourcepath="C:/Eclipse/API/spigot.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="https://hub.spigotmc.org/javadocs/spigot/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Eclipse/API/worldedit-bukkit-6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

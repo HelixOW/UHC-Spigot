@@ -90,8 +90,8 @@ public class LobbyListener implements Listener {
 	public void onInterAct(PlayerInteractEvent e) {
 		
 		if(!(GState.isState(GState.LOBBY))) return;
-		if(e.getItem() == null) return;
-		if(!(e.getItem().getType().equals(PlayerJoinListener.kitItem))) return;
+		if(e.getPlayer().getInventory().getItemInHand() == null) return;
+		if(!(e.getPlayer().getInventory().getItemInHand().getType().equals(PlayerJoinListener.kitItem))) return;
 		
 		e.setCancelled(true);
 		GUI.open(e.getPlayer());

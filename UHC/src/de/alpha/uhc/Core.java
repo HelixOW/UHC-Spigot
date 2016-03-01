@@ -9,6 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -92,11 +93,20 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 			}
 		}
 		
-		if(WorldUtil.lobbySchematic == true) {
-			new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
-		}
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+			
+				if(WorldUtil.lobbySchematic == true && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
+					new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
+				}
+				
+				WorldUtil.WorldReset();
+				
+			}
+		}.runTaskLater(this, 40);
 		
-		WorldUtil.WorldReset();
 		GState.setGameState(GState.LOBBY);
 		Timer.setCountdownTime();
 		

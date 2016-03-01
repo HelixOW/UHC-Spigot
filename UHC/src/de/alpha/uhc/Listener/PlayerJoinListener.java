@@ -117,7 +117,7 @@ public class PlayerJoinListener implements Listener {
 				Bukkit.getConsoleSender().sendMessage(Core.getPrefix()+"§cYou don't have any Kits in your kits.yml");
 			} else {
 				e.getPlayer().getInventory().setHeldItemSlot(0);
-				e.getPlayer().getInventory().setItemInOffHand(new ItemCreator(kitItem).setName(kitName).build());
+				e.getPlayer().getInventory().setItemInHand(new ItemCreator(kitItem).setName(kitName).build());
 		
 			}
 		}
