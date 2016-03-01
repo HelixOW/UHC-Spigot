@@ -307,7 +307,7 @@ public class DisguiseAPI {
 				PacketUtil.equipEntity(p, entity.getEquipment().getChestplate(), EquipmentSlot.CHESTPLATE, Bukkit.getOnlinePlayers().toArray(new Player[0]));
 				PacketUtil.equipEntity(p, entity.getEquipment().getLeggings(), EquipmentSlot.LEGGINGS, Bukkit.getOnlinePlayers().toArray(new Player[0]));
 				PacketUtil.equipEntity(p, entity.getEquipment().getBoots(), EquipmentSlot.BOOTS, Bukkit.getOnlinePlayers().toArray(new Player[0]));
-				PacketUtil.equipEntity(p, entity.getEquipment().getItemInHand(), EquipmentSlot.INHAND, Bukkit.getOnlinePlayers().toArray(new Player[0]));
+				PacketUtil.equipEntity(p, entity.getEquipment().getItemInMainHand(), EquipmentSlot.INHAND, Bukkit.getOnlinePlayers().toArray(new Player[0]));
 			
 			} catch (Exception e) {
 				e.printStackTrace();

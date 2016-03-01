@@ -34,6 +34,7 @@ import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Timer;
 import de.alpha.uhc.utils.WorldUtil;
+import net.minetopix.library.main.file.SimpleFile;
 import net.minetopix.mysqlapi.MySQLAPI;
 import net.minetopix.mysqlapi.MySQLDataType;
 import net.minetopix.mysqlapi.MySQLManager;
@@ -91,7 +92,10 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 			}
 		}
 		
-		if()
+		if(WorldUtil.lobbySchematic == true) {
+			new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
+		}
+		
 		WorldUtil.WorldReset();
 		GState.setGameState(GState.LOBBY);
 		Timer.setCountdownTime();

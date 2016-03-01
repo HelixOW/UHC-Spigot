@@ -15,6 +15,8 @@ public class CraftListener implements Listener {
         
         Player p = (Player) e.getWhoClicked();
         
+        if(r == null) return;
+        
         if(r.equals(Material.WOOD_AXE)) {
         	e.setCancelled(true);
 			e.getRecipe().getResult().setType(Material.AIR);

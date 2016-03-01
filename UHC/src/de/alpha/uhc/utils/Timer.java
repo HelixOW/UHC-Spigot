@@ -74,7 +74,7 @@ public class Timer {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendTitle(all, 10, 20, 10, " ", countmsg);
-											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
+											all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
 												@Override
@@ -91,7 +91,7 @@ public class Timer {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendAction(all, countmsg);
-											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
+											all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
 												@Override

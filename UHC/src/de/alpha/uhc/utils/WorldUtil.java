@@ -66,24 +66,17 @@ public class WorldUtil {
 			@Override
 			public void run() {
 				
-				if(lobbySchematic == true) {
-					if(new File("plugins/UHC/schematics", "lobby.schematic") != null) {
-					
-						try {
-							StructureAPI schematic = loadSchematic(new File("plugins/UHC/schematics", "lobby.schematic"));
-							World w = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
-							Location loc = new Location(w, 0, 200, 0);
-							
-							pasteSchematic(w, loc, schematic);
-							return;
-						} catch (IOException e) {
-							Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
-						}
+				if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) {
+					if(lobbySchematic == false) {
+						return;
 					}
 				}
-				if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) return;
 				if(SpawnFileManager.getSpawn() == null) return;
-				if(SpawnFileManager.getSpawnWorldName().equals(SpawnFileManager.getLobbyWorldName())) return;
+				if(SpawnFileManager.getSpawnWorldName().equals(SpawnFileManager.getLobbyWorldName())) {
+					if(lobbySchematic == false) {
+						return;
+					}
+				}
 				
 				String name = SpawnFileManager.getSpawnWorldName();
 				
@@ -95,6 +88,25 @@ public class WorldUtil {
 				
 				Bukkit.getWorld(name).getPopulators().add(new WorldPopulator());
 				Bukkit.getConsoleSender().sendMessage("§aPlaying World reseted");
+				
+				if(lobbySchematic == true) {
+					if(new File("plugins/UHC/schematics", "lobby.gz") != null) {
+					
+						try {
+							StructureAPI schematic = loadSchematic(new File("plugins/UHC/schematics", "lobby.gz"));
+							
+							World w = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
+							Location loc = new Location(w, 0, 200, 0);
+							
+							pasteSchematic(w, loc, schematic);
+							new SpawnFileManager().SetLobby(0, 200, 0, w);
+							return;
+						} catch (IOException e) {
+							Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.gz inside UHC/schematics folder");
+							e.printStackTrace();
+						}
+					}
+				}
 				
 			}
 		}.runTaskLater(Core.getInstance(), 20*5);
