@@ -13,6 +13,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
@@ -29,6 +30,13 @@ public class LobbyListener implements Listener {
 	public static String sel;
 	public static String bought;
 	public static String coinsneed;
+	
+	@EventHandler
+	public void onChunkUnLoad(ChunkUnloadEvent e) {
+		if(e.getWorld().getName().equals("world")) {
+			e.setCancelled(true);
+		}
+	}
 	
 	@EventHandler
 	public void onHunger(FoodLevelChangeEvent e) {

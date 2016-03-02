@@ -1,13 +1,8 @@
 package de.alpha.uhc.files;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.utils.Cuboid;
@@ -16,19 +11,13 @@ import net.minetopix.library.main.file.SimpleFile;
 
 public class SpawnFileManager {
 	
-	private static File f = new File("plugins/UHC", "locations.yml");
-	private static FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
-	
-	public static void saveCfg() {
-		try {
-			cfg.save(f);
-		} catch (IOException ignore) {}
-		
-	}
-	
 	public static SimpleFile getSpawnFile() {
-		return new SimpleFile(f);
+		return new SimpleFile("plugins/UHC", "locations.yml");
 	}
+	
+	private static SimpleFile cfg = getSpawnFile();
+	
+	private static void saveCfg() {cfg.save();}
 	
 	public void SetLobby(double x, double y, double z, World w) {
 		
@@ -37,7 +26,7 @@ public class SpawnFileManager {
 		cfg.set("Lobby.z", z);
 		cfg.set("Lobby.world", w.getName());
 		
-		saveCfg();
+		cfg.save();
 		
 	}
 	

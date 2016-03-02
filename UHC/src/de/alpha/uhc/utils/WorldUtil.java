@@ -1,7 +1,6 @@
 package de.alpha.uhc.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 
 import org.bukkit.Bukkit;
@@ -10,14 +9,6 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.MaxChangedBlocksException;
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.BukkitWorld;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
-import com.sk89q.worldedit.world.DataException;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.files.SpawnFileManager;
@@ -64,12 +55,11 @@ public class WorldUtil {
 			@Override
 			public void run() {
 				
-				if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) {
-					if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
-						return;
-					}
+				if(!(Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) && lobbySchematic == true) {
+					Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cWorldEdit hasn't been loaded!");
 				}
-				if(SpawnFileManager.getSpawn() == null) return;
+				if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) return;
+				if(SpawnFileManager.getSpawnWorldName() == null) return;
 				if(SpawnFileManager.getSpawnWorldName().equals(SpawnFileManager.getLobbyWorldName())) {
 					if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
 						return;
@@ -77,6 +67,37 @@ public class WorldUtil {
 				}
 				
 				String name = SpawnFileManager.getSpawnWorldName();
+				if(name.equals("world")) {
+					if(Bukkit.getWorld("UHC") == null) {
+						Bukkit.createWorld(new WorldCreator("UHC")
+								.generateStructures(false)
+								.type(WorldType.NORMAL));
+						
+						changeBiome("PLAINS");
+						
+						Bukkit.getWorld("UHC").getPopulators().add(new WorldPopulator());
+						Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§aPlaying World loaded");
+						if(lobbySchematic == true && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
+							if(new File("plugins/UHC/schematics", "lobby.schematic") != null) {
+								try {
+									World w = Bukkit.getWorld("UHC");
+									Location loc = new Location(w, 0, 200, 0);
+									
+									LobbyPasteUtil.pasteLobby(loc);
+									new SpawnFileManager().SetLobby(0, 200, 0, w);
+									return;
+								} catch (Exception e) {
+									Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
+									return;
+								}
+							}
+						} else {
+							return;
+						}
+					} else {
+						name = "UHC";
+					}
+				}
 				
 				Bukkit.createWorld(new WorldCreator(name)
 						.generateStructures(false)
@@ -85,7 +106,7 @@ public class WorldUtil {
 				changeBiome("PLAINS");
 				
 				Bukkit.getWorld(name).getPopulators().add(new WorldPopulator());
-				Bukkit.getConsoleSender().sendMessage("§aPlaying World reseted");
+				Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§aPlaying World reseted");
 				
 				if(lobbySchematic == true && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
 					if(new File("plugins/UHC/schematics", "lobby.schematic") != null) {
@@ -94,7 +115,7 @@ public class WorldUtil {
 							World w = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
 							Location loc = new Location(w, 0, 200, 0);
 							
-							pasteLobby(loc);
+							LobbyPasteUtil.pasteLobby(loc);
 							new SpawnFileManager().SetLobby(0, 200, 0, w);
 							return;
 						} catch (Exception e) {
@@ -104,26 +125,35 @@ public class WorldUtil {
 				}
 				
 			}
-		}.runTaskLater(Core.getInstance(), 20*5);
+		}.runTaskLater(Core.getInstance(), 40);
 	}
 	
-	
+	private static World spawn;
 	
 	public static void WorldReset() {
 		
-		if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) {
-			if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
-				return;
-			}
-		}
-		if(SpawnFileManager.getSpawn() == null) return;
+		if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) return;
+		if(SpawnFileManager.getSpawnWorldName() == null) return;
 		if(SpawnFileManager.getSpawnWorldName().equals(SpawnFileManager.getLobbyWorldName())) {
 			if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
 				return;
 			}
 		}
-		World spawn = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
 		
+		if(Bukkit.getWorld(SpawnFileManager.getSpawnWorldName()) != null) {
+			spawn = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
+			if(spawn.getName().equals("world")) {
+				if(Bukkit.getWorld("UHC") == null) {
+					spawn = Bukkit.createWorld(new WorldCreator("UHC"));
+				} else {
+					spawn = Bukkit.getWorld("UHC");
+				}
+			}
+		} else {
+			Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cThe ArenaSpawnWorld doesn't exists!");
+			return;
+		}
+			
 		unloadWorld(spawn);
 		delWorld(spawn.getWorldFolder());
 		createWorld();
@@ -154,25 +184,4 @@ public class WorldUtil {
                 // Error
         }
 	}
-	
-	@SuppressWarnings("deprecation")
-	private static void pasteLobby(Location loc) {
-		try {
-	        WorldEditPlugin we = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
-	        File schematic = new File("plugins/UHC/schematics/lobby.schematic");
-			EditSession session = we.getWorldEdit().getEditSessionFactory().getEditSession(new BukkitWorld(loc.getWorld()), 999999);
-	        try {
-	            MCEditSchematicFormat.getFormat(schematic).load(schematic).paste(session, new Vector(0,200,0), false);
-	            return;
-	        } catch (MaxChangedBlocksException
-	                | DataException | IOException e) {
-	        	Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
-				return;
-	        }
-		} catch (Exception ignore) {
-			Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
-			
-		}
-	}
-
 }

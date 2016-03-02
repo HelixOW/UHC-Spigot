@@ -67,7 +67,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		mfm.addMessages();
 		mfm.loadMessages();
 		
-		SpawnFileManager.saveCfg();
+		SpawnFileManager.getSpawnFile();
 		SpawnFileManager.registerRegions();
 		
 		HologramFileManager.getHologramFile().save();
@@ -93,20 +93,16 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 			}
 		}
 		
+		new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
+		
 		new BukkitRunnable() {
 			
 			@Override
 			public void run() {
-			
-				if(WorldUtil.lobbySchematic == true && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
-					new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
-				}
-				
 				WorldUtil.WorldReset();
 				
 			}
-		}.runTaskLater(this, 40);
-		
+		}.runTaskLater(Core.getInstance(), 20);
 		GState.setGameState(GState.LOBBY);
 		Timer.setCountdownTime();
 		

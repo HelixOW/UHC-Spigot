@@ -11,8 +11,8 @@ import net.minetopix.library.main.utils.ReflectionUtil;
 
 public class HoloUtil {
 	
-	public void createHologram(Player p, int id){
-		Location loc = new HologramFileManager().getLocation(id);
+	public void createHologram(Player p, int id, double remove){
+		Location loc = new HologramFileManager().getLocation(id).subtract(0, remove, 0);
 		
 		String name = new HologramFileManager().getName(id);
 		
@@ -93,6 +93,9 @@ public class HoloUtil {
 				
 				Object hc = holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld()));
 				name = name.replace("[Player]", p.getDisplayName());
+				name = name.replace("[Kills]", Integer.toString(new Stats(p).getKills()));
+				name = name.replace("[Deaths]", Integer.toString(new Stats(p).getDeaths()));
+				name = name.replace("[Coins]", Integer.toString(new Stats(p).getCoins()));
 				
 				cholo.getMethod("setLocation", param)
 					.invoke(hc,

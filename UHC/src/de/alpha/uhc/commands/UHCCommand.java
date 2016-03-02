@@ -66,7 +66,7 @@ public class UHCCommand implements CommandExecutor {
 					p.sendMessage("§7 /uhc setLobby - Set your Lobby, where the players will wait.");
 					p.sendMessage("§7 /uhc createLobby - Create a lobbyregion, which Player won't be able to leave");
 					p.sendMessage("§7 /uhc createWorld <name> - create a new random world");
-					p.sendMessage("§7 /uhc createHologram <name> - create a hologram with Player stats");
+					p.sendMessage("§7 /uhc createHologram [lowerby deep] <name> - create a hologram with Player stats");
 					p.sendMessage("§7 /uhc reload - reload the server to restart UHC");
 					p.sendMessage("§7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
 					p.sendMessage("§7 /uhc start - short the countdown to 10 seconds");
@@ -158,16 +158,39 @@ public class UHCCommand implements CommandExecutor {
 				String lore = "";
 				String name = "";
 				if(args.length >= 2) {
+					if(args.length >= 4) {
+						if(args[0].equalsIgnoreCase("createHologram")) {
+							if(args[1].equalsIgnoreCase("lowerby")) {
+								for(Player all : Bukkit.getOnlinePlayers()) {
+									for(int i = 3; i < args.length; i++) {
+										name = name + args[i] + " ";
+									}
+									
+									new HologramFileManager().addHoloram(name, p.getLocation(), Double.parseDouble(args[2]));
+									
+									for (int i = 0; i < new HologramFileManager().holocount(); i++) {
+										new HoloUtil().createHologram(all, i, Double.parseDouble(args[2]));
+									}
+								}
+								p.sendMessage(Core.getPrefix() + "§7You have created a new Hologram");
+								return true;
+							}
+						}
+					}
 					if(args[0].equalsIgnoreCase("createHologram")) {
+						if(args[1].equalsIgnoreCase("lowerby")) {
+							p.sendMessage(Core.getPrefix() + "/uhc createHologram [lowerby deep] <name>");
+							return true;
+						}
 						for(Player all : Bukkit.getOnlinePlayers()) {
 							for(int i = 1; i < args.length; i++) {
 								name = name + args[i] + " ";
 							}
 							
-							new HologramFileManager().addHoloram(name, p.getLocation());
+							new HologramFileManager().addHoloram(name, p.getLocation(), 0);
 							
 							for (int i = 0; i < new HologramFileManager().holocount(); i++) {
-								new HoloUtil().createHologram(all, i);
+								new HoloUtil().createHologram(all, i, 0);
 							}
 						}
 						p.sendMessage(Core.getPrefix() + "§7You have created a new Hologram");

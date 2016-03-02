@@ -106,17 +106,27 @@ public class Timer {
 										if(high == 0) {
 											
 											a.cancel();
+											
+											LobbyPasteUtil.removeLobby();
 													
 											for(Player ig : Core.getInGamePlayers()) {
 												
-												if(SpawnFileManager.getSpawn() == null) {
-													ig.teleport(ig.getWorld().getSpawnLocation());
-												} else {
-													Location l = SpawnFileManager.getSpawn();
+												if(WorldUtil.lobbySchematic == false) {
+												
+													if(SpawnFileManager.getSpawn() == null) {
+														ig.teleport(ig.getWorld().getSpawnLocation());
+													} else {
+														Location l = SpawnFileManager.getSpawn();
+														
+														l = SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max);
+																
+														ig.teleport(l);
+													}
 													
-													l = SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max);
-															
-													ig.teleport(l);
+													Border.setDistanceLoc(SpawnFileManager.getSpawn());
+													
+												} else {
+													Border.setDistanceLoc(SpawnFileManager.getLobby().getWorld().getHighestBlockAt(SpawnFileManager.getLobby()).getLocation());
 												}
 												b.cancel();
 												

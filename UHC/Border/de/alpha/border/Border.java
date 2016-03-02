@@ -11,16 +11,20 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import de.alpha.uhc.Core;
-import de.alpha.uhc.files.SpawnFileManager;
 
 public class Border {
 	
 	public static int size;
 	public static double dmg;
+	public static Location arena;
 	
 	private static int random(Integer d, Integer x) {
 		Random r = new Random();
 		return r.nextInt(x-d+1)+d;
+	}
+	
+	public static void setDistanceLoc(Location loc) {
+		arena = loc;
 	}
 	
 	public static void border() {
@@ -30,10 +34,10 @@ public class Border {
 			@Override
 			public void run() {
 				for(Player p : Bukkit.getOnlinePlayers()) {
-					if(SpawnFileManager.getSpawn() != null) {
-						if(p.getLocation().distance(SpawnFileManager.getSpawn()) >= size) {
+					if(arena != null) {
+						if(p.getLocation().distance(arena) >= size) {
 							Vector plV = p.getLocation().toVector();
-							Vector spV = SpawnFileManager.getSpawn().toVector();
+							Vector spV = arena.toVector();
 							Vector v = spV.clone().subtract(plV).multiply(2.0 / spV.distance(plV)).setY(0.5);
 							p.setVelocity(v);
 							p.getWorld().playSound(p.getLocation(), Sound.BURP, 1F, 0.8F);
@@ -57,15 +61,15 @@ public class Border {
 			public void run() {
 				
 				for(Player p : Bukkit.getOnlinePlayers()) {
-					if(SpawnFileManager.getSpawn() != null) {
-						if(p.getLocation().distance(SpawnFileManager.getSpawn()) >= size-15) {
+					if(arena != null) {
+						if(p.getLocation().distance(arena) >= size-15) {
 							Location min = p.getLocation().add(-10, -10, -10);
 							Location max = p.getLocation().add(10, 10, 10);
 							for(int x = min.getBlockX(); x < max.getBlockX(); x++) {
 								for(int y = min.getBlockY(); y < max.getBlockY(); y++) {
 									for(int z = min.getBlockZ(); z < max.getBlockZ(); z++) {
 										Location loc = new Location(p.getWorld(), x, y, z);
-										if(loc.distance(SpawnFileManager.getSpawn()) > size && loc.distance(SpawnFileManager.getSpawn()) < size+1) {
+										if(loc.distance(arena) > size && loc.distance(arena) < size+1) {
 											if(random(0, 20) == 0) {
 												for(int i = 0; i < 10; i++) {
 													p.getWorld().playEffect(loc, Effect.COLOURED_DUST, 1);

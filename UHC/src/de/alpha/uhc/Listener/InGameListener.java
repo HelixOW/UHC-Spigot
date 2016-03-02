@@ -60,6 +60,7 @@ public class InGameListener implements Listener {
 	public void onMove(PlayerMoveEvent e) {
 		
 		if(GState.isState(GState.LOBBY)) return;
+		if(Core.getSpecs().contains(e.getPlayer())) return;
 		ScoreboardManager.updateInGameBoard(e.getPlayer());
 		
 	}
@@ -215,7 +216,16 @@ public class InGameListener implements Listener {
 		e.setQuitMessage(null);
 		
 		Core.removeInGamePlayer(p);
-		Core.removeSpec(p);
+		if(Core.getSpecs().contains(p)) {
+			Core.removeSpec(p);
+			for(Player o : Core.getSpecs()) {
+				quit = quit.replace("[PlayerCount]", "§7["+apc+" left]");
+				
+				o.sendMessage(Core.getPrefix() + quit);
+				
+				quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
+			}
+		}
 		
 		if(GState.isState(GState.LOBBY)) {
 			apc = Bukkit.getOnlinePlayers().size() - 1;
@@ -391,14 +401,15 @@ public class InGameListener implements Listener {
 			
 		for(Entity entity : p.getNearbyEntities(size, size, size)) {
 			if(entity instanceof Player) {
+				if(!(Core.getSpecs().contains((Player) entity))) {
 					
-				double dis = p.getLocation().distance(entity.getLocation());
-					
-				if(dis < distance) {
-					distance = dis;
-					target = (Player) entity;
+					double dis = p.getLocation().distance(entity.getLocation());
+						
+					if(dis < distance) {
+						distance = dis;
+						target = (Player) entity;
+					}
 				}
-				
 			}
 		}
 		return target;

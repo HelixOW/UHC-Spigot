@@ -78,7 +78,7 @@ public class OptionsFileManager {
         file.setDefault("Spawnradius", 20);
         
         file.setDefault("Lobby.region", false);
-        file.setDefault("Lobby.createTool", "wood_axe");
+        file.setDefault("Lobby.createTool", "gold_axe");
         file.setDefault("Lobby.asSchematic", true);
         
         if(!file.isSet("Teams")) {

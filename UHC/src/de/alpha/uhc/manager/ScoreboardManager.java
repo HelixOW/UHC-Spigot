@@ -8,6 +8,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
+import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.files.SpawnFileManager;
@@ -117,7 +118,7 @@ public class ScoreboardManager {
 		}
 		{
 			Score a = o.getScore(center);
-			a.setScore((int) p.getLocation().distance(SpawnFileManager.getSpawn()));
+			a.setScore((int) p.getLocation().distance(Border.arena));
 		}
 		
 		
@@ -131,7 +132,7 @@ public class ScoreboardManager {
 		if(SpawnFileManager.getSpawn() == null) {
 			a.setScore((int) p.getLocation().distance(p.getWorld().getSpawnLocation()));
 		} else {
-			a.setScore((int) p.getLocation().distance(SpawnFileManager.getSpawn()));
+			a.setScore((int) p.getLocation().distance(Border.arena));
 		}
 	}
 }

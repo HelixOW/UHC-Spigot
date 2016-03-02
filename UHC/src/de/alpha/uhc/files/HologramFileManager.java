@@ -14,13 +14,13 @@ public class HologramFileManager {
 	
 	private static SimpleFile file = getHologramFile();
 	
-	public void addHoloram(String name, Location loc) {
+	public void addHoloram(String name, Location loc, double minus) {
 		
 		int id = file.getKeys(false).size();
 		file.setDefault(id + ".name", name);
-		file.setDefault(id + ".x", loc.getBlockX());
-		file.setDefault(id + ".y", loc.getBlockY());
-		file.setDefault(id + ".z", loc.getBlockZ());
+		file.setDefault(id + ".x", loc.getX());
+		file.setDefault(id + ".y", loc.subtract(0, minus, 0).getY());
+		file.setDefault(id + ".z", loc.getZ());
 		file.setDefault(id + ".world", loc.getWorld().getName());
 		
 	}
@@ -35,9 +35,9 @@ public class HologramFileManager {
 	
 	public Location getLocation(int id) {
 		
-		int x = file.getInt(id + ".x");
-		int y = file.getInt(id + ".y");
-		int z = file.getInt(id + ".z");
+		double x = file.getDouble(id + ".x");
+		double y = file.getDouble(id + ".y");
+		double z = file.getDouble(id + ".z");
 		World w = null;
 		if(Bukkit.getWorld(file.getString(id + ".world"))!= null) {
 			w = Bukkit.getWorld(file.getString(id + ".world"));
