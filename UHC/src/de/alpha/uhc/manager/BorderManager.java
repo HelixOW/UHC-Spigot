@@ -28,12 +28,12 @@ public class BorderManager {
 			public void run() {
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + moved);
-				for(Player all : Bukkit.getOnlinePlayers()) {
-					TitleManager.sendTitle(all, 10, 20, 10, " ", moved);
-				}
 				size = size - moving;
 				new Border().changesize(size);
-				
+				for(Player all : Bukkit.getOnlinePlayers()) {
+					ScoreboardManager.updateBorderScore(all);
+					TitleManager.sendTitle(all, 10, 20, 10, " ", moved);
+				}
 				
 			}
 		}.runTaskTimer(Core.getInstance(), 0, time);

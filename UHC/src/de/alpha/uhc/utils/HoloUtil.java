@@ -23,19 +23,17 @@ public class HoloUtil {
 		try {
 			holoConstructor = ReflectionUtil.getNmsClass("EntityArmorStand").getConstructor(cWorld);
 		} catch (NoSuchMethodException | SecurityException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		Class<?> cholo = ReflectionUtil.getNmsClass("EntityArmorStand");
 		try {
-			
-//		new EntityArmorStand(world).setLocation(d0, d1, d2, f, f1);
 			
 			Object hc = holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld()));
 			name = name.replace("[Player]", p.getDisplayName());
 			name = name.replace("[Kills]", Integer.toString(new Stats(p).getKills()));
 			name = name.replace("[Deaths]", Integer.toString(new Stats(p).getDeaths()));
 			name = name.replace("[Coins]", Integer.toString(new Stats(p).getCoins()));
+			
 			
 			cholo.getMethod("setLocation", param)
 				.invoke(hc,
@@ -61,7 +59,6 @@ public class HoloUtil {
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 			e1.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -83,13 +80,10 @@ public class HoloUtil {
 			try {
 				holoConstructor = ReflectionUtil.getNmsClass("EntityArmorStand").getConstructor(cWorld);
 			} catch (NoSuchMethodException | SecurityException e2) {
-				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
 			Class<?> cholo = ReflectionUtil.getNmsClass("EntityArmorStand");
 			try {
-				
-	//		new EntityArmorStand(world).setLocation(d0, d1, d2, f, f1);
 				
 				Object hc = holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld()));
 				name = name.replace("[Player]", p.getDisplayName());
@@ -121,7 +115,6 @@ public class HoloUtil {
 			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 				e1.printStackTrace();
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

@@ -1,7 +1,8 @@
 name: UHC
 author: AlphaHelix
-version: 2.7
+version: 3.0
 main: de.alpha.uhc.Core
+softdepend: [Vault]
 
 commands:
   uhc:

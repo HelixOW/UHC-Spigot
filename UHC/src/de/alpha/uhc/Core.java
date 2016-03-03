@@ -27,8 +27,9 @@ import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
-import de.alpha.uhc.teams.TeamListener;
+import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.MapReset;
 import de.alpha.uhc.utils.Regions;
@@ -59,16 +60,19 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		mfm = new MessageFileManager();
 		ig = new ArrayList<Player>();
 		spectator = new ArrayList<Player>();
+		Bukkit.setWhitelist(true);
 			
 		ofm.addOptions();
 		ofm.loadOptions();
-		ofm.registerTeams();
 			
 		mfm.addMessages();
 		mfm.loadMessages();
 		
 		SpawnFileManager.getSpawnFile();
 		SpawnFileManager.registerRegions();
+		
+		TeamFile.addDefaultTeams();
+		TeamFile.loadTeams();
 		
 		HologramFileManager.getHologramFile().save();
 		
@@ -111,6 +115,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		}
 		
 		Bukkit.getConsoleSender().sendMessage(prefix + "§aUHC by AlphaHelix is now enabled!");
+		Bukkit.setWhitelist(false);
 	}
 	
 	@Override
@@ -170,7 +175,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		Bukkit.getPluginManager().registerEvents(new MapReset(), this);
 		Bukkit.getPluginManager().registerEvents(new Spectator(), this);
 		Bukkit.getPluginManager().registerEvents(new Regions(), this);
-		Bukkit.getPluginManager().registerEvents(new TeamListener(), this);
+		Bukkit.getPluginManager().registerEvents(new ATeam(), this);
 	}
 	
 	public static ArrayList<Player> getInGamePlayers() {

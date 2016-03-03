@@ -140,6 +140,8 @@ public class WorldUtil {
 			}
 		}
 		
+		Bukkit.setWhitelist(true);
+		
 		if(Bukkit.getWorld(SpawnFileManager.getSpawnWorldName()) != null) {
 			spawn = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
 			if(spawn.getName().equals("world")) {
@@ -157,6 +159,7 @@ public class WorldUtil {
 		unloadWorld(spawn);
 		delWorld(spawn.getWorldFolder());
 		createWorld();
+		Bukkit.setWhitelist(false);
 	}
 	
 	@SuppressWarnings("rawtypes")

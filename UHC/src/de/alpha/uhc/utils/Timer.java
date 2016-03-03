@@ -150,6 +150,7 @@ public class Timer {
 												}
 												
 												ScoreboardManager.setInGameBoard(ig);
+								
 												new BukkitRunnable() {
 													
 													@Override
@@ -157,7 +158,7 @@ public class Timer {
 														return;
 														
 													}
-												}.runTaskLater(Core.getInstance(), 0);
+												}.runTaskLater(Core.getInstance(), 10);
 												
 											}
 												

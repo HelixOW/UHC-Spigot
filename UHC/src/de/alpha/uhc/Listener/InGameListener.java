@@ -25,7 +25,7 @@ import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
-import de.alpha.uhc.teams.TeamManager;
+import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Stats;
 import de.alpha.uhc.utils.Timer;
@@ -61,7 +61,7 @@ public class InGameListener implements Listener {
 		
 		if(GState.isState(GState.LOBBY)) return;
 		if(Core.getSpecs().contains(e.getPlayer())) return;
-		ScoreboardManager.updateInGameBoard(e.getPlayer());
+		ScoreboardManager.updateCenterScore(e.getPlayer());
 		
 	}
 	
@@ -82,6 +82,7 @@ public class InGameListener implements Listener {
 		
 		Player p = e.getEntity();
 		death = death.replace("[Player]", p.getDisplayName());
+		death = death.replace("[player]", p.getDisplayName());
 		
 		Core.removeInGamePlayer(p);
 		
@@ -105,9 +106,9 @@ public class InGameListener implements Listener {
 		p.sendMessage(Core.getPrefix() + rew);
 		TitleManager.sendTitle(p, 10, 20, 10, " ", rew);
 		rew = MessageFileManager.getMSGFile().getColorString("Reward");
-		for(Player all : Bukkit.getOnlinePlayers()) {
-			ScoreboardManager.setInGameBoard(all);
-		}
+		
+		ScoreboardManager.updatePlayerIGScore();
+		ScoreboardManager.updatePlayerSpecScore();
 		
 		p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.GOLDEN_APPLE));
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM);
@@ -162,6 +163,7 @@ public class InGameListener implements Listener {
 				GState.setGameState(GState.LOBBY);
 				
 				win = win.replace("[Player]", winner.getDisplayName());
+				win = win.replace("[player]", winner.getDisplayName());
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + win);
 				for(Player all : Bukkit.getOnlinePlayers()) {
@@ -363,8 +365,8 @@ public class InGameListener implements Listener {
 				return;
 			}
 			
-			if(TeamManager.hasTeam(p) == true && TeamManager.hasTeam(target) == true) {
-				if(TeamManager.getTeam(p).getAllPlayers().contains(target)) {
+			if(ATeam.hasTeam(p) == true && ATeam.hasTeam(target) == true) {
+				if(ATeam.hasSameTeam(p, target)) {
 					trackteam = trackteam.replace("[Player]", target.getDisplayName());
 					
 					int blocks = (int) p.getLocation().distance(getNearest(p).getLocation());
