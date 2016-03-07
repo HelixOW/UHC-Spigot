@@ -82,41 +82,10 @@ public class ScoreboardManager {
 			a.setScore(0);
 		}
 		
-		
-		Objective ob = s.registerNewObjective("UHCHealthName", "dummy");
-		ob.setDisplaySlot(DisplaySlot.BELOW_NAME);
-		ob.setDisplayName("§4♥");
-		
-		Objective obj = s.registerNewObjective("UHCHealthList", "dummy");
-		obj.setDisplaySlot(DisplaySlot.PLAYER_LIST);
-		obj.setDisplayName("§4♥");
-		
 		p.setScoreboard(s);
-		p.setHealth(p.getHealth());
 		
 	}
-	
-	public static void setHealthName(Player p) {
-		Scoreboard s = Bukkit.getScoreboardManager().getNewScoreboard();
-		
-		Objective o = s.registerNewObjective("UHCHealthName", "dummy");
-		o.setDisplaySlot(DisplaySlot.BELOW_NAME);
-		o.setDisplayName("§4♥");
-		
-		p.setScoreboard(s);
-		p.setHealth(p.getHealth());
-	}
-	
-	public static void setHealthList(Player p) {
-		Scoreboard s = Bukkit.getScoreboardManager().getNewScoreboard();
-		
-		Objective o = s.registerNewObjective("UHCHealthList", "dummy");
-		o.setDisplaySlot(DisplaySlot.PLAYER_LIST);
-		o.setDisplayName("§4♥");
-		
-		p.setScoreboard(s);
-		p.setHealth(p.getHealth());
-	}
+
 	
 	private static Scoreboard s;
 	private static Objective o;
@@ -136,21 +105,26 @@ public class ScoreboardManager {
 		}
 		
 		{
+			Score b = o.getScore("   ");
+			b.setScore(-1);
+		}
+		
+		{
 			if(ATeam.hasTeam(p)) {
 				Score a = o.getScore(team);
-				a.setScore(-1);
+				a.setScore(-2);
 				
 				Score b = o.getScore(ATeam.getPlayerTeam(p));
-				b.setScore(-2);
+				b.setScore(-3);
 				
 				Score c = o.getScore("  ");
-				c.setScore(-3);
+				c.setScore(-4);
 			} else {
 				Score a = o.getScore(team);
-				a.setScore(-1);
+				a.setScore(-2);
 				
 				Score b = o.getScore(" ");
-				b.setScore(-2);
+				b.setScore(-3);
 			}
 		}
 		
@@ -176,14 +150,26 @@ public class ScoreboardManager {
 		
 		{
 			Score a = o.getScore(ingameKit);
-			a.setScore(-4);
+			a.setScore(-5);
 		}
 		
 		{
 			Score a = o.getScore("§7" + LobbyListener.getSelKit(p));
-			a.setScore(-5);
+			a.setScore(-6);
 		}
 		
+		Objective ob = s.registerNewObjective("UHCHealthName", "health");
+		ob.setDisplaySlot(DisplaySlot.BELOW_NAME);
+		ob.setDisplayName("§4❤");
+		
+		Objective obj = s.registerNewObjective("UHCHealthList", "health");
+		obj.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+		obj.setDisplayName("§4❤");
+		
+		for(Player all: Core.getInGamePlayers()) {
+			all.setScoreboard(s);
+			all.setHealth(all.getMaxHealth());
+		}
 		p.setScoreboard(s);
 		return s;
 		

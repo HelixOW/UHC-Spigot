@@ -224,6 +224,7 @@ public class Timer {
 								Bukkit.broadcastMessage(Core.getPrefix() + end);
 								new BorderManager().set();
 								for(Player all : Core.getInGamePlayers()) {
+									all.showPlayer(all);
 									giveCompass(all);
 								}
 								c.cancel();

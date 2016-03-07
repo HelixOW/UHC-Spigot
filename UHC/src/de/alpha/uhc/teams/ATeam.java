@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.alpha.uhc.manager.TitleManager;
@@ -60,6 +61,19 @@ public class ATeam implements Listener {
 		}
 	}
 	
+	@EventHandler
+	public void onClick(PlayerInteractEvent e) {
+		
+		if(e.getPlayer().getItemInHand().equals(TeamSel.getItemStack())) {
+			e.setCancelled(true);
+			e.getPlayer().closeInventory();
+			TeamSel.open(e.getPlayer());
+		} else {
+			return;
+		}
+		
+	}
+	
 	public static boolean hasTeam(Player p) {
 		if(team.containsKey(p)) {
 			return true;
@@ -91,17 +105,22 @@ public class ATeam implements Listener {
 			for(String name : teamNames) {
 				for(String color : teamColors) {
 					
-					int id = m.lastIndexOf(":" + 1);
-					ChatColor cc = ChatColor.getByChar(color.toUpperCase());
+					String[] segements = m.split(":");
+					int id = Integer.parseInt(segements[0]);
+					String a = segements[1];
+					ChatColor cc = ChatColor.valueOf(color.toUpperCase());
 					
-					ItemStack is = new ItemCreator(Material.getMaterial(m.toUpperCase()))
+					ItemStack is = new ItemCreator(Material.getMaterial(a.toUpperCase()))
 							.setDamage(id)
 							.setName(cc + name)
 							.build();
 					
-					items.add(is);
+					if(!(items.contains(is))) {
+						items.add(is);
+					} 
 				}
 			}
+			return items;
 		}
 		return items;
 	}

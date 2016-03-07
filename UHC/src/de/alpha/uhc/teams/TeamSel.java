@@ -28,6 +28,10 @@ public class TeamSel {
 		p.openInventory(teams);
 	}
 	
+	public static ItemStack getItemStack() {
+		return new ItemCreator(Material.getMaterial(m.toUpperCase())).setName(itemName).build();
+	}
+	
 	public static void give(Player p) {
 		p.getInventory().setItem(2, new ItemCreator(Material.getMaterial(m.toUpperCase())).setName(itemName).build());
 	}
