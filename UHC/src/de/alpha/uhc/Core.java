@@ -30,7 +30,6 @@ import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.teams.ATeam;
-import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.MapReset;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
@@ -80,7 +79,6 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		registerEvents();
 		
 		GUI.fill();
-		TeamSel.fill();
 		
 		if(isMySQLActive == true) {
 			try {

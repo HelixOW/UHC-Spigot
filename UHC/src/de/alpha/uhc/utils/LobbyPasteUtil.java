@@ -45,6 +45,8 @@ public class LobbyPasteUtil {
 	
 	public static void removeLobby() {
 		
+		if(SpawnFileManager.getLobby() == null) return;
+		
 		World w = Bukkit.getWorld(SpawnFileManager.getLobbyWorldName());
 		Location l1 = new Location(w, -50, 155, -50);
 		Location l2 = new Location(w, 50, 255, 50);

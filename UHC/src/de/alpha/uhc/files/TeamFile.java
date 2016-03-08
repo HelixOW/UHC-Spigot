@@ -15,38 +15,37 @@ public class TeamFile {
 		
 		if(file.isConfigurationSection("Teams") == false) {
 			
-			file.setDefault("Teams.0.name", "red");
-			file.setDefault("Teams.0.color", "red");
-			file.setDefault("Teams.0.GUI Block", "14:wool");
+			file.setDefault("Teams.Red.name", "red");
+			file.setDefault("Teams.Red.color", "red");
 			
-			file.setDefault("Teams.1.name", "yellow");
-			file.setDefault("Teams.1.color", "yellow");
-			file.setDefault("Teams.1.GUI Block", "4:wool");
+			file.setDefault("Teams.Yellow.name", "yellow");
+			file.setDefault("Teams.Yellow.color", "yellow");
 			
-			file.setDefault("Teams.2.name", "blue");
-			file.setDefault("Teams.2.color", "blue");
-			file.setDefault("Teams.2.GUI Block", "11:wool");
+			file.setDefault("Teams.Blue.name", "blue");
+			file.setDefault("Teams.Blue.color", "blue");
 			
 		}
 	}
 	
-	public static void loadTeams() {
+	public static String getTeamColorAsString(String team) {
 		
-		int id = file.getConfigurationSection("Teams").getKeys(false).size();
-		for(int a = 0; a < id;a++) {
-			if(!(ATeam.teamNames.contains(file.getString("Teams."+a+".name")))) {
-				ATeam.teamNames.add(file.getString("Teams."+a+".name"));
-			}
-			if(!(ATeam.teamColors.contains(file.getString("Teams."+a+".color")))) {
-				ATeam.teamColors.add(file.getString("Teams."+a+".color"));
-			}
-			if(!(ATeam.teamBlocks.contains(file.getString("Teams."+a+".GUI Block")))) {
-				ATeam.teamBlocks.add(file.getString("Teams."+a+".GUI Block"));
+		for(String names : file.getConfigurationSection("Teams").getKeys(false)) {
+			if(team.equals(file.getString("Teams."+names+".name"))) {
+				return file.getString("Teams."+names+".color").toUpperCase();
 			}
 		}
-		System.out.println(ATeam.teamNames);
-		System.out.println(ATeam.teamColors);
-		System.out.println(ATeam.teamBlocks);
+		return "null";
 	}
-
+	
+	public static void loadTeams() {
+		
+		for(String names : file.getConfigurationSection("Teams").getKeys(false)) {
+			if(!(ATeam.teamNames.contains(file.getString("Teams."+names+".name")))) {
+				ATeam.teamNames.add(file.getString("Teams."+names+".name"));
+			}
+			if(!(ATeam.teamColors.contains(file.getString("Teams."+names+".color")))) {
+				ATeam.teamColors.add(file.getString("Teams."+names+".color"));
+			}
+		}
+	}
 }

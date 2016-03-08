@@ -9,8 +9,8 @@ import de.alpha.uhc.Listener.InGameListener;
 import de.alpha.uhc.Listener.MiningListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
+import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.manager.BorderManager;
-import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Timer;
 import de.alpha.uhc.utils.WorldUtil;
@@ -62,9 +62,6 @@ public class OptionsFileManager {
         
         file.setDefault("TeamMode", true);
         
-        file.setDefault("Team.item", "blaze_rod");
-        file.setDefault("Team.name", "&bTeams");
-        
         file.setDefault("Coins.on Win", 100);
         file.setDefault("Coins.on Death", 5);
         
@@ -74,7 +71,7 @@ public class OptionsFileManager {
         
         file.setDefault("Lobby.region", false);
         file.setDefault("Lobby.createTool", "gold_axe");
-        file.setDefault("Lobby.asSchematic", true);
+        file.setDefault("Lobby.asSchematic", false);
         
     }
 	
@@ -88,10 +85,7 @@ public class OptionsFileManager {
 		
 		InGameListener.newWorld = file.getBoolean("Worldreset");
 		
-		PlayerJoinListener.teamMode = file.getBoolean("TeamMode");
-		
-		TeamSel.m = file.getString("Team.item");
-		TeamSel.itemName = file.getColorString("Team.name");
+		UHCCommand.teamMode = file.getBoolean("TeamMode");
 		
 		Regions.material = file.getString("Lobby.createTool");
 		Regions.lobby = file.getBoolean("Lobby.region");

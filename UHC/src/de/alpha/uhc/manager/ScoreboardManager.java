@@ -114,7 +114,7 @@ public class ScoreboardManager {
 				Score a = o.getScore(team);
 				a.setScore(-2);
 				
-				Score b = o.getScore(ATeam.getPlayerTeam(p));
+				Score b = o.getScore("  "+ATeam.getTeamColor(ATeam.getPlayerTeam(p)) + ATeam.getPlayerTeam(p));
 				b.setScore(-3);
 				
 				Score c = o.getScore("  ");
@@ -154,7 +154,7 @@ public class ScoreboardManager {
 		}
 		
 		{
-			Score a = o.getScore("§7" + LobbyListener.getSelKit(p));
+			Score a = o.getScore("§7  " + LobbyListener.getSelKit(p));
 			a.setScore(-6);
 		}
 		
@@ -166,10 +166,7 @@ public class ScoreboardManager {
 		obj.setDisplaySlot(DisplaySlot.PLAYER_LIST);
 		obj.setDisplayName("§4❤");
 		
-		for(Player all: Core.getInGamePlayers()) {
-			all.setScoreboard(s);
-			all.setHealth(all.getMaxHealth());
-		}
+		p.setHealth(p.getHealth());
 		p.setScoreboard(s);
 		return s;
 		

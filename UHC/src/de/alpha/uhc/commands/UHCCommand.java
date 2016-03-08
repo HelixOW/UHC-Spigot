@@ -14,6 +14,7 @@ import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.kits.KitFileManager;
+import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Regions;
@@ -27,6 +28,7 @@ public class UHCCommand implements CommandExecutor {
 	public static String noperms;
 	public static String spawnset;
 	public static String lobbyset;
+	public static boolean teamMode;
 	
 	private SpawnFileManager sfm = new SpawnFileManager();
 
@@ -42,7 +44,21 @@ public class UHCCommand implements CommandExecutor {
 		
 		if(cmd.getName().equalsIgnoreCase("uhc")) {
 			
+			if(args.length == 2) {
+				if(args[0].equalsIgnoreCase("team")) {
+					if(teamMode == true) {
+						ATeam.addPlayerToTeam(p, args[1]);
+						return true;
+					}
+				}
+			}
+			
 			if(args.length == 1) {
+				if(args[0].equalsIgnoreCase("team") || args[0].equalsIgnoreCase("teams")) {
+					String a = ATeam.allTeams.replace("[teams]", ""+ATeam.teamNames);
+					p.sendMessage(Core.getPrefix() + a);
+					return true;
+				}
 				if(args[0].equalsIgnoreCase("stats")) {
 					new Stats(p).sendStats();
 					return true;
@@ -70,12 +86,14 @@ public class UHCCommand implements CommandExecutor {
 					p.sendMessage("§7 /uhc reload - reload the server to restart UHC");
 					p.sendMessage("§7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
 					p.sendMessage("§7 /uhc start - short the countdown to 10 seconds");
+					p.sendMessage("§7 /uhc team [teamname] - See all teams [join this team]");
 					p.sendMessage("§7 /uhc stats - see your stats");
 					p.sendMessage("§8---===XXX===---");
 					return true;
 				} else {
 					p.sendMessage("§8---===UHC===---");
 					p.sendMessage("§7 /uhc stats - see your stats");
+					p.sendMessage("§7 /uhc team [teamname] - See all teams [join this team]");
 					p.sendMessage("§8---===XXX===---");
 					return true;
 				}

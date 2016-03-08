@@ -18,7 +18,6 @@ import de.alpha.uhc.files.PlayerFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
-import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Timer;
@@ -36,8 +35,6 @@ public class PlayerJoinListener implements Listener {
 	public static Material kitItem;
 	public static String kitName;
 	public static boolean kitMode;
-	
-	public static boolean teamMode;
 	
 	private int apc;
 	public static int mpc;
@@ -121,19 +118,13 @@ public class PlayerJoinListener implements Listener {
 		
 			}
 		}
-		
-		if(teamMode == true) {
-			
-			TeamSel.give(e.getPlayer());
-			
+		if(SpawnFileManager.getLobby() != null) {
+			if(Bukkit.getWorld(SpawnFileManager.getLobbyWorldName()) == null) {
+				e.getPlayer().teleport(e.getPlayer().getWorld().getSpawnLocation());
+			} else {
+				e.getPlayer().teleport(SpawnFileManager.getLobby());
+			}
 		}
-		
-		if(SpawnFileManager.getLobby() == null) {
-			e.getPlayer().teleport(e.getPlayer().getWorld().getSpawnLocation());
-		} else {
-			e.getPlayer().teleport(SpawnFileManager.getLobby());
-		}
-		
 		Core.addInGamePlayer(e.getPlayer());
 		e.getPlayer().setGameMode(GameMode.SURVIVAL);
 		e.getPlayer().setHealth(20);

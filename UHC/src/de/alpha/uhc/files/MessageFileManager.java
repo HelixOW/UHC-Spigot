@@ -8,7 +8,6 @@ import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.teams.ATeam;
-import de.alpha.uhc.teams.TeamSel;
 import de.alpha.uhc.utils.Timer;
 import net.minetopix.library.main.file.SimpleFile;
 
@@ -65,7 +64,8 @@ public class MessageFileManager {
 		file.setDefault("Kits.GUI.Bought", "&aYou bought &6[Kit] for &c[Coins] Coins");
 		file.setDefault("Kits.GUI.No Coins", "&aYou need more Coins");
 		
-		file.setDefault("Teams.GUI.Title", "&7[&aTeams&7]");
+		file.setDefault("Teams.do not exist", "&7The Team &c[team]&7 do not exist!");
+		file.setDefault("Teams.all", "&7Teams: [teams]");
 		file.setDefault("Teams.chosen", "&aYou are now in Team [team]");
 		
 		file.setDefault("Reward", "&aYou got [Coins] Coins.");
@@ -74,9 +74,9 @@ public class MessageFileManager {
 	public void loadMessages() {
 		SimpleFile file = getMSGFile();
 		
-		TeamSel.title = file.getColorString("Teams.GUI.Title");
-		
 		ATeam.chosen = file.getColorString("Teams.chosen");
+		ATeam.noExist = file.getColorString("Teams.do not exist");
+		ATeam.allTeams = file.getColorString("Teams.all");
 		
 		LobbyListener.sel = file.getColorString("Kits.GUI.Selected");
 		LobbyListener.bought = file.getColorString("Kits.GUI.Bought");
