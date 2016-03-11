@@ -79,7 +79,7 @@ public class LobbyListener implements Listener {
 	@EventHandler
 	public void onPlace(BlockBreakEvent e) {
 		
-		if(GState.isState(GState.LOBBY)) {
+		if(!(GState.isState(GState.INGAME))) {
 			e.setCancelled(true);
 		}
 		
@@ -88,7 +88,7 @@ public class LobbyListener implements Listener {
 	@EventHandler
 	public void onPlace(BlockPlaceEvent e) {
 		
-		if(GState.isState(GState.LOBBY)) {
+		if(!(GState.isState(GState.INGAME))) {
 			e.setCancelled(true);
 		}
 		

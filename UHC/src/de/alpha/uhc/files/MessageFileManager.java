@@ -1,5 +1,6 @@
 package de.alpha.uhc.files;
 
+import de.alpha.uhc.Listener.GameEndListener;
 import de.alpha.uhc.Listener.InGameListener;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.Listener.MotdListener;
@@ -9,7 +10,7 @@ import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.teams.ATeam;
-import de.alpha.uhc.utils.Timer;
+import de.alpha.uhc.timer.Timer;
 import net.minetopix.library.main.file.SimpleFile;
 
 public class MessageFileManager {
@@ -37,6 +38,7 @@ public class MessageFileManager {
 		file.setDefault("Announcements.Win", "&6[Player]&a has won UHC.");
 		file.setDefault("Announcements.Border.Move", "&c The Border has moved!");
 		file.setDefault("Announcements.Restart", "&cThe Server is now restarting to load UHC again!");
+		file.setDefault("Announcements.End", "&cServer stops in &7[time]&8 seconds");
 		
 		file.setDefault("Warns.FullServer", "&cYou're not allowed to join. The Server is full.");
 		
@@ -73,6 +75,8 @@ public class MessageFileManager {
 		
 		file.setDefault("Motd.Lobby", "&bUHC \n &aJoinable!");
 		file.setDefault("Motd.InGame", "&bUHC \n &cInGame!");
+		file.setDefault("Motd.Restart", "&bUHC \n &5Restart!");
+		
 	}
 	
 	public void loadMessages() {
@@ -80,6 +84,7 @@ public class MessageFileManager {
 		
 		MotdListener.lobby = file.getColorString("Motd.Lobby");
 		MotdListener.ingame = file.getColorString("Motd.InGame");
+		MotdListener.restart = file.getColorString("Motd.Restart");
 		
 		ATeam.chosen = file.getColorString("Teams.chosen");
 		ATeam.noExist = file.getColorString("Teams.do not exist");
@@ -90,41 +95,49 @@ public class MessageFileManager {
 		LobbyListener.coinsneed = file.getColorString("Kits.GUI.No Coins");
 		
 		UHCCommand.noplayer = file.getColorString("Commands.Warns.OnlyPlayers");
-		 UHCCommand.noperms = file.getColorString("Commands.Warns.NoPermissions");
-		 UHCCommand.spawnset = file.getColorString("Commands.Admin.SpawnSet");
-		 UHCCommand.lobbyset = file.getColorString("Commands.Admin.LobbySet");
-		 Timer.countmsg = file.getColorString("Announcements.Countdown");
-		 Timer.nep = file.getColorString("Announcements.NotEnoughPlayers");
-		 Timer.gracemsg = file.getColorString("Announcements.Peaceperiod.timer");
-		 Timer.end = file.getColorString("Announcements.Peaceperiod.end");
-		InGameListener.death = file.getColorString("Announcements.Death");
-		InGameListener.quit = file.getColorString("Announcements.Leave");
-		 InGameListener.win = file.getColorString("Announcements.Win");
-		 InGameListener.kick = file.getColorString("Announcements.Restart");
-		 InGameListener.ntrack = file.getColorString("Compass.NoPlayerInRange");
-		 InGameListener.track = file.getColorString("Compass.PlayerInRange");
-		 InGameListener.trackteam = file.getColorString("Compass.TeamPlayerInRange");
-		 InGameListener.rew = file.getColorString("Reward");
-		 PlayerJoinListener.join = file.getColorString("Announcements.Join");
-		 PlayerJoinListener.full = file.getColorString("Warns.FullServer");
-		 PlayerJoinListener.title = file.getColorString("Join.Title");
-		 PlayerJoinListener.subtitle = file.getColorString("Join.Subtitle");
-		 BorderManager.moved = file.getColorString("Announcements.Border.Move");
+		UHCCommand.noperms = file.getColorString("Commands.Warns.NoPermissions");
+		UHCCommand.spawnset = file.getColorString("Commands.Admin.SpawnSet");
+		UHCCommand.lobbyset = file.getColorString("Commands.Admin.LobbySet");
+		
+		Timer.countmsg = file.getColorString("Announcements.Countdown");
+		Timer.nep = file.getColorString("Announcements.NotEnoughPlayers");
+		Timer.gracemsg = file.getColorString("Announcements.Peaceperiod.timer");
+		Timer.end = file.getColorString("Announcements.Peaceperiod.end");
+		Timer.endmsg = file.getColorString("Announcements.End");
+		
+		GameEndListener.death = file.getColorString("Announcements.Death");
+		GameEndListener.win = file.getColorString("Announcements.Win");
+		GameEndListener.kick = file.getColorString("Announcements.Restart");
+		GameEndListener.rew = file.getColorString("Reward");
+		GameEndListener.quit = file.getColorString("Announcements.Leave");
+		
+		Timer.kick = GameEndListener.kick;
+		
+		InGameListener.ntrack = file.getColorString("Compass.NoPlayerInRange");
+		InGameListener.track = file.getColorString("Compass.PlayerInRange");
+		InGameListener.trackteam = file.getColorString("Compass.TeamPlayerInRange");
+		
+		PlayerJoinListener.join = file.getColorString("Announcements.Join");
+		PlayerJoinListener.full = file.getColorString("Warns.FullServer");
+		PlayerJoinListener.title = file.getColorString("Join.Title");
+		PlayerJoinListener.subtitle = file.getColorString("Join.Subtitle");
+		
+		BorderManager.moved = file.getColorString("Announcements.Border.Move");
 		 
-		 ScoreboardManager.lobbytitle = file.getColorString("Scoreboard.Lobby.Title");
-		 ScoreboardManager.lobbyKills = file.getColorString("Scoreboard.Lobby.Kills");
-		 ScoreboardManager.lobbyDeaths = file.getColorString("Scoreboard.Lobby.Deaths");
-		 ScoreboardManager.lobbyCoins = file.getColorString("Scoreboard.Lobby.Coins");
+		ScoreboardManager.lobbytitle = file.getColorString("Scoreboard.Lobby.Title");
+		ScoreboardManager.lobbyKills = file.getColorString("Scoreboard.Lobby.Kills");
+		ScoreboardManager.lobbyDeaths = file.getColorString("Scoreboard.Lobby.Deaths");
+		ScoreboardManager.lobbyCoins = file.getColorString("Scoreboard.Lobby.Coins");
 		 
-		 ScoreboardManager.ingametitle = file.getColorString("Scoreboard.Ingame.Title");
-		 ScoreboardManager.ingamePlayersLiving = file.getColorString("Scoreboard.Ingame.Player Living");
-		 ScoreboardManager.ingameSpectators = file.getColorString("Scoreboard.Ingame.Spectators");
-		 ScoreboardManager.ingameKit = file.getColorString("Scoreboard.Ingame.Selected Kit");
-		 ScoreboardManager.center = file.getColorString("Scoreboard.Ingame.Distance to Center");
-		 ScoreboardManager.team = file.getColorString("Scoreboard.Ingame.Your Team");
-		 ScoreboardManager.border = file.getColorString("Scoreboard.Ingame.Border");
+		ScoreboardManager.ingametitle = file.getColorString("Scoreboard.Ingame.Title");
+		ScoreboardManager.ingamePlayersLiving = file.getColorString("Scoreboard.Ingame.Player Living");
+		ScoreboardManager.ingameSpectators = file.getColorString("Scoreboard.Ingame.Spectators");
+		ScoreboardManager.ingameKit = file.getColorString("Scoreboard.Ingame.Selected Kit");
+		ScoreboardManager.center = file.getColorString("Scoreboard.Ingame.Distance to Center");
+		ScoreboardManager.team = file.getColorString("Scoreboard.Ingame.Your Team");
+		ScoreboardManager.border = file.getColorString("Scoreboard.Ingame.Border");
 		 
-		 GUI.title = file.getColorString("Kits.GUI.Title");
+		GUI.title = file.getColorString("Kits.GUI.Title");
 		 
 	}
 

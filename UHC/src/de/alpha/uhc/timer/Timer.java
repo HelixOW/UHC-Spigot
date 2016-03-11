@@ -1,4 +1,4 @@
-package de.alpha.uhc.utils;
+package de.alpha.uhc.timer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -9,6 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 
 import de.alpha.border.Border;
 import de.alpha.uhc.Core;
@@ -21,6 +24,8 @@ import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
+import de.alpha.uhc.utils.LobbyPasteUtil;
+import de.alpha.uhc.utils.WorldUtil;
 import net.minetopix.library.main.item.ItemCreator;
 
 
@@ -30,6 +35,7 @@ public class Timer {
 	public static  String nep;
 	public static  String gracemsg;
 	public static  String end;
+	public static String endmsg;
 	
 	public static  boolean grace;
 	
@@ -38,12 +44,20 @@ public class Timer {
 	 static int high;
 	 static int gracetime;
 	 public	static int max;
+	 
+	private static int endTime;
 	
 	private static   BukkitTask a;
 	private  static  BukkitTask b;
 	
 	private  static  BukkitTask c;
 	private static   BukkitTask e;
+	
+	private static BukkitTask f;
+	
+	public static boolean BungeeMode;
+	public static String BungeeServer;
+	public static String kick;
 	
 	
 	public static void startCountdown() {
@@ -240,6 +254,46 @@ public class Timer {
 				}
 			}
 		}.runTaskTimer(Core.getInstance(), 0, 20);
+	}
+	
+	public static void startRestartTimer() {
+		
+		endTime = 10;
+		GState.setGameState(GState.RESTART);
+		
+		f = new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				if(endTime % 1 == 0 && endTime < 10 && endTime != 0) {
+					
+					endmsg = endmsg.replace("[time]", Integer.toString(endTime));
+					
+					Bukkit.broadcastMessage(Core.getPrefix() + endmsg);
+					
+					endmsg = MessageFileManager.getMSGFile().getColorString("Announcements.End");
+				} 
+				
+				else if(endTime == 0) {
+					
+					for(Player all : Bukkit.getOnlinePlayers()) {
+						if(BungeeMode == true) {
+							ByteArrayDataOutput out = ByteStreams.newDataOutput();
+							
+							out.writeUTF("Connect");
+							out.writeUTF(BungeeServer);
+							
+							all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
+						} else {
+							all.kickPlayer(Core.getPrefix() + kick);
+						}
+					}
+					f.cancel();
+					
+				}
+			}
+		}.runTaskTimer(Core.getInstance(), 0 , 20);
+		
 	}
 	
 	public static void changeTime() {

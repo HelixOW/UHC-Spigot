@@ -17,6 +17,7 @@ import com.google.common.io.ByteStreams;
 import de.alpha.uhc.Listener.ChatListener;
 import de.alpha.uhc.Listener.CraftListener;
 import de.alpha.uhc.Listener.DeathListener;
+import de.alpha.uhc.Listener.GameEndListener;
 import de.alpha.uhc.Listener.InGameListener;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.Listener.MiningListener;
@@ -31,10 +32,10 @@ import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.teams.ATeam;
+import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.MapReset;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
-import de.alpha.uhc.utils.Timer;
 import de.alpha.uhc.utils.WorldUtil;
 import net.minetopix.library.main.file.SimpleFile;
 import net.minetopix.mysqlapi.MySQLAPI;
@@ -96,6 +97,19 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 			}
 		}
 		
+		
+		for(Player all : Bukkit.getOnlinePlayers()) {
+			if(GameEndListener.BungeeMode == true) {
+				ByteArrayDataOutput out = ByteStreams.newDataOutput();
+				
+				out.writeUTF("Connect");
+				out.writeUTF(GameEndListener.BungeeServer);
+				
+				all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
+			} else {
+				all.kickPlayer(Core.getPrefix() + GameEndListener.kick);
+			}
+		}
 		new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
 		
 		new BukkitRunnable() {
@@ -129,18 +143,6 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 			}
 		}
 		
-		for(Player all : Bukkit.getOnlinePlayers()) {
-			if(InGameListener.BungeeMode == true) {
-				ByteArrayDataOutput out = ByteStreams.newDataOutput();
-				
-				out.writeUTF("Connect");
-				out.writeUTF(InGameListener.BungeeServer);
-				
-				all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
-			} else {
-				all.kickPlayer(Core.getPrefix() + InGameListener.kick);
-			}
-		}
 		MapReset.restore();
 		Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC by AlphaHelix is now disabled!");
 	}
@@ -171,11 +173,14 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		Bukkit.getPluginManager().registerEvents(new CraftListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
 		Bukkit.getPluginManager().registerEvents(new SoupListener(), this);
+		
 		Bukkit.getPluginManager().registerEvents(new MapReset(), this);
 		Bukkit.getPluginManager().registerEvents(new Spectator(), this);
 		Bukkit.getPluginManager().registerEvents(new Regions(), this);
 		Bukkit.getPluginManager().registerEvents(new ATeam(), this);
+		
 		Bukkit.getPluginManager().registerEvents(new MotdListener(), this);
+		Bukkit.getPluginManager().registerEvents(new GameEndListener(), this);
 	}
 	
 	public static ArrayList<Player> getInGamePlayers() {

@@ -26,7 +26,7 @@ public class MiningListener implements Listener {
 		Block b = e.getBlock();
 		Material m = b.getType();
 		
-		if(GState.isState(GState.LOBBY)) {
+		if(!(GState.isState(GState.INGAME))) {
 			e.setCancelled(true);
 			return;
 		}

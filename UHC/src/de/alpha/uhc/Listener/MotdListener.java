@@ -10,6 +10,7 @@ public class MotdListener implements Listener {
 	
 	public static String lobby;
 	public static String ingame;
+	public static String restart;
 	
 	public static boolean custommotd;
 	
@@ -22,6 +23,8 @@ public class MotdListener implements Listener {
 			e.setMotd(lobby);
 		} else if(GState.isState(GState.INGAME)) {
 			e.setMotd(ingame);
+		} else if(GState.isState(GState.RESTART)) {
+			e.setMotd(restart);
 		}
 		
 	}

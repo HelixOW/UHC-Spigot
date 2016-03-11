@@ -4,7 +4,8 @@ package de.alpha.uhc;
 public enum GState {
 	
 	LOBBY,
-	INGAME;
+	INGAME,
+	RESTART;
 	
 	private static GState currentState;
 

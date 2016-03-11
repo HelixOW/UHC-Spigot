@@ -18,11 +18,11 @@ import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.teams.ATeam;
+import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
-import de.alpha.uhc.utils.Timer;
 import de.alpha.uhc.utils.WorldPopulator;
 
 public class UHCCommand implements CommandExecutor {

@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.Listener.DeathListener;
+import de.alpha.uhc.Listener.GameEndListener;
 import de.alpha.uhc.Listener.InGameListener;
 import de.alpha.uhc.Listener.MiningListener;
 import de.alpha.uhc.Listener.MotdListener;
@@ -12,8 +13,8 @@ import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.manager.BorderManager;
+import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Regions;
-import de.alpha.uhc.utils.Timer;
 import de.alpha.uhc.utils.WorldUtil;
 import net.minetopix.library.main.file.SimpleFile;
 
@@ -66,8 +67,6 @@ public class OptionsFileManager {
         file.setDefault("Coins.on Win", 100);
         file.setDefault("Coins.on Death", 5);
         
-        file.setDefault("Worldreset", true);
-        
         file.setDefault("Spawnradius", 20);
         
         file.setDefault("Lobby.region", false);
@@ -85,48 +84,49 @@ public class OptionsFileManager {
 		
 		WorldUtil.lobbySchematic = file.getBoolean("Lobby.asSchematic");
 		
-		InGameListener.BungeeMode = file.getBoolean("BungeeMode");
-		InGameListener.BungeeServer = file.getString("BungeeServer");
+		Timer.BungeeMode = file.getBoolean("BungeeMode");
+		Timer.BungeeServer = file.getString("BungeeServer");
+		Timer.max = file.getInt("Spawnradius");
+		Timer.pc = file.getInt("Countdown.minimum_Player_Count");
 		
-		InGameListener.newWorld = file.getBoolean("Worldreset");
+		GameEndListener.BungeeMode = file.getBoolean("BungeeMode");
+		GameEndListener.BungeeServer = file.getString("BungeeServer");
+		GameEndListener.reward = file.getInt("Coins.on Win");
+		GameEndListener.deathreward = file.getInt("Coins.on Death");
 		
 		UHCCommand.teamMode = file.getBoolean("TeamMode");
 		
 		Regions.material = file.getString("Lobby.createTool");
 		Regions.lobby = file.getBoolean("Lobby.region");
 		
-		Timer.max = file.getInt("Spawnradius");
-		
-		InGameListener.reward = file.getInt("Coins.on Win");
-		InGameListener.deathreward = file.getInt("Coins.on Death");
-		
-		 Border.size = file.getInt("Border.size");
-		 InGameListener.size = file.getInt("Border.size");
+		Border.size = file.getInt("Border.size");
 		Border.dmg = file.getDouble("Border.damage");
+		
+		InGameListener.size = file.getInt("Border.size");
 		
 		Core.prefix = file.getColorString("Prefix");
 		Core.isMySQLActive = file.getBoolean("MySQL");
 		
-		Timer.pc = file.getInt("Countdown.minimum_Player_Count");
 		PlayerJoinListener.mpc = file.getInt("Countdown.maximum_Player_Count");
-		
 		PlayerJoinListener.kitItem = Material.getMaterial(file.getString("Kit.item").toUpperCase());
 		PlayerJoinListener.kitName = file.getColorString("Kit.name");
 		PlayerJoinListener.kitMode = file.getBoolean("Kits");
 		
 		MiningListener.wood = file.getBoolean("Drops.wood");
-		 MiningListener.ore = file.getBoolean("Drops.ores");
-		 DeathListener.mobs = file.getBoolean("Drops.mobs");
+		MiningListener.ore = file.getBoolean("Drops.ores");
+		MiningListener.coal = file.getBoolean("Mine.CoalOre");
+		MiningListener.iron = file.getBoolean("Mine.IronOre");
+		MiningListener.gold = file.getBoolean("Mine.GoldOre");
+		MiningListener.dia = file.getBoolean("Mine.DiamondOre");
+
+		 
+		DeathListener.mobs = file.getBoolean("Drops.mobs");
 		
-		 SoupListener.boost = file.getDouble("Soup.healthboost");
+		SoupListener.boost = file.getDouble("Soup.healthboost");
 		
-		 BorderManager.moveable = file.getBoolean("Border.getCloser");
-		 BorderManager.moving = file.getInt("Border.movingBlocks");
-		 BorderManager.time = (file.getInt("Border.moving after min")*20)*60;
+		BorderManager.moveable = file.getBoolean("Border.getCloser");
+		BorderManager.moving = file.getInt("Border.movingBlocks");
+		BorderManager.time = (file.getInt("Border.moving after min")*20)*60;
 		
-		 MiningListener.coal = file.getBoolean("Mine.CoalOre");
-		 MiningListener.iron = file.getBoolean("Mine.IronOre");
-		 MiningListener.gold = file.getBoolean("Mine.GoldOre");
-		 MiningListener.dia = file.getBoolean("Mine.DiamondOre");
 	}
 }

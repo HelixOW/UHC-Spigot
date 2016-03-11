@@ -56,7 +56,7 @@ public class MapReset implements Listener {
 	@EventHandler
 	public void onBreak(BlockBreakEvent e) {
 		
-		if(GState.isState(GState.INGAME)) {
+		if(!(GState.isState(GState.LOBBY))) {
 		
 			Block b = e.getBlock();
 			
@@ -71,7 +71,7 @@ public class MapReset implements Listener {
 	@EventHandler
 	public void onPlace(BlockPlaceEvent e) {
 		
-		if(GState.isState(GState.INGAME)) {
+		if(!(GState.isState(GState.LOBBY))) {
 		
 			BlockState b = e.getBlockReplacedState();
 			
@@ -85,7 +85,7 @@ public class MapReset implements Listener {
 	 @EventHandler
 	 public void onExplode(EntityExplodeEvent e) {
 		 
-		 if(GState.isState(GState.INGAME)) {
+		 if(!(GState.isState(GState.LOBBY))) {
 		 
 			 for(int i = 0; i < e.blockList().size(); i++) {
 				 

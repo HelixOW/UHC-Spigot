@@ -18,9 +18,9 @@ import de.alpha.uhc.files.PlayerFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
+import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Spectator;
-import de.alpha.uhc.utils.Timer;
 import net.minetopix.library.main.item.ItemCreator;
 import net.minetopix.mysqlapi.MySQLManager;
 
@@ -44,11 +44,11 @@ public class PlayerJoinListener implements Listener {
 		
 		e.setJoinMessage(null);
 		
-		if(GState.isState(GState.INGAME)) {
+		if(!(GState.isState(GState.LOBBY))) {
 			e.getPlayer().getInventory().clear();
 			e.getPlayer().getInventory().setArmorContents(null);
 			e.getPlayer().teleport(SpawnFileManager.getSpawn());
-			new Spectator().setSpec(e.getPlayer());
+			Spectator.setSpec(e.getPlayer());
 			ScoreboardManager.setInGameBoard(e.getPlayer());
 			for(Player all : Core.getInGamePlayers()) {
 				ScoreboardManager.setInGameBoard(all);
