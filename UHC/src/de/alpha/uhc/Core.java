@@ -20,6 +20,7 @@ import de.alpha.uhc.Listener.DeathListener;
 import de.alpha.uhc.Listener.InGameListener;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.Listener.MiningListener;
+import de.alpha.uhc.Listener.MotdListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.commands.UHCCommand;
@@ -85,7 +86,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 				MySQLAPI.initMySQLAPI(this);
 				createTables();
 			} catch(Exception e) {
-				isMySQLActive = false;
+				isMySQLActive = false;                                                 
 			}
 		}
 		
@@ -174,6 +175,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		Bukkit.getPluginManager().registerEvents(new Spectator(), this);
 		Bukkit.getPluginManager().registerEvents(new Regions(), this);
 		Bukkit.getPluginManager().registerEvents(new ATeam(), this);
+		Bukkit.getPluginManager().registerEvents(new MotdListener(), this);
 	}
 	
 	public static ArrayList<Player> getInGamePlayers() {

@@ -1,8 +1,8 @@
 name: UHC
 author: AlphaHelix
-version: 3.0
+version: 3.3
 main: de.alpha.uhc.Core
-softdepend: [Vault]
+softdepend: [WorldEdit]
 
 commands:
   uhc:

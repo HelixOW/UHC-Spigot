@@ -11,7 +11,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.files.HologramFileManager;
+import de.alpha.uhc.files.MessageFileManager;
+import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.teams.ATeam;
@@ -83,7 +86,8 @@ public class UHCCommand implements CommandExecutor {
 					p.sendMessage("§7 /uhc createLobby - Create a lobbyregion, which Player won't be able to leave");
 					p.sendMessage("§7 /uhc createWorld <name> - create a new random world");
 					p.sendMessage("§7 /uhc createHologram [lowerby deep] <name> - create a hologram with Player stats");
-					p.sendMessage("§7 /uhc reload - reload the server to restart UHC");
+					p.sendMessage("§7 /uhc restart - reload the server to restart UHC");
+					p.sendMessage("§7 /uhc reload - reload all UHC files");
 					p.sendMessage("§7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
 					p.sendMessage("§7 /uhc start - short the countdown to 10 seconds");
 					p.sendMessage("§7 /uhc team [teamname] - See all teams [join this team]");
@@ -101,7 +105,7 @@ public class UHCCommand implements CommandExecutor {
 			
 			if(p.hasPermission("UHC.admin")) {	
 				if(args.length == 1) {
-					if(args[0].equalsIgnoreCase("rl")) {
+					if(args[0].equalsIgnoreCase("restart")) {
 						new BukkitRunnable() {
 							
 							@Override
@@ -109,6 +113,24 @@ public class UHCCommand implements CommandExecutor {
 								Bukkit.reload();
 							}
 						}.runTaskLater(Core.getInstance(), 20);
+						return true;
+					}
+					if(args[0].equalsIgnoreCase("reload")) {
+						
+						new OptionsFileManager().addOptions();
+						new OptionsFileManager().loadOptions();
+							
+						new MessageFileManager().addMessages();
+						new MessageFileManager().loadMessages();
+						
+						SpawnFileManager.getSpawnFile();
+						SpawnFileManager.registerRegions();
+						
+						TeamFile.addDefaultTeams();
+						TeamFile.loadTeams();
+						
+						HologramFileManager.getHologramFile().save();
+						p.sendMessage(Core.getPrefix() + "§cAll configs has been reloaded");
 						return true;
 					}
 					

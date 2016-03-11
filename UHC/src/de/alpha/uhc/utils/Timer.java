@@ -115,15 +115,19 @@ public class Timer {
 												
 													if(SpawnFileManager.getSpawn() == null) {
 														ig.teleport(ig.getWorld().getSpawnLocation());
+														Border.setDistanceLoc(ig.getWorld().getSpawnLocation());
 													} else {
 														Location l = SpawnFileManager.getSpawn();
 														
-														l = SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max);
-																
-														ig.teleport(l);
+														Location r = SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max);
+														
+														if(r == null) {
+															Bukkit.broadcastMessage("Hey!");
+														}
+														
+														ig.teleport(r);
+														Border.setDistanceLoc(SpawnFileManager.getSpawn());
 													}
-													
-													Border.setDistanceLoc(SpawnFileManager.getSpawn());
 													
 												} else {
 													Border.setDistanceLoc(SpawnFileManager.getLobby().getWorld().getHighestBlockAt(SpawnFileManager.getLobby()).getLocation());

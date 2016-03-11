@@ -7,6 +7,7 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.Listener.DeathListener;
 import de.alpha.uhc.Listener.InGameListener;
 import de.alpha.uhc.Listener.MiningListener;
+import de.alpha.uhc.Listener.MotdListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.commands.UHCCommand;
@@ -73,10 +74,14 @@ public class OptionsFileManager {
         file.setDefault("Lobby.createTool", "gold_axe");
         file.setDefault("Lobby.asSchematic", false);
         
+        file.setDefault("Status Motd", true);
+        
     }
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		MotdListener.custommotd = file.getBoolean("Status Motd");
 		
 		WorldUtil.lobbySchematic = file.getBoolean("Lobby.asSchematic");
 		

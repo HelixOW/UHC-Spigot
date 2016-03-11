@@ -2,6 +2,7 @@ package de.alpha.uhc.files;
 
 import de.alpha.uhc.Listener.InGameListener;
 import de.alpha.uhc.Listener.LobbyListener;
+import de.alpha.uhc.Listener.MotdListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.kits.GUI;
@@ -69,10 +70,16 @@ public class MessageFileManager {
 		file.setDefault("Teams.chosen", "&aYou are now in Team [team]");
 		
 		file.setDefault("Reward", "&aYou got [Coins] Coins.");
+		
+		file.setDefault("Motd.Lobby", "&bUHC \n &aJoinable!");
+		file.setDefault("Motd.InGame", "&bUHC \n &cInGame!");
 	}
 	
 	public void loadMessages() {
 		SimpleFile file = getMSGFile();
+		
+		MotdListener.lobby = file.getColorString("Motd.Lobby");
+		MotdListener.ingame = file.getColorString("Motd.InGame");
 		
 		ATeam.chosen = file.getColorString("Teams.chosen");
 		ATeam.noExist = file.getColorString("Teams.do not exist");
