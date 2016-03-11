@@ -66,6 +66,9 @@ public class Spectator implements Listener{
 	
 	@EventHandler
 	public void onHit(EntityDamageByEntityEvent e){	
+		
+		if(!(e.getDamager() instanceof Player)) return;
+		
 		if(Core.getSpecs().contains(e.getDamager())){
 			e.setCancelled(true);	
 		}

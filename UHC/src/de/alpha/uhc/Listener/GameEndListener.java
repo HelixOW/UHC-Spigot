@@ -42,7 +42,7 @@ public class GameEndListener implements Listener {
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
 		
-		Player p = e.getEntity();
+		final Player p = e.getEntity();
 		
 		//                        -=X Death Note X=-
 		
@@ -94,7 +94,13 @@ public class GameEndListener implements Listener {
 		//                        -=X ItemDrop X=-
 		
 		p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.GOLDEN_APPLE));
-		p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
+			}
+		}.runTaskLater(Core.getInstance(), 10);
 		
 		
 		//                       -=X Game End X=-

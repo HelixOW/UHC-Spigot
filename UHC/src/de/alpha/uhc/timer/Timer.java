@@ -265,11 +265,12 @@ public class Timer {
 			
 			@Override
 			public void run() {
-				if(endTime % 1 == 0 && endTime < 10 && endTime != 0) {
+				if(endTime % 1 == 0 && endTime <= 10 && endTime != 0) {
 					
 					endmsg = endmsg.replace("[time]", Integer.toString(endTime));
 					
 					Bukkit.broadcastMessage(Core.getPrefix() + endmsg);
+					endTime = endTime - 1;
 					
 					endmsg = MessageFileManager.getMSGFile().getColorString("Announcements.End");
 				} 

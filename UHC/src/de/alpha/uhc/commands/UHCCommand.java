@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
 import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
@@ -48,10 +49,12 @@ public class UHCCommand implements CommandExecutor {
 		if(cmd.getName().equalsIgnoreCase("uhc")) {
 			
 			if(args.length == 2) {
-				if(args[0].equalsIgnoreCase("team")) {
-					if(teamMode == true) {
-						ATeam.addPlayerToTeam(p, args[1]);
-						return true;
+				if(GState.isState(GState.LOBBY)) { 
+					if(args[0].equalsIgnoreCase("team")) {
+						if(teamMode == true) {
+							ATeam.addPlayerToTeam(p, args[1]);
+							return true;
+						}
 					}
 				}
 			}
@@ -258,6 +261,6 @@ public class UHCCommand implements CommandExecutor {
 			}
 		}
 		
-		return false;
+		return true;
 	}
 }

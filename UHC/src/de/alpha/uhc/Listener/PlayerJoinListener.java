@@ -44,7 +44,12 @@ public class PlayerJoinListener implements Listener {
 		
 		e.setJoinMessage(null);
 		
-		if(!(GState.isState(GState.LOBBY))) {
+		if(GState.isState(GState.RESTART)) {
+			e.getPlayer().kickPlayer(Core.getPrefix() + GameEndListener.kick);
+			return;
+		}
+		
+		if(GState.isState(GState.INGAME)) {
 			e.getPlayer().getInventory().clear();
 			e.getPlayer().getInventory().setArmorContents(null);
 			e.getPlayer().teleport(SpawnFileManager.getSpawn());
