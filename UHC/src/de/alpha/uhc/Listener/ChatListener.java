@@ -8,6 +8,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.teams.ATeam;
 
 public class ChatListener implements Listener {
 	
@@ -16,8 +17,12 @@ public class ChatListener implements Listener {
 		
 		e.setCancelled(true);
 		
-		if(GState.isState(GState.INGAME)) {
+		if(GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
 			for(Player all : Core.getInGamePlayers()) {
+				if(e.getMessage().startsWith("#") && ATeam.hasSameTeam(e.getPlayer(), all)) {
+					all.sendMessage(Core.getPrefix() + "§7[" + ATeam.getTeamColor(ATeam.getPlayerTeam(e.getPlayer())) + ATeam.getPlayerTeam(e.getPlayer()) + "§7] " + e.getPlayer().getDisplayName() + " §7: " + e.getMessage().replaceFirst("#", ""));
+					return;
+				}
 				all.sendMessage(Core.getPrefix() + " " + e.getPlayer().getDisplayName() + "§7: " + e.getMessage());
 			}
 		} else {

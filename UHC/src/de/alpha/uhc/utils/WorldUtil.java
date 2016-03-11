@@ -50,6 +50,8 @@ public class WorldUtil {
 	
 	public static void createWorld() {
 		
+		changeBiome("PLAINS");
+		
 		new BukkitRunnable() {
 			
 			@Override
@@ -72,8 +74,6 @@ public class WorldUtil {
 						Bukkit.createWorld(new WorldCreator("UHC")
 								.generateStructures(false)
 								.type(WorldType.NORMAL));
-						
-						changeBiome("PLAINS");
 						
 						Bukkit.getWorld("UHC").getPopulators().add(new WorldPopulator());
 						Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§aPlaying World loaded");
@@ -102,8 +102,6 @@ public class WorldUtil {
 				Bukkit.createWorld(new WorldCreator(name)
 						.generateStructures(false)
 						.type(WorldType.NORMAL));
-				
-				changeBiome("PLAINS");
 				
 				Bukkit.getWorld(name).getPopulators().add(new WorldPopulator());
 				Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§aPlaying World reseted");
@@ -162,11 +160,10 @@ public class WorldUtil {
 		Bukkit.setWhitelist(false);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	private static void changeBiome(String Biome){
         try {
                 String mojangPath = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
-                Class clazz = Class.forName(mojangPath + ".BiomeBase");
+                Class<?> clazz = Class.forName(mojangPath + ".BiomeBase");
 
                 Field plainsField = clazz.getDeclaredField(Biome);
                 plainsField.setAccessible(true);

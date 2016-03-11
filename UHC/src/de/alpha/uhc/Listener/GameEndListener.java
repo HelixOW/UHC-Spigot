@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
@@ -93,7 +92,7 @@ public class GameEndListener implements Listener {
 		
 		//                        -=X ItemDrop X=-
 		
-		p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.GOLDEN_APPLE));
+		p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.GOLD_INGOT).setAmount(8).build());
 		new BukkitRunnable() {
 			
 			@Override
@@ -195,7 +194,7 @@ public class GameEndListener implements Listener {
 		if(GState.isState(GState.INGAME)) {
 			
 			if(!(Core.getSpecs().contains(p))) {
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.GOLDEN_APPLE));
+				p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.GOLD_INGOT).setAmount(8).build());
 				p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
 				p.getWorld().strikeLightningEffect(p.getLocation());
 			}	

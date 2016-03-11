@@ -20,8 +20,8 @@ public class WorldPopulator extends BlockPopulator {
 		
 		if(r.nextInt(50) < 10) {
 			w.generateTree(new Location(w, cx, w.getHighestBlockYAt(cx, cz), cz), TreeType.RED_MUSHROOM);
-			w.generateTree(new Location(w, cx, w.getHighestBlockYAt(cx, cz), cz), TreeType.BROWN_MUSHROOM);
-			w.generateTree(new Location(w, cx, w.getHighestBlockYAt(cx, cz), cz), TreeType.SWAMP);
+			w.generateTree(new Location(w, cx+10, w.getHighestBlockYAt(cx+10, cz+10), cz+10), TreeType.BROWN_MUSHROOM);
+			w.generateTree(new Location(w, cx-10, w.getHighestBlockYAt(cx-10, cz-10), cz-10), TreeType.SWAMP);
 		}
 	}
 	

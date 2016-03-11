@@ -41,7 +41,7 @@ public class LobbyListener implements Listener {
 	@EventHandler
 	public void onHunger(FoodLevelChangeEvent e) {
 		
-		if(GState.isState(GState.LOBBY)) {
+		if(GState.isState(GState.LOBBY) || GState.isState(GState.GRACE)) {
 			e.setFoodLevel(20);
 		}
 		
@@ -65,11 +65,11 @@ public class LobbyListener implements Listener {
 		
 	}
 	
-	@EventHandler (ignoreCancelled = true)
+	@EventHandler
 	public void onHurt(EntityDamageEvent e) {
 		
 		if(e.getEntity() instanceof Player) {
-			if(GState.isState(GState.LOBBY)) {
+			if(GState.isState(GState.LOBBY) || GState.isState(GState.GRACE)) {
 				e.setCancelled(true);
 			}
 		}

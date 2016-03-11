@@ -9,6 +9,7 @@ import de.alpha.uhc.GState;
 public class MotdListener implements Listener {
 	
 	public static String lobby;
+	public static String grace;
 	public static String ingame;
 	public static String restart;
 	
@@ -25,6 +26,8 @@ public class MotdListener implements Listener {
 			e.setMotd(ingame);
 		} else if(GState.isState(GState.RESTART)) {
 			e.setMotd(restart);
+		} else if(GState.isState(GState.GRACE)) {
+			e.setMotd(grace);
 		}
 		
 	}

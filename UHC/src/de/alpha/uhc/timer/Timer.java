@@ -26,7 +26,6 @@ import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.utils.LobbyPasteUtil;
 import de.alpha.uhc.utils.WorldUtil;
-import net.minetopix.library.main.item.ItemCreator;
 
 
 public class Timer {
@@ -153,11 +152,9 @@ public class Timer {
 												grace = true;
 												startGracePeriod();
 												Border.border();
-												GState.setGameState(GState.INGAME);
+												GState.setGameState(GState.GRACE);
 												
-												if(!(LobbyListener.hasSelKit(ig))) {
-													ig.getInventory().addItem(new ItemCreator(Material.APPLE).build());
-												} else {
+												if(LobbyListener.hasSelKit(ig)) {
 													for(ItemStack is : new KitFileManager().getContents(LobbyListener.getSelKit(ig)).getContents()) {
 														if(is != null) {
 															if(!(ig.getInventory().contains(is))) {
@@ -244,6 +241,7 @@ public class Timer {
 								for(Player all : Core.getInGamePlayers()) {
 									all.showPlayer(all);
 									giveCompass(all);
+									GState.setGameState(GState.INGAME);
 								}
 								c.cancel();
 								return;

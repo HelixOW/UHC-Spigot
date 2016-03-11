@@ -74,6 +74,7 @@ public class MessageFileManager {
 		file.setDefault("Reward", "&aYou got [Coins] Coins.");
 		
 		file.setDefault("Motd.Lobby", "&bUHC \n &aJoinable!");
+		file.setDefault("Motd.Grace", "&bUHC \n &dGraceperiod!");
 		file.setDefault("Motd.InGame", "&bUHC \n &cInGame!");
 		file.setDefault("Motd.Restart", "&bUHC \n &5Restart!");
 		
@@ -83,6 +84,7 @@ public class MessageFileManager {
 		SimpleFile file = getMSGFile();
 		
 		MotdListener.lobby = file.getColorString("Motd.Lobby");
+		MotdListener.grace = file.getColorString("Motd.Grace");
 		MotdListener.ingame = file.getColorString("Motd.InGame");
 		MotdListener.restart = file.getColorString("Motd.Restart");
 		

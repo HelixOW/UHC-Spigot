@@ -91,6 +91,7 @@ public class Regions implements Listener {
 		
 		if(pos1.containsKey(p) && pos2.containsKey(p)) {
 			p.sendMessage(Core.getPrefix()+"§7You can now create the lobby with /uhc createLobby");
+			
 		}
 		
 		

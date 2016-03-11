@@ -6,7 +6,10 @@ import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -123,6 +126,8 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		GState.setGameState(GState.LOBBY);
 		Timer.setCountdownTime();
 		
+		registerCrafting();
+		
 		if(Timer.pc <= 1) {
 			Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");
 		}
@@ -145,6 +150,21 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		
 		MapReset.restore();
 		Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC by AlphaHelix is now disabled!");
+	}
+	
+	private void registerCrafting() {
+		
+		ShapedRecipe goldenApple = new ShapedRecipe(new ItemStack(Material.GOLDEN_APPLE));
+		
+		goldenApple.shape(
+				"GGG",
+				"GxG",
+				"GGG");
+		
+		goldenApple.setIngredient('G', Material.GOLD_INGOT);
+		goldenApple.setIngredient('x', Material.SKULL_ITEM);
+		Bukkit.addRecipe(goldenApple);
+		
 	}
 	
 	private void registerCommands() {
