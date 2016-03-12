@@ -173,26 +173,34 @@ public class ScoreboardManager {
 	}
 		
 	public static void updatePlayerSpecScore() {
-		o.getScore(ingameSpectators).setScore(Core.getSpecs().size());
+		try {
+			o.getScore(ingameSpectators).setScore(Core.getSpecs().size());
+		} catch (Exception e) {}
 	}
 		
 	public static void updatePlayerIGScore() {
-		o.getScore(ingamePlayersLiving).setScore(Core.getInGamePlayers().size());
+		try {
+			o.getScore(ingamePlayersLiving).setScore(Core.getInGamePlayers().size());
+		} catch (Exception e) {}
 	}
 	
 	public static void updateCenterScore(Player p) {
-		Scoreboard sc = p.getScoreboard();
-		Objective ob = sc.getObjective("UHCInGame");
-		if(SpawnFileManager.getSpawn() == null) {
-			ob.getScore(center).setScore((int) p.getLocation().distance(p.getWorld().getSpawnLocation()));
-		} else {
-			ob.getScore(center).setScore((int) p.getLocation().distance(SpawnFileManager.getSpawn()));
-		}
+		try {
+			Scoreboard sc = p.getScoreboard();
+			Objective ob = sc.getObjective("UHCInGame");
+			if(SpawnFileManager.getSpawn() == null) {
+				ob.getScore(center).setScore((int) p.getLocation().distance(p.getWorld().getSpawnLocation()));
+			} else {
+				ob.getScore(center).setScore((int) p.getLocation().distance(SpawnFileManager.getSpawn()));
+			}
+		} catch (Exception e) {}
 	}
 	
 	public static void updateBorderScore(Player p) {
-		Scoreboard sc = p.getScoreboard();
-		Objective ob = sc.getObjective("UHCInGame");
-		ob.getScore(border).setScore(Border.size);
+		try {
+			Scoreboard sc = p.getScoreboard();
+			Objective ob = sc.getObjective("UHCInGame");
+			ob.getScore(border).setScore(Border.size);
+		} catch (Exception e) {}
 	}
 }

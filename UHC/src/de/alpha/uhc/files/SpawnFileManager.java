@@ -92,7 +92,7 @@ public class SpawnFileManager {
 	public static String getSpawnWorldName() {
 		
 		if(cfg.getString("Spawn.world") == null) {
-			return null;
+			return "UHC";
 		}
 		
 		return cfg.getString("Spawn.world");

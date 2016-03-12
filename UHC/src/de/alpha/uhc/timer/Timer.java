@@ -120,7 +120,9 @@ public class Timer {
 											
 											a.cancel();
 											
-											LobbyPasteUtil.removeLobby();
+											if(WorldUtil.lobbySchematic == true) {
+												LobbyPasteUtil.removeLobby();
+											}
 													
 											for(Player ig : Core.getInGamePlayers()) {
 												
@@ -197,7 +199,7 @@ public class Timer {
 	
 	public static void startGracePeriod() {
 		
-		if(GState.isState(GState.INGAME)) {
+		if(GState.isState(GState.GRACE)) {
 			return;
 		}
 		for(Player all : Core.getInGamePlayers()) {

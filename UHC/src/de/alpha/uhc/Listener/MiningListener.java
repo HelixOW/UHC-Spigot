@@ -8,8 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.alpha.uhc.GState;
-
 public class MiningListener implements Listener {
 	
 	public static boolean wood;
@@ -25,11 +23,6 @@ public class MiningListener implements Listener {
 		
 		Block b = e.getBlock();
 		Material m = b.getType();
-		
-		if(!(GState.isState(GState.INGAME))) {
-			e.setCancelled(true);
-			return;
-		}
 		
 		if(m.equals(Material.LOG) || m.equals(Material.LOG_2)) {
 			

@@ -152,6 +152,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC by AlphaHelix is now disabled!");
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void registerCrafting() {
 		
 		ShapedRecipe goldenApple = new ShapedRecipe(new ItemStack(Material.GOLDEN_APPLE));
@@ -162,7 +163,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 				"GGG");
 		
 		goldenApple.setIngredient('G', Material.GOLD_INGOT);
-		goldenApple.setIngredient('x', Material.SKULL_ITEM);
+		goldenApple.setIngredient('x', Material.SKULL_ITEM, 3);
 		Bukkit.addRecipe(goldenApple);
 		
 	}

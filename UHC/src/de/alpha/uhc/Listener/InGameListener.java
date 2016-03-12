@@ -33,7 +33,7 @@ public class InGameListener implements Listener {
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		
-		if(!(GState.isState(GState.INGAME))) return;
+		if(!(GState.isState(GState.INGAME) || GState.isState(GState.GRACE))) return;
 		if(Core.getSpecs().contains(e.getPlayer())) return;
 		ScoreboardManager.updateCenterScore(e.getPlayer());
 		

@@ -52,7 +52,7 @@ public class LobbyListener implements Listener {
 		
 		Player p = e.getPlayer();
 		
-		if(GState.isState(GState.INGAME)) return;
+		if(!(GState.isState(GState.LOBBY))) return;
 		if(Regions.lobby == false) return;
 		
 		if(Regions.isInRegion(e.getTo()) == false) {
@@ -77,9 +77,9 @@ public class LobbyListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlace(BlockBreakEvent e) {
+	public void onBreak(BlockBreakEvent e) {
 		
-		if(!(GState.isState(GState.INGAME))) {
+		if(GState.isState(GState.LOBBY) || GState.isState(GState.RESTART)) {
 			e.setCancelled(true);
 		}
 		
@@ -88,7 +88,7 @@ public class LobbyListener implements Listener {
 	@EventHandler
 	public void onPlace(BlockPlaceEvent e) {
 		
-		if(!(GState.isState(GState.INGAME))) {
+		if(GState.isState(GState.LOBBY) || GState.isState(GState.RESTART)) {
 			e.setCancelled(true);
 		}
 		

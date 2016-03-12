@@ -24,9 +24,4 @@ public class WorldPopulator extends BlockPopulator {
 			w.generateTree(new Location(w, cx-10, w.getHighestBlockYAt(cx-10, cz-10), cz-10), TreeType.SWAMP);
 		}
 	}
-	
-	
-	
-	
-
 }

@@ -43,6 +43,16 @@ public class GameEndListener implements Listener {
 		
 		final Player p = e.getEntity();
 		
+		//                        -=X Spectator X=-
+		
+		Core.removeInGamePlayer(p);
+		Core.addSpec(p);
+		
+		Spectator.setSpec(p);
+		
+		p.getWorld().strikeLightningEffect(p.getLocation());
+		
+		
 		//                        -=X Death Note X=-
 		
 		apc = Core.getInGamePlayers().size();
@@ -52,16 +62,6 @@ public class GameEndListener implements Listener {
 		e.setDeathMessage(Core.getPrefix() + death);
 		
 		death = MessageFileManager.getMSGFile().getColorString("Announcements.Death");
-		
-		
-		//                        -=X Spectator X=-
-		
-		Core.removeInGamePlayer(p);
-		Core.addSpec(p);
-		
-		Spectator.setSpec(p);
-		
-		p.getWorld().strikeLightningEffect(p.getLocation());
 		
 		
 		//                        -=X Stats X=-
@@ -85,6 +85,7 @@ public class GameEndListener implements Listener {
 		
 		
 		//                        -=X Scoreboard X=-
+		
 		
 		ScoreboardManager.updatePlayerIGScore();
 		ScoreboardManager.updatePlayerSpecScore();

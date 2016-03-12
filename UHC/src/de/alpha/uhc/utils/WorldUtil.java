@@ -150,8 +150,7 @@ public class WorldUtil {
 				}
 			}
 		} else {
-			Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cThe ArenaSpawnWorld doesn't exists!");
-			return;
+			spawn = Bukkit.createWorld(new WorldCreator("UHC"));
 		}
 			
 		unloadWorld(spawn);
@@ -175,9 +174,8 @@ public class WorldUtil {
                 Object[] biomes = (Object[]) biomesField.get(null);
 
                 // Ocean auf Plains setzen
-                for(int i = 0;i < biomes.length;i++){
-                biomes[i] = plainsBiome;
-                }
+                biomes[24] = plainsBiome;
+                biomes[0] = plainsBiome;
                 biomesField.set(null, biomes);
                 
         } catch (Exception e) {
