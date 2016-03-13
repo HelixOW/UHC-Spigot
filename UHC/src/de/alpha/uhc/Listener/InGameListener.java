@@ -56,7 +56,7 @@ public class InGameListener implements Listener {
 		if(e.getMaterial().equals(Material.COMPASS)) {
 			
 			Player target = getNearest(p);
-			if(target == null) {
+			if(target == null || Core.getSpecs().contains(target)) {
 				p.sendMessage(Core.getPrefix() + ntrack);
 				return;
 			}

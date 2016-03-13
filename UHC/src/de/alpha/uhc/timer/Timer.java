@@ -63,6 +63,8 @@ public class Timer {
 		
 		if(GState.isState(GState.LOBBY)) {
 			
+			SpawnFileManager.createSpawnWorld();
+			
 			a = new BukkitRunnable() {
 				
 				@Override
@@ -115,7 +117,6 @@ public class Timer {
 											}, 2);
 										}
 											
-											
 										if(high == 0) {
 											
 											a.cancel();
@@ -137,10 +138,6 @@ public class Timer {
 															Location l = SpawnFileManager.getSpawn();
 															
 															Location r = SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max);
-															
-															if(r == null) {
-																Bukkit.broadcastMessage("Hey!");
-															}
 															
 															ig.teleport(r);
 															Border.setDistanceLoc(SpawnFileManager.getSpawn());

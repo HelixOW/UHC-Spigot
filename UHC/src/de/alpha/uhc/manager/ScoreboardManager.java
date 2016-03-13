@@ -195,7 +195,7 @@ public class ScoreboardManager {
 			if(SpawnFileManager.getSpawn() == null) {
 				ob.getScore(center).setScore((int) p.getLocation().distance(p.getWorld().getSpawnLocation()));
 			} else {
-				ob.getScore(center).setScore((int) p.getLocation().distance(SpawnFileManager.getSpawn()));
+				ob.getScore(center).setScore((int) p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation()));
 			}
 		} catch (Exception e) {}
 	}

@@ -49,10 +49,15 @@ public class PlayerJoinListener implements Listener {
 			return;
 		}
 		
-		if(GState.isState(GState.INGAME)) {
+		if(GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
 			e.getPlayer().getInventory().clear();
 			e.getPlayer().getInventory().setArmorContents(null);
-			e.getPlayer().teleport(SpawnFileManager.getSpawn());
+			if(SpawnFileManager.getSpawn() == null) {
+				e.getPlayer().teleport(Bukkit.getWorld("UHC").getSpawnLocation());
+			} else {
+				e.getPlayer().teleport(SpawnFileManager.getSpawn());
+			}
+			Core.addSpec(e.getPlayer());
 			Spectator.setSpec(e.getPlayer());
 			ScoreboardManager.setInGameBoard(e.getPlayer());
 			for(Player all : Core.getInGamePlayers()) {

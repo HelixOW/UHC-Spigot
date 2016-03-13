@@ -84,7 +84,7 @@ public class WorldUtil {
 									Location loc = new Location(w, 0, 200, 0);
 									
 									LobbyPasteUtil.pasteLobby(loc);
-									new SpawnFileManager().SetLobby(0, 200, 0, w);
+									SpawnFileManager.SetLobby(0, 200, 0, w);
 									return;
 								} catch (Exception e) {
 									Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
@@ -114,7 +114,7 @@ public class WorldUtil {
 							Location loc = new Location(w, 0, 200, 0);
 							
 							LobbyPasteUtil.pasteLobby(loc);
-							new SpawnFileManager().SetLobby(0, 200, 0, w);
+							SpawnFileManager.SetLobby(0, 200, 0, w);
 							return;
 						} catch (Exception e) {
 							Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
@@ -140,29 +140,30 @@ public class WorldUtil {
 			}
 		}
 		
-		Bukkit.setWhitelist(true);
-		
 		if(Bukkit.getWorld(SpawnFileManager.getSpawnWorldName()) != null) {
 			spawn = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
 			if(spawn.getName().equals("world")) {
 				if(Bukkit.getWorld("UHC") == null) {
 					spawn = Bukkit.createWorld(new WorldCreator("UHC"));
+					SpawnFileManager.SetSpawn(0, 200, 0, spawn);
 				} else {
 					spawn = Bukkit.getWorld("UHC");
+					SpawnFileManager.SetSpawn(0, 200, 0, spawn);
 				}
 			}
 		} else {
 			if(Bukkit.getWorld("UHC") == null) {
 				spawn = Bukkit.createWorld(new WorldCreator("UHC"));
+				SpawnFileManager.SetSpawn(0, 200, 0, spawn);
 			} else {
 				spawn = Bukkit.getWorld("UHC");
+				SpawnFileManager.SetSpawn(0, 200, 0, spawn);
 			}
 		}
 			
 		unloadWorld(spawn);
 		delWorld(spawn.getWorldFolder());
 		createWorld();
-		Bukkit.setWhitelist(false);
 	}
 	
 	private static void changeBiome(String Biome){

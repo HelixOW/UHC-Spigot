@@ -3,6 +3,7 @@ package de.alpha.uhc.files;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.utils.Cuboid;
@@ -19,7 +20,7 @@ public class SpawnFileManager {
 	
 	private static void saveCfg() {cfg.save();}
 	
-	public void SetLobby(double x, double y, double z, World w) {
+	public static void SetLobby(double x, double y, double z, World w) {
 		
 		cfg.set("Lobby.x", x);
 		cfg.set("Lobby.y", y);
@@ -30,7 +31,7 @@ public class SpawnFileManager {
 		
 	}
 	
-	public void SetSpawn(double x, double y, double z, World w) {
+	public static void SetSpawn(double x, double y, double z, World w) {
 		
 		cfg.set("Spawn.x", x);
 		cfg.set("Spawn.y", y);
@@ -58,10 +59,25 @@ public class SpawnFileManager {
 		
 	}
 	
+	public static void createSpawnWorld() {
+		
+		if(cfg.getString("Spawn.world") == null) Bukkit.createWorld(new WorldCreator("UHC"));
+		
+		if(cfg.getString("Spawn.world") != null) Bukkit.createWorld(new WorldCreator(cfg.getString("Spawn.world")));
+		
+	}
+	
 	public static Location getSpawn() {
 		
 		if(cfg.getString("Spawn.world") == null) {
-			return null;
+			World w = Bukkit.getWorld("UHC");
+			int x = 0;
+			int y = 200;
+			int z = 0;
+			
+			Location l = new Location(w, x, y, z);
+			
+			return l;
 		}
 		
 		World w = Bukkit.getWorld(cfg.getString("Spawn.world"));

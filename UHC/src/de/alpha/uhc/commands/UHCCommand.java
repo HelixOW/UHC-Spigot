@@ -34,8 +34,6 @@ public class UHCCommand implements CommandExecutor {
 	public static String lobbyset;
 	public static boolean teamMode;
 	
-	private SpawnFileManager sfm = new SpawnFileManager();
-
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, final String[] args) {
 		
@@ -140,7 +138,7 @@ public class UHCCommand implements CommandExecutor {
 					
 					if(args[0].equalsIgnoreCase("setSpawn")) {
 						
-						sfm.SetSpawn(p.getLocation().getX(),
+						SpawnFileManager.SetSpawn(p.getLocation().getX(),
 								p.getLocation().getY(),
 								p.getLocation().getZ(),
 								p.getWorld());
@@ -151,7 +149,7 @@ public class UHCCommand implements CommandExecutor {
 					
 					if(args[0].equalsIgnoreCase("setLobby")) {
 						
-						sfm.SetLobby(p.getLocation().getX(),
+						SpawnFileManager.SetLobby(p.getLocation().getX(),
 								p.getLocation().getY(),
 								p.getLocation().getZ(),
 								p.getWorld());
