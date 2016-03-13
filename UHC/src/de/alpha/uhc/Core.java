@@ -132,6 +132,8 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 			Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");
 		}
 		
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+		
 		Bukkit.getConsoleSender().sendMessage(prefix + "§aUHC by AlphaHelix is now enabled!");
 		Bukkit.setWhitelist(false);
 	}
@@ -238,7 +240,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 	
 	@Override
 	public void onPluginMessageReceived(String arg0, Player arg1, byte[] arg2) {
-		if(!arg0.equalsIgnoreCase("BungeeCord")) {
+		if(!(arg0.equalsIgnoreCase("BungeeCord"))) {
 			return;
 		}
 		

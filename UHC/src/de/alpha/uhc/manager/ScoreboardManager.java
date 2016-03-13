@@ -174,13 +174,17 @@ public class ScoreboardManager {
 		
 	public static void updatePlayerSpecScore() {
 		try {
-			o.getScore(ingameSpectators).setScore(Core.getSpecs().size());
+			for(Player all : Bukkit.getOnlinePlayers()) {
+				all.getScoreboard().getObjective("UHCInGame").getScore(ingameSpectators).setScore(Core.getSpecs().size());
+			}
 		} catch (Exception e) {}
 	}
 		
 	public static void updatePlayerIGScore() {
 		try {
-			o.getScore(ingamePlayersLiving).setScore(Core.getInGamePlayers().size());
+			for(Player all : Bukkit.getOnlinePlayers()) {
+				all.getScoreboard().getObjective("UHCInGame").getScore(ingamePlayersLiving).setScore(Core.getInGamePlayers().size());
+			}
 		} catch (Exception e) {}
 	}
 	

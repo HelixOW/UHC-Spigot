@@ -127,21 +127,27 @@ public class Timer {
 											for(Player ig : Core.getInGamePlayers()) {
 												
 												if(WorldUtil.lobbySchematic == false) {
+													
+													try {
 												
-													if(SpawnFileManager.getSpawn() == null) {
+														if(SpawnFileManager.getSpawn() == null) {
+															ig.teleport(ig.getWorld().getSpawnLocation());
+															Border.setDistanceLoc(ig.getWorld().getSpawnLocation());
+														} else {
+															Location l = SpawnFileManager.getSpawn();
+															
+															Location r = SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max);
+															
+															if(r == null) {
+																Bukkit.broadcastMessage("Hey!");
+															}
+															
+															ig.teleport(r);
+															Border.setDistanceLoc(SpawnFileManager.getSpawn());
+														}
+													} catch (Exception e) {
 														ig.teleport(ig.getWorld().getSpawnLocation());
 														Border.setDistanceLoc(ig.getWorld().getSpawnLocation());
-													} else {
-														Location l = SpawnFileManager.getSpawn();
-														
-														Location r = SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max);
-														
-														if(r == null) {
-															Bukkit.broadcastMessage("Hey!");
-														}
-														
-														ig.teleport(r);
-														Border.setDistanceLoc(SpawnFileManager.getSpawn());
 													}
 													
 												} else {

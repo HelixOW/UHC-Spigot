@@ -130,11 +130,13 @@ public class WorldUtil {
 	
 	public static void WorldReset() {
 		
-		if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) || !(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby"))) return;
+		if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn"))) return;
 		if(SpawnFileManager.getSpawnWorldName() == null) return;
-		if(SpawnFileManager.getSpawnWorldName().equals(SpawnFileManager.getLobbyWorldName())) {
-			if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
-				return;
+		if(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby")) {
+			if(SpawnFileManager.getSpawnWorldName().equals(SpawnFileManager.getLobbyWorldName())) {
+				if(lobbySchematic == false && !(Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
+					return;
+				}
 			}
 		}
 		
@@ -150,7 +152,11 @@ public class WorldUtil {
 				}
 			}
 		} else {
-			spawn = Bukkit.createWorld(new WorldCreator("UHC"));
+			if(Bukkit.getWorld("UHC") == null) {
+				spawn = Bukkit.createWorld(new WorldCreator("UHC"));
+			} else {
+				spawn = Bukkit.getWorld("UHC");
+			}
 		}
 			
 		unloadWorld(spawn);
