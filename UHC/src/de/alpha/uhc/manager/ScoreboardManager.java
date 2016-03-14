@@ -29,7 +29,10 @@ public class ScoreboardManager {
 	public static String team;
 	public static String border;
 	
+	public static boolean aa;
+	
 	public static void setLobbyBoard(Player p) {
+		if(aa == false) return;
 		Scoreboard s = Bukkit.getScoreboardManager().getNewScoreboard();
 		
 		Objective o = s.registerNewObjective("UHCLobby", "dummy");
@@ -90,7 +93,8 @@ public class ScoreboardManager {
 	private static Scoreboard s;
 	private static Objective o;
 	
-		public static Scoreboard setInGameBoard(Player p) {
+		public static void setInGameBoard(Player p) {
+			if(aa == false) return;
 		
 		s = Bukkit.getScoreboardManager().getNewScoreboard();
 		
@@ -168,11 +172,10 @@ public class ScoreboardManager {
 		
 		p.setHealth(p.getHealth());
 		p.setScoreboard(s);
-		return s;
-		
 	}
 		
 	public static void updatePlayerSpecScore() {
+		if(aa == false) return;
 		try {
 			for(Player all : Bukkit.getOnlinePlayers()) {
 				all.getScoreboard().getObjective("UHCInGame").getScore(ingameSpectators).setScore(Core.getSpecs().size());
@@ -181,6 +184,7 @@ public class ScoreboardManager {
 	}
 		
 	public static void updatePlayerIGScore() {
+		if(aa == false) return;
 		try {
 			for(Player all : Bukkit.getOnlinePlayers()) {
 				all.getScoreboard().getObjective("UHCInGame").getScore(ingamePlayersLiving).setScore(Core.getInGamePlayers().size());
@@ -189,6 +193,7 @@ public class ScoreboardManager {
 	}
 	
 	public static void updateCenterScore(Player p) {
+		if(aa == false) return;
 		try {
 			Scoreboard sc = p.getScoreboard();
 			Objective ob = sc.getObjective("UHCInGame");
@@ -201,6 +206,7 @@ public class ScoreboardManager {
 	}
 	
 	public static void updateBorderScore(Player p) {
+		if(aa == false) return;
 		try {
 			Scoreboard sc = p.getScoreboard();
 			Objective ob = sc.getObjective("UHCInGame");

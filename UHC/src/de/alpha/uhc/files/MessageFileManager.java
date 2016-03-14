@@ -1,5 +1,6 @@
 package de.alpha.uhc.files;
 
+import de.alpha.uhc.GState;
 import de.alpha.uhc.Listener.GameEndListener;
 import de.alpha.uhc.Listener.InGameListener;
 import de.alpha.uhc.Listener.LobbyListener;
@@ -78,10 +79,22 @@ public class MessageFileManager {
 		file.setDefault("Motd.InGame", "&bUHC \n &cInGame!");
 		file.setDefault("Motd.Restart", "&bUHC \n &5Restart!");
 		
+		file.setDefault("Tablist.Top", "&b>> &cWelcome [player] &con the UHC &b<< \n &7Players:");
+		file.setDefault("Tablist.Bottom", "&b>> &cThere are currently &4[playercount] &cplayers online &b<< \n &b>> &cCurrent Gamestate: &4[gamestatus] &b<<");
+		
+		file.setDefault("GameStatus.Lobby", "Lobby");
+		file.setDefault("GameStatus.Grace", "Grace");
+		file.setDefault("GameStatus.InGame", "InGame");
+		file.setDefault("GameStatus.Restart", "Restart");
 	}
 	
 	public void loadMessages() {
 		SimpleFile file = getMSGFile();
+		
+		GState.lobby = file.getString("GameStatus.Lobby");
+		GState.grace = file.getString("GameStatus.Grace");
+		GState.ingame = file.getString("GameStatus.InGame");
+		GState.restart = file.getString("GameStatus.Restart");
 		
 		MotdListener.lobby = file.getColorString("Motd.Lobby");
 		MotdListener.grace = file.getColorString("Motd.Grace");
@@ -112,8 +125,12 @@ public class MessageFileManager {
 		GameEndListener.kick = file.getColorString("Announcements.Restart");
 		GameEndListener.rew = file.getColorString("Reward");
 		GameEndListener.quit = file.getColorString("Announcements.Leave");
+		GameEndListener.header = file.getColorString("Tablist.Top");
+		GameEndListener.footer = file.getColorString("Tablist.Bottom");
 		
 		Timer.kick = GameEndListener.kick;
+		Timer.header = file.getColorString("Tablist.Top");
+		Timer.footer = file.getColorString("Tablist.Bottom");
 		
 		InGameListener.ntrack = file.getColorString("Compass.NoPlayerInRange");
 		InGameListener.track = file.getColorString("Compass.PlayerInRange");
@@ -123,6 +140,8 @@ public class MessageFileManager {
 		PlayerJoinListener.full = file.getColorString("Warns.FullServer");
 		PlayerJoinListener.title = file.getColorString("Join.Title");
 		PlayerJoinListener.subtitle = file.getColorString("Join.Subtitle");
+		PlayerJoinListener.header = file.getColorString("Tablist.Top");
+		PlayerJoinListener.footer = file.getColorString("Tablist.Bottom");
 		
 		BorderManager.moved = file.getColorString("Announcements.Border.Move");
 		 

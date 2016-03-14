@@ -1,6 +1,6 @@
 name: UHC
 author: AlphaHelix
-version: 3.5.7
+version: 3.6.1
 main: de.alpha.uhc.Core
 softdepend: [WorldEdit]
 

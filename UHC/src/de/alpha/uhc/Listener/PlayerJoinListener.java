@@ -29,6 +29,9 @@ public class PlayerJoinListener implements Listener {
 	public static String join;
 	public static String full;
 	
+	public static String header;
+	public static String footer;
+	
 	public static String title;
 	public static String subtitle;
 	
@@ -49,7 +52,16 @@ public class PlayerJoinListener implements Listener {
 			return;
 		}
 		
+		header = header.replace("[player]", e.getPlayer().getDisplayName());
+		header = header.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
+		header = header.replace("[gamestatus]", GState.getGStateName());
+		
+		footer = footer.replace("[player]", e.getPlayer().getDisplayName());
+		footer = footer.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
+		footer = footer.replace("[gamestatus]", GState.getGStateName());
+		
 		if(GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
+			header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
 			e.getPlayer().getInventory().clear();
 			e.getPlayer().getInventory().setArmorContents(null);
 			if(SpawnFileManager.getSpawn() == null) {
@@ -60,11 +72,18 @@ public class PlayerJoinListener implements Listener {
 			Core.addSpec(e.getPlayer());
 			Spectator.setSpec(e.getPlayer());
 			ScoreboardManager.setInGameBoard(e.getPlayer());
+			TitleManager.sendTabTitle(e.getPlayer(), header, footer);
 			for(Player all : Core.getInGamePlayers()) {
 				ScoreboardManager.setInGameBoard(all);
 			}
 			return;
 		}
+		
+		TitleManager.sendTabTitle(e.getPlayer(), "", "");
+		TitleManager.sendTabTitle(e.getPlayer(), header, footer);
+		
+		header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
+		footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
 		
 		for(Player all : Bukkit.getOnlinePlayers()) {
 			all.showPlayer(e.getPlayer());

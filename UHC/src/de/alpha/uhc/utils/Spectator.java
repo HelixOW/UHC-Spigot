@@ -1,34 +1,49 @@
 package de.alpha.uhc.utils;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import de.alpha.uhc.Core;
+import net.minetopix.library.main.item.ItemCreator;
+import net.minetopix.library.main.item.data.SkullData;
 
 public class Spectator implements Listener{
+	
+	public static String specItem;
+	public static String specName;
+	public static String title;
 
-	public static void setSpec(final Player p) {
+	public static void setSpec(Player p) {
 		
 		p.setCanPickupItems(false);
 		p.setFoodLevel(20);
 		p.setHealth(20);
 		p.setVelocity(p.getVelocity().setY(20D));
 		p.setTotalExperience(0);
-		p.setGameMode(GameMode.SPECTATOR);
+		p.setGameMode(GameMode.ADVENTURE);
 		p.setPlayerListName("§7[§4X§7] §c" + p.getDisplayName());
+		p.setAllowFlight(true);
+		p.setFlying(true);
+		equipSpecStuff(p);
 		for(Player ig : Core.getInGamePlayers()) {
 			ig.hidePlayer(p);
 		}
-		
-		
 	}
 	
 	@EventHandler
@@ -87,6 +102,69 @@ public class Spectator implements Listener{
 		if(Core.getSpecs().contains(p)){
 			e.setCancelled(true);
 		}	
+	}
+	
+	private static void equipSpecStuff(Player p) {
+		p.getInventory().addItem(new ItemCreator(Material.getMaterial(specItem.toUpperCase())).setName(specName).build());
+	}
+	
+	@EventHandler
+	public void onClick(PlayerInteractEvent e){
+		
+		Player p = e.getPlayer();
+		
+		if(!(Core.getSpecs().contains(p))) return;
+		if(!(p.getItemInHand().hasItemMeta())) return;
+		
+		if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			
+			if(p.getItemInHand().getType() == Material.getMaterial(specItem.toUpperCase()) && p.getItemInHand().getItemMeta().getDisplayName().equals(specName)){
+				
+				Inventory inv = Bukkit.createInventory(null, 54, title);
+				
+				for(Player pl : Core.getInGamePlayers()) {
+						
+					ItemStack item = new ItemCreator(Material.SKULL_ITEM).setDamage(3).setName("§l§o" + pl.getDisplayName()).addItemData(new SkullData(pl.getName())).build();
+						
+					inv.addItem(item);
+						
+				}
+				
+				for(int i = 45; i < 54; i++) {
+					inv.setItem(i, new ItemCreator(Material.STAINED_GLASS_PANE).setName(" ").setDamage(15).build());
+				}
+				
+				p.openInventory(inv);
+			}
+		}
+	}
+	@EventHandler
+	public void onInvClick(InventoryClickEvent e){
+	
+		Player p = (Player) e.getWhoClicked();
+		Inventory inv = e.getClickedInventory();
+		
+		if(inv.getTitle().equals(title)) {
+			
+			if(e.getCurrentItem() != null && e.getCurrentItem().hasItemMeta()){
+				
+				String playername = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
+				Player player = Bukkit.getPlayerExact(playername);
+				
+				if(player != null){
+					
+					e.setCancelled(true);
+					p.teleport(player);
+					p.closeInventory();
+					
+				}
+				
+			}
+			
+			if(e.getCurrentItem().getType() == Material.STAINED_GLASS_PANE) {
+				e.setCancelled(true);
+			}
+		}
 	}
 	
 

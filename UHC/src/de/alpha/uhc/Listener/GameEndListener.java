@@ -30,6 +30,9 @@ public class GameEndListener implements Listener {
 	public static String quit;
 	public static String BungeeServer;
 	
+	public static String header;
+	public static String footer;
+	
 	private static int apc;
 	public static int opc;
 	
@@ -59,9 +62,21 @@ public class GameEndListener implements Listener {
 		death = death.replace("[Player]", p.getDisplayName());
 		death = death.replace("[PlayerCount]", "§7["+apc+" left]");
 		
+		header = header.replace("[player]", p.getDisplayName());
+		header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+		header = header.replace("[gamestatus]", GState.getGStateName());
+		
+		footer = footer.replace("[player]", p.getDisplayName());
+		footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+		footer = footer.replace("[gamestatus]", GState.getGStateName());
+		
 		e.setDeathMessage(Core.getPrefix() + death);
+		TitleManager.sendTabTitle(p, "", "");
+		TitleManager.sendTabTitle(p, header, footer);
 		
 		death = MessageFileManager.getMSGFile().getColorString("Announcements.Death");
+		header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
+		footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
 		
 		
 		//                        -=X Stats X=-
@@ -183,16 +198,33 @@ public class GameEndListener implements Listener {
 				
 				quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
 			}
+		} else {
+			quit = quit.replace("[PlayerCount]", "§7["+apc+" left]");
+		
+			Bukkit.broadcastMessage(Core.getPrefix() + quit);
+		
+			quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
 		}
-		quit = quit.replace("[PlayerCount]", "§7["+apc+" left]");
 		
-		Bukkit.broadcastMessage(Core.getPrefix() + quit);
-		
-		quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
+		for(Player all : Bukkit.getOnlinePlayers()) {
+			header = header.replace("[player]", all.getDisplayName());
+			header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+			header = header.replace("[gamestatus]", GState.getGStateName());
+			
+			footer = footer.replace("[player]", all.getDisplayName());
+			footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+			footer = footer.replace("[gamestatus]", GState.getGStateName());
+			
+			TitleManager.sendTabTitle(all, "", "");
+			TitleManager.sendTabTitle(all, header, footer);
+			
+			header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
+			footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
+		}
 		
 		p.getInventory().clear();
 		
-		if(GState.isState(GState.INGAME)) {
+		if(GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
 			
 			if(!(Core.getSpecs().contains(p))) {
 				p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.GOLD_INGOT).setAmount(8).build());
@@ -200,9 +232,8 @@ public class GameEndListener implements Listener {
 				p.getWorld().strikeLightningEffect(p.getLocation());
 			}	
 			
-			for(Player all : Bukkit.getOnlinePlayers()) {
-				ScoreboardManager.setInGameBoard(all);
-			}
+			ScoreboardManager.updatePlayerIGScore();
+			ScoreboardManager.updatePlayerSpecScore();
 			
 			p.setGameMode(GameMode.SURVIVAL);
 			

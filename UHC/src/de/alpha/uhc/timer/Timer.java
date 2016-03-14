@@ -44,6 +44,9 @@ public class Timer {
 	 static int gracetime;
 	 public	static int max;
 	 
+	public static String header;
+	public static String footer;
+	 
 	private static int endTime;
 	
 	private static   BukkitTask a;
@@ -158,6 +161,21 @@ public class Timer {
 												startGracePeriod();
 												Border.border();
 												GState.setGameState(GState.GRACE);
+												for(Player o : Bukkit.getOnlinePlayers()) {
+													header = header.replace("[player]", o.getDisplayName());
+													header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+													header = header.replace("[gamestatus]", GState.getGStateName());
+													
+													footer = footer.replace("[player]", o.getDisplayName());
+													footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+													footer = footer.replace("[gamestatus]", GState.getGStateName());
+													
+													TitleManager.sendTabTitle(o, "", "");
+													TitleManager.sendTabTitle(o, header, footer);
+													
+													header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
+													footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
+												}
 												
 												if(LobbyListener.hasSelKit(ig)) {
 													for(ItemStack is : new KitFileManager().getContents(LobbyListener.getSelKit(ig)).getContents()) {
@@ -247,6 +265,21 @@ public class Timer {
 									all.showPlayer(all);
 									giveCompass(all);
 									GState.setGameState(GState.INGAME);
+									for(Player o : Bukkit.getOnlinePlayers()) {
+										header = header.replace("[player]", o.getDisplayName());
+										header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+										header = header.replace("[gamestatus]", GState.getGStateName());
+										
+										footer = footer.replace("[player]", o.getDisplayName());
+										footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+										footer = footer.replace("[gamestatus]", GState.getGStateName());
+										
+										TitleManager.sendTabTitle(o, "", "");
+										TitleManager.sendTabTitle(o, header, footer);
+										
+										header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
+										footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
+									}
 								}
 								c.cancel();
 								return;
@@ -263,6 +296,22 @@ public class Timer {
 		
 		endTime = 10;
 		GState.setGameState(GState.RESTART);
+		
+		for(Player ig : Bukkit.getOnlinePlayers()) {
+			header = header.replace("[player]", ig.getDisplayName());
+			header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+			header = header.replace("[gamestatus]", GState.getGStateName());
+			
+			footer = footer.replace("[player]", ig.getDisplayName());
+			footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+			footer = footer.replace("[gamestatus]", GState.getGStateName());
+			
+			TitleManager.sendTabTitle(ig, "", "");
+			TitleManager.sendTabTitle(ig, header, footer);
+			
+			header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
+			footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
+		}
 		
 		f = new BukkitRunnable() {
 			
