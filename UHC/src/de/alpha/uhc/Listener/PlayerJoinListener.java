@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.PlayerFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
@@ -34,6 +35,9 @@ public class PlayerJoinListener implements Listener {
 	
 	public static String title;
 	public static String subtitle;
+	
+	public static Material teamItem;
+	public static String teamName;
 	
 	public static Material kitItem;
 	public static String kitName;
@@ -62,6 +66,7 @@ public class PlayerJoinListener implements Listener {
 		
 		if(GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
 			header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+			footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
 			e.getPlayer().getInventory().clear();
 			e.getPlayer().getInventory().setArmorContents(null);
 			if(SpawnFileManager.getSpawn() == null) {
@@ -79,14 +84,23 @@ public class PlayerJoinListener implements Listener {
 			return;
 		}
 		
-		TitleManager.sendTabTitle(e.getPlayer(), "", "");
-		TitleManager.sendTabTitle(e.getPlayer(), header, footer);
-		
-		header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
-		footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
-		
 		for(Player all : Bukkit.getOnlinePlayers()) {
+			header = header.replace("[player]", all.getDisplayName());
+			header = header.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
+			header = header.replace("[gamestatus]", GState.getGStateName());
+			
+			footer = footer.replace("[player]", all.getDisplayName());
+			footer = footer.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
+			footer = footer.replace("[gamestatus]", GState.getGStateName());
+			
+			
+			TitleManager.sendTabTitle(all, "", "");
+			TitleManager.sendTabTitle(all, header, footer);
+			
 			all.showPlayer(e.getPlayer());
+			
+			header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
+			footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
 		}
 		
 		if(Core.isMySQLActive == true) {
@@ -145,6 +159,13 @@ public class PlayerJoinListener implements Listener {
 				e.getPlayer().getInventory().setHeldItemSlot(0);
 				e.getPlayer().getInventory().setItemInHand(new ItemCreator(kitItem).setName(kitName).build());
 		
+			}
+		}
+		if(UHCCommand.teamMode == true) {
+			if(teamItem == null || teamName == null) {
+				Bukkit.getConsoleSender().sendMessage(Core.getPrefix()+"§cYou don't have any Kits in your kits.yml");
+			} else {
+				e.getPlayer().getInventory().setItem(1, new ItemCreator(teamItem).setName(teamName).build());
 			}
 		}
 		if(SpawnFileManager.getLobby() != null) {

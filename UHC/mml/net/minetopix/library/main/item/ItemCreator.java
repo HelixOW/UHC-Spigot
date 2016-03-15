@@ -40,8 +40,8 @@ public class ItemCreator {
 		this.amount = amount;
 		return this;
 	}
-	public ItemCreator setDamage(int i) {
-		this.damage = (short) i;
+	public ItemCreator setDamage(short i) {
+		this.damage = i;
 		return this;
 	}
 	public ItemCreator setLore(String[] lore) {

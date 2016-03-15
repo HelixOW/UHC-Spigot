@@ -124,14 +124,14 @@ public class Spectator implements Listener{
 				
 				for(Player pl : Core.getInGamePlayers()) {
 						
-					ItemStack item = new ItemCreator(Material.SKULL_ITEM).setDamage(3).setName("§l§o" + pl.getDisplayName()).addItemData(new SkullData(pl.getName())).build();
+					ItemStack item = new ItemCreator(Material.SKULL_ITEM).setDamage((short) 3).setName("§l§o" + pl.getDisplayName()).addItemData(new SkullData(pl.getName())).build();
 						
 					inv.addItem(item);
 						
 				}
 				
 				for(int i = 45; i < 54; i++) {
-					inv.setItem(i, new ItemCreator(Material.STAINED_GLASS_PANE).setName(" ").setDamage(15).build());
+					inv.setItem(i, new ItemCreator(Material.STAINED_GLASS_PANE).setName(" ").setDamage((short) 15).build());
 				}
 				
 				p.openInventory(inv);
@@ -142,6 +142,7 @@ public class Spectator implements Listener{
 	public void onInvClick(InventoryClickEvent e){
 	
 		Player p = (Player) e.getWhoClicked();
+		if(e.getClickedInventory() == null) return;
 		Inventory inv = e.getClickedInventory();
 		
 		if(inv.getTitle().equals(title)) {

@@ -14,6 +14,7 @@ import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.ScoreboardManager;
+import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
@@ -66,6 +67,11 @@ public class OptionsFileManager {
         
         file.setDefault("TeamMode", true);
         
+        file.setDefault("Team.Item", "blaze_rod");
+        file.setDefault("Team.Name", "&bTeams");
+        file.setDefault("Team.GUI.Title", "&7-=X &bTeams &7X=-");
+        file.setDefault("Team.GUI.Block", "stained_clay");
+        
         file.setDefault("Coins.on Win", 100);
         file.setDefault("Coins.on Death", 5);
         
@@ -87,6 +93,10 @@ public class OptionsFileManager {
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		ATeam.materialName = file.getString("Team.Item");
+		ATeam.title = file.getColorString("Team.GUI.Title");
+		ATeam.blockName = file.getString("Team.GUI.Block");
 		
 		ScoreboardManager.aa = file.getBoolean("Scoreboard.show");
 		
@@ -125,6 +135,8 @@ public class OptionsFileManager {
 		PlayerJoinListener.kitItem = Material.getMaterial(file.getString("Kit.item").toUpperCase());
 		PlayerJoinListener.kitName = file.getColorString("Kit.name");
 		PlayerJoinListener.kitMode = file.getBoolean("Kits");
+		PlayerJoinListener.teamName = file.getColorString("Team.Name");
+		PlayerJoinListener.teamItem = Material.getMaterial(file.getString("Team.Item").toUpperCase());
 		
 		MiningListener.wood = file.getBoolean("Drops.wood");
 		MiningListener.ore = file.getBoolean("Drops.ores");

@@ -59,6 +59,7 @@ public class UHCCommand implements CommandExecutor {
 			
 			if(args.length == 1) {
 				if(args[0].equalsIgnoreCase("team") || args[0].equalsIgnoreCase("teams")) {
+					
 					String a = ATeam.allTeams.replace("[teams]", ""+ATeam.teamNames);
 					p.sendMessage(Core.getPrefix() + a);
 					return true;

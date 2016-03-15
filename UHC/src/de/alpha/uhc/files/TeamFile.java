@@ -15,14 +15,17 @@ public class TeamFile {
 		
 		if(file.isConfigurationSection("Teams") == false) {
 			
-			file.setDefault("Teams.Red.name", "red");
+			file.setDefault("Teams.Red.name", "Red");
 			file.setDefault("Teams.Red.color", "red");
 			
-			file.setDefault("Teams.Yellow.name", "yellow");
+			file.setDefault("Teams.Yellow.name", "Yellow");
 			file.setDefault("Teams.Yellow.color", "yellow");
 			
-			file.setDefault("Teams.Blue.name", "blue");
+			file.setDefault("Teams.Blue.name", "Blue");
 			file.setDefault("Teams.Blue.color", "blue");
+			
+			file.setDefault("Teams.DarkBlue.name", "Dark Green");
+			file.setDefault("Teams.DarkBlue.color", "dark_green");
 			
 		}
 	}

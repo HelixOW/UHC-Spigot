@@ -62,17 +62,19 @@ public class GameEndListener implements Listener {
 		death = death.replace("[Player]", p.getDisplayName());
 		death = death.replace("[PlayerCount]", "§7["+apc+" left]");
 		
-		header = header.replace("[player]", p.getDisplayName());
-		header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-		header = header.replace("[gamestatus]", GState.getGStateName());
-		
-		footer = footer.replace("[player]", p.getDisplayName());
-		footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-		footer = footer.replace("[gamestatus]", GState.getGStateName());
-		
-		e.setDeathMessage(Core.getPrefix() + death);
-		TitleManager.sendTabTitle(p, "", "");
-		TitleManager.sendTabTitle(p, header, footer);
+		for(Player all : Bukkit.getOnlinePlayers()) {
+			header = header.replace("[player]", p.getDisplayName());
+			header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+			header = header.replace("[gamestatus]", GState.getGStateName());
+			
+			footer = footer.replace("[player]", p.getDisplayName());
+			footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+			footer = footer.replace("[gamestatus]", GState.getGStateName());
+			
+			e.setDeathMessage(Core.getPrefix() + death);
+			TitleManager.sendTabTitle(all, "", "");
+			TitleManager.sendTabTitle(all, header, footer);
+		}
 		
 		death = MessageFileManager.getMSGFile().getColorString("Announcements.Death");
 		header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");

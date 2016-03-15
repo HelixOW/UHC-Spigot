@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -63,6 +64,13 @@ public class LobbyListener implements Listener {
 			}
 		}
 		
+	}
+	
+	@EventHandler
+	public void onSpawn(CreatureSpawnEvent e) {
+		if(GState.isState(GState.LOBBY) || GState.isState(GState.GRACE)) {
+			e.setCancelled(true);
+		}
 	}
 	
 	@EventHandler
