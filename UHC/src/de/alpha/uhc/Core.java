@@ -100,6 +100,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 			}
 		}
 		
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		
 		for(Player all : Bukkit.getOnlinePlayers()) {
 			if(GameEndListener.BungeeMode == true) {
@@ -131,8 +132,6 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		if(Timer.pc <= 1) {
 			Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");
 		}
-		
-		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		
 		Bukkit.getConsoleSender().sendMessage(prefix + "§aUHC by AlphaHelix is now enabled!");
 		Bukkit.setWhitelist(false);

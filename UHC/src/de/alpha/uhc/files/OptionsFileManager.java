@@ -35,6 +35,7 @@ public class OptionsFileManager {
         file.setDefault("Prefix", "&7[&bUHC&7] ");
         file.setDefault("BungeeMode", false);
         file.setDefault("BungeeServer", "lobby");
+        file.setDefault("Minecraft 1,9", false);
         
         file.setDefault("Border.size", 3000);
         file.setDefault("Border.getCloser", true);
@@ -93,6 +94,8 @@ public class OptionsFileManager {
 	
 	public void loadOptions() {
 		SimpleFile file = getConfigFile();
+		
+		Timer.mcv = file.getBoolean("Minecraft 1,9");
 		
 		ATeam.materialName = file.getString("Team.Item");
 		ATeam.title = file.getColorString("Team.GUI.Title");

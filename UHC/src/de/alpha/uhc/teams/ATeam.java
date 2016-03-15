@@ -45,6 +45,7 @@ public class ATeam implements Listener {
 			p.sendMessage(Core.getPrefix() + chosen);
 			p.setDisplayName(getTeamColor(teamToPut) + p.getName());
 			p.setPlayerListName(getTeamColor(teamToPut) + p.getName());
+			
 			chosen = MessageFileManager.getMSGFile().getColorString("Teams.chosen");
 		} else {
 			String a = noExist.replace("[team]", teamToPut);
@@ -115,6 +116,7 @@ public class ATeam implements Listener {
 					
 				if(dura == getTeamColorAsInteger(names)) {
 					addPlayerToTeam(p, names);
+					p.closeInventory();
 					return;
 				}
 			}

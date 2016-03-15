@@ -6,6 +6,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import de.alpha.border.Border;
 import de.alpha.uhc.Core;
@@ -31,10 +32,11 @@ public class ScoreboardManager {
 	
 	public static boolean aa;
 	
+	private static Team t = null;
+	
 	public static void setLobbyBoard(Player p) {
 		if(aa == false) return;
 		Scoreboard s = Bukkit.getScoreboardManager().getNewScoreboard();
-		
 		Objective o = s.registerNewObjective("UHCLobby", "dummy");
 		o.setDisplaySlot(DisplaySlot.SIDEBAR);
 		
@@ -95,7 +97,7 @@ public class ScoreboardManager {
 	
 		public static void setInGameBoard(Player p) {
 			if(aa == false) return;
-		
+			
 		s = Bukkit.getScoreboardManager().getNewScoreboard();
 		
 		o = s.registerNewObjective("UHCInGame", "dummy");
@@ -120,6 +122,15 @@ public class ScoreboardManager {
 				
 				Score b = o.getScore("  "+ATeam.getTeamColor(ATeam.getPlayerTeam(p)) + ATeam.getPlayerTeam(p));
 				b.setScore(-3);
+				
+				if(s.getTeam(p.getName()) == null) {
+					t = s.registerNewTeam(ATeam.getPlayerTeam(p));
+				}else {
+					t = s.getTeam(p.getName());
+				}
+				
+				t.setPrefix(""+ATeam.getTeamColor(ATeam.getPlayerTeam(p)));
+				t.addEntry(p.getName());
 				
 				Score c = o.getScore("  ");
 				c.setScore(-4);

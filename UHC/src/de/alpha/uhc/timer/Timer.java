@@ -61,6 +61,8 @@ public class Timer {
 	public static String BungeeServer;
 	public static String kick;
 	
+	public static boolean mcv;
+	
 	
 	public static void startCountdown() {
 		
@@ -92,7 +94,9 @@ public class Timer {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendTitle(all, 10, 20, 10, " ", countmsg);
-											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
+											if(mcv == false) {
+												all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
+											}
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
 												@Override
@@ -109,7 +113,9 @@ public class Timer {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendAction(all, countmsg);
-											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
+											if(mcv == false) {
+												all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
+											}
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
 												@Override
@@ -155,7 +161,9 @@ public class Timer {
 												}
 												b.cancel();
 												
-												all.playSound(all.getLocation(), Sound.NOTE_PIANO, 1F, 0F);
+												if(mcv == false) {
+													all.playSound(all.getLocation(), Sound.NOTE_PIANO, 1F, 0F);
+												}
 												all.getWorld().setGameRuleValue("naturalRegeneration", "false");
 												grace = true;
 												startGracePeriod();
