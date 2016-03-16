@@ -22,7 +22,7 @@ import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.kits.KitFileManager;
-import de.alpha.uhc.manager.ScoreboardManager;
+import de.alpha.uhc.scoreboard.AScoreboard;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
 
@@ -133,6 +133,7 @@ public class LobbyListener implements Listener {
 					kit.put(p, kits);
 					sel = sel.replace("[Kit]", kits);
 					p.sendMessage(Core.getPrefix() + sel);
+					AScoreboard.updateLobbyKit(p);
 					sel = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Selected");
 					p.closeInventory();
 					break;
@@ -143,12 +144,13 @@ public class LobbyListener implements Listener {
 						kit.remove(p);
 					}
 					kit.put(p, kits);
+					AScoreboard.updateLobbyKit(p);
 					bought = bought.replace("[Kit]", kits);
 					bought = bought.replace("[Coins]", Integer.toString(new KitFileManager().getPrice(kits)));
 					p.sendMessage(Core.getPrefix() + bought);
 					bought = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Bought");
 					p.closeInventory();
-					ScoreboardManager.setLobbyBoard(p);
+					AScoreboard.setLobbyScoreboard(p);
 					break;
 				} else {
 					p.sendMessage(Core.getPrefix()+coinsneed);

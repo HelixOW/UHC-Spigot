@@ -13,7 +13,6 @@ import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.manager.BorderManager;
-import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Regions;
@@ -88,8 +87,6 @@ public class OptionsFileManager {
         file.setDefault("Spectator.Itemname", "&aPlayer Teleporter");
         file.setDefault("Spectator.GUI.Title", "&7-=X &cSpectator &7X=-");
         
-        file.setDefault("Scoreboard.show", true);
-        
     }
 	
 	public void loadOptions() {
@@ -100,8 +97,6 @@ public class OptionsFileManager {
 		ATeam.materialName = file.getString("Team.Item");
 		ATeam.title = file.getColorString("Team.GUI.Title");
 		ATeam.blockName = file.getString("Team.GUI.Block");
-		
-		ScoreboardManager.aa = file.getBoolean("Scoreboard.show");
 		
 		Spectator.specItem = file.getString("Spectator.Item");
 		Spectator.specName = file.getColorString("Spectator.Itemname");

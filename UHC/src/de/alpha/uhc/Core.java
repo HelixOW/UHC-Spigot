@@ -31,6 +31,7 @@ import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
+import de.alpha.uhc.files.ScoreboardFile;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
@@ -79,6 +80,9 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		TeamFile.loadTeams();
 		
 		HologramFileManager.getHologramFile().save();
+		
+		ScoreboardFile.addScores();
+		ScoreboardFile.loadScores();
 		
 		registerCommands();
 		registerEvents();

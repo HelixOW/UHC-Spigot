@@ -9,7 +9,6 @@ import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.manager.BorderManager;
-import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.timer.Timer;
 import net.minetopix.library.main.file.SimpleFile;
@@ -49,19 +48,6 @@ public class MessageFileManager {
 		
 		file.setDefault("Join.Title", "&aHello [Player]");
 		file.setDefault("Join.Subtitle", "&7and welcome to UHC");
-		
-		file.setDefault("Scoreboard.Lobby.Title", "[Player]'s §astats");
-		file.setDefault("Scoreboard.Lobby.Kills", "&aYour Kills:");
-		file.setDefault("Scoreboard.Lobby.Deaths", "&cYour Deaths:");
-		file.setDefault("Scoreboard.Lobby.Coins", "&6Your Coins:");
-		
-		file.setDefault("Scoreboard.Ingame.Title", "[Player]");
-		file.setDefault("Scoreboard.Ingame.Player Living", "&aLiving Players:");
-		file.setDefault("Scoreboard.Ingame.Spectators", "&cSpectators:");
-		file.setDefault("Scoreboard.Ingame.Selected Kit", "&6Kit:");
-		file.setDefault("Scoreboard.Ingame.Distance to Center", "&2Center:");
-		file.setDefault("Scoreboard.Ingame.Border", "&4Border:");
-		file.setDefault("Scoreboard.Ingame.Your Team", "&5Team:");
 		
 		file.setDefault("Kits.GUI.Title", "&7[&bKits&7]");
 		file.setDefault("Kits.GUI.Selected", "&aYou selected &6[Kit]");
@@ -144,19 +130,6 @@ public class MessageFileManager {
 		PlayerJoinListener.footer = file.getColorString("Tablist.Bottom");
 		
 		BorderManager.moved = file.getColorString("Announcements.Border.Move");
-		 
-		ScoreboardManager.lobbytitle = file.getColorString("Scoreboard.Lobby.Title");
-		ScoreboardManager.lobbyKills = file.getColorString("Scoreboard.Lobby.Kills");
-		ScoreboardManager.lobbyDeaths = file.getColorString("Scoreboard.Lobby.Deaths");
-		ScoreboardManager.lobbyCoins = file.getColorString("Scoreboard.Lobby.Coins");
-		 
-		ScoreboardManager.ingametitle = file.getColorString("Scoreboard.Ingame.Title");
-		ScoreboardManager.ingamePlayersLiving = file.getColorString("Scoreboard.Ingame.Player Living");
-		ScoreboardManager.ingameSpectators = file.getColorString("Scoreboard.Ingame.Spectators");
-		ScoreboardManager.ingameKit = file.getColorString("Scoreboard.Ingame.Selected Kit");
-		ScoreboardManager.center = file.getColorString("Scoreboard.Ingame.Distance to Center");
-		ScoreboardManager.team = file.getColorString("Scoreboard.Ingame.Your Team");
-		ScoreboardManager.border = file.getColorString("Scoreboard.Ingame.Border");
 		 
 		GUI.title = file.getColorString("Kits.GUI.Title");
 		 

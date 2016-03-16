@@ -14,8 +14,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
+import de.alpha.uhc.scoreboard.AScoreboard;
 import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.timer.Timer;
 
@@ -35,7 +35,7 @@ public class InGameListener implements Listener {
 		
 		if(!(GState.isState(GState.INGAME) || GState.isState(GState.GRACE))) return;
 		if(Core.getSpecs().contains(e.getPlayer())) return;
-		ScoreboardManager.updateCenterScore(e.getPlayer());
+		AScoreboard.updateInGameCenter(e.getPlayer());
 		
 	}
 	

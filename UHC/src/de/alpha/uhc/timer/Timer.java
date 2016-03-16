@@ -22,8 +22,8 @@ import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.manager.BorderManager;
-import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
+import de.alpha.uhc.scoreboard.AScoreboard;
 import de.alpha.uhc.utils.LobbyPasteUtil;
 import de.alpha.uhc.utils.WorldUtil;
 
@@ -195,7 +195,7 @@ public class Timer {
 													}
 												}
 												
-												ScoreboardManager.setInGameBoard(ig);
+												AScoreboard.setInGameScoreboard(ig);
 								
 												new BukkitRunnable() {
 													

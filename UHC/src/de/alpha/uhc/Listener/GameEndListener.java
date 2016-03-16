@@ -13,8 +13,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
+import de.alpha.uhc.scoreboard.AScoreboard;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Stats;
@@ -104,9 +104,10 @@ public class GameEndListener implements Listener {
 		//                        -=X Scoreboard X=-
 		
 		
-		ScoreboardManager.updatePlayerIGScore();
-		ScoreboardManager.updatePlayerSpecScore();
-		
+		for(Player all : Bukkit.getOnlinePlayers()) {
+			AScoreboard.updateInGamePlayersLiving(all);
+			AScoreboard.updateInGameSpectators(all);
+		}
 		
 		//                        -=X ItemDrop X=-
 		
@@ -234,8 +235,10 @@ public class GameEndListener implements Listener {
 				p.getWorld().strikeLightningEffect(p.getLocation());
 			}	
 			
-			ScoreboardManager.updatePlayerIGScore();
-			ScoreboardManager.updatePlayerSpecScore();
+			for(Player all : Bukkit.getOnlinePlayers()) {
+				AScoreboard.updateInGamePlayersLiving(all);
+				AScoreboard.updateInGameSpectators(all);
+			}
 			
 			p.setGameMode(GameMode.SURVIVAL);
 			

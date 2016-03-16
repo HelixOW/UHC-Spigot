@@ -19,6 +19,7 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.TeamFile;
+import de.alpha.uhc.scoreboard.AScoreboard;
 import net.minetopix.library.main.item.ItemCreator;
 
 public class ATeam implements Listener {
@@ -45,7 +46,7 @@ public class ATeam implements Listener {
 			p.sendMessage(Core.getPrefix() + chosen);
 			p.setDisplayName(getTeamColor(teamToPut) + p.getName());
 			p.setPlayerListName(getTeamColor(teamToPut) + p.getName());
-			
+			AScoreboard.updateLobbyTeam(p);
 			chosen = MessageFileManager.getMSGFile().getColorString("Teams.chosen");
 		} else {
 			String a = noExist.replace("[team]", teamToPut);

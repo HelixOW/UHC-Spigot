@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -17,8 +18,8 @@ import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.PlayerFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.manager.ScoreboardManager;
 import de.alpha.uhc.manager.TitleManager;
+import de.alpha.uhc.scoreboard.AScoreboard;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Spectator;
@@ -76,10 +77,10 @@ public class PlayerJoinListener implements Listener {
 			}
 			Core.addSpec(e.getPlayer());
 			Spectator.setSpec(e.getPlayer());
-			ScoreboardManager.setInGameBoard(e.getPlayer());
+			AScoreboard.setInGameScoreboard(e.getPlayer());
 			TitleManager.sendTabTitle(e.getPlayer(), header, footer);
 			for(Player all : Core.getInGamePlayers()) {
-				ScoreboardManager.setInGameBoard(all);
+				AScoreboard.updateInGameSpectators(all);
 			}
 			return;
 		}
@@ -197,9 +198,9 @@ public class PlayerJoinListener implements Listener {
 			TitleManager.sendTitle(e.getPlayer(), 20, 20, 20, title, subtitle);
 		}
 		
-		
-		
-		ScoreboardManager.setLobbyBoard(e.getPlayer());
+		for(Player all : Bukkit.getOnlinePlayers()) {
+			AScoreboard.setLobbyScoreboard(all);
+		}
 		
 		if(Bukkit.getOnlinePlayers().size() == Timer.pc) {
 			
@@ -214,8 +215,17 @@ public class PlayerJoinListener implements Listener {
 			}.runTaskLater(Core.getInstance(), 20);
 		
 		}
-		
-		
 	}
-
+	
+	@EventHandler
+	public void onQuit(PlayerQuitEvent e) {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				for(Player all : Bukkit.getOnlinePlayers()) {
+					AScoreboard.setLobbyScoreboard(all);
+				}
+			}
+		}.runTaskLater(Core.getInstance(), 5);
+	}
 }

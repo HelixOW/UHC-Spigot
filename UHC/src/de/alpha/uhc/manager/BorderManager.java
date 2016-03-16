@@ -6,6 +6,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.border.Border;
 import de.alpha.uhc.Core;
+import de.alpha.uhc.scoreboard.AScoreboard;
 
 public class BorderManager {
 	
@@ -31,7 +32,7 @@ public class BorderManager {
 				size = size - moving;
 				new Border().changesize(size);
 				for(Player all : Bukkit.getOnlinePlayers()) {
-					ScoreboardManager.updateBorderScore(all);
+					AScoreboard.updateInGameBorder(all);
 					TitleManager.sendTitle(all, 10, 20, 10, " ", moved);
 				}
 				
