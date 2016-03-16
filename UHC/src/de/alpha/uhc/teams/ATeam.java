@@ -31,23 +31,51 @@ public class ATeam implements Listener {
 	public static String materialName;
 	public static String blockName;
 	public static String title;
+	public static String full;
 	
 	private static Inventory teamInv;
 	
 	public static ArrayList<String> teamNames = new ArrayList<String>();
 	public static ArrayList<String> teamColors = new ArrayList<String>();
 	
+	public static HashMap<String, Integer> teamMax = new HashMap<String, Integer>();
+	public static HashMap<String, Integer> teamC = new HashMap<String, Integer>();
+	
 	private static HashMap<Player, String> teams = new HashMap<Player, String>();
 	
 	public static void addPlayerToTeam(Player p, String teamToPut) {
 		if(teamNames.contains(teamToPut)) {
-			teams.put(p, teamToPut);
-			chosen = chosen.replace("[team]", getTeamColor(teamToPut)+teamToPut);
-			p.sendMessage(Core.getPrefix() + chosen);
-			p.setDisplayName(getTeamColor(teamToPut) + p.getName());
-			p.setPlayerListName(getTeamColor(teamToPut) + p.getName());
-			AScoreboard.updateLobbyTeam(p);
-			chosen = MessageFileManager.getMSGFile().getColorString("Teams.chosen");
+			if(isFull(teamToPut)) {
+				full = full.replace("[team]", getTeamColor(teamToPut)+teamToPut);
+				p.sendMessage(Core.getPrefix() + full);
+				full = MessageFileManager.getMSGFile().getColorString("Teams.full");
+				return;
+			} else {
+				if(teamC.containsKey(teamToPut)) {
+					teamC.put(teamToPut, teamC.get(teamToPut)+1);
+					Bukkit.getConsoleSender().sendMessage("§c"+teamMax.get(teamToPut));
+					Bukkit.getConsoleSender().sendMessage("§c"+teamC.get(teamToPut));
+				} else {
+					teamC.put(teamToPut, 1);
+					Bukkit.getConsoleSender().sendMessage("§c"+teamMax.get(teamToPut));
+					Bukkit.getConsoleSender().sendMessage("§c"+teamC.get(teamToPut));
+					if(teamC.get(teamToPut) > teamMax.get(teamToPut)) {
+						teamC.put(teamToPut, teamC.get(teamToPut)-1);
+						full = full.replace("[team]", getTeamColor(teamToPut)+teamToPut);
+						p.sendMessage(Core.getPrefix() + full);
+						full = MessageFileManager.getMSGFile().getColorString("Teams.full");
+						return;
+					}
+				}
+				
+				teams.put(p, teamToPut);
+				chosen = chosen.replace("[team]", getTeamColor(teamToPut)+teamToPut);
+				p.sendMessage(Core.getPrefix() + chosen);
+				p.setDisplayName(getTeamColor(teamToPut) + p.getName());
+				p.setPlayerListName(getTeamColor(teamToPut) + p.getName());
+				AScoreboard.updateLobbyTeam(p);
+				chosen = MessageFileManager.getMSGFile().getColorString("Teams.chosen");
+			}
 		} else {
 			String a = noExist.replace("[team]", teamToPut);
 			String b = allTeams.replace("[teams]", ""+teamNames);
@@ -199,6 +227,19 @@ public class ATeam implements Listener {
 			return teams.get(p);
 		}
 		return "";
+	}
+	
+	public static int getMaxPlayers(String teamToCheck) {
+		return teamMax.get(teamToCheck);
+	}
+	
+	public static boolean isFull(String team) {
+		if(teamC.containsKey(team)) {
+			if(teamC.get(team) == teamMax.get(team)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static boolean hasSameTeam(Player p, Player other) {

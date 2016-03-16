@@ -17,15 +17,19 @@ public class TeamFile {
 			
 			file.setDefault("Teams.Red.name", "Red");
 			file.setDefault("Teams.Red.color", "red");
+			file.setDefault("Teams.Red.maxSize", 2);
 			
 			file.setDefault("Teams.Yellow.name", "Yellow");
 			file.setDefault("Teams.Yellow.color", "yellow");
+			file.setDefault("Teams.Yellow.maxSize", 2);
 			
 			file.setDefault("Teams.Blue.name", "Blue");
 			file.setDefault("Teams.Blue.color", "blue");
+			file.setDefault("Teams.Blue.maxSize", 2);
 			
-			file.setDefault("Teams.DarkBlue.name", "Dark Green");
-			file.setDefault("Teams.DarkBlue.color", "dark_green");
+			file.setDefault("Teams.DarkGreen.name", "Dark Green");
+			file.setDefault("Teams.DarkGreen.color", "dark_green");
+			file.setDefault("Teams.DarkGreen.maxSize", 2);
 			
 		}
 	}
@@ -48,6 +52,9 @@ public class TeamFile {
 			}
 			if(!(ATeam.teamColors.contains(file.getString("Teams."+names+".color")))) {
 				ATeam.teamColors.add(file.getString("Teams."+names+".color"));
+			}
+			if(!(ATeam.teamMax.containsKey("Teams."+names+".maxSize"))) {
+				ATeam.teamMax.put(file.getString("Teams."+names+".name"), file.getInt("Teams."+names+".maxSize"));
 			}
 		}
 	}

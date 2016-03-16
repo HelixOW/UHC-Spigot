@@ -57,6 +57,7 @@ public class MessageFileManager {
 		file.setDefault("Teams.do not exist", "&7The Team &c[team]&7 do not exist!");
 		file.setDefault("Teams.all", "&7Teams: [teams]");
 		file.setDefault("Teams.chosen", "&aYou are now in Team [team]");
+		file.setDefault("Teams.full", "&cThe team [team] is full.");
 		
 		file.setDefault("Reward", "&aYou got [Coins] Coins.");
 		
@@ -90,6 +91,7 @@ public class MessageFileManager {
 		ATeam.chosen = file.getColorString("Teams.chosen");
 		ATeam.noExist = file.getColorString("Teams.do not exist");
 		ATeam.allTeams = file.getColorString("Teams.all");
+		ATeam.full = file.getColorString("Teams.full");
 		
 		LobbyListener.sel = file.getColorString("Kits.GUI.Selected");
 		LobbyListener.bought = file.getColorString("Kits.GUI.Bought");
