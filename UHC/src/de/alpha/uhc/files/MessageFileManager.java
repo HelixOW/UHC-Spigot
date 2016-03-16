@@ -20,7 +20,7 @@ public class MessageFileManager {
         return new SimpleFile("plugins/UHC", "messages.yml");
     }
 	
-	public void addMessages() {
+	public static void addMessages() {
 		SimpleFile file = getMSGFile();
 		
 		file.setDefault("Commands.Warns.OnlyPlayers", "&cThis Command have to be executed by a Player.");
@@ -74,7 +74,7 @@ public class MessageFileManager {
 		file.setDefault("GameStatus.Restart", "Restart");
 	}
 	
-	public void loadMessages() {
+	public static void loadMessages() {
 		SimpleFile file = getMSGFile();
 		
 		GState.lobby = file.getString("GameStatus.Lobby");

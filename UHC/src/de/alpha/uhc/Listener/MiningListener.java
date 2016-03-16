@@ -10,13 +10,25 @@ import org.bukkit.inventory.ItemStack;
 
 public class MiningListener implements Listener {
 	
-	public static boolean wood;
-	public static boolean ore;
 	
+	public static boolean wood;
 	public static boolean coal;
 	public static boolean iron;
 	public static boolean gold;
 	public static boolean dia;
+	public static boolean gravel;
+	
+	public static int coalA;
+	public static int ironA;
+	public static int goldA;
+	public static int diaA;
+	public static int gravelA;
+	
+	public static Material coalM;
+	public static Material ironM;
+	public static Material goldM;
+	public static Material diaM;
+	public static Material gravelM;
 	
 	@EventHandler
 	public void onMine(BlockBreakEvent e) {
@@ -46,55 +58,51 @@ public class MiningListener implements Listener {
 			}
 		}
 		
-		if(ore == true) {
-		
-			if(m.equals(Material.IRON_ORE)) {
-				if(iron == false) {
-					e.setCancelled(true);
-					return;
-				}
-				b.setType(Material.AIR);
-				b.getWorld().dropItem(b.getLocation(), new ItemStack(Material.IRON_INGOT , 2));
+		if(m.equals(Material.IRON_ORE)) {
+			if(iron == false) {
 				e.setCancelled(true);
+				return;
 			}
+			b.setType(Material.AIR);
+			b.getWorld().dropItem(b.getLocation(), new ItemStack(ironM , ironA));
+			e.setCancelled(true);
+		}
 			
-			if(m.equals(Material.GRAVEL)) {
-				b.setType(Material.AIR);
-				b.getWorld().dropItem(b.getLocation(), new ItemStack(Material.ARROW));
-				e.setCancelled(true);
-			}
-			
-			if(m.equals(Material.GOLD_ORE)) {
-				if(gold == false) {
-					e.setCancelled(true);
-					return;
-				}
-				b.setType(Material.AIR);
-				b.getWorld().dropItem(b.getLocation(), new ItemStack(Material.GOLD_INGOT, 5));
-				e.setCancelled(true);
-			}
-			
-			if(m.equals(Material.DIAMOND_ORE)) {
-				if(dia == false) {
-					e.setCancelled(true);
-					return;
-				}
-				b.setType(Material.AIR);
-				b.getWorld().dropItem(b.getLocation(), new ItemStack(Material.DIAMOND, 7));
-				e.setCancelled(true);
-			}
-			
-			if(m.equals(Material.COAL_ORE)) {
-				if(coal == false) {
-					e.setCancelled(true);
-					return;
-				}
-				b.setType(Material.AIR);
-				b.getWorld().dropItem(b.getLocation(), new ItemStack(Material.COAL, 2));
-				e.setCancelled(true);
-			}
+		if(m.equals(Material.GRAVEL)) {
+			if(gravel == false) return;
+			b.setType(Material.AIR);
+			b.getWorld().dropItem(b.getLocation(), new ItemStack(gravelM , gravelA));
+			e.setCancelled(true);
 		}
 		
+		if(m.equals(Material.GOLD_ORE)) {
+			if(gold == false) {
+				e.setCancelled(true);
+				return;
+			}
+			b.setType(Material.AIR);
+			b.getWorld().dropItem(b.getLocation(), new ItemStack(goldM, goldA));
+			e.setCancelled(true);
+		}
+			
+		if(m.equals(Material.DIAMOND_ORE)) {
+			if(dia == false) {
+				e.setCancelled(true);
+				return;
+			}
+			b.setType(Material.AIR);
+			b.getWorld().dropItem(b.getLocation(), new ItemStack(diaM, diaA));
+			e.setCancelled(true);
+		}
+			
+		if(m.equals(Material.COAL_ORE)) {
+			if(coal == false) {
+				e.setCancelled(true);
+				return;
+			}
+			b.setType(Material.AIR);
+			b.getWorld().dropItem(b.getLocation(), new ItemStack(coalM, coalA));
+			e.setCancelled(true);
+		}
 	}
-
 }

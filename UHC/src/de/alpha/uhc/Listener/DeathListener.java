@@ -18,7 +18,32 @@ import org.bukkit.inventory.ItemStack;
 
 public class DeathListener implements Listener {
 	
-	public static boolean mobs;
+	public static boolean pig;
+	public static boolean zombie;
+	public static boolean cow;
+	public static boolean chicken;
+	public static boolean spider;
+	public static boolean skeleton;
+	public static boolean sheep;
+	public static boolean rabbit;
+	
+	public static int pigA;
+	public static int zombieA;
+	public static int cowA;
+	public static int chickenA;
+	public static int spiderA;
+	public static int skeletonA;
+	public static int sheepA;
+	public static int rabbitA;
+	
+	public static Material pigM;
+	public static Material zombieM;
+	public static Material cowM;
+	public static Material chickenM;
+	public static Material spiderM;
+	public static Material skeletonM;
+	public static Material sheepM;
+	public static Material rabbitM;
 	
 	@EventHandler
 	public void onDie(EntityDeathEvent e) {
@@ -29,55 +54,52 @@ public class DeathListener implements Listener {
 			return;
 		}
 		
-		if(mobs == true) {
-			
-			if(p instanceof Pig) {
-				e.getDrops().clear();
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.GRILLED_PORK, 3));
-			}
-			
-			if(p instanceof Zombie) {
-				e.getDrops().clear();
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.GRILLED_PORK, 3));
-			}
-			
-			if(p instanceof Cow) {
-				e.getDrops().clear();
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.COOKED_BEEF, 6));
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.LEATHER));
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.GRILLED_PORK, 3));
-			}
-			
-			if(p instanceof Chicken) {
-				e.getDrops().clear();
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.COOKED_CHICKEN, 3));
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.ARROW, 2));
-			}
-			
-			if(p instanceof Spider) {
-				e.getDrops().clear();
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.SPIDER_EYE));
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.STRING, 2));
-			}
-			
-			if(p instanceof Skeleton) {
-				e.getDrops().clear();
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.BOW));
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.ARROW, 3));
-			}
-			
-			if(p instanceof Sheep) {
-				e.getDrops().clear();
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.COOKED_MUTTON, 3));
-			}
-			
-			if(p instanceof Rabbit) {
-				e.getDrops().clear();
-				p.getWorld().dropItem(p.getLocation(), new ItemStack(Material.COOKED_RABBIT, 3));
-			}
-			
+		if(p instanceof Pig) {
+			if(!(pig)) return;
+			e.getDrops().clear();
+			p.getWorld().dropItem(p.getLocation(), new ItemStack(pigM, pigA));
 		}
-		
+			
+		if(p instanceof Zombie) {
+			if(!(zombie)) return;
+			e.getDrops().clear();
+			p.getWorld().dropItem(p.getLocation(), new ItemStack(zombieM, zombieA));
+		}
+			
+		if(p instanceof Cow) {
+			if(!(cow)) return;
+			e.getDrops().clear();
+			p.getWorld().dropItem(p.getLocation(), new ItemStack(cowM, cowA));
+		}
+			
+		if(p instanceof Chicken) {
+			if(!(chicken)) return;
+			e.getDrops().clear();
+			p.getWorld().dropItem(p.getLocation(), new ItemStack(chickenM, chickenA));
+		}
+			
+		if(p instanceof Spider) {
+			if(!(spider)) return;
+			e.getDrops().clear();
+			p.getWorld().dropItem(p.getLocation(), new ItemStack(spiderM, spiderA));
+		}
+			
+		if(p instanceof Skeleton) {
+			if(!(skeleton)) return;
+			e.getDrops().clear();
+			p.getWorld().dropItem(p.getLocation(), new ItemStack(skeletonM, skeletonA));
+		}
+			
+		if(p instanceof Sheep) {
+			if(!(sheep)) return;
+			e.getDrops().clear();
+			p.getWorld().dropItem(p.getLocation(), new ItemStack(sheepM, sheepA));
+		}
+			
+		if(p instanceof Rabbit) {
+			if(!(rabbit)) return;
+			e.getDrops().clear();
+			p.getWorld().dropItem(p.getLocation(), new ItemStack(rabbitM, rabbitA));
+		}
 	}
-
 }

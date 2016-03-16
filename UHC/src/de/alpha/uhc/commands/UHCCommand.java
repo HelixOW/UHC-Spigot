@@ -11,9 +11,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.files.DropFile;
 import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
+import de.alpha.uhc.files.ScoreboardFile;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
@@ -119,11 +121,11 @@ public class UHCCommand implements CommandExecutor {
 					}
 					if(args[0].equalsIgnoreCase("reload")) {
 						
-						new OptionsFileManager().addOptions();
-						new OptionsFileManager().loadOptions();
+						OptionsFileManager.addOptions();
+						OptionsFileManager.loadOptions();
 							
-						new MessageFileManager().addMessages();
-						new MessageFileManager().loadMessages();
+						MessageFileManager.addMessages();
+						MessageFileManager.loadMessages();
 						
 						SpawnFileManager.getSpawnFile();
 						SpawnFileManager.registerRegions();
@@ -132,6 +134,13 @@ public class UHCCommand implements CommandExecutor {
 						TeamFile.loadTeams();
 						
 						HologramFileManager.getHologramFile().save();
+						
+						DropFile.addDrops();
+						DropFile.loadDrops();
+						
+						ScoreboardFile.addScores();
+						ScoreboardFile.loadScores();
+						
 						p.sendMessage(Core.getPrefix() + "§cAll configs has been reloaded");
 						return true;
 					}

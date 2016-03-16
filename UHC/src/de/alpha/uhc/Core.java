@@ -28,6 +28,7 @@ import de.alpha.uhc.Listener.MotdListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.commands.UHCCommand;
+import de.alpha.uhc.files.DropFile;
 import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
@@ -50,8 +51,6 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 	
 	private static Core instance;
 	public static String prefix;
-	private OptionsFileManager ofm;
-	private MessageFileManager mfm;
 	
 	public static boolean isMySQLActive;
 	
@@ -61,17 +60,16 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 	@Override
 	public void onEnable() {
 		instance = this;
-		ofm = new OptionsFileManager();
-		mfm = new MessageFileManager();
 		ig = new ArrayList<Player>();
 		spectator = new ArrayList<Player>();
+		
 		Bukkit.setWhitelist(true);
 			
-		ofm.addOptions();
-		ofm.loadOptions();
+		OptionsFileManager.addOptions();
+		OptionsFileManager.loadOptions();
 			
-		mfm.addMessages();
-		mfm.loadMessages();
+		MessageFileManager.addMessages();
+		MessageFileManager.loadMessages();
 		
 		SpawnFileManager.getSpawnFile();
 		SpawnFileManager.registerRegions();
@@ -83,6 +81,9 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		
 		ScoreboardFile.addScores();
 		ScoreboardFile.loadScores();
+		
+		DropFile.addDrops();
+		DropFile.loadDrops();
 		
 		registerCommands();
 		registerEvents();
