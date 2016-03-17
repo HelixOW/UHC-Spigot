@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -53,6 +54,9 @@ public class AScoreboard {
 	public static String ingameBorder;
 	public static String ingameBar;
 	
+	public static boolean ShowHealthUName;
+	public static boolean ShowHealthInTab;
+	
 	private static HashMap<Player, String> A = new HashMap<Player, String>();
 	private static HashMap<Player, String> B = new HashMap<Player, String>();
 	
@@ -97,7 +101,7 @@ public class AScoreboard {
 		}
 		
 		if(ShowLobbyBar) {
-			obj.getScore("ßa"+lobbyBar).setScore(score);
+			obj.getScore("¬ßa"+lobbyBar).setScore(score);
 			score--;
 		}
 		
@@ -108,7 +112,7 @@ public class AScoreboard {
 		}
 		
 		if(ShowLobbyBar) {
-			obj.getScore("ßb"+lobbyBar).setScore(score);
+			obj.getScore("¬ßb"+lobbyBar).setScore(score);
 			score--;
 		}
 		
@@ -157,7 +161,7 @@ public class AScoreboard {
 	private static int le;
 	private static int lf;
 	
-	public static void setInGameScoreboard(Player p) {
+	public static void setInGameScoreboard(final Player p) {
 		if(ShowInGameScoreboard == false) return;
 		
 		int score = 0;
@@ -190,7 +194,7 @@ public class AScoreboard {
 		}
 		
 		if(ShowInGameBar) {
-			obj.getScore("ßa"+ingameBar).setScore(score);
+			obj.getScore("¬ßa"+ingameBar).setScore(score);
 			score--;
 		}
 		
@@ -207,7 +211,7 @@ public class AScoreboard {
 		}
 		
 		if(ShowInGameBar) {
-			obj.getScore("ßb"+ingameBar).setScore(score);
+			obj.getScore("¬ßb"+ingameBar).setScore(score);
 			score--;
 		}
 		
@@ -227,7 +231,28 @@ public class AScoreboard {
 			score--;
 		}
 		
+		if(ShowHealthUName) {
+			Objective objName = sb.registerNewObjective("UHCHealthName", "health");
+			objName.setDisplaySlot(DisplaySlot.BELOW_NAME);
+			objName.setDisplayName("‚ù§");
+		}
+		
+		if(ShowHealthInTab) {
+			Objective objName = sb.registerNewObjective("UHCHealthTab", "health");
+			objName.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+			objName.setDisplayName("‚ù§");
+		}
+		
 		p.setScoreboard(sb);
+		for(final Player online : Bukkit.getOnlinePlayers()){
+			  new BukkitRunnable() {
+				@Override
+				public void run() {
+					online.damage(1);
+					online.setHealth(online.getHealth()+1);
+				}
+			}.runTaskLater(Core.getInstance(), 20);
+		}
 	}
 	
 	public static void updateInGamePlayersLiving(Player p) {

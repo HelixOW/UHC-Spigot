@@ -60,6 +60,9 @@ public class ScoreboardFile {
 		
 		file.setDefault("Scoreboard.InGame.Bar.show", true);
 		file.setDefault("Scoreboard.InGame.Bar.message", "&7--------------");
+		
+		file.setDefault("Scoreboard.Health.UnderName.show", true);
+		file.setDefault("Scoreboard.Health.InTab.show", true);
 	}
 	
 	
@@ -100,5 +103,8 @@ public class ScoreboardFile {
 		AScoreboard.ingameCenter = file.getColorString("Scoreboard.InGame.Center.message");
 		AScoreboard.ingameBorder = file.getColorString("Scoreboard.InGame.Border.message");
 		AScoreboard.ingameBar = file.getColorString("Scoreboard.InGame.Bar.message");
+		
+		AScoreboard.ShowHealthUName = file.getBoolean("Scoreboard.Health.UnderName.show");
+		AScoreboard.ShowHealthInTab = file.getBoolean("Scoreboard.Health.InTab.show");
 	}
 }

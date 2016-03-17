@@ -53,12 +53,8 @@ public class ATeam implements Listener {
 			} else {
 				if(teamC.containsKey(teamToPut)) {
 					teamC.put(teamToPut, teamC.get(teamToPut)+1);
-					Bukkit.getConsoleSender().sendMessage("§c"+teamMax.get(teamToPut));
-					Bukkit.getConsoleSender().sendMessage("§c"+teamC.get(teamToPut));
 				} else {
 					teamC.put(teamToPut, 1);
-					Bukkit.getConsoleSender().sendMessage("§c"+teamMax.get(teamToPut));
-					Bukkit.getConsoleSender().sendMessage("§c"+teamC.get(teamToPut));
 					if(teamC.get(teamToPut) > teamMax.get(teamToPut)) {
 						teamC.put(teamToPut, teamC.get(teamToPut)-1);
 						full = full.replace("[team]", getTeamColor(teamToPut)+teamToPut);
