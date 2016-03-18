@@ -161,7 +161,9 @@ public class UHCCommand implements CommandExecutor {
 						
 						SpawnFileManager.SetLobby(p.getLocation().getX(),
 								p.getLocation().getY(),
-								p.getLocation().getZ(),
+								p.getLocation().getZ(), 
+								p.getLocation().getYaw(),
+								p.getLocation().getPitch(),
 								p.getWorld());
 						p.sendMessage(Core.getPrefix() + lobbyset);
 						return true;

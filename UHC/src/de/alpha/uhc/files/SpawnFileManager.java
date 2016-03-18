@@ -20,11 +20,13 @@ public class SpawnFileManager {
 	
 	private static void saveCfg() {cfg.save();}
 	
-	public static void SetLobby(double x, double y, double z, World w) {
+	public static void SetLobby(double x, double y, double z, float yaw, float pitch, World w) {
 		
 		cfg.set("Lobby.x", x);
 		cfg.set("Lobby.y", y);
 		cfg.set("Lobby.z", z);
+		cfg.set("Lobby.yaw", yaw);
+		cfg.set("Lobby.pitch", pitch);
 		cfg.set("Lobby.world", w.getName());
 		
 		cfg.save();
@@ -52,8 +54,10 @@ public class SpawnFileManager {
 		int x = cfg.getInt("Lobby.x");
 		int y = cfg.getInt("Lobby.y");
 		int z = cfg.getInt("Lobby.z");
+		float yaw = (float) cfg.getDouble("Lobby.yaw");
+		float pitch = (float) cfg.getDouble("Lobby.pitch");
 		
-		Location l = new Location(w, x, y, z);
+		Location l = new Location(w, x, y, z, yaw, pitch);
 		
 		return l;
 		

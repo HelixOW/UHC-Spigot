@@ -81,10 +81,10 @@ public class WorldUtil {
 							if(new File("plugins/UHC/schematics", "lobby.schematic") != null) {
 								try {
 									World w = Bukkit.getWorld("UHC");
-									Location loc = new Location(w, 0, 200, 0);
+									Location loc = new Location(w, 0, 200, 0, 0, 0);
 									
 									LobbyPasteUtil.pasteLobby(loc);
-									SpawnFileManager.SetLobby(0, 200, 0, w);
+									SpawnFileManager.SetLobby(0, 200, 0, 0 , 0, w);
 									return;
 								} catch (Exception e) {
 									Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
@@ -111,10 +111,10 @@ public class WorldUtil {
 					
 						try {
 							World w = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());
-							Location loc = new Location(w, 0, 200, 0);
+							Location loc = new Location(w, 0, 200, 0, 0, 0);
 							
 							LobbyPasteUtil.pasteLobby(loc);
-							SpawnFileManager.SetLobby(0, 200, 0, w);
+							SpawnFileManager.SetLobby(0, 200, 0, 0, 0, w);
 							return;
 						} catch (Exception e) {
 							Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
