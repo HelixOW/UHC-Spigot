@@ -17,13 +17,14 @@ import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.Listener.LobbyListener;
+import de.alpha.uhc.aclasses.AScoreboard;
+import de.alpha.uhc.aclasses.ATablist;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.TitleManager;
-import de.alpha.uhc.scoreboard.AScoreboard;
 import de.alpha.uhc.utils.LobbyPasteUtil;
 import de.alpha.uhc.utils.WorldUtil;
 
@@ -43,9 +44,6 @@ public class Timer {
 	 static int high;
 	 static int gracetime;
 	 public	static int max;
-	 
-	public static String header;
-	public static String footer;
 	 
 	private static int endTime;
 	
@@ -169,21 +167,8 @@ public class Timer {
 												startGracePeriod();
 												Border.border();
 												GState.setGameState(GState.GRACE);
-												for(Player o : Bukkit.getOnlinePlayers()) {
-													header = header.replace("[player]", o.getDisplayName());
-													header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-													header = header.replace("[gamestatus]", GState.getGStateName());
-													
-													footer = footer.replace("[player]", o.getDisplayName());
-													footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-													footer = footer.replace("[gamestatus]", GState.getGStateName());
-													
-													TitleManager.sendTabTitle(o, "", "");
-													TitleManager.sendTabTitle(o, header, footer);
-													
-													header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
-													footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
-												}
+
+												ATablist.sendStandingInGameTablist();
 												
 												if(LobbyListener.hasSelKit(ig)) {
 													for(ItemStack is : new KitFileManager().getContents(LobbyListener.getSelKit(ig)).getContents()) {
@@ -273,21 +258,8 @@ public class Timer {
 									all.showPlayer(all);
 									giveCompass(all);
 									GState.setGameState(GState.INGAME);
-									for(Player o : Bukkit.getOnlinePlayers()) {
-										header = header.replace("[player]", o.getDisplayName());
-										header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-										header = header.replace("[gamestatus]", GState.getGStateName());
-										
-										footer = footer.replace("[player]", o.getDisplayName());
-										footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-										footer = footer.replace("[gamestatus]", GState.getGStateName());
-										
-										TitleManager.sendTabTitle(o, "", "");
-										TitleManager.sendTabTitle(o, header, footer);
-										
-										header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
-										footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
-									}
+
+									ATablist.sendStandingInGameTablist();
 								}
 								c.cancel();
 								return;
@@ -305,21 +277,7 @@ public class Timer {
 		endTime = 10;
 		GState.setGameState(GState.RESTART);
 		
-		for(Player ig : Bukkit.getOnlinePlayers()) {
-			header = header.replace("[player]", ig.getDisplayName());
-			header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-			header = header.replace("[gamestatus]", GState.getGStateName());
-			
-			footer = footer.replace("[player]", ig.getDisplayName());
-			footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-			footer = footer.replace("[gamestatus]", GState.getGStateName());
-			
-			TitleManager.sendTabTitle(ig, "", "");
-			TitleManager.sendTabTitle(ig, header, footer);
-			
-			header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
-			footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
-		}
+		ATablist.sendStandingInGameTablist();
 		
 		f = new BukkitRunnable() {
 			

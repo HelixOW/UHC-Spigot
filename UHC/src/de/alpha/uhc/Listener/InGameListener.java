@@ -13,10 +13,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.aclasses.AScoreboard;
+import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.manager.TitleManager;
-import de.alpha.uhc.scoreboard.AScoreboard;
-import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.timer.Timer;
 
 public class InGameListener implements Listener {

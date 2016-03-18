@@ -1,4 +1,4 @@
-package de.alpha.uhc.scoreboard;
+package de.alpha.uhc.aclasses;
 
 import java.util.HashMap;
 
@@ -13,7 +13,6 @@ import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.utils.Stats;
 
 public class AScoreboard {

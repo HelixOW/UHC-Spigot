@@ -1,6 +1,6 @@
 package de.alpha.uhc.files;
 
-import de.alpha.uhc.scoreboard.AScoreboard;
+import de.alpha.uhc.aclasses.AScoreboard;
 import net.minetopix.library.main.file.SimpleFile;
 
 public class ScoreboardFile {

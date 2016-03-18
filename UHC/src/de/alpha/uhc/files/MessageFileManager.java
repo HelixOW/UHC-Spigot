@@ -6,10 +6,11 @@ import de.alpha.uhc.Listener.InGameListener;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.Listener.MotdListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
+import de.alpha.uhc.aclasses.ATablist;
+import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.manager.BorderManager;
-import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.timer.Timer;
 import net.minetopix.library.main.file.SimpleFile;
 
@@ -78,6 +79,9 @@ public class MessageFileManager {
 	public static void loadMessages() {
 		SimpleFile file = getMSGFile();
 		
+		ATablist.header = file.getColorString("Tablist.Top");
+		ATablist.footer = file.getColorString("Tablist.Bottom");
+		
 		GState.lobby = file.getString("GameStatus.Lobby");
 		GState.grace = file.getString("GameStatus.Grace");
 		GState.ingame = file.getString("GameStatus.InGame");
@@ -113,12 +117,8 @@ public class MessageFileManager {
 		GameEndListener.kick = file.getColorString("Announcements.Restart");
 		GameEndListener.rew = file.getColorString("Reward");
 		GameEndListener.quit = file.getColorString("Announcements.Leave");
-		GameEndListener.header = file.getColorString("Tablist.Top");
-		GameEndListener.footer = file.getColorString("Tablist.Bottom");
 		
 		Timer.kick = GameEndListener.kick;
-		Timer.header = file.getColorString("Tablist.Top");
-		Timer.footer = file.getColorString("Tablist.Bottom");
 		
 		InGameListener.ntrack = file.getColorString("Compass.NoPlayerInRange");
 		InGameListener.track = file.getColorString("Compass.PlayerInRange");
@@ -128,8 +128,6 @@ public class MessageFileManager {
 		PlayerJoinListener.full = file.getColorString("Warns.FullServer");
 		PlayerJoinListener.title = file.getColorString("Join.Title");
 		PlayerJoinListener.subtitle = file.getColorString("Join.Subtitle");
-		PlayerJoinListener.header = file.getColorString("Tablist.Top");
-		PlayerJoinListener.footer = file.getColorString("Tablist.Bottom");
 		
 		BorderManager.moved = file.getColorString("Announcements.Border.Move");
 		 

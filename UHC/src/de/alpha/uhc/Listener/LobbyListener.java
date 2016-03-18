@@ -3,6 +3,7 @@ package de.alpha.uhc.Listener;
 import java.util.HashMap;
 
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,11 +19,11 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.aclasses.AScoreboard;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.kits.KitFileManager;
-import de.alpha.uhc.scoreboard.AScoreboard;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
 
@@ -69,7 +70,9 @@ public class LobbyListener implements Listener {
 	@EventHandler
 	public void onSpawn(CreatureSpawnEvent e) {
 		if(GState.isState(GState.LOBBY) || GState.isState(GState.GRACE)) {
-			e.setCancelled(true);
+			if(!(e.getEntity() instanceof ArmorStand)) {
+				e.setCancelled(true);
+			}
 		}
 	}
 	

@@ -6,7 +6,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.border.Border;
 import de.alpha.uhc.Core;
-import de.alpha.uhc.scoreboard.AScoreboard;
+import de.alpha.uhc.aclasses.AScoreboard;
 
 public class BorderManager {
 	

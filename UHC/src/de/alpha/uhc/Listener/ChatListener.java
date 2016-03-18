@@ -8,7 +8,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
-import de.alpha.uhc.teams.ATeam;
+import de.alpha.uhc.aclasses.ATeam;
 
 public class ChatListener implements Listener {
 	

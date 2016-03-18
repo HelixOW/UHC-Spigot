@@ -3,6 +3,7 @@ package de.alpha.uhc.Listener;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,12 +15,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.aclasses.AScoreboard;
+import de.alpha.uhc.aclasses.ATablist;
+import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.PlayerFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.manager.TitleManager;
-import de.alpha.uhc.scoreboard.AScoreboard;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Spectator;
@@ -30,9 +33,6 @@ public class PlayerJoinListener implements Listener {
 	
 	public static String join;
 	public static String full;
-	
-	public static String header;
-	public static String footer;
 	
 	public static String title;
 	public static String subtitle;
@@ -57,17 +57,7 @@ public class PlayerJoinListener implements Listener {
 			return;
 		}
 		
-		header = header.replace("[player]", e.getPlayer().getDisplayName());
-		header = header.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
-		header = header.replace("[gamestatus]", GState.getGStateName());
-		
-		footer = footer.replace("[player]", e.getPlayer().getDisplayName());
-		footer = footer.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
-		footer = footer.replace("[gamestatus]", GState.getGStateName());
-		
 		if(GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
-			header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-			footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
 			e.getPlayer().getInventory().clear();
 			e.getPlayer().getInventory().setArmorContents(null);
 			if(SpawnFileManager.getSpawn() == null) {
@@ -78,7 +68,8 @@ public class PlayerJoinListener implements Listener {
 			Core.addSpec(e.getPlayer());
 			Spectator.setSpec(e.getPlayer());
 			AScoreboard.setInGameScoreboard(e.getPlayer());
-			TitleManager.sendTabTitle(e.getPlayer(), header, footer);
+
+			ATablist.sendStandingInGameTablist();
 			for(Player all : Core.getInGamePlayers()) {
 				AScoreboard.updateInGameSpectators(all);
 			}
@@ -86,23 +77,12 @@ public class PlayerJoinListener implements Listener {
 		}
 		
 		for(Player all : Bukkit.getOnlinePlayers()) {
-			header = header.replace("[player]", all.getDisplayName());
-			header = header.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
-			header = header.replace("[gamestatus]", GState.getGStateName());
-			
-			footer = footer.replace("[player]", all.getDisplayName());
-			footer = footer.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
-			footer = footer.replace("[gamestatus]", GState.getGStateName());
-			
-			
-			TitleManager.sendTabTitle(all, "", "");
-			TitleManager.sendTabTitle(all, header, footer);
 			
 			all.showPlayer(e.getPlayer());
 			
-			header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
-			footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
 		}
+		
+		ATablist.sendStandingLobbyTablist();
 		
 		if(Core.isMySQLActive == true) {
 			if(MySQLManager.getObjectConditionResult("UHC", "UUID", e.getPlayer().getUniqueId().toString(), "UUID") == null) {
@@ -122,7 +102,7 @@ public class PlayerJoinListener implements Listener {
 		
 		for(Entity kill : e.getPlayer().getWorld().getEntities()) {
 			
-			if(!(kill instanceof Player)) {
+			if(!(kill instanceof Player || kill instanceof ArmorStand)) {
 				kill.remove();
 			}
 			
@@ -219,6 +199,7 @@ public class PlayerJoinListener implements Listener {
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
+		ATeam.removePlayerFromTeam(e.getPlayer());
 		new BukkitRunnable() {
 			@Override
 			public void run() {

@@ -1,16 +1,19 @@
-package de.alpha.uhc.teams;
+package de.alpha.uhc.aclasses;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +22,6 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.TeamFile;
-import de.alpha.uhc.scoreboard.AScoreboard;
 import net.minetopix.library.main.item.ItemCreator;
 
 public class ATeam implements Listener {
@@ -43,6 +45,15 @@ public class ATeam implements Listener {
 	
 	private static HashMap<Player, String> teams = new HashMap<Player, String>();
 	
+	public static void removePlayerFromTeam(Player p) {
+		if(teamC.containsKey(getPlayerTeam(p))) {
+			teamC.put(getPlayerTeam(p), teamC.get(getPlayerTeam(p))-1);
+		}
+		if(teams.containsKey(p)) {
+			teams.remove(p);
+		}
+	}
+	
 	public static void addPlayerToTeam(Player p, String teamToPut) {
 		if(teamNames.contains(teamToPut)) {
 			if(isFull(teamToPut)) {
@@ -52,7 +63,9 @@ public class ATeam implements Listener {
 				return;
 			} else {
 				if(teamC.containsKey(teamToPut)) {
-					teamC.put(teamToPut, teamC.get(teamToPut)+1);
+					if(!(teams.containsKey(p))) {
+						teamC.put(teamToPut, teamC.get(teamToPut)+1);
+					}
 				} else {
 					teamC.put(teamToPut, 1);
 					if(teamC.get(teamToPut) > teamMax.get(teamToPut)) {
@@ -90,6 +103,12 @@ public class ATeam implements Listener {
 		if(hasSameTeam(p, other)) {
 			e.setCancelled(true);
 		}
+	}
+	
+	@EventHandler
+	public void onDestroy(EntityDamageByEntityEvent e) {
+		
+		if(e.getEntity() instanceof ArmorStand) e.setCancelled(true);
 	}
 	
 	@EventHandler
@@ -146,8 +165,23 @@ public class ATeam implements Listener {
 				}
 			}
 		}
+	}
+	
+	@EventHandler
+	public void onTeamJoin(PlayerInteractAtEntityEvent e) {
+		if(!(e.getRightClicked() instanceof ArmorStand)) return;
+		if(!(GState.isState(GState.LOBBY))) return;
+		ArmorStand as = (ArmorStand) e.getRightClicked();
+		if(!(as.isCustomNameVisible())) return;
+		String name = "";
+		for(String names : TeamFile.getTeamFile().getConfigurationSection("Teams").getKeys(false)) {
+			if(ChatColor.stripColor(as.getCustomName()).equalsIgnoreCase(names)) {
+				name = names;
+			}
+		}
 		
-		
+		e.setCancelled(true);
+		addPlayerToTeam(e.getPlayer(), name);
 	}
 	
 	public static ChatColor getTeamColor(String team) {
@@ -157,6 +191,53 @@ public class ATeam implements Listener {
 			Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cThe Team §4" + team + " §cis invalid.");
 		}
 		return ChatColor.RESET;
+	}
+	
+	public static Color getTeamItemColor(String team) {
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("orange")) {
+			return Color.ORANGE;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("light_purple")) {
+			return Color.FUCHSIA;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("aqua")) {
+			return Color.AQUA;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("yellow")) {
+			return Color.YELLOW;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("green")) {
+			return Color.LIME;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("red")) {
+			return Color.MAROON;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_grey")) {
+			return Color.GRAY;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("grey")) {
+			return Color.SILVER;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_aqua")) {
+			return Color.NAVY;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_purple")) {
+			return Color.PURPLE;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("blue")) {
+			return Color.BLUE;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_green")) {
+			return Color.OLIVE;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_red")) {
+			return Color.RED;
+		}
+		if(TeamFile.getTeamColorAsString(team).equalsIgnoreCase("black")) {
+			return Color.BLACK;
+		}
+		
+		return Color.WHITE;
 	}
 	
 	public static int getTeamColorAsInteger(String team) {

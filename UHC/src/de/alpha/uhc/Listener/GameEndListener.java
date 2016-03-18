@@ -12,9 +12,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.aclasses.AScoreboard;
+import de.alpha.uhc.aclasses.ATablist;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.manager.TitleManager;
-import de.alpha.uhc.scoreboard.AScoreboard;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Stats;
@@ -29,9 +30,6 @@ public class GameEndListener implements Listener {
 	public static String rew;
 	public static String quit;
 	public static String BungeeServer;
-	
-	public static String header;
-	public static String footer;
 	
 	private static int apc;
 	public static int opc;
@@ -61,24 +59,15 @@ public class GameEndListener implements Listener {
 		apc = Core.getInGamePlayers().size();
 		death = death.replace("[Player]", p.getDisplayName());
 		death = death.replace("[PlayerCount]", "§7["+apc+" left]");
-		
-		for(Player all : Bukkit.getOnlinePlayers()) {
-			header = header.replace("[player]", p.getDisplayName());
-			header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-			header = header.replace("[gamestatus]", GState.getGStateName());
 			
-			footer = footer.replace("[player]", p.getDisplayName());
-			footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-			footer = footer.replace("[gamestatus]", GState.getGStateName());
-			
-			e.setDeathMessage(Core.getPrefix() + death);
-			TitleManager.sendTabTitle(all, "", "");
-			TitleManager.sendTabTitle(all, header, footer);
-		}
+		e.setDeathMessage(Core.getPrefix() + death);
 		
 		death = MessageFileManager.getMSGFile().getColorString("Announcements.Death");
-		header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
-		footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
+		
+		
+		//                        -=X Tablist X=-
+		
+		ATablist.sendStandingInGameTablist();
 		
 		
 		//                        -=X Stats X=-
@@ -209,21 +198,7 @@ public class GameEndListener implements Listener {
 			quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
 		}
 		
-		for(Player all : Bukkit.getOnlinePlayers()) {
-			header = header.replace("[player]", all.getDisplayName());
-			header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-			header = header.replace("[gamestatus]", GState.getGStateName());
-			
-			footer = footer.replace("[player]", all.getDisplayName());
-			footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
-			footer = footer.replace("[gamestatus]", GState.getGStateName());
-			
-			TitleManager.sendTabTitle(all, "", "");
-			TitleManager.sendTabTitle(all, header, footer);
-			
-			header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
-			footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
-		}
+		ATablist.sendStandingInGameTablist();
 		
 		p.getInventory().clear();
 		

@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.files.DropFile;
 import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
@@ -20,8 +21,8 @@ import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.kits.KitFileManager;
-import de.alpha.uhc.teams.ATeam;
 import de.alpha.uhc.timer.Timer;
+import de.alpha.uhc.utils.ArmorStandUtil;
 import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Regions;
@@ -55,6 +56,12 @@ public class UHCCommand implements CommandExecutor {
 							ATeam.addPlayerToTeam(p, args[1]);
 							return true;
 						}
+					}
+					
+					if(args[0].equalsIgnoreCase("createTeamJoiner")) {
+						ArmorStandUtil.spawn(p.getLocation(), args[1]);
+						p.sendMessage(Core.getPrefix() + "§a Setted Teamjoiner for team " + ATeam.getTeamColor(args[1]) + args[1]);
+						return true;
 					}
 				}
 			}
@@ -95,6 +102,7 @@ public class UHCCommand implements CommandExecutor {
 					p.sendMessage("§7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
 					p.sendMessage("§7 /uhc start - short the countdown to 10 seconds");
 					p.sendMessage("§7 /uhc team [teamname] - See all teams [join this team]");
+					p.sendMessage("§7 /uhc createTeamJoiner [team] - creates a Entity to join the team [team]");
 					p.sendMessage("§7 /uhc stats - see your stats");
 					p.sendMessage("§8---===XXX===---");
 					return true;

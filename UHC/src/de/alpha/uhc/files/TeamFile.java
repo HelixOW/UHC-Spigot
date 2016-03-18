@@ -1,6 +1,6 @@
 package de.alpha.uhc.files;
 
-import de.alpha.uhc.teams.ATeam;
+import de.alpha.uhc.aclasses.ATeam;
 import net.minetopix.library.main.file.SimpleFile;
 
 public class TeamFile {
@@ -37,7 +37,7 @@ public class TeamFile {
 	public static String getTeamColorAsString(String team) {
 		
 		for(String names : file.getConfigurationSection("Teams").getKeys(false)) {
-			if(team.equals(file.getString("Teams."+names+".name"))) {
+			if(team.equalsIgnoreCase(file.getString("Teams."+names+".name"))) {
 				return file.getString("Teams."+names+".color").toUpperCase();
 			}
 		}
