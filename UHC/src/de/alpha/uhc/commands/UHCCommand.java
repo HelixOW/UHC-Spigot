@@ -27,7 +27,7 @@ import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
-import de.alpha.uhc.utils.WorldPopulator;
+import de.alpha.uhc.world.WorldPopulator;
 
 public class UHCCommand implements CommandExecutor {
 	

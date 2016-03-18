@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -28,6 +27,7 @@ import de.alpha.uhc.Listener.MotdListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.aclasses.ATeam;
+import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.DropFile;
 import de.alpha.uhc.files.HologramFileManager;
@@ -41,7 +41,6 @@ import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.MapReset;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
-import de.alpha.uhc.utils.WorldUtil;
 import net.minetopix.library.main.file.SimpleFile;
 import net.minetopix.mysqlapi.MySQLAPI;
 import net.minetopix.mysqlapi.MySQLDataType;
@@ -121,18 +120,12 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		}
 		new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
 		
-		new BukkitRunnable() {
-			
-			@Override
-			public void run() {
-				WorldUtil.WorldReset();
-				
-			}
-		}.runTaskLater(Core.getInstance(), 20);
 		GState.setGameState(GState.LOBBY);
 		Timer.setCountdownTime();
 		
 		registerCrafting();
+		
+		AWorld.performReset();
 		
 		if(Timer.pc <= 1) {
 			Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");

@@ -10,12 +10,12 @@ import de.alpha.uhc.Listener.MotdListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.aclasses.ATeam;
+import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
-import de.alpha.uhc.utils.WorldUtil;
 import net.minetopix.library.main.file.SimpleFile;
 
 public class OptionsFileManager {
@@ -91,7 +91,7 @@ public class OptionsFileManager {
 		
 		MotdListener.custommotd = file.getBoolean("Status Motd");
 		
-		WorldUtil.lobbySchematic = file.getBoolean("Lobby.asSchematic");
+		AWorld.lobbyAsSchematic = file.getBoolean("Lobby.asSchematic");
 		
 		Timer.BungeeMode = file.getBoolean("BungeeMode");
 		Timer.BungeeServer = file.getString("BungeeServer");

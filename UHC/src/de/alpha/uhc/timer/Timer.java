@@ -19,6 +19,7 @@ import de.alpha.uhc.GState;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.aclasses.AScoreboard;
 import de.alpha.uhc.aclasses.ATablist;
+import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
@@ -26,7 +27,6 @@ import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.utils.LobbyPasteUtil;
-import de.alpha.uhc.utils.WorldUtil;
 
 
 public class Timer {
@@ -128,13 +128,13 @@ public class Timer {
 											
 											a.cancel();
 											
-											if(WorldUtil.lobbySchematic == true) {
+											if(AWorld.lobbyAsSchematic == true) {
 												LobbyPasteUtil.removeLobby();
 											}
 													
 											for(Player ig : Core.getInGamePlayers()) {
 												
-												if(WorldUtil.lobbySchematic == false) {
+												if(AWorld.lobbyAsSchematic == false) {
 													
 													try {
 												

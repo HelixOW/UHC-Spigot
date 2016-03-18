@@ -1,4 +1,4 @@
-package de.alpha.uhc.utils;
+package de.alpha.uhc.world;
 
 import java.util.Random;
 
