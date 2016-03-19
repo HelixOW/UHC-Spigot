@@ -8,10 +8,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
@@ -43,6 +47,14 @@ public class PlayerJoinListener implements Listener {
 	public static Material kitItem;
 	public static String kitName;
 	public static boolean kitMode;
+	
+	public static boolean leaveMode;
+	public static Material leaveItem;
+	public static String leaveName;
+	
+	public static boolean startMode;
+	public static Material startItem;
+	public static String startName;
 	
 	private int apc;
 	public static int mpc;
@@ -149,6 +161,12 @@ public class PlayerJoinListener implements Listener {
 				e.getPlayer().getInventory().setItem(1, new ItemCreator(teamItem).setName(teamName).build());
 			}
 		}
+		if(leaveMode == true && GameEndListener.BungeeMode == true) {
+			e.getPlayer().getInventory().setItem(8, new ItemCreator(leaveItem).setName(leaveName).build());
+		}
+		if(startMode == true && e.getPlayer().hasPermission("uhc.start")) {
+			e.getPlayer().getInventory().setItem(4, new ItemCreator(startItem).setName(startName).build());
+		}
 		if(SpawnFileManager.getLobby() != null) {
 			if(Bukkit.getWorld(SpawnFileManager.getLobbyWorldName()) == null) {
 				e.getPlayer().teleport(e.getPlayer().getWorld().getSpawnLocation());
@@ -194,6 +212,25 @@ public class PlayerJoinListener implements Listener {
 				}
 			}.runTaskLater(Core.getInstance(), 20);
 		
+		}
+	}
+	
+	@EventHandler
+	public void onLeaveClick(PlayerInteractEvent e) {
+		if(!(GState.isState(GState.LOBBY))) return;
+		if(e.getItem() == null) return;
+		if(e.getItem().getType().equals(leaveItem)) {
+			if(GameEndListener.BungeeMode == true) {
+				ByteArrayDataOutput out = ByteStreams.newDataOutput();
+					
+				out.writeUTF("Connect");
+				out.writeUTF(GameEndListener.BungeeServer);
+					
+				e.getPlayer().sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
+			}
+		} else if(e.getPlayer().hasPermission("uhc.start") && startMode == true && e.getItem().getType().equals(startItem)) {
+				Timer.changeTime();
+				startMode = false;
 		}
 	}
 	

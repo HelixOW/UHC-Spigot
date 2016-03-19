@@ -32,6 +32,7 @@ public class MessageFileManager {
 		file.setDefault("Announcements.Countdown", "&aGame starts in &7[time]&8 seconds");
 		file.setDefault("Announcements.NotEnoughPlayers", "§cCountdown reloaded! Not enough Players online.");
 		file.setDefault("Announcements.Peaceperiod.timer", "§aThe damage is enabled in &7[time] &8seconds");
+		file.setDefault("Announcements.DeathMatch.timer", "§aThe deathmatch starts in &7[time] &8minutes");
 		file.setDefault("Announcements.Peaceperiod.end", "&cThe Damage is now on. Be Careful!");
 		file.setDefault("Announcements.Death", "&6[Player]&c had died. [PlayerCount]");
 		file.setDefault("Announcements.Leave", "&6[Player]&c had left. [PlayerCount]");
@@ -73,6 +74,7 @@ public class MessageFileManager {
 		file.setDefault("GameStatus.Lobby", "Lobby");
 		file.setDefault("GameStatus.Grace", "Grace");
 		file.setDefault("GameStatus.InGame", "InGame");
+		file.setDefault("GameStatus.Deathmatch", "Deathmatch");
 		file.setDefault("GameStatus.Restart", "Restart");
 	}
 	
@@ -85,6 +87,7 @@ public class MessageFileManager {
 		GState.lobby = file.getString("GameStatus.Lobby");
 		GState.grace = file.getString("GameStatus.Grace");
 		GState.ingame = file.getString("GameStatus.InGame");
+		GState.deathmatch = file.getString("GameStatus.Deathmatch");
 		GState.restart = file.getString("GameStatus.Restart");
 		
 		MotdListener.lobby = file.getColorString("Motd.Lobby");
@@ -106,6 +109,7 @@ public class MessageFileManager {
 		UHCCommand.spawnset = file.getColorString("Commands.Admin.SpawnSet");
 		UHCCommand.lobbyset = file.getColorString("Commands.Admin.LobbySet");
 		
+		Timer.dmmsg = file.getColorString("Announcements.DeathMatch.timer");
 		Timer.countmsg = file.getColorString("Announcements.Countdown");
 		Timer.nep = file.getColorString("Announcements.NotEnoughPlayers");
 		Timer.gracemsg = file.getColorString("Announcements.Peaceperiod.timer");

@@ -112,6 +112,13 @@ public class GameEndListener implements Listener {
 		
 		//                       -=X Game End X=-
 		
+		if(Core.getInGamePlayers().size() == 4) {
+			if(Timer.dm) {
+				Timer.dd.cancel();
+				Timer.startDeathMatch();
+			}
+		}
+		
 		if(Core.getInGamePlayers().size() <= 1) {
 			
 			if(Core.getInGamePlayers().size() == 0) {

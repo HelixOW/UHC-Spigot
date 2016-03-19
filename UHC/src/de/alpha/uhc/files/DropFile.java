@@ -20,10 +20,10 @@ public class DropFile {
 		file.setDefault("Blocks.Ore.Coal.drop", "coal:2");
 		
 		file.setDefault("Blocks.Ore.Iron.enabled", true);
-		file.setDefault("Blocks.Ore.Iron.drop", "iron_iron:2");
+		file.setDefault("Blocks.Ore.Iron.drop", "iron_ingot:2");
 		
 		file.setDefault("Blocks.Ore.Gold.enabled", true);
-		file.setDefault("Blocks.Ore.Gold.drop", "gold_iron:5");
+		file.setDefault("Blocks.Ore.Gold.drop", "gold_ingot:5");
 		
 		file.setDefault("Blocks.Ore.Diamond.enabled", true);
 		file.setDefault("Blocks.Ore.Diamond.drop", "diamond:7");

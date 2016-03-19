@@ -27,6 +27,10 @@ public class Border {
 		arena = loc;
 	}
 	
+	public static void setSize(int newSize) {
+		size = newSize;
+	}
+	
 	public static void border() {
 		
 		new BukkitRunnable() {

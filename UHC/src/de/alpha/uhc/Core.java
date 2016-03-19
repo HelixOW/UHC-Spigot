@@ -62,7 +62,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		ig = new ArrayList<Player>();
 		spectator = new ArrayList<Player>();
 		
-		Bukkit.setWhitelist(true);
+		GState.setGameState(GState.RESTART);
 			
 		OptionsFileManager.addOptions();
 		OptionsFileManager.loadOptions();
@@ -120,7 +120,6 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		}
 		new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
 		
-		GState.setGameState(GState.LOBBY);
 		Timer.setCountdownTime();
 		
 		registerCrafting();

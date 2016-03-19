@@ -12,9 +12,9 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.utils.LobbyPasteUtil;
-import de.alpha.uhc.world.WorldPopulator;
 
 public class AWorld {
 	
@@ -99,9 +99,12 @@ public class AWorld {
 							new BukkitRunnable() {
 								@Override
 								public void run() {
-									Bukkit.getWorld("UHC").getPopulators().add(new WorldPopulator());
 									worldName = "UHC";
 									Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + " §aUHC World loaded");
+									
+									SpawnFileManager.SetSpawn(0, Bukkit.getWorld(worldName).getHighestBlockAt(0, 0).getLocation().getY(), 0, Bukkit.getWorld(worldName));
+									
+									GState.setGameState(GState.LOBBY);
 									
 									if(lobbyAsSchematic && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
 										if(new File("plugins/UHC/schematics", "lobby.schematic") != null) {
@@ -132,11 +135,11 @@ public class AWorld {
 					new BukkitRunnable() {
 						@Override
 						public void run() {
-							Bukkit.getWorld(worldName).getPopulators().add(new WorldPopulator());
 							Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + " §aUHC World reseted");
 							
-							SpawnFileManager.SetSpawn(0, 200, 0, Bukkit.getWorld(worldName));
+							SpawnFileManager.SetSpawn(0, Bukkit.getWorld(worldName).getHighestBlockAt(0, 0).getLocation().getY(), 0, Bukkit.getWorld(worldName));
 							
+							GState.setGameState(GState.LOBBY);
 							if(lobbyAsSchematic && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
 								if(new File("plugins/UHC/schematics", "lobby.schematic") != null) {
 									World w = Bukkit.getWorld("UHC");
@@ -167,19 +170,19 @@ public class AWorld {
 			if(arena.getName().equals("world")) {
 				if(Bukkit.getWorld("UHC") == null) {
 					arena = Bukkit.createWorld(new WorldCreator("UHC"));
-					SpawnFileManager.SetSpawn(0, 200, 0, arena);
+					SpawnFileManager.SetSpawn(0, arena.getHighestBlockAt(0, 0).getLocation().getY(), 0, arena);
 				} else {
 					arena = Bukkit.getWorld("UHC");
-					SpawnFileManager.SetSpawn(0, 200, 0, arena);
+					SpawnFileManager.SetSpawn(0, arena.getHighestBlockAt(0, 0).getLocation().getY(), 0, arena);
 				}
 			}
 		} else {
 			if(Bukkit.getWorld("UHC") == null) {
 				arena = Bukkit.createWorld(new WorldCreator("UHC"));
-				SpawnFileManager.SetSpawn(0, 200, 0, arena);
+				SpawnFileManager.SetSpawn(0, arena.getHighestBlockAt(0, 0).getLocation().getY(), 0, arena);
 			} else {
 				arena = Bukkit.getWorld("UHC");
-				SpawnFileManager.SetSpawn(0, 200, 0, arena);
+				SpawnFileManager.SetSpawn(0, arena.getHighestBlockAt(0, 0).getLocation().getY(), 0, arena);
 			}
 		}
 		

@@ -43,6 +43,10 @@ public class OptionsFileManager {
         file.setDefault("Countdown.minimum_Player_Count", 2);
         file.setDefault("Countdown.maximum_Player_Count", 24);
         
+        file.setDefault("Deathmatch.enabled", true);
+        file.setDefault("Deathmatch.begins after min", 30);
+        file.setDefault("Deathmatch.time before pvp in seconds", 30);
+        
         file.setDefault("Soup.healthboost", 3);
         
         file.setDefault("MySQL", false);
@@ -68,18 +72,25 @@ public class OptionsFileManager {
         file.setDefault("Lobby.createTool", "gold_axe");
         file.setDefault("Lobby.asSchematic", false);
         
+        file.setDefault("Lobby.give startitem", true);
+        file.setDefault("Lobby.Startitem", "nether_star");
+        file.setDefault("Lobby.Startitemname", "&5Start UHC");
+        
+        file.setDefault("Lobby.give leaveitem", true);
+        file.setDefault("Lobby.Leaveitem", "redstone");
+        file.setDefault("Lobby.Leaveitemname", "&cLeave");
+        
         file.setDefault("Status Motd", true);
         
         file.setDefault("Spectator.Item", "magma_cream");
         file.setDefault("Spectator.Itemname", "&aPlayer Teleporter");
         file.setDefault("Spectator.GUI.Title", "&7-=X &cSpectator &7X=-");
         
+        
     }
 	
 	public static void loadOptions() {
 		SimpleFile file = getConfigFile();
-		
-		Timer.mcv = file.getBoolean("Minecraft 1,9");
 		
 		ATeam.materialName = file.getString("Team.Item");
 		ATeam.title = file.getColorString("Team.GUI.Title");
@@ -93,6 +104,10 @@ public class OptionsFileManager {
 		
 		AWorld.lobbyAsSchematic = file.getBoolean("Lobby.asSchematic");
 		
+		Timer.tbpvp = file.getInt("Deathmatch.time before pvp in seconds");
+		Timer.dm = file.getBoolean("Deathmatch.enabled");
+		Timer.uDM = file.getInt("Deathmatch.begins after min");
+		Timer.mcv = file.getBoolean("Minecraft 1,9");
 		Timer.BungeeMode = file.getBoolean("BungeeMode");
 		Timer.BungeeServer = file.getString("BungeeServer");
 		Timer.max = file.getInt("Spawnradius");
@@ -122,6 +137,12 @@ public class OptionsFileManager {
 		PlayerJoinListener.kitMode = file.getBoolean("Kits");
 		PlayerJoinListener.teamName = file.getColorString("Team.Name");
 		PlayerJoinListener.teamItem = Material.getMaterial(file.getString("Team.Item").toUpperCase());
+		PlayerJoinListener.leaveMode = file.getBoolean("Lobby.give leaveitem");
+		PlayerJoinListener.leaveName = file.getColorString("Lobby.Leaveitemname");
+		PlayerJoinListener.leaveItem = Material.getMaterial(file.getString("Lobby.Leaveitem").toUpperCase());
+		PlayerJoinListener.startMode = file.getBoolean("Lobby.give startitem");
+		PlayerJoinListener.startName = file.getColorString("Lobby.Startitemname");
+		PlayerJoinListener.startItem = Material.getMaterial(file.getString("Lobby.Startitem").toUpperCase());
 		
 		SoupListener.boost = file.getDouble("Soup.healthboost");
 		

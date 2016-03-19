@@ -32,26 +32,34 @@ import de.alpha.uhc.utils.LobbyPasteUtil;
 public class Timer {
 	
 	public static String countmsg;
-	public static  String nep;
-	public static  String gracemsg;
-	public static  String end;
+	public static String nep;
+	public static String gracemsg;
+	public static String end;
 	public static String endmsg;
+	public static String dmmsg;
 	
-	public static  boolean grace;
+	public static boolean grace;
+	public static boolean dm;
 	
-	public static  int pc;
+	public static int pc;
 	
-	 static int high;
-	 static int gracetime;
-	 public	static int max;
-	 
+	static int high;
+	static int gracetime;
+	public static int max;
+	
+	public static int uDM;
+	public static int tbpvp;
+	
 	private static int endTime;
 	
-	private static   BukkitTask a;
-	private  static  BukkitTask b;
+	private static BukkitTask a;
+	private static BukkitTask b;
 	
-	private  static  BukkitTask c;
-	private static   BukkitTask e;
+	private static BukkitTask c;
+	private static BukkitTask e;
+	public static BukkitTask dd;
+	public static BukkitTask ee;
+	public static BukkitTask gg;
 	
 	private static BukkitTask f;
 	
@@ -60,7 +68,6 @@ public class Timer {
 	public static String kick;
 	
 	public static boolean mcv;
-	
 	
 	public static void startCountdown() {
 		
@@ -260,6 +267,7 @@ public class Timer {
 									GState.setGameState(GState.INGAME);
 
 									ATablist.sendStandingInGameTablist();
+									if(dm) startSilentDeathMatchTimer();
 								}
 								c.cancel();
 								return;
@@ -268,6 +276,83 @@ public class Timer {
 						}
 					}.runTask(Core.getInstance());
 				}
+			}
+		}.runTaskTimer(Core.getInstance(), 0, 20);
+	}
+	
+	public static void startSilentDeathMatchTimer() {
+		dd = new BukkitRunnable() {
+			@Override
+			public void run() {
+				if(uDM % 1 == 0 && uDM > 0) {
+					for(Player all : Bukkit.getOnlinePlayers()) {
+						String a = dmmsg.replace("[time]", Integer.toString(uDM));
+						TitleManager.sendAction(all, Core.getPrefix() + a);
+						all.sendMessage(Core.getPrefix() + a);
+					}
+				}
+				if(uDM == 0) {
+					startDeathMatch();
+					dd.cancel();
+				}
+				uDM --;
+			}
+		}.runTaskTimer(Core.getInstance(), 0, 20*60);
+	}
+	
+	public static void startDeathMatch() {
+		for(Player ingame : Core.getInGamePlayers()) {
+			if(SpawnFileManager.getSpawn() == null) {
+				Location l = ingame.getWorld().getSpawnLocation();
+				
+				Location r = SpawnFileManager.getRandomLocation(l, l.getBlockX()-20,l.getBlockX()+20, l.getBlockZ()-20,l.getBlockZ()+20);
+				
+				Location lr = r.getWorld().getHighestBlockAt(r.getBlockX(), r.getBlockZ()).getLocation();
+				ingame.teleport(lr);
+				Border.setSize(50);
+			} else {
+				Location l = SpawnFileManager.getSpawn();
+				
+				Location r = SpawnFileManager.getRandomLocation(l, l.getBlockX()-20,l.getBlockX()+20, l.getBlockZ()-20,l.getBlockZ()+20);
+				
+				Location lr = r.getWorld().getHighestBlockAt(r.getBlockX(), r.getBlockZ()).getLocation();
+				
+				ingame.teleport(lr);
+				Border.setSize(50);
+			}
+		}
+		GState.setGameState(GState.PREDEATHMATCH);
+		ee = new BukkitRunnable() {
+			@Override
+			public void run() {
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						
+						if(tbpvp % 5 == 0 && tbpvp > 10) {
+							for(Player all : Bukkit.getOnlinePlayers()) {
+								String a = dmmsg.replace("[time]", Integer.toString(tbpvp)).replace("minutes", "seconds");
+								TitleManager.sendAction(all, Core.getPrefix() + a);
+							}
+						}
+						
+						if(tbpvp % 1 == 0 && tbpvp > 0 && tbpvp < 10) {
+							for(Player all : Bukkit.getOnlinePlayers()) {
+								String a = dmmsg.replace("[time]", Integer.toString(tbpvp)).replace("minutes", "seconds");
+								TitleManager.sendAction(all, Core.getPrefix() + a);
+							}
+						}
+						
+						if(tbpvp == 0) {
+							for(Player all : Bukkit.getOnlinePlayers()) {
+								GState.setGameState(GState.DEATHMATCH);
+								if(mcv == false) all.playSound(all.getLocation(), Sound.NOTE_PLING, 10F, 0);
+							}
+							ee.cancel();
+						}
+						tbpvp--;
+					}
+				}.runTask(Core.getInstance());
 			}
 		}.runTaskTimer(Core.getInstance(), 0, 20);
 	}

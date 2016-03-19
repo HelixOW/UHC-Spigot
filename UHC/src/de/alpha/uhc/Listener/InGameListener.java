@@ -33,10 +33,19 @@ public class InGameListener implements Listener {
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		
-		if(!(GState.isState(GState.INGAME) || GState.isState(GState.GRACE))) return;
+		if(!(GState.isState(GState.INGAME) || GState.isState(GState.GRACE) || GState.isState(GState.DEATHMATCH) || GState.isState(GState.PREDEATHMATCH))) return;
 		if(Core.getSpecs().contains(e.getPlayer())) return;
 		AScoreboard.updateInGameCenter(e.getPlayer());
 		
+	}
+	
+	@EventHandler
+	public void onFirstHit(EntityDamageEvent e) {
+		
+		if(!(e.getEntity() instanceof Player)) return;
+		if(GState.isState(GState.PREDEATHMATCH)) {
+			e.setCancelled(true);
+		}
 	}
 	
 	@EventHandler

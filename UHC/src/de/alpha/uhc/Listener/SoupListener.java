@@ -16,11 +16,11 @@ public class SoupListener implements Listener {
 	@EventHandler
 	public void onSoup(PlayerInteractEvent e) {
 		
-		if(GState.isState(GState.INGAME)) {
+		if(GState.isState(GState.INGAME) || GState.isState(GState.DEATHMATCH) || GState.isState(GState.PREDEATHMATCH)) {
 			
 			Player p = e.getPlayer();
 			
-			if(p.getItemOnCursor().getType().equals(Material.MUSHROOM_SOUP)) {
+			if(p.getItemInHand().getType().equals(Material.MUSHROOM_SOUP)) {
 				
 				if(e.getAction().equals(Action.RIGHT_CLICK_AIR) 
 						|| e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -29,7 +29,7 @@ public class SoupListener implements Listener {
 						return;
 					}
 					
-					p.getItemOnCursor().setType(Material.BOWL);
+					p.getItemInHand().setType(Material.BOWL);
 					if(p.getHealth() <= 19 - boost) {
 						p.setHealth(p.getHealth() + boost);
 					} else {

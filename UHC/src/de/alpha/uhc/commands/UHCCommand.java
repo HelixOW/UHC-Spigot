@@ -27,7 +27,6 @@ import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
-import de.alpha.uhc.world.WorldPopulator;
 
 public class UHCCommand implements CommandExecutor {
 	
@@ -202,7 +201,6 @@ public class UHCCommand implements CommandExecutor {
 						.generateStructures(false)
 						.type(WorldType.NORMAL));
 						
-						Bukkit.getWorld(args[1]).getPopulators().add(new WorldPopulator());
 						new BukkitRunnable() {
 							
 							@Override
