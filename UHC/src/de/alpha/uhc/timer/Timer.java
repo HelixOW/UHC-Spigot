@@ -67,8 +67,6 @@ public class Timer {
 	public static String BungeeServer;
 	public static String kick;
 	
-	public static boolean mcv;
-	
 	public static void startCountdown() {
 		
 		if(GState.isState(GState.LOBBY)) {
@@ -99,9 +97,7 @@ public class Timer {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendTitle(all, 10, 20, 10, " ", countmsg);
-											if(mcv == false) {
-												all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
-											}
+											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
 												@Override
@@ -118,9 +114,7 @@ public class Timer {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendAction(all, countmsg);
-											if(mcv == false) {
-												all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
-											}
+											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
 												@Override
@@ -166,9 +160,7 @@ public class Timer {
 												}
 												b.cancel();
 												
-												if(mcv == false) {
-													all.playSound(all.getLocation(), Sound.NOTE_PIANO, 1F, 0F);
-												}
+												all.playSound(all.getLocation(), Sound.NOTE_PIANO, 1F, 0F);
 												all.getWorld().setGameRuleValue("naturalRegeneration", "false");
 												grace = true;
 												startGracePeriod();
@@ -284,11 +276,20 @@ public class Timer {
 		dd = new BukkitRunnable() {
 			@Override
 			public void run() {
-				if(uDM % 1 == 0 && uDM > 0) {
+				for(Player all : Bukkit.getOnlinePlayers()) {
+					AScoreboard.updateInGamePvPTime(all);
+				}
+				if(uDM % 5 == 0 && uDM > 10) {
 					for(Player all : Bukkit.getOnlinePlayers()) {
 						String a = dmmsg.replace("[time]", Integer.toString(uDM));
 						TitleManager.sendAction(all, Core.getPrefix() + a);
-						all.sendMessage(Core.getPrefix() + a);
+					}
+				}
+				
+				if(uDM % 1 == 0 && uDM > 0 && uDM < 10) {
+					for(Player all : Bukkit.getOnlinePlayers()) {
+						String a = dmmsg.replace("[time]", Integer.toString(uDM));
+						TitleManager.sendAction(all, Core.getPrefix() + a);
 					}
 				}
 				if(uDM == 0) {
@@ -321,6 +322,9 @@ public class Timer {
 				Border.setSize(50);
 			}
 		}
+		for(Player all : Bukkit.getOnlinePlayers()) {
+			AScoreboard.setInGamePvPTime(all);
+		}
 		GState.setGameState(GState.PREDEATHMATCH);
 		ee = new BukkitRunnable() {
 			@Override
@@ -346,7 +350,7 @@ public class Timer {
 						if(tbpvp == 0) {
 							for(Player all : Bukkit.getOnlinePlayers()) {
 								GState.setGameState(GState.DEATHMATCH);
-								if(mcv == false) all.playSound(all.getLocation(), Sound.NOTE_PLING, 10F, 0);
+								all.playSound(all.getLocation(), Sound.NOTE_PLING, 10F, 0);
 							}
 							ee.cancel();
 						}

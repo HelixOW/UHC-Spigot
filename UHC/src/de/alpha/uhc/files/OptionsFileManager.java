@@ -30,7 +30,6 @@ public class OptionsFileManager {
         file.setDefault("Prefix", "&7[&bUHC&7] ");
         file.setDefault("BungeeMode", false);
         file.setDefault("BungeeServer", "lobby");
-        file.setDefault("Minecraft 1,9", false);
         
         file.setDefault("Border.size", 3000);
         file.setDefault("Border.getCloser", true);
@@ -107,7 +106,6 @@ public class OptionsFileManager {
 		Timer.tbpvp = file.getInt("Deathmatch.time before pvp in seconds");
 		Timer.dm = file.getBoolean("Deathmatch.enabled");
 		Timer.uDM = file.getInt("Deathmatch.begins after min");
-		Timer.mcv = file.getBoolean("Minecraft 1,9");
 		Timer.BungeeMode = file.getBoolean("BungeeMode");
 		Timer.BungeeServer = file.getString("BungeeServer");
 		Timer.max = file.getInt("Spawnradius");

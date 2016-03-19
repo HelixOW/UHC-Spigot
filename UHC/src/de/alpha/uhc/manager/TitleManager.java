@@ -8,8 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import de.alpha.uhc.timer.Timer;
-
 public class TitleManager {
 	
     public static void sendPacket(Player player, Object packet) {
@@ -98,7 +96,6 @@ public class TitleManager {
     }
 
     public static void sendAction(Player p, String msg) {
-    	if(Timer.mcv == true) return;
         try {
             if (TitleManager.getServerVersion().equalsIgnoreCase("v1_8_R2") || TitleManager.getServerVersion().equalsIgnoreCase("v1_8_R3")) {
                 Object icbc = TitleManager.getNmsClass("IChatBaseComponent$ChatSerializer").getMethod("a", String.class).invoke(null, "{'text': '" + msg + "'}");

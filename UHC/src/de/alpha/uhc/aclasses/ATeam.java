@@ -24,7 +24,6 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.TeamFile;
-import de.alpha.uhc.timer.Timer;
 import net.minetopix.library.main.item.ItemCreator;
 
 public class ATeam implements Listener {
@@ -83,10 +82,8 @@ public class ATeam implements Listener {
 				teams.put(p, teamToPut);
 				chosen = chosen.replace("[team]", getTeamColor(teamToPut)+teamToPut);
 				p.sendMessage(Core.getPrefix() + chosen);
-				if(!Timer.mcv) {
-					p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 0);
-					p.spigot().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 0, 0, 5, 5, 5, 50, 100, 5);
-				}
+				p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 0);
+				p.spigot().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 0, 0, 5, 5, 5, 50, 100, 5);
 				p.setDisplayName(getTeamColor(teamToPut) + p.getName());
 				p.setPlayerListName(getTeamColor(teamToPut) + p.getName());
 				AScoreboard.updateLobbyTeam(p);

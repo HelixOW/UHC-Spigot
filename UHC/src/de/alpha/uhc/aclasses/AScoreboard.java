@@ -12,6 +12,7 @@ import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Stats;
 
 public class AScoreboard {
@@ -41,6 +42,7 @@ public class AScoreboard {
 	public static boolean ShowInGameCenter;
 	public static boolean ShowInGameTeam;
 	public static boolean ShowInGameBorder;
+	public static boolean ShowInGamePvP;
 	public static boolean ShowInGameBar;
 	
 	public static String ingameTitle;
@@ -50,6 +52,7 @@ public class AScoreboard {
 	public static String ingameCenter;
 	public static String ingameTeam;
 	public static String ingameBorder;
+	public static String ingamePvP;
 	public static String ingameBar;
 	
 	public static boolean ShowHealthUName;
@@ -151,11 +154,14 @@ public class AScoreboard {
 	
 	private static HashMap<Player, String> lA = new HashMap<Player, String>();
 	private static HashMap<Player, String> lB = new HashMap<Player, String>();
+	private static HashMap<Player, String> lC = new HashMap<Player, String>();
 	private static HashMap<Player, String> lE = new HashMap<Player, String>();
 	private static HashMap<Player, String> lF = new HashMap<Player, String>();
 	
+	
 	private static int la;
 	private static int lb;
+	private static int lc;
 	private static int le;
 	private static int lf;
 	
@@ -229,6 +235,14 @@ public class AScoreboard {
 			score--;
 		}
 		
+		if(ShowInGamePvP) {
+			String a = ingamePvP.replace("[time]", Integer.toString(Timer.uDM));
+			lC.put(p, a);
+			lc = score;
+			obj.getScore(a).setScore(score);
+			score--;
+		}
+		
 		if(ShowHealthUName) {
 			Objective objName = sb.registerNewObjective("UHCHealthName", "health");
 			objName.setDisplaySlot(DisplaySlot.BELOW_NAME);
@@ -283,5 +297,21 @@ public class AScoreboard {
 		objP.getScore(a).setScore(lf);
 	}
 	
+	public static void updateInGamePvPTime(Player p) {
+		Objective objP = p.getScoreboard().getObjective("UHCInGame");
+		String a = ingamePvP.replace("[time]", Integer.toString(Timer.uDM));
+		p.getScoreboard().resetScores(lC.get(p));
+		lC.put(p, a);
+		objP.getScore(a).setScore(lc);
+	}
+	
+	public static String ingamePvPmsg;
+	
+	public static void setInGamePvPTime(Player p) {
+		Objective objP = p.getScoreboard().getObjective("UHCInGame");
+		p.getScoreboard().resetScores(lC.get(p));
+		lC.put(p, ingamePvPmsg);
+		objP.getScore(ingamePvPmsg).setScore(lc);
+	}
 	
 }

@@ -58,6 +58,11 @@ public class ScoreboardFile {
 		file.setDefault("Scoreboard.InGame.Border.show", true);
 		file.setDefault("Scoreboard.InGame.Border.message", "&4Border&7: &4[bordersize] &7Blocks");
 		
+		file.setDefault("Scoreboard.InGame.Until Deathmatch.show", true);
+		file.setDefault("Scoreboard.InGame.Until Deathmatch.message", "&eDeathmatch in&7: &e[time] &7minutes");
+		
+		file.setDefault("Scoreboard.InGame.Deathmatch.message", "&eDeathmatch&7: &enow");
+		
 		file.setDefault("Scoreboard.InGame.Bar.show", true);
 		file.setDefault("Scoreboard.InGame.Bar.message", "&7--------------");
 		
@@ -93,6 +98,7 @@ public class ScoreboardFile {
 		AScoreboard.ShowInGameTeam = file.getBoolean("Scoreboard.InGame.Team.show");
 		AScoreboard.ShowInGameCenter = file.getBoolean("Scoreboard.InGame.Center.show");
 		AScoreboard.ShowInGameBorder = file.getBoolean("Scoreboard.InGame.Border.show");
+		AScoreboard.ShowInGamePvP = file.getBoolean("Scoreboard.InGame.Until Deathmatch.show");
 		AScoreboard.ShowInGameBar = file.getBoolean("Scoreboard.InGame.Bar.show");
 		
 		AScoreboard.ingameTitle = file.getColorString("Scoreboard.InGame.title");
@@ -102,6 +108,8 @@ public class ScoreboardFile {
 		AScoreboard.ingameTeam = file.getColorString("Scoreboard.InGame.Team.message");
 		AScoreboard.ingameCenter = file.getColorString("Scoreboard.InGame.Center.message");
 		AScoreboard.ingameBorder = file.getColorString("Scoreboard.InGame.Border.message");
+		AScoreboard.ingamePvP = file.getColorString("Scoreboard.InGame.Until Deathmatch.message");
+		AScoreboard.ingamePvPmsg = file.getColorString("Scoreboard.InGame.Deathmatch.message");
 		AScoreboard.ingameBar = file.getColorString("Scoreboard.InGame.Bar.message");
 		
 		AScoreboard.ShowHealthUName = file.getBoolean("Scoreboard.Health.UnderName.show");
