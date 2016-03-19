@@ -34,7 +34,6 @@ public class MessageFileManager {
 		file.setDefault("Announcements.Peaceperiod.timer", "§aThe damage is enabled in &7[time] &8seconds");
 		file.setDefault("Announcements.DeathMatch.timer", "§aThe deathmatch starts in &7[time] &8minutes");
 		file.setDefault("Announcements.Peaceperiod.end", "&cThe Damage is now on. Be Careful!");
-		file.setDefault("Announcements.Death", "&6[Player]&c had died. [PlayerCount]");
 		file.setDefault("Announcements.Leave", "&6[Player]&c had left. [PlayerCount]");
 		file.setDefault("Announcements.Join", "&6[Player]&a has joined. [PlayerCount]");
 		file.setDefault("Announcements.Win", "&6[Player]&a has won UHC.");
@@ -116,7 +115,6 @@ public class MessageFileManager {
 		Timer.end = file.getColorString("Announcements.Peaceperiod.end");
 		Timer.endmsg = file.getColorString("Announcements.End");
 		
-		GameEndListener.death = file.getColorString("Announcements.Death");
 		GameEndListener.win = file.getColorString("Announcements.Win");
 		GameEndListener.kick = file.getColorString("Announcements.Restart");
 		GameEndListener.rew = file.getColorString("Reward");

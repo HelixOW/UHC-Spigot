@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -243,15 +242,6 @@ public class AScoreboard {
 		}
 		
 		p.setScoreboard(sb);
-		for(final Player online : Bukkit.getOnlinePlayers()){
-			  new BukkitRunnable() {
-				@Override
-				public void run() {
-					online.damage(1);
-					online.setHealth(online.getHealth()+1);
-				}
-			}.runTaskLater(Core.getInstance(), 20);
-		}
 	}
 	
 	public static void updateInGamePlayersLiving(Player p) {

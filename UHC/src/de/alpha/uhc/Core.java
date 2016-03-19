@@ -18,6 +18,7 @@ import com.google.common.io.ByteStreams;
 
 import de.alpha.uhc.Listener.ChatListener;
 import de.alpha.uhc.Listener.CraftListener;
+import de.alpha.uhc.Listener.CustomDeathListener;
 import de.alpha.uhc.Listener.DeathListener;
 import de.alpha.uhc.Listener.GameEndListener;
 import de.alpha.uhc.Listener.InGameListener;
@@ -29,6 +30,7 @@ import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.commands.UHCCommand;
+import de.alpha.uhc.files.DeathMessageFile;
 import de.alpha.uhc.files.DropFile;
 import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
@@ -83,6 +85,9 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		
 		DropFile.addDrops();
 		DropFile.loadDrops();
+		
+		DeathMessageFile.addDeathMessages();
+		DeathMessageFile.loadDeathMessages();
 		
 		registerCommands();
 		registerEvents();
@@ -192,6 +197,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		Bukkit.getPluginManager().registerEvents(new CraftListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
 		Bukkit.getPluginManager().registerEvents(new SoupListener(), this);
+		Bukkit.getPluginManager().registerEvents(new CustomDeathListener(), this);
 		
 		Bukkit.getPluginManager().registerEvents(new MapReset(), this);
 		Bukkit.getPluginManager().registerEvents(new Spectator(), this);

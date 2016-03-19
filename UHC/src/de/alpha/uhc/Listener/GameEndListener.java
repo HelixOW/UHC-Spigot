@@ -24,7 +24,6 @@ import net.minetopix.library.main.item.data.SkullData;
 
 public class GameEndListener implements Listener {
 	
-	public static String death;
 	public static String win;
 	public static String kick;
 	public static String rew;
@@ -52,17 +51,6 @@ public class GameEndListener implements Listener {
 		Spectator.setSpec(p);
 		
 		p.getWorld().strikeLightningEffect(p.getLocation());
-		
-		
-		//                        -=X Death Note X=-
-		
-		apc = Core.getInGamePlayers().size();
-		death = death.replace("[Player]", p.getDisplayName());
-		death = death.replace("[PlayerCount]", "§7["+apc+" left]");
-			
-		e.setDeathMessage(Core.getPrefix() + death);
-		
-		death = MessageFileManager.getMSGFile().getColorString("Announcements.Death");
 		
 		
 		//                        -=X Tablist X=-
