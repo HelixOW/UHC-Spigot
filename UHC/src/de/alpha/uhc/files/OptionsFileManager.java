@@ -39,6 +39,7 @@ public class OptionsFileManager {
         
         file.setDefault("Countdown.lobby", 60);
         file.setDefault("Countdown.graceperiod", 60);
+        file.setDefault("Countdown.no PvP period in minutes", 5);
         file.setDefault("Countdown.minimum_Player_Count", 2);
         file.setDefault("Countdown.maximum_Player_Count", 24);
         
@@ -79,6 +80,10 @@ public class OptionsFileManager {
         file.setDefault("Lobby.Leaveitem", "redstone");
         file.setDefault("Lobby.Leaveitemname", "&cLeave");
         
+        file.setDefault("InGame.give Compass", true);
+        file.setDefault("InGame.Compassitem", "compass");
+        file.setDefault("InGame.Compassitemname", "§aPlayertracker");
+        
         file.setDefault("Status Motd", true);
         
         file.setDefault("Spectator.Item", "magma_cream");
@@ -103,6 +108,7 @@ public class OptionsFileManager {
 		
 		AWorld.lobbyAsSchematic = file.getBoolean("Lobby.asSchematic");
 		
+		Timer.prePvP = file.getInt("Countdown.no PvP period in minutes");
 		Timer.tbpvp = file.getInt("Deathmatch.time before pvp in seconds");
 		Timer.dm = file.getBoolean("Deathmatch.enabled");
 		Timer.uDM = file.getInt("Deathmatch.begins after min");
@@ -110,6 +116,9 @@ public class OptionsFileManager {
 		Timer.BungeeServer = file.getString("BungeeServer");
 		Timer.max = file.getInt("Spawnradius");
 		Timer.pc = file.getInt("Countdown.minimum_Player_Count");
+		Timer.comMode = file.getBoolean("InGame.give Compass");
+		Timer.comName = file.getColorString("InGame.Compassitemname");
+		Timer.comItem = Material.getMaterial(file.getString("InGame.Compassitem").toUpperCase());
 		
 		GameEndListener.BungeeMode = file.getBoolean("BungeeMode");
 		GameEndListener.BungeeServer = file.getString("BungeeServer");
@@ -147,6 +156,5 @@ public class OptionsFileManager {
 		BorderManager.moveable = file.getBoolean("Border.getCloser");
 		BorderManager.moving = file.getInt("Border.movingBlocks");
 		BorderManager.time = (file.getInt("Border.moving after min")*20)*60;
-		
 	}
 }

@@ -35,7 +35,7 @@ public class TitleManager {
     public static void sendTitle(Player player, Integer fadeIn, Integer stay, Integer fadeOut, String title, String subtitle) {
         try {
             if (title != null) {
-                title = ChatColor.translateAlternateColorCodes((char)'&', (String)title);
+                title = ChatColor.translateAlternateColorCodes('&', title);
                 title = title.replaceAll("%player%", player.getDisplayName());
                 Object enumTitle = TitleManager.getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
                 Object chatTitle = TitleManager.getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + title + "\"}");
@@ -45,7 +45,7 @@ public class TitleManager {
                 TitleManager.sendPacket(player, titlePacket);
             }
             if (subtitle != null) {
-                subtitle = ChatColor.translateAlternateColorCodes((char)'&', (String)subtitle);
+                subtitle = ChatColor.translateAlternateColorCodes('&', subtitle);
                 subtitle = subtitle.replaceAll("%player%", player.getDisplayName());
                 Object enumSubtitle = TitleManager.getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("SUBTITLE").get(null);
                 Object chatSubtitle = TitleManager.getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + subtitle + "\"}");
@@ -64,11 +64,11 @@ public class TitleManager {
         if (header == null) {
             header = "";
         }
-        header = ChatColor.translateAlternateColorCodes((char)'&', (String)header);
+        header = ChatColor.translateAlternateColorCodes('&', header);
         if (footer == null) {
             footer = "";
         }
-        footer = ChatColor.translateAlternateColorCodes((char)'&', (String)footer);
+        footer = ChatColor.translateAlternateColorCodes('&', footer);
         header = header.replaceAll("%player%", player.getDisplayName());
         footer = footer.replaceAll("%player%", player.getDisplayName());
         try {

@@ -64,14 +64,14 @@ public class MiningListener implements Listener {
 				return;
 			}
 			b.setType(Material.AIR);
-			b.getWorld().dropItem(b.getLocation(), new ItemStack(ironM , ironA));
+			b.breakNaturally(new ItemStack(ironM, ironA));
 			e.setCancelled(true);
 		}
 			
 		if(m.equals(Material.GRAVEL)) {
 			if(gravel == false) return;
 			b.setType(Material.AIR);
-			b.getWorld().dropItem(b.getLocation(), new ItemStack(gravelM , gravelA));
+			b.breakNaturally(new ItemStack(gravelM , gravelA));
 			e.setCancelled(true);
 		}
 		
@@ -81,7 +81,7 @@ public class MiningListener implements Listener {
 				return;
 			}
 			b.setType(Material.AIR);
-			b.getWorld().dropItem(b.getLocation(), new ItemStack(goldM, goldA));
+			b.breakNaturally(new ItemStack(goldM, goldA));
 			e.setCancelled(true);
 		}
 			
@@ -91,7 +91,7 @@ public class MiningListener implements Listener {
 				return;
 			}
 			b.setType(Material.AIR);
-			b.getWorld().dropItem(b.getLocation(), new ItemStack(diaM, diaA));
+			b.breakNaturally(new ItemStack(diaM, diaA));
 			e.setCancelled(true);
 		}
 			
@@ -101,7 +101,7 @@ public class MiningListener implements Listener {
 				return;
 			}
 			b.setType(Material.AIR);
-			b.getWorld().dropItem(b.getLocation(), new ItemStack(coalM, coalA));
+			b.breakNaturally(new ItemStack(coalM, coalA));
 			e.setCancelled(true);
 		}
 	}

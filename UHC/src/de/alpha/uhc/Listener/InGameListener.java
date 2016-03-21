@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -17,7 +18,6 @@ import de.alpha.uhc.aclasses.AScoreboard;
 import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.manager.TitleManager;
-import de.alpha.uhc.timer.Timer;
 
 public class InGameListener implements Listener {
 	
@@ -33,17 +33,18 @@ public class InGameListener implements Listener {
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		
-		if(!(GState.isState(GState.INGAME) || GState.isState(GState.GRACE) || GState.isState(GState.DEATHMATCH) || GState.isState(GState.PREDEATHMATCH))) return;
+		if(!(GState.isState(GState.INGAME) || GState.isState(GState.GRACE) || GState.isState(GState.DEATHMATCH) || GState.isState(GState.PREDEATHMATCH) || GState.isState(GState.PREGAME))) return;
 		if(Core.getSpecs().contains(e.getPlayer())) return;
 		AScoreboard.updateInGameCenter(e.getPlayer());
 		
 	}
 	
 	@EventHandler
-	public void onFirstHit(EntityDamageEvent e) {
+	public void onFirstHit(EntityDamageByEntityEvent e) {
 		
 		if(!(e.getEntity() instanceof Player)) return;
-		if(GState.isState(GState.PREDEATHMATCH)) {
+		if(!(e.getDamager() instanceof Player)) return;
+		if(GState.isState(GState.PREDEATHMATCH) || GState.isState(GState.PREGAME)) {
 			e.setCancelled(true);
 		}
 	}
@@ -51,9 +52,9 @@ public class InGameListener implements Listener {
 	@EventHandler
 	public void onDMG(EntityDamageEvent e) {
 		
-		if(!(GState.isState(GState.INGAME))) return;
+		if(!(GState.isState(GState.INGAME) || GState.isState(GState.PREGAME))) return;
 		if(!(e.getEntity() instanceof Player)) return;
-		if(Timer.grace == true) e.setCancelled(true);
+		if(GState.isState(GState.GRACE)) e.setCancelled(true);
 		
 	}
 	
@@ -108,7 +109,7 @@ public class InGameListener implements Listener {
 			
 		for(Entity entity : p.getNearbyEntities(size, size, size)) {
 			if(entity instanceof Player) {
-				if(!(Core.getSpecs().contains((Player) entity))) {
+				if(!(Core.getSpecs().contains(entity))) {
 					
 					double dis = p.getLocation().distance(entity.getLocation());
 						

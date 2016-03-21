@@ -27,6 +27,7 @@ import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.utils.LobbyPasteUtil;
+import net.minetopix.library.main.item.ItemCreator;
 
 
 public class Timer {
@@ -37,25 +38,32 @@ public class Timer {
 	public static String end;
 	public static String endmsg;
 	public static String dmmsg;
+	public static String pvpmsg;
+	public static String pvpstart;
 	
-	public static boolean grace;
+	public static boolean comMode;
+	public static Material comItem;
+	public static String comName;
+	
+//	public static boolean grace;
 	public static boolean dm;
 	
 	public static int pc;
 	
-	static int high;
-	static int gracetime;
+	public static int high;
+	public static int gracetime;
 	public static int max;
 	
 	public static int uDM;
 	public static int tbpvp;
+	public static int prePvP;
 	
 	private static int endTime;
 	
 	private static BukkitTask a;
 	private static BukkitTask b;
-	
 	private static BukkitTask c;
+	public static BukkitTask d;
 	private static BukkitTask e;
 	public static BukkitTask dd;
 	public static BukkitTask ee;
@@ -162,7 +170,6 @@ public class Timer {
 												
 												all.playSound(all.getLocation(), Sound.NOTE_PIANO, 1F, 0F);
 												all.getWorld().setGameRuleValue("naturalRegeneration", "false");
-												grace = true;
 												startGracePeriod();
 												Border.border();
 												GState.setGameState(GState.GRACE);
@@ -238,7 +245,9 @@ public class Timer {
 						
 						@Override
 						public void run() {
-							
+							for(Player all : Bukkit.getOnlinePlayers()) {
+								AScoreboard.updateInGamePvPTime(all);
+							}
 							if(gracetime % 10 == 0 && gracetime > 0) {
 								gracemsg = gracemsg.replace("[time]", Integer.toString(gracetime));
 								Bukkit.broadcastMessage(Core.getPrefix() + gracemsg);
@@ -250,16 +259,14 @@ public class Timer {
 								
 								e.cancel();
 								
-								grace = false;
 								Bukkit.broadcastMessage(Core.getPrefix() + end);
 								new BorderManager().set();
 								for(Player all : Core.getInGamePlayers()) {
 									all.showPlayer(all);
 									giveCompass(all);
-									GState.setGameState(GState.INGAME);
-
+									GState.setGameState(GState.PREGAME);
+									startSilentGStateWatcher();
 									ATablist.sendStandingInGameTablist();
-									if(dm) startSilentDeathMatchTimer();
 								}
 								c.cancel();
 								return;
@@ -270,6 +277,34 @@ public class Timer {
 				}
 			}
 		}.runTaskTimer(Core.getInstance(), 0, 20);
+	}
+	
+	public static void startSilentGStateWatcher() {
+		
+		d = new BukkitRunnable() {
+			@Override
+			public void run() {
+				for(Player all : Bukkit.getOnlinePlayers()) {
+					AScoreboard.updateInGamePvPTime(all);
+				}
+				if(prePvP % 1 == 0 && prePvP > 0) {
+					for(Player all : Bukkit.getOnlinePlayers()) {
+						String a = pvpmsg.replace("[time]", Integer.toString(prePvP));
+						TitleManager.sendAction(all, Core.getPrefix() + a);
+					}
+				}
+				
+				if(prePvP == 0) {
+					for(Player all : Bukkit.getOnlinePlayers()) {
+						TitleManager.sendAction(all, Core.getPrefix() + pvpstart);
+					}
+					GState.setGameState(GState.INGAME);
+					if(dm) startSilentDeathMatchTimer();
+					d.cancel();
+				}
+				prePvP --;
+			}
+		}.runTaskTimer(Core.getInstance(), 0, 20*60);
 	}
 	
 	public static void startSilentDeathMatchTimer() {
@@ -414,7 +449,8 @@ public class Timer {
 	}
 	
 	private static void giveCompass(Player p) {
-		p.getInventory().addItem(new ItemStack(Material.COMPASS));
+		if(comMode) {
+			p.getInventory().addItem(new ItemCreator(comItem).setName(comName).build());
+		}
 	}
-	
 }

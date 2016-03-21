@@ -26,7 +26,7 @@ public class AWorld {
 	
 	private static void unloadWorld(World world) {
 		if(!world.equals(null)) {
-	        Bukkit.getServer().unloadWorld(world, true);
+	        Bukkit.getServer().unloadWorld(world, false);
 	    }
 	}
 	

@@ -575,6 +575,7 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
 		return res;
 	}
 
+	@Override
 	public Iterator<Block> iterator() {
 		return new CuboidIterator(this.getWorld(), this.x1, this.y1, this.z1, this.x2, this.y2, this.z2);
 	}
@@ -606,10 +607,12 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
 			this.x = this.y = this.z = 0;
 		}
 
+		@Override
 		public boolean hasNext() {
 			return this.x < this.sizeX && this.y < this.sizeY && this.z < this.sizeZ;
 		}
 
+		@Override
 		public Block next() {
 			Block b = this.w.getBlockAt(this.baseX + this.x, this.baseY + this.y, this.baseZ + this.z);
 			if (++x >= this.sizeX) {
@@ -622,6 +625,7 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
 			return b;
 		}
 
+		@Override
 		public void remove() {
 		}
 	}

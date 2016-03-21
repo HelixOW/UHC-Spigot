@@ -29,8 +29,8 @@ public class BorderManager {
 			public void run() {
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + moved);
-				size = size - moving;
-				new Border().changesize(size);
+				size = Border.size - moving;
+				Border.changesize(size);
 				for(Player all : Bukkit.getOnlinePlayers()) {
 					AScoreboard.updateInGameBorder(all);
 					TitleManager.sendTitle(all, 10, 20, 10, " ", moved);

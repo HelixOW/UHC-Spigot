@@ -14,7 +14,7 @@ import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
+import com.sk89q.worldedit.schematic.SchematicFormat;
 import com.sk89q.worldedit.world.DataException;
 
 import de.alpha.uhc.Core;
@@ -29,7 +29,7 @@ public class LobbyPasteUtil {
 	        File schematic = new File("plugins/UHC/schematics/lobby.schematic");
 			EditSession session = we.getWorldEdit().getEditSessionFactory().getEditSession(new BukkitWorld(loc.getWorld()), 999999);
 	        try {
-	            MCEditSchematicFormat.getFormat(schematic).load(schematic).paste(session, new Vector(0,200,0), false);
+	            SchematicFormat.getFormat(schematic).load(schematic).paste(session, new Vector(0,200,0), false);
 	            return;
 	        } catch (MaxChangedBlocksException
 	                | DataException | IOException e) {

@@ -84,6 +84,7 @@ public class ItemCreator {
 		return lore;
 	}
 	
+	@Override
 	public ItemCreator clone() {
 		ItemCreator c = new ItemCreator(
 				getMaterial()).

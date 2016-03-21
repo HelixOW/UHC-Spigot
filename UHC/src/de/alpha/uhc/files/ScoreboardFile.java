@@ -60,6 +60,8 @@ public class ScoreboardFile {
 		
 		file.setDefault("Scoreboard.InGame.Until Deathmatch.show", true);
 		file.setDefault("Scoreboard.InGame.Until Deathmatch.message", "&eDeathmatch in&7: &e[time] &7minutes");
+		file.setDefault("Scoreboard.InGame.Until Detahmatch.Until Damage.message", "&dDamage in&7: &d[time] &7seconds");
+		file.setDefault("Scoreboard.InGame.Until Detahmatch.Until PvP.message", "&6PvP in&7: &6[time] &7minutes");
 		
 		file.setDefault("Scoreboard.InGame.Deathmatch.message", "&eDeathmatch&7: &enow");
 		
@@ -111,6 +113,9 @@ public class ScoreboardFile {
 		AScoreboard.ingamePvP = file.getColorString("Scoreboard.InGame.Until Deathmatch.message");
 		AScoreboard.ingamePvPmsg = file.getColorString("Scoreboard.InGame.Deathmatch.message");
 		AScoreboard.ingameBar = file.getColorString("Scoreboard.InGame.Bar.message");
+		
+		AScoreboard.dmgin = file.getColorString("Scoreboard.InGame.Until Detahmatch.Until Damage.message");
+		AScoreboard.pvpin = file.getColorString("Scoreboard.InGame.Until Detahmatch.Until PvP.message");
 		
 		AScoreboard.ShowHealthUName = file.getBoolean("Scoreboard.Health.UnderName.show");
 		AScoreboard.ShowHealthInTab = file.getBoolean("Scoreboard.Health.InTab.show");

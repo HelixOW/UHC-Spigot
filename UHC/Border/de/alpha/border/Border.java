@@ -115,9 +115,8 @@ public class Border {
 		}.runTaskTimer(Core.getInstance(), 0L, 15L);
 		
 	}
-
 	
-	public void changesize(int newSize) {
+	public static void changesize(int newSize) {
 		size = newSize;
 	}
 }

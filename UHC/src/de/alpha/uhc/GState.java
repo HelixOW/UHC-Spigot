@@ -5,6 +5,7 @@ public enum GState {
 	
 	LOBBY,
 	GRACE,
+	PREGAME,
 	INGAME,
 	PREDEATHMATCH,
 	DEATHMATCH,
@@ -13,6 +14,7 @@ public enum GState {
 	private static GState currentState;
 	public static String lobby;
 	public static String grace;
+	public static String pregame;
 	public static String ingame;
 	public static String deathmatch;
 	public static String restart;
@@ -33,6 +35,9 @@ public enum GState {
 		}
 		if(isState(GState.GRACE)) {
 			return grace;
+		}
+		if(isState(PREGAME)) {
+			return pregame;
 		}
 		if(isState(GState.INGAME)) {
 			return ingame;

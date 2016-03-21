@@ -10,6 +10,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import de.alpha.border.Border;
 import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.timer.Timer;
@@ -57,6 +58,9 @@ public class AScoreboard {
 	
 	public static boolean ShowHealthUName;
 	public static boolean ShowHealthInTab;
+	
+	public static String dmgin;
+	public static String pvpin;
 	
 	private static HashMap<Player, String> A = new HashMap<Player, String>();
 	private static HashMap<Player, String> B = new HashMap<Player, String>();
@@ -155,15 +159,19 @@ public class AScoreboard {
 	private static HashMap<Player, String> lA = new HashMap<Player, String>();
 	private static HashMap<Player, String> lB = new HashMap<Player, String>();
 	private static HashMap<Player, String> lC = new HashMap<Player, String>();
+	private static HashMap<Player, String> lD = new HashMap<Player, String>();
 	private static HashMap<Player, String> lE = new HashMap<Player, String>();
 	private static HashMap<Player, String> lF = new HashMap<Player, String>();
+	private static HashMap<Player, String> lG = new HashMap<Player, String>();
 	
 	
 	private static int la;
 	private static int lb;
 	private static int lc;
+	private static int ld;
 	private static int le;
 	private static int lf;
+	private static int lg;
 	
 	public static void setInGameScoreboard(final Player p) {
 		if(ShowInGameScoreboard == false) return;
@@ -236,11 +244,31 @@ public class AScoreboard {
 		}
 		
 		if(ShowInGamePvP) {
-			String a = ingamePvP.replace("[time]", Integer.toString(Timer.uDM));
-			lC.put(p, a);
-			lc = score;
-			obj.getScore(a).setScore(score);
-			score--;
+			if(GState.isState(GState.INGAME)) {
+				String a = ingamePvP.replace("[time]", Integer.toString(Timer.uDM));
+				lC.put(p, a);
+				lc = score;
+				ld = score;
+				lg = score;
+				obj.getScore(a).setScore(score);
+				score--;
+			} else if(GState.isState(GState.GRACE)){
+				String a = dmgin.replace("[time]", Integer.toString(Timer.gracetime));
+				lD.put(p, a);
+				lc = score;
+				ld = score;
+				lg = score;
+				obj.getScore(a).setScore(score);
+				score--;
+			} else if(GState.isState(GState.PREGAME)) {
+				String a = pvpin.replace("[time]", Integer.toString(Timer.prePvP));
+				lG.put(p, a);
+				lc = score;
+				ld = score;
+				lg = score;
+				obj.getScore(a).setScore(score);
+				score--;
+			}
 		}
 		
 		if(ShowHealthUName) {
@@ -297,12 +325,41 @@ public class AScoreboard {
 		objP.getScore(a).setScore(lf);
 	}
 	
-	public static void updateInGamePvPTime(Player p) {
-		Objective objP = p.getScoreboard().getObjective("UHCInGame");
-		String a = ingamePvP.replace("[time]", Integer.toString(Timer.uDM));
-		p.getScoreboard().resetScores(lC.get(p));
-		lC.put(p, a);
-		objP.getScore(a).setScore(lc);
+	public static void updateInGamePvPTime(final Player p) {
+		if(GState.isState(GState.INGAME)) {
+			Objective objP = p.getScoreboard().getObjective("UHCInGame");
+			String a = ingamePvP.replace("[time]", Integer.toString(Timer.uDM));
+			if(lC.containsKey(p)) p.getScoreboard().resetScores(lC.get(p));
+			lC.put(p, a);
+			objP.getScore(a).setScore(lc);
+		} 
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				if(GState.isState(GState.GRACE)) {
+					Objective objP = p.getScoreboard().getObjective("UHCInGame");
+					String a = dmgin.replace("[time]", Integer.toString(Timer.gracetime));
+					if(lC.containsKey(p)) p.getScoreboard().resetScores(lC.get(p));
+					if(lD.containsKey(p)) p.getScoreboard().resetScores(lD.get(p));
+					lD.put(p, a);
+					objP.getScore(a).setScore(ld);
+				}
+			}
+		}, 2);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				if(GState.isState(GState.PREGAME)) {
+					Objective objP = p.getScoreboard().getObjective("UHCInGame");
+					String a = pvpin.replace("[time]", Integer.toString(Timer.prePvP));
+					if(lC.containsKey(p)) p.getScoreboard().resetScores(lC.get(p));
+					if(lD.containsKey(p)) p.getScoreboard().resetScores(lD.get(p));
+					if(lG.containsKey(p)) p.getScoreboard().resetScores(lG.get(p));
+					lG.put(p, a);
+					objP.getScore(a).setScore(lg);
+				}
+			}
+		}, 2);
 	}
 	
 	public static String ingamePvPmsg;

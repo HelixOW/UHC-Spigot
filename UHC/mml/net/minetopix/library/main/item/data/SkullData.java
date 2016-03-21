@@ -12,6 +12,7 @@ public class SkullData extends ItemData{
 	
 	String ownerName = null;
 
+	@Override
 	public void applyOn(ItemStack applyOn) throws WrongDataException{
 		try {
 			if(!(applyOn.getType() == Material.SKULL_ITEM)) {
