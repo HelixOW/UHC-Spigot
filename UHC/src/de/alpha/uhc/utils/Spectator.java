@@ -49,14 +49,10 @@ public class Spectator implements Listener{
 	@EventHandler
 	public void onDmg(EntityDamageEvent e){
 		
-		if(!(e.getEntity() instanceof Player)){
-			return;
-		}
+		if(!(e.getEntity() instanceof Player)) return;
 		
 		Player p = (Player) e.getEntity();
-		if(Core.getSpecs().contains(p)){
-			e.setCancelled(true);
-		}
+		if(Core.getSpecs().contains(p)) e.setCancelled(true);
 	}
 	
 	@EventHandler
@@ -114,11 +110,11 @@ public class Spectator implements Listener{
 		Player p = e.getPlayer();
 		
 		if(!(Core.getSpecs().contains(p))) return;
-		if(!(p.getItemInHand().hasItemMeta())) return;
 		
 		if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			
-			if(p.getItemInHand().getType() == Material.getMaterial(specItem.toUpperCase()) && p.getItemInHand().getItemMeta().getDisplayName().equals(specName)){
+			
+			if(p.getInventory().getItemInHand().getType().equals(Material.getMaterial(specItem.toUpperCase()))){
 				
 				Inventory inv = Bukkit.createInventory(null, 54, title);
 				

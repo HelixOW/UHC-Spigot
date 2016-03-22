@@ -173,7 +173,7 @@ public class Timer {
 												startGracePeriod();
 												Border.border();
 												GState.setGameState(GState.GRACE);
-
+												
 												ATablist.sendStandingInGameTablist();
 												
 												if(LobbyListener.hasSelKit(ig)) {
@@ -187,7 +187,6 @@ public class Timer {
 												}
 												
 												AScoreboard.setInGameScoreboard(ig);
-								
 												new BukkitRunnable() {
 													
 													@Override
@@ -231,6 +230,7 @@ public class Timer {
 			}
 			all.getInventory().clear();
 		}
+		
 		
 		c = new BukkitRunnable() {
 			

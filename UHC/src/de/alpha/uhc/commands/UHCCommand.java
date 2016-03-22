@@ -99,6 +99,7 @@ public class UHCCommand implements CommandExecutor {
 					p.sendMessage("§7 /uhc restart - reload the server to restart UHC");
 					p.sendMessage("§7 /uhc reload - reload all UHC files");
 					p.sendMessage("§7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
+					p.sendMessage("§7 /uhc tpToWorld <name> - teleport to the World with the name <name>");
 					p.sendMessage("§7 /uhc start - short the countdown to 10 seconds");
 					p.sendMessage("§7 /uhc team [teamname] - See all teams [join this team]");
 					p.sendMessage("§7 /uhc createTeamJoiner [team] - creates a Entity to join the team [team]");
@@ -194,6 +195,17 @@ public class UHCCommand implements CommandExecutor {
 				}
 				
 				if(args.length == 2) {
+					
+					if(args[0].equalsIgnoreCase("tpToWorld")) {
+						if(Bukkit.getWorld(args[1]) != null) {
+							p.teleport(Bukkit.getWorld(args[1]).getSpawnLocation().add(0, 200, 0));
+							p.sendMessage(Core.getPrefix() + "§7You have been teleported to the world: §a"+ args[1]);
+							return true;
+						} else {
+							p.sendMessage(Core.getPrefix() + "§7The World §c"+args[1]+" §7do not exists");
+							return true;
+						}
+					}
 					
 					if(args[0].equalsIgnoreCase("createWorld")) {
 						

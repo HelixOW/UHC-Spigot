@@ -38,7 +38,7 @@ public class Border {
 			@Override
 			public void run() {
 				for(Player p : Bukkit.getOnlinePlayers()) {
-					if(arena != null) {
+					if(arena != null && arena.getWorld().getName().equals(p.getWorld().getName())) {
 						if(p.getLocation().distance(arena) >= size) {
 							Vector plV = p.getLocation().toVector();
 							Vector spV = arena.toVector();
@@ -66,7 +66,7 @@ public class Border {
 			public void run() {
 				
 				for(Player p : Bukkit.getOnlinePlayers()) {
-					if(arena != null) {
+					if(arena != null && arena.getWorld().getName().equals(p.getWorld().getName())) {
 						if(p.getLocation().distance(arena) >= size-15) {
 							Location min = p.getLocation().add(-10, -10, -10);
 							Location max = p.getLocation().add(10, 10, 10);

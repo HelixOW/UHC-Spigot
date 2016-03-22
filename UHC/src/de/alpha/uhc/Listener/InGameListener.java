@@ -52,9 +52,10 @@ public class InGameListener implements Listener {
 	@EventHandler
 	public void onDMG(EntityDamageEvent e) {
 		
-		if(!(GState.isState(GState.INGAME) || GState.isState(GState.PREGAME))) return;
 		if(!(e.getEntity() instanceof Player)) return;
-		if(GState.isState(GState.GRACE)) e.setCancelled(true);
+		if(GState.isState(GState.GRACE)) {
+			e.setCancelled(true);
+		}
 		
 	}
 	

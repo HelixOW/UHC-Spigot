@@ -310,7 +310,7 @@ public class AScoreboard {
 			lE.put(p, a);
 			objP.getScore(a).setScore(le);
 		} else {
-			String a = ingameCenter.replace("[distanceToCenter]", Integer.toString((int) p.getLocation().distance(Border.arena.getWorld().getHighestBlockAt(Border.arena).getLocation())));
+			String a = ingameCenter.replace("[distanceToCenter]", Integer.toString((int) p.getLocation().distance(p.getWorld().getSpawnLocation())));
 			p.getScoreboard().resetScores(lE.get(p));
 			lE.put(p, a);
 			objP.getScore(a).setScore(le);
