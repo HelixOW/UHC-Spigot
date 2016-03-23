@@ -30,6 +30,7 @@ public class OptionsFileManager {
         file.setDefault("Prefix", "&7[&bUHC&7] ");
         file.setDefault("BungeeMode", false);
         file.setDefault("BungeeServer", "lobby");
+        file.setDefault("Reset World", true);
         
         file.setDefault("Border.size", 3000);
         file.setDefault("Border.getCloser", true);
@@ -106,6 +107,7 @@ public class OptionsFileManager {
 		
 		MotdListener.custommotd = file.getBoolean("Status Motd");
 		
+		AWorld.wr = file.getBoolean("Reset World");
 		AWorld.lobbyAsSchematic = file.getBoolean("Lobby.asSchematic");
 		
 		Timer.prePvP = file.getInt("Countdown.no PvP period in minutes");

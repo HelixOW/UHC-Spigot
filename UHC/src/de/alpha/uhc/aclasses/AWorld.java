@@ -19,6 +19,7 @@ import de.alpha.uhc.utils.LobbyPasteUtil;
 public class AWorld {
 	
 	public static boolean lobbyAsSchematic;
+	public static boolean wr;
 	
 	private static String worldName;
 	
@@ -162,6 +163,11 @@ public class AWorld {
 	}
 	
 	public static void performReset() {
+		
+		if(!wr) {
+			GState.setGameState(GState.LOBBY);
+			return;
+		}
 		
 		if(Bukkit.getWorld(SpawnFileManager.getSpawnWorldName()) != null) {
 			

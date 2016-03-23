@@ -149,6 +149,10 @@ public class SpawnFileManager {
 			Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cYou haven't created a Lobbyregion."); 
 			return;
 		}
+		else if(Bukkit.getWorld(cfg.getString("Lobbyregion.pos1.world")) == null) {
+			Bukkit.createWorld(new WorldCreator(cfg.getString("Lobbyregion.pos1.world")));
+			return;
+		}
 		
 		Regions.addRegion(new Cuboid(getRegionLoc("pos1"), getRegionLoc("pos2")));
 			
