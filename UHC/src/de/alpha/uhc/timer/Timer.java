@@ -27,7 +27,7 @@ import de.alpha.uhc.kits.KitFileManager;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.utils.LobbyPasteUtil;
-import net.minetopix.library.main.item.ItemCreator;
+import de.popokaka.alphalibary.item.ItemBuilder;
 
 
 public class Timer {
@@ -105,7 +105,7 @@ public class Timer {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendTitle(all, 10, 20, 10, " ", countmsg);
-											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
+											all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
 												@Override
@@ -122,7 +122,7 @@ public class Timer {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
 											TitleManager.sendAction(all, countmsg);
-											all.playSound(all.getLocation(), Sound.NOTE_BASS, 1F, 0F);
+											all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
 												@Override
@@ -168,7 +168,7 @@ public class Timer {
 												}
 												b.cancel();
 												
-												all.playSound(all.getLocation(), Sound.NOTE_PIANO, 1F, 0F);
+												all.playSound(all.getLocation(), Sound.BLOCK_NOTE_HARP, 1F, 0F);
 												all.getWorld().setGameRuleValue("naturalRegeneration", "false");
 												startGracePeriod();
 												Border.border();
@@ -385,7 +385,7 @@ public class Timer {
 						if(tbpvp == 0) {
 							for(Player all : Bukkit.getOnlinePlayers()) {
 								GState.setGameState(GState.DEATHMATCH);
-								all.playSound(all.getLocation(), Sound.NOTE_PLING, 10F, 0);
+								all.playSound(all.getLocation(), Sound.BLOCK_NOTE_PLING, 10F, 0);
 							}
 							ee.cancel();
 						}
@@ -450,7 +450,7 @@ public class Timer {
 	
 	private static void giveCompass(Player p) {
 		if(comMode) {
-			p.getInventory().addItem(new ItemCreator(comItem).setName(comName).build());
+			p.getInventory().addItem(new ItemBuilder(comItem).setName(comName).build());
 		}
 	}
 }

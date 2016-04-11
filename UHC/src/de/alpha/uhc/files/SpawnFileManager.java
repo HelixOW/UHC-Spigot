@@ -8,7 +8,7 @@ import org.bukkit.WorldCreator;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.utils.Cuboid;
 import de.alpha.uhc.utils.Regions;
-import net.minetopix.library.main.file.SimpleFile;
+import de.popokaka.alphalibary.file.SimpleFile;
 
 public class SpawnFileManager {
 	

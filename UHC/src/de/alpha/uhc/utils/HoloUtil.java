@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import de.alpha.uhc.files.HologramFileManager;
-import net.minetopix.library.main.utils.ReflectionUtil;
+import de.popokaka.alphalibary.reflection.ReflectionUtil;
 
 public class HoloUtil {
 	

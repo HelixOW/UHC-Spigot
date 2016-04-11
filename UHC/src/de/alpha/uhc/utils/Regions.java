@@ -70,8 +70,8 @@ public class Regions implements Listener {
 		
 		Material m = Material.getMaterial(material.toUpperCase());
 		
-		if(p.getItemInHand() == null) return;
-		if(!(p.getItemInHand().getType().equals(m))) return;
+		if(p.getInventory().getItemInMainHand() == null) return;
+		if(!(p.getInventory().getItemInMainHand().getType().equals(m))) return;
 		if(!(p.hasPermission("uhc.admin"))) return;
 		if(lobby == false) return;
 		

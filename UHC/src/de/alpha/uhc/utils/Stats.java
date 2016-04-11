@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.files.PlayerFileManager;
-import net.minetopix.mysqlapi.MySQLManager;
+import de.popokaka.alphalibary.mysql.MySQLManager;
 
 public class Stats {
 	

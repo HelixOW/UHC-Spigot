@@ -24,7 +24,7 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.TeamFile;
-import net.minetopix.library.main.item.ItemCreator;
+import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class ATeam implements Listener {
 	
@@ -82,7 +82,7 @@ public class ATeam implements Listener {
 				teams.put(p, teamToPut);
 				chosen = chosen.replace("[team]", getTeamColor(teamToPut)+teamToPut);
 				p.sendMessage(Core.getPrefix() + chosen);
-				p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 0);
+				p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 10, 0);
 				p.spigot().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 0, 0, 5, 5, 5, 50, 100, 5);
 				p.setDisplayName(getTeamColor(teamToPut) + p.getName());
 				p.setPlayerListName(getTeamColor(teamToPut) + p.getName());
@@ -121,7 +121,7 @@ public class ATeam implements Listener {
 		if(!(GState.isState(GState.LOBBY))) return;
 		
 		Player p = e.getPlayer();
-		Material m = p.getItemInHand().getType();
+		Material m = p.getInventory().getItemInMainHand().getType();
 		Material toCompare = Material.getMaterial(materialName.toUpperCase());
 		
 		if(m.equals(toCompare)) {
@@ -130,7 +130,7 @@ public class ATeam implements Listener {
 			
 			for(String name : teamNames) {
 				
-				ItemStack item = new ItemCreator(Material.getMaterial(blockName.toUpperCase()))
+				ItemStack item = new ItemBuilder(Material.getMaterial(blockName.toUpperCase()))
 						.setName(getTeamColor(name) + name)
 						.setDamage((short) getTeamColorAsInteger(name))
 						.build();

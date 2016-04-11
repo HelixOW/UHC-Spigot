@@ -1,7 +1,7 @@
 package de.alpha.uhc.files;
 
 import de.alpha.uhc.aclasses.AScoreboard;
-import net.minetopix.library.main.file.SimpleFile;
+import de.popokaka.alphalibary.file.SimpleFile;
 
 public class ScoreboardFile {
 	

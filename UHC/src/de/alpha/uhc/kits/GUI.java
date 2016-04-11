@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import de.alpha.uhc.Core;
-import net.minetopix.library.main.item.ItemCreator;
+import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class GUI {
 	
@@ -24,7 +24,7 @@ public class GUI {
 				String lore = new KitFileManager().getLore(kitName);
 				
 				kits.setItem(slot,
-						new ItemCreator(m)
+						new ItemBuilder(m)
 						.setName(kitName)
 						.setLore(new String[]{lore})
 						.build());

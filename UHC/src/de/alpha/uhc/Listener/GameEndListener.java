@@ -19,8 +19,8 @@ import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Stats;
-import net.minetopix.library.main.item.ItemCreator;
-import net.minetopix.library.main.item.data.SkullData;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.item.data.SkullData;
 
 public class GameEndListener implements Listener {
 	
@@ -88,12 +88,12 @@ public class GameEndListener implements Listener {
 		
 		//                        -=X ItemDrop X=-
 		
-		p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.GOLD_INGOT).setAmount(8).build());
+		p.getWorld().dropItem(p.getLocation(), new ItemBuilder(Material.GOLD_INGOT).setAmount(8).build());
 		new BukkitRunnable() {
 			
 			@Override
 			public void run() {
-				p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
+				p.getWorld().dropItem(p.getLocation(), new ItemBuilder(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
 			}
 		}.runTaskLater(Core.getInstance(), 10);
 		
@@ -200,8 +200,8 @@ public class GameEndListener implements Listener {
 		if(GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
 			
 			if(!(Core.getSpecs().contains(p))) {
-				p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.GOLD_INGOT).setAmount(8).build());
-				p.getWorld().dropItem(p.getLocation(), new ItemCreator(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
+				p.getWorld().dropItem(p.getLocation(), new ItemBuilder(Material.GOLD_INGOT).setAmount(8).build());
+				p.getWorld().dropItem(p.getLocation(), new ItemBuilder(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
 				p.getWorld().strikeLightningEffect(p.getLocation());
 			}	
 			

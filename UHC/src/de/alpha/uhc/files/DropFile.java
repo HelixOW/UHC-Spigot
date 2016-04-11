@@ -4,7 +4,7 @@ import org.bukkit.Material;
 
 import de.alpha.uhc.Listener.DeathListener;
 import de.alpha.uhc.Listener.MiningListener;
-import net.minetopix.library.main.file.SimpleFile;
+import de.popokaka.alphalibary.file.SimpleFile;
 
 public class DropFile {
 	

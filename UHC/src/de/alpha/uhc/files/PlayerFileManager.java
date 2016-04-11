@@ -3,7 +3,7 @@ package de.alpha.uhc.files;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import net.minetopix.library.main.file.SimpleFile;
+import de.popokaka.alphalibary.file.SimpleFile;
 
 public class PlayerFileManager {
 	

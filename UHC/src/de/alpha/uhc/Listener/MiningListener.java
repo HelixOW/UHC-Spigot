@@ -59,19 +59,19 @@ public class MiningListener implements Listener {
 		}
 		
 		if(m.equals(Material.IRON_ORE)) {
-			if(iron == false) {
+			if(!iron) {
 				e.setCancelled(true);
 				return;
 			}
 			b.setType(Material.AIR);
-			b.breakNaturally(new ItemStack(ironM, ironA));
+			b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(ironM, ironA));
 			e.setCancelled(true);
 		}
 			
 		if(m.equals(Material.GRAVEL)) {
 			if(gravel == false) return;
 			b.setType(Material.AIR);
-			b.breakNaturally(new ItemStack(gravelM , gravelA));
+			b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(gravelM , gravelA));
 			e.setCancelled(true);
 		}
 		
@@ -81,7 +81,7 @@ public class MiningListener implements Listener {
 				return;
 			}
 			b.setType(Material.AIR);
-			b.breakNaturally(new ItemStack(goldM, goldA));
+			b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(goldM, goldA));
 			e.setCancelled(true);
 		}
 			
@@ -91,7 +91,7 @@ public class MiningListener implements Listener {
 				return;
 			}
 			b.setType(Material.AIR);
-			b.breakNaturally(new ItemStack(diaM, diaA));
+			b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(diaM, diaA));
 			e.setCancelled(true);
 		}
 			
@@ -101,7 +101,7 @@ public class MiningListener implements Listener {
 				return;
 			}
 			b.setType(Material.AIR);
-			b.breakNaturally(new ItemStack(coalM, coalA));
+			b.getWorld().dropItemNaturally(b.getLocation(), new ItemStack(coalM, coalA));
 			e.setCancelled(true);
 		}
 	}

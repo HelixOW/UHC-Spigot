@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-import net.minetopix.library.main.file.SimpleFile;
+import de.popokaka.alphalibary.file.SimpleFile;
 
 public class HologramFileManager {
 	

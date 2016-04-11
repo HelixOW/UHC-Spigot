@@ -20,8 +20,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import de.alpha.uhc.Core;
-import net.minetopix.library.main.item.ItemCreator;
-import net.minetopix.library.main.item.data.SkullData;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.item.data.SkullData;
 
 public class Spectator implements Listener{
 	
@@ -101,7 +101,7 @@ public class Spectator implements Listener{
 	}
 	
 	private static void equipSpecStuff(Player p) {
-		p.getInventory().addItem(new ItemCreator(Material.getMaterial(specItem.toUpperCase())).setName(specName).build());
+		p.getInventory().addItem(new ItemBuilder(Material.getMaterial(specItem.toUpperCase())).setName(specName).build());
 	}
 	
 	@EventHandler
@@ -114,20 +114,20 @@ public class Spectator implements Listener{
 		if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			
 			
-			if(p.getInventory().getItemInHand().getType().equals(Material.getMaterial(specItem.toUpperCase()))){
+			if(p.getInventory().getItemInMainHand().getType().equals(Material.getMaterial(specItem.toUpperCase()))){
 				
 				Inventory inv = Bukkit.createInventory(null, 54, title);
 				
 				for(Player pl : Core.getInGamePlayers()) {
 						
-					ItemStack item = new ItemCreator(Material.SKULL_ITEM).setDamage((short) 3).setName("§l§o" + pl.getDisplayName()).addItemData(new SkullData(pl.getName())).build();
+					ItemStack item = new ItemBuilder(Material.SKULL_ITEM).setDamage((short) 3).setName("§l§o" + pl.getDisplayName()).addItemData(new SkullData(pl.getName())).build();
 						
 					inv.addItem(item);
 						
 				}
 				
 				for(int i = 45; i < 54; i++) {
-					inv.setItem(i, new ItemCreator(Material.STAINED_GLASS_PANE).setName(" ").setDamage((short) 15).build());
+					inv.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").setDamage((short) 15).build());
 				}
 				
 				p.openInventory(inv);

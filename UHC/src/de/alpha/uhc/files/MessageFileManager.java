@@ -12,7 +12,7 @@ import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.timer.Timer;
-import net.minetopix.library.main.file.SimpleFile;
+import de.popokaka.alphalibary.file.SimpleFile;
 
 public class MessageFileManager {
 	

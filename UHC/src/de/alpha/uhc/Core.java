@@ -2,11 +2,15 @@ package de.alpha.uhc;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -43,10 +47,10 @@ import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.MapReset;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
-import net.minetopix.library.main.file.SimpleFile;
-import net.minetopix.mysqlapi.MySQLAPI;
-import net.minetopix.mysqlapi.MySQLDataType;
-import net.minetopix.mysqlapi.MySQLManager;
+import de.popokaka.alphalibary.file.SimpleFile;
+import de.popokaka.alphalibary.mysql.MySQLAPI;
+import de.popokaka.alphalibary.mysql.MySQLDataType;
+import de.popokaka.alphalibary.mysql.MySQLManager;
 
 public class Core extends JavaPlugin implements PluginMessageListener{
 	
@@ -245,7 +249,67 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		if(!(arg0.equalsIgnoreCase("BungeeCord"))) {
 			return;
 		}
-		
+	}
+	
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+		if(cmd.getName().equalsIgnoreCase("uhc")) {
+			ArrayList<String> l = new ArrayList<>();
+			
+			if(args.length == 1) {
+				l.add("stats");
+				l.add("team");
+				if(sender.hasPermission("uhc.start")) {
+					l.add("start");
+				}
+				if(sender.hasPermission("uhc.admin")) {
+					l.add("restart");
+					l.add("reload");
+					l.add("setSpawn");
+					l.add("setLobby");
+					l.add("createLobby");
+					l.add("createWorld");
+					l.add("createHologram");
+					l.add("addKit");
+					l.add("tpToWorld");
+					l.add("createTeamJoiner");
+				}
+			}
+			if(args.length == 2) {
+				l.add("team");
+				if(sender.hasPermission("uhc.admin")) {
+					l.add("name");
+					l.add("UltraHardCoreWorld");
+					l.add("lowerby");
+				}
+			}
+			if(args.length == 3) {
+				if(sender.hasPermission("uhc.admin")) {
+					l.add("deep");
+					l.add("block");
+				}
+			}
+			if(args.length == 4) {
+				if(sender.hasPermission("uhc.admin")) {
+					l.add("slot");
+				}
+			}
+			if(args.length == 5) {
+				if(sender.hasPermission("uhc.admin")) {
+					l.add("price");
+				}
+			}
+			if(args.length == 6) {
+				if(sender.hasPermission("uhc.admin")) {
+					l.add("lore");
+				}
+			}
+			
+			Collections.sort(l);
+			
+			return l;
+		}
+		return null;
 	}
 	
 }

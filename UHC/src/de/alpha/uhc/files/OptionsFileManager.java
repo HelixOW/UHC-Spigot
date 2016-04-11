@@ -16,7 +16,7 @@ import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
-import net.minetopix.library.main.file.SimpleFile;
+import de.popokaka.alphalibary.file.SimpleFile;
 
 public class OptionsFileManager {
 	

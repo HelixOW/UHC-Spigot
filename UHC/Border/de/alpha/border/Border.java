@@ -44,7 +44,7 @@ public class Border {
 							Vector spV = arena.toVector();
 							Vector v = spV.clone().subtract(plV).multiply(2.0 / spV.distance(plV)).setY(0.5);
 							p.setVelocity(v);
-							p.getWorld().playSound(p.getLocation(), Sound.BURP, 1F, 0.8F);
+							p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_BURP, 1F, 0.8F);
 							p.damage(dmg);
 						}
 					} else {

@@ -9,8 +9,8 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.aclasses.ATeam;
-import net.minetopix.library.main.item.ItemCreator;
-import net.minetopix.library.main.item.data.SkullData;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.item.data.SkullData;
 
 public class ArmorStandUtil{
 	
@@ -24,10 +24,10 @@ public class ArmorStandUtil{
 		
 		ArmorStand as = l.getWorld().spawn(l, ArmorStand.class);
 		
-		ItemStack head = new ItemCreator(Material.SKULL_ITEM).addItemData(new SkullData("AlphaHelix")).build();
-		ItemStack chest = new ItemCreator(Material.LEATHER_CHESTPLATE).build();
-		ItemStack pants = new ItemCreator(Material.LEATHER_LEGGINGS).build();
-		ItemStack boots = new ItemCreator(Material.LEATHER_BOOTS).build();
+		ItemStack head = new ItemBuilder(Material.SKULL_ITEM).addItemData(new SkullData("AlphaHelix")).build();
+		ItemStack chest = new ItemBuilder(Material.LEATHER_CHESTPLATE).build();
+		ItemStack pants = new ItemBuilder(Material.LEATHER_LEGGINGS).build();
+		ItemStack boots = new ItemBuilder(Material.LEATHER_BOOTS).build();
 		
 		LeatherArmorMeta a = (LeatherArmorMeta) chest.getItemMeta();
 		LeatherArmorMeta b = (LeatherArmorMeta) pants.getItemMeta();

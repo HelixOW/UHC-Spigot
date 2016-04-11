@@ -30,8 +30,8 @@ import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Spectator;
-import net.minetopix.library.main.item.ItemCreator;
-import net.minetopix.mysqlapi.MySQLManager;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.mysql.MySQLManager;
 
 public class PlayerJoinListener implements Listener {
 	
@@ -150,7 +150,7 @@ public class PlayerJoinListener implements Listener {
 				Bukkit.getConsoleSender().sendMessage(Core.getPrefix()+"§cYou don't have any Kits in your kits.yml");
 			} else {
 				e.getPlayer().getInventory().setHeldItemSlot(0);
-				e.getPlayer().getInventory().setItemInHand(new ItemCreator(kitItem).setName(kitName).build());
+				e.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(kitItem).setName(kitName).build());
 		
 			}
 		}
@@ -158,14 +158,14 @@ public class PlayerJoinListener implements Listener {
 			if(teamItem == null || teamName == null) {
 				Bukkit.getConsoleSender().sendMessage(Core.getPrefix()+"§cYou don't have any Kits in your kits.yml");
 			} else {
-				e.getPlayer().getInventory().setItem(1, new ItemCreator(teamItem).setName(teamName).build());
+				e.getPlayer().getInventory().setItem(1, new ItemBuilder(teamItem).setName(teamName).build());
 			}
 		}
 		if(leaveMode == true && GameEndListener.BungeeMode == true) {
-			e.getPlayer().getInventory().setItem(8, new ItemCreator(leaveItem).setName(leaveName).build());
+			e.getPlayer().getInventory().setItem(8, new ItemBuilder(leaveItem).setName(leaveName).build());
 		}
 		if(startMode == true && e.getPlayer().hasPermission("uhc.start")) {
-			e.getPlayer().getInventory().setItem(4, new ItemCreator(startItem).setName(startName).build());
+			e.getPlayer().getInventory().setItem(4, new ItemBuilder(startItem).setName(startName).build());
 		}
 		if(SpawnFileManager.getLobby() != null) {
 			if(Bukkit.getWorld(SpawnFileManager.getLobbyWorldName()) == null) {
