@@ -2,7 +2,6 @@ package de.alpha.uhc.files;
 
 import org.bukkit.Material;
 
-import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.Listener.GameEndListener;
 import de.alpha.uhc.Listener.InGameListener;
@@ -11,8 +10,9 @@ import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.aclasses.AWorld;
+import de.alpha.uhc.border.Border;
+import de.alpha.uhc.border.BorderManager;
 import de.alpha.uhc.commands.UHCCommand;
-import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;

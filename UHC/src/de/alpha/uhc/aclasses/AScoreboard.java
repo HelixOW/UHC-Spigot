@@ -8,10 +8,10 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.Listener.LobbyListener;
+import de.alpha.uhc.border.Border;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Stats;

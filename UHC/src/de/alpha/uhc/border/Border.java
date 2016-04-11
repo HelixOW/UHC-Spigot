@@ -1,4 +1,4 @@
-package de.alpha.border;
+package de.alpha.uhc.border;
 
 import java.util.Random;
 

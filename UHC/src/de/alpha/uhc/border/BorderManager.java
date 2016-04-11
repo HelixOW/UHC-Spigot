@@ -1,12 +1,12 @@
-package de.alpha.uhc.manager;
+package de.alpha.uhc.border;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.aclasses.AScoreboard;
+import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class BorderManager {
 	
@@ -33,7 +33,7 @@ public class BorderManager {
 				Border.changesize(size);
 				for(Player all : Bukkit.getOnlinePlayers()) {
 					AScoreboard.updateInGameBorder(all);
-					TitleManager.sendTitle(all, 10, 20, 10, " ", moved);
+					SimpleTitle.sendTitle(all, " ", moved, 10, 20, 10);
 				}
 				
 			}

@@ -17,7 +17,7 @@ import de.alpha.uhc.GState;
 import de.alpha.uhc.aclasses.AScoreboard;
 import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.manager.TitleManager;
+import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class InGameListener implements Listener {
 	
@@ -81,7 +81,7 @@ public class InGameListener implements Listener {
 					trackteam = trackteam.replace("[distance]", Integer.toString(blocks));
 							
 					p.sendMessage(Core.getPrefix() + trackteam);
-					TitleManager.sendTitle(p, 10, 20, 10, " ", trackteam);
+					SimpleTitle.sendTitle(p, " ", trackteam, 10, 20, 10);
 					p.setCompassTarget(getNearest(p).getLocation());
 						
 					trackteam = MessageFileManager.getMSGFile().getColorString("Compass.TeamPlayerInRange");
@@ -96,7 +96,7 @@ public class InGameListener implements Listener {
 				track = track.replace("[distance]", Integer.toString(blocks));
 						
 				p.sendMessage(Core.getPrefix() + track);
-				TitleManager.sendTitle(p, 10, 20, 10, " ", track);
+				SimpleTitle.sendTitle(p, " ", track, 10, 20, 10);
 				p.setCompassTarget(getNearest(p).getLocation());
 					
 				track = MessageFileManager.getMSGFile().getColorString("Compass.PlayerInRange");

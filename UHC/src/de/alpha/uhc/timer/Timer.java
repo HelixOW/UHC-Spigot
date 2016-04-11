@@ -13,21 +13,22 @@ import org.bukkit.scheduler.BukkitTask;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-import de.alpha.border.Border;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.aclasses.AScoreboard;
 import de.alpha.uhc.aclasses.ATablist;
 import de.alpha.uhc.aclasses.AWorld;
+import de.alpha.uhc.border.Border;
+import de.alpha.uhc.border.BorderManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.kits.KitFileManager;
-import de.alpha.uhc.manager.BorderManager;
-import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.utils.LobbyPasteUtil;
 import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.nms.SimpleActionBar;
+import de.popokaka.alphalibary.nms.SimpleTitle;
 
 
 public class Timer {
@@ -104,7 +105,7 @@ public class Timer {
 										if(high % 10 == 0 && high > 10 && high != 0) {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
-											TitleManager.sendTitle(all, 10, 20, 10, " ", countmsg);
+											SimpleTitle.sendTitle(all, " ", countmsg, 10, 20, 10);
 											all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
@@ -121,7 +122,7 @@ public class Timer {
 											
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
-											TitleManager.sendAction(all, countmsg);
+											SimpleActionBar.send(all, countmsg);
 											all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												
@@ -290,13 +291,13 @@ public class Timer {
 				if(prePvP % 1 == 0 && prePvP > 0) {
 					for(Player all : Bukkit.getOnlinePlayers()) {
 						String a = pvpmsg.replace("[time]", Integer.toString(prePvP));
-						TitleManager.sendAction(all, Core.getPrefix() + a);
+						SimpleActionBar.send(all, Core.getPrefix() + a);
 					}
 				}
 				
 				if(prePvP == 0) {
 					for(Player all : Bukkit.getOnlinePlayers()) {
-						TitleManager.sendAction(all, Core.getPrefix() + pvpstart);
+						SimpleActionBar.send(all, Core.getPrefix() + pvpstart);
 					}
 					GState.setGameState(GState.INGAME);
 					if(dm) startSilentDeathMatchTimer();
@@ -317,14 +318,14 @@ public class Timer {
 				if(uDM % 5 == 0 && uDM > 10) {
 					for(Player all : Bukkit.getOnlinePlayers()) {
 						String a = dmmsg.replace("[time]", Integer.toString(uDM));
-						TitleManager.sendAction(all, Core.getPrefix() + a);
+						SimpleActionBar.send(all, Core.getPrefix() + a);
 					}
 				}
 				
 				if(uDM % 1 == 0 && uDM > 0 && uDM < 10) {
 					for(Player all : Bukkit.getOnlinePlayers()) {
 						String a = dmmsg.replace("[time]", Integer.toString(uDM));
-						TitleManager.sendAction(all, Core.getPrefix() + a);
+						SimpleActionBar.send(all, Core.getPrefix() + a);
 					}
 				}
 				if(uDM == 0) {
@@ -371,14 +372,14 @@ public class Timer {
 						if(tbpvp % 5 == 0 && tbpvp > 10) {
 							for(Player all : Bukkit.getOnlinePlayers()) {
 								String a = dmmsg.replace("[time]", Integer.toString(tbpvp)).replace("minutes", "seconds");
-								TitleManager.sendAction(all, Core.getPrefix() + a);
+								SimpleActionBar.send(all, Core.getPrefix() + a);
 							}
 						}
 						
 						if(tbpvp % 1 == 0 && tbpvp > 0 && tbpvp < 10) {
 							for(Player all : Bukkit.getOnlinePlayers()) {
 								String a = dmmsg.replace("[time]", Integer.toString(tbpvp)).replace("minutes", "seconds");
-								TitleManager.sendAction(all, Core.getPrefix() + a);
+								SimpleActionBar.send(all, Core.getPrefix() + a);
 							}
 						}
 						

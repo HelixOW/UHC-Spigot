@@ -8,9 +8,9 @@ import de.alpha.uhc.Listener.MotdListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.aclasses.ATablist;
 import de.alpha.uhc.aclasses.ATeam;
+import de.alpha.uhc.border.BorderManager;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.kits.GUI;
-import de.alpha.uhc.manager.BorderManager;
 import de.alpha.uhc.timer.Timer;
 import de.popokaka.alphalibary.file.SimpleFile;
 

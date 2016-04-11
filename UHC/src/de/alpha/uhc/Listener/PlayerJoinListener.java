@@ -26,12 +26,12 @@ import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.PlayerFileManager;
 import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.HoloUtil;
 import de.alpha.uhc.utils.Spectator;
 import de.popokaka.alphalibary.item.ItemBuilder;
 import de.popokaka.alphalibary.mysql.MySQLManager;
+import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class PlayerJoinListener implements Listener {
 	
@@ -63,23 +63,24 @@ public class PlayerJoinListener implements Listener {
 	public void onJoin(final PlayerJoinEvent e) {
 		
 		e.setJoinMessage(null);
+		Player p = e.getPlayer();
 		
 		if(GState.isState(GState.RESTART)) {
-			e.getPlayer().kickPlayer(Core.getPrefix() + GameEndListener.kick);
+			p.kickPlayer(Core.getPrefix() + GameEndListener.kick);
 			return;
 		}
 		
 		if(GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
-			e.getPlayer().getInventory().clear();
-			e.getPlayer().getInventory().setArmorContents(null);
+			p.getInventory().clear();
+			p.getInventory().setArmorContents(null);
 			if(SpawnFileManager.getSpawn() == null) {
-				e.getPlayer().teleport(Bukkit.getWorld("UHC").getSpawnLocation());
+				p.teleport(Bukkit.getWorld("UHC").getSpawnLocation());
 			} else {
-				e.getPlayer().teleport(SpawnFileManager.getSpawn());
+				p.teleport(SpawnFileManager.getSpawn());
 			}
-			Core.addSpec(e.getPlayer());
-			Spectator.setSpec(e.getPlayer());
-			AScoreboard.setInGameScoreboard(e.getPlayer());
+			Core.addSpec(p);
+			Spectator.setSpec(p);
+			AScoreboard.setInGameScoreboard(p);
 
 			ATablist.sendStandingInGameTablist();
 			for(Player all : Core.getInGamePlayers()) {
@@ -90,29 +91,29 @@ public class PlayerJoinListener implements Listener {
 		
 		for(Player all : Bukkit.getOnlinePlayers()) {
 			
-			all.showPlayer(e.getPlayer());
+			all.showPlayer(p);
 			
 		}
 		
 		ATablist.sendStandingLobbyTablist();
 		
 		if(Core.isMySQLActive == true) {
-			if(MySQLManager.getObjectConditionResult("UHC", "UUID", e.getPlayer().getUniqueId().toString(), "UUID") == null) {
-				MySQLManager.exInsertQry("UHC", e.getPlayer().getName(), e.getPlayer().getUniqueId().toString(), "0", "0", "0", "");
-			} else if(MySQLManager.getObjectConditionResult("UHC", "UUID ", e.getPlayer().getUniqueId().toString(), "UUID") != null) {
-				MySQLManager.exUpdateQry("UHC", "UUID", e.getPlayer().getUniqueId().toString(), "Player", e.getPlayer().getName());
+			if(MySQLManager.getObjectConditionResult("UHC", "UUID", p.getUniqueId().toString(), "UUID") == null) {
+				MySQLManager.exInsertQry("UHC", p.getName(), p.getUniqueId().toString(), "0", "0", "0", "");
+			} else if(MySQLManager.getObjectConditionResult("UHC", "UUID ", p.getUniqueId().toString(), "UUID") != null) {
+				MySQLManager.exUpdateQry("UHC", "UUID", p.getUniqueId().toString(), "Player", p.getName());
 			}
 		} else {
-			if(!(PlayerFileManager.getPlayerFile().contains("Player: "+ e.getPlayer().getName()))) {
-				new PlayerFileManager().addPlayer(e.getPlayer());
+			if(!(PlayerFileManager.getPlayerFile().contains("Player: "+ p.getName()))) {
+				new PlayerFileManager().addPlayer(p);
 			}
 		}
 		
 		if(Bukkit.getOnlinePlayers().size() == mpc+1) {
-			e.getPlayer().kickPlayer(Core.getPrefix() + full);
+			p.kickPlayer(Core.getPrefix() + full);
 		} 
 		
-		for(Entity kill : e.getPlayer().getWorld().getEntities()) {
+		for(Entity kill : p.getWorld().getEntities()) {
 			
 			if(!(kill instanceof Player || kill instanceof ArmorStand)) {
 				kill.remove();
@@ -127,7 +128,7 @@ public class PlayerJoinListener implements Listener {
 				
 				apc = Bukkit.getOnlinePlayers().size();
 				
-				join = join.replace("[Player]", e.getPlayer().getDisplayName());
+				join = join.replace("[Player]", p.getDisplayName());
 				join = join.replace("[PlayerCount]", "§7["+apc+"/"+mpc+"]");
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + join);
@@ -137,20 +138,20 @@ public class PlayerJoinListener implements Listener {
 			}
 		}, 20);
 		
-		e.getPlayer().setLevel(0);
-		e.getPlayer().setExp(0);
+		p.setLevel(0);
+		p.setExp(0);
 		
-		e.getPlayer().getInventory().clear();
-		e.getPlayer().getInventory().setArmorContents(null);
+		p.getInventory().clear();
+		p.getInventory().setArmorContents(null);
 		
-		new HoloUtil().showHologram(e.getPlayer());
+		new HoloUtil().showHologram(p);
 		
 		if(kitMode == true) {
 			if(kitItem == null || kitName == null) {
 				Bukkit.getConsoleSender().sendMessage(Core.getPrefix()+"§cYou don't have any Kits in your kits.yml");
 			} else {
-				e.getPlayer().getInventory().setHeldItemSlot(0);
-				e.getPlayer().getInventory().setItemInMainHand(new ItemBuilder(kitItem).setName(kitName).build());
+				p.getInventory().setHeldItemSlot(0);
+				p.getInventory().setItemInMainHand(new ItemBuilder(kitItem).setName(kitName).build());
 		
 			}
 		}
@@ -158,42 +159,42 @@ public class PlayerJoinListener implements Listener {
 			if(teamItem == null || teamName == null) {
 				Bukkit.getConsoleSender().sendMessage(Core.getPrefix()+"§cYou don't have any Kits in your kits.yml");
 			} else {
-				e.getPlayer().getInventory().setItem(1, new ItemBuilder(teamItem).setName(teamName).build());
+				p.getInventory().setItem(1, new ItemBuilder(teamItem).setName(teamName).build());
 			}
 		}
 		if(leaveMode == true && GameEndListener.BungeeMode == true) {
-			e.getPlayer().getInventory().setItem(8, new ItemBuilder(leaveItem).setName(leaveName).build());
+			p.getInventory().setItem(8, new ItemBuilder(leaveItem).setName(leaveName).build());
 		}
-		if(startMode == true && e.getPlayer().hasPermission("uhc.start")) {
-			e.getPlayer().getInventory().setItem(4, new ItemBuilder(startItem).setName(startName).build());
+		if(startMode == true && p.hasPermission("uhc.start")) {
+			p.getInventory().setItem(4, new ItemBuilder(startItem).setName(startName).build());
 		}
 		if(SpawnFileManager.getLobby() != null) {
 			if(Bukkit.getWorld(SpawnFileManager.getLobbyWorldName()) == null) {
-				e.getPlayer().teleport(e.getPlayer().getWorld().getSpawnLocation());
+				p.teleport(p.getWorld().getSpawnLocation());
 			} else {
-				e.getPlayer().teleport(SpawnFileManager.getLobby());
+				p.teleport(SpawnFileManager.getLobby());
 			}
 		}
-		Core.addInGamePlayer(e.getPlayer());
-		e.getPlayer().setGameMode(GameMode.SURVIVAL);
-		e.getPlayer().setHealth(20);
-		e.getPlayer().setFoodLevel(20);
-		for(PotionEffect pe : e.getPlayer().getActivePotionEffects()) {
-			if(e.getPlayer().hasPotionEffect(pe.getType())) {
-				e.getPlayer().removePotionEffect(pe.getType());
+		Core.addInGamePlayer(p);
+		p.setGameMode(GameMode.SURVIVAL);
+		p.setHealth(20);
+		p.setFoodLevel(20);
+		for(PotionEffect pe : p.getActivePotionEffects()) {
+			if(p.hasPotionEffect(pe.getType())) {
+				p.removePotionEffect(pe.getType());
 			}
 		}
 		
 		if(title.contains("[Player]")) {
-			String aa = title.replace("[Player]", e.getPlayer().getDisplayName());
+			String aa = title.replace("[Player]", p.getDisplayName());
 			if(subtitle.contains("[Player]")) {
-				String bb = subtitle.replace("[Player]", e.getPlayer().getDisplayName());
-				TitleManager.sendTitle(e.getPlayer(), 20, 20, 20, aa, bb);
+				String bb = subtitle.replace("[Player]", p.getDisplayName());
+				SimpleTitle.sendTitle(p, aa, bb, 10, 20, 10);
 			} else {
-				TitleManager.sendTitle(e.getPlayer(), 20, 20, 20, aa, subtitle);
+				SimpleTitle.sendTitle(p, aa, subtitle, 10, 20, 10);
 			}
 		} else {
-			TitleManager.sendTitle(e.getPlayer(), 20, 20, 20, title, subtitle);
+			SimpleTitle.sendTitle(p, title, subtitle, 10, 20, 10);
 		}
 		
 		for(Player all : Bukkit.getOnlinePlayers()) {

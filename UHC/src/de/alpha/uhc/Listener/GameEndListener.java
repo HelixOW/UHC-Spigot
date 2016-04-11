@@ -15,12 +15,12 @@ import de.alpha.uhc.GState;
 import de.alpha.uhc.aclasses.AScoreboard;
 import de.alpha.uhc.aclasses.ATablist;
 import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.manager.TitleManager;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Spectator;
 import de.alpha.uhc.utils.Stats;
 import de.popokaka.alphalibary.item.ItemBuilder;
 import de.popokaka.alphalibary.item.data.SkullData;
+import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class GameEndListener implements Listener {
 	
@@ -73,7 +73,7 @@ public class GameEndListener implements Listener {
 		rew = rew.replace("[Coins]", Integer.toString(deathreward));
 		
 		p.sendMessage(Core.getPrefix() + rew);
-		TitleManager.sendTitle(p, 10, 20, 10, " ", rew);
+		SimpleTitle.sendTitle(p, " ", rew, 10, 20, 10);
 		
 		rew = MessageFileManager.getMSGFile().getColorString("Reward");
 		
@@ -134,7 +134,7 @@ public class GameEndListener implements Listener {
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + win);
 				for(Player all : Bukkit.getOnlinePlayers()) {
-					TitleManager.sendTitle(all, 10, 20, 10, " ", win);
+					SimpleTitle.sendTitle(all, " ", win, 10, 20, 10);
 				}
 				
 				new Stats(winner).addCoins(reward);
@@ -237,7 +237,7 @@ public class GameEndListener implements Listener {
 					
 					Bukkit.broadcastMessage(Core.getPrefix() + win);
 					for(Player all : Bukkit.getOnlinePlayers()) {
-						TitleManager.sendTitle(all, 10, 20, 10, " ", win);
+						SimpleTitle.sendTitle(all, " ", win, 10, 20, 10);
 					}
 					
 					new Stats(winner).addCoins(reward);

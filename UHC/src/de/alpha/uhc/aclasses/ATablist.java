@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.manager.TitleManager;
+import de.popokaka.alphalibary.nms.SimpleTablist;
 
 public class ATablist {
 	
@@ -23,8 +23,8 @@ public class ATablist {
 			footer = footer.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
 			footer = footer.replace("[gamestatus]", GState.getGStateName());
 			
-			TitleManager.sendTabTitle(all, "", "");
-			TitleManager.sendTabTitle(all, header, footer);
+			SimpleTablist.setTablistHeaderFooter(all, "", "");
+			SimpleTablist.setTablistHeaderFooter(all, header, footer);
 			
 			header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
 			footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
@@ -43,8 +43,8 @@ public class ATablist {
 			footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
 			footer = footer.replace("[gamestatus]", GState.getGStateName());
 			
-			TitleManager.sendTabTitle(all, "", "");
-			TitleManager.sendTabTitle(all, header, footer);
+			SimpleTablist.setTablistHeaderFooter(all, "", "");
+			SimpleTablist.setTablistHeaderFooter(all, header, footer);
 			
 			header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
 			footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
