@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.files.PlayerFileManager;
+import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.mysql.MySQLManager;
 
 public class Stats {
@@ -19,7 +20,7 @@ public class Stats {
 	
 	public int getCoins() {
 		if(isMysql == true) {
-			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", p.getUniqueId().toString(), "Coins").toString();
+			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Coins").toString();
 			return Integer.parseInt(sql);
 		}
 		return new PlayerFileManager().getPlayerCoins(p);
@@ -27,7 +28,7 @@ public class Stats {
 	
 	public int getKills() {
 		if(isMysql == true) {
-			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", p.getUniqueId().toString(), "Kills").toString();
+			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kills").toString();
 			return Integer.parseInt(sql);
 		}
 		return new PlayerFileManager().getPlayerKills(p);
@@ -35,7 +36,7 @@ public class Stats {
 	
 	public int getDeaths() {
 		if(isMysql == true) {
-			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", p.getUniqueId().toString(), "Deaths").toString();
+			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Deaths").toString();
 			return Integer.parseInt(sql);
 		}
 		return new PlayerFileManager().getPlayerDeaths(p);
@@ -43,7 +44,7 @@ public class Stats {
 	
 	public String getKits() {
 		if(isMysql == true) {
-			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", p.getUniqueId().toString(), "Kits").toString();
+			String sql = MySQLManager.getObjectConditionResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kits").toString();
 			sql = sql.replaceAll(",", "");
 			return sql;
 		}
@@ -52,7 +53,7 @@ public class Stats {
 	
 	public void addKit(String kit) {
 		if(isMysql == true) {
-			MySQLManager.exUpdateQry("UHC", "UUID", p.getUniqueId().toString(), "Kits", getKits()+kit+" ,");
+			MySQLManager.exUpdateQry("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kits", getKits()+kit+" ,");
 			return;
 		}
 		new PlayerFileManager().addPlayerKit(p, kit);
@@ -61,7 +62,7 @@ public class Stats {
 	
 	public void addKill() {
 		if(isMysql == true) {
-			MySQLManager.exUpdateQry("UHC", "UUID", p.getUniqueId().toString(), "Kills", Integer.toString(getKills()+1));
+			MySQLManager.exUpdateQry("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kills", Integer.toString(getKills()+1));
 			return;
 		}
 		new PlayerFileManager().addPlayerKill(p);
@@ -69,21 +70,21 @@ public class Stats {
 	
 	public void addDeath() {
 		if(isMysql == true) {
-			MySQLManager.exUpdateQry("UHC", "UUID", p.getUniqueId().toString(), "Deaths", Integer.toString(getDeaths()+1));
+			MySQLManager.exUpdateQry("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Deaths", Integer.toString(getDeaths()+1));
 		}
 		new PlayerFileManager().addPlayerDeath(p);
 	}
 	
 	public void addCoins(int amount) {
 		if(isMysql == true) {
-			MySQLManager.exUpdateQry("UHC", "UUID", p.getUniqueId().toString(), "Coins", Integer.toString(getCoins()+amount));
+			MySQLManager.exUpdateQry("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Coins", Integer.toString(getCoins()+amount));
 		}
 		new PlayerFileManager().addPlayerCoins(p, amount);
 	}
 	
 	public void removeCoins(int amount) {
 		if(isMysql == true) {
-			MySQLManager.exUpdateQry("UHC", "UUID", p.getUniqueId().toString(), "Coins", Integer.toString(getCoins()-amount));
+			MySQLManager.exUpdateQry("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Coins", Integer.toString(getCoins()-amount));
 		}
 		new PlayerFileManager().removePlayerCoins(p, amount);
 	}
