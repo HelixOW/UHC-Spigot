@@ -10,7 +10,7 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.popokaka.alphalibary.AlphaLibary;
+import de.alpha.uhc.Core;
 
 public abstract class SimpleCommand<P extends JavaPlugin> extends Command {
 	
@@ -21,7 +21,7 @@ public abstract class SimpleCommand<P extends JavaPlugin> extends Command {
 	      
 	      SimpleCommand.VERSION = path.substring(path.lastIndexOf(".") + 1, path.length());
 	      
-	      System.out.println(AlphaLibary.getLibary().getPrefix()+" AutoCommand hook for Bukkit " + SimpleCommand.VERSION);
+	      System.out.println(Core.getPrefix()+" AutoCommand hook for Bukkit " + SimpleCommand.VERSION);
 	   }
 	   
 	   protected final P plugin;

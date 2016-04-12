@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.popokaka.alphalibary.AlphaLibary;
+import de.alpha.uhc.Core;
 
 public class SimpleFile extends YamlConfiguration {
 	
@@ -69,7 +69,7 @@ public class SimpleFile extends YamlConfiguration {
 					public void run() {
 						Bukkit.reload();
 					}
-				}.runTaskLater(AlphaLibary.getLibary(), 20);
+				}.runTaskLater(Core.getInstance(), 20);
 			}
 		}
 		finishSetup();
