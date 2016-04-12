@@ -29,27 +29,27 @@ public class Spectator implements Listener{
 	private static String specName;
 	private static String title;
 
-	public static synchronized String getSpecItem() {
+	public static  String getSpecItem() {
 		return specItem;
 	}
 
-	public static synchronized void setSpecItem(String specItem) {
+	public static  void setSpecItem(String specItem) {
 		Spectator.specItem = specItem;
 	}
 
-	public static synchronized String getSpecName() {
+	public static  String getSpecName() {
 		return specName;
 	}
 
-	public static synchronized void setSpecName(String specName) {
+	public static  void setSpecName(String specName) {
 		Spectator.specName = specName;
 	}
 
-	public static synchronized String getTitle() {
+	public static  String getTitle() {
 		return title;
 	}
 
-	public static synchronized void setTitle(String title) {
+	public static  void setTitle(String title) {
 		Spectator.title = title;
 	}
 

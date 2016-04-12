@@ -47,145 +47,145 @@ public class DeathListener implements Listener {
 	
 	
 	
-	public static synchronized void setPig(boolean pig) {
+	public static  void setPig(boolean pig) {
 		DeathListener.pig = pig;
 	}
 
 
 
-	public static synchronized void setZombie(boolean zombie) {
+	public static  void setZombie(boolean zombie) {
 		DeathListener.zombie = zombie;
 	}
 
 
 
-	public static synchronized void setCow(boolean cow) {
+	public static  void setCow(boolean cow) {
 		DeathListener.cow = cow;
 	}
 
 
 
-	public static synchronized void setChicken(boolean chicken) {
+	public static  void setChicken(boolean chicken) {
 		DeathListener.chicken = chicken;
 	}
 
 
 
-	public static synchronized void setSpider(boolean spider) {
+	public static  void setSpider(boolean spider) {
 		DeathListener.spider = spider;
 	}
 
 
 
-	public static synchronized void setSkeleton(boolean skeleton) {
+	public static  void setSkeleton(boolean skeleton) {
 		DeathListener.skeleton = skeleton;
 	}
 
 
 
-	public static synchronized void setSheep(boolean sheep) {
+	public static  void setSheep(boolean sheep) {
 		DeathListener.sheep = sheep;
 	}
 
 
 
-	public static synchronized void setRabbit(boolean rabbit) {
+	public static  void setRabbit(boolean rabbit) {
 		DeathListener.rabbit = rabbit;
 	}
 
 
 
-	public static synchronized void setPigA(int pigA) {
+	public static  void setPigA(int pigA) {
 		DeathListener.pigA = pigA;
 	}
 
 
 
-	public static synchronized void setZombieA(int zombieA) {
+	public static  void setZombieA(int zombieA) {
 		DeathListener.zombieA = zombieA;
 	}
 
 
 
-	public static synchronized void setCowA(int cowA) {
+	public static  void setCowA(int cowA) {
 		DeathListener.cowA = cowA;
 	}
 
 
 
-	public static synchronized void setChickenA(int chickenA) {
+	public static  void setChickenA(int chickenA) {
 		DeathListener.chickenA = chickenA;
 	}
 
 
 
-	public static synchronized void setSpiderA(int spiderA) {
+	public static  void setSpiderA(int spiderA) {
 		DeathListener.spiderA = spiderA;
 	}
 
 
 
-	public static synchronized void setSkeletonA(int skeletonA) {
+	public static  void setSkeletonA(int skeletonA) {
 		DeathListener.skeletonA = skeletonA;
 	}
 
 
 
-	public static synchronized void setSheepA(int sheepA) {
+	public static  void setSheepA(int sheepA) {
 		DeathListener.sheepA = sheepA;
 	}
 
 
 
-	public static synchronized void setRabbitA(int rabbitA) {
+	public static  void setRabbitA(int rabbitA) {
 		DeathListener.rabbitA = rabbitA;
 	}
 
 
 
-	public static synchronized void setPigM(Material pigM) {
+	public static  void setPigM(Material pigM) {
 		DeathListener.pigM = pigM;
 	}
 
 
 
-	public static synchronized void setZombieM(Material zombieM) {
+	public static  void setZombieM(Material zombieM) {
 		DeathListener.zombieM = zombieM;
 	}
 
 
 
-	public static synchronized void setCowM(Material cowM) {
+	public static  void setCowM(Material cowM) {
 		DeathListener.cowM = cowM;
 	}
 
 
 
-	public static synchronized void setChickenM(Material chickenM) {
+	public static  void setChickenM(Material chickenM) {
 		DeathListener.chickenM = chickenM;
 	}
 
 
 
-	public static synchronized void setSpiderM(Material spiderM) {
+	public static  void setSpiderM(Material spiderM) {
 		DeathListener.spiderM = spiderM;
 	}
 
 
 
-	public static synchronized void setSkeletonM(Material skeletonM) {
+	public static  void setSkeletonM(Material skeletonM) {
 		DeathListener.skeletonM = skeletonM;
 	}
 
 
 
-	public static synchronized void setSheepM(Material sheepM) {
+	public static  void setSheepM(Material sheepM) {
 		DeathListener.sheepM = sheepM;
 	}
 
 
 
-	public static synchronized void setRabbitM(Material rabbitM) {
+	public static  void setRabbitM(Material rabbitM) {
 		DeathListener.rabbitM = rabbitM;
 	}
 

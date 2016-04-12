@@ -23,43 +23,43 @@ public class Regions implements Listener {
 	private static String material;
 	private static boolean lobby;
 	
-	public static synchronized ArrayList<Cuboid> getRegions() {
+	public static  ArrayList<Cuboid> getRegions() {
 		return regions;
 	}
 
-	public static synchronized void setRegions(ArrayList<Cuboid> regions) {
+	public static  void setRegions(ArrayList<Cuboid> regions) {
 		Regions.regions = regions;
 	}
 
-	public static synchronized HashMap<Player, Location> getPos1() {
+	public static  HashMap<Player, Location> getPos1() {
 		return pos1;
 	}
 
-	public static synchronized void setPos1(HashMap<Player, Location> pos1) {
+	public static  void setPos1(HashMap<Player, Location> pos1) {
 		Regions.pos1 = pos1;
 	}
 
-	public static synchronized HashMap<Player, Location> getPos2() {
+	public static  HashMap<Player, Location> getPos2() {
 		return pos2;
 	}
 
-	public static synchronized void setPos2(HashMap<Player, Location> pos2) {
+	public static  void setPos2(HashMap<Player, Location> pos2) {
 		Regions.pos2 = pos2;
 	}
 
-	public static synchronized String getMaterial() {
+	public static  String getMaterial() {
 		return material;
 	}
 
-	public static synchronized void setMaterial(String material) {
+	public static  void setMaterial(String material) {
 		Regions.material = material;
 	}
 
-	public static synchronized boolean isLobby() {
+	public static  boolean isLobby() {
 		return lobby;
 	}
 
-	public static synchronized void setLobby(boolean lobby) {
+	public static  void setLobby(boolean lobby) {
 		Regions.lobby = lobby;
 	}
 

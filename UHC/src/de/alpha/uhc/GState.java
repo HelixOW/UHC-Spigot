@@ -22,31 +22,31 @@ public enum GState {
 	
 	
 
-	public static synchronized void setCurrentState(GState currentState) {
+	public static  void setCurrentState(GState currentState) {
 		GState.currentState = currentState;
 	}
 
-	public static synchronized void setLobby(String lobby) {
+	public static  void setLobby(String lobby) {
 		GState.lobby = lobby;
 	}
 
-	public static synchronized void setGrace(String grace) {
+	public static  void setGrace(String grace) {
 		GState.grace = grace;
 	}
 
-	public static synchronized void setPregame(String pregame) {
+	public static  void setPregame(String pregame) {
 		GState.pregame = pregame;
 	}
 
-	public static synchronized void setIngame(String ingame) {
+	public static  void setIngame(String ingame) {
 		GState.ingame = ingame;
 	}
 
-	public static synchronized void setDeathmatch(String deathmatch) {
+	public static  void setDeathmatch(String deathmatch) {
 		GState.deathmatch = deathmatch;
 	}
 
-	public static synchronized void setRestart(String restart) {
+	public static  void setRestart(String restart) {
 		GState.restart = restart;
 	}
 

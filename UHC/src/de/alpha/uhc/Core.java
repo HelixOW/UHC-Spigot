@@ -59,35 +59,35 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 	
 	private static boolean isMySQLActive;
 	
-	public static synchronized boolean isMySQLActive() {
+	public static  boolean isMySQLActive() {
 		return isMySQLActive;
 	}
 
-	public static synchronized void setMySQLActive(boolean isMySQLActive) {
+	public static  void setMySQLActive(boolean isMySQLActive) {
 		Core.isMySQLActive = isMySQLActive;
 	}
 
-	public static synchronized ArrayList<Player> getIg() {
+	public static  ArrayList<Player> getIg() {
 		return ig;
 	}
 
-	public static synchronized void setIg(ArrayList<Player> ig) {
+	public static  void setIg(ArrayList<Player> ig) {
 		Core.ig = ig;
 	}
 
-	public static synchronized ArrayList<Player> getSpectator() {
+	public static  ArrayList<Player> getSpectator() {
 		return spectator;
 	}
 
-	public static synchronized void setSpectator(ArrayList<Player> spectator) {
+	public static  void setSpectator(ArrayList<Player> spectator) {
 		Core.spectator = spectator;
 	}
 
-	public static synchronized void setInstance(Core instance) {
+	public static  void setInstance(Core instance) {
 		Core.instance = instance;
 	}
 
-	public static synchronized void setPrefix(String prefix) {
+	public static  void setPrefix(String prefix) {
 		Core.prefix = prefix;
 	}
 

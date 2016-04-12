@@ -40,102 +40,102 @@ public class GameEndListener implements Listener {
 	
 	
 	
-	public static synchronized String getWin() {
+	public static  String getWin() {
 		return win;
 	}
 
 
-	public static synchronized void setWin(String win) {
+	public static  void setWin(String win) {
 		GameEndListener.win = win;
 	}
 
 
-	public static synchronized String getKick() {
+	public static  String getKick() {
 		return kick;
 	}
 
 
-	public static synchronized void setKick(String kick) {
+	public static  void setKick(String kick) {
 		GameEndListener.kick = kick;
 	}
 
 
-	public static synchronized String getRew() {
+	public static  String getRew() {
 		return rew;
 	}
 
 
-	public static synchronized void setRew(String rew) {
+	public static  void setRew(String rew) {
 		GameEndListener.rew = rew;
 	}
 
 
-	public static synchronized String getQuit() {
+	public static  String getQuit() {
 		return quit;
 	}
 
 
-	public static synchronized void setQuit(String quit) {
+	public static  void setQuit(String quit) {
 		GameEndListener.quit = quit;
 	}
 
 
-	public static synchronized String getBungeeServer() {
+	public static  String getBungeeServer() {
 		return BungeeServer;
 	}
 
 
-	public static synchronized void setBungeeServer(String bungeeServer) {
+	public static  void setBungeeServer(String bungeeServer) {
 		BungeeServer = bungeeServer;
 	}
 
 
-	public static synchronized int getApc() {
+	public static  int getApc() {
 		return apc;
 	}
 
 
-	public static synchronized void setApc(int apc) {
+	public static  void setApc(int apc) {
 		GameEndListener.apc = apc;
 	}
 
 
-	public static synchronized int getOpc() {
+	public static  int getOpc() {
 		return opc;
 	}
 
 
-	public static synchronized void setOpc(int opc) {
+	public static  void setOpc(int opc) {
 		GameEndListener.opc = opc;
 	}
 
 
-	public static synchronized int getReward() {
+	public static  int getReward() {
 		return reward;
 	}
 
 
-	public static synchronized void setReward(int reward) {
+	public static  void setReward(int reward) {
 		GameEndListener.reward = reward;
 	}
 
 
-	public static synchronized int getDeathreward() {
+	public static  int getDeathreward() {
 		return deathreward;
 	}
 
 
-	public static synchronized void setDeathreward(int deathreward) {
+	public static  void setDeathreward(int deathreward) {
 		GameEndListener.deathreward = deathreward;
 	}
 
 
-	public static synchronized boolean isBungeeMode() {
+	public static  boolean isBungeeMode() {
 		return BungeeMode;
 	}
 
 
-	public static synchronized void setBungeeMode(boolean bungeeMode) {
+	public static  void setBungeeMode(boolean bungeeMode) {
 		BungeeMode = bungeeMode;
 	}
 

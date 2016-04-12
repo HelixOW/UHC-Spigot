@@ -13,11 +13,11 @@ public class SoupListener implements Listener {
 	
 	private static double boost;
 	
-	public static synchronized double getBoost() {
+	public static  double getBoost() {
 		return boost;
 	}
 
-	public static synchronized void setBoost(double a) {
+	public static  void setBoost(double a) {
 		boost = a;
 	}
 

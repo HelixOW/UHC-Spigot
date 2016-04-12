@@ -33,15 +33,15 @@ public class LobbyListener implements Listener {
 	private static String bought;
 	private static String coinsneed;
 	
-	public static synchronized void setSel(String sel) {
+	public static  void setSel(String sel) {
 		LobbyListener.sel = sel;
 	}
 
-	public static synchronized void setBought(String bought) {
+	public static  void setBought(String bought) {
 		LobbyListener.bought = bought;
 	}
 
-	public static synchronized void setCoinsneed(String coinsneed) {
+	public static  void setCoinsneed(String coinsneed) {
 		LobbyListener.coinsneed = coinsneed;
 	}
 

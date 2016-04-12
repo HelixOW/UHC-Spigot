@@ -15,23 +15,23 @@ public class MotdListener implements Listener {
 	
 	
 	
-	public static synchronized void setLobby(String lobby) {
+	public static  void setLobby(String lobby) {
 		MotdListener.lobby = lobby;
 	}
 
-	public static synchronized void setGrace(String grace) {
+	public static  void setGrace(String grace) {
 		MotdListener.grace = grace;
 	}
 
-	public static synchronized void setIngame(String ingame) {
+	public static  void setIngame(String ingame) {
 		MotdListener.ingame = ingame;
 	}
 
-	public static synchronized void setRestart(String restart) {
+	public static  void setRestart(String restart) {
 		MotdListener.restart = restart;
 	}
 
-	public static synchronized void setCustommotd(boolean custommotd) {
+	public static  void setCustommotd(boolean custommotd) {
 		MotdListener.custommotd = custommotd;
 	}
 

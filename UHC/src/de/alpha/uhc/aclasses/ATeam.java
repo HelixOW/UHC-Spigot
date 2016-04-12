@@ -32,91 +32,91 @@ public class ATeam implements Listener {
 	private static String noExist;
 	private static String allTeams;
 	
-	public static synchronized void setChosen(String chosen) {
+	public static  void setChosen(String chosen) {
 		ATeam.chosen = chosen;
 	}
 
-	public static synchronized void setNoExist(String noExist) {
+	public static  void setNoExist(String noExist) {
 		ATeam.noExist = noExist;
 	}
 
-	public static synchronized void setAllTeams(String allTeams) {
+	public static  void setAllTeams(String allTeams) {
 		ATeam.allTeams = allTeams;
 	}
 
-	public static synchronized Inventory getTeamInv() {
+	public static  Inventory getTeamInv() {
 		return teamInv;
 	}
 
-	public static synchronized void setTeamInv(Inventory teamInv) {
+	public static  void setTeamInv(Inventory teamInv) {
 		ATeam.teamInv = teamInv;
 	}
 
-	public static synchronized ArrayList<String> getTeamNames() {
+	public static  ArrayList<String> getTeamNames() {
 		return teamNames;
 	}
 
-	public static synchronized void setTeamNames(ArrayList<String> teamNames) {
+	public static  void setTeamNames(ArrayList<String> teamNames) {
 		ATeam.teamNames = teamNames;
 	}
 
-	public static synchronized ArrayList<String> getTeamColors() {
+	public static  ArrayList<String> getTeamColors() {
 		return teamColors;
 	}
 
-	public static synchronized void setTeamColors(ArrayList<String> teamColors) {
+	public static  void setTeamColors(ArrayList<String> teamColors) {
 		ATeam.teamColors = teamColors;
 	}
 
-	public static synchronized HashMap<String, Integer> getTeamMax() {
+	public static  HashMap<String, Integer> getTeamMax() {
 		return teamMax;
 	}
 
-	public static synchronized void setTeamMax(HashMap<String, Integer> teamMax) {
+	public static  void setTeamMax(HashMap<String, Integer> teamMax) {
 		ATeam.teamMax = teamMax;
 	}
 
-	public static synchronized HashMap<String, Integer> getTeamC() {
+	public static  HashMap<String, Integer> getTeamC() {
 		return teamC;
 	}
 
-	public static synchronized void setTeamC(HashMap<String, Integer> teamC) {
+	public static  void setTeamC(HashMap<String, Integer> teamC) {
 		ATeam.teamC = teamC;
 	}
 
-	public static synchronized HashMap<Player, String> getTeams() {
+	public static  HashMap<Player, String> getTeams() {
 		return teams;
 	}
 
-	public static synchronized void setTeams(HashMap<Player, String> teams) {
+	public static  void setTeams(HashMap<Player, String> teams) {
 		ATeam.teams = teams;
 	}
 
-	public static synchronized String getChosen() {
+	public static  String getChosen() {
 		return chosen;
 	}
 
-	public static synchronized String getNoExist() {
+	public static  String getNoExist() {
 		return noExist;
 	}
 
-	public static synchronized String getAllTeams() {
+	public static  String getAllTeams() {
 		return allTeams;
 	}
 
-	public static synchronized String getMaterialName() {
+	public static  String getMaterialName() {
 		return materialName;
 	}
 
-	public static synchronized String getBlockName() {
+	public static  String getBlockName() {
 		return blockName;
 	}
 
-	public static synchronized String getTitle() {
+	public static  String getTitle() {
 		return title;
 	}
 
-	public static synchronized String getFull() {
+	public static  String getFull() {
 		return full;
 	}
 
@@ -127,19 +127,19 @@ public class ATeam implements Listener {
 	
 	
 	
-	public static synchronized void setMaterialName(String materialName) {
+	public static  void setMaterialName(String materialName) {
 		ATeam.materialName = materialName;
 	}
 
-	public static synchronized void setBlockName(String blockName) {
+	public static  void setBlockName(String blockName) {
 		ATeam.blockName = blockName;
 	}
 
-	public static synchronized void setTitle(String title) {
+	public static  void setTitle(String title) {
 		ATeam.title = title;
 	}
 
-	public static synchronized void setFull(String full) {
+	public static  void setFull(String full) {
 		ATeam.full = full;
 	}
 

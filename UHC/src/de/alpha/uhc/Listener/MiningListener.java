@@ -31,97 +31,97 @@ public class MiningListener implements Listener {
 	private static Material gravelM;
 	
 	
-	public static synchronized void setWood(boolean wood) {
+	public static  void setWood(boolean wood) {
 		MiningListener.wood = wood;
 	}
 
 
 
-	public static synchronized void setCoal(boolean coal) {
+	public static  void setCoal(boolean coal) {
 		MiningListener.coal = coal;
 	}
 
 
 
-	public static synchronized void setIron(boolean iron) {
+	public static  void setIron(boolean iron) {
 		MiningListener.iron = iron;
 	}
 
 
 
-	public static synchronized void setGold(boolean gold) {
+	public static  void setGold(boolean gold) {
 		MiningListener.gold = gold;
 	}
 
 
 
-	public static synchronized void setDia(boolean dia) {
+	public static  void setDia(boolean dia) {
 		MiningListener.dia = dia;
 	}
 
 
 
-	public static synchronized void setGravel(boolean gravel) {
+	public static  void setGravel(boolean gravel) {
 		MiningListener.gravel = gravel;
 	}
 
 
 
-	public static synchronized void setCoalA(int coalA) {
+	public static  void setCoalA(int coalA) {
 		MiningListener.coalA = coalA;
 	}
 
 
 
-	public static synchronized void setIronA(int ironA) {
+	public static  void setIronA(int ironA) {
 		MiningListener.ironA = ironA;
 	}
 
 
 
-	public static synchronized void setGoldA(int goldA) {
+	public static  void setGoldA(int goldA) {
 		MiningListener.goldA = goldA;
 	}
 
 
 
-	public static synchronized void setDiaA(int diaA) {
+	public static  void setDiaA(int diaA) {
 		MiningListener.diaA = diaA;
 	}
 
 
 
-	public static synchronized void setGravelA(int gravelA) {
+	public static  void setGravelA(int gravelA) {
 		MiningListener.gravelA = gravelA;
 	}
 
 
 
-	public static synchronized void setCoalM(Material coalM) {
+	public static  void setCoalM(Material coalM) {
 		MiningListener.coalM = coalM;
 	}
 
 
 
-	public static synchronized void setIronM(Material ironM) {
+	public static  void setIronM(Material ironM) {
 		MiningListener.ironM = ironM;
 	}
 
 
 
-	public static synchronized void setGoldM(Material goldM) {
+	public static  void setGoldM(Material goldM) {
 		MiningListener.goldM = goldM;
 	}
 
 
 
-	public static synchronized void setDiaM(Material diaM) {
+	public static  void setDiaM(Material diaM) {
 		MiningListener.diaM = diaM;
 	}
 
 
 
-	public static synchronized void setGravelM(Material gravelM) {
+	public static  void setGravelM(Material gravelM) {
 		MiningListener.gravelM = gravelM;
 	}
 

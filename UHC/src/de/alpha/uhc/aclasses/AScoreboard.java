@@ -62,475 +62,475 @@ public class AScoreboard {
 	private static String dmgin;
 	private static String pvpin;
 	
-	public static synchronized boolean isShowLobbyScoreboard() {
+	public static  boolean isShowLobbyScoreboard() {
 		return ShowLobbyScoreboard;
 	}
 
-	public static synchronized void setShowLobbyScoreboard(boolean showLobbyScoreboard) {
+	public static  void setShowLobbyScoreboard(boolean showLobbyScoreboard) {
 		ShowLobbyScoreboard = showLobbyScoreboard;
 	}
 
-	public static synchronized boolean isShowLobbyKills() {
+	public static  boolean isShowLobbyKills() {
 		return ShowLobbyKills;
 	}
 
-	public static synchronized void setShowLobbyKills(boolean showLobbyKills) {
+	public static  void setShowLobbyKills(boolean showLobbyKills) {
 		ShowLobbyKills = showLobbyKills;
 	}
 
-	public static synchronized boolean isShowLobbyDeaths() {
+	public static  boolean isShowLobbyDeaths() {
 		return ShowLobbyDeaths;
 	}
 
-	public static synchronized void setShowLobbyDeaths(boolean showLobbyDeaths) {
+	public static  void setShowLobbyDeaths(boolean showLobbyDeaths) {
 		ShowLobbyDeaths = showLobbyDeaths;
 	}
 
-	public static synchronized boolean isShowLobbyCoins() {
+	public static  boolean isShowLobbyCoins() {
 		return ShowLobbyCoins;
 	}
 
-	public static synchronized void setShowLobbyCoins(boolean showLobbyCoins) {
+	public static  void setShowLobbyCoins(boolean showLobbyCoins) {
 		ShowLobbyCoins = showLobbyCoins;
 	}
 
-	public static synchronized boolean isShowLobbyPlayercount() {
+	public static  boolean isShowLobbyPlayercount() {
 		return ShowLobbyPlayercount;
 	}
 
-	public static synchronized void setShowLobbyPlayercount(boolean showLobbyPlayercount) {
+	public static  void setShowLobbyPlayercount(boolean showLobbyPlayercount) {
 		ShowLobbyPlayercount = showLobbyPlayercount;
 	}
 
-	public static synchronized boolean isShowLobbyTeam() {
+	public static  boolean isShowLobbyTeam() {
 		return ShowLobbyTeam;
 	}
 
-	public static synchronized void setShowLobbyTeam(boolean showLobbyTeam) {
+	public static  void setShowLobbyTeam(boolean showLobbyTeam) {
 		ShowLobbyTeam = showLobbyTeam;
 	}
 
-	public static synchronized boolean isShowLobbyKit() {
+	public static  boolean isShowLobbyKit() {
 		return ShowLobbyKit;
 	}
 
-	public static synchronized void setShowLobbyKit(boolean showLobbyKit) {
+	public static  void setShowLobbyKit(boolean showLobbyKit) {
 		ShowLobbyKit = showLobbyKit;
 	}
 
-	public static synchronized boolean isShowLobbyBar() {
+	public static  boolean isShowLobbyBar() {
 		return ShowLobbyBar;
 	}
 
-	public static synchronized void setShowLobbyBar(boolean showLobbyBar) {
+	public static  void setShowLobbyBar(boolean showLobbyBar) {
 		ShowLobbyBar = showLobbyBar;
 	}
 
-	public static synchronized String getLobbyTitle() {
+	public static  String getLobbyTitle() {
 		return lobbyTitle;
 	}
 
-	public static synchronized void setLobbyTitle(String lobbyTitle) {
+	public static  void setLobbyTitle(String lobbyTitle) {
 		AScoreboard.lobbyTitle = lobbyTitle;
 	}
 
-	public static synchronized String getLobbyKills() {
+	public static  String getLobbyKills() {
 		return lobbyKills;
 	}
 
-	public static synchronized void setLobbyKills(String lobbyKills) {
+	public static  void setLobbyKills(String lobbyKills) {
 		AScoreboard.lobbyKills = lobbyKills;
 	}
 
-	public static synchronized String getLobbyDeaths() {
+	public static  String getLobbyDeaths() {
 		return lobbyDeaths;
 	}
 
-	public static synchronized void setLobbyDeaths(String lobbyDeaths) {
+	public static  void setLobbyDeaths(String lobbyDeaths) {
 		AScoreboard.lobbyDeaths = lobbyDeaths;
 	}
 
-	public static synchronized String getLobbyCoins() {
+	public static  String getLobbyCoins() {
 		return lobbyCoins;
 	}
 
-	public static synchronized void setLobbyCoins(String lobbyCoins) {
+	public static  void setLobbyCoins(String lobbyCoins) {
 		AScoreboard.lobbyCoins = lobbyCoins;
 	}
 
-	public static synchronized String getLobbyPlayercount() {
+	public static  String getLobbyPlayercount() {
 		return lobbyPlayercount;
 	}
 
-	public static synchronized void setLobbyPlayercount(String lobbyPlayercount) {
+	public static  void setLobbyPlayercount(String lobbyPlayercount) {
 		AScoreboard.lobbyPlayercount = lobbyPlayercount;
 	}
 
-	public static synchronized String getLobbyTeam() {
+	public static  String getLobbyTeam() {
 		return lobbyTeam;
 	}
 
-	public static synchronized void setLobbyTeam(String lobbyTeam) {
+	public static  void setLobbyTeam(String lobbyTeam) {
 		AScoreboard.lobbyTeam = lobbyTeam;
 	}
 
-	public static synchronized String getLobbyKit() {
+	public static  String getLobbyKit() {
 		return lobbyKit;
 	}
 
-	public static synchronized void setLobbyKit(String lobbyKit) {
+	public static  void setLobbyKit(String lobbyKit) {
 		AScoreboard.lobbyKit = lobbyKit;
 	}
 
-	public static synchronized String getLobbyBar() {
+	public static  String getLobbyBar() {
 		return lobbyBar;
 	}
 
-	public static synchronized void setLobbyBar(String lobbyBar) {
+	public static  void setLobbyBar(String lobbyBar) {
 		AScoreboard.lobbyBar = lobbyBar;
 	}
 
-	public static synchronized boolean isShowInGameScoreboard() {
+	public static  boolean isShowInGameScoreboard() {
 		return ShowInGameScoreboard;
 	}
 
-	public static synchronized void setShowInGameScoreboard(boolean showInGameScoreboard) {
+	public static  void setShowInGameScoreboard(boolean showInGameScoreboard) {
 		ShowInGameScoreboard = showInGameScoreboard;
 	}
 
-	public static synchronized boolean isShowInGamePlayersLiving() {
+	public static  boolean isShowInGamePlayersLiving() {
 		return ShowInGamePlayersLiving;
 	}
 
-	public static synchronized void setShowInGamePlayersLiving(boolean showInGamePlayersLiving) {
+	public static  void setShowInGamePlayersLiving(boolean showInGamePlayersLiving) {
 		ShowInGamePlayersLiving = showInGamePlayersLiving;
 	}
 
-	public static synchronized boolean isShowInGameSpectators() {
+	public static  boolean isShowInGameSpectators() {
 		return ShowInGameSpectators;
 	}
 
-	public static synchronized void setShowInGameSpectators(boolean showInGameSpectators) {
+	public static  void setShowInGameSpectators(boolean showInGameSpectators) {
 		ShowInGameSpectators = showInGameSpectators;
 	}
 
-	public static synchronized boolean isShowInGameKit() {
+	public static  boolean isShowInGameKit() {
 		return ShowInGameKit;
 	}
 
-	public static synchronized void setShowInGameKit(boolean showInGameKit) {
+	public static  void setShowInGameKit(boolean showInGameKit) {
 		ShowInGameKit = showInGameKit;
 	}
 
-	public static synchronized boolean isShowInGameCenter() {
+	public static  boolean isShowInGameCenter() {
 		return ShowInGameCenter;
 	}
 
-	public static synchronized void setShowInGameCenter(boolean showInGameCenter) {
+	public static  void setShowInGameCenter(boolean showInGameCenter) {
 		ShowInGameCenter = showInGameCenter;
 	}
 
-	public static synchronized boolean isShowInGameTeam() {
+	public static  boolean isShowInGameTeam() {
 		return ShowInGameTeam;
 	}
 
-	public static synchronized void setShowInGameTeam(boolean showInGameTeam) {
+	public static  void setShowInGameTeam(boolean showInGameTeam) {
 		ShowInGameTeam = showInGameTeam;
 	}
 
-	public static synchronized boolean isShowInGameBorder() {
+	public static  boolean isShowInGameBorder() {
 		return ShowInGameBorder;
 	}
 
-	public static synchronized void setShowInGameBorder(boolean showInGameBorder) {
+	public static  void setShowInGameBorder(boolean showInGameBorder) {
 		ShowInGameBorder = showInGameBorder;
 	}
 
-	public static synchronized boolean isShowInGamePvP() {
+	public static  boolean isShowInGamePvP() {
 		return ShowInGamePvP;
 	}
 
-	public static synchronized void setShowInGamePvP(boolean showInGamePvP) {
+	public static  void setShowInGamePvP(boolean showInGamePvP) {
 		ShowInGamePvP = showInGamePvP;
 	}
 
-	public static synchronized boolean isShowInGameBar() {
+	public static  boolean isShowInGameBar() {
 		return ShowInGameBar;
 	}
 
-	public static synchronized void setShowInGameBar(boolean showInGameBar) {
+	public static  void setShowInGameBar(boolean showInGameBar) {
 		ShowInGameBar = showInGameBar;
 	}
 
-	public static synchronized String getIngameTitle() {
+	public static  String getIngameTitle() {
 		return ingameTitle;
 	}
 
-	public static synchronized void setIngameTitle(String ingameTitle) {
+	public static  void setIngameTitle(String ingameTitle) {
 		AScoreboard.ingameTitle = ingameTitle;
 	}
 
-	public static synchronized String getIngamePlayersLiving() {
+	public static  String getIngamePlayersLiving() {
 		return ingamePlayersLiving;
 	}
 
-	public static synchronized void setIngamePlayersLiving(String ingamePlayersLiving) {
+	public static  void setIngamePlayersLiving(String ingamePlayersLiving) {
 		AScoreboard.ingamePlayersLiving = ingamePlayersLiving;
 	}
 
-	public static synchronized String getIngameSpectators() {
+	public static  String getIngameSpectators() {
 		return ingameSpectators;
 	}
 
-	public static synchronized void setIngameSpectators(String ingameSpectators) {
+	public static  void setIngameSpectators(String ingameSpectators) {
 		AScoreboard.ingameSpectators = ingameSpectators;
 	}
 
-	public static synchronized String getIngameKit() {
+	public static  String getIngameKit() {
 		return ingameKit;
 	}
 
-	public static synchronized void setIngameKit(String ingameKit) {
+	public static  void setIngameKit(String ingameKit) {
 		AScoreboard.ingameKit = ingameKit;
 	}
 
-	public static synchronized String getIngameCenter() {
+	public static  String getIngameCenter() {
 		return ingameCenter;
 	}
 
-	public static synchronized void setIngameCenter(String ingameCenter) {
+	public static  void setIngameCenter(String ingameCenter) {
 		AScoreboard.ingameCenter = ingameCenter;
 	}
 
-	public static synchronized String getIngameTeam() {
+	public static  String getIngameTeam() {
 		return ingameTeam;
 	}
 
-	public static synchronized void setIngameTeam(String ingameTeam) {
+	public static  void setIngameTeam(String ingameTeam) {
 		AScoreboard.ingameTeam = ingameTeam;
 	}
 
-	public static synchronized String getIngameBorder() {
+	public static  String getIngameBorder() {
 		return ingameBorder;
 	}
 
-	public static synchronized void setIngameBorder(String ingameBorder) {
+	public static  void setIngameBorder(String ingameBorder) {
 		AScoreboard.ingameBorder = ingameBorder;
 	}
 
-	public static synchronized String getIngamePvP() {
+	public static  String getIngamePvP() {
 		return ingamePvP;
 	}
 
-	public static synchronized void setIngamePvP(String ingamePvP) {
+	public static  void setIngamePvP(String ingamePvP) {
 		AScoreboard.ingamePvP = ingamePvP;
 	}
 
-	public static synchronized String getIngameBar() {
+	public static  String getIngameBar() {
 		return ingameBar;
 	}
 
-	public static synchronized void setIngameBar(String ingameBar) {
+	public static  void setIngameBar(String ingameBar) {
 		AScoreboard.ingameBar = ingameBar;
 	}
 
-	public static synchronized boolean isShowHealthUName() {
+	public static  boolean isShowHealthUName() {
 		return ShowHealthUName;
 	}
 
-	public static synchronized void setShowHealthUName(boolean showHealthUName) {
+	public static  void setShowHealthUName(boolean showHealthUName) {
 		ShowHealthUName = showHealthUName;
 	}
 
-	public static synchronized boolean isShowHealthInTab() {
+	public static  boolean isShowHealthInTab() {
 		return ShowHealthInTab;
 	}
 
-	public static synchronized void setShowHealthInTab(boolean showHealthInTab) {
+	public static  void setShowHealthInTab(boolean showHealthInTab) {
 		ShowHealthInTab = showHealthInTab;
 	}
 
-	public static synchronized String getDmgin() {
+	public static  String getDmgin() {
 		return dmgin;
 	}
 
-	public static synchronized void setDmgin(String dmgin) {
+	public static  void setDmgin(String dmgin) {
 		AScoreboard.dmgin = dmgin;
 	}
 
-	public static synchronized String getPvpin() {
+	public static  String getPvpin() {
 		return pvpin;
 	}
 
-	public static synchronized void setPvpin(String pvpin) {
+	public static  void setPvpin(String pvpin) {
 		AScoreboard.pvpin = pvpin;
 	}
 
-	public static synchronized HashMap<Player, String> getA() {
+	public static  HashMap<Player, String> getA() {
 		return A;
 	}
 
-	public static synchronized void setA(HashMap<Player, String> a) {
+	public static  void setA(HashMap<Player, String> a) {
 		A = a;
 	}
 
-	public static synchronized HashMap<Player, String> getB() {
+	public static  HashMap<Player, String> getB() {
 		return B;
 	}
 
-	public static synchronized void setB(HashMap<Player, String> b) {
+	public static  void setB(HashMap<Player, String> b) {
 		B = b;
 	}
 
-	public static synchronized int getAa() {
+	public static  int getAa() {
 		return aa;
 	}
 
-	public static synchronized void setAa(int aa) {
+	public static  void setAa(int aa) {
 		AScoreboard.aa = aa;
 	}
 
-	public static synchronized int getBb() {
+	public static  int getBb() {
 		return bb;
 	}
 
-	public static synchronized void setBb(int bb) {
+	public static  void setBb(int bb) {
 		AScoreboard.bb = bb;
 	}
 
-	public static synchronized Scoreboard getSb() {
+	public static  Scoreboard getSb() {
 		return sb;
 	}
 
-	public static synchronized void setSb(Scoreboard sb) {
+	public static  void setSb(Scoreboard sb) {
 		AScoreboard.sb = sb;
 	}
 
-	public static synchronized Objective getObj() {
+	public static  Objective getObj() {
 		return obj;
 	}
 
-	public static synchronized void setObj(Objective obj) {
+	public static  void setObj(Objective obj) {
 		AScoreboard.obj = obj;
 	}
 
-	public static synchronized HashMap<Player, String> getlA() {
+	public static  HashMap<Player, String> getlA() {
 		return lA;
 	}
 
-	public static synchronized void setlA(HashMap<Player, String> lA) {
+	public static  void setlA(HashMap<Player, String> lA) {
 		AScoreboard.lA = lA;
 	}
 
-	public static synchronized HashMap<Player, String> getlB() {
+	public static  HashMap<Player, String> getlB() {
 		return lB;
 	}
 
-	public static synchronized void setlB(HashMap<Player, String> lB) {
+	public static  void setlB(HashMap<Player, String> lB) {
 		AScoreboard.lB = lB;
 	}
 
-	public static synchronized HashMap<Player, String> getlC() {
+	public static  HashMap<Player, String> getlC() {
 		return lC;
 	}
 
-	public static synchronized void setlC(HashMap<Player, String> lC) {
+	public static  void setlC(HashMap<Player, String> lC) {
 		AScoreboard.lC = lC;
 	}
 
-	public static synchronized HashMap<Player, String> getlD() {
+	public static  HashMap<Player, String> getlD() {
 		return lD;
 	}
 
-	public static synchronized void setlD(HashMap<Player, String> lD) {
+	public static  void setlD(HashMap<Player, String> lD) {
 		AScoreboard.lD = lD;
 	}
 
-	public static synchronized HashMap<Player, String> getlE() {
+	public static  HashMap<Player, String> getlE() {
 		return lE;
 	}
 
-	public static synchronized void setlE(HashMap<Player, String> lE) {
+	public static  void setlE(HashMap<Player, String> lE) {
 		AScoreboard.lE = lE;
 	}
 
-	public static synchronized HashMap<Player, String> getlF() {
+	public static  HashMap<Player, String> getlF() {
 		return lF;
 	}
 
-	public static synchronized void setlF(HashMap<Player, String> lF) {
+	public static  void setlF(HashMap<Player, String> lF) {
 		AScoreboard.lF = lF;
 	}
 
-	public static synchronized HashMap<Player, String> getlG() {
+	public static  HashMap<Player, String> getlG() {
 		return lG;
 	}
 
-	public static synchronized void setlG(HashMap<Player, String> lG) {
+	public static  void setlG(HashMap<Player, String> lG) {
 		AScoreboard.lG = lG;
 	}
 
-	public static synchronized int getLa() {
+	public static  int getLa() {
 		return la;
 	}
 
-	public static synchronized void setLa(int la) {
+	public static  void setLa(int la) {
 		AScoreboard.la = la;
 	}
 
-	public static synchronized int getLb() {
+	public static  int getLb() {
 		return lb;
 	}
 
-	public static synchronized void setLb(int lb) {
+	public static  void setLb(int lb) {
 		AScoreboard.lb = lb;
 	}
 
-	public static synchronized int getLc() {
+	public static  int getLc() {
 		return lc;
 	}
 
-	public static synchronized void setLc(int lc) {
+	public static  void setLc(int lc) {
 		AScoreboard.lc = lc;
 	}
 
-	public static synchronized int getLd() {
+	public static  int getLd() {
 		return ld;
 	}
 
-	public static synchronized void setLd(int ld) {
+	public static  void setLd(int ld) {
 		AScoreboard.ld = ld;
 	}
 
-	public static synchronized int getLe() {
+	public static  int getLe() {
 		return le;
 	}
 
-	public static synchronized void setLe(int le) {
+	public static  void setLe(int le) {
 		AScoreboard.le = le;
 	}
 
-	public static synchronized int getLf() {
+	public static  int getLf() {
 		return lf;
 	}
 
-	public static synchronized void setLf(int lf) {
+	public static  void setLf(int lf) {
 		AScoreboard.lf = lf;
 	}
 
-	public static synchronized int getLg() {
+	public static  int getLg() {
 		return lg;
 	}
 
-	public static synchronized void setLg(int lg) {
+	public static  void setLg(int lg) {
 		AScoreboard.lg = lg;
 	}
 
-	public static synchronized String getIngamePvPmsg() {
+	public static  String getIngamePvPmsg() {
 		return ingamePvPmsg;
 	}
 
-	public static synchronized void setIngamePvPmsg(String ingamePvPmsg) {
+	public static  void setIngamePvPmsg(String ingamePvPmsg) {
 		AScoreboard.ingamePvPmsg = ingamePvPmsg;
 	}
 

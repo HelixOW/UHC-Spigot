@@ -36,43 +36,43 @@ public class UHCCommand implements CommandExecutor {
 	private static String lobbyset;
 	private static boolean teamMode;
 	
-	public static synchronized String getNoplayer() {
+	public static  String getNoplayer() {
 		return noplayer;
 	}
 
-	public static synchronized String getNoperms() {
+	public static  String getNoperms() {
 		return noperms;
 	}
 
-	public static synchronized String getSpawnset() {
+	public static  String getSpawnset() {
 		return spawnset;
 	}
 
-	public static synchronized String getLobbyset() {
+	public static  String getLobbyset() {
 		return lobbyset;
 	}
 
-	public static synchronized boolean isTeamMode() {
+	public static  boolean isTeamMode() {
 		return teamMode;
 	}
 
-	public static synchronized void setNoplayer(String noplayer) {
+	public static  void setNoplayer(String noplayer) {
 		UHCCommand.noplayer = noplayer;
 	}
 
-	public static synchronized void setNoperms(String noperms) {
+	public static  void setNoperms(String noperms) {
 		UHCCommand.noperms = noperms;
 	}
 
-	public static synchronized void setSpawnset(String spawnset) {
+	public static  void setSpawnset(String spawnset) {
 		UHCCommand.spawnset = spawnset;
 	}
 
-	public static synchronized void setLobbyset(String lobbyset) {
+	public static  void setLobbyset(String lobbyset) {
 		UHCCommand.lobbyset = lobbyset;
 	}
 
-	public static synchronized void setTeamMode(boolean teamMode) {
+	public static  void setTeamMode(boolean teamMode) {
 		UHCCommand.teamMode = teamMode;
 	}
 

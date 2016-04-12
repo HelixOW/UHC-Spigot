@@ -21,35 +21,35 @@ public class AWorld {
 	private static boolean lobbyAsSchematic;
 	private static boolean wr;
 	
-	public static synchronized boolean isLobbyAsSchematic() {
+	public static  boolean isLobbyAsSchematic() {
 		return lobbyAsSchematic;
 	}
 
-	public static synchronized void setLobbyAsSchematic(boolean lobbyAsSchematic) {
+	public static  void setLobbyAsSchematic(boolean lobbyAsSchematic) {
 		AWorld.lobbyAsSchematic = lobbyAsSchematic;
 	}
 
-	public static synchronized boolean isWr() {
+	public static  boolean isWr() {
 		return wr;
 	}
 
-	public static synchronized void setWr(boolean wr) {
+	public static  void setWr(boolean wr) {
 		AWorld.wr = wr;
 	}
 
-	public static synchronized String getWorldName() {
+	public static  String getWorldName() {
 		return worldName;
 	}
 
-	public static synchronized void setWorldName(String worldName) {
+	public static  void setWorldName(String worldName) {
 		AWorld.worldName = worldName;
 	}
 
-	public static synchronized World getArena() {
+	public static  World getArena() {
 		return arena;
 	}
 
-	public static synchronized void setArena(World arena) {
+	public static  void setArena(World arena) {
 		AWorld.arena = arena;
 	}
 

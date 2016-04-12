@@ -30,43 +30,43 @@ public class InGameListener implements Listener {
 	
 	private ArrayList<Player> ig = new ArrayList<Player>();
 	
-	public static synchronized String getNtrack() {
+	public static  String getNtrack() {
 		return ntrack;
 	}
 
-	public static synchronized void setNtrack(String ntrack) {
+	public static  void setNtrack(String ntrack) {
 		InGameListener.ntrack = ntrack;
 	}
 
-	public static synchronized String getTrack() {
+	public static  String getTrack() {
 		return track;
 	}
 
-	public static synchronized void setTrack(String track) {
+	public static  void setTrack(String track) {
 		InGameListener.track = track;
 	}
 
-	public static synchronized String getTrackteam() {
+	public static  String getTrackteam() {
 		return trackteam;
 	}
 
-	public static synchronized void setTrackteam(String trackteam) {
+	public static  void setTrackteam(String trackteam) {
 		InGameListener.trackteam = trackteam;
 	}
 
-	public static synchronized int getSize() {
+	public static  int getSize() {
 		return size;
 	}
 
-	public static synchronized void setSize(int size) {
+	public static  void setSize(int size) {
 		InGameListener.size = size;
 	}
 
-	public synchronized ArrayList<Player> getIg() {
+	public  ArrayList<Player> getIg() {
 		return ig;
 	}
 
-	public synchronized void setIg(ArrayList<Player> ig) {
+	public  void setIg(ArrayList<Player> ig) {
 		this.ig = ig;
 	}
 

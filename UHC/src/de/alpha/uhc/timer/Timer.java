@@ -33,127 +33,127 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class Timer {
 	
-	public static synchronized String getCountmsg() {
+	public static  String getCountmsg() {
 		return countmsg;
 	}
 
-	public static synchronized String getNep() {
+	public static  String getNep() {
 		return nep;
 	}
 
-	public static synchronized String getGracemsg() {
+	public static  String getGracemsg() {
 		return gracemsg;
 	}
 
-	public static synchronized String getEnd() {
+	public static  String getEnd() {
 		return end;
 	}
 
-	public static synchronized String getEndmsg() {
+	public static  String getEndmsg() {
 		return endmsg;
 	}
 
-	public static synchronized String getDmmsg() {
+	public static  String getDmmsg() {
 		return dmmsg;
 	}
 
-	public static synchronized String getPvpmsg() {
+	public static  String getPvpmsg() {
 		return pvpmsg;
 	}
 
-	public static synchronized String getPvpstart() {
+	public static  String getPvpstart() {
 		return pvpstart;
 	}
 
-	public static synchronized boolean isComMode() {
+	public static  boolean isComMode() {
 		return comMode;
 	}
 
-	public static synchronized Material getComItem() {
+	public static  Material getComItem() {
 		return comItem;
 	}
 
-	public static synchronized String getComName() {
+	public static  String getComName() {
 		return comName;
 	}
 
-	public static synchronized boolean isDm() {
+	public static  boolean isDm() {
 		return dm;
 	}
 
-	public static synchronized int getPc() {
+	public static  int getPc() {
 		return pc;
 	}
 
-	public static synchronized int getHigh() {
+	public static  int getHigh() {
 		return high;
 	}
 
-	public static synchronized int getGracetime() {
+	public static  int getGracetime() {
 		return gracetime;
 	}
 
-	public static synchronized int getMax() {
+	public static  int getMax() {
 		return max;
 	}
 
-	public static synchronized int getuDM() {
+	public static  int getuDM() {
 		return uDM;
 	}
 
-	public static synchronized int getTbpvp() {
+	public static  int getTbpvp() {
 		return tbpvp;
 	}
 
-	public static synchronized int getPrePvP() {
+	public static  int getPrePvP() {
 		return prePvP;
 	}
 
-	public static synchronized int getEndTime() {
+	public static  int getEndTime() {
 		return endTime;
 	}
 
-	public static synchronized BukkitTask getA() {
+	public static  BukkitTask getA() {
 		return a;
 	}
 
-	public static synchronized BukkitTask getB() {
+	public static  BukkitTask getB() {
 		return b;
 	}
 
-	public static synchronized BukkitTask getC() {
+	public static  BukkitTask getC() {
 		return c;
 	}
 
-	public static synchronized BukkitTask getD() {
+	public static  BukkitTask getD() {
 		return d;
 	}
 
-	public static synchronized BukkitTask getE() {
+	public static  BukkitTask getE() {
 		return e;
 	}
 
-	public static synchronized BukkitTask getDd() {
+	public static  BukkitTask getDd() {
 		return dd;
 	}
 
-	public static synchronized BukkitTask getEe() {
+	public static  BukkitTask getEe() {
 		return ee;
 	}
 
-	public static synchronized BukkitTask getF() {
+	public static  BukkitTask getF() {
 		return f;
 	}
 
-	public static synchronized boolean isBungeeMode() {
+	public static  boolean isBungeeMode() {
 		return BungeeMode;
 	}
 
-	public static synchronized String getBungeeServer() {
+	public static  String getBungeeServer() {
 		return BungeeServer;
 	}
 
-	public static synchronized String getKick() {
+	public static  String getKick() {
 		return kick;
 	}
 
@@ -200,127 +200,127 @@ public class Timer {
 	
 	
 	
-	public static synchronized void setCountmsg(String countmsg) {
+	public static  void setCountmsg(String countmsg) {
 		Timer.countmsg = countmsg;
 	}
 
-	public static synchronized void setNep(String nep) {
+	public static  void setNep(String nep) {
 		Timer.nep = nep;
 	}
 
-	public static synchronized void setGracemsg(String gracemsg) {
+	public static  void setGracemsg(String gracemsg) {
 		Timer.gracemsg = gracemsg;
 	}
 
-	public static synchronized void setEnd(String end) {
+	public static  void setEnd(String end) {
 		Timer.end = end;
 	}
 
-	public static synchronized void setEndmsg(String endmsg) {
+	public static  void setEndmsg(String endmsg) {
 		Timer.endmsg = endmsg;
 	}
 
-	public static synchronized void setDmmsg(String dmmsg) {
+	public static  void setDmmsg(String dmmsg) {
 		Timer.dmmsg = dmmsg;
 	}
 
-	public static synchronized void setPvpmsg(String pvpmsg) {
+	public static  void setPvpmsg(String pvpmsg) {
 		Timer.pvpmsg = pvpmsg;
 	}
 
-	public static synchronized void setPvpstart(String pvpstart) {
+	public static  void setPvpstart(String pvpstart) {
 		Timer.pvpstart = pvpstart;
 	}
 
-	public static synchronized void setComMode(boolean comMode) {
+	public static  void setComMode(boolean comMode) {
 		Timer.comMode = comMode;
 	}
 
-	public static synchronized void setComItem(Material comItem) {
+	public static  void setComItem(Material comItem) {
 		Timer.comItem = comItem;
 	}
 
-	public static synchronized void setComName(String comName) {
+	public static  void setComName(String comName) {
 		Timer.comName = comName;
 	}
 
-	public static synchronized void setDm(boolean dm) {
+	public static  void setDm(boolean dm) {
 		Timer.dm = dm;
 	}
 
-	public static synchronized void setPc(int pc) {
+	public static  void setPc(int pc) {
 		Timer.pc = pc;
 	}
 
-	public static synchronized void setHigh(int high) {
+	public static  void setHigh(int high) {
 		Timer.high = high;
 	}
 
-	public static synchronized void setGracetime(int gracetime) {
+	public static  void setGracetime(int gracetime) {
 		Timer.gracetime = gracetime;
 	}
 
-	public static synchronized void setMax(int max) {
+	public static  void setMax(int max) {
 		Timer.max = max;
 	}
 
-	public static synchronized void setuDM(int uDM) {
+	public static  void setuDM(int uDM) {
 		Timer.uDM = uDM;
 	}
 
-	public static synchronized void setTbpvp(int tbpvp) {
+	public static  void setTbpvp(int tbpvp) {
 		Timer.tbpvp = tbpvp;
 	}
 
-	public static synchronized void setPrePvP(int prePvP) {
+	public static  void setPrePvP(int prePvP) {
 		Timer.prePvP = prePvP;
 	}
 
-	public static synchronized void setEndTime(int endTime) {
+	public static  void setEndTime(int endTime) {
 		Timer.endTime = endTime;
 	}
 
-	public static synchronized void setA(BukkitTask a) {
+	public static  void setA(BukkitTask a) {
 		Timer.a = a;
 	}
 
-	public static synchronized void setB(BukkitTask b) {
+	public static  void setB(BukkitTask b) {
 		Timer.b = b;
 	}
 
-	public static synchronized void setC(BukkitTask c) {
+	public static  void setC(BukkitTask c) {
 		Timer.c = c;
 	}
 
-	public static synchronized void setD(BukkitTask d) {
+	public static  void setD(BukkitTask d) {
 		Timer.d = d;
 	}
 
-	public static synchronized void setE(BukkitTask e) {
+	public static  void setE(BukkitTask e) {
 		Timer.e = e;
 	}
 
-	public static synchronized void setDd(BukkitTask dd) {
+	public static  void setDd(BukkitTask dd) {
 		Timer.dd = dd;
 	}
 
-	public static synchronized void setEe(BukkitTask ee) {
+	public static  void setEe(BukkitTask ee) {
 		Timer.ee = ee;
 	}
 
-	public static synchronized void setF(BukkitTask f) {
+	public static  void setF(BukkitTask f) {
 		Timer.f = f;
 	}
 
-	public static synchronized void setBungeeMode(boolean bungeeMode) {
+	public static  void setBungeeMode(boolean bungeeMode) {
 		BungeeMode = bungeeMode;
 	}
 
-	public static synchronized void setBungeeServer(String bungeeServer) {
+	public static  void setBungeeServer(String bungeeServer) {
 		BungeeServer = bungeeServer;
 	}
 
-	public static synchronized void setKick(String kick) {
+	public static  void setKick(String kick) {
 		Timer.kick = kick;
 	}
 

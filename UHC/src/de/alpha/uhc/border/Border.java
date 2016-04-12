@@ -18,23 +18,23 @@ public class Border {
 	private static double dmg;
 	private static Location arena;
 	
-	public static synchronized double getDmg() {
+	public static  double getDmg() {
 		return dmg;
 	}
 
-	public static synchronized void setDmg(double dmg) {
+	public static  void setDmg(double dmg) {
 		Border.dmg = dmg;
 	}
 
-	public static synchronized Location getArena() {
+	public static  Location getArena() {
 		return arena;
 	}
 
-	public static synchronized void setArena(Location arena) {
+	public static  void setArena(Location arena) {
 		Border.arena = arena;
 	}
 
-	public static synchronized int getSize() {
+	public static  int getSize() {
 		return size;
 	}
 

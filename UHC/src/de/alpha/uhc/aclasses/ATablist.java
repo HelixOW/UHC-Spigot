@@ -15,11 +15,11 @@ public class ATablist {
 	
 	
 	
-	public static synchronized void setHeader(String header) {
+	public static  void setHeader(String header) {
 		ATablist.header = header;
 	}
 
-	public static synchronized void setFooter(String footer) {
+	public static  void setFooter(String footer) {
 		ATablist.footer = footer;
 	}
 

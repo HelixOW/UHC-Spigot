@@ -60,139 +60,139 @@ public class PlayerJoinListener implements Listener {
 	private int apc;
 	private static int mpc;
 
-	public static synchronized String getJoin() {
+	public static  String getJoin() {
 		return join;
 	}
 
-	public static synchronized void setJoin(String join) {
+	public static  void setJoin(String join) {
 		PlayerJoinListener.join = join;
 	}
 
-	public static synchronized String getFull() {
+	public static  String getFull() {
 		return full;
 	}
 
-	public static synchronized void setFull(String full) {
+	public static  void setFull(String full) {
 		PlayerJoinListener.full = full;
 	}
 
-	public static synchronized String getTitle() {
+	public static  String getTitle() {
 		return title;
 	}
 
-	public static synchronized void setTitle(String title) {
+	public static  void setTitle(String title) {
 		PlayerJoinListener.title = title;
 	}
 
-	public static synchronized String getSubtitle() {
+	public static  String getSubtitle() {
 		return subtitle;
 	}
 
-	public static synchronized void setSubtitle(String subtitle) {
+	public static  void setSubtitle(String subtitle) {
 		PlayerJoinListener.subtitle = subtitle;
 	}
 
-	public static synchronized Material getTeamItem() {
+	public static  Material getTeamItem() {
 		return teamItem;
 	}
 
-	public static synchronized void setTeamItem(Material teamItem) {
+	public static  void setTeamItem(Material teamItem) {
 		PlayerJoinListener.teamItem = teamItem;
 	}
 
-	public static synchronized String getTeamName() {
+	public static  String getTeamName() {
 		return teamName;
 	}
 
-	public static synchronized void setTeamName(String teamName) {
+	public static  void setTeamName(String teamName) {
 		PlayerJoinListener.teamName = teamName;
 	}
 
-	public static synchronized Material getKitItem() {
+	public static  Material getKitItem() {
 		return kitItem;
 	}
 
-	public static synchronized void setKitItem(Material kitItem) {
+	public static  void setKitItem(Material kitItem) {
 		PlayerJoinListener.kitItem = kitItem;
 	}
 
-	public static synchronized String getKitName() {
+	public static  String getKitName() {
 		return kitName;
 	}
 
-	public static synchronized void setKitName(String kitName) {
+	public static  void setKitName(String kitName) {
 		PlayerJoinListener.kitName = kitName;
 	}
 
-	public static synchronized boolean isKitMode() {
+	public static  boolean isKitMode() {
 		return kitMode;
 	}
 
-	public static synchronized void setKitMode(boolean kitMode) {
+	public static  void setKitMode(boolean kitMode) {
 		PlayerJoinListener.kitMode = kitMode;
 	}
 
-	public static synchronized boolean isLeaveMode() {
+	public static  boolean isLeaveMode() {
 		return leaveMode;
 	}
 
-	public static synchronized void setLeaveMode(boolean leaveMode) {
+	public static  void setLeaveMode(boolean leaveMode) {
 		PlayerJoinListener.leaveMode = leaveMode;
 	}
 
-	public static synchronized Material getLeaveItem() {
+	public static  Material getLeaveItem() {
 		return leaveItem;
 	}
 
-	public static synchronized void setLeaveItem(Material leaveItem) {
+	public static  void setLeaveItem(Material leaveItem) {
 		PlayerJoinListener.leaveItem = leaveItem;
 	}
 
-	public static synchronized String getLeaveName() {
+	public static  String getLeaveName() {
 		return leaveName;
 	}
 
-	public static synchronized void setLeaveName(String leaveName) {
+	public static  void setLeaveName(String leaveName) {
 		PlayerJoinListener.leaveName = leaveName;
 	}
 
-	public static synchronized boolean isStartMode() {
+	public static  boolean isStartMode() {
 		return startMode;
 	}
 
-	public static synchronized void setStartMode(boolean startMode) {
+	public static  void setStartMode(boolean startMode) {
 		PlayerJoinListener.startMode = startMode;
 	}
 
-	public static synchronized Material getStartItem() {
+	public static  Material getStartItem() {
 		return startItem;
 	}
 
-	public static synchronized void setStartItem(Material startItem) {
+	public static  void setStartItem(Material startItem) {
 		PlayerJoinListener.startItem = startItem;
 	}
 
-	public static synchronized String getStartName() {
+	public static  String getStartName() {
 		return startName;
 	}
 
-	public static synchronized void setStartName(String startName) {
+	public static  void setStartName(String startName) {
 		PlayerJoinListener.startName = startName;
 	}
 
-	public synchronized int getApc() {
+	public  int getApc() {
 		return apc;
 	}
 
-	public synchronized void setApc(int apc) {
+	public  void setApc(int apc) {
 		this.apc = apc;
 	}
 
-	public static synchronized int getMpc() {
+	public static  int getMpc() {
 		return mpc;
 	}
 
-	public static synchronized void setMpc(int mpc) {
+	public static  void setMpc(int mpc) {
 		PlayerJoinListener.mpc = mpc;
 	}
 

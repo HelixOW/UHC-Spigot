@@ -15,19 +15,19 @@ public class GUI {
 	
 	
 	
-	public static synchronized Inventory getKits() {
+	public static  Inventory getKits() {
 		return kits;
 	}
 
-	public static synchronized void setKits(Inventory kits) {
+	public static  void setKits(Inventory kits) {
 		GUI.kits = kits;
 	}
 
-	public static synchronized String getTitle() {
+	public static  String getTitle() {
 		return title;
 	}
 
-	public static synchronized void setTitle(String title) {
+	public static  void setTitle(String title) {
 		GUI.title = title;
 	}
 
