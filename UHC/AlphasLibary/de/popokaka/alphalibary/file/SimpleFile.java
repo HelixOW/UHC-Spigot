@@ -3,7 +3,6 @@ package de.popokaka.alphalibary.file;
 import java.io.File;
 import java.io.IOException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -64,12 +63,10 @@ public class SimpleFile extends YamlConfiguration {
 			try {
 				source.createNewFile();
 			} catch (IOException e) {
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						Bukkit.reload();
+				new BukkitRunnable() { @Override public void run() {
+						try { source.createNewFile(); } catch (IOException e) { e.printStackTrace(); }
 					}
-				}.runTaskLater(Core.getInstance(), 20);
+				}.runTaskLaterAsynchronously(Core.getInstance(), 20);
 			}
 		}
 		finishSetup();
