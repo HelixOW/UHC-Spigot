@@ -353,7 +353,7 @@ public class Timer {
 										if(high % 10 == 0 && high > 10 && high != 0) {
 											countmsg = countmsg.replace("[time]", Integer.toString(high));
 											all.sendMessage(Core.getPrefix() + countmsg);
-											SimpleTitle.sendTitle(all, " ", countmsg, 10, 20, 10);
+											SimpleTitle.sendTitle(all, " ", countmsg, 1, 2, 1);
 											all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
 											Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 												

@@ -200,7 +200,7 @@ public class PlayerJoinListener implements Listener {
 	public void onJoin(final PlayerJoinEvent e) {
 
 		e.setJoinMessage(null);
-		Player p = e.getPlayer();
+		final Player p = e.getPlayer();
 
 		if (GState.isState(GState.RESTART)) {
 			p.kickPlayer(Core.getPrefix() + GameEndListener.getKick());
@@ -232,7 +232,7 @@ public class PlayerJoinListener implements Listener {
 
 		}
 
-		ATablist.sendStandingLobbyTablist();
+//		ATablist.sendStandingLobbyTablist();
 
 		if (Core.isMySQLActive() == true) {
 			if (MySQLManager.getObjectConditionResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "UUID") == null) {
@@ -327,12 +327,12 @@ public class PlayerJoinListener implements Listener {
 			String aa = title.replace("[Player]", p.getDisplayName());
 			if (subtitle.contains("[Player]")) {
 				String bb = subtitle.replace("[Player]", p.getDisplayName());
-				SimpleTitle.sendTitle(p, aa, bb, 10, 20, 10);
+				SimpleTitle.sendTitle(p, aa, bb, 3, 4, 3);
 			} else {
-				SimpleTitle.sendTitle(p, aa, subtitle, 10, 20, 10);
+				SimpleTitle.sendTitle(p, aa, subtitle, 3, 4, 3);
 			}
 		} else {
-			SimpleTitle.sendTitle(p, title, subtitle, 10, 20, 10);
+			SimpleTitle.sendTitle(p, title, subtitle, 3, 4, 3);
 		}
 
 		for (Player all : Bukkit.getOnlinePlayers()) {
@@ -340,17 +340,9 @@ public class PlayerJoinListener implements Listener {
 		}
 
 		if (Bukkit.getOnlinePlayers().size() == Timer.getPc()) {
-
-			new BukkitRunnable() {
-
-				@Override
-				public void run() {
-
+			new BukkitRunnable() { @Override public void run() {
 					Timer.startCountdown();
-
-				}
-			}.runTaskLater(Core.getInstance(), 20);
-
+				} }.runTaskLater(Core.getInstance(), 20);
 		}
 	}
 
