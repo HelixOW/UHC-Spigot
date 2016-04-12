@@ -10,12 +10,52 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class BorderManager {
 	
-	public static boolean moveable;
-	public static String moved;
+	private static boolean moveable;
+	private static String moved;
 	
-	private int size = Border.size;
-	public static int moving;
-	public static int time;
+	private int size = Border.getSize();
+	private static int moving;
+	private static int time;
+
+	public static synchronized boolean isMoveable() {
+		return moveable;
+	}
+
+	public static synchronized void setMoveable(boolean moveable) {
+		BorderManager.moveable = moveable;
+	}
+
+	public static synchronized String getMoved() {
+		return moved;
+	}
+
+	public static synchronized void setMoved(String moved) {
+		BorderManager.moved = moved;
+	}
+
+	public synchronized int getSize() {
+		return size;
+	}
+
+	public synchronized void setSize(int size) {
+		this.size = size;
+	}
+
+	public static synchronized int getMoving() {
+		return moving;
+	}
+
+	public static synchronized void setMoving(int moving) {
+		BorderManager.moving = moving;
+	}
+
+	public static synchronized int getTime() {
+		return time;
+	}
+
+	public static synchronized void setTime(int time) {
+		BorderManager.time = time;
+	}
 
 	public void set() {
 		
@@ -29,7 +69,7 @@ public class BorderManager {
 			public void run() {
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + moved);
-				size = Border.size - moving;
+				size = Border.getSize() - moving;
 				Border.changesize(size);
 				for(Player all : Bukkit.getOnlinePlayers()) {
 					AScoreboard.updateInGameBorder(all);

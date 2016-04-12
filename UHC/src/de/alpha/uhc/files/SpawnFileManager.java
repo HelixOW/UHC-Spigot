@@ -160,7 +160,7 @@ public class SpawnFileManager {
 	
 	public static Location getRegionLoc(String name) {
 		
-		if(!cfg.isConfigurationSection("Lobbyregion")) {Regions.lobby = false; return null;}
+		if(!cfg.isConfigurationSection("Lobbyregion")) {Regions.setLobby(false); return null;}
 		
 		World w =  Bukkit.getWorld(cfg.getString("Lobbyregion." + name + ".world"));
 		

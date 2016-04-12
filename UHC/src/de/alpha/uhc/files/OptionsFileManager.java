@@ -97,66 +97,66 @@ public class OptionsFileManager {
 	public static void loadOptions() {
 		SimpleFile file = getConfigFile();
 		
-		ATeam.materialName = file.getString("Team.Item");
-		ATeam.title = file.getColorString("Team.GUI.Title");
-		ATeam.blockName = file.getString("Team.GUI.Block");
+		ATeam.setMaterialName(file.getString("Team.Item"));
+		ATeam.setTitle(file.getColorString("Team.GUI.Title"));
+		ATeam.setBlockName(file.getString("Team.GUI.Block"));
 		
-		Spectator.specItem = file.getString("Spectator.Item");
-		Spectator.specName = file.getColorString("Spectator.Itemname");
-		Spectator.title = file.getColorString("Spectator.GUI.Title");
+		Spectator.setSpecItem(file.getString("Spectator.Item"));
+		Spectator.setSpecName(file.getColorString("Spectator.Itemname"));
+		Spectator.setTitle(file.getColorString("Spectator.GUI.Title"));
 		
-		MotdListener.custommotd = file.getBoolean("Status Motd");
+		MotdListener.setCustommotd(file.getBoolean("Status Motd"));
 		
-		AWorld.wr = file.getBoolean("Reset World");
-		AWorld.lobbyAsSchematic = file.getBoolean("Lobby.asSchematic");
+		AWorld.setWr(file.getBoolean("Reset World"));
+		AWorld.setLobbyAsSchematic(file.getBoolean("Lobby.asSchematic"));
 		
-		Timer.prePvP = file.getInt("Countdown.no PvP period in minutes");
-		Timer.tbpvp = file.getInt("Deathmatch.time before pvp in seconds");
-		Timer.dm = file.getBoolean("Deathmatch.enabled");
-		Timer.uDM = file.getInt("Deathmatch.begins after min");
-		Timer.BungeeMode = file.getBoolean("BungeeMode");
-		Timer.BungeeServer = file.getString("BungeeServer");
-		Timer.max = file.getInt("Spawnradius");
-		Timer.pc = file.getInt("Countdown.minimum_Player_Count");
-		Timer.comMode = file.getBoolean("InGame.give Compass");
-		Timer.comName = file.getColorString("InGame.Compassitemname");
-		Timer.comItem = Material.getMaterial(file.getString("InGame.Compassitem").toUpperCase());
+		Timer.setPrePvP(file.getInt("Countdown.no PvP period in minutes"));
+		Timer.setTbpvp(file.getInt("Deathmatch.time before pvp in seconds"));
+		Timer.setDm(file.getBoolean("Deathmatch.enabled"));
+		Timer.setuDM(file.getInt("Deathmatch.begins after min"));
+		Timer.setBungeeMode(file.getBoolean("BungeeMode"));
+		Timer.setBungeeServer(file.getString("BungeeServer"));
+		Timer.setMax(file.getInt("Spawnradius"));
+		Timer.setPc(file.getInt("Countdown.minimum_Player_Count"));
+		Timer.setComMode(file.getBoolean("InGame.give Compass"));
+		Timer.setComName(file.getColorString("InGame.Compassitemname"));
+		Timer.setComItem(Material.getMaterial(file.getString("InGame.Compassitem").toUpperCase()));
 		
-		GameEndListener.BungeeMode = file.getBoolean("BungeeMode");
-		GameEndListener.BungeeServer = file.getString("BungeeServer");
-		GameEndListener.reward = file.getInt("Coins.on Win");
-		GameEndListener.deathreward = file.getInt("Coins.on Death");
+		GameEndListener.setBungeeMode(file.getBoolean("BungeeMode"));
+		GameEndListener.setBungeeServer(file.getString("BungeeServer"));
+		GameEndListener.setReward(file.getInt("Coins.on Win"));
+		GameEndListener.setDeathreward(file.getInt("Coins.on Death"));
 		
-		UHCCommand.teamMode = file.getBoolean("TeamMode");
+		UHCCommand.setTeamMode(file.getBoolean("TeamMode"));
 		
-		Regions.material = file.getString("Lobby.createTool");
-		Regions.lobby = file.getBoolean("Lobby.region");
+		Regions.setMaterial(file.getString("Lobby.createTool"));
+		Regions.setLobby(file.getBoolean("Lobby.region"));
 		
-		Border.size = file.getInt("Border.size");
-		Border.dmg = file.getDouble("Border.damage");
+		Border.setSize(file.getInt("Border.size"));
+		Border.setDmg(file.getDouble("Border.damage"));
 		
-		InGameListener.size = file.getInt("Border.size");
+		InGameListener.setSize(file.getInt("Border.size"));
 		
-		Core.prefix = file.getColorString("Prefix");
-		Core.isMySQLActive = file.getBoolean("MySQL");
+		Core.setPrefix(file.getColorString("Prefix"));
+		Core.setMySQLActive(file.getBoolean("MySQL"));
 		
-		PlayerJoinListener.mpc = file.getInt("Countdown.maximum_Player_Count");
-		PlayerJoinListener.kitItem = Material.getMaterial(file.getString("Kit.item").toUpperCase());
-		PlayerJoinListener.kitName = file.getColorString("Kit.name");
-		PlayerJoinListener.kitMode = file.getBoolean("Kits");
-		PlayerJoinListener.teamName = file.getColorString("Team.Name");
-		PlayerJoinListener.teamItem = Material.getMaterial(file.getString("Team.Item").toUpperCase());
-		PlayerJoinListener.leaveMode = file.getBoolean("Lobby.give leaveitem");
-		PlayerJoinListener.leaveName = file.getColorString("Lobby.Leaveitemname");
-		PlayerJoinListener.leaveItem = Material.getMaterial(file.getString("Lobby.Leaveitem").toUpperCase());
-		PlayerJoinListener.startMode = file.getBoolean("Lobby.give startitem");
-		PlayerJoinListener.startName = file.getColorString("Lobby.Startitemname");
-		PlayerJoinListener.startItem = Material.getMaterial(file.getString("Lobby.Startitem").toUpperCase());
+		PlayerJoinListener.setMpc(file.getInt("Countdown.maximum_Player_Count"));
+		PlayerJoinListener.setKitItem(Material.getMaterial(file.getString("Kit.item").toUpperCase()));
+		PlayerJoinListener.setKitName(file.getColorString("Kit.name"));
+		PlayerJoinListener.setKitMode(file.getBoolean("Kits"));
+		PlayerJoinListener.setTeamName(file.getColorString("Team.Name"));
+		PlayerJoinListener.setTeamItem(Material.getMaterial(file.getString("Team.Item").toUpperCase()));
+		PlayerJoinListener.setLeaveMode(file.getBoolean("Lobby.give leaveitem"));
+		PlayerJoinListener.setLeaveName(file.getColorString("Lobby.Leaveitemname"));
+		PlayerJoinListener.setLeaveItem(Material.getMaterial(file.getString("Lobby.Leaveitem").toUpperCase()));
+		PlayerJoinListener.setStartMode(file.getBoolean("Lobby.give startitem"));
+		PlayerJoinListener.setStartName(file.getColorString("Lobby.Startitemname"));
+		PlayerJoinListener.setStartItem(Material.getMaterial(file.getString("Lobby.Startitem").toUpperCase()));
 		
-		SoupListener.boost = file.getDouble("Soup.healthboost");
+		SoupListener.setBoost(file.getDouble("Soup.healthboost"));
 		
-		BorderManager.moveable = file.getBoolean("Border.getCloser");
-		BorderManager.moving = file.getInt("Border.movingBlocks");
-		BorderManager.time = (file.getInt("Border.moving after min")*20)*60;
+		BorderManager.setMoveable(file.getBoolean("Border.getCloser"));
+		BorderManager.setMoving(file.getInt("Border.movingBlocks"));
+		BorderManager.setTime((file.getInt("Border.moving after min")*20)*60);
 	}
 }

@@ -18,9 +18,41 @@ import de.alpha.uhc.utils.LobbyPasteUtil;
 
 public class AWorld {
 	
-	public static boolean lobbyAsSchematic;
-	public static boolean wr;
+	private static boolean lobbyAsSchematic;
+	private static boolean wr;
 	
+	public static synchronized boolean isLobbyAsSchematic() {
+		return lobbyAsSchematic;
+	}
+
+	public static synchronized void setLobbyAsSchematic(boolean lobbyAsSchematic) {
+		AWorld.lobbyAsSchematic = lobbyAsSchematic;
+	}
+
+	public static synchronized boolean isWr() {
+		return wr;
+	}
+
+	public static synchronized void setWr(boolean wr) {
+		AWorld.wr = wr;
+	}
+
+	public static synchronized String getWorldName() {
+		return worldName;
+	}
+
+	public static synchronized void setWorldName(String worldName) {
+		AWorld.worldName = worldName;
+	}
+
+	public static synchronized World getArena() {
+		return arena;
+	}
+
+	public static synchronized void setArena(World arena) {
+		AWorld.arena = arena;
+	}
+
 	private static String worldName;
 	
 	private static World arena;

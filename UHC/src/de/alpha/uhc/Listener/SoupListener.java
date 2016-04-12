@@ -11,8 +11,16 @@ import de.alpha.uhc.GState;
 
 public class SoupListener implements Listener {
 	
-	public static double boost;
+	private static double boost;
 	
+	public static synchronized double getBoost() {
+		return boost;
+	}
+
+	public static synchronized void setBoost(double a) {
+		boost = a;
+	}
+
 	@EventHandler
 	public void onSoup(PlayerInteractEvent e) {
 		

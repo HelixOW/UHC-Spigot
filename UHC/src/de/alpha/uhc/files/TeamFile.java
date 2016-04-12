@@ -47,14 +47,14 @@ public class TeamFile {
 	public static void loadTeams() {
 		
 		for(String names : file.getConfigurationSection("Teams").getKeys(false)) {
-			if(!(ATeam.teamNames.contains(file.getString("Teams."+names+".name")))) {
-				ATeam.teamNames.add(file.getString("Teams."+names+".name"));
+			if(!(ATeam.getTeamNames().contains(file.getString("Teams."+names+".name")))) {
+				ATeam.getTeamNames().add(file.getString("Teams."+names+".name"));
 			}
-			if(!(ATeam.teamColors.contains(file.getString("Teams."+names+".color")))) {
-				ATeam.teamColors.add(file.getString("Teams."+names+".color"));
+			if(!(ATeam.getTeamColors().contains(file.getString("Teams."+names+".color")))) {
+				ATeam.getTeamColors().add(file.getString("Teams."+names+".color"));
 			}
-			if(!(ATeam.teamMax.containsKey("Teams."+names+".maxSize"))) {
-				ATeam.teamMax.put(file.getString("Teams."+names+".name"), file.getInt("Teams."+names+".maxSize"));
+			if(!(ATeam.getTeamMax().containsKey("Teams."+names+".maxSize"))) {
+				ATeam.getTeamMax().put(file.getString("Teams."+names+".name"), file.getInt("Teams."+names+".maxSize"));
 			}
 		}
 	}

@@ -10,26 +10,152 @@ import de.alpha.uhc.Core;
 
 public class CustomDeathListener implements Listener {
 	
-	public static String blockExplode;
-	public static String contact;
-	public static String drown;
-	public static String pvp;
-	public static String entityExplode;
-	public static String fall;
-	public static String anvil;
-	public static String fire;
-	public static String lava;
-	public static String light;
-	public static String potion;
-	public static String arrow;
-	public static String hunger;
-	public static String burried;
-	public static String kill;
-	public static String thorns;
-	public static String voidd;
-	public static String wither;
+	private static String blockExplode;
+	private static String contact;
+	private static String drown;
+	private static String pvp;
+	private static String entityExplode;
+	private static String fall;
+	private static String anvil;
+	private static String fire;
+	private static String lava;
+	private static String light;
+	private static String potion;
+	private static String arrow;
+	private static String hunger;
+	private static String burried;
+	private static String kill;
+	private static String thorns;
+	private static String voidd;
+	private static String wither;
 	
 	
+	public static void setBlockExplode(String a) {
+		blockExplode = a;
+	}
+
+
+
+
+	public static void setContact(String a) {
+		contact = a;
+	}
+
+
+
+
+	public static void setDrown(String a) {
+		drown = a;
+	}
+
+
+
+
+	public static void setPvp(String a) {
+		pvp = a;
+	}
+
+
+
+
+	public static void setEntityExplode(String a) {
+		entityExplode = a;
+	}
+
+
+
+
+	public static void setFall(String a) {
+		fall = a;
+	}
+
+
+
+
+	public static void setAnvil(String a) {
+		anvil = a;
+	}
+
+
+
+
+	public static void setFire(String a) {
+		fire = a;
+	}
+
+
+
+
+	public static void setLava(String a) {
+		lava = a;
+	}
+
+
+
+
+	public static void setLight(String a) {
+		light = a;
+	}
+
+
+
+
+	public static void setPotion(String a) {
+		potion = a;
+	}
+
+
+
+
+	public static void setArrow(String a) {
+		arrow = a;
+	}
+
+
+
+
+	public static void setHunger(String a) {
+		hunger = a;
+	}
+
+
+
+
+	public static void setBurried(String a) {
+		burried = a;
+	}
+
+
+
+
+	public static void setKill(String a) {
+		kill = a;
+	}
+
+
+
+
+	public static void setThorns(String a) {
+		thorns = a;
+	}
+
+
+
+
+	public static void setVoidd(String a) {
+		voidd = a;
+	}
+
+
+
+
+	public static void setWither(String a) {
+		wither = a;
+	}
+
+
+
+
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
 		

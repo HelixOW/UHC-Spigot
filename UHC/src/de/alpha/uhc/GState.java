@@ -12,13 +12,43 @@ public enum GState {
 	RESTART;
 	
 	private static GState currentState;
-	public static String lobby;
-	public static String grace;
-	public static String pregame;
-	public static String ingame;
-	public static String deathmatch;
-	public static String restart;
+	private static String lobby;
+	private static String grace;
+	private static String pregame;
+	private static String ingame;
+	private static String deathmatch;
+	private static String restart;
 	
+	
+	
+
+	public static synchronized void setCurrentState(GState currentState) {
+		GState.currentState = currentState;
+	}
+
+	public static synchronized void setLobby(String lobby) {
+		GState.lobby = lobby;
+	}
+
+	public static synchronized void setGrace(String grace) {
+		GState.grace = grace;
+	}
+
+	public static synchronized void setPregame(String pregame) {
+		GState.pregame = pregame;
+	}
+
+	public static synchronized void setIngame(String ingame) {
+		GState.ingame = ingame;
+	}
+
+	public static synchronized void setDeathmatch(String deathmatch) {
+		GState.deathmatch = deathmatch;
+	}
+
+	public static synchronized void setRestart(String restart) {
+		GState.restart = restart;
+	}
 
 	public static void setGameState(GState newGState) {
 		currentState = newGState;

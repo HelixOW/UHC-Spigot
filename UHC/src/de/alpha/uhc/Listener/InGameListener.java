@@ -21,15 +21,55 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class InGameListener implements Listener {
 	
-	public static String ntrack;
-	public static String track;
-	public static String trackteam;
+	private static String ntrack;
+	private static String track;
+	private static String trackteam;
 	
-	public static int size;
+	private static int size;
 	
 	
-	public ArrayList<Player> ig = new ArrayList<Player>();
+	private ArrayList<Player> ig = new ArrayList<Player>();
 	
+	public static synchronized String getNtrack() {
+		return ntrack;
+	}
+
+	public static synchronized void setNtrack(String ntrack) {
+		InGameListener.ntrack = ntrack;
+	}
+
+	public static synchronized String getTrack() {
+		return track;
+	}
+
+	public static synchronized void setTrack(String track) {
+		InGameListener.track = track;
+	}
+
+	public static synchronized String getTrackteam() {
+		return trackteam;
+	}
+
+	public static synchronized void setTrackteam(String trackteam) {
+		InGameListener.trackteam = trackteam;
+	}
+
+	public static synchronized int getSize() {
+		return size;
+	}
+
+	public static synchronized void setSize(int size) {
+		InGameListener.size = size;
+	}
+
+	public synchronized ArrayList<Player> getIg() {
+		return ig;
+	}
+
+	public synchronized void setIg(ArrayList<Player> ig) {
+		this.ig = ig;
+	}
+
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		

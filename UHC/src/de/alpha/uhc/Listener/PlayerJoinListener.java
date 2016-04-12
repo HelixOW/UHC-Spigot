@@ -35,30 +35,166 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class PlayerJoinListener implements Listener {
 	
-	public static String join;
-	public static String full;
+	private static String join;
+	private static String full;
 	
-	public static String title;
-	public static String subtitle;
+	private static String title;
+	private static String subtitle;
 	
-	public static Material teamItem;
-	public static String teamName;
+	private static Material teamItem;
+	private static String teamName;
 	
-	public static Material kitItem;
-	public static String kitName;
-	public static boolean kitMode;
+	private static Material kitItem;
+	private static String kitName;
+	private static boolean kitMode;
 	
-	public static boolean leaveMode;
-	public static Material leaveItem;
-	public static String leaveName;
+	private static boolean leaveMode;
+	private static Material leaveItem;
+	private static String leaveName;
 	
-	public static boolean startMode;
-	public static Material startItem;
-	public static String startName;
+	private static boolean startMode;
+	private static Material startItem;
+	private static String startName;
 	
 	private int apc;
-	public static int mpc;
+	private static int mpc;
 	
+	public static synchronized String getJoin() {
+		return join;
+	}
+
+	public static synchronized void setJoin(String join) {
+		PlayerJoinListener.join = join;
+	}
+
+	public static synchronized String getFull() {
+		return full;
+	}
+
+	public static synchronized void setFull(String full) {
+		PlayerJoinListener.full = full;
+	}
+
+	public static synchronized String getTitle() {
+		return title;
+	}
+
+	public static synchronized void setTitle(String title) {
+		PlayerJoinListener.title = title;
+	}
+
+	public static synchronized String getSubtitle() {
+		return subtitle;
+	}
+
+	public static synchronized void setSubtitle(String subtitle) {
+		PlayerJoinListener.subtitle = subtitle;
+	}
+
+	public static synchronized Material getTeamItem() {
+		return teamItem;
+	}
+
+	public static synchronized void setTeamItem(Material teamItem) {
+		PlayerJoinListener.teamItem = teamItem;
+	}
+
+	public static synchronized String getTeamName() {
+		return teamName;
+	}
+
+	public static synchronized void setTeamName(String teamName) {
+		PlayerJoinListener.teamName = teamName;
+	}
+
+	public static synchronized Material getKitItem() {
+		return kitItem;
+	}
+
+	public static synchronized void setKitItem(Material kitItem) {
+		PlayerJoinListener.kitItem = kitItem;
+	}
+
+	public static synchronized String getKitName() {
+		return kitName;
+	}
+
+	public static synchronized void setKitName(String kitName) {
+		PlayerJoinListener.kitName = kitName;
+	}
+
+	public static synchronized boolean isKitMode() {
+		return kitMode;
+	}
+
+	public static synchronized void setKitMode(boolean kitMode) {
+		PlayerJoinListener.kitMode = kitMode;
+	}
+
+	public static synchronized boolean isLeaveMode() {
+		return leaveMode;
+	}
+
+	public static synchronized void setLeaveMode(boolean leaveMode) {
+		PlayerJoinListener.leaveMode = leaveMode;
+	}
+
+	public static synchronized Material getLeaveItem() {
+		return leaveItem;
+	}
+
+	public static synchronized void setLeaveItem(Material leaveItem) {
+		PlayerJoinListener.leaveItem = leaveItem;
+	}
+
+	public static synchronized String getLeaveName() {
+		return leaveName;
+	}
+
+	public static synchronized void setLeaveName(String leaveName) {
+		PlayerJoinListener.leaveName = leaveName;
+	}
+
+	public static synchronized boolean isStartMode() {
+		return startMode;
+	}
+
+	public static synchronized void setStartMode(boolean startMode) {
+		PlayerJoinListener.startMode = startMode;
+	}
+
+	public static synchronized Material getStartItem() {
+		return startItem;
+	}
+
+	public static synchronized void setStartItem(Material startItem) {
+		PlayerJoinListener.startItem = startItem;
+	}
+
+	public static synchronized String getStartName() {
+		return startName;
+	}
+
+	public static synchronized void setStartName(String startName) {
+		PlayerJoinListener.startName = startName;
+	}
+
+	public synchronized int getApc() {
+		return apc;
+	}
+
+	public synchronized void setApc(int apc) {
+		this.apc = apc;
+	}
+
+	public static synchronized int getMpc() {
+		return mpc;
+	}
+
+	public static synchronized void setMpc(int mpc) {
+		PlayerJoinListener.mpc = mpc;
+	}
+
 	@EventHandler
 	public void onJoin(final PlayerJoinEvent e) {
 		
@@ -66,7 +202,7 @@ public class PlayerJoinListener implements Listener {
 		Player p = e.getPlayer();
 		
 		if(GState.isState(GState.RESTART)) {
-			p.kickPlayer(Core.getPrefix() + GameEndListener.kick);
+			p.kickPlayer(Core.getPrefix() + GameEndListener.getKick());
 			return;
 		}
 		
@@ -97,7 +233,7 @@ public class PlayerJoinListener implements Listener {
 		
 		ATablist.sendStandingLobbyTablist();
 		
-		if(Core.isMySQLActive == true) {
+		if(Core.isMySQLActive() == true) {
 			if(MySQLManager.getObjectConditionResult("UHC", "UUID", p.getUniqueId().toString(), "UUID") == null) {
 				MySQLManager.exInsertQry("UHC", p.getName(), p.getUniqueId().toString(), "0", "0", "0", "");
 			} else if(MySQLManager.getObjectConditionResult("UHC", "UUID ", p.getUniqueId().toString(), "UUID") != null) {
@@ -155,14 +291,14 @@ public class PlayerJoinListener implements Listener {
 		
 			}
 		}
-		if(UHCCommand.teamMode == true) {
+		if(UHCCommand.isTeamMode() == true) {
 			if(teamItem == null || teamName == null) {
 				Bukkit.getConsoleSender().sendMessage(Core.getPrefix()+"§cYou don't have any Kits in your kits.yml");
 			} else {
 				p.getInventory().setItem(1, new ItemBuilder(teamItem).setName(teamName).build());
 			}
 		}
-		if(leaveMode == true && GameEndListener.BungeeMode == true) {
+		if(leaveMode == true && GameEndListener.isBungeeMode() == true) {
 			p.getInventory().setItem(8, new ItemBuilder(leaveItem).setName(leaveName).build());
 		}
 		if(startMode == true && p.hasPermission("uhc.start")) {
@@ -201,7 +337,7 @@ public class PlayerJoinListener implements Listener {
 			AScoreboard.setLobbyScoreboard(all);
 		}
 		
-		if(Bukkit.getOnlinePlayers().size() == Timer.pc) {
+		if(Bukkit.getOnlinePlayers().size() == Timer.getPc()) {
 			
 			new BukkitRunnable() {
 				
@@ -221,11 +357,11 @@ public class PlayerJoinListener implements Listener {
 		if(!(GState.isState(GState.LOBBY))) return;
 		if(e.getItem() == null) return;
 		if(e.getItem().getType().equals(leaveItem)) {
-			if(GameEndListener.BungeeMode == true) {
+			if(GameEndListener.isBungeeMode() == true) {
 				ByteArrayDataOutput out = ByteStreams.newDataOutput();
 					
 				out.writeUTF("Connect");
-				out.writeUTF(GameEndListener.BungeeServer);
+				out.writeUTF(GameEndListener.getBungeeServer());
 					
 				e.getPlayer().sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
 			}

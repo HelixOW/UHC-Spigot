@@ -55,10 +55,42 @@ import de.popokaka.alphalibary.mysql.MySQLManager;
 public class Core extends JavaPlugin implements PluginMessageListener{
 	
 	private static Core instance;
-	public static String prefix;
+	private static String prefix;
 	
-	public static boolean isMySQLActive;
+	private static boolean isMySQLActive;
 	
+	public static synchronized boolean isMySQLActive() {
+		return isMySQLActive;
+	}
+
+	public static synchronized void setMySQLActive(boolean isMySQLActive) {
+		Core.isMySQLActive = isMySQLActive;
+	}
+
+	public static synchronized ArrayList<Player> getIg() {
+		return ig;
+	}
+
+	public static synchronized void setIg(ArrayList<Player> ig) {
+		Core.ig = ig;
+	}
+
+	public static synchronized ArrayList<Player> getSpectator() {
+		return spectator;
+	}
+
+	public static synchronized void setSpectator(ArrayList<Player> spectator) {
+		Core.spectator = spectator;
+	}
+
+	public static synchronized void setInstance(Core instance) {
+		Core.instance = instance;
+	}
+
+	public static synchronized void setPrefix(String prefix) {
+		Core.prefix = prefix;
+	}
+
 	private static ArrayList<Player> ig;
 	private static ArrayList<Player> spectator;
 	
@@ -116,15 +148,15 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		
 		for(Player all : Bukkit.getOnlinePlayers()) {
-			if(GameEndListener.BungeeMode == true) {
+			if(GameEndListener.isBungeeMode() == true) {
 				ByteArrayDataOutput out = ByteStreams.newDataOutput();
 				
 				out.writeUTF("Connect");
-				out.writeUTF(GameEndListener.BungeeServer);
+				out.writeUTF(GameEndListener.getBungeeServer());
 				
 				all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
 			} else {
-				all.kickPlayer(Core.getPrefix() + GameEndListener.kick);
+				all.kickPlayer(Core.getPrefix() + GameEndListener.getKick());
 			}
 		}
 		new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
@@ -135,7 +167,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		
 		AWorld.performReset();
 		
-		if(Timer.pc <= 1) {
+		if(Timer.getPc() <= 1) {
 			Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");
 		}
 		

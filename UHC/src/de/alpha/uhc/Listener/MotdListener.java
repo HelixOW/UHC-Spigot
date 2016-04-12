@@ -8,11 +8,33 @@ import de.alpha.uhc.GState;
 
 public class MotdListener implements Listener {
 	
-	public static String lobby;
-	public static String grace;
-	public static String ingame;
-	public static String restart;
+	private static String lobby;
+	private static String grace;
+	private static String ingame;
+	private static String restart;
 	
+	
+	
+	public static synchronized void setLobby(String lobby) {
+		MotdListener.lobby = lobby;
+	}
+
+	public static synchronized void setGrace(String grace) {
+		MotdListener.grace = grace;
+	}
+
+	public static synchronized void setIngame(String ingame) {
+		MotdListener.ingame = ingame;
+	}
+
+	public static synchronized void setRestart(String restart) {
+		MotdListener.restart = restart;
+	}
+
+	public static synchronized void setCustommotd(boolean custommotd) {
+		MotdListener.custommotd = custommotd;
+	}
+
 	public static boolean custommotd;
 	
 	@EventHandler

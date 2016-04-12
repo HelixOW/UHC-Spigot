@@ -33,24 +33,24 @@ public class DeathMessageFile {
 	}
 	
 	public static void loadDeathMessages() {
-		CustomDeathListener.blockExplode = file.getColorString("Block Explosion");
-		CustomDeathListener.contact = file.getColorString("Contact with Cactus");
-		CustomDeathListener.drown = file.getColorString("Drowning");
-		CustomDeathListener.pvp = file.getColorString("PvP");
-		CustomDeathListener.entityExplode = file.getColorString("Entity Explosion");
-		CustomDeathListener.fall = file.getColorString("Fall");
-		CustomDeathListener.anvil = file.getColorString("Falling Block");
-		CustomDeathListener.fire = file.getColorString("Fire");
-		CustomDeathListener.lava = file.getColorString("Lava");
-		CustomDeathListener.light = file.getColorString("Lightning");
-		CustomDeathListener.potion = file.getColorString("Potion");
-		CustomDeathListener.arrow = file.getColorString("Arrow");
-		CustomDeathListener.hunger = file.getColorString("Starvation");
-		CustomDeathListener.burried = file.getColorString("Suffocation");
-		CustomDeathListener.kill = file.getColorString("Suicide");
-		CustomDeathListener.thorns = file.getColorString("Thorns");
-		CustomDeathListener.voidd = file.getColorString("Void");
-		CustomDeathListener.wither = file.getColorString("Wither");
+		CustomDeathListener.setBlockExplode(file.getColorString("Block Explosion"));
+		CustomDeathListener.setContact(file.getColorString("Contact with Cactus"));
+		CustomDeathListener.setDrown(file.getColorString("Drowning"));
+		CustomDeathListener.setPvp(file.getColorString("PvP"));
+		CustomDeathListener.setEntityExplode(file.getColorString("Entity Explosion"));
+		CustomDeathListener.setFall(file.getColorString("Fall"));
+		CustomDeathListener.setAnvil(file.getColorString("Falling Block"));
+		CustomDeathListener.setFire(file.getColorString("Fire"));
+		CustomDeathListener.setLava(file.getColorString("Lava"));
+		CustomDeathListener.setLight(file.getColorString("Lava"));
+		CustomDeathListener.setPotion(file.getColorString("Potion"));
+		CustomDeathListener.setArrow(file.getColorString("Arrow"));
+		CustomDeathListener.setHunger(file.getColorString("Starvation"));
+		CustomDeathListener.setBurried(file.getColorString("Suffocation"));
+		CustomDeathListener.setKill(file.getColorString("Suicide"));
+		CustomDeathListener.setThorns(file.getColorString("Thorns"));
+		CustomDeathListener.setVoidd(file.getColorString("Void"));
+		CustomDeathListener.setWither(file.getColorString("Wither"));
 	}
 
 }

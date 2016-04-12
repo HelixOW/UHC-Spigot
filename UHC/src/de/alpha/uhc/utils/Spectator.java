@@ -25,9 +25,33 @@ import de.popokaka.alphalibary.item.data.SkullData;
 
 public class Spectator implements Listener{
 	
-	public static String specItem;
-	public static String specName;
-	public static String title;
+	private static String specItem;
+	private static String specName;
+	private static String title;
+
+	public static synchronized String getSpecItem() {
+		return specItem;
+	}
+
+	public static synchronized void setSpecItem(String specItem) {
+		Spectator.specItem = specItem;
+	}
+
+	public static synchronized String getSpecName() {
+		return specName;
+	}
+
+	public static synchronized void setSpecName(String specName) {
+		Spectator.specName = specName;
+	}
+
+	public static synchronized String getTitle() {
+		return title;
+	}
+
+	public static synchronized void setTitle(String title) {
+		Spectator.title = title;
+	}
 
 	public static void setSpec(Player p) {
 		

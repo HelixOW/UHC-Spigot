@@ -11,8 +11,26 @@ import de.popokaka.alphalibary.item.ItemBuilder;
 public class GUI {
 	
 	private static Inventory kits;
-	public static String title;
+	private static String title;
 	
+	
+	
+	public static synchronized Inventory getKits() {
+		return kits;
+	}
+
+	public static synchronized void setKits(Inventory kits) {
+		GUI.kits = kits;
+	}
+
+	public static synchronized String getTitle() {
+		return title;
+	}
+
+	public static synchronized void setTitle(String title) {
+		GUI.title = title;
+	}
+
 	public static void fill() {
 		kits = Bukkit.createInventory(null, 54, title);
 

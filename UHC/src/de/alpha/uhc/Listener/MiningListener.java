@@ -11,25 +11,122 @@ import org.bukkit.inventory.ItemStack;
 public class MiningListener implements Listener {
 	
 	
-	public static boolean wood;
-	public static boolean coal;
-	public static boolean iron;
-	public static boolean gold;
-	public static boolean dia;
-	public static boolean gravel;
+	private static boolean wood;
+	private static boolean coal;
+	private static boolean iron;
+	private static boolean gold;
+	private static boolean dia;
+	private static boolean gravel;
 	
-	public static int coalA;
-	public static int ironA;
-	public static int goldA;
-	public static int diaA;
-	public static int gravelA;
+	private static int coalA;
+	private static int ironA;
+	private static int goldA;
+	private static int diaA;
+	private static int gravelA;
 	
-	public static Material coalM;
-	public static Material ironM;
-	public static Material goldM;
-	public static Material diaM;
-	public static Material gravelM;
+	private static Material coalM;
+	private static Material ironM;
+	private static Material goldM;
+	private static Material diaM;
+	private static Material gravelM;
 	
+	
+	public static synchronized void setWood(boolean wood) {
+		MiningListener.wood = wood;
+	}
+
+
+
+	public static synchronized void setCoal(boolean coal) {
+		MiningListener.coal = coal;
+	}
+
+
+
+	public static synchronized void setIron(boolean iron) {
+		MiningListener.iron = iron;
+	}
+
+
+
+	public static synchronized void setGold(boolean gold) {
+		MiningListener.gold = gold;
+	}
+
+
+
+	public static synchronized void setDia(boolean dia) {
+		MiningListener.dia = dia;
+	}
+
+
+
+	public static synchronized void setGravel(boolean gravel) {
+		MiningListener.gravel = gravel;
+	}
+
+
+
+	public static synchronized void setCoalA(int coalA) {
+		MiningListener.coalA = coalA;
+	}
+
+
+
+	public static synchronized void setIronA(int ironA) {
+		MiningListener.ironA = ironA;
+	}
+
+
+
+	public static synchronized void setGoldA(int goldA) {
+		MiningListener.goldA = goldA;
+	}
+
+
+
+	public static synchronized void setDiaA(int diaA) {
+		MiningListener.diaA = diaA;
+	}
+
+
+
+	public static synchronized void setGravelA(int gravelA) {
+		MiningListener.gravelA = gravelA;
+	}
+
+
+
+	public static synchronized void setCoalM(Material coalM) {
+		MiningListener.coalM = coalM;
+	}
+
+
+
+	public static synchronized void setIronM(Material ironM) {
+		MiningListener.ironM = ironM;
+	}
+
+
+
+	public static synchronized void setGoldM(Material goldM) {
+		MiningListener.goldM = goldM;
+	}
+
+
+
+	public static synchronized void setDiaM(Material diaM) {
+		MiningListener.diaM = diaM;
+	}
+
+
+
+	public static synchronized void setGravelM(Material gravelM) {
+		MiningListener.gravelM = gravelM;
+	}
+
+
+
 	@EventHandler
 	public void onMine(BlockBreakEvent e) {
 		

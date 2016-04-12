@@ -14,10 +14,30 @@ import de.alpha.uhc.Core;
 
 public class Border {
 	
-	public static int size;
-	public static double dmg;
-	public static Location arena;
+	private static int size;
+	private static double dmg;
+	private static Location arena;
 	
+	public static synchronized double getDmg() {
+		return dmg;
+	}
+
+	public static synchronized void setDmg(double dmg) {
+		Border.dmg = dmg;
+	}
+
+	public static synchronized Location getArena() {
+		return arena;
+	}
+
+	public static synchronized void setArena(Location arena) {
+		Border.arena = arena;
+	}
+
+	public static synchronized int getSize() {
+		return size;
+	}
+
 	private static int random(Integer d, Integer x) {
 		Random r = new Random();
 		return r.nextInt(x-d+1)+d;

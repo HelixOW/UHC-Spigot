@@ -15,9 +15,9 @@ import de.popokaka.alphalibary.item.data.SkullData;
 public class ArmorStandUtil{
 	
 	public static void spawn(Location l, String name) {
-		if(!(ATeam.teamNames.contains(name))) {
-			String a = ATeam.noExist.replace("[team]", name);
-			String b = ATeam.allTeams.replace("[teams]", ""+name);
+		if(!(ATeam.getTeamNames().contains(name))) {
+			String a = ATeam.getNoExist().replace("[team]", name);
+			String b = ATeam.getAllTeams().replace("[teams]", ""+name);
 			Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + a + "\n" + b);
 			return;
 		}

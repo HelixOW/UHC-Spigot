@@ -83,64 +83,62 @@ public class MessageFileManager {
 	public static void loadMessages() {
 		SimpleFile file = getMSGFile();
 		
-		ATablist.header = file.getColorString("Tablist.Top");
-		ATablist.footer = file.getColorString("Tablist.Bottom");
+		ATablist.setHeader(file.getColorString("Tablist.Top"));
+		ATablist.setFooter(file.getColorString("Tablist.Bottom"));
 		
-		GState.lobby = file.getString("GameStatus.Lobby");
-		GState.grace = file.getString("GameStatus.Grace");
-		GState.pregame = file.getString("GameStatus.No PvP");
-		GState.ingame = file.getString("GameStatus.InGame");
-		GState.deathmatch = file.getString("GameStatus.Deathmatch");
-		GState.restart = file.getString("GameStatus.Restart");
+		GState.setLobby(file.getString("GameStatus.Lobby"));
+		GState.setGrace(file.getString("GameStatus.Grace"));
+		GState.setPregame(file.getString("GameStatus.No PvP"));
+		GState.setIngame(file.getString("GameStatus.InGame"));
+		GState.setDeathmatch(file.getString("GameStatus.Deathmatch"));
+		GState.setRestart(file.getString("GameStatus.Restart"));
 		
-		MotdListener.lobby = file.getColorString("Motd.Lobby");
-		MotdListener.grace = file.getColorString("Motd.Grace");
-		MotdListener.ingame = file.getColorString("Motd.InGame");
-		MotdListener.restart = file.getColorString("Motd.Restart");
+		MotdListener.setLobby(file.getColorString("Motd.Lobby"));
+		MotdListener.setGrace(file.getColorString("Motd.Grace"));
+		MotdListener.setIngame(file.getColorString("Motd.InGame"));
+		MotdListener.setRestart(file.getColorString("Motd.Restart"));
 		
-		ATeam.chosen = file.getColorString("Teams.chosen");
-		ATeam.noExist = file.getColorString("Teams.do not exist");
-		ATeam.allTeams = file.getColorString("Teams.all");
-		ATeam.full = file.getColorString("Teams.full");
+		ATeam.setChosen(file.getColorString("Teams.chosen"));
+		ATeam.setNoExist(file.getColorString("Teams.do not exist"));
+		ATeam.setAllTeams(file.getColorString("Teams.all"));
+		ATeam.setFull(file.getColorString("Teams.full"));
 		
-		LobbyListener.sel = file.getColorString("Kits.GUI.Selected");
-		LobbyListener.bought = file.getColorString("Kits.GUI.Bought");
-		LobbyListener.coinsneed = file.getColorString("Kits.GUI.No Coins");
+		LobbyListener.setSel(file.getColorString("Kits.GUI.Selected"));
+		LobbyListener.setBought(file.getColorString("Kits.GUI.Bought"));
+		LobbyListener.setCoinsneed(file.getColorString("Kits.GUI.No Coins"));
 		
-		UHCCommand.noplayer = file.getColorString("Commands.Warns.OnlyPlayers");
-		UHCCommand.noperms = file.getColorString("Commands.Warns.NoPermissions");
-		UHCCommand.spawnset = file.getColorString("Commands.Admin.SpawnSet");
-		UHCCommand.lobbyset = file.getColorString("Commands.Admin.LobbySet");
+		UHCCommand.setNoplayer(file.getColorString("Commands.Warns.OnlyPlayers"));
+		UHCCommand.setNoperms(file.getColorString("Commands.Warns.NoPermissions"));
+		UHCCommand.setSpawnset(file.getColorString("Commands.Admin.SpawnSet"));
+		UHCCommand.setLobbyset(file.getColorString("Commands.Admin.LobbySet"));
 		
-		Timer.pvpstart = file.getColorString("Announcements.PvP.end");
-		Timer.pvpmsg = file.getColorString("Announcements.PvP.timer");
-		Timer.dmmsg = file.getColorString("Announcements.DeathMatch.timer");
-		Timer.countmsg = file.getColorString("Announcements.Countdown");
-		Timer.nep = file.getColorString("Announcements.NotEnoughPlayers");
-		Timer.gracemsg = file.getColorString("Announcements.Peaceperiod.timer");
-		Timer.end = file.getColorString("Announcements.Peaceperiod.end");
-		Timer.endmsg = file.getColorString("Announcements.End");
+		Timer.setPvpstart(file.getColorString("Announcements.PvP.end"));
+		Timer.setPvpmsg(file.getColorString("Announcements.PvP.timer"));
+		Timer.setDmmsg(file.getColorString("Announcements.DeathMatch.timer"));
+		Timer.setCountmsg(file.getColorString("Announcements.Countdown"));
+		Timer.setNep(file.getColorString("Announcements.NotEnoughPlayers"));
+		Timer.setGracemsg(file.getColorString("Announcements.Peaceperiod.timer"));
+		Timer.setEnd(file.getColorString("Announcements.Peaceperiod.end"));
+		Timer.setEndmsg(file.getColorString("Announcements.End"));
+		Timer.setKick(GameEndListener.getKick());
 		
-		GameEndListener.win = file.getColorString("Announcements.Win");
-		GameEndListener.kick = file.getColorString("Announcements.Restart");
-		GameEndListener.rew = file.getColorString("Reward");
-		GameEndListener.quit = file.getColorString("Announcements.Leave");
+		GameEndListener.setWin(file.getColorString("Announcements.Win"));
+		GameEndListener.setKick(file.getColorString("Announcements.Restart"));
+		GameEndListener.setRew(file.getColorString("Reward"));
+		GameEndListener.setQuit(file.getColorString("Announcements.Leave"));
 		
-		Timer.kick = GameEndListener.kick;
+		InGameListener.setNtrack(file.getColorString("Compass.NoPlayerInRange"));
+		InGameListener.setTrack(file.getColorString("Compass.PlayerInRange"));
+		InGameListener.setTrackteam(file.getColorString("Compass.TeamPlayerInRange"));
 		
-		InGameListener.ntrack = file.getColorString("Compass.NoPlayerInRange");
-		InGameListener.track = file.getColorString("Compass.PlayerInRange");
-		InGameListener.trackteam = file.getColorString("Compass.TeamPlayerInRange");
+		PlayerJoinListener.setJoin(file.getColorString("Announcements.Join"));
+		PlayerJoinListener.setFull(file.getColorString("Warns.FullServer"));
+		PlayerJoinListener.setTitle(file.getColorString("Join.Title"));
+		PlayerJoinListener.setSubtitle(file.getColorString("Join.Subtitle"));
 		
-		PlayerJoinListener.join = file.getColorString("Announcements.Join");
-		PlayerJoinListener.full = file.getColorString("Warns.FullServer");
-		PlayerJoinListener.title = file.getColorString("Join.Title");
-		PlayerJoinListener.subtitle = file.getColorString("Join.Subtitle");
+		BorderManager.setMoved(file.getColorString("Announcements.Border.Move"));
 		
-		BorderManager.moved = file.getColorString("Announcements.Border.Move");
-		 
-		GUI.title = file.getColorString("Kits.GUI.Title");
-		 
+		GUI.setTitle(file.getColorString("Kits.GUI.Title"));
 	}
 
 }

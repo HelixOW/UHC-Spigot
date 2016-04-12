@@ -61,52 +61,53 @@ public class DropFile {
 	
 	public static void loadDrops() {
 		
-		DeathListener.pig = file.getBoolean("Mobs.Pig.enabled");
-		DeathListener.zombie = file.getBoolean("Mobs.Zombie.enabled");
-		DeathListener.cow = file.getBoolean("Mobs.Cow.enabled");
-		DeathListener.chicken = file.getBoolean("Mobs.Chicken.enabled");
-		DeathListener.spider = file.getBoolean("Mobs.Spider.enabled");
-		DeathListener.skeleton = file.getBoolean("Mobs.Skeleton.enabled");
-		DeathListener.sheep = file.getBoolean("Mobs.Sheep.enabled");
-		DeathListener.rabbit = file.getBoolean("Mobs.Rabbit.enabled");
+		DeathListener.setPig(file.getBoolean("Mobs.Pig.enabled"));
+		DeathListener.setZombie(file.getBoolean("Mobs.Zombie.enabled"));
+		DeathListener.setCow(file.getBoolean("Mobs.Cow.enabled"));
+		DeathListener.setChicken(file.getBoolean("Mobs.Chicken.enabled"));
+		DeathListener.setSpider(file.getBoolean("Mobs.Spider.enabled"));
+		DeathListener.setSkeleton(file.getBoolean("Mobs.Skeleton.enabled"));
+		DeathListener.setSheep(file.getBoolean("Mobs.Sheep.enabled"));
+		DeathListener.setRabbit(file.getBoolean("Mobs.Rabbit.enabled"));
 		
-		DeathListener.pigA = getAmountByString(file.getString("Mobs.Pig.drop"));
-		DeathListener.zombieA = getAmountByString(file.getString("Mobs.Zombie.drop"));
-		DeathListener.cowA = getAmountByString(file.getString("Mobs.Cow.drop"));
-		DeathListener.chickenA = getAmountByString(file.getString("Mobs.Chicken.drop"));
-		DeathListener.spiderA = getAmountByString(file.getString("Mobs.Spider.drop"));
-		DeathListener.skeletonA = getAmountByString(file.getString("Mobs.Skeleton.drop"));
-		DeathListener.sheepA = getAmountByString(file.getString("Mobs.Sheep.drop"));
-		DeathListener.rabbitA = getAmountByString(file.getString("Mobs.Rabbit.drop"));
+		DeathListener.setPigA(getAmountByString(file.getString("Mobs.Pig.drop")));
+		DeathListener.setZombieA(getAmountByString(file.getString("Mobs.Zombie.drop")));
+		DeathListener.setCowA(getAmountByString(file.getString("Mobs.Cow.drop")));
+		DeathListener.setChickenA(getAmountByString(file.getString("Mobs.Chicken.drop")));
+		DeathListener.setChickenA(getAmountByString(file.getString("Mobs.Chicken.drop")));
+		DeathListener.setSpiderA(getAmountByString(file.getString("Mobs.Spider.drop")));
+		DeathListener.setSkeletonA(getAmountByString(file.getString("Mobs.Skeleton.drop")));
+		DeathListener.setSheepA(getAmountByString(file.getString("Mobs.Sheep.drop")));
+		DeathListener.setRabbitA(getAmountByString(file.getString("Mobs.Rabbit.drop")));
 		
-		DeathListener.pigM = getMaterialByString(file.getString("Mobs.Pig.drop"));
-		DeathListener.zombieM = getMaterialByString(file.getString("Mobs.Zombie.drop"));
-		DeathListener.cowM = getMaterialByString(file.getString("Mobs.Cow.drop"));
-		DeathListener.chickenM = getMaterialByString(file.getString("Mobs.Chicken.drop"));
-		DeathListener.spiderM = getMaterialByString(file.getString("Mobs.Spider.drop"));
-		DeathListener.skeletonM = getMaterialByString(file.getString("Mobs.Skeleton.drop"));
-		DeathListener.sheepM = getMaterialByString(file.getString("Mobs.Sheep.drop"));
-		DeathListener.rabbitM = getMaterialByString(file.getString("Mobs.Rabbit.drop"));
+		DeathListener.setPigM(getMaterialByString(file.getString("Mobs.Pig.drop")));
+		DeathListener.setZombieM(getMaterialByString(file.getString("Mobs.Zombie.drop")));
+		DeathListener.setCowM(getMaterialByString(file.getString("Mobs.Cow.drop")));
+		DeathListener.setChickenM(getMaterialByString(file.getString("Mobs.Chicken.drop")));
+		DeathListener.setSpiderM(getMaterialByString(file.getString("Mobs.Spider.drop")));
+		DeathListener.setSkeletonM(getMaterialByString(file.getString("Mobs.Skeleton.drop")));
+		DeathListener.setSheepM(getMaterialByString(file.getString("Mobs.Sheep.drop")));
+		DeathListener.setRabbitM(getMaterialByString(file.getString("Mobs.Rabbit.drop")));
 		
-		MiningListener.coal = file.getBoolean("Blocks.Ore.Coal.enabled");
-		MiningListener.iron = file.getBoolean("Blocks.Ore.Iron.enabled");
-		MiningListener.gold = file.getBoolean("Blocks.Ore.Gold.enabled");
-		MiningListener.dia = file.getBoolean("Blocks.Ore.Diamond.enabled");
-		MiningListener.gravel = file.getBoolean("Blocks.Gravel.enabled");
-		MiningListener.wood = file.getBoolean("Blocks.Wood.enabled");
 		
-		MiningListener.coalA = getAmountByString(file.getString("Blocks.Ore.Coal.drop"));
-		MiningListener.ironA = getAmountByString(file.getString("Blocks.Ore.Iron.drop"));
-		MiningListener.goldA = getAmountByString(file.getString("Blocks.Ore.Gold.drop"));
-		MiningListener.diaA = getAmountByString(file.getString("Blocks.Ore.Diamond.drop"));
-		MiningListener.gravelA = getAmountByString(file.getString("Blocks.Gravel.drop"));
+		MiningListener.setCoal(file.getBoolean("Blocks.Ore.Coal.enabled"));
+		MiningListener.setIron(file.getBoolean("Blocks.Ore.Iron.enabled"));
+		MiningListener.setGold(file.getBoolean("Blocks.Ore.Gold.enabled"));
+		MiningListener.setDia(file.getBoolean("Blocks.Ore.Diamond.enabled"));
+		MiningListener.setGravel(file.getBoolean("Blocks.Gravel.enabled"));
+		MiningListener.setWood(file.getBoolean("Blocks.Wood.enabled"));
 		
-		MiningListener.coalM = getMaterialByString(file.getString("Blocks.Ore.Coal.drop"));
-		MiningListener.ironM = getMaterialByString(file.getString("Blocks.Ore.Iron.drop"));
-		MiningListener.goldM = getMaterialByString(file.getString("Blocks.Ore.Gold.drop"));
-		MiningListener.diaM = getMaterialByString(file.getString("Blocks.Ore.Diamond.drop"));
-		MiningListener.gravelM = getMaterialByString(file.getString("Blocks.Gravel.drop"));
+		MiningListener.setCoalA(getAmountByString(file.getString("Blocks.Ore.Coal.drop")));
+		MiningListener.setIronA(getAmountByString(file.getString("Blocks.Ore.Iron.drop")));
+		MiningListener.setGoldA(getAmountByString(file.getString("Blocks.Ore.Gold.drop")));
+		MiningListener.setDiaA(getAmountByString(file.getString("Blocks.Ore.Diamond.drop")));
+		MiningListener.setGravelA(getAmountByString(file.getString("Blocks.Gravel.drop")));
 		
+		MiningListener.setCoalM(getMaterialByString(file.getString("Blocks.Ore.Coal.drop")));
+		MiningListener.setIronM(getMaterialByString(file.getString("Blocks.Ore.Iron.drop")));
+		MiningListener.setGoldM(getMaterialByString(file.getString("Blocks.Ore.Gold.drop")));
+		MiningListener.setDiaM(getMaterialByString(file.getString("Blocks.Ore.Diamond.drop")));
+		MiningListener.setGravelM(getMaterialByString(file.getString("Blocks.Gravel.drop")));
 	}
 	
 	public static Material getMaterialByString(String block) {

@@ -30,12 +30,52 @@ import de.alpha.uhc.utils.Stats;
 
 public class UHCCommand implements CommandExecutor {
 	
-	public static String noplayer;
-	public static String noperms;
-	public static String spawnset;
-	public static String lobbyset;
-	public static boolean teamMode;
+	private static String noplayer;
+	private static String noperms;
+	private static String spawnset;
+	private static String lobbyset;
+	private static boolean teamMode;
 	
+	public static synchronized String getNoplayer() {
+		return noplayer;
+	}
+
+	public static synchronized String getNoperms() {
+		return noperms;
+	}
+
+	public static synchronized String getSpawnset() {
+		return spawnset;
+	}
+
+	public static synchronized String getLobbyset() {
+		return lobbyset;
+	}
+
+	public static synchronized boolean isTeamMode() {
+		return teamMode;
+	}
+
+	public static synchronized void setNoplayer(String noplayer) {
+		UHCCommand.noplayer = noplayer;
+	}
+
+	public static synchronized void setNoperms(String noperms) {
+		UHCCommand.noperms = noperms;
+	}
+
+	public static synchronized void setSpawnset(String spawnset) {
+		UHCCommand.spawnset = spawnset;
+	}
+
+	public static synchronized void setLobbyset(String lobbyset) {
+		UHCCommand.lobbyset = lobbyset;
+	}
+
+	public static synchronized void setTeamMode(boolean teamMode) {
+		UHCCommand.teamMode = teamMode;
+	}
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, final String[] args) {
 		
@@ -68,7 +108,7 @@ public class UHCCommand implements CommandExecutor {
 			if(args.length == 1) {
 				if(args[0].equalsIgnoreCase("team") || args[0].equalsIgnoreCase("teams")) {
 					
-					String a = ATeam.allTeams.replace("[teams]", ""+ATeam.teamNames);
+					String a = ATeam.getAllTeams().replace("[teams]", ""+ATeam.getTeamNames());
 					p.sendMessage(Core.getPrefix() + a);
 					return true;
 				}

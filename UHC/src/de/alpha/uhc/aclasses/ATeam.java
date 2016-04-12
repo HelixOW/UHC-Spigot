@@ -28,22 +28,128 @@ import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class ATeam implements Listener {
 	
-	public static String chosen;
-	public static String noExist;
-	public static String allTeams;
+	private static String chosen;
+	private static String noExist;
+	private static String allTeams;
 	
-	public static String materialName;
-	public static String blockName;
-	public static String title;
-	public static String full;
+	public static synchronized void setChosen(String chosen) {
+		ATeam.chosen = chosen;
+	}
+
+	public static synchronized void setNoExist(String noExist) {
+		ATeam.noExist = noExist;
+	}
+
+	public static synchronized void setAllTeams(String allTeams) {
+		ATeam.allTeams = allTeams;
+	}
+
+	public static synchronized Inventory getTeamInv() {
+		return teamInv;
+	}
+
+	public static synchronized void setTeamInv(Inventory teamInv) {
+		ATeam.teamInv = teamInv;
+	}
+
+	public static synchronized ArrayList<String> getTeamNames() {
+		return teamNames;
+	}
+
+	public static synchronized void setTeamNames(ArrayList<String> teamNames) {
+		ATeam.teamNames = teamNames;
+	}
+
+	public static synchronized ArrayList<String> getTeamColors() {
+		return teamColors;
+	}
+
+	public static synchronized void setTeamColors(ArrayList<String> teamColors) {
+		ATeam.teamColors = teamColors;
+	}
+
+	public static synchronized HashMap<String, Integer> getTeamMax() {
+		return teamMax;
+	}
+
+	public static synchronized void setTeamMax(HashMap<String, Integer> teamMax) {
+		ATeam.teamMax = teamMax;
+	}
+
+	public static synchronized HashMap<String, Integer> getTeamC() {
+		return teamC;
+	}
+
+	public static synchronized void setTeamC(HashMap<String, Integer> teamC) {
+		ATeam.teamC = teamC;
+	}
+
+	public static synchronized HashMap<Player, String> getTeams() {
+		return teams;
+	}
+
+	public static synchronized void setTeams(HashMap<Player, String> teams) {
+		ATeam.teams = teams;
+	}
+
+	public static synchronized String getChosen() {
+		return chosen;
+	}
+
+	public static synchronized String getNoExist() {
+		return noExist;
+	}
+
+	public static synchronized String getAllTeams() {
+		return allTeams;
+	}
+
+	public static synchronized String getMaterialName() {
+		return materialName;
+	}
+
+	public static synchronized String getBlockName() {
+		return blockName;
+	}
+
+	public static synchronized String getTitle() {
+		return title;
+	}
+
+	public static synchronized String getFull() {
+		return full;
+	}
+
+	private static String materialName;
+	private static String blockName;
+	private static String title;
+	private static String full;
 	
+	
+	
+	public static synchronized void setMaterialName(String materialName) {
+		ATeam.materialName = materialName;
+	}
+
+	public static synchronized void setBlockName(String blockName) {
+		ATeam.blockName = blockName;
+	}
+
+	public static synchronized void setTitle(String title) {
+		ATeam.title = title;
+	}
+
+	public static synchronized void setFull(String full) {
+		ATeam.full = full;
+	}
+
 	private static Inventory teamInv;
 	
-	public static ArrayList<String> teamNames = new ArrayList<String>();
-	public static ArrayList<String> teamColors = new ArrayList<String>();
+	private static ArrayList<String> teamNames = new ArrayList<String>();
+	private static ArrayList<String> teamColors = new ArrayList<String>();
 	
-	public static HashMap<String, Integer> teamMax = new HashMap<String, Integer>();
-	public static HashMap<String, Integer> teamC = new HashMap<String, Integer>();
+	private static HashMap<String, Integer> teamMax = new HashMap<String, Integer>();
+	private static HashMap<String, Integer> teamC = new HashMap<String, Integer>();
 	
 	private static HashMap<Player, String> teams = new HashMap<Player, String>();
 	

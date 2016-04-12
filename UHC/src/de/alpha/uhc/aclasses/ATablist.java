@@ -10,9 +10,19 @@ import de.popokaka.alphalibary.nms.SimpleTablist;
 
 public class ATablist {
 	
-	public static String header;
-	public static String footer;
+	private static String header;
+	private static String footer;
 	
+	
+	
+	public static synchronized void setHeader(String header) {
+		ATablist.header = header;
+	}
+
+	public static synchronized void setFooter(String footer) {
+		ATablist.footer = footer;
+	}
+
 	public static void sendStandingLobbyTablist() {
 		for(Player all : Bukkit.getOnlinePlayers()) {
 			header = header.replace("[player]", all.getDisplayName());

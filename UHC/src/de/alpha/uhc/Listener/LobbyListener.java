@@ -29,10 +29,22 @@ import de.alpha.uhc.utils.Stats;
 
 public class LobbyListener implements Listener {
 	
-	public static String sel;
-	public static String bought;
-	public static String coinsneed;
+	private static String sel;
+	private static String bought;
+	private static String coinsneed;
 	
+	public static synchronized void setSel(String sel) {
+		LobbyListener.sel = sel;
+	}
+
+	public static synchronized void setBought(String bought) {
+		LobbyListener.bought = bought;
+	}
+
+	public static synchronized void setCoinsneed(String coinsneed) {
+		LobbyListener.coinsneed = coinsneed;
+	}
+
 	@EventHandler
 	public void onChunkUnLoad(ChunkUnloadEvent e) {
 		if(e.getWorld().getName().equals("world")) {
@@ -55,7 +67,7 @@ public class LobbyListener implements Listener {
 		Player p = e.getPlayer();
 		
 		if(!(GState.isState(GState.LOBBY))) return;
-		if(Regions.lobby == false) return;
+		if(Regions.isLobby() == false) return;
 		
 		if(Regions.isInRegion(e.getTo()) == false) {
 			if(SpawnFileManager.getLobby() == null) {
@@ -110,7 +122,7 @@ public class LobbyListener implements Listener {
 		
 		if(!(GState.isState(GState.LOBBY))) return;
 		if(e.getPlayer().getInventory().getItemInMainHand() == null) return;
-		if(!(e.getPlayer().getInventory().getItemInMainHand().getType().equals(PlayerJoinListener.kitItem))) return;
+		if(!(e.getPlayer().getInventory().getItemInMainHand().getType().equals(PlayerJoinListener.getKitItem()))) return;
 		
 		e.setCancelled(true);
 		GUI.open(e.getPlayer());
@@ -123,7 +135,7 @@ public class LobbyListener implements Listener {
 	public void onInvClick(InventoryClickEvent e) {
 		
 		if(e.getClickedInventory() == null) return;
-		if(!(e.getClickedInventory().getName().equalsIgnoreCase(GUI.title))) return;
+		if(!(e.getClickedInventory().getName().equalsIgnoreCase(GUI.getTitle()))) return;
 		if(!(e.getWhoClicked() instanceof Player)) return;
 		
 		Player p = (Player) e.getWhoClicked();

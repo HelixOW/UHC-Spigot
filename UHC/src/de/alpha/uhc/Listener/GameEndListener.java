@@ -24,20 +24,122 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class GameEndListener implements Listener {
 	
-	public static String win;
-	public static String kick;
-	public static String rew;
-	public static String quit;
-	public static String BungeeServer;
+	private static String win;
+	private static String kick;
+	private static String rew;
+	private static String quit;
+	private static String BungeeServer;
 	
 	private static int apc;
-	public static int opc;
+	private static int opc;
 	
-	public static int reward;
-	public static int deathreward;
+	private static int reward;
+	private static int deathreward;
 	
-	public static boolean BungeeMode;
+	private static boolean BungeeMode;
 	
+	
+	
+	public static synchronized String getWin() {
+		return win;
+	}
+
+
+	public static synchronized void setWin(String win) {
+		GameEndListener.win = win;
+	}
+
+
+	public static synchronized String getKick() {
+		return kick;
+	}
+
+
+	public static synchronized void setKick(String kick) {
+		GameEndListener.kick = kick;
+	}
+
+
+	public static synchronized String getRew() {
+		return rew;
+	}
+
+
+	public static synchronized void setRew(String rew) {
+		GameEndListener.rew = rew;
+	}
+
+
+	public static synchronized String getQuit() {
+		return quit;
+	}
+
+
+	public static synchronized void setQuit(String quit) {
+		GameEndListener.quit = quit;
+	}
+
+
+	public static synchronized String getBungeeServer() {
+		return BungeeServer;
+	}
+
+
+	public static synchronized void setBungeeServer(String bungeeServer) {
+		BungeeServer = bungeeServer;
+	}
+
+
+	public static synchronized int getApc() {
+		return apc;
+	}
+
+
+	public static synchronized void setApc(int apc) {
+		GameEndListener.apc = apc;
+	}
+
+
+	public static synchronized int getOpc() {
+		return opc;
+	}
+
+
+	public static synchronized void setOpc(int opc) {
+		GameEndListener.opc = opc;
+	}
+
+
+	public static synchronized int getReward() {
+		return reward;
+	}
+
+
+	public static synchronized void setReward(int reward) {
+		GameEndListener.reward = reward;
+	}
+
+
+	public static synchronized int getDeathreward() {
+		return deathreward;
+	}
+
+
+	public static synchronized void setDeathreward(int deathreward) {
+		GameEndListener.deathreward = deathreward;
+	}
+
+
+	public static synchronized boolean isBungeeMode() {
+		return BungeeMode;
+	}
+
+
+	public static synchronized void setBungeeMode(boolean bungeeMode) {
+		BungeeMode = bungeeMode;
+	}
+
+
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
 		
@@ -101,8 +203,8 @@ public class GameEndListener implements Listener {
 		//                       -=X Game End X=-
 		
 		if(Core.getInGamePlayers().size() == 4) {
-			if(Timer.dm) {
-				Timer.dd.cancel();
+			if(Timer.isDm()) {
+				Timer.getDd().cancel();
 				Timer.startDeathMatch();
 			}
 		}

@@ -14,7 +14,7 @@ public class Stats {
 	
 	public Stats(Player killer) {
 		p = killer;
-		isMysql = Core.isMySQLActive;
+		isMysql = Core.isMySQLActive();
 	}
 	
 	public int getCoins() {
