@@ -3,10 +3,13 @@ package de.alpha.uhc.Listener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+
+import de.alpha.uhc.utils.BlockUtil;
 
 public class MiningListener implements Listener {
 	
@@ -149,6 +152,11 @@ public class MiningListener implements Listener {
 								inWood = true;
 							}
 							loc.getBlock().breakNaturally();
+							for(BlockFace bf : BlockUtil.getRelative()) {
+								if(loc.getBlock().getRelative(bf).getType().equals(Material.LEAVES) || loc.getBlock().getRelative(bf).getType().equals(Material.LEAVES_2)) {
+									loc.getBlock().getRelative(bf).breakNaturally();
+								}
+							}
 						}
 					}
 				}

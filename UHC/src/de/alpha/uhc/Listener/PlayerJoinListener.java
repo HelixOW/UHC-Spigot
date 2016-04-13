@@ -232,7 +232,7 @@ public class PlayerJoinListener implements Listener {
 
 		}
 
-//		ATablist.sendStandingLobbyTablist();
+		ATablist.sendStandingLobbyTablist();
 
 		if (Core.isMySQLActive() == true) {
 			if (MySQLManager.getObjectConditionResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "UUID") == null) {

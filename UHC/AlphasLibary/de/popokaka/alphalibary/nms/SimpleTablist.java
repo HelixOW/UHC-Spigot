@@ -1,6 +1,6 @@
 package de.popokaka.alphalibary.nms;
 
-import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import org.bukkit.ChatColor;
@@ -24,21 +24,27 @@ public class SimpleTablist {
 			footer = "";
 
 		try {
-			Class<?> classIChatBaseComponent = ReflectionUtil.getNmsClass("IChatBaseComponent");
+			Object headerPacket = ReflectionUtil.getNmsClass("ChatComponentText").getConstructor(new Class[] { String.class })
+					.newInstance(new Object[] { ChatColor.translateAlternateColorCodes('&', header) });
+			Object footerPacket = ReflectionUtil.getNmsClass("ChatComponentText").getConstructor(new Class[] { String.class })
+					.newInstance(new Object[] { ChatColor.translateAlternateColorCodes('&', footer) });
 
-			Constructor<?> listConstructor = ReflectionUtil.getNmsClass("PacketPlayOutPlayerListHeaderFooter")
-					.getConstructor(classIChatBaseComponent);
+			Object ppoplhf = ReflectionUtil.getNmsClass("PacketPlayOutPlayerListHeaderFooter")
+					.getConstructor(new Class[] { ReflectionUtil.getNmsClass("IChatBaseComponent") })
+					.newInstance(new Object[] { headerPacket });
 
-			Object packageHeader = listConstructor
-					.newInstance(ReflectionUtil.serializeString(ChatColor.translateAlternateColorCodes('&', header)));
-			Object packageFooter = listConstructor
-					.newInstance(ReflectionUtil.serializeString(ChatColor.translateAlternateColorCodes('&', footer)));
+			Field f = ppoplhf.getClass().getDeclaredField("b");
+			f.setAccessible(true);
+			f.set(ppoplhf, footerPacket);
 
-			ReflectionUtil.sendPacket(p, packageHeader);
-			ReflectionUtil.sendPacket(p, packageFooter);
+			Object nmsp = p.getClass().getMethod("getHandle", new Class[0]).invoke(p, new Object[0]);
+			Object pcon = nmsp.getClass().getField("playerConnection").get(nmsp);
+
+			pcon.getClass().getMethod("sendPacket", new Class[] { ReflectionUtil.getNmsClass("Packet") })
+					.invoke(pcon, new Object[] { ppoplhf });
 
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
+				| NoSuchMethodException | SecurityException | NoSuchFieldException e) {
 
 		}
 	}
