@@ -1,5 +1,7 @@
 package de.popokaka.alphalibary.nms;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.bukkit.World;
@@ -14,18 +16,25 @@ public class SimpleActionBar {
 	 * @param player to send the ActionBar
 	 * @param message to be displayed inside the ActionBar
 	 */
-	public static void send(Player player, String message){
+	public static void send(Player player, String message) {
 		try {
-			Object notify = ReflectionUtil.serializeString(message);
-			Object packet = ReflectionUtil.getNmsClass("PacketPlayOutChat").getConstructor(new Class<?>[] {
-					ReflectionUtil.getNmsClass("IChatBaseComponent") , byte.class
-			}).newInstance(new Object[] {
-					notify , (byte) 2
-			});
-			
-			ReflectionUtil.sendPacket(player, packet);
-		} catch (Exception e) {
-			e.printStackTrace();
+			Class<?> c1 = Class.forName("org.bukkit.craftbukkit." + ReflectionUtil.getVersion() + ".entity.CraftPlayer");
+			Object p = c1.cast(player);
+			Object ppoc;
+			Class<?> c4 = Class.forName("net.minecraft.server." + ReflectionUtil.getVersion() + ".PacketPlayOutChat");
+			Class<?> c5 = Class.forName("net.minecraft.server." + ReflectionUtil.getVersion() + ".Packet");
+			Class<?> c2 = Class.forName("net.minecraft.server." + ReflectionUtil.getVersion() + ".ChatComponentText");
+			Class<?> c3 = Class.forName("net.minecraft.server." + ReflectionUtil.getVersion() + ".IChatBaseComponent");
+			Object o = c2.getConstructor(new Class<?>[]{String.class}).newInstance(message);
+			ppoc = c4.getConstructor(new Class<?>[]{c3, byte.class}).newInstance(o, (byte) 2);
+			Method m1 = c1.getDeclaredMethod("getHandle");
+			Object h = m1.invoke(p);
+			Field f1 = h.getClass().getDeclaredField("playerConnection");
+			Object pc = f1.get(h);
+			Method m5 = pc.getClass().getDeclaredMethod("sendPacket", c5);
+			m5.invoke(pc, ppoc);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 	

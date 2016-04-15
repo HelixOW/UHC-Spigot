@@ -435,7 +435,7 @@ public class Timer {
 													}
 												}
 												
-												AScoreboard.setInGameScoreboard(ig);
+												AScoreboard.sendAntiFlickerInGameBoard(ig);
 												new BukkitRunnable() {
 													
 													@Override

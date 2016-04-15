@@ -175,7 +175,7 @@ public class GameEndListener implements Listener {
 		rew = rew.replace("[Coins]", Integer.toString(deathreward));
 		
 		p.sendMessage(Core.getPrefix() + rew);
-		SimpleTitle.sendTitle(p, " ", rew, 10, 20, 10);
+		SimpleTitle.sendTitle(p, " ", rew, 1, 2, 1);
 		
 		rew = MessageFileManager.getMSGFile().getColorString("Reward");
 		
@@ -236,7 +236,7 @@ public class GameEndListener implements Listener {
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + win);
 				for(Player all : Bukkit.getOnlinePlayers()) {
-					SimpleTitle.sendTitle(all, " ", win, 10, 20, 10);
+					SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
 				}
 				
 				new Stats(winner).addCoins(reward);
@@ -339,7 +339,7 @@ public class GameEndListener implements Listener {
 					
 					Bukkit.broadcastMessage(Core.getPrefix() + win);
 					for(Player all : Bukkit.getOnlinePlayers()) {
-						SimpleTitle.sendTitle(all, " ", win, 10, 20, 10);
+						SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
 					}
 					
 					new Stats(winner).addCoins(reward);

@@ -20,7 +20,11 @@ private static String version;
 	}
 	
 	//############################################## FIELDS #################################################
-		
+	
+	public static String getVersion() {
+		return version;
+	}
+	
 	public static SaveField getField(String name , Class<?> clazz) {
 		try {
 			Field f = clazz.getField(name);

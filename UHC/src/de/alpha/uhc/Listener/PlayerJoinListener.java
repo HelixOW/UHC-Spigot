@@ -210,27 +210,18 @@ public class PlayerJoinListener implements Listener {
 		if (GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
 			p.getInventory().clear();
 			p.getInventory().setArmorContents(null);
-			if (SpawnFileManager.getSpawn() == null) {
-				p.teleport(Bukkit.getWorld("UHC").getSpawnLocation());
-			} else {
-				p.teleport(SpawnFileManager.getSpawn());
-			}
+			if (SpawnFileManager.getSpawn() == null) p.teleport(Bukkit.getWorld("UHC").getSpawnLocation());
+			else p.teleport(SpawnFileManager.getSpawn());
 			Core.addSpec(p);
 			Spectator.setSpec(p);
-			AScoreboard.setInGameScoreboard(p);
+			AScoreboard.sendAntiFlickerInGameBoard(p);
 
 			ATablist.sendStandingInGameTablist();
-			for (Player all : Core.getInGamePlayers()) {
-				AScoreboard.updateInGameSpectators(all);
-			}
+			for (Player all : Core.getInGamePlayers()) { AScoreboard.updateInGameSpectators(all); }
 			return;
 		}
 
-		for (Player all : Bukkit.getOnlinePlayers()) {
-
-			all.showPlayer(p);
-
-		}
+		for (Player all : Bukkit.getOnlinePlayers()) { all.showPlayer(p); }
 
 		ATablist.sendStandingLobbyTablist();
 

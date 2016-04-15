@@ -73,7 +73,7 @@ public class BorderManager {
 				Border.changesize(size);
 				for(Player all : Bukkit.getOnlinePlayers()) {
 					AScoreboard.updateInGameBorder(all);
-					SimpleTitle.sendTitle(all, " ", moved, 10, 20, 10);
+					SimpleTitle.sendTitle(all, " ", moved, 1, 2, 1);
 				}
 				
 			}

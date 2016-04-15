@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -414,117 +415,6 @@ public class AScoreboard {
 		AScoreboard.obj = obj;
 	}
 
-	public static  HashMap<Player, String> getlA() {
-		return lA;
-	}
-
-	public static  void setlA(HashMap<Player, String> lA) {
-		AScoreboard.lA = lA;
-	}
-
-	public static  HashMap<Player, String> getlB() {
-		return lB;
-	}
-
-	public static  void setlB(HashMap<Player, String> lB) {
-		AScoreboard.lB = lB;
-	}
-
-	public static  HashMap<Player, String> getlC() {
-		return lC;
-	}
-
-	public static  void setlC(HashMap<Player, String> lC) {
-		AScoreboard.lC = lC;
-	}
-
-	public static  HashMap<Player, String> getlD() {
-		return lD;
-	}
-
-	public static  void setlD(HashMap<Player, String> lD) {
-		AScoreboard.lD = lD;
-	}
-
-	public static  HashMap<Player, String> getlE() {
-		return lE;
-	}
-
-	public static  void setlE(HashMap<Player, String> lE) {
-		AScoreboard.lE = lE;
-	}
-
-	public static  HashMap<Player, String> getlF() {
-		return lF;
-	}
-
-	public static  void setlF(HashMap<Player, String> lF) {
-		AScoreboard.lF = lF;
-	}
-
-	public static  HashMap<Player, String> getlG() {
-		return lG;
-	}
-
-	public static  void setlG(HashMap<Player, String> lG) {
-		AScoreboard.lG = lG;
-	}
-
-	public static  int getLa() {
-		return la;
-	}
-
-	public static  void setLa(int la) {
-		AScoreboard.la = la;
-	}
-
-	public static  int getLb() {
-		return lb;
-	}
-
-	public static  void setLb(int lb) {
-		AScoreboard.lb = lb;
-	}
-
-	public static  int getLc() {
-		return lc;
-	}
-
-	public static  void setLc(int lc) {
-		AScoreboard.lc = lc;
-	}
-
-	public static  int getLd() {
-		return ld;
-	}
-
-	public static  void setLd(int ld) {
-		AScoreboard.ld = ld;
-	}
-
-	public static  int getLe() {
-		return le;
-	}
-
-	public static  void setLe(int le) {
-		AScoreboard.le = le;
-	}
-
-	public static  int getLf() {
-		return lf;
-	}
-
-	public static  void setLf(int lf) {
-		AScoreboard.lf = lf;
-	}
-
-	public static  int getLg() {
-		return lg;
-	}
-
-	public static  void setLg(int lg) {
-		AScoreboard.lg = lg;
-	}
 
 	public static  String getIngamePvPmsg() {
 		return ingamePvPmsg;
@@ -554,43 +444,12 @@ public class AScoreboard {
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		obj.setDisplayName(lobbyTitle);
 		
-		if(ShowLobbyBar) {
-			obj.getScore(lobbyBar).setScore(score);
-			score--;
-		}
-		
-		if(ShowLobbyKills) {
-			String a = lobbyKills.replace("[kills]", ""+new Stats(p).getKills());
+		if(ShowLobbyKit) {
+			String a = lobbyKit.replace("[kit]", ""+LobbyListener.getSelKit(p));
 			obj.getScore(a).setScore(score);
-			score--;
-		}
-		
-		if(ShowLobbyDeaths) {
-			String a = lobbyDeaths.replace("[deaths]", ""+new Stats(p).getDeaths());
-			obj.getScore(a).setScore(score);
-			score--;
-		}
-		
-		if(ShowLobbyCoins) {
-			String a = lobbyCoins.replace("[coins]", ""+new Stats(p).getCoins());
-			obj.getScore(a).setScore(score);
-			score--;
-		}
-		
-		if(ShowLobbyBar) {
-			obj.getScore("§a"+lobbyBar).setScore(score);
-			score--;
-		}
-		
-		if(ShowLobbyPlayercount) {
-			String a = lobbyPlayercount.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
-			obj.getScore(a).setScore(score);
-			score--;
-		}
-		
-		if(ShowLobbyBar) {
-			obj.getScore("§b"+lobbyBar).setScore(score);
-			score--;
+			B.put(p, a);
+			bb = score;
+			score++;
 		}
 		
 		if(ShowLobbyTeam) {
@@ -598,16 +457,48 @@ public class AScoreboard {
 			obj.getScore(a).setScore(score);
 			A.put(p, a);
 			aa = score;
-			score--;
+			score++;
 		}
 		
-		if(ShowLobbyKit) {
-			String a = lobbyKit.replace("[kit]", ""+LobbyListener.getSelKit(p));
-			obj.getScore(a).setScore(score);
-			B.put(p, a);
-			bb = score;
-			score--;
+		if(ShowLobbyBar) {
+			obj.getScore("§b"+lobbyBar).setScore(score);
+			score++;
 		}
+		
+		if(ShowLobbyPlayercount) {
+			String a = lobbyPlayercount.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
+			obj.getScore(a).setScore(score);
+			score++;
+		}
+		
+		if(ShowLobbyBar) {
+			obj.getScore("§a"+lobbyBar).setScore(score);
+			score++;
+		}
+		
+		if(ShowLobbyCoins) {
+			String a = lobbyCoins.replace("[coins]", ""+new Stats(p).getCoins());
+			obj.getScore(a).setScore(score);
+			score++;
+		}
+		
+		if(ShowLobbyDeaths) {
+			String a = lobbyDeaths.replace("[deaths]", ""+new Stats(p).getDeaths());
+			obj.getScore(a).setScore(score);
+			score++;
+		}
+		
+		if(ShowLobbyKills) {
+			String a = lobbyKills.replace("[kills]", ""+new Stats(p).getKills());
+			obj.getScore(a).setScore(score);
+			score++;
+		}
+		
+		if(ShowLobbyBar) {
+			obj.getScore(lobbyBar).setScore(score);
+			score++;
+		}
+		
 		
 		p.setScoreboard(sb);
 	}
@@ -628,119 +519,206 @@ public class AScoreboard {
 		objP.getScore(a).setScore(bb);
 	}
 	
-	private static HashMap<Player, String> lA = new HashMap<Player, String>();
-	private static HashMap<Player, String> lB = new HashMap<Player, String>();
-	private static HashMap<Player, String> lC = new HashMap<Player, String>();
-	private static HashMap<Player, String> lD = new HashMap<Player, String>();
-	private static HashMap<Player, String> lE = new HashMap<Player, String>();
-	private static HashMap<Player, String> lF = new HashMap<Player, String>();
-	private static HashMap<Player, String> lG = new HashMap<Player, String>();
+	//                 		-=X Scores X=-
 	
+	private static HashMap<Player, Integer> sTeamA = new HashMap<>();
+	private static HashMap<Player, Integer> sTeamS = new HashMap<>();
+	private static HashMap<Player, Integer> sTeamK = new HashMap<>();
+	private static HashMap<Player, Integer> sTeamT = new HashMap<>();
+	private static HashMap<Player, Integer> sTeamD = new HashMap<>();
+	private static HashMap<Player, Integer> sTeamB = new HashMap<>();
+	private static HashMap<Player, Integer> sTeamP = new HashMap<>();
 	
-	private static int la;
-	private static int lb;
-	private static int lc;
-	private static int ld;
-	private static int le;
-	private static int lf;
-	private static int lg;
+	//  					-=X Strings on Board X=-
 	
-	public static void setInGameScoreboard(final Player p) {
-		if(ShowInGameScoreboard == false) return;
+	private static HashMap<Player, String> cTeamA = new HashMap<>();
+	private static HashMap<Player, String> cTeamS = new HashMap<>();
+	private static HashMap<Player, String> cTeamK = new HashMap<>();
+	private static HashMap<Player, String> cTeamT = new HashMap<>();
+	private static HashMap<Player, String> cTeamD = new HashMap<>();
+	private static HashMap<Player, String> cTeamB = new HashMap<>();
+	private static HashMap<Player, String> cTeamP = new HashMap<>();
+	
+	public static void sendAntiFlickerInGameBoard(final Player p) {
+		sb = Bukkit.getScoreboardManager().getNewScoreboard();
+		obj = sb.registerNewObjective("UHCInGame", "dummy");
 		
 		int score = 0;
 		
-		sb = Bukkit.getScoreboardManager().getNewScoreboard();
-		obj = sb.registerNewObjective("UHCInGame", "dummy");
+		String alive = ingamePlayersLiving.replace("[livingPlayerscount]", Integer.toString(Core.getInGamePlayers().size()));
+		String specs = ingameSpectators.replace("[spectatorcount]", Integer.toString(Core.getSpecs().size()));
+		String kit = ingameKit.replace("[kit]", LobbyListener.getSelKit(p));
+		String team = ingameTeam.replace("[team]", ""+ATeam.getTeamColor(ATeam.getPlayerTeam(p))+ ATeam.getPlayerTeam(p));
+		String bordersize = ingameBorder.replace("[bordersize]", Integer.toString(Border.getSize()));
+		String inGameTime = ingamePvP.replace("[time]", Integer.toString(Timer.getuDM()));
+		String GraceTime = dmgin.replace("[time]", Integer.toString(Timer.getGracetime()));
+		String PreGame = pvpin.replace("[time]", Integer.toString(Timer.getPrePvP()));
 		
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		obj.setDisplayName(ingameTitle);
 		
-		if(ShowInGameBar) {
-			obj.getScore(ingameBar).setScore(score);
-			score--;
-		}
-		
-		if(ShowInGamePlayersLiving) {
-			String a = ingamePlayersLiving.replace("[livingPlayerscount]", Integer.toString(Core.getInGamePlayers().size()));
-			lA.put(p, a);
-			la = score;
-			obj.getScore(a).setScore(score);
-			score--;
-		}
-		
-		if(ShowInGameSpectators) {
-			String a = ingameSpectators.replace("[spectatorcount]", Integer.toString(Core.getSpecs().size()));
-			lB.put(p, a);
-			lb = score;
-			obj.getScore(a).setScore(score);
-			score--;
-		}
-		
-		if(ShowInGameBar) {
-			obj.getScore("§a"+ingameBar).setScore(score);
-			score--;
-		}
-		
-		if(ShowInGameKit) {
-			String a = ingameKit.replace("[kit]", LobbyListener.getSelKit(p));
-			obj.getScore(a).setScore(score);
-			score--;
-		}
-		
-		if(ShowInGameTeam) {
-			String a = ingameTeam.replace("[team]", ""+ATeam.getTeamColor(ATeam.getPlayerTeam(p))+ ATeam.getPlayerTeam(p));
-			obj.getScore(a).setScore(score);
-			score--;
-		}
-		
-		if(ShowInGameBar) {
-			obj.getScore("§b"+ingameBar).setScore(score);
-			score--;
-		}
-		
-		if(ShowInGameCenter) {
-			String a = ingameCenter.replace("[distanceToCenter]", Integer.toString((int) p.getLocation().distance(Border.getArena())));
-			lE.put(p, a);
-			le = score;
-			obj.getScore(a).setScore(score);
-			score--;
+		if(ShowInGamePvP) {
+			if(GState.isState(GState.PREGAME)) {
+				obj.getScore(PreGame).setScore(score++);
+				sTeamP.put(p, score);
+				cTeamP.put(p, PreGame);
+			} else
+			if(GState.isState(GState.GRACE)) {
+				obj.getScore(GraceTime).setScore(score++);
+				sTeamP.put(p, score);
+				cTeamP.put(p, GraceTime);
+			} else 
+			if(GState.isState(GState.INGAME)) {
+				obj.getScore(inGameTime).setScore(score++);
+				sTeamP.put(p, score);
+				cTeamP.put(p, inGameTime);
+			}
 		}
 		
 		if(ShowInGameBorder) {
-			String a = ingameBorder.replace("[bordersize]", Integer.toString(Border.getSize()));
-			lF.put(p, a);
-			lf = score;
-			obj.getScore(a).setScore(score);
-			score--;
+			obj.getScore(bordersize).setScore(score++);
+			sTeamB.put(p, score);
+			cTeamB.put(p, bordersize);
 		}
 		
-		if(ShowInGamePvP) {
-			if(GState.isState(GState.INGAME)) {
-				String a = ingamePvP.replace("[time]", Integer.toString(Timer.getuDM()));
-				lC.put(p, a);
-				lc = score;
-				ld = score;
-				lg = score;
-				obj.getScore(a).setScore(score);
-				score--;
-			} else if(GState.isState(GState.GRACE)){
-				String a = dmgin.replace("[time]", Integer.toString(Timer.getGracetime()));
-				lD.put(p, a);
-				lc = score;
-				ld = score;
-				lg = score;
-				obj.getScore(a).setScore(score);
-				score--;
-			} else if(GState.isState(GState.PREGAME)) {
-				String a = pvpin.replace("[time]", Integer.toString(Timer.getPrePvP()));
-				lG.put(p, a);
-				lc = score;
-				ld = score;
-				lg = score;
-				obj.getScore(a).setScore(score);
-				score--;
+		if(ShowInGameCenter) {
+			if(SpawnFileManager.getSpawn() == null && p.getWorld().getName().equals(SpawnFileManager.getSpawnWorldName())) {
+				double dis = p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation());
+				if(dis >= 0) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7<"+Integer.toString(100));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 250) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(250));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 500) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(500));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				} 
+				if(dis >= 750) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(750));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 1000) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1000));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 1250) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1250));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 1500) {
+					String a = ingameCenter.replace("[distanceToCenter]", ">"+Integer.toString(1500));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+			} else {
+				double dis = p.getLocation().distance(p.getWorld().getSpawnLocation());
+				if(dis >= 0) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7<"+Integer.toString(100));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 250) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(250));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 500) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(500));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				} 
+				if(dis >= 750) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(750));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 1000) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1000));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 1250) {
+					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1250));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
+				if(dis >= 1500) {
+					String a = ingameCenter.replace("[distanceToCenter]", ">"+Integer.toString(1500));
+					p.getScoreboard().resetScores(cTeamD.get(p));
+					cTeamD.put(p, a);
+					obj.getScore(a).setScore(score++);
+					sTeamD.put(p, score);
+				}
 			}
+		}
+		
+		if(ShowInGameBar) {
+			obj.getScore("§b"+ingameBar).setScore(score++);
+		}
+		
+		if(ShowInGameTeam) {
+			obj.getScore(team).setScore(score++);
+			sTeamT.put(p, score);
+			cTeamT.put(p, team);
+		}
+		
+		if(ShowInGameKit) {
+			obj.getScore(kit).setScore(score++);
+			sTeamK.put(p, score);
+			cTeamK.put(p, kit);
+		}
+		
+		if(ShowInGameBar) {
+			obj.getScore("§a"+ingameBar).setScore(score++);
+		}
+		
+		if(ShowInGameSpectators) {
+			obj.getScore(specs).setScore(score++);
+			sTeamS.put(p, score);
+			cTeamS.put(p, specs);
+		}
+		
+		if(ShowInGamePlayersLiving) {
+			obj.getScore(alive).setScore(score++);
+			sTeamA.put(p, score);
+			cTeamA.put(p, alive);
+		}
+		
+		if(ShowInGameBar) {
+			obj.getScore(ingameBar).setScore(score++);
 		}
 		
 		if(ShowHealthUName) {
@@ -759,62 +737,143 @@ public class AScoreboard {
 	}
 	
 	public static void updateInGamePlayersLiving(Player p) {
-		Objective objP = p.getScoreboard().getObjective("UHCInGame");
+		Objective b = p.getScoreboard().getObjective("UHCInGame");
 		String a = ingamePlayersLiving.replace("[livingPlayerscount]", Integer.toString(Core.getInGamePlayers().size()));
-		p.getScoreboard().resetScores(lA.get(p));
-		lA.put(p, a);
-		objP.getScore(a).setScore(la);
+		p.getScoreboard().resetScores(cTeamA.get(p));
+		cTeamA.put(p, a);
+		b.getScore(a).setScore(sTeamA.get(p));
 	}
 	
 	public static void updateInGameSpectators(Player p) {
-		Objective objP = p.getScoreboard().getObjective("UHCInGame");
+		Objective b = p.getScoreboard().getObjective("UHCInGame");
 		String a = ingameSpectators.replace("[spectatorcount]", Integer.toString(Core.getSpecs().size()));
-		p.getScoreboard().resetScores(lB.get(p));
-		lB.put(p, a);
-		objP.getScore(a).setScore(lb);
+		p.getScoreboard().resetScores(cTeamS.get(p));
+		cTeamS.put(p, a);
+		b.getScore(a).setScore(sTeamS.get(p));
 	}
 	
 	public static void updateInGameCenter(Player p) {
-		Objective objP = p.getScoreboard().getObjective("UHCInGame");
-		if(SpawnFileManager.getSpawn() == null) {
-			String  a = ingameCenter.replace("[distanceToCenter]", Integer.toString((int) p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation())));
-			p.getScoreboard().resetScores(lE.get(p));
-			lE.put(p, a);
-			objP.getScore(a).setScore(le);
+		Objective b = p.getScoreboard().getObjective("UHCInGame");
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+		if(!(SpawnFileManager.getSpawn() == null && p.getWorld().getName().equals(SpawnFileManager.getSpawnWorldName()))) {
+			double dis = p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation());
+			if(dis >= 0) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7<"+Integer.toString(100));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 250) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(250));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 500) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(500));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 750) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(750));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 1000) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1000));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 1250) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1250));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 1500) {
+				String a = ingameCenter.replace("[distanceToCenter]", ">"+Integer.toString(1500));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
 		} else {
-			String a = ingameCenter.replace("[distanceToCenter]", Integer.toString((int) p.getLocation().distance(p.getWorld().getSpawnLocation())));
-			p.getScoreboard().resetScores(lE.get(p));
-			lE.put(p, a);
-			objP.getScore(a).setScore(le);
+			double dis = p.getLocation().distance(p.getWorld().getSpawnLocation());
+			if(dis >= 0) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7<"+Integer.toString(100));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 250) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(250));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 500) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(500));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 750) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(750));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 1000) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1000));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 1250) {
+				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1250));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
+			if(dis >= 1500) {
+				String a = ingameCenter.replace("[distanceToCenter]", ">"+Integer.toString(1500));
+				p.getScoreboard().resetScores(cTeamD.get(p));
+				cTeamD.put(p, a);
+				b.getScore(a).setScore(sTeamD.get(p));
+			}
 		}
+			}
+		}.runTaskLater(Core.getInstance(), 20);
 	}
 	
 	public static void updateInGameBorder(Player p) {
-		Objective objP = p.getScoreboard().getObjective("UHCInGame");
+		Objective b = p.getScoreboard().getObjective("UHCInGame");
 		String a = ingameBorder.replace("[bordersize]", Integer.toString(Border.getSize()));
-		p.getScoreboard().resetScores(lF.get(p));
-		lF.put(p, a);
-		objP.getScore(a).setScore(lf);
+		p.getScoreboard().resetScores(cTeamB.get(p));
+		cTeamB.put(p, a);
+		b.getScore(a).setScore(sTeamB.get(p));
 	}
 	
 	public static void updateInGamePvPTime(final Player p) {
+		Objective b = p.getScoreboard().getObjective("UHCInGame");
 		if(GState.isState(GState.INGAME)) {
-			Objective objP = p.getScoreboard().getObjective("UHCInGame");
 			String a = ingamePvP.replace("[time]", Integer.toString(Timer.getuDM()));
-			if(lC.containsKey(p)) p.getScoreboard().resetScores(lC.get(p));
-			lC.put(p, a);
-			objP.getScore(a).setScore(lc);
+			p.getScoreboard().resetScores(cTeamP.get(p));
+			cTeamP.put(p, a);
+			b.getScore(a).setScore(sTeamP.get(p));
 		} 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 			@Override
 			public void run() {
 				if(GState.isState(GState.GRACE)) {
-					Objective objP = p.getScoreboard().getObjective("UHCInGame");
 					String a = dmgin.replace("[time]", Integer.toString(Timer.getGracetime()));
-					if(lC.containsKey(p)) p.getScoreboard().resetScores(lC.get(p));
-					if(lD.containsKey(p)) p.getScoreboard().resetScores(lD.get(p));
-					lD.put(p, a);
-					objP.getScore(a).setScore(ld);
+					p.getScoreboard().resetScores(cTeamP.get(p));
+					cTeamP.put(p, a);
+					b.getScore(a).setScore(sTeamP.get(p));
 				}
 			}
 		}, 2);
@@ -822,13 +881,10 @@ public class AScoreboard {
 			@Override
 			public void run() {
 				if(GState.isState(GState.PREGAME)) {
-					Objective objP = p.getScoreboard().getObjective("UHCInGame");
 					String a = pvpin.replace("[time]", Integer.toString(Timer.getPrePvP()));
-					if(lC.containsKey(p)) p.getScoreboard().resetScores(lC.get(p));
-					if(lD.containsKey(p)) p.getScoreboard().resetScores(lD.get(p));
-					if(lG.containsKey(p)) p.getScoreboard().resetScores(lG.get(p));
-					lG.put(p, a);
-					objP.getScore(a).setScore(lg);
+					p.getScoreboard().resetScores(cTeamP.get(p));
+					cTeamP.put(p, a);
+					b.getScore(a).setScore(sTeamP.get(p));
 				}
 			}
 		}, 2);
@@ -837,10 +893,10 @@ public class AScoreboard {
 	public static String ingamePvPmsg;
 	
 	public static void setInGamePvPTime(Player p) {
-		Objective objP = p.getScoreboard().getObjective("UHCInGame");
-		p.getScoreboard().resetScores(lC.get(p));
-		lC.put(p, ingamePvPmsg);
-		objP.getScore(ingamePvPmsg).setScore(lc);
-	}
+		Objective b = p.getScoreboard().getObjective("UHCInGame");
+		p.getScoreboard().resetScores(cTeamP.get(p));
+		cTeamP.put(p, ingamePvPmsg);
+		b.getScore(ingamePvPmsg).setScore(sTeamP.get(p));
+		}
 	
 }

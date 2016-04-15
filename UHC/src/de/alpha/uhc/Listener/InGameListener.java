@@ -121,7 +121,7 @@ public class InGameListener implements Listener {
 					trackteam = trackteam.replace("[distance]", Integer.toString(blocks));
 							
 					p.sendMessage(Core.getPrefix() + trackteam);
-					SimpleTitle.sendTitle(p, " ", trackteam, 10, 20, 10);
+					SimpleTitle.sendTitle(p, " ", trackteam, 1, 2, 1);
 					p.setCompassTarget(getNearest(p).getLocation());
 						
 					trackteam = MessageFileManager.getMSGFile().getColorString("Compass.TeamPlayerInRange");
@@ -136,7 +136,7 @@ public class InGameListener implements Listener {
 				track = track.replace("[distance]", Integer.toString(blocks));
 						
 				p.sendMessage(Core.getPrefix() + track);
-				SimpleTitle.sendTitle(p, " ", track, 10, 20, 10);
+				SimpleTitle.sendTitle(p, " ", track, 1, 2, 1);
 				p.setCompassTarget(getNearest(p).getLocation());
 					
 				track = MessageFileManager.getMSGFile().getColorString("Compass.PlayerInRange");

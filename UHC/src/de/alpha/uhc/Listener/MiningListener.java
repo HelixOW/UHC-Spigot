@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.alpha.uhc.GState;
 import de.alpha.uhc.utils.BlockUtil;
 
 public class MiningListener implements Listener {
@@ -135,6 +136,8 @@ public class MiningListener implements Listener {
 		
 		Block b = e.getBlock();
 		Material m = b.getType();
+		
+		if(GState.isState(GState.LOBBY) || GState.isState(GState.RESTART)) return;
 		
 		if(m.equals(Material.LOG) || m.equals(Material.LOG_2)) {
 			
