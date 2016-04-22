@@ -26,19 +26,49 @@ public class GameEndListener implements Listener {
 	
 	private static String win;
 	private static String kick;
-	private static String rew;
 	private static String quit;
 	private static String BungeeServer;
+	private static String cmdEnd;
+	private static String cmdDeath;
 	
 	private static int apc;
 	private static int opc;
 	
-	private static int reward;
-	private static int deathreward;
-	
 	private static boolean BungeeMode;
+	private static boolean cmdOnEnd;
+	private static boolean cmdOnDeath;
 	
-	
+	public static String getCmdDeath() {
+		return cmdDeath;
+	}
+
+	public static void setCmdDeath(String cmdDeath) {
+		GameEndListener.cmdDeath = cmdDeath;
+	}
+
+	public static boolean isCmdOnDeath() {
+		return cmdOnDeath;
+	}
+
+	public static void setCmdOnDeath(boolean cmdOnDeath) {
+		GameEndListener.cmdOnDeath = cmdOnDeath;
+	}
+
+	public static boolean isCmdOnEnd() {
+		return cmdOnEnd;
+	}
+
+	public static void setCmdOnEnd(boolean cmdOnEnd) {
+		GameEndListener.cmdOnEnd = cmdOnEnd;
+	}
+
+	public static String getCmdEnd() {
+		return cmdEnd;
+	}
+
+	public static void setCmdEnd(String cmd) {
+		GameEndListener.cmdEnd = cmd;
+	}
 	
 	public static  String getWin() {
 		return win;
@@ -58,17 +88,6 @@ public class GameEndListener implements Listener {
 	public static  void setKick(String kick) {
 		GameEndListener.kick = kick;
 	}
-
-
-	public static  String getRew() {
-		return rew;
-	}
-
-
-	public static  void setRew(String rew) {
-		GameEndListener.rew = rew;
-	}
-
 
 	public static  String getQuit() {
 		return quit;
@@ -110,26 +129,6 @@ public class GameEndListener implements Listener {
 	}
 
 
-	public static  int getReward() {
-		return reward;
-	}
-
-
-	public static  void setReward(int reward) {
-		GameEndListener.reward = reward;
-	}
-
-
-	public static  int getDeathreward() {
-		return deathreward;
-	}
-
-
-	public static  void setDeathreward(int deathreward) {
-		GameEndListener.deathreward = deathreward;
-	}
-
-
 	public static  boolean isBungeeMode() {
 		return BungeeMode;
 	}
@@ -166,18 +165,7 @@ public class GameEndListener implements Listener {
 		if(p.getKiller() instanceof Player) new Stats(p.getKiller()).addKill();
 		
 		new Stats(p).addDeath();
-		new Stats(p).addCoins(deathreward);
-		
-		
-		//                        -=X Rewarding X=-
-		
-		
-		rew = rew.replace("[Coins]", Integer.toString(deathreward));
-		
-		p.sendMessage(Core.getPrefix() + rew);
-		SimpleTitle.sendTitle(p, " ", rew, 1, 2, 1);
-		
-		rew = MessageFileManager.getMSGFile().getColorString("Reward");
+		if(isCmdOnDeath()) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmdDeath);
 		
 		
 		//                        -=X Scoreboard X=-
@@ -232,18 +220,14 @@ public class GameEndListener implements Listener {
 			for(Player winner: Core.getInGamePlayers()) {
 				
 				win = win.replace("[Player]", winner.getDisplayName());
-				rew = rew.replace("[Coins]", Integer.toString(reward));
 				
 				Bukkit.broadcastMessage(Core.getPrefix() + win);
 				for(Player all : Bukkit.getOnlinePlayers()) {
 					SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
 				}
 				
-				new Stats(winner).addCoins(reward);
+				if(cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmdEnd);
 				
-				winner.sendMessage(Core.getPrefix() + rew);
-				
-				rew = MessageFileManager.getMSGFile().getColorString("Reward");
 				win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
 				
 				Timer.startRestartTimer();
@@ -335,19 +319,15 @@ public class GameEndListener implements Listener {
 				for(Player winner: Core.getInGamePlayers()) {
 					
 					win = win.replace("[Player]", winner.getDisplayName());
-					rew = rew.replace("[Coins]", Integer.toString(reward));
 					
 					Bukkit.broadcastMessage(Core.getPrefix() + win);
 					for(Player all : Bukkit.getOnlinePlayers()) {
 						SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
 					}
 					
-					new Stats(winner).addCoins(reward);
+					if(cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmdEnd);
 					
 					
-					winner.sendMessage(Core.getPrefix() + rew);
-					
-					rew = MessageFileManager.getMSGFile().getColorString("Reward");
 					win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
 					
 					Timer.startRestartTimer();

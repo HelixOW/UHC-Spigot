@@ -529,7 +529,6 @@ public class Timer {
 	}
 	
 	public static void startSilentGStateWatcher() {
-		
 		d = new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -548,6 +547,10 @@ public class Timer {
 						SimpleActionBar.send(all, Core.getPrefix() + pvpstart);
 					}
 					GState.setGameState(GState.INGAME);
+					for(Player all : Bukkit.getOnlinePlayers()) {
+						all.damage(1);
+						all.setHealth(all.getMaxHealth());
+					}
 					if(dm) startSilentDeathMatchTimer();
 					d.cancel();
 				}

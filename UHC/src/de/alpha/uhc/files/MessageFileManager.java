@@ -9,6 +9,7 @@ import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.aclasses.ATablist;
 import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.border.BorderManager;
+import de.alpha.uhc.commands.CoinsCommand;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.timer.Timer;
@@ -124,7 +125,6 @@ public class MessageFileManager {
 		
 		GameEndListener.setWin(file.getColorString("Announcements.Win"));
 		GameEndListener.setKick(file.getColorString("Announcements.Restart"));
-		GameEndListener.setRew(file.getColorString("Reward"));
 		GameEndListener.setQuit(file.getColorString("Announcements.Leave"));
 		
 		InGameListener.setNtrack(file.getColorString("Compass.NoPlayerInRange"));
@@ -137,6 +137,8 @@ public class MessageFileManager {
 		PlayerJoinListener.setSubtitle(file.getColorString("Join.Subtitle"));
 		
 		BorderManager.setMoved(file.getColorString("Announcements.Border.Move"));
+		
+		CoinsCommand.setRew(file.getColorString("Reward"));
 		
 		GUI.setTitle(file.getColorString("Kits.GUI.Title"));
 	}

@@ -75,6 +75,7 @@ public class InGameListener implements Listener {
 		
 		if(!(GState.isState(GState.INGAME) || GState.isState(GState.GRACE) || GState.isState(GState.DEATHMATCH) || GState.isState(GState.PREDEATHMATCH) || GState.isState(GState.PREGAME))) return;
 		if(Core.getSpecs().contains(e.getPlayer())) return;
+		if(e.getFrom().getBlock().equals(e.getTo().getBlock())) return;
 		AScoreboard.updateInGameCenter(e.getPlayer());
 		
 	}

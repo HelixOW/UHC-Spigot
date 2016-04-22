@@ -158,6 +158,8 @@ public class MiningListener implements Listener {
 							for(BlockFace bf : BlockUtil.getRelative()) {
 								if(loc.getBlock().getRelative(bf).getType().equals(Material.LEAVES) || loc.getBlock().getRelative(bf).getType().equals(Material.LEAVES_2)) {
 									loc.getBlock().getRelative(bf).breakNaturally();
+									if(loc.getBlock().getRelative(bf, 2).getType().equals(Material.LEAVES) || loc.getBlock().getRelative(bf, 2).getType().equals(Material.LEAVES_2)) loc.getBlock().getRelative(bf, 2).breakNaturally();
+									if(loc.getBlock().getRelative(bf, 3).getType().equals(Material.LEAVES) || loc.getBlock().getRelative(bf, 3).getType().equals(Material.LEAVES_2)) loc.getBlock().getRelative(bf, 3).breakNaturally();
 								}
 							}
 						}

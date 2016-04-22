@@ -64,9 +64,6 @@ public class OptionsFileManager {
         file.setDefault("Team.GUI.Title", "&7-=X &bTeams &7X=-");
         file.setDefault("Team.GUI.Block", "stained_clay");
         
-        file.setDefault("Coins.on Win", 100);
-        file.setDefault("Coins.on Death", 5);
-        
         file.setDefault("Spawnradius", 20);
         
         file.setDefault("Lobby.region", false);
@@ -90,6 +87,11 @@ public class OptionsFileManager {
         file.setDefault("Spectator.Item", "magma_cream");
         file.setDefault("Spectator.Itemname", "&aPlayer Teleporter");
         file.setDefault("Spectator.GUI.Title", "&7-=X &cSpectator &7X=-");
+        
+        file.setDefault("Command.on End", true);
+        file.setDefault("Command.to execute.on End", "coins add 100 [player]");
+        file.setDefault("Command.on Death", true);
+        file.setDefault("Command.to execute.on Death", "coins add 5 [player]");
         
         
     }
@@ -124,8 +126,10 @@ public class OptionsFileManager {
 		
 		GameEndListener.setBungeeMode(file.getBoolean("BungeeMode"));
 		GameEndListener.setBungeeServer(file.getString("BungeeServer"));
-		GameEndListener.setReward(file.getInt("Coins.on Win"));
-		GameEndListener.setDeathreward(file.getInt("Coins.on Death"));
+		GameEndListener.setCmdEnd(file.getString("Command.to execute.on End"));
+		GameEndListener.setCmdOnEnd(file.getBoolean("Command.on End"));
+		GameEndListener.setCmdDeath(file.getString("Command.to execute.on Death"));
+		GameEndListener.setCmdOnDeath(file.getBoolean("Command.on Death"));
 		
 		UHCCommand.setTeamMode(file.getBoolean("TeamMode"));
 		

@@ -33,6 +33,7 @@ import de.alpha.uhc.Listener.PlayerJoinListener;
 import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.aclasses.AWorld;
+import de.alpha.uhc.commands.CoinsCommand;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.DeathMessageFile;
 import de.alpha.uhc.files.DropFile;
@@ -209,6 +210,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 	
 	private void registerCommands() {
 		getCommand("uhc").setExecutor(new UHCCommand());
+		new CoinsCommand(this, "coins", "Add coins to a Player", new String[] {});
 	}
 	
 	private void createTables() {
