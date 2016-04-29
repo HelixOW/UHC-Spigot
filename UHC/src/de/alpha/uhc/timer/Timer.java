@@ -435,7 +435,6 @@ public class Timer {
 													}
 												}
 												
-												AScoreboard.sendAntiFlickerInGameBoard(ig);
 												new BukkitRunnable() {
 													
 													@Override
@@ -478,8 +477,8 @@ public class Timer {
 				}
 			}
 			all.getInventory().clear();
+			AScoreboard.sendAntiFlickerInGameBoard(all);
 		}
-		
 		
 		c = new BukkitRunnable() {
 			

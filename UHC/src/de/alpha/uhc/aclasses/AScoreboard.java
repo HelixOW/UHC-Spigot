@@ -583,105 +583,17 @@ public class AScoreboard {
 		
 		if(ShowInGameCenter) {
 			if(SpawnFileManager.getSpawn() == null && p.getWorld().getName().equals(SpawnFileManager.getSpawnWorldName())) {
-				double dis = p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation());
-				if(dis >= 0) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7<"+Integer.toString(100));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 250) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(250));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 500) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(500));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				} 
-				if(dis >= 750) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(750));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 1000) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1000));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 1250) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1250));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 1500) {
-					String a = ingameCenter.replace("[distanceToCenter]", ">"+Integer.toString(1500));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
+				int dis = (int) p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation());
+				String a = ingameCenter.replace("[distanceToCenter]", Integer.toString(dis));
+				cTeamD.put(p, a);
+				obj.getScore(a).setScore(score++);
+				sTeamD.put(p, score);
 			} else {
-				double dis = p.getLocation().distance(p.getWorld().getSpawnLocation());
-				if(dis >= 0) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7<"+Integer.toString(100));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 250) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(250));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 500) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(500));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				} 
-				if(dis >= 750) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(750));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 1000) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1000));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 1250) {
-					String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1250));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
-				if(dis >= 1500) {
-					String a = ingameCenter.replace("[distanceToCenter]", ">"+Integer.toString(1500));
-					p.getScoreboard().resetScores(cTeamD.get(p));
-					cTeamD.put(p, a);
-					obj.getScore(a).setScore(score++);
-					sTeamD.put(p, score);
-				}
+				int dis = (int) p.getLocation().distance(p.getWorld().getSpawnLocation());
+				String a = ingameCenter.replace("[distanceToCenter]", Integer.toString(dis));
+				cTeamD.put(p, a);
+				obj.getScore(a).setScore(score++);
+				sTeamD.put(p, score);
 			}
 		}
 		
@@ -758,93 +670,17 @@ public class AScoreboard {
 			@Override
 			public void run() {
 		if(!(SpawnFileManager.getSpawn() == null && p.getWorld().getName().equals(SpawnFileManager.getSpawnWorldName()))) {
-			double dis = p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation());
-			if(dis >= 0) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7<"+Integer.toString(100));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 250) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(250));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 500) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(500));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 750) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(750));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 1000) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1000));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 1250) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1250));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 1500) {
-				String a = ingameCenter.replace("[distanceToCenter]", ">"+Integer.toString(1500));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
+			int dis = (int) p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation());
+			String a = ingameCenter.replace("[distanceToCenter]", Integer.toString(dis));
+			p.getScoreboard().resetScores(cTeamD.get(p));
+			cTeamD.put(p, a);
+			b.getScore(a).setScore(sTeamD.get(p));
 		} else {
-			double dis = p.getLocation().distance(p.getWorld().getSpawnLocation());
-			if(dis >= 0) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7<"+Integer.toString(100));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 250) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(250));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 500) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(500));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 750) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(750));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 1000) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1000));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 1250) {
-				String a = ingameCenter.replace("[distanceToCenter]", "§7~"+Integer.toString(1250));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
-			if(dis >= 1500) {
-				String a = ingameCenter.replace("[distanceToCenter]", ">"+Integer.toString(1500));
-				p.getScoreboard().resetScores(cTeamD.get(p));
-				cTeamD.put(p, a);
-				b.getScore(a).setScore(sTeamD.get(p));
-			}
+			int dis = (int) p.getLocation().distance(p.getWorld().getSpawnLocation());
+			String a = ingameCenter.replace("[distanceToCenter]", Integer.toString(dis));
+			p.getScoreboard().resetScores(cTeamD.get(p));
+			cTeamD.put(p, a);
+			b.getScore(a).setScore(sTeamD.get(p));
 		}
 			}
 		}.runTaskLater(Core.getInstance(), 20);
@@ -860,6 +696,29 @@ public class AScoreboard {
 	
 	public static void updateInGamePvPTime(final Player p) {
 		Objective b = p.getScoreboard().getObjective("UHCInGame");
+		String inGameTime = ingamePvP.replace("[time]", Integer.toString(Timer.getuDM()));
+		String GraceTime = dmgin.replace("[time]", Integer.toString(Timer.getGracetime()));
+		String PreGame = pvpin.replace("[time]", Integer.toString(Timer.getPrePvP()));
+		if(!(cTeamP.containsKey(p))) {
+			if(ShowInGamePvP) {
+				if(GState.isState(GState.PREGAME)) {
+					obj.getScore(PreGame).setScore(sTeamB.get(p)-1);
+					sTeamP.put(p, sTeamB.get(p)-1);
+					cTeamP.put(p, PreGame);
+				} else
+				if(GState.isState(GState.GRACE)) {
+					obj.getScore(GraceTime).setScore(sTeamB.get(p)-1);
+					sTeamP.put(p, sTeamB.get(p)-1);
+					cTeamP.put(p, GraceTime);
+				} else 
+				if(GState.isState(GState.INGAME)) {
+					obj.getScore(inGameTime).setScore(sTeamB.get(p)-1);
+					sTeamP.put(p, sTeamB.get(p)-1);
+					cTeamP.put(p, inGameTime);
+				}
+			}
+			return;
+		}
 		if(GState.isState(GState.INGAME)) {
 			String a = ingamePvP.replace("[time]", Integer.toString(Timer.getuDM()));
 			p.getScoreboard().resetScores(cTeamP.get(p));

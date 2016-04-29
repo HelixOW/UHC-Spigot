@@ -165,7 +165,8 @@ public class GameEndListener implements Listener {
 		if(p.getKiller() instanceof Player) new Stats(p.getKiller()).addKill();
 		
 		new Stats(p).addDeath();
-		if(isCmdOnDeath()) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmdDeath);
+		String a = cmdDeath.replace("[player]", p.getName());
+		if(isCmdOnDeath()) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), a);
 		
 		
 		//                        -=X Scoreboard X=-
@@ -226,7 +227,8 @@ public class GameEndListener implements Listener {
 					SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
 				}
 				
-				if(cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmdEnd);
+				String b = cmdEnd.replace("[player]", p.getName());
+				if(cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), b);
 				
 				win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
 				
@@ -325,7 +327,8 @@ public class GameEndListener implements Listener {
 						SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
 					}
 					
-					if(cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmdEnd);
+					String a = cmdEnd.replace("[player]", p.getName());
+					if(cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), a);
 					
 					
 					win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
