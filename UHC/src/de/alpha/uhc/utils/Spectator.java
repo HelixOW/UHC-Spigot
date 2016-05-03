@@ -4,20 +4,26 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import de.alpha.uhc.Core;
 import de.popokaka.alphalibary.item.ItemBuilder;
@@ -67,6 +73,29 @@ public class Spectator implements Listener{
 		equipSpecStuff(p);
 		for(Player ig : Core.getInGamePlayers()) {
 			ig.hidePlayer(p);
+		}
+	}
+	
+	@EventHandler
+	public void onMove(PlayerMoveEvent e) {
+		Player p = e.getPlayer();
+		
+		if(Core.getSpecs().contains(p)) {
+			for(Entity near : p.getNearbyEntities(6, 6, 6)) {
+				if(near instanceof Player) {
+					Vector v = p.getLocation().getDirection().add(new Vector(-1, 2, -1));
+					p.setVelocity(v);
+					break;
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onExp(PlayerExpChangeEvent e) {
+		if(Core.getSpecs().contains(e.getPlayer())) {
+			e.setAmount(0);
+			e.getPlayer().getWorld().spawnEntity(e.getPlayer().getLocation().subtract(0, 5, 0), EntityType.EXPERIENCE_ORB);
 		}
 	}
 	
@@ -122,6 +151,13 @@ public class Spectator implements Listener{
 		if(Core.getSpecs().contains(p)){
 			e.setCancelled(true);
 		}	
+	}
+	
+	@EventHandler
+	public void onTrack(EntityTargetEvent e) {
+		if (((e.getTarget() instanceof Player)) && (Core.getSpecs().contains(e.getTarget()))) {
+	      e.setCancelled(true);
+	    }
 	}
 	
 	private static void equipSpecStuff(Player p) {
