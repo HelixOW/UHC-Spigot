@@ -34,7 +34,9 @@ import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.commands.CoinsCommand;
+import de.alpha.uhc.commands.StartCommand;
 import de.alpha.uhc.commands.UHCCommand;
+import de.alpha.uhc.files.CommandsFile;
 import de.alpha.uhc.files.DeathMessageFile;
 import de.alpha.uhc.files.DropFile;
 import de.alpha.uhc.files.HologramFileManager;
@@ -126,6 +128,9 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		DeathMessageFile.addDeathMessages();
 		DeathMessageFile.loadDeathMessages();
 		
+		CommandsFile.addCommands();
+		CommandsFile.loadCommands();
+		
 		registerCommands();
 		registerEvents();
 		
@@ -211,6 +216,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 	private void registerCommands() {
 		getCommand("uhc").setExecutor(new UHCCommand());
 		new CoinsCommand(this, "coins", "Add coins to a Player", new String[] {});
+		new StartCommand(this, "start", "Short the timer to 10 seconds", new String[] {});
 	}
 	
 	private void createTables() {
