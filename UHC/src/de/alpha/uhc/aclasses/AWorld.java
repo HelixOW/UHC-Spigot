@@ -119,6 +119,7 @@ public class AWorld {
 				
 				if(!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn"))) {
 					p.sendMessage(Core.getPrefix() + "§cYou haven't created a custom World spawnpoint.");
+					GState.setGameState(GState.LOBBY);
 					worldName = "UHC";
 				} else {
 					worldName = SpawnFileManager.getSpawnWorldName();

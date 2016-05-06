@@ -36,11 +36,10 @@ public class StatsCommand extends SimpleCommand<Core>{
 
 	@Override
 	public boolean execute(CommandSender cs, String label, String[] args) {
-		if(cs instanceof Player) {
+		if(!(cs instanceof Player)) {
 			cs.sendMessage(Core.getPrefix() + UHCCommand.getNoplayer());
 			return false;
 		}
-		System.out.println(us);
 		if(inUs() == true) {
 			Player p = (Player) cs;
 			new Stats(p).sendStats();

@@ -35,7 +35,6 @@ public class StartCommand extends SimpleCommand<Core>{
 
 	@Override
 	public boolean execute(CommandSender cs, String label, String[] args) {
-		System.out.println(StartCommand.inUse());
 		if(StartCommand.inUse()) {
 			if(cs.hasPermission("UHC.start")) {
 				Timer.changeTime();
