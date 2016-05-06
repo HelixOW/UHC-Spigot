@@ -217,6 +217,7 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		getCommand("uhc").setExecutor(new UHCCommand());
 		new CoinsCommand(this, "coins", "Add coins to a Player", new String[] {});
 		new StartCommand(this, "start", "Short the timer to 10 seconds", new String[] {});
+		new StartCommand(this, "stats", "See your Statistics of UHC", new String[] {});
 	}
 	
 	private void createTables() {

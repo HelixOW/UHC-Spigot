@@ -12,6 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.aclasses.ATeam;
+import de.alpha.uhc.files.CommandsFile;
+import de.alpha.uhc.files.DeathMessageFile;
 import de.alpha.uhc.files.DropFile;
 import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
@@ -188,6 +190,12 @@ public class UHCCommand implements CommandExecutor {
 						
 						ScoreboardFile.addScores();
 						ScoreboardFile.loadScores();
+						
+						DeathMessageFile.addDeathMessages();
+						DeathMessageFile.loadDeathMessages();
+						
+						CommandsFile.addCommands();
+						CommandsFile.loadCommands();
 						
 						p.sendMessage(Core.getPrefix() + "§cAll configs has been reloaded");
 						return true;

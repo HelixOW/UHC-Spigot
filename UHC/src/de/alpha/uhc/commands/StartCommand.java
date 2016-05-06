@@ -17,20 +17,16 @@ public class StartCommand extends SimpleCommand<Core>{
 		return use;
 	}
 
-	public static void setUse(boolean use) {
-		StartCommand.use = use;
+	public static void setUse(boolean a) {
+		StartCommand.use = a;
 	}
 
 	public static String getErr() {
 		return err;
 	}
 
-	public static void setErr(String err) {
-		StartCommand.err = err;
-	}
-
-	public static boolean isUse() {
-		return use;
+	public static void setErr(String a) {
+		StartCommand.err = a;
 	}
 
 	public StartCommand(Core plugin, String command, String description, String[] aliases) {
@@ -39,14 +35,15 @@ public class StartCommand extends SimpleCommand<Core>{
 
 	@Override
 	public boolean execute(CommandSender cs, String label, String[] args) {
-		if(inUse()) {
+		System.out.println(StartCommand.inUse());
+		if(StartCommand.inUse()) {
 			if(cs.hasPermission("UHC.start")) {
 				Timer.changeTime();
 			} else {
 				cs.sendMessage(Core.getPrefix() + UHCCommand.getNoperms());
 			}
 		} else {
-			cs.sendMessage(Core.getPrefix()+ getErr());
+			cs.sendMessage(Core.getPrefix()+ StartCommand.getErr());
 		}
 		return false;
 	}

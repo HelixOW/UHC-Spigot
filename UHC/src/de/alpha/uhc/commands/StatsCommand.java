@@ -11,27 +11,23 @@ import de.popokaka.alphalibary.command.SimpleCommand;
 
 public class StatsCommand extends SimpleCommand<Core>{
 	
-	private static boolean use;
-	private static String err;
+	private static boolean us;
+	private static String er;
 	
-	public static boolean inUse() {
-		return use;
+	public static boolean inUs() {
+		return us;
 	}
 
-	public static void setUse(boolean use) {
-		StatsCommand.use = use;
+	public static void setUs(boolean a) {
+		us = a;
 	}
 
-	public static String getErr() {
-		return err;
+	public static String getEr() {
+		return er;
 	}
 
-	public static void setErr(String err) {
-		StatsCommand.err = err;
-	}
-
-	public static boolean isUse() {
-		return use;
+	public static void setEr(String a) {
+		StatsCommand.er = a;
 	}
 
 	public StatsCommand(Core plugin, String command, String description, String[] aliases) {
@@ -44,11 +40,12 @@ public class StatsCommand extends SimpleCommand<Core>{
 			cs.sendMessage(Core.getPrefix() + UHCCommand.getNoplayer());
 			return false;
 		}
-		if(inUse()) {
+		System.out.println(us);
+		if(inUs() == true) {
 			Player p = (Player) cs;
 			new Stats(p).sendStats();
 		} else {
-			cs.sendMessage(Core.getPrefix()+ getErr());
+			cs.sendMessage(Core.getPrefix()+ getEr());
 		}
 		return false;
 	}

@@ -111,6 +111,7 @@ public class AWorld {
 					if(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby") && SpawnFileManager.getLobbyWorldName().equals(SpawnFileManager.getSpawnWorldName())) {
 						if(!(lobbyAsSchematic && Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
 							p.sendMessage(Core.getPrefix() + "§cBecause your Lobby and Spawn is in one World. The World is not resetting itself.");
+							GState.setGameState(GState.LOBBY);
 							return;
 						}
 					}
