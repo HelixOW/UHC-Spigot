@@ -299,9 +299,9 @@ public class PlayerJoinListener implements Listener {
 		}
 		if (SpawnFileManager.getLobby() != null) {
 			if (Bukkit.getWorld(SpawnFileManager.getLobbyWorldName()) == null) {
-				p.teleport(p.getWorld().getSpawnLocation());
+				p.teleport(p.getWorld().getHighestBlockAt(p.getWorld().getSpawnLocation()).getLocation());
 			} else {
-				p.teleport(SpawnFileManager.getLobby());
+				p.teleport(SpawnFileManager.getLobby().getWorld().getHighestBlockAt(SpawnFileManager.getLobby()).getLocation());
 			}
 		}
 		Core.addInGamePlayer(p);

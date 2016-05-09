@@ -15,6 +15,7 @@ import com.google.common.io.ByteStreams;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
+import de.alpha.uhc.Listener.GameEndListener;
 import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.aclasses.AScoreboard;
 import de.alpha.uhc.aclasses.ATablist;
@@ -153,10 +154,6 @@ public class Timer {
 		return BungeeServer;
 	}
 
-	public static  String getKick() {
-		return kick;
-	}
-
 	private static String countmsg;
 	private static String nep;
 	private static String gracemsg;
@@ -196,7 +193,7 @@ public class Timer {
 	
 	private static boolean BungeeMode;
 	private static String BungeeServer;
-	private static String kick;
+//	private static String kick;
 	
 	
 	
@@ -320,10 +317,6 @@ public class Timer {
 		BungeeServer = bungeeServer;
 	}
 
-	public static  void setKick(String kick) {
-		Timer.kick = kick;
-	}
-
 	public static void startCountdown() {
 		
 		if(GState.isState(GState.LOBBY)) {
@@ -397,18 +390,18 @@ public class Timer {
 													try {
 												
 														if(SpawnFileManager.getSpawn() == null) {
-															ig.teleport(ig.getWorld().getSpawnLocation());
+															ig.teleport(ig.getWorld().getHighestBlockAt(ig.getWorld().getSpawnLocation()).getLocation());
 															Border.setDistanceLoc(ig.getWorld().getSpawnLocation());
 														} else {
 															Location l = SpawnFileManager.getSpawn();
 															
-															Location r = SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max);
+															Location r = l.getWorld().getHighestBlockAt(SpawnFileManager.getRandomLocation(l, l.getBlockX()-max,l.getBlockX()+max, l.getBlockZ()-max,l.getBlockZ()+max)).getLocation();
 															
 															ig.teleport(r);
 															Border.setDistanceLoc(SpawnFileManager.getSpawn());
 														}
 													} catch (Exception e) {
-														ig.teleport(ig.getWorld().getSpawnLocation());
+														ig.teleport(ig.getWorld().getHighestBlockAt(ig.getWorld().getSpawnLocation()).getLocation());
 														Border.setDistanceLoc(ig.getWorld().getSpawnLocation());
 													}
 													
@@ -450,6 +443,7 @@ public class Timer {
 									}
 								} else {
 									Bukkit.broadcastMessage(Core.getPrefix() + nep);
+									resetTime();
 									a.cancel();
 									b.cancel();
 									return;
@@ -515,6 +509,12 @@ public class Timer {
 									GState.setGameState(GState.PREGAME);
 									startSilentGStateWatcher();
 									ATablist.sendStandingInGameTablist();
+									all.damage(1);
+									new BukkitRunnable() {
+										public void run() {
+											all.setHealth(all.getMaxHealth());
+										}
+									}.runTaskLaterAsynchronously(Core.getInstance(), 15);
 								}
 								c.cancel();
 								return;
@@ -546,10 +546,6 @@ public class Timer {
 						SimpleActionBar.send(all, Core.getPrefix() + pvpstart);
 					}
 					GState.setGameState(GState.INGAME);
-					for(Player all : Bukkit.getOnlinePlayers()) {
-						all.damage(1);
-						all.setHealth(all.getMaxHealth());
-					}
 					if(dm) startSilentDeathMatchTimer();
 					d.cancel();
 				}
@@ -679,7 +675,7 @@ public class Timer {
 							
 							all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
 						} else {
-							all.kickPlayer(Core.getPrefix() + kick);
+							all.kickPlayer(Core.getPrefix() + GameEndListener.getKick());
 						}
 					}
 					f.cancel();
@@ -692,6 +688,13 @@ public class Timer {
 	
 	public static void changeTime() {
 		high = 10;
+	}
+	
+	public static void resetTime() {
+		high = OptionsFileManager.getConfigFile().getInt("Countdown.lobby");
+		for(Player all : Bukkit.getOnlinePlayers()) {
+			all.setLevel(high);
+		}
 	}
 	
 	public static void setCountdownTime() {

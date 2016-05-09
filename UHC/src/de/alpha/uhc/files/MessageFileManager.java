@@ -121,7 +121,6 @@ public class MessageFileManager {
 		Timer.setGracemsg(file.getColorString("Announcements.Peaceperiod.timer"));
 		Timer.setEnd(file.getColorString("Announcements.Peaceperiod.end"));
 		Timer.setEndmsg(file.getColorString("Announcements.End"));
-		Timer.setKick(GameEndListener.getKick());
 		
 		GameEndListener.setWin(file.getColorString("Announcements.Win"));
 		GameEndListener.setKick(file.getColorString("Announcements.Restart"));

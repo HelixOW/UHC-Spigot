@@ -165,6 +165,7 @@ public class GameEndListener implements Listener {
 		if(p.getKiller() instanceof Player) new Stats(p.getKiller()).addKill();
 		
 		new Stats(p).addDeath();
+		
 		String a = cmdDeath.replace("[player]", p.getName());
 		if(isCmdOnDeath()) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), a);
 		
@@ -179,12 +180,12 @@ public class GameEndListener implements Listener {
 		
 		//                        -=X ItemDrop X=-
 		
-		p.getWorld().dropItem(p.getLocation(), new ItemBuilder(Material.GOLD_INGOT).setAmount(8).build());
+		p.getWorld().dropItemNaturally(p.getLocation(), new ItemBuilder(Material.GOLD_INGOT).setAmount(8).build());
 		new BukkitRunnable() {
 			
 			@Override
 			public void run() {
-				p.getWorld().dropItem(p.getLocation(), new ItemBuilder(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
+				p.getWorld().dropItemNaturally(p.getLocation(), new ItemBuilder(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
 			}
 		}.runTaskLater(Core.getInstance(), 10);
 		
@@ -227,7 +228,7 @@ public class GameEndListener implements Listener {
 					SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
 				}
 				
-				String b = cmdEnd.replace("[player]", p.getName());
+				String b = cmdEnd.replace("[player]", winner.getName());
 				if(cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), b);
 				
 				win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
@@ -288,8 +289,8 @@ public class GameEndListener implements Listener {
 		if(GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
 			
 			if(!(Core.getSpecs().contains(p))) {
-				p.getWorld().dropItem(p.getLocation(), new ItemBuilder(Material.GOLD_INGOT).setAmount(8).build());
-				p.getWorld().dropItem(p.getLocation(), new ItemBuilder(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
+				p.getWorld().dropItemNaturally(p.getLocation(), new ItemBuilder(Material.GOLD_INGOT).setAmount(8).build());
+				p.getWorld().dropItemNaturally(p.getLocation(), new ItemBuilder(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
 				p.getWorld().strikeLightningEffect(p.getLocation());
 			}	
 			
@@ -327,7 +328,7 @@ public class GameEndListener implements Listener {
 						SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
 					}
 					
-					String a = cmdEnd.replace("[player]", p.getName());
+					String a = cmdEnd.replace("[player]", winner.getName());
 					if(cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), a);
 					
 					

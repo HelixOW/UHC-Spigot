@@ -636,13 +636,13 @@ public class AScoreboard {
 		if(ShowHealthUName) {
 			Objective objName = sb.registerNewObjective("UHCHealthName", "health");
 			objName.setDisplaySlot(DisplaySlot.BELOW_NAME);
-			objName.setDisplayName("❤");
+			objName.setDisplayName("§4❤");
 		}
 		
 		if(ShowHealthInTab) {
 			Objective objName = sb.registerNewObjective("UHCHealthTab", "health");
 			objName.setDisplaySlot(DisplaySlot.PLAYER_LIST);
-			objName.setDisplayName("❤");
+			objName.setDisplayName("§4❤");
 		}
 		
 		p.setScoreboard(sb);

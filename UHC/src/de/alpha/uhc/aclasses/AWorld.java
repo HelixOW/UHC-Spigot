@@ -92,6 +92,7 @@ public class AWorld {
 
             biomes[24] = plainsBiome;
             biomes[0] = plainsBiome;
+            biomes[10] = plainsBiome;
             biomesField.set(null, biomes);
                 
         } catch (Exception e) {}
@@ -139,6 +140,8 @@ public class AWorld {
 									
 									SpawnFileManager.SetSpawn(0, Bukkit.getWorld(worldName).getHighestBlockAt(0, 0).getLocation().getY(), 0, Bukkit.getWorld(worldName));
 									
+									if(!(Bukkit.getWorld(worldName).getSpawnLocation().getChunk().isLoaded())) Bukkit.getWorld(worldName).getSpawnLocation().getChunk().load();
+									
 									GState.setGameState(GState.LOBBY);
 									
 									if(lobbyAsSchematic && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
@@ -173,6 +176,8 @@ public class AWorld {
 							Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + " §aUHC World reseted");
 							
 							SpawnFileManager.SetSpawn(0, Bukkit.getWorld(worldName).getHighestBlockAt(0, 0).getLocation().getY(), 0, Bukkit.getWorld(worldName));
+							
+							if(!(Bukkit.getWorld(worldName).getSpawnLocation().getChunk().isLoaded())) Bukkit.getWorld(worldName).getSpawnLocation().getChunk().load();
 							
 							GState.setGameState(GState.LOBBY);
 							if(lobbyAsSchematic && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
