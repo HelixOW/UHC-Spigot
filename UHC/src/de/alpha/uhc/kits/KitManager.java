@@ -56,8 +56,7 @@ public class KitManager {
 	public static Inventory StringToInventory (String invString)
     {
         String[] serializedBlocks = invString.split(";");
-        String invInfo = serializedBlocks[0];
-        Inventory deserializedInventory = Bukkit.getServer().createInventory(null, Integer.parseInt(invInfo));
+        Inventory deserializedInventory = Bukkit.getServer().createInventory(null, 45);
        
         for (int i = 1; i < serializedBlocks.length; i++)
         {

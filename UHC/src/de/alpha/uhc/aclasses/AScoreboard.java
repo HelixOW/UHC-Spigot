@@ -511,14 +511,6 @@ public class AScoreboard {
 		objP.getScore(a).setScore(aa);
 	}
 	
-	public static void updateLobbyKit(Player p) {
-		Objective objP = p.getScoreboard().getObjective("UHCLobby");
-		String a = lobbyKit.replace("[kit]", ""+LobbyListener.getSelKit(p));
-		p.getScoreboard().resetScores(B.get(p));
-		B.put(p, a);
-		objP.getScore(a).setScore(bb);
-	}
-	
 	//                 		-=X Scores X=-
 	
 	private static HashMap<Player, Integer> sTeamA = new HashMap<>();

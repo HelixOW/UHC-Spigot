@@ -148,7 +148,6 @@ public class LobbyListener implements Listener {
 					kit.put(p, kits);
 					sel = sel.replace("[Kit]", kits);
 					p.sendMessage(Core.getPrefix() + sel);
-					AScoreboard.updateLobbyKit(p);
 					sel = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Selected");
 					p.closeInventory();
 					break;
@@ -159,7 +158,6 @@ public class LobbyListener implements Listener {
 						kit.remove(p);
 					}
 					kit.put(p, kits);
-					AScoreboard.updateLobbyKit(p);
 					bought = bought.replace("[Kit]", kits);
 					bought = bought.replace("[Coins]", Integer.toString(new KitFileManager().getPrice(kits)));
 					p.sendMessage(Core.getPrefix() + bought);
