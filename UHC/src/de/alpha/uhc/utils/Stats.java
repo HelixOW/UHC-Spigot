@@ -12,7 +12,11 @@ public class Stats {
 	private Player p;
 	private boolean isMysql;
 	
-	
+	/**
+	 * @author AlphaHelix
+	 * @param killer to add/remove coins
+	 * 
+	 */
 	public Stats(Player killer) {
 		p = killer;
 		isMysql = Core.isMySQLActive();
@@ -98,8 +102,5 @@ public class Stats {
 				    + "§6Coins§7: §c"+ new Stats(p).getCoins() + "\n"
 				    + "§6Kits§7: §c"+ new Stats(p).getKits() + "\n"
 				    + "§8---===XXX===---");
-		
 	}
-	
-
 }

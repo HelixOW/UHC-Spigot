@@ -63,6 +63,8 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 	
 	private static boolean isMySQLActive;
 	
+	//Getting & Setting of the variables
+	
 	public static  boolean isMySQLActive() {
 		return isMySQLActive;
 	}
@@ -98,14 +100,18 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 	private static ArrayList<Player> ig;
 	private static ArrayList<Player> spectator;
 	
+	//Start of a new UHC Round
+	
 	@Override
 	public void onEnable() {
 		instance = this;
 		ig = new ArrayList<Player>();
 		spectator = new ArrayList<Player>();
 		
+		//Make a sort of Whitelist
 		GState.setGameState(GState.RESTART);
 			
+		//Load Variables out of Configs
 		OptionsFileManager.addOptions();
 		OptionsFileManager.loadOptions();
 			
@@ -132,30 +138,38 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		CommandsFile.addCommands();
 		CommandsFile.loadCommands();
 		
+		//Register Commands & Events
 		registerCommands();
 		registerEvents();
 		
+		//Fill the Kits Inventory
 		GUI.fill();
 		
-		if(isMySQLActive == true) {
+		//Checks if MySQL is active
+		if(isMySQLActive() == true) {
 			try {
+				//Connect to Database and create the Tables if it's not existing
 				MySQLAPI.initMySQLAPI(this);
 				createTables();
 			} catch(Exception e) {
+				//Use the file backup
 				isMySQLActive = false;                                                 
 			}
 		}
 		
+		//Reset Gamemode of Spectators and other Players
 		if(Bukkit.getOnlinePlayers().size() != 0) {
 			for(Player all : Bukkit.getOnlinePlayers()) {
 				all.setGameMode(GameMode.SURVIVAL);
 			}
 		}
 		
+		//Register Channel for BungeeCord 
 		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		
 		for(Player all : Bukkit.getOnlinePlayers()) {
 			if(GameEndListener.isBungeeMode() == true) {
+				//Send all Players to Lobby Server
 				ByteArrayDataOutput out = ByteStreams.newDataOutput();
 				
 				out.writeUTF("Connect");
@@ -163,23 +177,29 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 				
 				all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
 			} else {
+				//Kick the players from the server
 				all.kickPlayer(Core.getPrefix() + GameEndListener.getKick());
 			}
 		}
+		//Create schematics folder
 		new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
 		
+		//Set the Countdowntime to the value of the config
 		Timer.setCountdownTime();
 		
+		//Registers the custom crafting recipes
 		registerCrafting();
 		
+		//Recreate the World
 		AWorld.performReset();
 		
 		if(Timer.getPc() <= 1) {
+			//Print error message to inform serverowner
 			Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");
 		}
 		
+		//Print out successfully loaded message
 		Bukkit.getConsoleSender().sendMessage(prefix + "§aUHC by AlphaHelix is now enabled!");
-		Bukkit.setWhitelist(false);
 	}
 	
 	@Override
@@ -187,20 +207,25 @@ public class Core extends JavaPlugin implements PluginMessageListener{
 		
 		if(isMySQLActive == true) {
 			try {
+				//Close the connection to the database
 				MySQLAPI.closeMySQLConnection();
 			} catch (SQLException e) {
+				//Should pretty much never happen (R.I.P English)
 				e.printStackTrace();
 				Bukkit.getLogger().log(Level.WARNING, "The MySQL Connection wasn't closed.");
 			}
 		}
 		
+		//Reset placed Blocks
 		MapReset.restore();
+		//Successfull disabled message
 		Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC by AlphaHelix is now disabled!");
 	}
 	
 	@SuppressWarnings("deprecation")
 	private void registerCrafting() {
 		
+		//create golden Apple recipe
 		ShapedRecipe goldenApple = new ShapedRecipe(new ItemStack(Material.GOLDEN_APPLE));
 		
 		goldenApple.shape(

@@ -3,6 +3,7 @@ package de.alpha.uhc.Listener;
 import java.util.HashMap;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -148,6 +149,7 @@ public class LobbyListener implements Listener {
 					kit.put(p, kits);
 					sel = sel.replace("[Kit]", kits);
 					p.sendMessage(Core.getPrefix() + sel);
+					p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
 					sel = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Selected");
 					p.closeInventory();
 					break;
@@ -163,6 +165,7 @@ public class LobbyListener implements Listener {
 					p.sendMessage(Core.getPrefix() + bought);
 					bought = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Bought");
 					p.closeInventory();
+					p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
 					AScoreboard.setLobbyScoreboard(p);
 					break;
 				} else {
