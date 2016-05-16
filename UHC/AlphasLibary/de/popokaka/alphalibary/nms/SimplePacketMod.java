@@ -2,10 +2,10 @@ package de.popokaka.alphalibary.nms;
 
 import java.lang.reflect.Field;
 
-public class SimplePacketMod {
+class SimplePacketMod {
 	
-	private Class<?> clazz;
-	private Object instance;
+	private final Class<?> clazz;
+	private final Object instance;
 
 	public SimplePacketMod(Class<?> clazz, Object instace) {
 		this.clazz = clazz;
@@ -29,7 +29,6 @@ public class SimplePacketMod {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
 		}
 	}
 
@@ -57,7 +56,7 @@ public class SimplePacketMod {
 
 	}
 
-	public boolean hasField(String name) {
+	private boolean hasField(String name) {
 
 		for (Field f : clazz.getFields()) {
 			if (f.getName().equals(name)) {
@@ -68,7 +67,7 @@ public class SimplePacketMod {
 		return false;
 	}
 
-	public boolean hasDeclaredField(String name) {
+	private boolean hasDeclaredField(String name) {
 
 		for (Field f : clazz.getDeclaredFields()) {
 			if (f.getName().equals(name)) {

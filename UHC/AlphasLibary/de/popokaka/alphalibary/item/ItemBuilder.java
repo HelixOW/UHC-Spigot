@@ -1,9 +1,6 @@
 package de.popokaka.alphalibary.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 
 import org.bukkit.Material;
@@ -21,10 +18,10 @@ public class ItemBuilder {
 	private int amount = 1;
 	private short damage = 0;
 	private List<String> lore = new ArrayList<>();
-	private HashMap<Enchantment,Integer> enchantments = new HashMap<>();
-	private ArrayList<ItemFlag> itemflags = new ArrayList<>();
+	private final HashMap<Enchantment,Integer> enchantments = new HashMap<>();
+	private final ArrayList<ItemFlag> itemflags = new ArrayList<>();
 	private boolean Unbreakable = false;
-	private ArrayList<ItemData> itemData = new ArrayList<ItemData>();
+	private final ArrayList<ItemData> itemData = new ArrayList<>();
 	
 	/**
 	 * Create a new ItemStack with the given {@code Material}
@@ -32,29 +29,6 @@ public class ItemBuilder {
 	 */
 	public ItemBuilder(Material material) {
 		m = material;
-	}
-	
-	/**
-	 * Create a new ItemStack out of a other ItemStack
-	 * @param is the ItemStack which you want to edit
-	 */
-	public ItemBuilder(ItemStack is) {
-		m = is.getType();
-		amount = is.getAmount();
-		damage = is.getDurability();
-		if(is.hasItemMeta()) {
-			if(is.getItemMeta().hasLore()) lore = is.getItemMeta().getLore();
-			if(is.getItemMeta().hasDisplayName()) name = is.getItemMeta().getDisplayName();
-			if(is.getItemMeta().hasEnchants()) enchantments = (HashMap<Enchantment, Integer>) is.getEnchantments();
-		}
-	}
-	
-	/**
-	 * Create a new ItemStack with a {@code String} (doesn't have to be in CAPS)
-	 * @param material
-	 */
-	public ItemBuilder(String material) {
-		m = Material.getMaterial(material.toUpperCase());
 	}
 	
 	/**
@@ -66,7 +40,7 @@ public class ItemBuilder {
 		enchantments.put(e,level);
 		return this;
 	}
-	
+
 	public ItemBuilder addItemData(ItemData data) {
 		itemData.add(data);
 		return this;
@@ -83,7 +57,7 @@ public class ItemBuilder {
 		itemflags.add(ItemFlag.HIDE_ENCHANTS);
 		return this;
 	}
-	
+
 	/**
 	 * Set a custom name for the ItemStack
 	 * @param name The new custom name of the ItemStack 
@@ -95,10 +69,9 @@ public class ItemBuilder {
 	
 	/**
 	 * Set a custom amount for the ItemStack
-	 * @param amount The new custom amount of the ItemStack
 	 */
-	public ItemBuilder setAmount(int amount) {
-		this.amount = amount;
+	public ItemBuilder setAmount() {
+		this.amount = 8;
 		return this;
 	}
 	
@@ -128,16 +101,16 @@ public class ItemBuilder {
 		this.Unbreakable = status;
 		return this;
 	}
-	
+
 	/**
 	 * Add new ItemFlags to the ItemStack
-	 * @param newFlags The ItemFlag you want to add
+	 * @param flagsToAdd The ItemFlag you want to add
 	 */
 	public ItemBuilder addItemFlags(ItemFlag... flagsToAdd) {
-		for(ItemFlag iFlag : flagsToAdd) { itemflags.add(iFlag); }
+		Collections.addAll(itemflags, flagsToAdd);
 		return this;
 	}
-	
+
 	/**
 	 * Remove ItemFlags from the ItemStack
 	 * @param flagsToRemove The ItemFlag you want to remove
@@ -146,19 +119,19 @@ public class ItemBuilder {
 		for(ItemFlag iFlag : flagsToRemove) { itemflags.remove(iFlag); }
 		return this;
 	}
-	
+
 	/**
 	 * Get all enchantments this ItemStack has
 	 * @return all enchantments of this ItemStack
 	 */
 	public HashMap<Enchantment,Integer> getAllEnchantments() { return enchantments; }
-	
+
 	/**
 	 * Get the custom name of this ItemStack
 	 * @return the custom name of this ItemStack
 	 */
 	public String getName() { return name; }
-	
+
 	/**
 	 * Get the material of this ItemStack
 	 * @return the material of this ItemStack
@@ -182,13 +155,13 @@ public class ItemBuilder {
 	 * @return the lore of this ItemStack
 	 */
 	public List<String> getLore() { return lore; }
-	
+
 	/**
 	 * Get the breakstatus of this ItemStack
-	 * @return the breakstatus of this ItemStack 
+	 * @return the breakstatus of this ItemStack
 	 */
 	public boolean isUnbreakable() { return Unbreakable; }
-	
+
 	/**
 	 * Get the final ItemStack with all the attributes you have been adding
 	 * @return the ItemStack of this ItemBuilder

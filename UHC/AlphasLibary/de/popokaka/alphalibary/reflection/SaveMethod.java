@@ -12,7 +12,7 @@ public class SaveMethod {
 			this.m = m;
 		} catch (Exception e) {
 			e.printStackTrace();
-		};
+		}
 	}
 	
 	public Object invoke(Object instance , Boolean stackTrace , Object... args) {

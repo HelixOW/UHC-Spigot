@@ -2,9 +2,9 @@ package de.popokaka.alphalibary.mysql;
 
 import de.popokaka.alphalibary.file.SimpleFile;
 
-public class MySQLFileManager {
+class MySQLFileManager {
 
-	public static SimpleFile getMySQLFile() {
+	private static SimpleFile getMySQLFile() {
 		
 		return new SimpleFile(MySQLAPI.getMySQLFilePath(), "mysql.yml");	
 	}

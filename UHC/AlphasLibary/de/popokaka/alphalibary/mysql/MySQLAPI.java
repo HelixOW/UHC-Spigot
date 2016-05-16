@@ -15,7 +15,6 @@ public class MySQLAPI {
 	private static String port;
 	private static Connection con;
 	private static Plugin plugin;
-	private static String mySQLFilePath = "./plugins/MySQLAPI/";
 
 	public static void setMySQLConnection(String username, String pass,
 			String database, String host, String port) {
@@ -31,7 +30,7 @@ public class MySQLAPI {
 	}
 
 	public static String getMySQLFilePath() {
-		return mySQLFilePath;
+		return "./plugins/MySQLAPI/";
 	}
 
 	public static boolean isConnected() {

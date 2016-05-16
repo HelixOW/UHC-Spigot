@@ -48,7 +48,7 @@ public class SimpleFile extends YamlConfiguration {
 	private void finishSetup() {
 		try {
 			load(source);
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 
 		}
 	}
@@ -82,7 +82,7 @@ public class SimpleFile extends YamlConfiguration {
 
 		try {
 			String toReturn = getString(path);
-			return toReturn.replaceAll("&", "ง");
+			return toReturn.replaceAll("&", "ยง");
 		} catch (Exception e) { return ""; }
 	}
 	
@@ -102,15 +102,15 @@ public class SimpleFile extends YamlConfiguration {
 	 * @return The ItemStackArray at the given path
 	 */
 	public ItemStack[] getItemStackArray(String path) {
-		ItemStack[] items = getList(path).toArray(new ItemStack[0]);
-		return items;
+		java.util.List<?> var = getList(path);
+		return var.toArray(new ItemStack[var.size()]);
 	}
 
 	/**
 	 * Save & load the file
 	 */
 	public void save() {
-		try { save(source); } catch (IOException e) {}
+		try { save(source); } catch (IOException ignored) {}
 	}
 	
 	/**
@@ -119,7 +119,7 @@ public class SimpleFile extends YamlConfiguration {
 	 * @param value The value which you want to save inside your file
 	 */
 	public void setDefault(String path, Object value) {
-		if (value instanceof String) value = ((String) value).replaceAll("ง", "&");
+		if (value instanceof String) value = ((String) value).replaceAll("ยง", "&");
 		
 		addDefault(path, value);
 		save();

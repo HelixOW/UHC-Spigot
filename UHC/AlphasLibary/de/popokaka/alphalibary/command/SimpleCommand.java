@@ -2,6 +2,7 @@ package de.popokaka.alphalibary.command;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -24,25 +25,23 @@ public abstract class SimpleCommand<P extends JavaPlugin> extends Command {
 	      System.out.println(Core.getPrefix()+" AutoCommand hook for Bukkit " + SimpleCommand.VERSION);
 	   }
 	   
-	   protected final P plugin;
-	   protected final String command;
+	   private final P plugin;
+	   private final String command;
 	   
-	   public SimpleCommand(P plugin, String command, String description, String... aliases) {
+	   protected SimpleCommand(P plugin, String command, String description, String... aliases) {
 	      super(command);
 	      this.plugin = plugin;
 	      this.command = command;
 	      
 	      super.setDescription(description);
-	      List<String> aliasList = new ArrayList<String>();
-	      for (String alias : aliases) {
-	         aliasList.add(alias);
-	      }
+	      List<String> aliasList = new ArrayList<>();
+		   Collections.addAll(aliasList, aliases);
 	      super.setAliases(aliasList);
 	      
 	      this.register();
 	   }
 	   
-	   public void register() {
+	   void register() {
 	      try {
 	         Field f = Class.forName("org.bukkit.craftbukkit." + SimpleCommand.VERSION + ".CraftServer").getDeclaredField("commandMap");
 	         f.setAccessible(true);

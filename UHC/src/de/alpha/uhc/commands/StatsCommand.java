@@ -1,58 +1,56 @@
 package de.alpha.uhc.commands;
 
-import java.util.List;
-
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import de.alpha.uhc.Core;
 import de.alpha.uhc.utils.Stats;
 import de.popokaka.alphalibary.command.SimpleCommand;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class StatsCommand extends SimpleCommand<Core>{
-	
-	private static boolean us;
-	private static String er;
-	
-	public static boolean inUs() {
-		return us;
-	}
+import java.util.List;
 
-	public static void setUs(boolean a) {
-		us = a;
-	}
+public class StatsCommand extends SimpleCommand<Core> {
 
-	public static String getEr() {
-		return er;
-	}
+    private static boolean us;
+    private static String er;
 
-	public static void setEr(String a) {
-		StatsCommand.er = a;
-	}
+    public StatsCommand(Core plugin, String[] aliases) {
+        super(plugin, "stats", "See your Statistics of UHC", aliases);
+    }
 
-	public StatsCommand(Core plugin, String command, String description, String[] aliases) {
-		super(plugin, command, description, aliases);
-	}
+    private static boolean inUs() {
+        return us;
+    }
 
-	@Override
-	public boolean execute(CommandSender cs, String label, String[] args) {
-		if(!(cs instanceof Player)) {
-			cs.sendMessage(Core.getPrefix() + UHCCommand.getNoplayer());
-			return false;
-		}
-		if(inUs() == true) {
-			Player p = (Player) cs;
-			new Stats(p).sendStats();
-		} else {
-			cs.sendMessage(Core.getPrefix()+ getEr());
-		}
-		return false;
-	}
+    public static void setUs(boolean a) {
+        us = a;
+    }
 
-	@Override
-	public List<String> tabComplete(CommandSender cs, String label, String[] args) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    private static String getEr() {
+        return er;
+    }
+
+    public static void setEr(String a) {
+        StatsCommand.er = a;
+    }
+
+    @Override
+    public boolean execute(CommandSender cs, String label, String[] args) {
+        if (!(cs instanceof Player)) {
+            cs.sendMessage(Core.getPrefix() + UHCCommand.getNoplayer());
+            return false;
+        }
+        if (inUs()) {
+            Player p = (Player) cs;
+            new Stats(p).sendStats();
+        } else {
+            cs.sendMessage(Core.getPrefix() + getEr());
+        }
+        return false;
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender cs, String label, String[] args) {
+        return null;
+    }
 
 }

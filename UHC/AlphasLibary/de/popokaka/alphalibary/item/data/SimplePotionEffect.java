@@ -3,7 +3,7 @@ package de.popokaka.alphalibary.item.data;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class SimplePotionEffect {
+class SimplePotionEffect {
 	
 	private int durationInSec = 0;
 	private PotionEffectType potionType = PotionEffectType.SPEED;

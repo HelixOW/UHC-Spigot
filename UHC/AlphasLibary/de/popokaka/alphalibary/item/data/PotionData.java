@@ -8,7 +8,7 @@ import org.bukkit.potion.PotionEffect;
 
 public class PotionData extends ItemData{
 	
-	private ArrayList<PotionEffect> toApply = new ArrayList<PotionEffect>();
+	private final ArrayList<PotionEffect> toApply = new ArrayList<>();
 	
 	public PotionData addEffect(SimplePotionEffect... effects) {
 		for(SimplePotionEffect effect : effects) {

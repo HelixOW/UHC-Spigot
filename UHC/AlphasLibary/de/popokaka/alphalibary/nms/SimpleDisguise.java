@@ -17,15 +17,14 @@ import de.popokaka.alphalibary.reflection.ReflectionUtil;
 
 public class SimpleDisguise {
 
-	private static HashMap<UUID, DisguiseData> disguise = new HashMap<>();
+	private static final HashMap<UUID, DisguiseData> disguise = new HashMap<>();
 
 	/**
 	 * Disguise a Player into another mob
 	 * @param p The mob you want the player to disguise to
 	 * @param data The DisguiseData
-	 * @param receiver The player who will be disguised
 	 */
-	public static void disguiseEntity(final LivingEntity p, DisguiseData data, Player... receiver) {
+	private static void disguiseEntity(final LivingEntity p, DisguiseData data) {
 
 		try {
 
@@ -44,8 +43,8 @@ public class SimpleDisguise {
 			modifier.set("j", (byte) (int) (p.getLocation().getPitch() * 256.0F / 360.0F));
 			modifier.set("k",
 					(byte) (int) ((float) ReflectionUtil
-							.getDeclaredField("aK", ReflectionUtil.getNmsClass("EntityLiving"))
-							.get(ReflectionUtil.getEntity(p), true) * 256.0F / 360.0F));
+							.getDeclaredField(ReflectionUtil.getNmsClass("EntityLiving"))
+							.get(ReflectionUtil.getEntity(p)) * 256.0F / 360.0F));
 
 			modifier.set("l", data.getDataWatcher());
 
@@ -67,7 +66,7 @@ public class SimpleDisguise {
 
 					try {
 						Thread.sleep(20);
-					} catch (InterruptedException e) {
+					} catch (InterruptedException ignored) {
 
 					}
 
@@ -82,7 +81,6 @@ public class SimpleDisguise {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
 		}
 
 	}
@@ -117,7 +115,7 @@ public class SimpleDisguise {
 
 					try {
 						Thread.sleep(20);
-					} catch (InterruptedException e) {
+					} catch (InterruptedException ignored) {
 
 					}
 
@@ -132,7 +130,6 @@ public class SimpleDisguise {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
 		}
 
 	}
@@ -142,7 +139,7 @@ public class SimpleDisguise {
 	 * @param p The Player which DiguiseData you want
 	 * @return The DisguiseData of the Player
 	 */
-	public static DisguiseData getDisguise(Player p) {
+	private static DisguiseData getDisguise(Player p) {
 		return disguise.get(p.getUniqueId());
 	}
 
@@ -150,13 +147,13 @@ public class SimpleDisguise {
 
 		for (UUID uuid : disguise.keySet()) {
 
-			disguiseEntity(Bukkit.getPlayer(uuid), getDisguise(p), p);
+			disguiseEntity(Bukkit.getPlayer(uuid), getDisguise(p));
 
 		}
 
 	}
 	
-	public static enum DisguiseType {
+	public enum DisguiseType {
 
 		CREEPER(ReflectionUtil.getNmsClass("EntityCreeper") , ReflectionUtil.getCraftBukkitClass("entity.CraftCreeper")), 
 		ZOMBIE(ReflectionUtil.getNmsClass("EntityZombie") , ReflectionUtil.getCraftBukkitClass("entity.CraftZombie")), 
@@ -166,10 +163,10 @@ public class SimpleDisguise {
 		WITCH (ReflectionUtil.getNmsClass("EntityWitch") , ReflectionUtil.getCraftBukkitClass("entity.CraftWitch")),
 		CHICKEN (ReflectionUtil.getNmsClass("EntityChicken") , ReflectionUtil.getCraftBukkitClass("entity.CraftChicken"));
 
-		private Class<?> clazz;
-		private Class<?> craftClazz;
+		private final Class<?> clazz;
+		private final Class<?> craftClazz;
 
-		private DisguiseType(Class<?> exectuer , Class<?> craftClass) {
+		DisguiseType(Class<?> exectuer, Class<?> craftClass) {
 			this.clazz = exectuer;
 			this.craftClazz = craftClass;
 		}
@@ -232,9 +229,9 @@ public class SimpleDisguise {
 		private Object entity = null;
 		private Object dataWatcher = null;
 		private Object craftEntity = null;
-		private int id;
-		private LivingEntity p;
-		private DisguiseType type;
+		private final int id;
+		private final LivingEntity p;
+		private final DisguiseType type;
 
 		public DisguiseData(DisguiseType type, LivingEntity p) {
 			this.type = type;
@@ -270,7 +267,6 @@ public class SimpleDisguise {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				return;
 			}
 		}
 
@@ -283,7 +279,7 @@ public class SimpleDisguise {
 		}
 
 		@SuppressWarnings("unchecked")
-		public <T extends LivingEntity> T getEntity(Class<T> type) {
+		public <T extends LivingEntity> T getEntity() {
 			try {
 				return (T) craftEntity;
 			} catch (Exception e) {
@@ -313,20 +309,24 @@ public class SimpleDisguise {
 					}
 				}.run();
 				
-				LivingEntity entity = this.getEntity(LivingEntity.class);
+				LivingEntity entity = this.getEntity();
 				
 				/*
 				 * Update equipment
 				 */
-				PacketUtil.equipEntity(p, entity.getEquipment().getHelmet(), EquipmentSlot.HELMET, Bukkit.getOnlinePlayers().toArray(new Player[0]));
-				PacketUtil.equipEntity(p, entity.getEquipment().getChestplate(), EquipmentSlot.CHESTPLATE, Bukkit.getOnlinePlayers().toArray(new Player[0]));
-				PacketUtil.equipEntity(p, entity.getEquipment().getLeggings(), EquipmentSlot.LEGGINGS, Bukkit.getOnlinePlayers().toArray(new Player[0]));
-				PacketUtil.equipEntity(p, entity.getEquipment().getBoots(), EquipmentSlot.BOOTS, Bukkit.getOnlinePlayers().toArray(new Player[0]));
-				PacketUtil.equipEntity(p, entity.getEquipment().getItemInMainHand(), EquipmentSlot.INHAND, Bukkit.getOnlinePlayers().toArray(new Player[0]));
+				java.util.Collection<? extends Player> var = Bukkit.getOnlinePlayers();
+				PacketUtil.equipEntity(p, entity.getEquipment().getHelmet(), EquipmentSlot.HELMET, var.toArray(new Player[var.size()]));
+				java.util.Collection<? extends Player> var2 = Bukkit.getOnlinePlayers();
+				PacketUtil.equipEntity(p, entity.getEquipment().getChestplate(), EquipmentSlot.CHESTPLATE, var.toArray(new Player[var2.size()]));
+				java.util.Collection<? extends Player> var3 = Bukkit.getOnlinePlayers();
+				PacketUtil.equipEntity(p, entity.getEquipment().getLeggings(), EquipmentSlot.LEGGINGS, var.toArray(new Player[var3.size()]));
+				java.util.Collection<? extends Player> var4 = Bukkit.getOnlinePlayers();
+				PacketUtil.equipEntity(p, entity.getEquipment().getBoots(), EquipmentSlot.BOOTS, var.toArray(new Player[var4.size()]));
+				java.util.Collection<? extends Player> var5 = Bukkit.getOnlinePlayers();
+				PacketUtil.equipEntity(p, entity.getEquipment().getItemInMainHand(), EquipmentSlot.INHAND, var.toArray(new Player[var5.size()]));
 			
 			} catch (Exception e) {
 				e.printStackTrace();
-				return;
 			}
 			
 		}

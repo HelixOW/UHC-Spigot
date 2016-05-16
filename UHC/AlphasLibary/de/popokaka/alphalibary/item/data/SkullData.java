@@ -10,7 +10,7 @@ public class SkullData extends ItemData{
 		ownerName = name;
 	}
 	
-	String ownerName = null;
+	private String ownerName = null;
 
 	@Override
 	public void applyOn(ItemStack applyOn) throws WrongDataException{
@@ -28,7 +28,7 @@ public class SkullData extends ItemData{
 		} catch (Exception e) {
 			try {
 				throw new WrongDataException(this);
-			} catch (WrongDataException e1) {
+			} catch (WrongDataException ignored) {
 				
 			}
 		}

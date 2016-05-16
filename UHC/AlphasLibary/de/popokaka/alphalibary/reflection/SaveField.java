@@ -12,14 +12,14 @@ public class SaveField {
 			this.f = f;
 		} catch (Exception e) {
 			e.printStackTrace();
-		};
+		}
 	}
 	
-	public Object get(Object instance , boolean stackTrace) {
+	public Object get(Object instance) {
 		try {
 			return f.get(instance);
 		} catch (Exception e) {
-			if(stackTrace) e.printStackTrace();
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -30,6 +30,5 @@ public class SaveField {
 		} catch (Exception e) {
 			if(stackTrace) e.printStackTrace();
 		}
-		return;
 	}
 }

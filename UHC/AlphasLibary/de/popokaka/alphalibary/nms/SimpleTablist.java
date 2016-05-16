@@ -25,26 +25,26 @@ public class SimpleTablist {
 
 		try {
 			Object headerPacket = ReflectionUtil.getNmsClass("ChatComponentText").getConstructor(new Class[] { String.class })
-					.newInstance(new Object[] { ChatColor.translateAlternateColorCodes('&', header) });
+					.newInstance(ChatColor.translateAlternateColorCodes('&', header));
 			Object footerPacket = ReflectionUtil.getNmsClass("ChatComponentText").getConstructor(new Class[] { String.class })
-					.newInstance(new Object[] { ChatColor.translateAlternateColorCodes('&', footer) });
+					.newInstance(ChatColor.translateAlternateColorCodes('&', footer));
 
 			Object ppoplhf = ReflectionUtil.getNmsClass("PacketPlayOutPlayerListHeaderFooter")
 					.getConstructor(new Class[] { ReflectionUtil.getNmsClass("IChatBaseComponent") })
-					.newInstance(new Object[] { headerPacket });
+					.newInstance(headerPacket);
 
 			Field f = ppoplhf.getClass().getDeclaredField("b");
 			f.setAccessible(true);
 			f.set(ppoplhf, footerPacket);
 
-			Object nmsp = p.getClass().getMethod("getHandle", new Class[0]).invoke(p, new Object[0]);
+			Object nmsp = p.getClass().getMethod("getHandle", new Class[0]).invoke(p);
 			Object pcon = nmsp.getClass().getField("playerConnection").get(nmsp);
 
 			pcon.getClass().getMethod("sendPacket", new Class[] { ReflectionUtil.getNmsClass("Packet") })
-					.invoke(pcon, new Object[] { ppoplhf });
+					.invoke(pcon, ppoplhf);
 
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException | NoSuchFieldException e) {
+				| NoSuchMethodException | SecurityException | NoSuchFieldException ignored) {
 
 		}
 	}

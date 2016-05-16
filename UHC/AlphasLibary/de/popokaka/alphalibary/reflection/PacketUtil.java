@@ -12,7 +12,7 @@ import com.mojang.authlib.GameProfile;
 
 public class PacketUtil {
 
-	public static enum EquipmentSlot {
+	public enum EquipmentSlot {
 		
 		INHAND(0),
 		BOOTS(1),
@@ -20,9 +20,9 @@ public class PacketUtil {
 		CHESTPLATE(3),
 		HELMET(4);
 		
-		private int id;
+		private final int id;
 		
-		private EquipmentSlot(int id) {
+		EquipmentSlot(int id) {
 			this.id = id;
 		}
 		
@@ -38,9 +38,7 @@ public class PacketUtil {
 			
 			final Object packet = ReflectionUtil.getNmsClass("PacketPlayOutEntityEquipment").getConstructor(new Class<?>[] {
 					int.class , int.class , ReflectionUtil.getNmsClass("ItemStack")
-			}).newInstance(new Object[] {
-					id , slot.getID() , ReflectionUtil.getObjectNMSItemStack(toEquip)
-			});
+			}).newInstance(id, slot.getID(), ReflectionUtil.getObjectNMSItemStack(toEquip));
 			
 			new BukkitRunnable() {
 				

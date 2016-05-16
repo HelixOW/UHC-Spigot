@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 public class FireworkData extends ItemData {
-	private List<FireworkEffect> allEffects = new ArrayList<FireworkEffect>();
+	private final List<FireworkEffect> allEffects = new ArrayList<>();
 	
 	public FireworkData(SimpleFireworkEffect... effects) {
 		for(SimpleFireworkEffect effect : effects) {
@@ -30,7 +30,7 @@ public class FireworkData extends ItemData {
 		} catch(Exception e) {
 			try {
 				throw new WrongDataException(this);
-			} catch (WrongDataException e1) {
+			} catch (WrongDataException ignored) {
 				
 			}
 		}

@@ -64,7 +64,7 @@ public class SimpleActionBar {
 	 * Clear the ActionBar for a player
 	 * @param player
 	 */
-	public static void clear(Player player){
+	private static void clear(Player player){
 		send(player, "");
 	}
 	
@@ -80,7 +80,7 @@ public class SimpleActionBar {
 	
 	/**
 	 * Clear the ActionBar inside a world
-	 * @param player
+	 * @param world
 	 */
 	public static void clear(World world){
 		for(Player p : world.getPlayers()){

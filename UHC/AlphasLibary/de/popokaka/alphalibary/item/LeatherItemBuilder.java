@@ -1,9 +1,6 @@
 package de.popokaka.alphalibary.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 
 import org.bukkit.Color;
@@ -23,10 +20,10 @@ public class LeatherItemBuilder{
 	private short damage = 0;
 	private List<String> lore = new ArrayList<>();
 	private HashMap<Enchantment,Integer> enchantments = new HashMap<>();
-	private ArrayList<ItemFlag> itemflags = new ArrayList<>();
+	private final ArrayList<ItemFlag> itemflags = new ArrayList<>();
 	private boolean Unbreakable = false;
 	private Color color = Color.BLACK;
-	private ArrayList<ItemData> itemData = new ArrayList<ItemData>();
+	private final ArrayList<ItemData> itemData = new ArrayList<>();
 	
 	/**
 	 * Create a new ItemStack with the given {@code Material}
@@ -134,10 +131,10 @@ public class LeatherItemBuilder{
 	
 	/**
 	 * Add new ItemFlags to the ItemStack
-	 * @param newFlags The ItemFlag you want to add
+	 * @param flagsToAdd The ItemFlag you want to add
 	 */
 	public LeatherItemBuilder addItemFlags(ItemFlag... flagsToAdd) {
-		for(ItemFlag iFlag : flagsToAdd) { itemflags.add(iFlag); }
+		Collections.addAll(itemflags, flagsToAdd);
 		return this;
 	}
 	
