@@ -30,11 +30,11 @@ public class ATeam implements Listener {
     private static String blockName;
     private static String title;
     private static String full;
-    private static ArrayList<String> teamNames = new ArrayList<>();
-    private static ArrayList<String> teamColors = new ArrayList<>();
-    private static HashMap<String, Integer> teamMax = new HashMap<>();
-    private static HashMap<String, Integer> teamC = new HashMap<>();
-    private static HashMap<Player, String> teams = new HashMap<>();
+    private static final ArrayList<String> teamNames = new ArrayList<>();
+    private static final ArrayList<String> teamColors = new ArrayList<>();
+    private static final HashMap<String, Integer> teamMax = new HashMap<>();
+    private static final HashMap<String, Integer> teamC = new HashMap<>();
+    private static final HashMap<Player, String> teams = new HashMap<>();
 
     public static ArrayList<String> getTeamNames() {
         return teamNames;

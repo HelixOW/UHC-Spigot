@@ -16,7 +16,6 @@ public class AWorld {
     private static boolean lobbyAsSchematic;
     private static boolean wr;
     private static String worldName;
-    private static World arena;
 
     public static boolean isLobbyAsSchematic() {
         return lobbyAsSchematic;
@@ -173,6 +172,7 @@ public class AWorld {
             return;
         }
 
+        World arena;
         if (Bukkit.getWorld(SpawnFileManager.getSpawnWorldName()) != null) {
 
             arena = Bukkit.getWorld(SpawnFileManager.getSpawnWorldName());

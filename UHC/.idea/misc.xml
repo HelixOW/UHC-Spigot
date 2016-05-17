@@ -1,7 +1,243 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
-    <entry_points version="2.0" />
+    <entry_points version="2.0">
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.aclasses.AScoreboard void setB(java.util.HashMap&lt;org.bukkit.entity.Player,java.lang.String&gt; b)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.aclasses.AScoreboard java.util.HashMap&lt;org.bukkit.entity.Player,java.lang.String&gt; getB()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.aclasses.AScoreboard void setA(java.util.HashMap&lt;org.bukkit.entity.Player,java.lang.String&gt; a)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.aclasses.AScoreboard java.util.HashMap&lt;org.bukkit.entity.Player,java.lang.String&gt; getA()" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.aclasses.AScoreboard" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.aclasses.ATeam void onTeamJoin(org.bukkit.event.player.PlayerInteractAtEntityEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.aclasses.ATeam void onClick(org.bukkit.event.inventory.InventoryClickEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.aclasses.ATeam void onInteract(org.bukkit.event.player.PlayerInteractEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.aclasses.ATeam void onDestroy(org.bukkit.event.entity.EntityDamageByEntityEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.aclasses.ATeam void onHit(org.bukkit.event.entity.EntityDamageByEntityEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.aclasses.ATeam" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.border.BorderManager void setSize(int size)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.border.BorderManager int getSize()" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.border.BorderManager" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.ChatListener void onTeamChat(org.bukkit.event.player.AsyncPlayerChatEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.ChatListener void onChat(org.bukkit.event.player.AsyncPlayerChatEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.ChatListener" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.data.ColorData ColorData(org.bukkit.DyeColor color)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.data.ColorData ColorData(int red, int blue, int green)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.item.data.ColorData" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Core" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.CraftListener void craftItem(org.bukkit.event.inventory.CraftItemEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.CraftListener" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.utils.Cuboid.CuboidDirection" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid java.util.List&lt;org.bukkit.Chunk&gt; getChunks()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid org.bukkit.block.Block getRelativeBlock(org.bukkit.World w, int x, int y, int z)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid org.bukkit.block.Block getRelativeBlock(int x, int y, int z)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid de.alpha.uhc.utils.Cuboid getBoundingCuboid(de.alpha.uhc.utils.Cuboid other)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid de.alpha.uhc.utils.Cuboid contract()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid byte getAverageLightLevel()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid int getVolume()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid boolean contains(org.bukkit.block.Block b)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid de.alpha.uhc.utils.Cuboid inset(de.alpha.uhc.utils.Cuboid.CuboidDirection dir, int amount)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid org.bukkit.block.Block[] corners()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid org.bukkit.Location getCenter()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid org.bukkit.Location getUpperSW()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid org.bukkit.Location getLowerNE()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid Cuboid(java.util.Map&lt;java.lang.String,java.lang.Object&gt; map)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid Cuboid(org.bukkit.World world, int x1, int y1, int z1, int x2, int y2, int z2)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid Cuboid(org.bukkit.Location l1)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid Cuboid(org.bukkit.Location l1, org.bukkit.Location l2)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid Cuboid(de.alpha.uhc.utils.Cuboid other)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Cuboid Cuboid(java.lang.String worldName, int x1, int y1, int z1, int x2, int y2, int z2)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.utils.Cuboid" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.CustomDeathListener void onDeath(org.bukkit.event.entity.PlayerDeathEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.CustomDeathListener" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.DeathListener void onDie(org.bukkit.event.entity.EntityDeathEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.DeathListener" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.data.FireworkData FireworkData(de.popokaka.alphalibary.item.data.SimpleFireworkEffect... effects)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.item.data.FireworkData" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.GState de.alpha.uhc.GState getGState()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.GState void setCurrentState(de.alpha.uhc.GState currentState)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.GState" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.kits.GUI void setKits(org.bukkit.inventory.Inventory kits)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.kits.GUI org.bukkit.inventory.Inventory getKits()" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.kits.GUI" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.GameEndListener void onQuit(org.bukkit.event.player.PlayerQuitEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.GameEndListener void onDeath(org.bukkit.event.entity.PlayerDeathEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.GameEndListener" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.InGameListener void onClick(org.bukkit.event.player.PlayerInteractEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.InGameListener void onDMG(org.bukkit.event.entity.EntityDamageEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.InGameListener void onFirstHit(org.bukkit.event.entity.EntityDamageByEntityEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.InGameListener void onMove(org.bukkit.event.player.PlayerMoveEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.InGameListener int getSize()" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.InGameListener" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder boolean isUnbreakable()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder java.util.List&lt;java.lang.String&gt; getLore()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder short getDamage()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder int getAmount()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder org.bukkit.Material getMaterial()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder java.lang.String getName()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder java.util.HashMap&lt;org.bukkit.enchantments.Enchantment,java.lang.Integer&gt; getAllEnchantments()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder de.popokaka.alphalibary.item.ItemBuilder removeItemFlags(org.bukkit.inventory.ItemFlag... flagsToRemove)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder de.popokaka.alphalibary.item.ItemBuilder addItemFlags(org.bukkit.inventory.ItemFlag... flagsToAdd)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder de.popokaka.alphalibary.item.ItemBuilder setUnbreakable(boolean status)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder de.popokaka.alphalibary.item.ItemBuilder setGlow()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder java.util.ArrayList&lt;de.popokaka.alphalibary.item.data.ItemData&gt; getAllData()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder de.popokaka.alphalibary.item.ItemBuilder addEnchantment(org.bukkit.enchantments.Enchantment e, int level)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.ItemBuilder ItemBuilder(org.bukkit.Material material)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.item.ItemBuilder" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.data.ItemData void applyOn(org.bukkit.inventory.ItemStack applyOn)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.item.data.ItemData" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.LeatherItemBuilder LeatherItemBuilder(java.lang.String material)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.LeatherItemBuilder LeatherItemBuilder(org.bukkit.inventory.ItemStack is)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.LeatherItemBuilder LeatherItemBuilder(org.bukkit.Material material)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.item.LeatherItemBuilder" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.LobbyListener void onInvClick(org.bukkit.event.inventory.InventoryClickEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.LobbyListener void onInterAct(org.bukkit.event.player.PlayerInteractEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.LobbyListener void onPlace(org.bukkit.event.block.BlockPlaceEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.LobbyListener void onBreak(org.bukkit.event.block.BlockBreakEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.LobbyListener void onHurt(org.bukkit.event.entity.EntityDamageEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.LobbyListener void onSpawn(org.bukkit.event.entity.CreatureSpawnEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.LobbyListener void onMove(org.bukkit.event.player.PlayerMoveEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.LobbyListener void onHunger(org.bukkit.event.entity.FoodLevelChangeEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.LobbyListener void onChunkUnLoad(org.bukkit.event.world.ChunkUnloadEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.LobbyListener" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.MapReset void onInterAct(org.bukkit.event.player.PlayerInteractEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.MapReset void onExplode(org.bukkit.event.entity.EntityExplodeEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.MapReset void onPlace(org.bukkit.event.block.BlockPlaceEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.MapReset void onBreak(org.bukkit.event.block.BlockBreakEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.utils.MapReset" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.MiningListener void onMine(org.bukkit.event.block.BlockBreakEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.MiningListener" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.MotdListener void onPing(org.bukkit.event.server.ServerListPingEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.MotdListener" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.MySQLAPI org.bukkit.plugin.Plugin getPlugin()" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.mysql.MySQLAPI" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.mysql.MySQLDataType TINYINT" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.mysql.MySQLDataType SMALLINT" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.mysql.MySQLDataType BIGINT" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.mysql.MySQLDataType INT" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.mysql.MySQLDataType TEXT" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.mysql.MySQLDataType CHAR" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.mysql.MySQLDataType" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.MySQLManager boolean existInColumn(java.lang.String table, java.lang.String columnname, java.lang.String match)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.MySQLManager java.util.ArrayList&lt;java.lang.Object&gt; getListResult(java.lang.String table, java.lang.String column)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.MySQLManager java.util.ArrayList&lt;java.util.UUID&gt; getConditionListResult(java.lang.String table, java.lang.String condition, java.lang.String value, java.lang.String column)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.MySQLManager java.lang.Object getObjectResult(java.lang.String table, java.lang.String column)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.MySQLManager de.popokaka.alphalibary.mysql.MySQLDataType getComlumnDataType(java.lang.String table, int column)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.MySQLManager java.lang.String getColumnSize(java.lang.String table, int column)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.MySQLManager void exRemoveQry(java.lang.String table, java.lang.String condition, java.lang.String value)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.mysql.MySQLManager" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.PacketUtil java.lang.Object createPlayerInfoPacket(java.lang.Object enumPlayerInfoAction, java.lang.Object gameProfile, int ping, java.lang.Object enumGamemode, java.lang.String name)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.PacketUtil.EquipmentSlot EquipmentSlot(int id)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.reflection.PacketUtil.EquipmentSlot" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.reflection.PacketUtil" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.Pair Pair(K element0, V element1)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.mysql.Pair de.popokaka.alphalibary.mysql.Pair&lt;K,V&gt; createPair(K element0, V element1)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.mysql.Pair" />
+      <entry_point TYPE="field" FQNAME="de.alpha.uhc.files.PlayerFileManager i" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.files.PlayerFileManager" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.PlayerJoinListener void onQuit(org.bukkit.event.player.PlayerQuitEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.PlayerJoinListener void onLeaveClick(org.bukkit.event.player.PlayerInteractEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.PlayerJoinListener void onJoin(org.bukkit.event.player.PlayerJoinEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.PlayerJoinListener" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.item.data.PotionData" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.REnumPlayerInfoAction java.lang.Object getPlayerInfoAction()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.REnumPlayerInfoAction REnumPlayerInfoAction(int enumIndex)" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.REnumPlayerInfoAction REMOVE_PLAYER" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.REnumPlayerInfoAction UPDATE_DISPLAY_NAME" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.REnumPlayerInfoAction UPDATE_LATENCY" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.REnumPlayerInfoAction UPDATE_GAME_MODE" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.REnumPlayerInfoAction ADD_PLAYER" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.nms.REnumPlayerInfoAction" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil java.lang.Object[] serializeString(java.lang.String[] strings)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil java.lang.String[] fromIChatBaseComponent(java.lang.Object[] baseComponentArray)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil int getPing(org.bukkit.entity.Player p)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil java.lang.Object getEnumGamemode(org.bukkit.entity.Player p)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil java.lang.Class&lt;?&gt; getCraftBukkitClassAsArray(java.lang.String name)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil java.lang.Class&lt;?&gt; getNmsClassAsArray(java.lang.String name)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil java.lang.String getCraftBukkitPrefix()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil java.lang.String getNmsPrefix()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil de.popokaka.alphalibary.reflection.SaveMethod getDeclaredMethode(java.lang.String name, java.lang.Class&lt;?&gt; clazz, java.lang.Class&lt;?&gt;... parameterClasses)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil de.popokaka.alphalibary.reflection.SaveMethod getMethode(java.lang.String name, java.lang.Class&lt;?&gt; clazz, java.lang.Class&lt;?&gt;... parameterClasses)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil de.popokaka.alphalibary.reflection.SaveField getField(java.lang.String name, java.lang.Class&lt;?&gt; clazz)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.reflection.ReflectionUtil" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Regions void onDefine(org.bukkit.event.player.PlayerInteractEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Regions java.lang.String getMaterial()" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.utils.Regions" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.SaveField SaveField(java.lang.reflect.Field f)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.reflection.SaveField" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.reflection.SaveMethod SaveMethod(java.lang.reflect.Method m)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.reflection.SaveMethod" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimpleActionBar void clear(org.bukkit.World world)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimpleActionBar void clear(java.util.List&lt;org.bukkit.entity.Player&gt; player)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimpleActionBar void send(org.bukkit.World world, java.lang.String message)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimpleActionBar void send(java.util.List&lt;org.bukkit.entity.Player&gt; player, java.lang.String message)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.nms.SimpleActionBar" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.command.SimpleCommand P getPlugin()" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.command.SimpleCommand java.lang.String buildString(java.lang.String[] args, int start)" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.command.SimpleCommand command" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.command.SimpleCommand SimpleCommand(P plugin, java.lang.String command, java.lang.String description, java.lang.String... aliases)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.command.SimpleCommand" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseData DisguiseData(de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType type, org.bukkit.entity.LivingEntity p)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseData" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType java.lang.Object createDataWatcher(org.bukkit.World w)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType DisguiseType(java.lang.Class&lt;?&gt; exectuer, java.lang.Class&lt;?&gt; craftClass)" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType CHICKEN" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType WITCH" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType WITHER_BOSS" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType PIG" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType SKELETON" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType ZOMBIE" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType CREEPER" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise.DisguiseType" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise void sendAllDisguisesToPlayer(org.bukkit.entity.Player p)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise void undisguisePlayer(org.bukkit.entity.LivingEntity p)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.nms.SimpleDisguise" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.file.SimpleFile org.bukkit.inventory.ItemStack[] getItemStackArray(java.lang.String path)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.file.SimpleFile void setItemStackArray(java.lang.String path, org.bukkit.inventory.ItemStack[] array)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.file.SimpleFile SimpleFile(java.io.File f)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.file.SimpleFile SimpleFile(org.bukkit.plugin.Plugin plugin, java.lang.String name)" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.file.SimpleFile SimpleFile(java.lang.String path, java.lang.String name)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.file.SimpleFile" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.data.SimpleFireworkEffect SimpleFireworkEffect(org.bukkit.FireworkEffect.Type type)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.item.data.SimpleFireworkEffect" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.nms.SimplePacketMod SimplePacketMod(java.lang.Class&lt;?&gt; clazz, java.lang.Object instace)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.nms.SimplePacketMod" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.data.SimplePotionEffect SimplePotionEffect(int durationInSec, org.bukkit.potion.PotionEffectType type, int amplifier)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.item.data.SimplePotionEffect" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleTitle.TitleAction RESET" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleTitle.TitleAction CLEAR" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.nms.SimpleTitle.TitleAction TIMES" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.nms.SimpleTitle.TitleAction" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.nms.SimpleTitle" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.Listener.SoupListener void onSoup(org.bukkit.event.player.PlayerInteractEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.Listener.SoupListener" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onInvClick(org.bukkit.event.inventory.InventoryClickEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onClick(org.bukkit.event.player.PlayerInteractEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onTrack(org.bukkit.event.entity.EntityTargetEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onPickUp(org.bukkit.event.player.PlayerPickupItemEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onInteract(org.bukkit.event.player.PlayerInteractAtEntityEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onHit(org.bukkit.event.entity.EntityDamageByEntityEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onDrop(org.bukkit.event.player.PlayerDropItemEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onHungerMeterChange(org.bukkit.event.entity.FoodLevelChangeEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onDmg(org.bukkit.event.entity.EntityDamageEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onExp(org.bukkit.event.player.PlayerExpChangeEvent e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.utils.Spectator void onMove(org.bukkit.event.player.PlayerMoveEvent e)" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.utils.Spectator" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.timer.Timer void setE(org.bukkit.scheduler.BukkitTask e)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.timer.Timer org.bukkit.scheduler.BukkitTask getE()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.timer.Timer void setC(org.bukkit.scheduler.BukkitTask c)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.timer.Timer org.bukkit.scheduler.BukkitTask getC()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.timer.Timer void setB(org.bukkit.scheduler.BukkitTask b)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.timer.Timer org.bukkit.scheduler.BukkitTask getB()" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.timer.Timer void setA(org.bukkit.scheduler.BukkitTask a)" />
+      <entry_point TYPE="method" FQNAME="de.alpha.uhc.timer.Timer org.bukkit.scheduler.BukkitTask getA()" />
+      <entry_point TYPE="class" FQNAME="de.alpha.uhc.timer.Timer" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.UUID.PlayerUUID id" />
+      <entry_point TYPE="field" FQNAME="de.popokaka.alphalibary.UUID.PlayerUUID name" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.UUID.PlayerUUID" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.UUID.UUIDFetcher java.lang.String getName(java.util.UUID uuid)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.UUID.UUIDFetcher" />
+      <entry_point TYPE="method" FQNAME="de.popokaka.alphalibary.item.data.WrongDataException WrongDataException(de.popokaka.alphalibary.item.data.ItemData data)" />
+      <entry_point TYPE="class" FQNAME="de.popokaka.alphalibary.item.data.WrongDataException" />
+    </entry_points>
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">

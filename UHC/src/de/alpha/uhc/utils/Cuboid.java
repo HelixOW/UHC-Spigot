@@ -581,11 +581,6 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
     }
 
     @Override
-    public Cuboid clone() {
-        return new Cuboid(this);
-    }
-
-    @Override
     public String toString() {
         return "Cuboid: " + this.worldName + "," + this.x1 + "," + this.y1 + "," + this.z1 + "=>" + this.x2 + "," + this.y2 + "," + this.z2;
     }

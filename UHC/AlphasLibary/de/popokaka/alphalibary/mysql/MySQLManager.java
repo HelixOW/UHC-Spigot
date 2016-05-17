@@ -112,25 +112,7 @@ public class MySQLManager {
 
 		return info[column - 1].split(" ")[0];
 	}
-	
-	public static String getColumnSize(String table, int column) {
-		if(tableinfo.get(table) == null) {
-			return null;
-		}
-		String[] info = tableinfo.get(table).split(", ");
 
-		return info[column - 1].split(" ")[1].split("()")[1].replace(")", "");
-	}
-	
-	public static MySQLDataType getComlumnDataType(String table, int column) {
-		if(tableinfo.get(table) == null) {
-			return null;
-		}
-		String[] info = tableinfo.get(table).split(", ");
-
-		return MySQLDataType.valueOf(info[column - 1].split(" ")[1].split("()")[0]);
-	}
-	
 	public static Object getObjectConditionResult(String condition, String value, String column) {
 		if(MySQLAPI.isConnected()) {
 			try {
