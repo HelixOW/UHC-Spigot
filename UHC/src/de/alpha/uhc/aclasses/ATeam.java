@@ -1,11 +1,15 @@
 package de.alpha.uhc.aclasses;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.files.TeamFile;
-import de.popokaka.alphalibary.item.ItemBuilder;
-import org.bukkit.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.Effect;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,9 +21,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.files.MessageFileManager;
+import de.alpha.uhc.files.TeamFile;
+import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class ATeam implements Listener {
 
@@ -118,7 +124,7 @@ public class ATeam implements Listener {
                 teams.put(p, teamToPut);
                 chosen = chosen.replace("[team]", getTeamColor(teamToPut) + teamToPut);
                 p.sendMessage(Core.getPrefix() + chosen);
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 10, 0);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 10, 0); //TODO: multi
                 p.spigot().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 0, 0, 5, 5, 5, 50, 100, 5);
                 p.setDisplayName(getTeamColor(teamToPut) + p.getName());
                 p.setPlayerListName(getTeamColor(teamToPut) + p.getName());
@@ -136,7 +142,7 @@ public class ATeam implements Listener {
         try {
             return ChatColor.valueOf(TeamFile.getTeamColorAsString(team));
         } catch (IllegalArgumentException e) {
-            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "Â§cThe Team Â§4" + team + " Â§cis invalid.");
+            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cThe Team §4" + team + " §cis invalid.");
         }
         return ChatColor.RESET;
     }
@@ -234,7 +240,7 @@ public class ATeam implements Listener {
             }
 
         } catch (IllegalArgumentException e) {
-            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "Â§cThe Team Â§4" + team + " Â§cis invalid.");
+            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cThe Team §4" + team + " §cis invalid.");
         }
 
         return 12;

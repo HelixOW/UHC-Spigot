@@ -30,10 +30,10 @@ public class LobbyPasteUtil {
                 SchematicFormat.getFormat(schematic).load(schematic).paste(session, new Vector(0, 200, 0), false);
             } catch (MaxChangedBlocksException
                     | DataException | IOException e) {
-                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "Â§cCouldn't load lobby.schematic inside UHC/schematics folder");
+                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
             }
         } catch (Exception ignore) {
-            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "Â§cCouldn't load lobby.schematic inside UHC/schematics folder");
+            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
 
         }
     }

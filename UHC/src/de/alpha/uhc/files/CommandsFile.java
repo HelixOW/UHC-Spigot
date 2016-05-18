@@ -16,8 +16,8 @@ public class CommandsFile {
         file.setDefault("Use start command", true);
         file.setDefault("Use stats command", true);
 
-        file.setDefault("start command disabled", "§7Please use§8: §b/uhc start");
-        file.setDefault("stats command disabled", "§7Please use§8: §b/uhc stats");
+        file.setDefault("start command disabled", "&7Please use&8: &b/uhc start");
+        file.setDefault("stats command disabled", "&7Please use&8: &b/uhc stats");
     }
 
     public static void loadCommands() {

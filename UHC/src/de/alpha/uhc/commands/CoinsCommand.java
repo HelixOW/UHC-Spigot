@@ -25,7 +25,7 @@ public class CoinsCommand extends SimpleCommand<Core> {
     public boolean execute(CommandSender cs, String label, String[] args) {
         if (cs instanceof Player) return false;
         if (args.length == 0) {
-            cs.sendMessage(Core.getPrefix() + "ยง7/coins <add/remove> <amount> <Player>");
+            cs.sendMessage(Core.getPrefix() + "ง7/coins <add/remove> <amount> <Player>");
         }
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("add")) {

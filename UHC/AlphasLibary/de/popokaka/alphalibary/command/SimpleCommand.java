@@ -11,8 +11,6 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.alpha.uhc.Core;
-
 public abstract class SimpleCommand<P extends JavaPlugin> extends Command {
 	
 	private static String VERSION;
@@ -22,11 +20,14 @@ public abstract class SimpleCommand<P extends JavaPlugin> extends Command {
 	      
 	      SimpleCommand.VERSION = path.substring(path.lastIndexOf(".") + 1, path.length());
 	      
-	      System.out.println(Core.getPrefix()+" AutoCommand hook for Bukkit " + SimpleCommand.VERSION);
 	   }
 	   
 	   private final P plugin;
 	   private final String command;
+	   
+	   String getCommand() {
+		   return command;
+	   }
 	   
 	   protected SimpleCommand(P plugin, String command, String description, String... aliases) {
 	      super(command);

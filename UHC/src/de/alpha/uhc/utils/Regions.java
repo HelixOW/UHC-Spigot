@@ -82,8 +82,8 @@ public class Regions implements Listener {
 
         Material m = Material.getMaterial(material.toUpperCase());
 
-        if (p.getInventory().getItemInMainHand() == null) return;
-        if (!(p.getInventory().getItemInMainHand().getType().equals(m))) return;
+        if (p.getInventory().getItemInMainHand() == null) return;//TODO: multi
+        if (!(p.getInventory().getItemInMainHand().getType().equals(m))) return;//TODO: multi
         if (!(p.hasPermission("uhc.admin"))) return;
         if (!lobby) return;
 
@@ -91,18 +91,18 @@ public class Regions implements Listener {
             e.setCancelled(true);
 
             pos1.put(p, e.getClickedBlock().getLocation());
-            p.sendMessage(Core.getPrefix() + "Â§7The Â§afirst Lobbypoint Â§7has been set. [1/2]");
+            p.sendMessage(Core.getPrefix() + "§7The §afirst Lobbypoint §7has been set. [1/2]");
 
         } else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             e.setCancelled(true);
 
             pos2.put(p, e.getClickedBlock().getLocation());
-            p.sendMessage(Core.getPrefix() + "Â§7The Â§asecond Lobbypoint Â§7has been set. [2/2]");
+            p.sendMessage(Core.getPrefix() + "§7The §asecond Lobbypoint §7has been set. [2/2]");
 
         }
 
         if (pos1.containsKey(p) && pos2.containsKey(p)) {
-            p.sendMessage(Core.getPrefix() + "Â§7You can now create the lobby with /uhc createLobby");
+            p.sendMessage(Core.getPrefix() + "§7You can now create the lobby with /uhc createLobby");
 
         }
 

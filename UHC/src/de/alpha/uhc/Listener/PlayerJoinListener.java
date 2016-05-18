@@ -175,7 +175,7 @@ public class PlayerJoinListener implements Listener {
                 apc = Bukkit.getOnlinePlayers().size();
 
                 join = join.replace("[Player]", p.getDisplayName());
-                join = join.replace("[PlayerCount]", "Â§7[" + apc + "/" + mpc + "]");
+                join = join.replace("[PlayerCount]", "§7[" + apc + "/" + mpc + "]");
 
                 Bukkit.broadcastMessage(Core.getPrefix() + join);
 
@@ -194,16 +194,16 @@ public class PlayerJoinListener implements Listener {
 
         if (kitMode) {
             if (kitItem == null || kitName == null) {
-                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "Â§cYou don't have any Kits in your kits.yml");
+                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cYou don't have any Kits in your kits.yml");
             } else {
                 p.getInventory().setHeldItemSlot(0);
-                p.getInventory().setItemInMainHand(new ItemBuilder(kitItem).setName(kitName).build());
+                p.getInventory().setItemInMainHand(new ItemBuilder(kitItem).setName(kitName).build());//TODO: multi
 
             }
         }
         if (UHCCommand.isTeamMode()) {
             if (teamItem == null || teamName == null) {
-                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "Â§cYou don't have any Kits in your kits.yml");
+                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cYou don't have any Kits in your kits.yml");
             } else {
                 p.getInventory().setItem(1, new ItemBuilder(teamItem).setName(teamName).build());
             }

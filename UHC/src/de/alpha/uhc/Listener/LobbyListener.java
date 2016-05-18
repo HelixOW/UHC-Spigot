@@ -133,8 +133,8 @@ public class LobbyListener implements Listener {
     public void onInterAct(PlayerInteractEvent e) {
 
         if (!(GState.isState(GState.LOBBY))) return;
-        if (e.getPlayer().getInventory().getItemInMainHand() == null) return;
-        if (!(e.getPlayer().getInventory().getItemInMainHand().getType().equals(PlayerJoinListener.getKitItem())))
+        if (e.getPlayer().getInventory().getItemInMainHand() == null) return;//TODO: multi
+        if (!(e.getPlayer().getInventory().getItemInMainHand().getType().equals(PlayerJoinListener.getKitItem())))//TODO: multi
             return;
 
         e.setCancelled(true);
@@ -159,7 +159,7 @@ public class LobbyListener implements Listener {
                     kit.put(p, kits);
                     sel = sel.replace("[Kit]", kits);
                     p.sendMessage(Core.getPrefix() + sel);
-                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
+                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);//TODO: multi
                     sel = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Selected");
                     p.closeInventory();
                     break;
@@ -175,7 +175,7 @@ public class LobbyListener implements Listener {
                     p.sendMessage(Core.getPrefix() + bought);
                     bought = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Bought");
                     p.closeInventory();
-                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
+                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);//TODO: multi
                     AScoreboard.setLobbyScoreboard(p);
                     break;
                 } else {

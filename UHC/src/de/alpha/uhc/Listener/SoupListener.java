@@ -23,7 +23,7 @@ public class SoupListener implements Listener {
 
             Player p = e.getPlayer();
 
-            if (p.getInventory().getItemInMainHand().getType().equals(Material.MUSHROOM_SOUP)) {
+            if (p.getInventory().getItemInMainHand().getType().equals(Material.MUSHROOM_SOUP)) {//TODO: multi
 
                 if (e.getAction().equals(Action.RIGHT_CLICK_AIR)
                         || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -32,7 +32,7 @@ public class SoupListener implements Listener {
                         return;
                     }
 
-                    p.getInventory().getItemInMainHand().setType(Material.BOWL);
+                    p.getInventory().getItemInMainHand().setType(Material.BOWL);//TODO: multi
                     if (p.getHealth() <= 19 - boost) {
                         p.setHealth(p.getHealth() + boost);
                     } else {

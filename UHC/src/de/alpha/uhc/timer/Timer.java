@@ -223,7 +223,7 @@ public class Timer {
                                             countmsg = countmsg.replace("[time]", Integer.toString(high));
                                             all.sendMessage(Core.getPrefix() + countmsg);
                                             SimpleTitle.sendTitle(all, " ", countmsg, 1, 2, 1);
-                                            all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
+                                            all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);//TODO: multi
                                             Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 
                                                 @Override
@@ -240,7 +240,7 @@ public class Timer {
                                             countmsg = countmsg.replace("[time]", Integer.toString(high));
                                             all.sendMessage(Core.getPrefix() + countmsg);
                                             SimpleActionBar.send(all, countmsg);
-                                            all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
+                                            all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);//TODO: multi
                                             Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 
                                                 @Override
@@ -496,7 +496,7 @@ public class Timer {
                         if (tbpvp == 0) {
                             for (Player all : Bukkit.getOnlinePlayers()) {
                                 GState.setGameState(GState.DEATHMATCH);
-                                all.playSound(all.getLocation(), Sound.BLOCK_NOTE_PLING, 10F, 0);
+                                all.playSound(all.getLocation(), Sound.BLOCK_NOTE_PLING, 10F, 0);//TODO: multi
                             }
                             ee.cancel();
                         }

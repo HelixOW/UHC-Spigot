@@ -27,11 +27,11 @@ public class MessageFileManager {
         file.setDefault("Commands.Admin.LobbySet", "&aYou have sucessfully set the Lobby.");
 
         file.setDefault("Announcements.Countdown", "&aGame starts in &7[time]&8 seconds");
-        file.setDefault("Announcements.NotEnoughPlayers", "§cCountdown reloaded! Not enough Players online.");
-        file.setDefault("Announcements.Peaceperiod.timer", "§aThe damage is enabled in &7[time] &8seconds");
-        file.setDefault("Announcements.DeathMatch.timer", "§aThe deathmatch starts in &7[time] &8minutes");
-        file.setDefault("Announcements.PvP.timer", "§aPvP is enabled in &7[time] &8minutes");
-        file.setDefault("Announcements.PvP.end", "§aPvP is now enabled");
+        file.setDefault("Announcements.NotEnoughPlayers", "&cCountdown reloaded! Not enough Players online.");
+        file.setDefault("Announcements.Peaceperiod.timer", "&aThe damage is enabled in &7[time] &8seconds");
+        file.setDefault("Announcements.DeathMatch.timer", "&aThe deathmatch starts in &7[time] &8minutes");
+        file.setDefault("Announcements.PvP.timer", "&aPvP is enabled in &7[time] &8minutes");
+        file.setDefault("Announcements.PvP.end", "&aPvP is now enabled");
         file.setDefault("Announcements.Peaceperiod.end", "&cThe Damage is now on. Be Careful!");
         file.setDefault("Announcements.Leave", "&6[Player]&c had left. [PlayerCount]");
         file.setDefault("Announcements.Join", "&6[Player]&a has joined. [PlayerCount]");
@@ -43,8 +43,8 @@ public class MessageFileManager {
         file.setDefault("Warns.FullServer", "&cYou're not allowed to join. The Server is full.");
 
         file.setDefault("Compass.NoPlayerInRange", "&cThere is no Player in your Range!");
-        file.setDefault("Compass.PlayerInRange", "&6[Player] &ais §7[distance] blocks &aaway from you.");
-        file.setDefault("Compass.TeamPlayerInRange", "§aYour Teammate &6[Player] &ais §7[distance] blocks &aaway from you.");
+        file.setDefault("Compass.PlayerInRange", "&6[Player] &ais &7[distance] blocks &aaway from you.");
+        file.setDefault("Compass.TeamPlayerInRange", "&aYour Teammate &6[Player] &ais &7[distance] blocks &aaway from you.");
 
         file.setDefault("Join.Title", "&aHello [Player]");
         file.setDefault("Join.Subtitle", "&7and welcome to UHC");

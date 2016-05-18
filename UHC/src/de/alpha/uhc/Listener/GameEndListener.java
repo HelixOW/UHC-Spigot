@@ -216,14 +216,14 @@ public class GameEndListener implements Listener {
         if (Core.getSpecs().contains(p)) {
             Core.removeSpec(p);
             for (Player o : Core.getSpecs()) {
-                quit = quit.replace("[PlayerCount]", "ยง7[" + apc + " left]");
+                quit = quit.replace("[PlayerCount]", "ง7[" + apc + " left]");
 
                 o.sendMessage(Core.getPrefix() + quit);
 
                 quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
             }
         } else {
-            quit = quit.replace("[PlayerCount]", "ยง7[" + apc + " left]");
+            quit = quit.replace("[PlayerCount]", "ง7[" + apc + " left]");
 
             Bukkit.broadcastMessage(Core.getPrefix() + quit);
 

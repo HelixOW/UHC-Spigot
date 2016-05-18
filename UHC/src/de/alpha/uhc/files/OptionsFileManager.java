@@ -75,7 +75,7 @@ public class OptionsFileManager {
 
         file.setDefault("InGame.give Compass", true);
         file.setDefault("InGame.Compassitem", "compass");
-        file.setDefault("InGame.Compassitemname", "§aPlayertracker");
+        file.setDefault("InGame.Compassitemname", "&aPlayertracker");
 
         file.setDefault("Status Motd", true);
 

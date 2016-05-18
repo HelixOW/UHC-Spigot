@@ -189,11 +189,11 @@ public class Core extends JavaPlugin implements PluginMessageListener {
 
         if (Timer.getPc() <= 1) {
             //Print error message to inform serverowner
-            Bukkit.getConsoleSender().sendMessage(prefix + "Â§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");
+            Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");
         }
 
         //Print out successfully loaded message
-        Bukkit.getConsoleSender().sendMessage(prefix + "Â§aUHC by AlphaHelix is now enabled!");
+        Bukkit.getConsoleSender().sendMessage(prefix + "§aUHC by AlphaHelix is now enabled!");
     }
 
     @Override
@@ -213,7 +213,7 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         //Reset placed Blocks
         MapReset.restore();
         //Successfull disabled message
-        Bukkit.getConsoleSender().sendMessage(prefix + "Â§cUHC by AlphaHelix is now disabled!");
+        Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC by AlphaHelix is now disabled!");
     }
 
     @SuppressWarnings("deprecation")

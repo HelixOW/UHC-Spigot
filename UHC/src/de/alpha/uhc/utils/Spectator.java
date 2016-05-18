@@ -49,7 +49,7 @@ public class Spectator implements Listener {
         p.setVelocity(p.getVelocity().setY(20D));
         p.setTotalExperience(0);
         p.setGameMode(GameMode.ADVENTURE);
-        p.setPlayerListName("ยง7[ยง4Xยง7] ยงc" + p.getDisplayName());
+        p.setPlayerListName("ง7[ง4Xง7] งc" + p.getDisplayName());
         p.setAllowFlight(true);
         p.setFlying(true);
         equipSpecStuff(p);
@@ -158,13 +158,13 @@ public class Spectator implements Listener {
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
 
-            if (p.getInventory().getItemInMainHand().getType().equals(Material.getMaterial(specItem.toUpperCase()))) {
+            if (p.getInventory().getItemInMainHand().getType().equals(Material.getMaterial(specItem.toUpperCase()))) {//TODO: multi
 
                 Inventory inv = Bukkit.createInventory(null, 54, title);
 
                 for (Player pl : Core.getInGamePlayers()) {
 
-                    ItemStack item = new ItemBuilder(Material.SKULL_ITEM).setDamage((short) 3).setName("ยงlยงo" + pl.getDisplayName()).addItemData(new SkullData(pl.getName())).build();
+                    ItemStack item = new ItemBuilder(Material.SKULL_ITEM).setDamage((short) 3).setName("งlงo" + pl.getDisplayName()).addItemData(new SkullData(pl.getName())).build();
 
                     inv.addItem(item);
 

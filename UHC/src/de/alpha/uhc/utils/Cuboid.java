@@ -52,15 +52,6 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
     }
 
     /**
-     * Copy constructor.
-     *
-     * @param other - The Cuboid to copy
-     */
-    private Cuboid(Cuboid other) {
-        this(other.getWorld().getName(), other.x1, other.y1, other.z1, other.x2, other.y2, other.z2);
-    }
-
-    /**
      * Construct a Cuboid in the given World and xyz co-ordinates
      *
      * @param world - The Cuboid's world

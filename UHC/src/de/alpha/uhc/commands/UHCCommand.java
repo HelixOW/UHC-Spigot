@@ -80,7 +80,7 @@ public class UHCCommand implements CommandExecutor {
 
                     if (args[0].equalsIgnoreCase("createTeamJoiner")) {
                         ArmorStandUtil.spawn(p.getLocation(), args[1]);
-                        p.sendMessage(Core.getPrefix() + "ยงa Setted Teamjoiner for team " + ATeam.getTeamColor(args[1]) + args[1]);
+                        p.sendMessage(Core.getPrefix() + "งa Setted Teamjoiner for team " + ATeam.getTeamColor(args[1]) + args[1]);
                         return true;
                     }
                 }
@@ -111,27 +111,27 @@ public class UHCCommand implements CommandExecutor {
 
             if (args.length == 0) {
                 if (p.hasPermission("UHC.admin")) {
-                    p.sendMessage("ยง8---===UHC===---");
-                    p.sendMessage("ยง7 /uhc setSpawn - Set your Arena");
-                    p.sendMessage("ยง7 /uhc setLobby - Set your Lobby, where the players will wait.");
-                    p.sendMessage("ยง7 /uhc createLobby - Create a lobbyregion, which Player won't be able to leave");
-                    p.sendMessage("ยง7 /uhc createWorld <name> - create a new random world");
-                    p.sendMessage("ยง7 /uhc createHologram [lowerby deep] <name> - create a hologram with Player stats");
-                    p.sendMessage("ยง7 /uhc restart - reload the server to restart UHC");
-                    p.sendMessage("ยง7 /uhc reload - reload all UHC files");
-                    p.sendMessage("ยง7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
-                    p.sendMessage("ยง7 /uhc tpToWorld <name> - teleport to the World with the name <name>");
-                    p.sendMessage("ยง7 /uhc start - short the countdown to 10 seconds");
-                    p.sendMessage("ยง7 /uhc team [teamname] - See all teams [join this team]");
-                    p.sendMessage("ยง7 /uhc createTeamJoiner [team] - creates a Entity to join the team [team]");
-                    p.sendMessage("ยง7 /uhc stats - see your stats");
-                    p.sendMessage("ยง8---===XXX===---");
+                    p.sendMessage("ง8---===UHC===---");
+                    p.sendMessage("ง7 /uhc setSpawn - Set your Arena");
+                    p.sendMessage("ง7 /uhc setLobby - Set your Lobby, where the players will wait.");
+                    p.sendMessage("ง7 /uhc createLobby - Create a lobbyregion, which Player won't be able to leave");
+                    p.sendMessage("ง7 /uhc createWorld <name> - create a new random world");
+                    p.sendMessage("ง7 /uhc createHologram [lowerby deep] <name> - create a hologram with Player stats");
+                    p.sendMessage("ง7 /uhc restart - reload the server to restart UHC");
+                    p.sendMessage("ง7 /uhc reload - reload all UHC files");
+                    p.sendMessage("ง7 /uhc addKit <name> <GUI block> <GUI slot> <price> <itemlore> - adds a kit with your current inventory");
+                    p.sendMessage("ง7 /uhc tpToWorld <name> - teleport to the World with the name <name>");
+                    p.sendMessage("ง7 /uhc start - short the countdown to 10 seconds");
+                    p.sendMessage("ง7 /uhc team [teamname] - See all teams [join this team]");
+                    p.sendMessage("ง7 /uhc createTeamJoiner [team] - creates a Entity to join the team [team]");
+                    p.sendMessage("ง7 /uhc stats - see your stats");
+                    p.sendMessage("ง8---===XXX===---");
                     return true;
                 } else {
-                    p.sendMessage("ยง8---===UHC===---");
-                    p.sendMessage("ยง7 /uhc stats - see your stats");
-                    p.sendMessage("ยง7 /uhc team [teamname] - See all teams [join this team]");
-                    p.sendMessage("ยง8---===XXX===---");
+                    p.sendMessage("ง8---===UHC===---");
+                    p.sendMessage("ง7 /uhc stats - see your stats");
+                    p.sendMessage("ง7 /uhc team [teamname] - See all teams [join this team]");
+                    p.sendMessage("ง8---===XXX===---");
                     return true;
                 }
             }
@@ -176,7 +176,7 @@ public class UHCCommand implements CommandExecutor {
                         CommandsFile.addCommands();
                         CommandsFile.loadCommands();
 
-                        p.sendMessage(Core.getPrefix() + "ยงcAll configs has been reloaded");
+                        p.sendMessage(Core.getPrefix() + "งcAll configs has been reloaded");
                         return true;
                     }
 
@@ -211,11 +211,11 @@ public class UHCCommand implements CommandExecutor {
                             Regions.addRegion((new Cuboid(Regions.getPos1(p), Regions.getPos2(p))));
                             SpawnFileManager.addRegion(Regions.getPos1(p), Regions.getPos2(p));
 
-                            p.sendMessage(Core.getPrefix() + "ยง7You have created a lobbyregion.");
+                            p.sendMessage(Core.getPrefix() + "ง7You have created a lobbyregion.");
                             return true;
 
                         } else {
-                            p.sendMessage(Core.getPrefix() + "ยง7You have to definde 2 lobbypoints first.");
+                            p.sendMessage(Core.getPrefix() + "ง7You have to definde 2 lobbypoints first.");
                             return true;
                         }
                     }
@@ -226,10 +226,10 @@ public class UHCCommand implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("tpToWorld")) {
                         if (Bukkit.getWorld(args[1]) != null) {
                             p.teleport(Bukkit.getWorld(args[1]).getSpawnLocation().add(0, 200, 0));
-                            p.sendMessage(Core.getPrefix() + "ยง7You have been teleported to the world: ยงa" + args[1]);
+                            p.sendMessage(Core.getPrefix() + "ง7You have been teleported to the world: งa" + args[1]);
                             return true;
                         } else {
-                            p.sendMessage(Core.getPrefix() + "ยง7The World ยงc" + args[1] + " ยง7do not exists");
+                            p.sendMessage(Core.getPrefix() + "ง7The World งc" + args[1] + " ง7do not exists");
                             return true;
                         }
                     }
@@ -270,7 +270,7 @@ public class UHCCommand implements CommandExecutor {
                                         new HoloUtil().createHologram(all, i, Double.parseDouble(args[2]));
                                     }
                                 }
-                                p.sendMessage(Core.getPrefix() + "ยง7You have created a new Hologram");
+                                p.sendMessage(Core.getPrefix() + "ง7You have created a new Hologram");
                                 return true;
                             }
                         }
@@ -291,7 +291,7 @@ public class UHCCommand implements CommandExecutor {
                                 new HoloUtil().createHologram(all, i, 0);
                             }
                         }
-                        p.sendMessage(Core.getPrefix() + "ยง7You have created a new Hologram");
+                        p.sendMessage(Core.getPrefix() + "ง7You have created a new Hologram");
                         return true;
                     }
                 }
@@ -303,7 +303,7 @@ public class UHCCommand implements CommandExecutor {
                         }
 
                         new KitFileManager().addKit(args[1], p.getInventory(), args[2], Integer.parseInt(args[3]), lore, Integer.parseInt(args[4]));
-                        p.sendMessage(Core.getPrefix() + "ยง7You have set the kit ยงa" + args[1] + " ยง7with GUI-block ยงa" + args[2] + "ยง7 on GUI-slot ยงa" + args[3] + "ยง7 with the price of ยงa" + args[4] + " ยง7and the lore ยงa" + lore);
+                        p.sendMessage(Core.getPrefix() + "ง7You have set the kit งa" + args[1] + " ง7with GUI-block งa" + args[2] + "ง7 on GUI-slot งa" + args[3] + "ง7 with the price of งa" + args[4] + " ง7and the lore งa" + lore);
                         GUI.fill();
                         return true;
                     }

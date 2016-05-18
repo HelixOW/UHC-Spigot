@@ -92,12 +92,12 @@ public class Stats {
 
     public void sendStats() {
 
-        p.sendMessage("Â§8---===XXX===---\n"
-                + "Â§6PlayerÂ§7: " + p.getDisplayName() + "\n"
-                + "Â§6KillsÂ§7: Â§a" + new Stats(p).getKills() + "\n"
-                + "Â§6DeathsÂ§7: Â§c" + new Stats(p).getDeaths() + "\n"
-                + "Â§6CoinsÂ§7: Â§c" + new Stats(p).getCoins() + "\n"
-                + "Â§6KitsÂ§7: Â§c" + new Stats(p).getKits() + "\n"
-                + "Â§8---===XXX===---");
+        p.sendMessage("§8---===XXX===---\n"
+                + "§6Player§7: " + p.getDisplayName() + "\n"
+                + "§6Kills§7: §a" + new Stats(p).getKills() + "\n"
+                + "§6Deaths§7: §c" + new Stats(p).getDeaths() + "\n"
+                + "§6Coins§7: §c" + new Stats(p).getCoins() + "\n"
+                + "§6Kits§7: §c" + new Stats(p).getKits() + "\n"
+                + "§8---===XXX===---");
     }
 }
