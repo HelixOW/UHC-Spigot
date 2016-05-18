@@ -82,7 +82,7 @@ public class SimpleFile extends YamlConfiguration {
 
 		try {
 			String toReturn = getString(path);
-			return toReturn.replaceAll("&", "ยง");
+			return toReturn.replaceAll("&", "ง");
 		} catch (Exception e) { return ""; }
 	}
 	
