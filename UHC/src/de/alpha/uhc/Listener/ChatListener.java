@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 
 public class ChatListener implements Listener {
 
@@ -42,6 +43,11 @@ public class ChatListener implements Listener {
                 all.sendMessage(Core.getPrefix() + "§7[" + ATeam.getTeamColor(ATeam.getPlayerTeam(e.getPlayer())) + ATeam.getPlayerTeam(e.getPlayer()) + "§7] " + e.getPlayer().getDisplayName() + " §7: " + e.getMessage().replaceFirst("#", ""));
             }
         }
+    }
+    
+    @EventHandler
+    public void onReward(PlayerAchievementAwardedEvent e) {
+    	e.setCancelled(true);
     }
 
 }
