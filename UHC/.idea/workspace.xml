@@ -1,69 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="38c92f25-cca0-4be1-b7d4-7cea2a9bd909" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/alpha/uhc/shop/Particles.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/.gitignore" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Core.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Core.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/GState.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/GState.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/ChatListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/ChatListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/CraftListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/CraftListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/DeathListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/DeathListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$1.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$2.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$3.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$4.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$5.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/GameEndListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/InGameListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/InGameListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/LobbyListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/LobbyListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/MiningListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/MiningListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/MotdListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/MotdListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/PlayerJoinListener$1.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/PlayerJoinListener$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/PlayerJoinListener$2.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/PlayerJoinListener$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/PlayerJoinListener$3.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/PlayerJoinListener$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/PlayerJoinListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/PlayerJoinListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/SoupListener.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/Listener/SoupListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/commands/UHCCommand$1.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/commands/UHCCommand$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/commands/UHCCommand$2.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/commands/UHCCommand$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/commands/UHCCommand.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/commands/UHCCommand.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/files/DropFile.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/files/DropFile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/files/HologramFileManager.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/files/HologramFileManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/files/MessageFileManager.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/files/MessageFileManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/files/OptionsFileManager.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/files/OptionsFileManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/files/PlayerFileManager.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/files/PlayerFileManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/files/ScoreboardFile.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/files/ScoreboardFile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/files/SpawnFileManager.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/files/SpawnFileManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/files/TeamFile.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/files/TeamFile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/kits/GUI.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/kits/GUI.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/kits/KitFileManager.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/kits/KitFileManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/kits/KitManager.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/kits/KitManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$1$1$1.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$1$1$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$1$1$2.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$1$1$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$1$1.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$1$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$1.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$2$1.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$2$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$2.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$3.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/timer/Timer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Cuboid$CuboidDirection.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Cuboid$CuboidDirection.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Cuboid$CuboidIterator.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Cuboid$CuboidIterator.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Cuboid.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Cuboid.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/HoloUtil.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/HoloUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/LobbyPasteUtil.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/LobbyPasteUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/MapReset.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/MapReset.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Regions.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Regions.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Spectator.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Spectator.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Stats.class" afterPath="$PROJECT_DIR$/bin/de/alpha/uhc/utils/Stats.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AlphasLibary/de/popokaka/alphalibary/mysql/MySQLManager.java" afterPath="$PROJECT_DIR$/AlphasLibary/de/popokaka/alphalibary/mysql/MySQLManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/alpha/uhc/aclasses/ATeam.java" afterPath="$PROJECT_DIR$/src/de/alpha/uhc/aclasses/ATeam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/alpha/uhc/aclasses/AWorld.java" afterPath="$PROJECT_DIR$/src/de/alpha/uhc/aclasses/AWorld.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/alpha/uhc/utils/Cuboid.java" afterPath="$PROJECT_DIR$/src/de/alpha/uhc/utils/Cuboid.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/plugin.yml" afterPath="$PROJECT_DIR$/src/plugin.yml" />
-    </list>
+    <list default="true" id="38c92f25-cca0-4be1-b7d4-7cea2a9bd909" name="Default" comment="" />
     <ignored path="UHC.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -235,18 +173,7 @@
     </favorites_list>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Particles.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/de/alpha/uhc/shop/Particles.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.26131222">
-              <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -362,9 +289,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -394,68 +321,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="UHC" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="UHC" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="uhc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="UHC" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="UHC" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="uhc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="UHC" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="UHC" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="uhc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="files" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -796,31 +661,31 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17235859" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17075774" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286026" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3995633" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969433" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969433" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1141,7 +1006,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>

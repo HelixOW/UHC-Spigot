@@ -215,7 +215,6 @@ public class LeatherItemBuilder{
 		LeatherArmorMeta m = (LeatherArmorMeta) s.getItemMeta();
 		
 		for(ItemFlag iflag : itemflags) {m.addItemFlags(iflag);}
-		m.spigot().setUnbreakable(Unbreakable);
 		m.setDisplayName(name);
 		m.setLore(lore);
 		m.setColor(color);

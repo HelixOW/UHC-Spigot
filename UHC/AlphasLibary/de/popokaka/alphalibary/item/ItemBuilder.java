@@ -173,7 +173,6 @@ public class ItemBuilder {
 		ItemMeta m = s.getItemMeta();
 		
 		for(ItemFlag iflag : itemflags) {m.addItemFlags(iflag);}
-		m.spigot().setUnbreakable(Unbreakable);
 		m.setDisplayName(name);
 		m.setLore(lore);
 		s.setItemMeta(m);
