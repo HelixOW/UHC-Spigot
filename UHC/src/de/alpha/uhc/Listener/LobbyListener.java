@@ -93,8 +93,8 @@ public class LobbyListener implements Listener {
 
     @EventHandler
     public void onSpawn(CreatureSpawnEvent e) {
-        if (GState.isState(GState.LOBBY) || GState.isState(GState.GRACE)) {
-            if (!(e.getEntity() instanceof ArmorStand)) {
+        if (GState.isState(GState.LOBBY)) {
+            if(!(e.getEntity() instanceof ArmorStand)) {
                 e.setCancelled(true);
             }
         }
@@ -133,8 +133,8 @@ public class LobbyListener implements Listener {
     public void onInterAct(PlayerInteractEvent e) {
 
         if (!(GState.isState(GState.LOBBY))) return;
-        if (e.getPlayer().getInventory().getItemInMainHand() == null) return;//TODO: multi
-        if (!(e.getPlayer().getInventory().getItemInMainHand().getType().equals(PlayerJoinListener.getKitItem())))//TODO: multi
+        if (e.getPlayer().getInventory().getItemInMainHand() == null) return;
+        if (!(e.getPlayer().getInventory().getItemInMainHand().getType().equals(PlayerJoinListener.getKitItem())))
             return;
 
         e.setCancelled(true);
@@ -159,7 +159,7 @@ public class LobbyListener implements Listener {
                     kit.put(p, kits);
                     sel = sel.replace("[Kit]", kits);
                     p.sendMessage(Core.getPrefix() + sel);
-                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);//TODO: multi
+                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
                     sel = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Selected");
                     p.closeInventory();
                     break;
@@ -175,7 +175,7 @@ public class LobbyListener implements Listener {
                     p.sendMessage(Core.getPrefix() + bought);
                     bought = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Bought");
                     p.closeInventory();
-                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);//TODO: multi
+                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
                     AScoreboard.setLobbyScoreboard(p);
                     break;
                 } else {

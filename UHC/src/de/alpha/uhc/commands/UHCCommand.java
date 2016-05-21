@@ -77,12 +77,6 @@ public class UHCCommand implements CommandExecutor {
                             return true;
                         }
                     }
-
-                    if (args[0].equalsIgnoreCase("createTeamJoiner")) {
-                        ArmorStandUtil.spawn(p.getLocation(), args[1]);
-                        p.sendMessage(Core.getPrefix() + "§a Setted Teamjoiner for team " + ATeam.getTeamColor(args[1]) + args[1]);
-                        return true;
-                    }
                 }
             }
 
@@ -124,6 +118,7 @@ public class UHCCommand implements CommandExecutor {
                     p.sendMessage("§7 /uhc start - short the countdown to 10 seconds");
                     p.sendMessage("§7 /uhc team [teamname] - See all teams [join this team]");
                     p.sendMessage("§7 /uhc createTeamJoiner [team] - creates a Entity to join the team [team]");
+                    p.sendMessage("§7 /uhc removeTeamJoiner - removes the TeamJoiner at your current Location");
                     p.sendMessage("§7 /uhc stats - see your stats");
                     p.sendMessage("§8---===XXX===---");
                     return true;
@@ -175,12 +170,18 @@ public class UHCCommand implements CommandExecutor {
 
                         CommandsFile.addCommands();
                         CommandsFile.loadCommands();
+                        
+                        ArmorStandFile.getASFile().save();
 
                         p.sendMessage(Core.getPrefix() + "§cAll configs has been reloaded");
                         return true;
                     }
 
-
+                    if(args[0].equalsIgnoreCase("removeTeamJoiner")) {
+                    	ArmorStandUtil.removeArmorStand(p.getLocation());
+                    	p.sendMessage(Core.getPrefix() + "TeamJoiner successfully removed");
+                    }
+                    
                     if (args[0].equalsIgnoreCase("setSpawn")) {
 
                         SpawnFileManager.SetSpawn(p.getLocation().getX(),
@@ -222,6 +223,12 @@ public class UHCCommand implements CommandExecutor {
                 }
 
                 if (args.length == 2) {
+                	
+                	if (args[0].equalsIgnoreCase("createTeamJoiner")) {
+                        ArmorStandUtil.spawn(p.getLocation(), args[1]);
+                        p.sendMessage(Core.getPrefix() + "§a Setted Teamjoiner for team " + ATeam.getTeamColor(args[1]) + args[1]);
+                        return true;
+                    }
 
                     if (args[0].equalsIgnoreCase("tpToWorld")) {
                         if (Bukkit.getWorld(args[1]) != null) {

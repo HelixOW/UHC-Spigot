@@ -2,12 +2,14 @@ package de.alpha.uhc.utils;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.aclasses.ATeam;
+import de.alpha.uhc.files.ArmorStandFile;
 import de.popokaka.alphalibary.item.ItemBuilder;
 import de.popokaka.alphalibary.item.data.SkullData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
@@ -51,5 +53,15 @@ public class ArmorStandUtil {
         as.setVisible(true);
         as.setGravity(false);
         as.setCustomNameVisible(true);
+        
+        ArmorStandFile.addArmorStand(l);
+    }
+    
+    public static void removeArmorStand(Location l) {
+    	for(Entity e : l.getWorld().getEntitiesByClass(ArmorStand.class)) {
+    		if(e.getLocation().getBlockX() == l.getBlockX() && e.getLocation().getBlockY() == l.getBlockY() && e.getLocation().getBlockZ() == l.getBlockZ()) {
+    			e.remove();
+    		}
+    	}
     }
 }

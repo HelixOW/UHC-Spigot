@@ -138,6 +138,8 @@ public class Core extends JavaPlugin implements PluginMessageListener {
 
         CommandsFile.addCommands();
         CommandsFile.loadCommands();
+        
+        ArmorStandFile.getASFile().save();
 
         //Register Commands & Events
         registerCommands();
