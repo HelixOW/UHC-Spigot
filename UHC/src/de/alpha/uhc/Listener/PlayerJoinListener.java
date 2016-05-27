@@ -33,6 +33,12 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerJoinListener implements Listener {
+	
+	private Core pl;
+	
+	public PlayerJoinListener(Core c) {
+		this.pl = c;
+	}
 
     private static String join;
     private static String full;

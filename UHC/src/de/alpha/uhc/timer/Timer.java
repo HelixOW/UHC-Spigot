@@ -29,6 +29,12 @@ import static de.alpha.uhc.files.SpawnFileManager.*;
 
 
 public class Timer {
+	
+	private Core pl;
+	
+	public Timer(Core c) {
+		this.pl = c;
+	}
 
     private static String countmsg;
     private static String nep;

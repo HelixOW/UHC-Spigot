@@ -12,6 +12,10 @@ import org.bukkit.util.Vector;
 import java.util.Random;
 
 public class Border {
+	
+	public Border() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static int size;
     private static double dmg;

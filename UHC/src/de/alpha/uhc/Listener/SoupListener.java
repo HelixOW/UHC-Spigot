@@ -1,5 +1,6 @@
 package de.alpha.uhc.Listener;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,6 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class SoupListener implements Listener {
+	
+	private Core pl;
+	
+	public SoupListener(Core c) {
+		this.pl = c;
+	}
 
     private static double boost;
 

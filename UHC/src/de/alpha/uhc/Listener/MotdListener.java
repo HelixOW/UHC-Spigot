@@ -1,11 +1,18 @@
 package de.alpha.uhc.Listener;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
 public class MotdListener implements Listener {
+	
+	private Core pl;
+	
+	public MotdListener(Core c) {
+		this.pl = c;
+	}
 
     private static String lobby;
     private static String grace;

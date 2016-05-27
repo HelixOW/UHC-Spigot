@@ -28,6 +28,10 @@ import de.alpha.uhc.files.TeamFile;
 import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class ATeam implements Listener {
+	
+	public ATeam() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static String chosen;
     private static String noExist;

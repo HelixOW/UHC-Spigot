@@ -13,6 +13,10 @@ import de.popokaka.alphalibary.file.SimpleFile;
 
 public class MessageFileManager {
 
+	
+	public MessageFileManager() {
+		// TODO Auto-generated constructor stub
+	}
 
     public static SimpleFile getMSGFile() {
         return new SimpleFile("plugins/UHC", "messages.yml");

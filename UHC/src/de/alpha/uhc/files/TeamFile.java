@@ -4,6 +4,10 @@ import de.alpha.uhc.aclasses.ATeam;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class TeamFile {
+	
+	public TeamFile() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static final SimpleFile file = getTeamFile();
 

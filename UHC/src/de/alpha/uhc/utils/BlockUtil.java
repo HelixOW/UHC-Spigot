@@ -2,10 +2,18 @@ package de.alpha.uhc.utils;
 
 import org.bukkit.block.BlockFace;
 
+import de.alpha.uhc.Core;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class BlockUtil {
+	
+	private Core pl;
+	
+	public BlockUtil(Core c) {
+		this.pl = c;
+	}
 
     public static ArrayList<BlockFace> getRelative() {
         ArrayList<BlockFace> faces = new ArrayList<>();

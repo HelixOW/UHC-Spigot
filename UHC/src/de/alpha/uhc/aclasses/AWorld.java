@@ -12,6 +12,10 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 public class AWorld {
+	
+	public AWorld() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static boolean lobbyAsSchematic;
     private static boolean wr;

@@ -8,6 +8,10 @@ import de.popokaka.alphalibary.file.SimpleFile;
 
 public class ArmorStandFile {
 	
+	public ArmorStandFile() {
+		// TODO Auto-generated constructor stub
+	}
+	
     private static SimpleFile file = getASFile();
 
     public static SimpleFile getASFile() {

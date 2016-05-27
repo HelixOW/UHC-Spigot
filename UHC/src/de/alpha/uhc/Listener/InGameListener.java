@@ -18,6 +18,12 @@ import de.alpha.uhc.files.MessageFileManager;
 import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class InGameListener implements Listener {
+	
+	private Core pl;
+	
+	public InGameListener(Core c) {
+		this.pl = c;
+	}
 
     private static String ntrack;
     private static String track;

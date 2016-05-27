@@ -5,6 +5,10 @@ import de.alpha.uhc.commands.StatsCommand;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class CommandsFile {
+	
+	public CommandsFile() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static final SimpleFile file = getCmdFile();
 

@@ -6,6 +6,10 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 
 public class KitFileManager {
+	
+	public KitFileManager() {
+		// TODO Auto-generated constructor stub
+	}
 
     private final SimpleFile file = getKitFile();
 

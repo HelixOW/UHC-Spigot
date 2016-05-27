@@ -22,6 +22,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameEndListener implements Listener {
+	
+	private Core pl;
+	
+	public GameEndListener(Core c) {
+		this.pl = c;
+	}
 
     private static String win;
     private static String kick;

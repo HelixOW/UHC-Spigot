@@ -17,6 +17,9 @@ import org.bukkit.scoreboard.Scoreboard;
 import java.util.HashMap;
 
 public class AScoreboard {
+	
+	public AScoreboard() {
+	}
 
     private static final HashMap<Player, Integer> sTeamA = new HashMap<>();
     private static final HashMap<Player, Integer> sTeamS = new HashMap<>();

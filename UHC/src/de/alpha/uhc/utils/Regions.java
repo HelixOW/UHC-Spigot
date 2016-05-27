@@ -14,6 +14,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Regions implements Listener {
+	
+	private Core pl;
+	
+	public Regions(Core c) {
+		this.pl = c;
+	}
 
     private static ArrayList<Cuboid> regions = new ArrayList<>();
     private static HashMap<Player, Location> pos1 = new HashMap<>();

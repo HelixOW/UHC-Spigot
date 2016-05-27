@@ -6,6 +6,10 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 public class HologramFileManager {
+	
+	public HologramFileManager() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static final SimpleFile file = getHologramFile();
 

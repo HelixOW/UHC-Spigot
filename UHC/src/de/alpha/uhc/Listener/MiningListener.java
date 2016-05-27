@@ -1,5 +1,6 @@
 package de.alpha.uhc.Listener;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.utils.BlockUtil;
 import org.bukkit.Location;
@@ -12,6 +13,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class MiningListener implements Listener {
+	
+	private Core pl;
+	
+	public MiningListener(Core c) {
+		this.pl = c;
+	}
 
 
     private static boolean wood;

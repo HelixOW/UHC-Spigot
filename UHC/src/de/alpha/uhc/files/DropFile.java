@@ -6,6 +6,10 @@ import de.popokaka.alphalibary.file.SimpleFile;
 import org.bukkit.Material;
 
 public class DropFile {
+	
+	public DropFile() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static final SimpleFile file = getDropFile();
 

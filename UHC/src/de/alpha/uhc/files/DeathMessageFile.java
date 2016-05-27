@@ -4,6 +4,10 @@ import de.alpha.uhc.Listener.CustomDeathListener;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class DeathMessageFile {
+	
+	public DeathMessageFile() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static final SimpleFile file = getDeathFile();
 

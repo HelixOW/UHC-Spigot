@@ -4,6 +4,10 @@ import de.alpha.uhc.aclasses.AScoreboard;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class ScoreboardFile {
+	
+	public ScoreboardFile() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static final SimpleFile file = getScoreboardFile();
 

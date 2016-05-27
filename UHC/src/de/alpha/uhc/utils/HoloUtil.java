@@ -1,5 +1,6 @@
 package de.alpha.uhc.utils;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.files.HologramFileManager;
 import de.popokaka.alphalibary.reflection.ReflectionUtil;
 import org.bukkit.Location;
@@ -10,6 +11,12 @@ import java.lang.reflect.InvocationTargetException;
 
 public class HoloUtil {
 
+	private Core pl;
+	
+	public HoloUtil(Core c) {
+		this.pl = c;
+	}
+	
     public void createHologram(Player p, int id, double remove) {
         Location loc = new HologramFileManager().getLocation(id).subtract(0, remove, 0);
 

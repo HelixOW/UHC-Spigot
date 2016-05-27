@@ -24,6 +24,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 public class Spectator implements Listener {
+	
+	private Core pl;
+	
+	public Spectator(Core c) {
+		this.pl = c;
+	}
 
     private static String specItem;
     private static String specName;

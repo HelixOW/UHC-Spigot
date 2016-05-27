@@ -8,6 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class ATablist {
+	
+	public ATablist() {
+	}
 
     private static String header;
     private static String footer;

@@ -10,6 +10,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 class KitManager {
+	
+	public KitManager() {
+		// TODO Auto-generated constructor stub
+	}
 
     @SuppressWarnings("deprecation")
     public static String InventoryToString(Inventory invInventory) {

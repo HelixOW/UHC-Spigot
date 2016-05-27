@@ -8,6 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class BorderManager {
+	
+	public BorderManager() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static boolean moveable;
     private static String moved;

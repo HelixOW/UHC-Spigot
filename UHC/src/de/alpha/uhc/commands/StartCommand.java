@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 public class StartCommand extends SimpleCommand<Core> {
-
+	
     private static boolean use;
     private static String err;
 

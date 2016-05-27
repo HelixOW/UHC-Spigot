@@ -14,6 +14,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class ArmorStandUtil {
+	
+	private Core pl;
+	
+	public ArmorStandUtil(Core c) {
+		this.pl = c;
+	}
 
     public static void spawn(Location l, String name) {
         if (!(ATeam.getTeamNames().contains(name))) {

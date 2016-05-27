@@ -6,6 +6,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 public class PlayerFileManager {
+	
+	public PlayerFileManager() {
+		// TODO Auto-generated constructor stub
+	}
 
     public static Inventory i;
     private final SimpleFile file = getPlayerFile();

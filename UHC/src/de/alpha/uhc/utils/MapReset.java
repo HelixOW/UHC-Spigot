@@ -1,5 +1,6 @@
 package de.alpha.uhc.utils;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,6 +19,12 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class MapReset implements Listener {
+	
+	private Core pl;
+	
+	public MapReset(Core c) {
+		this.pl = c;
+	}
 
     private static final List<String> breaked = new LinkedList<>();
     private static final List<String> placed = new LinkedList<>();

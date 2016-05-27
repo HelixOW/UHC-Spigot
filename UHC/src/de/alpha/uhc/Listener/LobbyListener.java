@@ -28,6 +28,12 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 import java.util.HashMap;
 
 public class LobbyListener implements Listener {
+	
+	private Core pl;
+	
+	public LobbyListener(Core c) {
+		this.pl = c;
+	}
 
     private static final HashMap<Player, String> kit = new HashMap<>();
     private static String sel;

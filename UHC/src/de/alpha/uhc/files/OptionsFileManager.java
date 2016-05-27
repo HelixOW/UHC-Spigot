@@ -14,6 +14,10 @@ import de.popokaka.alphalibary.file.SimpleFile;
 import org.bukkit.Material;
 
 public class OptionsFileManager {
+	
+	public OptionsFileManager() {
+		// TODO Auto-generated constructor stub
+	}
 
     public static SimpleFile getConfigFile() {
         return new SimpleFile("plugins/UHC", "options.yml");

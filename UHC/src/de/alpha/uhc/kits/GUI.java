@@ -8,6 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 public class GUI {
+	
+	public GUI() {
+		// TODO Auto-generated constructor stub
+	}
 
     private static Inventory kits;
     private static String title;

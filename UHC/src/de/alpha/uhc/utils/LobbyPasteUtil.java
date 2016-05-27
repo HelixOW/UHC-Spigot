@@ -19,6 +19,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class LobbyPasteUtil {
+	
+	private Core pl;
+	
+	public LobbyPasteUtil(Core c) {
+		this.pl = c;
+	}
 
     @SuppressWarnings("deprecation")
     public static void pasteLobby(Location loc) {
