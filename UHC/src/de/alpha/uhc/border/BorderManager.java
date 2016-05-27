@@ -9,8 +9,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class BorderManager {
 	
-	public BorderManager() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public BorderManager(Core c) {
+		this.pl = c;
 	}
 
     private static boolean moveable;

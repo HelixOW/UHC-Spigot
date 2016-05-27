@@ -4,12 +4,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import de.alpha.uhc.Core;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class ArmorStandFile {
 	
-	public ArmorStandFile() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public ArmorStandFile(Core c) {
+		this.pl = c;
 	}
 	
     private static SimpleFile file = getASFile();

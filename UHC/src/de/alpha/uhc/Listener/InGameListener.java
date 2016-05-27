@@ -56,7 +56,7 @@ public class InGameListener implements Listener {
 
         if (!(GState.isState(GState.INGAME) || GState.isState(GState.GRACE) || GState.isState(GState.DEATHMATCH) || GState.isState(GState.PREDEATHMATCH) || GState.isState(GState.PREGAME)))
             return;
-        if (Core.getSpecs().contains(e.getPlayer())) return;
+        if (pl.getSpecs().contains(e.getPlayer())) return;
         if (e.getFrom().getBlock().equals(e.getTo().getBlock())) return;
         AScoreboard.updateInGameCenter(e.getPlayer());
 
@@ -90,8 +90,8 @@ public class InGameListener implements Listener {
         if (e.getMaterial().equals(Material.COMPASS)) {
 
             Player target = getNearest(p);
-            if (target == null || Core.getSpecs().contains(target)) {
-                p.sendMessage(Core.getPrefix() + ntrack);
+            if (target == null || pl.getSpecs().contains(target)) {
+                p.sendMessage(pl.getPrefix() + ntrack);
                 return;
             }
 
@@ -103,7 +103,7 @@ public class InGameListener implements Listener {
 
                     trackteam = trackteam.replace("[distance]", Integer.toString(blocks));
 
-                    p.sendMessage(Core.getPrefix() + trackteam);
+                    p.sendMessage(pl.getPrefix() + trackteam);
                     SimpleTitle.sendTitle(p, " ", trackteam, 1, 2, 1);
                     p.setCompassTarget(getNearest(p).getLocation());
 
@@ -118,7 +118,7 @@ public class InGameListener implements Listener {
 
             track = track.replace("[distance]", Integer.toString(blocks));
 
-            p.sendMessage(Core.getPrefix() + track);
+            p.sendMessage(pl.getPrefix() + track);
             SimpleTitle.sendTitle(p, " ", track, 1, 2, 1);
             p.setCompassTarget(getNearest(p).getLocation());
 
@@ -133,7 +133,7 @@ public class InGameListener implements Listener {
 
         for (Entity entity : p.getNearbyEntities(size, size, size)) {
             if (entity instanceof Player) {
-                if (!(Core.getSpecs().contains(entity))) {
+                if (!(pl.getSpecs().contains(entity))) {
 
                     double dis = p.getLocation().distance(entity.getLocation());
 

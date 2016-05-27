@@ -1,13 +1,16 @@
 package de.alpha.uhc.files;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.commands.StartCommand;
 import de.alpha.uhc.commands.StatsCommand;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class CommandsFile {
 	
-	public CommandsFile() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public CommandsFile(Core c) {
+		this.pl = c;
 	}
 
     private static final SimpleFile file = getCmdFile();

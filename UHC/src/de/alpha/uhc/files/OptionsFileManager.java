@@ -15,8 +15,10 @@ import org.bukkit.Material;
 
 public class OptionsFileManager {
 	
-	public OptionsFileManager() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public OptionsFileManager(Core c) {
+		this.pl = c;
 	}
 
     public static SimpleFile getConfigFile() {

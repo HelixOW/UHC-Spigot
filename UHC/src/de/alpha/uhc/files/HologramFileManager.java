@@ -1,5 +1,6 @@
 package de.alpha.uhc.files;
 
+import de.alpha.uhc.Core;
 import de.popokaka.alphalibary.file.SimpleFile;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -7,8 +8,10 @@ import org.bukkit.World;
 
 public class HologramFileManager {
 	
-	public HologramFileManager() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public HologramFileManager(Core c) {
+		this.pl = c;
 	}
 
     private static final SimpleFile file = getHologramFile();

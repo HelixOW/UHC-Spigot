@@ -274,7 +274,7 @@ public class UHCCommand implements CommandExecutor {
                                     new HologramFileManager().addHoloram(name, p.getLocation(), Double.parseDouble(args[2]));
 
                                     for (int i = 0; i < new HologramFileManager().holocount(); i++) {
-                                        new HoloUtil().createHologram(all, i, Double.parseDouble(args[2]));
+                                        Core.getInstance().getRegistery().getHoloUtil().createHologram(all, i, Double.parseDouble(args[2]));
                                     }
                                 }
                                 p.sendMessage(Core.getInstance().getPrefix() + "§7You have created a new Hologram");
@@ -295,7 +295,7 @@ public class UHCCommand implements CommandExecutor {
                             new HologramFileManager().addHoloram(name, p.getLocation(), 0);
 
                             for (int i = 0; i < new HologramFileManager().holocount(); i++) {
-                                new HoloUtil().createHologram(all, i, 0);
+                                Core.getInstance().getRegistery().getHoloUtil().createHologram(all, i, 0);
                             }
                         }
                         p.sendMessage(Core.getInstance().getPrefix() + "§7You have created a new Hologram");

@@ -1,5 +1,6 @@
 package de.alpha.uhc.kits;
 
+import de.alpha.uhc.Core;
 import de.popokaka.alphalibary.file.SimpleFile;
 import org.bukkit.inventory.Inventory;
 
@@ -7,8 +8,10 @@ import java.util.ArrayList;
 
 public class KitFileManager {
 	
-	public KitFileManager() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public KitFileManager(Core c) {
+		this.pl = c;
 	}
 
     private final SimpleFile file = getKitFile();

@@ -1,5 +1,6 @@
 package de.alpha.uhc.files;
 
+import de.alpha.uhc.Core;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.file.SimpleFile;
 import org.bukkit.entity.Player;
@@ -7,8 +8,10 @@ import org.bukkit.inventory.Inventory;
 
 public class PlayerFileManager {
 	
-	public PlayerFileManager() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public PlayerFileManager(Core c) {
+		this.pl = c;
 	}
 
     public static Inventory i;

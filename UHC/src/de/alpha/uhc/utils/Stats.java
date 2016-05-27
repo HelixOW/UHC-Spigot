@@ -8,15 +8,20 @@ import org.bukkit.entity.Player;
 
 public class Stats {
 
-    private final Player p;
-    private final boolean isMysql;
+    private Player p;
+    private Core pl;
+    private boolean isMysql;
+    
+    public Stats(Core c) {
+		this.pl = c;
+		this.isMysql = pl.isMySQLActive();
+	}
 
     /**
      * @param killer to add/remove coins
      */
     public Stats(Player killer) {
         p = killer;
-        isMysql = Core.isMySQLActive();
     }
 
     public int getCoins() {

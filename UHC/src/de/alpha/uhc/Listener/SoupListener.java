@@ -11,10 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class SoupListener implements Listener {
 	
-	private Core pl;
-	
 	public SoupListener(Core c) {
-		this.pl = c;
 	}
 
     private static double boost;

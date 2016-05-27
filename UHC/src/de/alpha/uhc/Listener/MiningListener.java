@@ -14,12 +14,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class MiningListener implements Listener {
 	
-	private Core pl;
 	
-	public MiningListener(Core c) {
-		this.pl = c;
-	}
-
+	public MiningListener(Core c) {}
+	
 
     private static boolean wood;
     private static boolean coal;

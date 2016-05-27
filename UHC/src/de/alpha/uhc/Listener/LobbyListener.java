@@ -164,7 +164,7 @@ public class LobbyListener implements Listener {
                 if (new Stats(p).getKits().contains(kits)) {
                     kit.put(p, kits);
                     sel = sel.replace("[Kit]", kits);
-                    p.sendMessage(Core.getPrefix() + sel);
+                    p.sendMessage(pl.getPrefix() + sel);
                     p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
                     sel = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Selected");
                     p.closeInventory();
@@ -178,14 +178,14 @@ public class LobbyListener implements Listener {
                     kit.put(p, kits);
                     bought = bought.replace("[Kit]", kits);
                     bought = bought.replace("[Coins]", Integer.toString(new KitFileManager().getPrice(kits)));
-                    p.sendMessage(Core.getPrefix() + bought);
+                    p.sendMessage(pl.getPrefix() + bought);
                     bought = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Bought");
                     p.closeInventory();
                     p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
                     AScoreboard.setLobbyScoreboard(p);
                     break;
                 } else {
-                    p.sendMessage(Core.getPrefix() + coinsneed);
+                    p.sendMessage(pl.getPrefix() + coinsneed);
                 }
             }
         }

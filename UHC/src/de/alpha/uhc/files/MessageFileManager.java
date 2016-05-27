@@ -1,5 +1,6 @@
 package de.alpha.uhc.files;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.Listener.*;
 import de.alpha.uhc.aclasses.ATablist;
@@ -12,10 +13,11 @@ import de.alpha.uhc.timer.Timer;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class MessageFileManager {
-
 	
-	public MessageFileManager() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public MessageFileManager(Core c) {
+		this.pl = c;
 	}
 
     public static SimpleFile getMSGFile() {

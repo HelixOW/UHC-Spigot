@@ -1,12 +1,7 @@
 package de.alpha.uhc.aclasses;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.Listener.LobbyListener;
-import de.alpha.uhc.border.Border;
-import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.timer.Timer;
-import de.alpha.uhc.utils.Stats;
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -14,11 +9,20 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.util.HashMap;
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.Listener.LobbyListener;
+import de.alpha.uhc.border.Border;
+import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.timer.Timer;
+import de.alpha.uhc.utils.Stats;
 
 public class AScoreboard {
 	
-	public AScoreboard() {
+	private Core pl;
+	
+	public AScoreboard(Core c) {
+		this.pl = c;
 	}
 
     private static final HashMap<Player, Integer> sTeamA = new HashMap<>();

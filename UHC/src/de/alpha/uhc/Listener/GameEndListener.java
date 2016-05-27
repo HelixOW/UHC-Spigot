@@ -100,8 +100,8 @@ public class GameEndListener implements Listener {
 
         //                        -=X Spectator X=-
 
-        Core.removeInGamePlayer(p);
-        Core.addSpec(p);
+        pl.removeInGamePlayer(p);
+        pl.addSpec(p);
 
         Spectator.setSpec(p);
 
@@ -141,21 +141,21 @@ public class GameEndListener implements Listener {
             public void run() {
                 p.getWorld().dropItemNaturally(p.getLocation(), new ItemBuilder(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
             }
-        }.runTaskLater(Core.getInstance(), 10);
+        }.runTaskLater(pl, 10);
 
 
         //                       -=X Game End X=-
 
-        if (Core.getInGamePlayers().size() == 4) {
+        if (pl.getInGamePlayers().size() == 4) {
             if (Timer.isDm()) {
                 Timer.getDd().cancel();
                 Timer.startDeathMatch();
             }
         }
 
-        if (Core.getInGamePlayers().size() <= 1) {
+        if (pl.getInGamePlayers().size() <= 1) {
 
-            if (Core.getInGamePlayers().size() == 0) {
+            if (pl.getInGamePlayers().size() == 0) {
 
                 Timer.startRestartTimer();
 
@@ -167,16 +167,16 @@ public class GameEndListener implements Listener {
                         Bukkit.reload();
 
                     }
-                }.runTaskLater(Core.getInstance(), 20 * 20);
+                }.runTaskLater(pl, 20 * 20);
                 return;
             }
 
 
-            for (Player winner : Core.getInGamePlayers()) {
+            for (Player winner : pl.getInGamePlayers()) {
 
                 win = win.replace("[Player]", winner.getDisplayName());
 
-                Bukkit.broadcastMessage(Core.getPrefix() + win);
+                Bukkit.broadcastMessage(pl.getPrefix() + win);
                 for (Player all : Bukkit.getOnlinePlayers()) {
                     SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
                 }
@@ -188,7 +188,7 @@ public class GameEndListener implements Listener {
 
                 Timer.startRestartTimer();
 
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(pl, new Runnable() {
 
                     @Override
                     public void run() {
@@ -211,27 +211,27 @@ public class GameEndListener implements Listener {
         Player p = e.getPlayer();
         quit = quit.replace("[Player]", p.getDisplayName());
 
-        Core.removeInGamePlayer(p);
+        pl.removeInGamePlayer(p);
 
         if (GState.isState(GState.LOBBY)) {
             apc = Bukkit.getOnlinePlayers().size() - 1;
         } else {
-            apc = Core.getInGamePlayers().size();
+            apc = pl.getInGamePlayers().size();
         }
 
-        if (Core.getSpecs().contains(p)) {
-            Core.removeSpec(p);
-            for (Player o : Core.getSpecs()) {
+        if (pl.getSpecs().contains(p)) {
+        	pl.removeSpec(p);
+            for (Player o : pl.getSpecs()) {
                 quit = quit.replace("[PlayerCount]", "§7[" + apc + " left]");
 
-                o.sendMessage(Core.getPrefix() + quit);
+                o.sendMessage(pl.getPrefix() + quit);
 
                 quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
             }
         } else {
             quit = quit.replace("[PlayerCount]", "§7[" + apc + " left]");
 
-            Bukkit.broadcastMessage(Core.getPrefix() + quit);
+            Bukkit.broadcastMessage(pl.getPrefix() + quit);
 
             quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
         }
@@ -242,7 +242,7 @@ public class GameEndListener implements Listener {
 
         if (GState.isState(GState.INGAME) || GState.isState(GState.GRACE)) {
 
-            if (!(Core.getSpecs().contains(p))) {
+            if (!(pl.getSpecs().contains(p))) {
                 p.getWorld().dropItemNaturally(p.getLocation(), new ItemBuilder(Material.GOLD_INGOT).setAmount().build());
                 p.getWorld().dropItemNaturally(p.getLocation(), new ItemBuilder(Material.SKULL_ITEM).addItemData(new SkullData(p.getName())).build());
                 p.getWorld().strikeLightningEffect(p.getLocation());
@@ -255,9 +255,9 @@ public class GameEndListener implements Listener {
 
             p.setGameMode(GameMode.SURVIVAL);
 
-            if (Core.getInGamePlayers().size() <= 1) {
+            if (pl.getInGamePlayers().size() <= 1) {
 
-                if (Core.getInGamePlayers().size() == 0) {
+                if (pl.getInGamePlayers().size() == 0) {
 
                     Timer.startRestartTimer();
 
@@ -269,15 +269,15 @@ public class GameEndListener implements Listener {
                             Bukkit.reload();
 
                         }
-                    }.runTaskLater(Core.getInstance(), 20 * 20);
+                    }.runTaskLater(pl, 20 * 20);
                     return;
                 }
 
-                for (Player winner : Core.getInGamePlayers()) {
+                for (Player winner : pl.getInGamePlayers()) {
 
                     win = win.replace("[Player]", winner.getDisplayName());
 
-                    Bukkit.broadcastMessage(Core.getPrefix() + win);
+                    Bukkit.broadcastMessage(pl.getPrefix() + win);
                     for (Player all : Bukkit.getOnlinePlayers()) {
                         SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
                     }
@@ -298,7 +298,7 @@ public class GameEndListener implements Listener {
                             Bukkit.reload();
 
                         }
-                    }.runTaskLater(Core.getInstance(), 20 * 20);
+                    }.runTaskLater(pl, 20 * 20);
                 }
             }
         }

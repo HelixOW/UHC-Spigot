@@ -9,10 +9,8 @@ import java.util.Collections;
 
 public class BlockUtil {
 	
-	private Core pl;
 	
 	public BlockUtil(Core c) {
-		this.pl = c;
 	}
 
     public static ArrayList<BlockFace> getRelative() {

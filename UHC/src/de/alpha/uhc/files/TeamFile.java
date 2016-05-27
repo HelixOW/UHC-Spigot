@@ -1,12 +1,15 @@
 package de.alpha.uhc.files;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.aclasses.ATeam;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class TeamFile {
 	
-	public TeamFile() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public TeamFile(Core c) {
+		this.pl = c;
 	}
 
     private static final SimpleFile file = getTeamFile();

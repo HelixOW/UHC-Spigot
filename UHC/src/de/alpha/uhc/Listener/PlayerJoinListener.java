@@ -1,23 +1,5 @@
 package de.alpha.uhc.Listener;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.aclasses.AScoreboard;
-import de.alpha.uhc.aclasses.ATablist;
-import de.alpha.uhc.aclasses.ATeam;
-import de.alpha.uhc.commands.UHCCommand;
-import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.files.PlayerFileManager;
-import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.timer.Timer;
-import de.alpha.uhc.utils.HoloUtil;
-import de.alpha.uhc.utils.Spectator;
-import de.popokaka.alphalibary.UUID.UUIDFetcher;
-import de.popokaka.alphalibary.item.ItemBuilder;
-import de.popokaka.alphalibary.mysql.MySQLManager;
-import de.popokaka.alphalibary.nms.SimpleTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -31,6 +13,25 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.aclasses.AScoreboard;
+import de.alpha.uhc.aclasses.ATablist;
+import de.alpha.uhc.aclasses.ATeam;
+import de.alpha.uhc.commands.UHCCommand;
+import de.alpha.uhc.files.MessageFileManager;
+import de.alpha.uhc.files.PlayerFileManager;
+import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.timer.Timer;
+import de.alpha.uhc.utils.Spectator;
+import de.popokaka.alphalibary.UUID.UUIDFetcher;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.mysql.MySQLManager;
+import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class PlayerJoinListener implements Listener {
 	
@@ -122,7 +123,7 @@ public class PlayerJoinListener implements Listener {
         final Player p = e.getPlayer();
 
         if (GState.isState(GState.RESTART)) {
-            p.kickPlayer(Core.getPrefix() + GameEndListener.getKick());
+            p.kickPlayer(pl.getPrefix() + GameEndListener.getKick());
             return;
         }
 
@@ -131,12 +132,12 @@ public class PlayerJoinListener implements Listener {
             p.getInventory().setArmorContents(null);
             if (SpawnFileManager.getSpawn() == null) p.teleport(Bukkit.getWorld("UHC").getSpawnLocation());
             else p.teleport(SpawnFileManager.getSpawn());
-            Core.addSpec(p);
+            pl.addSpec(p);
             Spectator.setSpec(p);
             AScoreboard.sendAntiFlickerInGameBoard(p);
 
             ATablist.sendStandingInGameTablist();
-            for (Player all : Core.getInGamePlayers()) {
+            for (Player all : pl.getInGamePlayers()) {
                 AScoreboard.updateInGameSpectators(all);
             }
             return;
@@ -148,7 +149,7 @@ public class PlayerJoinListener implements Listener {
 
         ATablist.sendStandingLobbyTablist();
 
-        if (Core.isMySQLActive()) {
+        if (pl.isMySQLActive()) {
             if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(), "UUID") == null) {
                 MySQLManager.exInsertQry(p.getName(), UUIDFetcher.getUUID(p.getName()).toString(), "0", "0", "0", "");
             } else if (MySQLManager.getObjectConditionResult("UUID ", UUIDFetcher.getUUID(p.getName()).toString(),
@@ -162,7 +163,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (Bukkit.getOnlinePlayers().size() == mpc + 1) {
-            p.kickPlayer(Core.getPrefix() + full);
+            p.kickPlayer(pl.getPrefix() + full);
         }
 
         for (Entity kill : p.getWorld().getEntities()) {
@@ -183,7 +184,7 @@ public class PlayerJoinListener implements Listener {
                 join = join.replace("[Player]", p.getDisplayName());
                 join = join.replace("[PlayerCount]", "§7[" + apc + "/" + mpc + "]");
 
-                Bukkit.broadcastMessage(Core.getPrefix() + join);
+                Bukkit.broadcastMessage(pl.getPrefix() + join);
 
                 join = MessageFileManager.getMSGFile().getColorString("Announcements.Join");
 
@@ -196,11 +197,11 @@ public class PlayerJoinListener implements Listener {
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
 
-        new HoloUtil().showHologram(p);
+        pl.getRegistery().getHoloUtil().showHologram(p);
 
         if (kitMode) {
             if (kitItem == null || kitName == null) {
-                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cYou don't have any Kits in your kits.yml");
+                Bukkit.getConsoleSender().sendMessage(pl.getPrefix() + "§cYou don't have any Kits in your kits.yml");
             } else {
                 p.getInventory().setHeldItemSlot(0);
                 p.getInventory().setItemInMainHand(new ItemBuilder(kitItem).setName(kitName).build());//TODO: multi
@@ -209,7 +210,7 @@ public class PlayerJoinListener implements Listener {
         }
         if (UHCCommand.isTeamMode()) {
             if (teamItem == null || teamName == null) {
-                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cYou don't have any Kits in your kits.yml");
+                Bukkit.getConsoleSender().sendMessage(pl.getPrefix() + "§cYou don't have any Kits in your kits.yml");
             } else {
                 p.getInventory().setItem(1, new ItemBuilder(teamItem).setName(teamName).build());
             }
@@ -227,7 +228,7 @@ public class PlayerJoinListener implements Listener {
                 p.teleport(SpawnFileManager.getLobby().getWorld().getHighestBlockAt(SpawnFileManager.getLobby()).getLocation());
             }
         }
-        Core.addInGamePlayer(p);
+        pl.addInGamePlayer(p);
         p.setGameMode(GameMode.ADVENTURE);
         p.setHealth(20);
         p.setFoodLevel(20);

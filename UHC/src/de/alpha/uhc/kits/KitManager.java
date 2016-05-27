@@ -6,13 +6,17 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import de.alpha.uhc.Core;
+
 import java.util.Map;
 import java.util.Map.Entry;
 
-class KitManager {
+public class KitManager {
 	
-	public KitManager() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public KitManager(Core c) {
+		this.pl = c;
 	}
 
     @SuppressWarnings("deprecation")

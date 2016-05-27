@@ -9,8 +9,10 @@ import org.bukkit.inventory.Inventory;
 
 public class GUI {
 	
-	public GUI() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public GUI(Core c) {
+		this.pl = c;
 	}
 
     private static Inventory kits;

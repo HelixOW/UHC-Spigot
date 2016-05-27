@@ -1,12 +1,15 @@
 package de.alpha.uhc.files;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.Listener.CustomDeathListener;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class DeathMessageFile {
 	
-	public DeathMessageFile() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public DeathMessageFile(Core c) {
+		this.pl = c;
 	}
 
     private static final SimpleFile file = getDeathFile();

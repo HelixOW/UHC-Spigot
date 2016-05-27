@@ -33,7 +33,7 @@ public class Timer {
 	private Core pl;
 	
 	public Timer(Core c) {
-		this.pl = c;
+		pl = c;
 	}
 
     private static String countmsg;
@@ -199,7 +199,7 @@ public class Timer {
         BungeeServer = bungeeServer;
     }
 
-    public static void startCountdown() {
+    public void startCountdown() {
 
         if (GState.isState(GState.LOBBY)) {
 
@@ -221,13 +221,13 @@ public class Timer {
 
                                 if (Bukkit.getOnlinePlayers().size() >= pc) {
 
-                                    for (Player all : Core.getInGamePlayers()) {
+                                    for (Player all : pl.getInGamePlayers()) {
 
                                         all.setLevel(high);
 
                                         if (high % 10 == 0 && high > 10 && high != 0) {
                                             countmsg = countmsg.replace("[time]", Integer.toString(high));
-                                            all.sendMessage(Core.getPrefix() + countmsg);
+                                            all.sendMessage(pl.getPrefix() + countmsg);
                                             SimpleTitle.sendTitle(all, " ", countmsg, 1, 2, 1);
                                             all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);//TODO: multi
                                             Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
@@ -244,7 +244,7 @@ public class Timer {
                                         if (high < 10 && high != 0) {
 
                                             countmsg = countmsg.replace("[time]", Integer.toString(high));
-                                            all.sendMessage(Core.getPrefix() + countmsg);
+                                            all.sendMessage(pl.getPrefix() + countmsg);
                                             SimpleActionBar.send(all, countmsg);
                                             all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);//TODO: multi
                                             Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
@@ -265,7 +265,7 @@ public class Timer {
                                                 LobbyPasteUtil.removeLobby();
                                             }
 
-                                            for (Player ig : Core.getInGamePlayers()) {
+                                            for (Player ig : pl.getInGamePlayers()) {
 
                                                 if (!AWorld.isLobbyAsSchematic()) {
 
@@ -314,7 +314,7 @@ public class Timer {
                                         }
                                     }
                                 } else {
-                                    Bukkit.broadcastMessage(Core.getPrefix() + nep);
+                                    Bukkit.broadcastMessage(pl.getPrefix() + nep);
                                     resetTime();
                                     a.cancel();
                                     b.cancel();
@@ -329,12 +329,12 @@ public class Timer {
         }
     }
 
-    private static void startGracePeriod() {
+    private void startGracePeriod() {
 
         if (GState.isState(GState.GRACE)) {
             return;
         }
-        for (Player all : Core.getInGamePlayers()) {
+        for (Player all : pl.getInGamePlayers()) {
             for (Entity kill : all.getWorld().getEntities()) {
 
                 if (!(kill instanceof Player)) {
@@ -363,7 +363,7 @@ public class Timer {
                             }
                             if (gracetime % 10 == 0 && gracetime > 0) {
                                 gracemsg = gracemsg.replace("[time]", Integer.toString(gracetime));
-                                Bukkit.broadcastMessage(Core.getPrefix() + gracemsg);
+                                Bukkit.broadcastMessage(pl.getPrefix() + gracemsg);
                                 gracemsg = MessageFileManager.getMSGFile().getColorString("Announcements.Peaceperiod.timer");
                                 return;
                             }
@@ -372,9 +372,9 @@ public class Timer {
 
                                 e.cancel();
 
-                                Bukkit.broadcastMessage(Core.getPrefix() + end);
+                                Bukkit.broadcastMessage(pl.getPrefix() + end);
                                 new BorderManager().set();
-                                for (final Player all : Core.getInGamePlayers()) {
+                                for (final Player all : pl.getInGamePlayers()) {
                                     all.showPlayer(all);
                                     giveCompass(all);
                                     GState.setGameState(GState.PREGAME);
@@ -397,7 +397,7 @@ public class Timer {
         }.runTaskTimer(Core.getInstance(), 0, 20);
     }
 
-    private static void startSilentGStateWatcher() {
+    private void startSilentGStateWatcher() {
         d = new BukkitRunnable() {
             @Override
             public void run() {
@@ -407,13 +407,13 @@ public class Timer {
                 if (prePvP > 0) {
                     for (Player all : Bukkit.getOnlinePlayers()) {
                         String a = pvpmsg.replace("[time]", Integer.toString(prePvP));
-                        SimpleActionBar.send(all, Core.getPrefix() + a);
+                        SimpleActionBar.send(all, pl.getPrefix() + a);
                     }
                 }
 
                 if (prePvP == 0) {
                     for (Player all : Bukkit.getOnlinePlayers()) {
-                        SimpleActionBar.send(all, Core.getPrefix() + pvpstart);
+                        SimpleActionBar.send(all, pl.getPrefix() + pvpstart);
                     }
                     GState.setGameState(GState.INGAME);
                     if (dm) startSilentDeathMatchTimer();
@@ -424,7 +424,7 @@ public class Timer {
         }.runTaskTimer(Core.getInstance(), 0, 20 * 60);
     }
 
-    private static void startSilentDeathMatchTimer() {
+    private void startSilentDeathMatchTimer() {
         dd = new BukkitRunnable() {
             @Override
             public void run() {
@@ -434,14 +434,14 @@ public class Timer {
                 if (uDM % 5 == 0 && uDM > 10) {
                     for (Player all : Bukkit.getOnlinePlayers()) {
                         String a = dmmsg.replace("[time]", Integer.toString(uDM));
-                        SimpleActionBar.send(all, Core.getPrefix() + a);
+                        SimpleActionBar.send(all, pl.getPrefix() + a);
                     }
                 }
 
                 if (uDM > 0 && uDM < 10) {
                     for (Player all : Bukkit.getOnlinePlayers()) {
                         String a = dmmsg.replace("[time]", Integer.toString(uDM));
-                        SimpleActionBar.send(all, Core.getPrefix() + a);
+                        SimpleActionBar.send(all, pl.getPrefix() + a);
                     }
                 }
                 if (uDM == 0) {
@@ -453,8 +453,8 @@ public class Timer {
         }.runTaskTimer(Core.getInstance(), 0, 20 * 60);
     }
 
-    public static void startDeathMatch() {
-        for (Player ingame : Core.getInGamePlayers()) {
+    public void startDeathMatch() {
+        for (Player ingame : pl.getInGamePlayers()) {
             if (getSpawn() == null) {
                 Location l = ingame.getWorld().getSpawnLocation();
 
@@ -488,14 +488,14 @@ public class Timer {
                         if (tbpvp % 5 == 0 && tbpvp > 10) {
                             for (Player all : Bukkit.getOnlinePlayers()) {
                                 String a = dmmsg.replace("[time]", Integer.toString(tbpvp)).replace("minutes", "seconds");
-                                SimpleActionBar.send(all, Core.getPrefix() + a);
+                                SimpleActionBar.send(all, pl.getPrefix() + a);
                             }
                         }
 
                         if (tbpvp > 0 && tbpvp < 10) {
                             for (Player all : Bukkit.getOnlinePlayers()) {
                                 String a = dmmsg.replace("[time]", Integer.toString(tbpvp)).replace("minutes", "seconds");
-                                SimpleActionBar.send(all, Core.getPrefix() + a);
+                                SimpleActionBar.send(all, pl.getPrefix() + a);
                             }
                         }
 
@@ -513,7 +513,7 @@ public class Timer {
         }.runTaskTimer(Core.getInstance(), 0, 20);
     }
 
-    public static void startRestartTimer() {
+    public void startRestartTimer() {
 
         endTime = 10;
         GState.setGameState(GState.RESTART);
@@ -528,7 +528,7 @@ public class Timer {
 
                     endmsg = endmsg.replace("[time]", Integer.toString(endTime));
 
-                    Bukkit.broadcastMessage(Core.getPrefix() + endmsg);
+                    Bukkit.broadcastMessage(pl.getPrefix() + endmsg);
                     endTime = endTime - 1;
 
                     endmsg = MessageFileManager.getMSGFile().getColorString("Announcements.End");
@@ -541,16 +541,16 @@ public class Timer {
                             out.writeUTF("Connect");
                             out.writeUTF(BungeeServer);
 
-                            all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
+                            all.sendPluginMessage(pl, "BungeeCord", out.toByteArray());
                         } else {
-                            all.kickPlayer(Core.getPrefix() + GameEndListener.getKick());
+                            all.kickPlayer(pl.getPrefix() + GameEndListener.getKick());
                         }
                     }
                     f.cancel();
 
                 }
             }
-        }.runTaskTimer(Core.getInstance(), 0, 20);
+        }.runTaskTimer(pl, 0, 20);
 
     }
 

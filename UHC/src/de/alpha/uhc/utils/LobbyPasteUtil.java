@@ -27,7 +27,7 @@ public class LobbyPasteUtil {
 	}
 
     @SuppressWarnings("deprecation")
-    public static void pasteLobby(Location loc) {
+    public void pasteLobby(Location loc) {
         try {
             WorldEditPlugin we = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
             File schematic = new File("plugins/UHC/schematics/lobby.schematic");
@@ -36,10 +36,10 @@ public class LobbyPasteUtil {
                 SchematicFormat.getFormat(schematic).load(schematic).paste(session, new Vector(0, 200, 0), false);
             } catch (MaxChangedBlocksException
                     | DataException | IOException e) {
-                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
+                Bukkit.getConsoleSender().sendMessage(pl.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
             }
         } catch (Exception ignore) {
-            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
+            Bukkit.getConsoleSender().sendMessage(pl.getPrefix() + "§cCouldn't load lobby.schematic inside UHC/schematics folder");
 
         }
     }

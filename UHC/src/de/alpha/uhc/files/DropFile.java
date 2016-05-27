@@ -1,5 +1,6 @@
 package de.alpha.uhc.files;
 
+import de.alpha.uhc.Core;
 import de.alpha.uhc.Listener.DeathListener;
 import de.alpha.uhc.Listener.MiningListener;
 import de.popokaka.alphalibary.file.SimpleFile;
@@ -7,8 +8,10 @@ import org.bukkit.Material;
 
 public class DropFile {
 	
-	public DropFile() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public DropFile(Core c) {
+		this.pl = c;
 	}
 
     private static final SimpleFile file = getDropFile();

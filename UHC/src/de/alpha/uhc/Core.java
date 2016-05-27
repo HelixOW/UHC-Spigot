@@ -9,25 +9,14 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-import de.alpha.uhc.Listener.ChatListener;
-import de.alpha.uhc.Listener.CraftListener;
-import de.alpha.uhc.Listener.CustomDeathListener;
-import de.alpha.uhc.Listener.DeathListener;
 import de.alpha.uhc.Listener.GameEndListener;
-import de.alpha.uhc.Listener.InGameListener;
-import de.alpha.uhc.Listener.LobbyListener;
-import de.alpha.uhc.Listener.MiningListener;
-import de.alpha.uhc.Listener.MotdListener;
-import de.alpha.uhc.Listener.PlayerJoinListener;
-import de.alpha.uhc.Listener.SoupListener;
-import de.alpha.uhc.aclasses.ATeam;
-import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.commands.CoinsCommand;
 import de.alpha.uhc.commands.StartCommand;
 import de.alpha.uhc.commands.StatsCommand;
@@ -45,8 +34,6 @@ import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.MapReset;
-import de.alpha.uhc.utils.Regions;
-import de.alpha.uhc.utils.Spectator;
 import de.popokaka.alphalibary.file.SimpleFile;
 import de.popokaka.alphalibary.mysql.MySQLAPI;
 import de.popokaka.alphalibary.mysql.MySQLManager;
@@ -54,6 +41,7 @@ import de.popokaka.alphalibary.mysql.MySQLManager;
 public class Core extends JavaPlugin implements PluginMessageListener {
 
     private static Core instance;
+    private Registery reg;
     private String prefix;
 
     private boolean isMySQLActive;
@@ -107,6 +95,10 @@ public class Core extends JavaPlugin implements PluginMessageListener {
     private void setInstance(Core instance) {
         Core.instance = instance;
     }
+    
+	private void setReg(Registery reg) {
+		this.reg = reg;
+	}
 
     public String getPrefix() {
         return this.prefix;
@@ -121,6 +113,9 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         this.setInstance(this);
         this.setIg(new ArrayList<Player>());
         this.setSpectator(new ArrayList<Player>());
+        this.setReg(new Registery(getInstance()));
+        
+        reg.registerAll();
 
         //Make a sort of Whitelist
         GState.setGameState(GState.RESTART);
@@ -200,7 +195,7 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         registerCrafting();
 
         //Recreate the World
-        AWorld.performReset();
+        getRegistery().getAWorld().performReset();
 
         if (Timer.getPc() <= 1) {
             //Print error message to inform serverowner
@@ -249,6 +244,7 @@ public class Core extends JavaPlugin implements PluginMessageListener {
     }
 
     private void registerCommands() {
+    	
         getCommand("uhc").setExecutor(new UHCCommand());
         new CoinsCommand(this, new String[]{});
         new StartCommand(this, new String[]{});
@@ -264,42 +260,37 @@ public class Core extends JavaPlugin implements PluginMessageListener {
                 MySQLManager.createColumn("Deaths", 500),
                 MySQLManager.createColumn("Coins", 500),
                 MySQLManager.createColumn("Kits", 500));
-
-
     }
 
     private void registerEvents() {
-        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        Bukkit.getPluginManager().registerEvents(new InGameListener(), this);
-        Bukkit.getPluginManager().registerEvents(new MiningListener(), this);
-        Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
-        Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
-        Bukkit.getPluginManager().registerEvents(new CraftListener(), this);
-        Bukkit.getPluginManager().registerEvents(new ChatListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new SoupListener(), this);
-        Bukkit.getPluginManager().registerEvents(new CustomDeathListener(this), this);
-
-        Bukkit.getPluginManager().registerEvents(new MapReset(), this);
-        Bukkit.getPluginManager().registerEvents(new Spectator(), this);
-        Bukkit.getPluginManager().registerEvents(new Regions(), this);
-        Bukkit.getPluginManager().registerEvents(new ATeam(), this);
-
-        Bukkit.getPluginManager().registerEvents(new MotdListener(), this);
-        Bukkit.getPluginManager().registerEvents(new GameEndListener(), this);
+    	PluginManager p = Bukkit.getPluginManager();
+    	
+    	p.registerEvents(reg.getPlayerJoinListener(), getInstance());
+    	p.registerEvents(reg.getInGameListener(), getInstance());
+    	p.registerEvents(reg.getMiningListener(), getInstance());
+    	p.registerEvents(reg.getDeathListener(), getInstance());
+    	p.registerEvents(reg.getLobbyListener(), getInstance());
+    	p.registerEvents(reg.getCraftListener(), getInstance());
+    	p.registerEvents(reg.getChatListener(), getInstance());
+    	p.registerEvents(reg.getSoupListener(), getInstance());
+    	p.registerEvents(reg.getCustomDeathListener(), getInstance());
+    	p.registerEvents(reg.getMapReset(), getInstance());
+    	p.registerEvents(reg.getSpectator(), getInstance());
+    	p.registerEvents(reg.getRegions(), getInstance());
+    	p.registerEvents(reg.getATeam(), getInstance());
+    	p.registerEvents(reg.getMotdListener(), getInstance());
+    	p.registerEvents(reg.getGameEndListener(), getInstance());
     }
 
     @Override
-    public void onPluginMessageReceived(String arg0, Player arg1, byte[] arg2) {
-
-    }
+    public void onPluginMessageReceived(String arg0, Player arg1, byte[] arg2) {}
     
-    
-    //Instances
     
     public static Core getInstance() {
         return instance;
     }
-    
-    
-    
+
+	public Registery getRegistery() {
+		return reg;
+	}
 }

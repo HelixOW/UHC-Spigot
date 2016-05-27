@@ -20,10 +20,7 @@ import java.util.List;
 @SuppressWarnings("deprecation")
 public class MapReset implements Listener {
 	
-	private Core pl;
-	
 	public MapReset(Core c) {
-		this.pl = c;
 	}
 
     private static final List<String> breaked = new LinkedList<>();

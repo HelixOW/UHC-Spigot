@@ -1,45 +1,51 @@
 package de.alpha.uhc.aclasses;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.utils.LobbyPasteUtil;
-import org.bukkit.*;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import java.io.File;
 import java.lang.reflect.Field;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.files.SpawnFileManager;
+
 public class AWorld {
 	
-	public AWorld() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public AWorld(Core c) {
+		this.pl = c;
 	}
 
-    private static boolean lobbyAsSchematic;
-    private static boolean wr;
-    private static String worldName;
+    private boolean lobbyAsSchematic;
+    private boolean wr;
+    private String worldName;
 
-    public static boolean isLobbyAsSchematic() {
+    public boolean isLobbyAsSchematic() {
         return lobbyAsSchematic;
     }
 
-    public static void setLobbyAsSchematic(boolean lobbyAsSchematic) {
-        AWorld.lobbyAsSchematic = lobbyAsSchematic;
+    public void setLobbyAsSchematic(boolean lobbyAsSchematic) {
+        this.lobbyAsSchematic = lobbyAsSchematic;
     }
 
-    public static void setWr(boolean wr) {
-        AWorld.wr = wr;
+    public void setWr(boolean wr) {
+    	this.wr = wr;
     }
 
-    private static void unloadWorld(World world) {
+    private void unloadWorld(World world) {
         if (world != null) {
             Bukkit.getServer().unloadWorld(world, false);
         }
     }
 
-    private static void deleteWorld(File path) {
+    private void deleteWorld(File path) {
         if (path.exists()) {
             File files[] = path.listFiles();
             for (int i = 0; i < (files != null ? files.length : 0); i++) {
@@ -52,7 +58,7 @@ public class AWorld {
         }
     }
 
-    private static void changeBiome() {
+    private void changeBiome() {
         try {
             String mojangPath = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
             Class<?> clazz = Class.forName(mojangPath + ".BiomeBase");
@@ -74,7 +80,7 @@ public class AWorld {
         }
     }
 
-    private static void createNewWorld() {
+    private void createNewWorld() {
 
         changeBiome();
 
@@ -125,7 +131,7 @@ public class AWorld {
                                         World w = Bukkit.getWorld("UHC");
                                         Location loc = new Location(w, 0, 200, 0, 0, 0);
 
-                                        LobbyPasteUtil.pasteLobby(loc);
+                                        pl.getRegistery().getLobbyPasteUtil().pasteLobby(loc);
                                         SpawnFileManager.SetLobby(0, 200, 0, 0, 0, w);
 
                                         p.sendMessage(Core.getInstance().getPrefix() + "§aLobbyschematic pasted sucessfully");
@@ -157,7 +163,7 @@ public class AWorld {
                                 World w = Bukkit.getWorld("UHC");
                                 Location loc = new Location(w, 0, 200, 0, 0, 0);
 
-                                LobbyPasteUtil.pasteLobby(loc);
+                                pl.getRegistery().getLobbyPasteUtil().pasteLobby(loc);
                                 SpawnFileManager.SetLobby(0, 200, 0, 0, 0, w);
 
                                 p.sendMessage(Core.getInstance().getPrefix() + "§aLobbyschematic pasted sucessfully");
@@ -169,7 +175,7 @@ public class AWorld {
         }.runTaskLater(Core.getInstance(), 40);
     }
 
-    public static void performReset() {
+    public void performReset() {
 
         if (!wr) {
             GState.setGameState(GState.LOBBY);

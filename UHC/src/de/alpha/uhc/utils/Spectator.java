@@ -47,7 +47,7 @@ public class Spectator implements Listener {
         Spectator.title = title;
     }
 
-    public static void setSpec(Player p) {
+    public void setSpec(Player p) {
 
         p.setCanPickupItems(false);
         p.setFoodLevel(20);
@@ -59,7 +59,7 @@ public class Spectator implements Listener {
         p.setAllowFlight(true);
         p.setFlying(true);
         equipSpecStuff(p);
-        for (Player ig : Core.getInGamePlayers()) {
+        for (Player ig : pl.getInGamePlayers()) {
             ig.hidePlayer(p);
         }
     }
@@ -72,7 +72,7 @@ public class Spectator implements Listener {
     public void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
 
-        if (Core.getSpecs().contains(p)) {
+        if (pl.getSpecs().contains(p)) {
             for (Entity near : p.getNearbyEntities(6, 6, 6)) {
                 if (near instanceof Player) {
                     Vector v = p.getLocation().getDirection().add(new Vector(-1, 2, -1));
@@ -85,7 +85,7 @@ public class Spectator implements Listener {
 
     @EventHandler
     public void onExp(PlayerExpChangeEvent e) {
-        if (Core.getSpecs().contains(e.getPlayer())) {
+        if (pl.getSpecs().contains(e.getPlayer())) {
             e.setAmount(0);
             e.getPlayer().getWorld().spawnEntity(e.getPlayer().getLocation().subtract(0, 5, 0), EntityType.EXPERIENCE_ORB);
         }
@@ -97,7 +97,7 @@ public class Spectator implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
 
         Player p = (Player) e.getEntity();
-        if (Core.getSpecs().contains(p)) e.setCancelled(true);
+        if (pl.getSpecs().contains(p)) e.setCancelled(true);
     }
 
     @EventHandler
@@ -105,7 +105,7 @@ public class Spectator implements Listener {
 
         Player p = (Player) e.getEntity();
 
-        if (Core.getSpecs().contains(p)) {
+        if (pl.getSpecs().contains(p)) {
             e.setCancelled(true);
         }
     }
@@ -115,7 +115,7 @@ public class Spectator implements Listener {
 
         Player p = e.getPlayer();
 
-        if (Core.getSpecs().contains(p)) {
+        if (pl.getSpecs().contains(p)) {
             e.setCancelled(true);
         }
     }
@@ -125,14 +125,14 @@ public class Spectator implements Listener {
 
         if (!(e.getDamager() instanceof Player)) return;
 
-        if (Core.getSpecs().contains(e.getDamager())) {
+        if (pl.getSpecs().contains(e.getDamager())) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onInteract(PlayerInteractAtEntityEvent e) {
-        if (Core.getSpecs().contains(e.getPlayer())) {
+        if (pl.getSpecs().contains(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
@@ -142,14 +142,14 @@ public class Spectator implements Listener {
 
         Player p = e.getPlayer();
 
-        if (Core.getSpecs().contains(p)) {
+        if (pl.getSpecs().contains(p)) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onTrack(EntityTargetEvent e) {
-        if (((e.getTarget() instanceof Player)) && (Core.getSpecs().contains(e.getTarget()))) {
+        if (((e.getTarget() instanceof Player)) && (pl.getSpecs().contains(e.getTarget()))) {
             e.setCancelled(true);
         }
     }
@@ -159,7 +159,7 @@ public class Spectator implements Listener {
 
         Player p = e.getPlayer();
 
-        if (!(Core.getSpecs().contains(p))) return;
+        if (!(pl.getSpecs().contains(p))) return;
 
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
@@ -168,7 +168,7 @@ public class Spectator implements Listener {
 
                 Inventory inv = Bukkit.createInventory(null, 54, title);
 
-                for (Player pl : Core.getInGamePlayers()) {
+                for (Player pl : pl.getInGamePlayers()) {
 
                     ItemStack item = new ItemBuilder(Material.SKULL_ITEM).setDamage((short) 3).setName("§l§o" + pl.getDisplayName()).addItemData(new SkullData(pl.getName())).build();
 

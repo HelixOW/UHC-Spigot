@@ -11,8 +11,10 @@ import org.bukkit.WorldCreator;
 
 public class SpawnFileManager {
 	
-	public SpawnFileManager() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public SpawnFileManager(Core c) {
+		this.pl = c;
 	}
 
     private static final SimpleFile cfg = getSpawnFile();

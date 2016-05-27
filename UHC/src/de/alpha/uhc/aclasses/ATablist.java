@@ -9,7 +9,10 @@ import org.bukkit.entity.Player;
 
 public class ATablist {
 	
-	public ATablist() {
+	private Core pl;
+	
+	public ATablist(Core c) {
+		this.pl = c;
 	}
 
     private static String header;

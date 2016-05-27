@@ -21,11 +21,11 @@ public class ArmorStandUtil {
 		this.pl = c;
 	}
 
-    public static void spawn(Location l, String name) {
+    public void spawn(Location l, String name) {
         if (!(ATeam.getTeamNames().contains(name))) {
             String a = ATeam.getNoExist().replace("[team]", name);
             String b = ATeam.getAllTeams().replace("[teams]", "" + name);
-            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + a + "\n" + b);
+            Bukkit.getConsoleSender().sendMessage(pl.getPrefix() + a + "\n" + b);
             return;
         }
 

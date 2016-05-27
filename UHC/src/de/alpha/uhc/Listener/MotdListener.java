@@ -8,10 +8,7 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 public class MotdListener implements Listener {
 	
-	private Core pl;
-	
 	public MotdListener(Core c) {
-		this.pl = c;
 	}
 
     private static String lobby;

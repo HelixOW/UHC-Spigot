@@ -13,8 +13,10 @@ import java.util.Random;
 
 public class Border {
 	
-	public Border() {
-		// TODO Auto-generated constructor stub
+	private Core pl;
+	
+	public Border(Core c) {
+		this.pl = c;
 	}
 
     private static int size;

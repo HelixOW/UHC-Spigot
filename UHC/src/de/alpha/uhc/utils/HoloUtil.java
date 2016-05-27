@@ -11,10 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class HoloUtil {
 
-	private Core pl;
-	
 	public HoloUtil(Core c) {
-		this.pl = c;
 	}
 	
     public void createHologram(Player p, int id, double remove) {
