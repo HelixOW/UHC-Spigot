@@ -25,7 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import static de.alpha.uhc.files.SpawnFileManager.*;
+import  de.alpha.uhc.files.SpawnFileManager.*;
 
 
 public class Timer {
@@ -36,166 +36,166 @@ public class Timer {
 		pl = c;
 	}
 
-    private static String countmsg;
-    private static String nep;
-    private static String gracemsg;
-    private static String end;
-    private static String endmsg;
-    private static String dmmsg;
-    private static String pvpmsg;
-    private static String pvpstart;
-    private static boolean comMode;
-    private static Material comItem;
-    private static String comName;
-    private static boolean dm;
-    private static int pc;
-    private static int high;
-    private static int gracetime;
-    private static int max;
-    private static int uDM;
-    private static int tbpvp;
-    private static int prePvP;
-    private static int endTime;
-    private static BukkitTask a;
-    private static BukkitTask b;
-    private static BukkitTask c;
-    private static BukkitTask d;
-    private static BukkitTask e;
-    private static BukkitTask dd;
-    private static BukkitTask ee;
-    private static BukkitTask f;
-    private static boolean BungeeMode;
-    private static String BungeeServer;
+    private  String countmsg;
+    private  String nep;
+    private  String gracemsg;
+    private  String end;
+    private  String endmsg;
+    private  String dmmsg;
+    private  String pvpmsg;
+    private  String pvpstart;
+    private  boolean comMode;
+    private  Material comItem;
+    private  String comName;
+    private  boolean dm;
+    private  int pc;
+    private  int high;
+    private  int gracetime;
+    private  int max;
+    private  int uDM;
+    private  int tbpvp;
+    private  int prePvP;
+    private  int endTime;
+    private  BukkitTask a;
+    private  BukkitTask b;
+    private  BukkitTask c;
+    private  BukkitTask d;
+    private  BukkitTask e;
+    private  BukkitTask dd;
+    private  BukkitTask ee;
+    private  BukkitTask f;
+    private  boolean BungeeMode;
+    private  String BungeeServer;
 
-    public static void setCountmsg(String countmsg) {
+    public  void setCountmsg(String countmsg) {
         Timer.countmsg = countmsg;
     }
 
-    public static void setNep(String nep) {
+    public  void setNep(String nep) {
         Timer.nep = nep;
     }
 
-    public static void setGracemsg(String gracemsg) {
+    public  void setGracemsg(String gracemsg) {
         Timer.gracemsg = gracemsg;
     }
 
-    public static void setEnd(String end) {
+    public  void setEnd(String end) {
         Timer.end = end;
     }
 
-    public static void setEndmsg(String endmsg) {
+    public  void setEndmsg(String endmsg) {
         Timer.endmsg = endmsg;
     }
 
-    public static void setDmmsg(String dmmsg) {
+    public  void setDmmsg(String dmmsg) {
         Timer.dmmsg = dmmsg;
     }
 
-    public static void setPvpmsg(String pvpmsg) {
+    public  void setPvpmsg(String pvpmsg) {
         Timer.pvpmsg = pvpmsg;
     }
 
-    public static void setPvpstart(String pvpstart) {
+    public  void setPvpstart(String pvpstart) {
         Timer.pvpstart = pvpstart;
     }
 
-    public static void setComMode(boolean comMode) {
+    public  void setComMode(boolean comMode) {
         Timer.comMode = comMode;
     }
 
-    public static void setComItem(Material comItem) {
+    public  void setComItem(Material comItem) {
         Timer.comItem = comItem;
     }
 
-    public static void setComName(String comName) {
+    public  void setComName(String comName) {
         Timer.comName = comName;
     }
 
-    public static boolean isDm() {
+    public  boolean isDm() {
         return dm;
     }
 
-    public static void setDm(boolean dm) {
+    public  void setDm(boolean dm) {
         Timer.dm = dm;
     }
 
-    public static int getPc() {
+    public  int getPc() {
         return pc;
     }
 
-    public static void setPc(int pc) {
+    public  void setPc(int pc) {
         Timer.pc = pc;
     }
 
-    public static int getGracetime() {
+    public  int getGracetime() {
         return gracetime;
     }
 
-    public static void setMax(int max) {
+    public  void setMax(int max) {
         Timer.max = max;
     }
 
-    public static int getuDM() {
+    public  int getuDM() {
         return uDM;
     }
 
-    public static void setuDM(int uDM) {
+    public  void setuDM(int uDM) {
         Timer.uDM = uDM;
     }
 
-    public static void setTbpvp(int tbpvp) {
+    public  void setTbpvp(int tbpvp) {
         Timer.tbpvp = tbpvp;
     }
 
-    public static int getPrePvP() {
+    public  int getPrePvP() {
         return prePvP;
     }
 
-    public static void setPrePvP(int prePvP) {
+    public  void setPrePvP(int prePvP) {
         Timer.prePvP = prePvP;
     }
 
-    public static BukkitTask getA() {
+    public  BukkitTask getA() {
         return a;
     }
 
-    public static void setA(BukkitTask a) {
+    public  void setA(BukkitTask a) {
         Timer.a = a;
     }
 
-    public static BukkitTask getB() {
+    public  BukkitTask getB() {
         return b;
     }
 
-    public static void setB(BukkitTask b) {
+    public  void setB(BukkitTask b) {
         Timer.b = b;
     }
 
-    public static BukkitTask getC() {
+    public  BukkitTask getC() {
         return c;
     }
 
-    public static void setC(BukkitTask c) {
+    public  void setC(BukkitTask c) {
         Timer.c = c;
     }
 
-    public static BukkitTask getE() {
+    public  BukkitTask getE() {
         return e;
     }
 
-    public static void setE(BukkitTask e) {
+    public  void setE(BukkitTask e) {
         Timer.e = e;
     }
 
-    public static BukkitTask getDd() {
+    public  BukkitTask getDd() {
         return dd;
     }
 
-    public static void setBungeeMode(boolean bungeeMode) {
+    public  void setBungeeMode(boolean bungeeMode) {
         BungeeMode = bungeeMode;
     }
 
-    public static void setBungeeServer(String bungeeServer) {
+    public  void setBungeeServer(String bungeeServer) {
         BungeeServer = bungeeServer;
     }
 
@@ -554,23 +554,23 @@ public class Timer {
 
     }
 
-    public static void changeTime() {
+    public  void changeTime() {
         high = 10;
     }
 
-    private static void resetTime() {
+    private  void resetTime() {
         high = OptionsFileManager.getConfigFile().getInt("Countdown.lobby");
         for (Player all : Bukkit.getOnlinePlayers()) {
             all.setLevel(high);
         }
     }
 
-    public static void setCountdownTime() {
+    public  void setCountdownTime() {
         high = OptionsFileManager.getConfigFile().getInt("Countdown.lobby");
         gracetime = OptionsFileManager.getConfigFile().getInt("Countdown.graceperiod");
     }
 
-    private static void giveCompass(Player p) {
+    private  void giveCompass(Player p) {
         if (comMode) {
             p.getInventory().addItem(new ItemBuilder(comItem).setName(comName).build());
         }

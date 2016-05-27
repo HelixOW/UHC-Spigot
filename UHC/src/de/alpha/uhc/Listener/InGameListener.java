@@ -25,29 +25,29 @@ public class InGameListener implements Listener {
 		this.pl = c;
 	}
 
-    private static String ntrack;
-    private static String track;
-    private static String trackteam;
+    private  String ntrack;
+    private  String track;
+    private  String trackteam;
 
-    private static int size;
+    private  int size;
 
-    public static void setNtrack(String ntrack) {
+    public  void setNtrack(String ntrack) {
         InGameListener.ntrack = ntrack;
     }
 
-    public static void setTrack(String track) {
+    public  void setTrack(String track) {
         InGameListener.track = track;
     }
 
-    public static void setTrackteam(String trackteam) {
+    public  void setTrackteam(String trackteam) {
         InGameListener.trackteam = trackteam;
     }
 
-    public static int getSize() {
+    public  int getSize() {
         return size;
     }
 
-    public static void setSize(int size) {
+    public  void setSize(int size) {
         InGameListener.size = size;
     }
 

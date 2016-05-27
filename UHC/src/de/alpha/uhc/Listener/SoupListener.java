@@ -14,9 +14,9 @@ public class SoupListener implements Listener {
 	public SoupListener(Core c) {
 	}
 
-    private static double boost;
+    private  double boost;
 
-    public static void setBoost(double a) {
+    public  void setBoost(double a) {
         boost = a;
     }
 

@@ -23,10 +23,10 @@ public class MapReset implements Listener {
 	public MapReset(Core c) {
 	}
 
-    private static final List<String> breaked = new LinkedList<>();
-    private static final List<String> placed = new LinkedList<>();
+    private  final List<String> breaked = new LinkedList<>();
+    private  final List<String> placed = new LinkedList<>();
 
-    public static void restore() {
+    public  void restore() {
 
         for (String b : breaked) {
 

@@ -16,32 +16,32 @@ public class Border {
 	public Border(Core c) {
 	}
 
-    private static int size;
-    private static double dmg;
-    private static Location arena;
+    private  int size;
+    private  double dmg;
+    private  Location arena;
 
-    public static void setDmg(double dmg) {
+    public  void setDmg(double dmg) {
         Border.dmg = dmg;
     }
 
-    public static int getSize() {
+    public  int getSize() {
         return size;
     }
 
-    public static void setSize(int newSize) {
+    public  void setSize(int newSize) {
         size = newSize;
     }
 
-    private static int random() {
+    private  int random() {
         Random r = new Random();
         return r.nextInt(20 + 1);
     }
 
-    public static void setDistanceLoc(Location loc) {
+    public  void setDistanceLoc(Location loc) {
         arena = loc;
     }
 
-    public static void border() {
+    public  void border() {
 
         new BukkitRunnable() {
 
@@ -126,7 +126,7 @@ public class Border {
 
     }
 
-    public static void changesize(int newSize) {
+    public  void changesize(int newSize) {
         size = newSize;
     }
 }

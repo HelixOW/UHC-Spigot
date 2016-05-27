@@ -12,18 +12,18 @@ public class ATablist {
 	public ATablist(Core c) {
 	}
 
-    private static String header;
-    private static String footer;
+    private  String header;
+    private  String footer;
 
-    public static void setHeader(String header) {
+    public  void setHeader(String header) {
         ATablist.header = header;
     }
 
-    public static void setFooter(String footer) {
+    public  void setFooter(String footer) {
         ATablist.footer = footer;
     }
 
-    public static void sendStandingLobbyTablist() {
+    public  void sendStandingLobbyTablist() {
         for (Player all : Bukkit.getOnlinePlayers()) {
             header = header.replace("[player]", all.getDisplayName());
             header = header.replace("[playercount]", Integer.toString(Bukkit.getOnlinePlayers().size()));
@@ -43,7 +43,7 @@ public class ATablist {
 
     }
 
-    public static void sendStandingInGameTablist() {
+    public  void sendStandingInGameTablist() {
         for (Player all : Bukkit.getOnlinePlayers()) {
             header = header.replace("[player]", all.getDisplayName());
             header = header.replace("[playercount]", Integer.toString(Core.getInstance().getInGamePlayers().size()));

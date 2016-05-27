@@ -22,232 +22,232 @@ public class AScoreboard {
 	public AScoreboard(Core c) {
 	}
 
-    private static final HashMap<Player, Integer> sTeamA = new HashMap<>();
-    private static final HashMap<Player, Integer> sTeamS = new HashMap<>();
-    private static final HashMap<Player, Integer> sTeamK = new HashMap<>();
-    private static final HashMap<Player, Integer> sTeamT = new HashMap<>();
-    private static final HashMap<Player, Integer> sTeamD = new HashMap<>();
-    private static final HashMap<Player, Integer> sTeamB = new HashMap<>();
-    private static final HashMap<Player, Integer> sTeamP = new HashMap<>();
-    private static final HashMap<Player, String> cTeamA = new HashMap<>();
-    private static final HashMap<Player, String> cTeamS = new HashMap<>();
-    private static final HashMap<Player, String> cTeamK = new HashMap<>();
-    private static final HashMap<Player, String> cTeamT = new HashMap<>();
-    private static final HashMap<Player, String> cTeamD = new HashMap<>();
-    private static final HashMap<Player, String> cTeamB = new HashMap<>();
-    private static final HashMap<Player, String> cTeamP = new HashMap<>();
-    private static boolean ShowLobbyScoreboard;
-    private static boolean ShowLobbyKills;
-    private static boolean ShowLobbyDeaths;
-    private static boolean ShowLobbyCoins;
-    private static boolean ShowLobbyPlayercount;
-    private static boolean ShowLobbyTeam;
-    private static boolean ShowLobbyBar;
-    private static String lobbyTitle;
-    private static String lobbyKills;
-    private static String lobbyDeaths;
-    private static String lobbyCoins;
-    private static String lobbyPlayercount;
-    private static String lobbyTeam;
-    private static String lobbyBar;
-    private static boolean ShowIngameScoreboard;
-    private static boolean ShowInGamePlayersLiving;
-    private static boolean ShowInGameSpectators;
-    private static boolean ShowInGameKit;
-    private static boolean ShowInGameCenter;
-    private static boolean ShowInGameTeam;
-    private static boolean ShowInGameBorder;
-    private static boolean ShowInGamePvP;
-    private static boolean ShowInGameBar;
-    private static String ingameTitle;
-    private static String ingamePlayersLiving;
-    private static String ingameSpectators;
-    private static String ingameKit;
-    private static String ingameCenter;
-    private static String ingameTeam;
-    private static String ingameBorder;
-    private static String ingamePvP;
-    private static String ingameBar;
-    private static boolean ShowHealthUName;
-    private static boolean ShowHealthInTab;
-    private static String dmgin;
-    private static String pvpin;
-    private static HashMap<Player, String> A = new HashMap<>();
-    private static HashMap<Player, String> B = new HashMap<>();
-    private static int aa;
-    private static Scoreboard sb;
-    private static Objective obj;
-    private static String ingamePvPmsg;
+    private  final HashMap<Player, Integer> sTeamA = new HashMap<>();
+    private  final HashMap<Player, Integer> sTeamS = new HashMap<>();
+    private  final HashMap<Player, Integer> sTeamK = new HashMap<>();
+    private  final HashMap<Player, Integer> sTeamT = new HashMap<>();
+    private  final HashMap<Player, Integer> sTeamD = new HashMap<>();
+    private  final HashMap<Player, Integer> sTeamB = new HashMap<>();
+    private  final HashMap<Player, Integer> sTeamP = new HashMap<>();
+    private  final HashMap<Player, String> cTeamA = new HashMap<>();
+    private  final HashMap<Player, String> cTeamS = new HashMap<>();
+    private  final HashMap<Player, String> cTeamK = new HashMap<>();
+    private  final HashMap<Player, String> cTeamT = new HashMap<>();
+    private  final HashMap<Player, String> cTeamD = new HashMap<>();
+    private  final HashMap<Player, String> cTeamB = new HashMap<>();
+    private  final HashMap<Player, String> cTeamP = new HashMap<>();
+    private  boolean ShowLobbyScoreboard;
+    private  boolean ShowLobbyKills;
+    private  boolean ShowLobbyDeaths;
+    private  boolean ShowLobbyCoins;
+    private  boolean ShowLobbyPlayercount;
+    private  boolean ShowLobbyTeam;
+    private  boolean ShowLobbyBar;
+    private  String lobbyTitle;
+    private  String lobbyKills;
+    private  String lobbyDeaths;
+    private  String lobbyCoins;
+    private  String lobbyPlayercount;
+    private  String lobbyTeam;
+    private  String lobbyBar;
+    private  boolean ShowIngameScoreboard;
+    private  boolean ShowInGamePlayersLiving;
+    private  boolean ShowInGameSpectators;
+    private  boolean ShowInGameKit;
+    private  boolean ShowInGameCenter;
+    private  boolean ShowInGameTeam;
+    private  boolean ShowInGameBorder;
+    private  boolean ShowInGamePvP;
+    private  boolean ShowInGameBar;
+    private  String ingameTitle;
+    private  String ingamePlayersLiving;
+    private  String ingameSpectators;
+    private  String ingameKit;
+    private  String ingameCenter;
+    private  String ingameTeam;
+    private  String ingameBorder;
+    private  String ingamePvP;
+    private  String ingameBar;
+    private  boolean ShowHealthUName;
+    private  boolean ShowHealthInTab;
+    private  String dmgin;
+    private  String pvpin;
+    private  HashMap<Player, String> A = new HashMap<>();
+    private  HashMap<Player, String> B = new HashMap<>();
+    private  int aa;
+    private  Scoreboard sb;
+    private  Objective obj;
+    private  String ingamePvPmsg;
 
-    public static void setShowLobbyScoreboard(boolean showLobbyScoreboard) {
+    public  void setShowLobbyScoreboard(boolean showLobbyScoreboard) {
         ShowLobbyScoreboard = showLobbyScoreboard;
     }
 
-    public static void setShowLobbyKills(boolean showLobbyKills) {
+    public  void setShowLobbyKills(boolean showLobbyKills) {
         ShowLobbyKills = showLobbyKills;
     }
 
-    public static void setShowLobbyDeaths(boolean showLobbyDeaths) {
+    public  void setShowLobbyDeaths(boolean showLobbyDeaths) {
         ShowLobbyDeaths = showLobbyDeaths;
     }
 
-    public static void setShowLobbyCoins(boolean showLobbyCoins) {
+    public  void setShowLobbyCoins(boolean showLobbyCoins) {
         ShowLobbyCoins = showLobbyCoins;
     }
 
-    public static void setShowLobbyPlayercount(boolean showLobbyPlayercount) {
+    public  void setShowLobbyPlayercount(boolean showLobbyPlayercount) {
         ShowLobbyPlayercount = showLobbyPlayercount;
     }
 
-    public static void setShowLobbyTeam(boolean showLobbyTeam) {
+    public  void setShowLobbyTeam(boolean showLobbyTeam) {
         ShowLobbyTeam = showLobbyTeam;
     }
 
-    public static void setShowLobbyBar(boolean showLobbyBar) {
+    public  void setShowLobbyBar(boolean showLobbyBar) {
         ShowLobbyBar = showLobbyBar;
     }
 
-    public static void setLobbyTitle(String lobbyTitle) {
+    public  void setLobbyTitle(String lobbyTitle) {
         AScoreboard.lobbyTitle = lobbyTitle;
     }
 
-    public static void setLobbyKills(String lobbyKills) {
+    public  void setLobbyKills(String lobbyKills) {
         AScoreboard.lobbyKills = lobbyKills;
     }
 
-    public static void setLobbyDeaths(String lobbyDeaths) {
+    public  void setLobbyDeaths(String lobbyDeaths) {
         AScoreboard.lobbyDeaths = lobbyDeaths;
     }
 
-    public static void setLobbyCoins(String lobbyCoins) {
+    public  void setLobbyCoins(String lobbyCoins) {
         AScoreboard.lobbyCoins = lobbyCoins;
     }
 
-    public static void setLobbyPlayercount(String lobbyPlayercount) {
+    public  void setLobbyPlayercount(String lobbyPlayercount) {
         AScoreboard.lobbyPlayercount = lobbyPlayercount;
     }
 
-    public static void setLobbyTeam(String lobbyTeam) {
+    public  void setLobbyTeam(String lobbyTeam) {
         AScoreboard.lobbyTeam = lobbyTeam;
     }
 
-    public static void setLobbyBar(String lobbyBar) {
+    public  void setLobbyBar(String lobbyBar) {
         AScoreboard.lobbyBar = lobbyBar;
     }
 
-    public static void setShowInGameScoreboard(boolean showInGameScoreboard) {
+    public  void setShowInGameScoreboard(boolean showInGameScoreboard) {
         ShowIngameScoreboard = showInGameScoreboard;
     }
 
-    public static void setShowInGamePlayersLiving(boolean showInGamePlayersLiving) {
+    public  void setShowInGamePlayersLiving(boolean showInGamePlayersLiving) {
         ShowInGamePlayersLiving = showInGamePlayersLiving;
     }
 
-    public static void setShowInGameSpectators(boolean showInGameSpectators) {
+    public  void setShowInGameSpectators(boolean showInGameSpectators) {
         ShowInGameSpectators = showInGameSpectators;
     }
 
-    public static void setShowInGameKit(boolean showInGameKit) {
+    public  void setShowInGameKit(boolean showInGameKit) {
         ShowInGameKit = showInGameKit;
     }
 
-    public static void setShowInGameCenter(boolean showInGameCenter) {
+    public  void setShowInGameCenter(boolean showInGameCenter) {
         ShowInGameCenter = showInGameCenter;
     }
 
-    public static void setShowInGameTeam(boolean showInGameTeam) {
+    public  void setShowInGameTeam(boolean showInGameTeam) {
         ShowInGameTeam = showInGameTeam;
     }
 
-    public static void setShowInGameBorder(boolean showInGameBorder) {
+    public  void setShowInGameBorder(boolean showInGameBorder) {
         ShowInGameBorder = showInGameBorder;
     }
 
-    public static void setShowInGamePvP(boolean showInGamePvP) {
+    public  void setShowInGamePvP(boolean showInGamePvP) {
         ShowInGamePvP = showInGamePvP;
     }
 
-    public static void setShowInGameBar(boolean showInGameBar) {
+    public  void setShowInGameBar(boolean showInGameBar) {
         ShowInGameBar = showInGameBar;
     }
 
-    public static void setIngameTitle(String ingameTitle) {
+    public  void setIngameTitle(String ingameTitle) {
         AScoreboard.ingameTitle = ingameTitle;
     }
 
-    public static void setIngamePlayersLiving(String ingamePlayersLiving) {
+    public  void setIngamePlayersLiving(String ingamePlayersLiving) {
         AScoreboard.ingamePlayersLiving = ingamePlayersLiving;
     }
 
-    public static void setIngameSpectators(String ingameSpectators) {
+    public  void setIngameSpectators(String ingameSpectators) {
         AScoreboard.ingameSpectators = ingameSpectators;
     }
 
-    public static void setIngameKit(String ingameKit) {
+    public  void setIngameKit(String ingameKit) {
         AScoreboard.ingameKit = ingameKit;
     }
 
-    public static void setIngameCenter(String ingameCenter) {
+    public  void setIngameCenter(String ingameCenter) {
         AScoreboard.ingameCenter = ingameCenter;
     }
 
     //                 		-=X Scores X=-
 
-    public static void setIngameTeam(String ingameTeam) {
+    public  void setIngameTeam(String ingameTeam) {
         AScoreboard.ingameTeam = ingameTeam;
     }
 
-    public static void setIngameBorder(String ingameBorder) {
+    public  void setIngameBorder(String ingameBorder) {
         AScoreboard.ingameBorder = ingameBorder;
     }
 
-    public static void setIngamePvP(String ingamePvP) {
+    public  void setIngamePvP(String ingamePvP) {
         AScoreboard.ingamePvP = ingamePvP;
     }
 
-    public static void setIngameBar(String ingameBar) {
+    public  void setIngameBar(String ingameBar) {
         AScoreboard.ingameBar = ingameBar;
     }
 
-    public static void setShowHealthUName(boolean showHealthUName) {
+    public  void setShowHealthUName(boolean showHealthUName) {
         ShowHealthUName = showHealthUName;
     }
 
-    public static void setShowHealthInTab(boolean showHealthInTab) {
+    public  void setShowHealthInTab(boolean showHealthInTab) {
         ShowHealthInTab = showHealthInTab;
     }
 
-    public static void setDmgin(String dmgin) {
+    public  void setDmgin(String dmgin) {
         AScoreboard.dmgin = dmgin;
     }
 
     //  					-=X Strings on Board X=-
 
-    public static void setPvpin(String pvpin) {
+    public  void setPvpin(String pvpin) {
         AScoreboard.pvpin = pvpin;
     }
 
-    public static HashMap<Player, String> getA() {
+    public  HashMap<Player, String> getA() {
         return A;
     }
 
-    public static void setA(HashMap<Player, String> a) {
+    public  void setA(HashMap<Player, String> a) {
         A = a;
     }
 
-    public static HashMap<Player, String> getB() {
+    public  HashMap<Player, String> getB() {
         return B;
     }
 
-    public static void setB(HashMap<Player, String> b) {
+    public  void setB(HashMap<Player, String> b) {
         B = b;
     }
 
-    public static void setIngamePvPmsg(String ingamePvPmsg) {
+    public  void setIngamePvPmsg(String ingamePvPmsg) {
         AScoreboard.ingamePvPmsg = ingamePvPmsg;
     }
 
-    public static void setLobbyScoreboard(Player p) {
+    public  void setLobbyScoreboard(Player p) {
         if (!ShowLobbyScoreboard) return;
 
         int score = 0;
@@ -308,7 +308,7 @@ public class AScoreboard {
         p.setScoreboard(sb);
     }
 
-    public static void updateLobbyTeam(Player p) {
+    public  void updateLobbyTeam(Player p) {
         Objective objP = p.getScoreboard().getObjective("UHCLobby");
         String a = lobbyTeam.replace("[team]", "" + ATeam.getTeamColor(ATeam.getPlayerTeam(p)) + ATeam.getPlayerTeam(p));
         p.getScoreboard().resetScores(A.get(p));
@@ -316,7 +316,7 @@ public class AScoreboard {
         objP.getScore(a).setScore(aa);
     }
 
-    public static void sendAntiFlickerInGameBoard(final Player p) {
+    public  void sendAntiFlickerInGameBoard(final Player p) {
         sb = Bukkit.getScoreboardManager().getNewScoreboard();
         obj = sb.registerNewObjective("UHCInGame", "dummy");
 
@@ -425,7 +425,7 @@ public class AScoreboard {
         p.setScoreboard(sb);
     }
 
-    public static void updateInGamePlayersLiving(Player p) {
+    public  void updateInGamePlayersLiving(Player p) {
         Objective b = p.getScoreboard().getObjective("UHCInGame");
         String a = ingamePlayersLiving.replace("[livingPlayerscount]", Integer.toString(Core.getInstance().getInGamePlayers().size()));
         p.getScoreboard().resetScores(cTeamA.get(p));
@@ -433,7 +433,7 @@ public class AScoreboard {
         b.getScore(a).setScore(sTeamA.get(p));
     }
 
-    public static void updateInGameSpectators(Player p) {
+    public  void updateInGameSpectators(Player p) {
         Objective b = p.getScoreboard().getObjective("UHCInGame");
         String a = ingameSpectators.replace("[spectatorcount]", Integer.toString(Core.getInstance().getSpecs().size()));
         p.getScoreboard().resetScores(cTeamS.get(p));
@@ -441,7 +441,7 @@ public class AScoreboard {
         b.getScore(a).setScore(sTeamS.get(p));
     }
 
-    public static void updateInGameCenter(final Player p) {
+    public  void updateInGameCenter(final Player p) {
         final Objective b = p.getScoreboard().getObjective("UHCInGame");
         new BukkitRunnable() {
             @Override
@@ -463,7 +463,7 @@ public class AScoreboard {
         }.runTaskLater(Core.getInstance(), 20);
     }
 
-    public static void updateInGameBorder(Player p) {
+    public  void updateInGameBorder(Player p) {
         Objective b = p.getScoreboard().getObjective("UHCInGame");
         String a = ingameBorder.replace("[bordersize]", Integer.toString(Border.getSize()));
         p.getScoreboard().resetScores(cTeamB.get(p));
@@ -471,7 +471,7 @@ public class AScoreboard {
         b.getScore(a).setScore(sTeamB.get(p));
     }
 
-    public static void updateInGamePvPTime(final Player p) {
+    public  void updateInGamePvPTime(final Player p) {
         final Objective b = p.getScoreboard().getObjective("UHCInGame");
         String inGameTime = ingamePvP.replace("[time]", Integer.toString(Timer.getuDM()));
         String GraceTime = dmgin.replace("[time]", Integer.toString(Timer.getGracetime()));
@@ -524,7 +524,7 @@ public class AScoreboard {
         }, 2);
     }
 
-    public static void setInGamePvPTime(Player p) {
+    public  void setInGamePvPTime(Player p) {
         Objective b = p.getScoreboard().getObjective("UHCInGame");
         p.getScoreboard().resetScores(cTeamP.get(p));
         cTeamP.put(p, ingamePvPmsg);

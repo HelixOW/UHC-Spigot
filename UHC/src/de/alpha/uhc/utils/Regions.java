@@ -21,52 +21,52 @@ public class Regions implements Listener {
 		this.pl = c;
 	}
 
-    private static ArrayList<Cuboid> regions = new ArrayList<>();
-    private static HashMap<Player, Location> pos1 = new HashMap<>();
-    private static HashMap<Player, Location> pos2 = new HashMap<>();
+    private  ArrayList<Cuboid> regions = new ArrayList<>();
+    private  HashMap<Player, Location> pos1 = new HashMap<>();
+    private  HashMap<Player, Location> pos2 = new HashMap<>();
 
-    private static String material;
-    private static boolean lobby;
+    private  String material;
+    private  boolean lobby;
 
-    public static String getMaterial() {
+    public  String getMaterial() {
         return material;
     }
 
-    public static void setMaterial(String material) {
+    public  void setMaterial(String material) {
         Regions.material = material;
     }
 
-    public static boolean isLobby() {
+    public  boolean isLobby() {
         return lobby;
     }
 
-    public static void setLobby(boolean lobby) {
+    public  void setLobby(boolean lobby) {
         Regions.lobby = lobby;
     }
 
-    public static void addRegion(Cuboid toAdd) {
+    public  void addRegion(Cuboid toAdd) {
         regions.add(toAdd);
     }
 
-    public static boolean getDefined(Player p) {
+    public  boolean getDefined(Player p) {
         return pos1.containsKey(p) && pos2.containsKey(p);
     }
 
-    public static Location getPos1(Player p) {
+    public  Location getPos1(Player p) {
         if (pos1.containsKey(p)) {
             return pos1.get(p);
         }
         return null;
     }
 
-    public static Location getPos2(Player p) {
+    public  Location getPos2(Player p) {
         if (pos2.containsKey(p)) {
             return pos2.get(p);
         }
         return null;
     }
 
-    public static boolean isInRegion(Location loc) {
+    public  boolean isInRegion(Location loc) {
 
         if (!(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobbyregion"))) return true;
 

@@ -18,102 +18,102 @@ public class MiningListener implements Listener {
 	public MiningListener(Core c) {}
 	
 
-    private static boolean wood;
-    private static boolean coal;
-    private static boolean iron;
-    private static boolean gold;
-    private static boolean dia;
-    private static boolean gravel;
+    private  boolean wood;
+    private  boolean coal;
+    private  boolean iron;
+    private  boolean gold;
+    private  boolean dia;
+    private  boolean gravel;
 
-    private static int coalA;
-    private static int ironA;
-    private static int goldA;
-    private static int diaA;
-    private static int gravelA;
+    private  int coalA;
+    private  int ironA;
+    private  int goldA;
+    private  int diaA;
+    private  int gravelA;
 
-    private static Material coalM;
-    private static Material ironM;
-    private static Material goldM;
-    private static Material diaM;
-    private static Material gravelM;
+    private  Material coalM;
+    private  Material ironM;
+    private  Material goldM;
+    private  Material diaM;
+    private  Material gravelM;
 
 
-    public static void setWood(boolean wood) {
+    public  void setWood(boolean wood) {
         MiningListener.wood = wood;
     }
 
 
-    public static void setCoal(boolean coal) {
+    public  void setCoal(boolean coal) {
         MiningListener.coal = coal;
     }
 
 
-    public static void setIron(boolean iron) {
+    public  void setIron(boolean iron) {
         MiningListener.iron = iron;
     }
 
 
-    public static void setGold(boolean gold) {
+    public  void setGold(boolean gold) {
         MiningListener.gold = gold;
     }
 
 
-    public static void setDia(boolean dia) {
+    public  void setDia(boolean dia) {
         MiningListener.dia = dia;
     }
 
 
-    public static void setGravel(boolean gravel) {
+    public  void setGravel(boolean gravel) {
         MiningListener.gravel = gravel;
     }
 
 
-    public static void setCoalA(int coalA) {
+    public  void setCoalA(int coalA) {
         MiningListener.coalA = coalA;
     }
 
 
-    public static void setIronA(int ironA) {
+    public  void setIronA(int ironA) {
         MiningListener.ironA = ironA;
     }
 
 
-    public static void setGoldA(int goldA) {
+    public  void setGoldA(int goldA) {
         MiningListener.goldA = goldA;
     }
 
 
-    public static void setDiaA(int diaA) {
+    public  void setDiaA(int diaA) {
         MiningListener.diaA = diaA;
     }
 
 
-    public static void setGravelA(int gravelA) {
+    public  void setGravelA(int gravelA) {
         MiningListener.gravelA = gravelA;
     }
 
 
-    public static void setCoalM(Material coalM) {
+    public  void setCoalM(Material coalM) {
         MiningListener.coalM = coalM;
     }
 
 
-    public static void setIronM(Material ironM) {
+    public  void setIronM(Material ironM) {
         MiningListener.ironM = ironM;
     }
 
 
-    public static void setGoldM(Material goldM) {
+    public  void setGoldM(Material goldM) {
         MiningListener.goldM = goldM;
     }
 
 
-    public static void setDiaM(Material diaM) {
+    public  void setDiaM(Material diaM) {
         MiningListener.diaM = diaM;
     }
 
 
-    public static void setGravelM(Material gravelM) {
+    public  void setGravelM(Material gravelM) {
         MiningListener.gravelM = gravelM;
     }
 

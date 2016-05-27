@@ -13,13 +13,13 @@ public class CommandsFile {
 		this.pl = c;
 	}
 
-    private static final SimpleFile file = getCmdFile();
+    private  final SimpleFile file = getCmdFile();
 
-    private static SimpleFile getCmdFile() {
+    private  SimpleFile getCmdFile() {
         return new SimpleFile("plugins/UHC", "commands.yml");
     }
 
-    public static void addCommands() {
+    public  void addCommands() {
         file.setDefault("Use start command", true);
         file.setDefault("Use stats command", true);
 
@@ -27,7 +27,7 @@ public class CommandsFile {
         file.setDefault("stats command disabled", "&7Please use&8: &b/uhc stats");
     }
 
-    public static void loadCommands() {
+    public  void loadCommands() {
         StartCommand.setUse(file.getBoolean("Use start command"));
         StatsCommand.setUs(file.getBoolean("Use stats command"));
 

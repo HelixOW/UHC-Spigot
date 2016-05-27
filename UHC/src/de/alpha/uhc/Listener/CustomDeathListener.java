@@ -15,112 +15,112 @@ public class CustomDeathListener implements Listener {
 		this.pl = c;
 	}
 
-    private static String blockExplode;
-    private static String contact;
-    private static String drown;
-    private static String pvp;
-    private static String entityExplode;
-    private static String fall;
-    private static String anvil;
-    private static String fire;
-    private static String lava;
-    private static String light;
-    private static String potion;
-    private static String arrow;
-    private static String hunger;
-    private static String burried;
-    private static String kill;
-    private static String thorns;
-    private static String voidd;
-    private static String wither;
+    private  String blockExplode;
+    private  String contact;
+    private  String drown;
+    private  String pvp;
+    private  String entityExplode;
+    private  String fall;
+    private  String anvil;
+    private  String fire;
+    private  String lava;
+    private  String light;
+    private  String potion;
+    private  String arrow;
+    private  String hunger;
+    private  String burried;
+    private  String kill;
+    private  String thorns;
+    private  String voidd;
+    private  String wither;
 
 
-    public static void setBlockExplode(String a) {
+    public  void setBlockExplode(String a) {
         blockExplode = a;
     }
 
 
-    public static void setContact(String a) {
+    public  void setContact(String a) {
         contact = a;
     }
 
 
-    public static void setDrown(String a) {
+    public  void setDrown(String a) {
         drown = a;
     }
 
 
-    public static void setPvp(String a) {
+    public  void setPvp(String a) {
         pvp = a;
     }
 
 
-    public static void setEntityExplode(String a) {
+    public  void setEntityExplode(String a) {
         entityExplode = a;
     }
 
 
-    public static void setFall(String a) {
+    public  void setFall(String a) {
         fall = a;
     }
 
 
-    public static void setAnvil(String a) {
+    public  void setAnvil(String a) {
         anvil = a;
     }
 
 
-    public static void setFire(String a) {
+    public  void setFire(String a) {
         fire = a;
     }
 
 
-    public static void setLava(String a) {
+    public  void setLava(String a) {
         lava = a;
     }
 
 
-    public static void setLight(String a) {
+    public  void setLight(String a) {
         light = a;
     }
 
 
-    public static void setPotion(String a) {
+    public  void setPotion(String a) {
         potion = a;
     }
 
 
-    public static void setArrow(String a) {
+    public  void setArrow(String a) {
         arrow = a;
     }
 
 
-    public static void setHunger(String a) {
+    public  void setHunger(String a) {
         hunger = a;
     }
 
 
-    public static void setBurried(String a) {
+    public  void setBurried(String a) {
         burried = a;
     }
 
 
-    public static void setKill(String a) {
+    public  void setKill(String a) {
         kill = a;
     }
 
 
-    public static void setThorns(String a) {
+    public  void setThorns(String a) {
         thorns = a;
     }
 
 
-    public static void setVoidd(String a) {
+    public  void setVoidd(String a) {
         voidd = a;
     }
 
 
-    public static void setWither(String a) {
+    public  void setWither(String a) {
         wither = a;
     }
 

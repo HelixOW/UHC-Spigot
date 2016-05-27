@@ -11,29 +11,29 @@ public class MotdListener implements Listener {
 	public MotdListener(Core c) {
 	}
 
-    private static String lobby;
-    private static String grace;
-    private static String ingame;
-    private static String restart;
-    private static boolean custommotd;
+    private  String lobby;
+    private  String grace;
+    private  String ingame;
+    private  String restart;
+    private  boolean custommotd;
 
-    public static void setLobby(String lobby) {
+    public  void setLobby(String lobby) {
         MotdListener.lobby = lobby;
     }
 
-    public static void setGrace(String grace) {
+    public  void setGrace(String grace) {
         MotdListener.grace = grace;
     }
 
-    public static void setIngame(String ingame) {
+    public  void setIngame(String ingame) {
         MotdListener.ingame = ingame;
     }
 
-    public static void setRestart(String restart) {
+    public  void setRestart(String restart) {
         MotdListener.restart = restart;
     }
 
-    public static void setCustommotd(boolean custommotd) {
+    public  void setCustommotd(boolean custommotd) {
         MotdListener.custommotd = custommotd;
     }
 

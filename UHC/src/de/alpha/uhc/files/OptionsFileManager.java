@@ -25,11 +25,11 @@ public class OptionsFileManager {
 		this.pl = c;
 	}
 
-    public static SimpleFile getConfigFile() {
+    public  SimpleFile getConfigFile() {
         return new SimpleFile("plugins/UHC", "options.yml");
     }
 
-    public static void addOptions() {
+    public  void addOptions() {
         SimpleFile file = getConfigFile();
 
         file.setDefault("Prefix", "&7[&bUHC&7] ");

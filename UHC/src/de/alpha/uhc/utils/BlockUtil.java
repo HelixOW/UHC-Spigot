@@ -13,7 +13,7 @@ public class BlockUtil {
 	public BlockUtil(Core c) {
 	}
 
-    public static ArrayList<BlockFace> getRelative() {
+    public  ArrayList<BlockFace> getRelative() {
         ArrayList<BlockFace> faces = new ArrayList<>();
 
         Collections.addAll(faces, BlockFace.values());

@@ -12,13 +12,13 @@ public class DeathMessageFile {
 		this.pl = c;
 	}
 
-    private static final SimpleFile file = getDeathFile();
+    private  final SimpleFile file = getDeathFile();
 
-    private static SimpleFile getDeathFile() {
+    private  SimpleFile getDeathFile() {
         return new SimpleFile("plugins/UHC", "deathmessages.yml");
     }
 
-    public static void addDeathMessages() {
+    public  void addDeathMessages() {
         file.setDefault("Block Explosion", "[player] &7was to near to a block explode and died.");
         file.setDefault("Contact with Cactus", "[player] &7wanted to kuddle with a cactus. Ouch.");
         file.setDefault("Drowning", "[player] &7thought he is a fish and ran out of air.");
@@ -39,7 +39,7 @@ public class DeathMessageFile {
         file.setDefault("Wither", "[player] &7was to weak for the Withereffect.");
     }
 
-    public static void loadDeathMessages() {
+    public  void loadDeathMessages() {
         CustomDeathListener.setBlockExplode(file.getColorString("Block Explosion"));
         CustomDeathListener.setContact(file.getColorString("Contact with Cactus"));
         CustomDeathListener.setDrown(file.getColorString("Drowning"));

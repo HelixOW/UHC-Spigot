@@ -20,11 +20,11 @@ public class MessageFileManager {
 		this.pl = c;
 	}
 
-    public static SimpleFile getMSGFile() {
+    public  SimpleFile getMSGFile() {
         return new SimpleFile("plugins/UHC", "messages.yml");
     }
 
-    public static void addMessages() {
+    public  void addMessages() {
         SimpleFile file = getMSGFile();
 
         file.setDefault("Commands.Warns.OnlyPlayers", "&cThis Command have to be executed by a Player.");
@@ -83,7 +83,7 @@ public class MessageFileManager {
         file.setDefault("GameStatus.Restart", "Restart");
     }
 
-    public static void loadMessages() {
+    public  void loadMessages() {
         SimpleFile file = getMSGFile();
 
         ATablist.setHeader(file.getColorString("Tablist.Top"));

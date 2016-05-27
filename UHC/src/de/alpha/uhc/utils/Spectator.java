@@ -31,19 +31,19 @@ public class Spectator implements Listener {
 		this.pl = c;
 	}
 
-    private static String specItem;
-    private static String specName;
-    private static String title;
+    private  String specItem;
+    private  String specName;
+    private  String title;
 
-    public static void setSpecItem(String specItem) {
+    public  void setSpecItem(String specItem) {
         Spectator.specItem = specItem;
     }
 
-    public static void setSpecName(String specName) {
+    public  void setSpecName(String specName) {
         Spectator.specName = specName;
     }
 
-    public static void setTitle(String title) {
+    public  void setTitle(String title) {
         Spectator.title = title;
     }
 
@@ -64,7 +64,7 @@ public class Spectator implements Listener {
         }
     }
 
-    private static void equipSpecStuff(Player p) {
+    private  void equipSpecStuff(Player p) {
         p.getInventory().addItem(new ItemBuilder(Material.getMaterial(specItem.toUpperCase())).setName(specName).build());
     }
 

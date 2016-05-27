@@ -20,7 +20,7 @@ public class KitManager {
 	}
 
     @SuppressWarnings("deprecation")
-    public static String InventoryToString(Inventory invInventory) {
+    public  String InventoryToString(Inventory invInventory) {
         String serialization = invInventory.getSize() + ";";
         for (int i = 0; i < invInventory.getSize(); i++) {
             ItemStack is = invInventory.getItem(i);
@@ -54,7 +54,7 @@ public class KitManager {
     }
 
     @SuppressWarnings("deprecation")
-    public static Inventory StringToInventory(String invString) {
+    public  Inventory StringToInventory(String invString) {
         String[] serializedBlocks = invString.split(";");
         Inventory deserializedInventory = Bukkit.getServer().createInventory(null, 45);
 

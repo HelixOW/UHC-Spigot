@@ -17,17 +17,17 @@ public class SpawnFileManager {
 		this.pl = c;
 	}
 
-    private static final SimpleFile cfg = getSpawnFile();
+    private  final SimpleFile cfg = getSpawnFile();
 
-    public static SimpleFile getSpawnFile() {
+    public  SimpleFile getSpawnFile() {
         return new SimpleFile("plugins/UHC", "locations.yml");
     }
 
-    private static void saveCfg() {
+    private  void saveCfg() {
         cfg.save();
     }
 
-    public static void SetLobby(double x, double y, double z, float yaw, float pitch, World w) {
+    public  void SetLobby(double x, double y, double z, float yaw, float pitch, World w) {
 
         cfg.set("Lobby.x", x);
         cfg.set("Lobby.y", y);
@@ -40,7 +40,7 @@ public class SpawnFileManager {
 
     }
 
-    public static void SetSpawn(double x, double y, double z, World w) {
+    public  void SetSpawn(double x, double y, double z, World w) {
 
         cfg.set("Spawn.x", x);
         cfg.set("Spawn.y", y);
@@ -51,7 +51,7 @@ public class SpawnFileManager {
 
     }
 
-    public static Location getLobby() {
+    public  Location getLobby() {
 
         if (cfg.getString("Lobby.world") == null) {
             return null;
@@ -68,7 +68,7 @@ public class SpawnFileManager {
 
     }
 
-    public static void createSpawnWorld() {
+    public  void createSpawnWorld() {
 
         if (cfg.getString("Spawn.world") == null) Bukkit.createWorld(new WorldCreator("UHC"));
 
@@ -76,7 +76,7 @@ public class SpawnFileManager {
 
     }
 
-    public static Location getSpawn() {
+    public  Location getSpawn() {
 
         if (cfg.getString("Spawn.world") == null) {
             World w = Bukkit.getWorld("UHC");
@@ -96,7 +96,7 @@ public class SpawnFileManager {
 
     }
 
-    public static Location getRandomLocation(Location player, int Xminimum, int Xmaximum, int Zminimum, int Zmaximum) {
+    public  Location getRandomLocation(Location player, int Xminimum, int Xmaximum, int Zminimum, int Zmaximum) {
         try {
             World world = player.getWorld();
             int randomZ = Zminimum + ((int) (Math.random() * ((Zmaximum - Zminimum) + 1)));
@@ -110,7 +110,7 @@ public class SpawnFileManager {
         return null;
     }
 
-    public static String getSpawnWorldName() {
+    public  String getSpawnWorldName() {
 
         if (cfg.getString("Spawn.world") == null) {
             return "UHC";
@@ -119,7 +119,7 @@ public class SpawnFileManager {
         return cfg.getString("Spawn.world");
     }
 
-    public static String getLobbyWorldName() {
+    public  String getLobbyWorldName() {
 
         if (cfg.getString("Lobby.world") == null) {
             return null;
@@ -129,7 +129,7 @@ public class SpawnFileManager {
     }
 
 
-    public static void addRegion(Location loc1, Location loc2) {
+    public  void addRegion(Location loc1, Location loc2) {
 
         cfg.set("Lobbyregion.pos1.world", loc1.getWorld().getName());
         cfg.set("Lobbyregion.pos1.x", loc1.getBlockX());
@@ -143,7 +143,7 @@ public class SpawnFileManager {
         saveCfg();
     }
 
-    public static void registerRegions() {
+    public  void registerRegions() {
 
         if (!cfg.isConfigurationSection("Lobbyregion")) {
             Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + "§cYou haven't created a Lobbyregion.");
@@ -157,7 +157,7 @@ public class SpawnFileManager {
 
     }
 
-    private static Location getRegionLoc(String name) {
+    private  Location getRegionLoc(String name) {
 
         if (!cfg.isConfigurationSection("Lobbyregion")) {
             Regions.setLobby(false);

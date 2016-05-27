@@ -14,13 +14,13 @@ public class DropFile {
 		this.pl = c;
 	}
 
-    private static final SimpleFile file = getDropFile();
+    private  final SimpleFile file = getDropFile();
 
-    private static SimpleFile getDropFile() {
+    private  SimpleFile getDropFile() {
         return new SimpleFile("plugins/UHC", "drops.yml");
     }
 
-    public static void addDrops() {
+    public  void addDrops() {
 
         file.setDefault("Blocks.Ore.Coal.enabled", true);
         file.setDefault("Blocks.Ore.Coal.drop", "coal:2");
@@ -65,7 +65,7 @@ public class DropFile {
 
     }
 
-    public static void loadDrops() {
+    public  void loadDrops() {
 
         DeathListener.setPig(file.getBoolean("Mobs.Pig.enabled"));
         DeathListener.setZombie(file.getBoolean("Mobs.Zombie.enabled"));
@@ -116,14 +116,14 @@ public class DropFile {
         MiningListener.setGravelM(getMaterialByString(file.getString("Blocks.Gravel.drop")));
     }
 
-    private static Material getMaterialByString(String block) {
+    private  Material getMaterialByString(String block) {
 
         String blockAsArray[] = block.split(":");
 
         return Material.getMaterial(blockAsArray[0].toUpperCase());
     }
 
-    private static int getAmountByString(String block) {
+    private  int getAmountByString(String block) {
 
         String blockAsArray[] = block.split(":");
 

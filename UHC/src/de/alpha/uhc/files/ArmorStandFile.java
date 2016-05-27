@@ -15,13 +15,13 @@ public class ArmorStandFile {
 		this.pl = c;
 	}
 	
-    private static SimpleFile file = getASFile();
+    private  SimpleFile file = getASFile();
 
-    public static SimpleFile getASFile() {
+    public  SimpleFile getASFile() {
         return new SimpleFile("plugins/UHC", "armorstands.yml");
     }
 
-    public static void addArmorStand(Location l) {
+    public  void addArmorStand(Location l) {
     	
     	int id = file.getKeys(false).size();
     	
@@ -32,7 +32,7 @@ public class ArmorStandFile {
     	file.save();
     }
     
-    public static void removeArmorStand(Location l) {
+    public  void removeArmorStand(Location l) {
     	for(String id : file.getKeys(false)) {
     		int x = file.getInt(id+".x");
     		int y = file.getInt(id+".y");

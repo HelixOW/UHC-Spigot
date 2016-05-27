@@ -12,9 +12,9 @@ public class ScoreboardFile {
 		this.pl = c;
 	}
 
-    private static final SimpleFile file = getScoreboardFile();
+    private  final SimpleFile file = getScoreboardFile();
 
-    public static void addScores() {
+    public  void addScores() {
 
         file.setDefault("Scoreboard.Lobby.show", true);
         file.setDefault("Scoreboard.Lobby.title", "&7-=X &aLobby &7X=-");
@@ -75,11 +75,11 @@ public class ScoreboardFile {
         file.setDefault("Scoreboard.Health.InTab.show", true);
     }
 
-    private static SimpleFile getScoreboardFile() {
+    private  SimpleFile getScoreboardFile() {
         return new SimpleFile("plugins/UHC", "scoreboard.yml");
     }
 
-    public static void loadScores() {
+    public  void loadScores() {
 
         AScoreboard.setShowLobbyScoreboard(file.getBoolean("Scoreboard.Lobby.show"));
         AScoreboard.setShowLobbyKills(file.getBoolean("Scoreboard.Lobby.Kills.show"));

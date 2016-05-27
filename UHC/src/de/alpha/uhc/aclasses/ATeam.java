@@ -32,68 +32,68 @@ public class ATeam implements Listener {
 	public ATeam(Core c) {
 	}
 
-    private static String chosen;
-    private static String noExist;
-    private static String allTeams;
-    private static String materialName;
-    private static String blockName;
-    private static String title;
-    private static String full;
-    private static final ArrayList<String> teamNames = new ArrayList<>();
-    private static final ArrayList<String> teamColors = new ArrayList<>();
-    private static final HashMap<String, Integer> teamMax = new HashMap<>();
-    private static final HashMap<String, Integer> teamC = new HashMap<>();
-    private static final HashMap<Player, String> teams = new HashMap<>();
+    private  String chosen;
+    private  String noExist;
+    private  String allTeams;
+    private  String materialName;
+    private  String blockName;
+    private  String title;
+    private  String full;
+    private  final ArrayList<String> teamNames = new ArrayList<>();
+    private  final ArrayList<String> teamColors = new ArrayList<>();
+    private  final HashMap<String, Integer> teamMax = new HashMap<>();
+    private  final HashMap<String, Integer> teamC = new HashMap<>();
+    private  final HashMap<Player, String> teams = new HashMap<>();
 
-    public static ArrayList<String> getTeamNames() {
+    public  ArrayList<String> getTeamNames() {
         return teamNames;
     }
 
-    public static ArrayList<String> getTeamColors() {
+    public  ArrayList<String> getTeamColors() {
         return teamColors;
     }
 
-    public static HashMap<String, Integer> getTeamMax() {
+    public  HashMap<String, Integer> getTeamMax() {
         return teamMax;
     }
 
-    public static void setChosen(String chosen) {
+    public  void setChosen(String chosen) {
         ATeam.chosen = chosen;
     }
 
-    public static String getNoExist() {
+    public  String getNoExist() {
         return noExist;
     }
 
-    public static void setNoExist(String noExist) {
+    public  void setNoExist(String noExist) {
         ATeam.noExist = noExist;
     }
 
-    public static String getAllTeams() {
+    public  String getAllTeams() {
         return allTeams;
     }
 
-    public static void setAllTeams(String allTeams) {
+    public  void setAllTeams(String allTeams) {
         ATeam.allTeams = allTeams;
     }
 
-    public static void setMaterialName(String materialName) {
+    public  void setMaterialName(String materialName) {
         ATeam.materialName = materialName;
     }
 
-    public static void setBlockName(String blockName) {
+    public  void setBlockName(String blockName) {
         ATeam.blockName = blockName;
     }
 
-    public static void setTitle(String title) {
+    public  void setTitle(String title) {
         ATeam.title = title;
     }
 
-    public static void setFull(String full) {
+    public  void setFull(String full) {
         ATeam.full = full;
     }
 
-    public static void removePlayerFromTeam(Player p) {
+    public  void removePlayerFromTeam(Player p) {
         if (teamC.containsKey(getPlayerTeam(p))) {
             teamC.put(getPlayerTeam(p), teamC.get(getPlayerTeam(p)) - 1);
         }
@@ -102,7 +102,7 @@ public class ATeam implements Listener {
         }
     }
 
-    public static void addPlayerToTeam(Player p, String teamToPut) {
+    public  void addPlayerToTeam(Player p, String teamToPut) {
         if (teamNames.contains(teamToPut)) {
             if (isFull(teamToPut)) {
                 full = full.replace("[team]", getTeamColor(teamToPut) + teamToPut);
@@ -141,7 +141,7 @@ public class ATeam implements Listener {
         }
     }
 
-    public static ChatColor getTeamColor(String team) {
+    public  ChatColor getTeamColor(String team) {
         try {
             return ChatColor.valueOf(TeamFile.getTeamColorAsString(team));
         } catch (IllegalArgumentException e) {
@@ -150,7 +150,7 @@ public class ATeam implements Listener {
         return ChatColor.RESET;
     }
 
-    public static Color getTeamItemColor(String team) {
+    public  Color getTeamItemColor(String team) {
         if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("orange")) {
             return Color.ORANGE;
         }
@@ -197,7 +197,7 @@ public class ATeam implements Listener {
         return Color.WHITE;
     }
 
-    private static int getTeamColorAsInteger(String team) {
+    private  int getTeamColorAsInteger(String team) {
         try {
             if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("orange")) {
                 return 1;
@@ -249,18 +249,18 @@ public class ATeam implements Listener {
         return 12;
     }
 
-    public static boolean hasTeam(Player p) {
+    public  boolean hasTeam(Player p) {
         return teams.containsKey(p);
     }
 
-    public static String getPlayerTeam(Player p) {
+    public  String getPlayerTeam(Player p) {
         if (teams.containsKey(p)) {
             return teams.get(p);
         }
         return "";
     }
 
-    private static boolean isFull(String team) {
+    private  boolean isFull(String team) {
         if (teamC.containsKey(team)) {
             if (Objects.equals(teamC.get(team), teamMax.get(team))) {
                 return true;
@@ -269,7 +269,7 @@ public class ATeam implements Listener {
         return false;
     }
 
-    public static boolean hasSameTeam(Player p, Player other) {
+    public  boolean hasSameTeam(Player p, Player other) {
         if (teams.containsKey(p) && teams.containsKey(other)) {
             if (getPlayerTeam(p).equals(getPlayerTeam(other))) {
                 return true;

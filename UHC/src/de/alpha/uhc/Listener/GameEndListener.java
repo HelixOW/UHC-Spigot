@@ -29,66 +29,66 @@ public class GameEndListener implements Listener {
 		this.pl = c;
 	}
 
-    private static String win;
-    private static String kick;
-    private static String quit;
-    private static String BungeeServer;
-    private static String cmdEnd;
-    private static String cmdDeath;
+    private  String win;
+    private  String kick;
+    private  String quit;
+    private  String BungeeServer;
+    private  String cmdEnd;
+    private  String cmdDeath;
 
-    private static boolean BungeeMode;
-    private static boolean cmdOnEnd;
-    private static boolean cmdOnDeath;
+    private  boolean BungeeMode;
+    private  boolean cmdOnEnd;
+    private  boolean cmdOnDeath;
 
-    public static void setCmdDeath(String cmdDeath) {
+    public  void setCmdDeath(String cmdDeath) {
         GameEndListener.cmdDeath = cmdDeath;
     }
 
-    private static boolean isCmdOnDeath() {
+    private  boolean isCmdOnDeath() {
         return cmdOnDeath;
     }
 
-    public static void setCmdOnDeath(boolean cmdOnDeath) {
+    public  void setCmdOnDeath(boolean cmdOnDeath) {
         GameEndListener.cmdOnDeath = cmdOnDeath;
     }
 
-    public static void setCmdOnEnd(boolean cmdOnEnd) {
+    public  void setCmdOnEnd(boolean cmdOnEnd) {
         GameEndListener.cmdOnEnd = cmdOnEnd;
     }
 
-    public static void setCmdEnd(String cmd) {
+    public  void setCmdEnd(String cmd) {
         GameEndListener.cmdEnd = cmd;
     }
 
-    public static void setWin(String win) {
+    public  void setWin(String win) {
         GameEndListener.win = win;
     }
 
-    public static String getKick() {
+    public  String getKick() {
         return kick;
     }
 
-    public static void setKick(String kick) {
+    public  void setKick(String kick) {
         GameEndListener.kick = kick;
     }
 
-    public static void setQuit(String quit) {
+    public  void setQuit(String quit) {
         GameEndListener.quit = quit;
     }
 
-    public static String getBungeeServer() {
+    public  String getBungeeServer() {
         return BungeeServer;
     }
 
-    public static void setBungeeServer(String bungeeServer) {
+    public  void setBungeeServer(String bungeeServer) {
         BungeeServer = bungeeServer;
     }
 
-    public static boolean isBungeeMode() {
+    public  boolean isBungeeMode() {
         return BungeeMode;
     }
 
-    public static void setBungeeMode(boolean bungeeMode) {
+    public  void setBungeeMode(boolean bungeeMode) {
         BungeeMode = bungeeMode;
     }
 

@@ -41,78 +41,78 @@ public class PlayerJoinListener implements Listener {
 		this.pl = c;
 	}
 
-    private static String join;
-    private static String full;
+    private  String join;
+    private  String full;
 
-    private static String title;
-    private static String subtitle;
+    private  String title;
+    private  String subtitle;
 
-    private static Material teamItem;
-    private static String teamName;
+    private  Material teamItem;
+    private  String teamName;
 
-    private static Material kitItem;
-    private static String kitName;
-    private static boolean kitMode;
+    private  Material kitItem;
+    private  String kitName;
+    private  boolean kitMode;
 
-    private static boolean leaveMode;
-    private static Material leaveItem;
-    private static String leaveName;
+    private  boolean leaveMode;
+    private  Material leaveItem;
+    private  String leaveName;
 
-    private static boolean startMode;
-    private static Material startItem;
-    private static String startName;
-    private static int mpc;
+    private  boolean startMode;
+    private  Material startItem;
+    private  String startName;
+    private  int mpc;
     private int apc;
 
-    public static void setJoin(String join) {
+    public  void setJoin(String join) {
         PlayerJoinListener.join = join;
     }
-    public static void setFull(String full) {
+    public  void setFull(String full) {
         PlayerJoinListener.full = full;
     }
-    public static void setTitle(String title) {
+    public  void setTitle(String title) {
         PlayerJoinListener.title = title;
     }
-    public static void setSubtitle(String subtitle) {
+    public  void setSubtitle(String subtitle) {
         PlayerJoinListener.subtitle = subtitle;
     }
-    public static void setTeamItem(Material teamItem) {
+    public  void setTeamItem(Material teamItem) {
         PlayerJoinListener.teamItem = teamItem;
     }
-    public static void setTeamName(String teamName) {
+    public  void setTeamName(String teamName) {
         PlayerJoinListener.teamName = teamName;
     }
-    public static Material getKitItem() {
+    public  Material getKitItem() {
         return kitItem;
     }
-    public static void setKitItem(Material kitItem) {
+    public  void setKitItem(Material kitItem) {
         PlayerJoinListener.kitItem = kitItem;
     }
-    public static void setKitName(String kitName) {
+    public  void setKitName(String kitName) {
         PlayerJoinListener.kitName = kitName;
     }
-    public static void setKitMode(boolean kitMode) {
+    public  void setKitMode(boolean kitMode) {
         PlayerJoinListener.kitMode = kitMode;
     }
-    public static void setLeaveMode(boolean leaveMode) {
+    public  void setLeaveMode(boolean leaveMode) {
         PlayerJoinListener.leaveMode = leaveMode;
     }
-    public static void setLeaveItem(Material leaveItem) {
+    public  void setLeaveItem(Material leaveItem) {
         PlayerJoinListener.leaveItem = leaveItem;
     }
-    public static void setLeaveName(String leaveName) {
+    public  void setLeaveName(String leaveName) {
         PlayerJoinListener.leaveName = leaveName;
     }
-    public static void setStartMode(boolean startMode) {
+    public  void setStartMode(boolean startMode) {
         PlayerJoinListener.startMode = startMode;
     }
-    public static void setStartItem(Material startItem) {
+    public  void setStartItem(Material startItem) {
         PlayerJoinListener.startItem = startItem;
     }
-    public static void setStartName(String startName) {
+    public  void setStartName(String startName) {
         PlayerJoinListener.startName = startName;
     }
-    public static void setMpc(int mpc) {
+    public  void setMpc(int mpc) {
         PlayerJoinListener.mpc = mpc;
     }
 

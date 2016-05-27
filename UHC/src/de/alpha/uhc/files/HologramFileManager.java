@@ -14,9 +14,9 @@ public class HologramFileManager {
 		this.pl = c;
 	}
 
-    private static final SimpleFile file = getHologramFile();
+    private  final SimpleFile file = getHologramFile();
 
-    public static SimpleFile getHologramFile() {
+    public  SimpleFile getHologramFile() {
         return new SimpleFile("plugins/UHC", "holograms.yml");
     }
 

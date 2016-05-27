@@ -35,28 +35,28 @@ public class LobbyListener implements Listener {
 		this.pl = c;
 	}
 
-    private static final HashMap<Player, String> kit = new HashMap<>();
-    private static String sel;
-    private static String bought;
-    private static String coinsneed;
+    private  final HashMap<Player, String> kit = new HashMap<>();
+    private  String sel;
+    private  String bought;
+    private  String coinsneed;
 
-    public static void setSel(String sel) {
+    public  void setSel(String sel) {
         LobbyListener.sel = sel;
     }
 
-    public static void setBought(String bought) {
+    public  void setBought(String bought) {
         LobbyListener.bought = bought;
     }
 
-    public static void setCoinsneed(String coinsneed) {
+    public  void setCoinsneed(String coinsneed) {
         LobbyListener.coinsneed = coinsneed;
     }
 
-    public static boolean hasSelKit(Player p) {
+    public  boolean hasSelKit(Player p) {
         return kit.containsKey(p);
     }
 
-    public static String getSelKit(Player p) {
+    public  String getSelKit(Player p) {
         if (kit.containsKey(p)) {
             return kit.get(p);
         }

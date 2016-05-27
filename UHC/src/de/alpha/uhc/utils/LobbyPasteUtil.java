@@ -45,7 +45,7 @@ public class LobbyPasteUtil {
     }
 
 
-    public static void removeLobby() {
+    public  void removeLobby() {
 
         if (SpawnFileManager.getLobby() == null) return;
 

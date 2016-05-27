@@ -63,7 +63,7 @@ public class ArmorStandUtil {
         ArmorStandFile.addArmorStand(l);
     }
     
-    public static void removeArmorStand(Location l) {
+    public  void removeArmorStand(Location l) {
     	for(Entity e : l.getWorld().getEntitiesByClass(ArmorStand.class)) {
     		if(e.getLocation().getBlockX() == l.getBlockX() && e.getLocation().getBlockY() == l.getBlockY() && e.getLocation().getBlockZ() == l.getBlockZ()) {
     			e.remove();

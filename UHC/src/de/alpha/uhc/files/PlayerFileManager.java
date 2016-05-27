@@ -14,10 +14,10 @@ public class PlayerFileManager {
 		this.pl = c;
 	}
 
-    public static Inventory i;
+    public  Inventory i;
     private final SimpleFile file = getPlayerFile();
 
-    public static SimpleFile getPlayerFile() {
+    public  SimpleFile getPlayerFile() {
         return new SimpleFile("plugins/UHC", "players.yml");
     }
 

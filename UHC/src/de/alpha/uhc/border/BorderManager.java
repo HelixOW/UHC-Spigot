@@ -12,25 +12,25 @@ public class BorderManager {
 	public BorderManager(Core c) {
 	}
 
-    private static boolean moveable;
-    private static String moved;
-    private static int moving;
-    private static int time;
+    private  boolean moveable;
+    private  String moved;
+    private  int moving;
+    private  int time;
     private int size = Border.getSize();
 
-    public static void setMoveable(boolean moveable) {
+    public  void setMoveable(boolean moveable) {
         BorderManager.moveable = moveable;
     }
 
-    public static void setMoved(String moved) {
+    public  void setMoved(String moved) {
         BorderManager.moved = moved;
     }
 
-    public static void setMoving(int moving) {
+    public  void setMoving(int moving) {
         BorderManager.moving = moving;
     }
 
-    public static void setTime(int time) {
+    public  void setTime(int time) {
         BorderManager.time = time;
     }
 

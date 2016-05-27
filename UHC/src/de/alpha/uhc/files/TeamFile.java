@@ -12,13 +12,13 @@ public class TeamFile {
 		this.pl = c;
 	}
 
-    private static final SimpleFile file = getTeamFile();
+    private  final SimpleFile file = getTeamFile();
 
-    public static SimpleFile getTeamFile() {
+    public  SimpleFile getTeamFile() {
         return new SimpleFile("plugins/UHC", "teams.yml");
     }
 
-    public static void addDefaultTeams() {
+    public  void addDefaultTeams() {
 
         if (!file.isConfigurationSection("Teams")) {
 
@@ -41,7 +41,7 @@ public class TeamFile {
         }
     }
 
-    public static String getTeamColorAsString(String team) {
+    public  String getTeamColorAsString(String team) {
 
         for (String names : file.getConfigurationSection("Teams").getKeys(false)) {
             if (team.equalsIgnoreCase(file.getString("Teams." + names + ".name"))) {
@@ -51,7 +51,7 @@ public class TeamFile {
         return "null";
     }
 
-    public static void loadTeams() {
+    public  void loadTeams() {
 
         for (String names : file.getConfigurationSection("Teams").getKeys(false)) {
             if (!(ATeam.getTeamNames().contains(file.getString("Teams." + names + ".name")))) {

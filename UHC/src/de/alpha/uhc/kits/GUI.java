@@ -15,27 +15,27 @@ public class GUI {
 		this.pl = c;
 	}
 
-    private static Inventory kits;
-    private static String title;
+    private  Inventory kits;
+    private  String title;
 
 
-    public static Inventory getKits() {
+    public  Inventory getKits() {
         return kits;
     }
 
-    public static void setKits(Inventory kits) {
+    public  void setKits(Inventory kits) {
         GUI.kits = kits;
     }
 
-    public static String getTitle() {
+    public  String getTitle() {
         return title;
     }
 
-    public static void setTitle(String title) {
+    public  void setTitle(String title) {
         GUI.title = title;
     }
 
-    public static void fill() {
+    public  void fill() {
         kits = Bukkit.createInventory(null, 54, title);
 
         for (String kitName : new KitFileManager().getAllKits()) {
@@ -56,7 +56,7 @@ public class GUI {
         }
     }
 
-    public static void open(Player p) {
+    public  void open(Player p) {
         p.openInventory(kits);
     }
 
