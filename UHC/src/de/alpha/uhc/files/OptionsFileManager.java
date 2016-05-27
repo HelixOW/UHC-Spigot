@@ -1,9 +1,14 @@
 package de.alpha.uhc.files;
 
+import org.bukkit.Material;
+
 import de.alpha.uhc.Core;
-import de.alpha.uhc.Listener.*;
+import de.alpha.uhc.Listener.GameEndListener;
+import de.alpha.uhc.Listener.InGameListener;
+import de.alpha.uhc.Listener.MotdListener;
+import de.alpha.uhc.Listener.PlayerJoinListener;
+import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.aclasses.ATeam;
-import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.border.Border;
 import de.alpha.uhc.border.BorderManager;
 import de.alpha.uhc.commands.UHCCommand;
@@ -11,7 +16,6 @@ import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Spectator;
 import de.popokaka.alphalibary.file.SimpleFile;
-import org.bukkit.Material;
 
 public class OptionsFileManager {
 	
@@ -97,7 +101,7 @@ public class OptionsFileManager {
 
     }
 
-    public static void loadOptions() {
+    public void loadOptions() {
         SimpleFile file = getConfigFile();
 
         ATeam.setMaterialName(file.getString("Team.Item"));
@@ -110,8 +114,8 @@ public class OptionsFileManager {
 
         MotdListener.setCustommotd(file.getBoolean("Status Motd"));
 
-        AWorld.setWr(file.getBoolean("Reset World"));
-        AWorld.setLobbyAsSchematic(file.getBoolean("Lobby.asSchematic"));
+        pl.getRegistery().getAWorld().setWr(file.getBoolean("Reset World"));
+        pl.getRegistery().getAWorld().setLobbyAsSchematic(file.getBoolean("Lobby.asSchematic"));
 
         Timer.setPrePvP(file.getInt("Countdown.no PvP period in minutes"));
         Timer.setTbpvp(file.getInt("Deathmatch.time before pvp in seconds"));

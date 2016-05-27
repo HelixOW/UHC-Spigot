@@ -17,6 +17,7 @@ import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.border.Border;
 import de.alpha.uhc.border.BorderManager;
+import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.ArmorStandFile;
 import de.alpha.uhc.files.CommandsFile;
 import de.alpha.uhc.files.DeathMessageFile;
@@ -85,6 +86,7 @@ public class Registery {
 	private Regions r;
 	private Spectator s;
 	private Stats ss;
+	private UHCCommand uc;
 	
 	public Registery(Core c) {
 		this.pl = c;
@@ -131,6 +133,7 @@ public class Registery {
 		r = new Regions(pl);
 		s = new Spectator(pl);
 		ss = new Stats(pl);
+		uc = new UHCCommand(pl);
 	}
 	
 	
@@ -294,5 +297,9 @@ public class Registery {
     
     public Stats getStats() {
     	return ss;
+    }
+    
+    public UHCCommand getUHCCommand() {
+    	return uc;
     }
 }

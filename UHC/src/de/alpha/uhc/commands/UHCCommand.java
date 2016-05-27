@@ -1,13 +1,5 @@
 package de.alpha.uhc.commands;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.aclasses.ATeam;
-import de.alpha.uhc.files.*;
-import de.alpha.uhc.kits.GUI;
-import de.alpha.uhc.kits.KitFileManager;
-import de.alpha.uhc.timer.Timer;
-import de.alpha.uhc.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
@@ -17,7 +9,33 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.aclasses.ATeam;
+import de.alpha.uhc.files.ArmorStandFile;
+import de.alpha.uhc.files.CommandsFile;
+import de.alpha.uhc.files.DeathMessageFile;
+import de.alpha.uhc.files.DropFile;
+import de.alpha.uhc.files.HologramFileManager;
+import de.alpha.uhc.files.MessageFileManager;
+import de.alpha.uhc.files.OptionsFileManager;
+import de.alpha.uhc.files.ScoreboardFile;
+import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.files.TeamFile;
+import de.alpha.uhc.kits.GUI;
+import de.alpha.uhc.timer.Timer;
+import de.alpha.uhc.utils.ArmorStandUtil;
+import de.alpha.uhc.utils.Cuboid;
+import de.alpha.uhc.utils.Regions;
+import de.alpha.uhc.utils.Stats;
+
 public class UHCCommand implements CommandExecutor {
+	
+	private Core pl;
+	
+	public UHCCommand(Core c) {
+		this.pl = c;
+	}
 
     private static String noplayer;
     private static String noperms;
@@ -225,7 +243,7 @@ public class UHCCommand implements CommandExecutor {
                 if (args.length == 2) {
                 	
                 	if (args[0].equalsIgnoreCase("createTeamJoiner")) {
-                        ArmorStandUtil.spawn(p.getLocation(), args[1]);
+                		pl.getRegistery().getArmorStandUtil().spawn(p.getLocation(), args[1]);
                         p.sendMessage(Core.getInstance().getPrefix() + "§a Setted Teamjoiner for team " + ATeam.getTeamColor(args[1]) + args[1]);
                         return true;
                     }
@@ -270,10 +288,10 @@ public class UHCCommand implements CommandExecutor {
                                     for (int i = 3; i < args.length; i++) {
                                         name = name + args[i] + " ";
                                     }
+                                    
+                                    pl.getRegistery().getHologramFile().addHoloram(name, p.getLocation(), Double.parseDouble(args[2]));
 
-                                    new HologramFileManager().addHoloram(name, p.getLocation(), Double.parseDouble(args[2]));
-
-                                    for (int i = 0; i < new HologramFileManager().holocount(); i++) {
+                                    for (int i = 0; i < pl.getRegistery().getHologramFile().holocount(); i++) {
                                         Core.getInstance().getRegistery().getHoloUtil().createHologram(all, i, Double.parseDouble(args[2]));
                                     }
                                 }
@@ -292,9 +310,9 @@ public class UHCCommand implements CommandExecutor {
                                 name = name + args[i] + " ";
                             }
 
-                            new HologramFileManager().addHoloram(name, p.getLocation(), 0);
+                            pl.getRegistery().getHologramFile().addHoloram(name, p.getLocation(), 0);
 
-                            for (int i = 0; i < new HologramFileManager().holocount(); i++) {
+                            for (int i = 0; i < pl.getRegistery().getHologramFile().holocount(); i++) {
                                 Core.getInstance().getRegistery().getHoloUtil().createHologram(all, i, 0);
                             }
                         }
@@ -309,7 +327,7 @@ public class UHCCommand implements CommandExecutor {
                             lore = lore + args[i] + " ";
                         }
 
-                        new KitFileManager().addKit(args[1], p.getInventory(), args[2], Integer.parseInt(args[3]), lore, Integer.parseInt(args[4]));
+                        pl.getRegistery().getKitFile().addKit(args[1], p.getInventory(), args[2], Integer.parseInt(args[3]), lore, Integer.parseInt(args[4]));
                         p.sendMessage(Core.getInstance().getPrefix() + "§7You have set the kit §a" + args[1] + " §7with GUI-block §a" + args[2] + "§7 on GUI-slot §a" + args[3] + "§7 with the price of §a" + args[4] + " §7and the lore §a" + lore);
                         GUI.fill();
                         return true;

@@ -245,7 +245,7 @@ public class Core extends JavaPlugin implements PluginMessageListener {
 
     private void registerCommands() {
     	
-        getCommand("uhc").setExecutor(new UHCCommand());
+        getCommand("uhc").setExecutor(new UHCCommand(getInstance()));
         new CoinsCommand(this, new String[]{});
         new StartCommand(this, new String[]{});
         new StatsCommand(this, new String[]{});

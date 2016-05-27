@@ -19,10 +19,7 @@ import de.alpha.uhc.utils.Stats;
 
 public class AScoreboard {
 	
-	private Core pl;
-	
 	public AScoreboard(Core c) {
-		this.pl = c;
 	}
 
     private static final HashMap<Player, Integer> sTeamA = new HashMap<>();

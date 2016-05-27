@@ -29,10 +29,7 @@ import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class ATeam implements Listener {
 	
-	private Core pl;
-	
 	public ATeam(Core c) {
-		this.pl = c;
 	}
 
     private static String chosen;

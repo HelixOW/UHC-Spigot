@@ -13,10 +13,7 @@ import java.util.Random;
 
 public class Border {
 	
-	private Core pl;
-	
 	public Border(Core c) {
-		this.pl = c;
 	}
 
     private static int size;

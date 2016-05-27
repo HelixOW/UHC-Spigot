@@ -9,10 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class BorderManager {
 	
-	private Core pl;
-	
 	public BorderManager(Core c) {
-		this.pl = c;
 	}
 
     private static boolean moveable;
