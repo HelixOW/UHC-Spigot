@@ -45,7 +45,7 @@ public class GUI {
                                 .setLore(new String[]{lore})
                                 .build());
             } catch (NullPointerException e) {
-                Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cYour Kits.yml is invalid. Block has to be a valid Material [google Bukkit materials]");
+                Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + "§cYour Kits.yml is invalid. Block has to be a valid Material [google Bukkit materials]");
             }
         }
     }

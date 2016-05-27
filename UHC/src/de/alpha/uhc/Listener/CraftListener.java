@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftListener implements Listener {
-
+	
     @EventHandler
     public void craftItem(CraftItemEvent e) {
         Material r = e.getRecipe().getResult().getType();

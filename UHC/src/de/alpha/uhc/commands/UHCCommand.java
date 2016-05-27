@@ -61,7 +61,7 @@ public class UHCCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, final String[] args) {
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(Core.getPrefix() + noplayer);
+            sender.sendMessage(Core.getInstance().getPrefix() + noplayer);
             return true;
         }
 
@@ -84,7 +84,7 @@ public class UHCCommand implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("team") || args[0].equalsIgnoreCase("teams")) {
 
                     String a = ATeam.getAllTeams().replace("[teams]", "" + ATeam.getTeamNames());
-                    p.sendMessage(Core.getPrefix() + a);
+                    p.sendMessage(Core.getInstance().getPrefix() + a);
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("stats")) {
@@ -98,7 +98,7 @@ public class UHCCommand implements CommandExecutor {
                         return true;
                     }
                 } else {
-                    p.sendMessage(Core.getPrefix() + noperms);
+                    p.sendMessage(Core.getInstance().getPrefix() + noperms);
                     return true;
                 }
             }
@@ -173,13 +173,13 @@ public class UHCCommand implements CommandExecutor {
                         
                         ArmorStandFile.getASFile().save();
 
-                        p.sendMessage(Core.getPrefix() + "§cAll configs has been reloaded");
+                        p.sendMessage(Core.getInstance().getPrefix() + "§cAll configs has been reloaded");
                         return true;
                     }
 
                     if(args[0].equalsIgnoreCase("removeTeamJoiner")) {
                     	ArmorStandUtil.removeArmorStand(p.getLocation());
-                    	p.sendMessage(Core.getPrefix() + "TeamJoiner successfully removed");
+                    	p.sendMessage(Core.getInstance().getPrefix() + "TeamJoiner successfully removed");
                     }
                     
                     if (args[0].equalsIgnoreCase("setSpawn")) {
@@ -188,7 +188,7 @@ public class UHCCommand implements CommandExecutor {
                                 p.getLocation().getY(),
                                 p.getLocation().getZ(),
                                 p.getWorld());
-                        p.sendMessage(Core.getPrefix() + spawnset);
+                        p.sendMessage(Core.getInstance().getPrefix() + spawnset);
                         return true;
 
                     }
@@ -201,7 +201,7 @@ public class UHCCommand implements CommandExecutor {
                                 p.getLocation().getYaw(),
                                 p.getLocation().getPitch(),
                                 p.getWorld());
-                        p.sendMessage(Core.getPrefix() + lobbyset);
+                        p.sendMessage(Core.getInstance().getPrefix() + lobbyset);
                         return true;
 
                     }
@@ -212,11 +212,11 @@ public class UHCCommand implements CommandExecutor {
                             Regions.addRegion((new Cuboid(Regions.getPos1(p), Regions.getPos2(p))));
                             SpawnFileManager.addRegion(Regions.getPos1(p), Regions.getPos2(p));
 
-                            p.sendMessage(Core.getPrefix() + "§7You have created a lobbyregion.");
+                            p.sendMessage(Core.getInstance().getPrefix() + "§7You have created a lobbyregion.");
                             return true;
 
                         } else {
-                            p.sendMessage(Core.getPrefix() + "§7You have to definde 2 lobbypoints first.");
+                            p.sendMessage(Core.getInstance().getPrefix() + "§7You have to definde 2 lobbypoints first.");
                             return true;
                         }
                     }
@@ -226,17 +226,17 @@ public class UHCCommand implements CommandExecutor {
                 	
                 	if (args[0].equalsIgnoreCase("createTeamJoiner")) {
                         ArmorStandUtil.spawn(p.getLocation(), args[1]);
-                        p.sendMessage(Core.getPrefix() + "§a Setted Teamjoiner for team " + ATeam.getTeamColor(args[1]) + args[1]);
+                        p.sendMessage(Core.getInstance().getPrefix() + "§a Setted Teamjoiner for team " + ATeam.getTeamColor(args[1]) + args[1]);
                         return true;
                     }
 
                     if (args[0].equalsIgnoreCase("tpToWorld")) {
                         if (Bukkit.getWorld(args[1]) != null) {
                             p.teleport(Bukkit.getWorld(args[1]).getSpawnLocation().add(0, 200, 0));
-                            p.sendMessage(Core.getPrefix() + "§7You have been teleported to the world: §a" + args[1]);
+                            p.sendMessage(Core.getInstance().getPrefix() + "§7You have been teleported to the world: §a" + args[1]);
                             return true;
                         } else {
-                            p.sendMessage(Core.getPrefix() + "§7The World §c" + args[1] + " §7do not exists");
+                            p.sendMessage(Core.getInstance().getPrefix() + "§7The World §c" + args[1] + " §7do not exists");
                             return true;
                         }
                     }
@@ -277,14 +277,14 @@ public class UHCCommand implements CommandExecutor {
                                         new HoloUtil().createHologram(all, i, Double.parseDouble(args[2]));
                                     }
                                 }
-                                p.sendMessage(Core.getPrefix() + "§7You have created a new Hologram");
+                                p.sendMessage(Core.getInstance().getPrefix() + "§7You have created a new Hologram");
                                 return true;
                             }
                         }
                     }
                     if (args[0].equalsIgnoreCase("createHologram")) {
                         if (args[1].equalsIgnoreCase("lowerby")) {
-                            p.sendMessage(Core.getPrefix() + "/uhc createHologram [lowerby deep] <name>");
+                            p.sendMessage(Core.getInstance().getPrefix() + "/uhc createHologram [lowerby deep] <name>");
                             return true;
                         }
                         for (Player all : Bukkit.getOnlinePlayers()) {
@@ -298,7 +298,7 @@ public class UHCCommand implements CommandExecutor {
                                 new HoloUtil().createHologram(all, i, 0);
                             }
                         }
-                        p.sendMessage(Core.getPrefix() + "§7You have created a new Hologram");
+                        p.sendMessage(Core.getInstance().getPrefix() + "§7You have created a new Hologram");
                         return true;
                     }
                 }
@@ -310,14 +310,14 @@ public class UHCCommand implements CommandExecutor {
                         }
 
                         new KitFileManager().addKit(args[1], p.getInventory(), args[2], Integer.parseInt(args[3]), lore, Integer.parseInt(args[4]));
-                        p.sendMessage(Core.getPrefix() + "§7You have set the kit §a" + args[1] + " §7with GUI-block §a" + args[2] + "§7 on GUI-slot §a" + args[3] + "§7 with the price of §a" + args[4] + " §7and the lore §a" + lore);
+                        p.sendMessage(Core.getInstance().getPrefix() + "§7You have set the kit §a" + args[1] + " §7with GUI-block §a" + args[2] + "§7 on GUI-slot §a" + args[3] + "§7 with the price of §a" + args[4] + " §7and the lore §a" + lore);
                         GUI.fill();
                         return true;
                     }
                 }
 
             } else {
-                p.sendMessage(Core.getPrefix() + noperms);
+                p.sendMessage(Core.getInstance().getPrefix() + noperms);
                 return true;
             }
         }

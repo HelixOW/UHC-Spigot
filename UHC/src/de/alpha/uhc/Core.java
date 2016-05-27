@@ -1,15 +1,47 @@
 package de.alpha.uhc;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.PluginMessageListener;
+
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import de.alpha.uhc.Listener.*;
+
+import de.alpha.uhc.Listener.ChatListener;
+import de.alpha.uhc.Listener.CraftListener;
+import de.alpha.uhc.Listener.CustomDeathListener;
+import de.alpha.uhc.Listener.DeathListener;
+import de.alpha.uhc.Listener.GameEndListener;
+import de.alpha.uhc.Listener.InGameListener;
+import de.alpha.uhc.Listener.LobbyListener;
+import de.alpha.uhc.Listener.MiningListener;
+import de.alpha.uhc.Listener.MotdListener;
+import de.alpha.uhc.Listener.PlayerJoinListener;
+import de.alpha.uhc.Listener.SoupListener;
 import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.commands.CoinsCommand;
 import de.alpha.uhc.commands.StartCommand;
 import de.alpha.uhc.commands.StatsCommand;
 import de.alpha.uhc.commands.UHCCommand;
-import de.alpha.uhc.files.*;
+import de.alpha.uhc.files.ArmorStandFile;
+import de.alpha.uhc.files.CommandsFile;
+import de.alpha.uhc.files.DeathMessageFile;
+import de.alpha.uhc.files.DropFile;
+import de.alpha.uhc.files.HologramFileManager;
+import de.alpha.uhc.files.MessageFileManager;
+import de.alpha.uhc.files.OptionsFileManager;
+import de.alpha.uhc.files.ScoreboardFile;
+import de.alpha.uhc.files.SpawnFileManager;
+import de.alpha.uhc.files.TeamFile;
 import de.alpha.uhc.kits.GUI;
 import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.MapReset;
@@ -18,96 +50,77 @@ import de.alpha.uhc.utils.Spectator;
 import de.popokaka.alphalibary.file.SimpleFile;
 import de.popokaka.alphalibary.mysql.MySQLAPI;
 import de.popokaka.alphalibary.mysql.MySQLManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.messaging.PluginMessageListener;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
 
 public class Core extends JavaPlugin implements PluginMessageListener {
 
     private static Core instance;
-    private static String prefix;
+    private String prefix;
 
-    private static boolean isMySQLActive;
+    private boolean isMySQLActive;
 
     //Getting & Setting of the variables
-    private static ArrayList<Player> ig;
-    private static ArrayList<Player> spectator;
+    private ArrayList<Player> ig;
+    private ArrayList<Player> spectator;
 
-    public static boolean isMySQLActive() {
-        return isMySQLActive;
+    public boolean isMySQLActive() {
+        return this.isMySQLActive;
     }
 
-    public static void setMySQLActive(boolean isMySQLActive) {
-        Core.isMySQLActive = isMySQLActive;
+    public void setMySQLActive(boolean isMySQLActive) {
+    	this.isMySQLActive = isMySQLActive;
     }
 
-    private static void setIg(ArrayList<Player> ig) {
-        Core.ig = ig;
+    private void setIg(ArrayList<Player> ig) {
+    	this.ig = ig;
     }
 
-    private static void setSpectator(ArrayList<Player> spectator) {
-        Core.spectator = spectator;
+    private void setSpectator(ArrayList<Player> spectator) {
+    	this.spectator = spectator;
     }
 
-    public static ArrayList<Player> getInGamePlayers() {
-        return ig;
+    public ArrayList<Player> getInGamePlayers() {
+        return this.ig;
     }
 
-    public static void addInGamePlayer(Player p) {
-        ig.add(p);
+    public void addInGamePlayer(Player p) {
+    	this.ig.add(p);
     }
 
     //Start of a new UHC Round
 
-    public static void removeInGamePlayer(Player p) {
-        ig.remove(p);
+    public void removeInGamePlayer(Player p) {
+    	this.ig.remove(p);
     }
 
-    public static ArrayList<Player> getSpecs() {
-        return spectator;
+    public ArrayList<Player> getSpecs() {
+        return this.spectator;
     }
 
-    public static void addSpec(Player p) {
-        spectator.add(p);
+    public void addSpec(Player p) {
+        this.spectator.add(p);
     }
 
-    public static void removeSpec(Player p) {
-        spectator.remove(p);
+    public void removeSpec(Player p) {
+    	this.spectator.remove(p);
     }
 
-    public static Core getInstance() {
-        return instance;
-    }
-
-    private static void setInstance(Core instance) {
+    private void setInstance(Core instance) {
         Core.instance = instance;
     }
 
-    public static String getPrefix() {
-        return prefix;
+    public String getPrefix() {
+        return this.prefix;
     }
 
-    public static void setPrefix(String prefix) {
-        Core.prefix = prefix;
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
     @Override
     public void onEnable() {
-        setInstance(this);
-        setIg(new ArrayList<Player>());
-        setSpectator(new ArrayList<Player>());
+        this.setInstance(this);
+        this.setIg(new ArrayList<Player>());
+        this.setSpectator(new ArrayList<Player>());
 
         //Make a sort of Whitelist
         GState.setGameState(GState.RESTART);
@@ -174,7 +187,7 @@ public class Core extends JavaPlugin implements PluginMessageListener {
                 all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
             } else {
                 //Kick the players from the server
-                all.kickPlayer(Core.getPrefix() + GameEndListener.getKick());
+                all.kickPlayer(this.getPrefix() + GameEndListener.getKick());
             }
         }
         //Create schematics folder
@@ -262,9 +275,9 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new LobbyListener(), this);
         Bukkit.getPluginManager().registerEvents(new CraftListener(), this);
-        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ChatListener(this), this);
         Bukkit.getPluginManager().registerEvents(new SoupListener(), this);
-        Bukkit.getPluginManager().registerEvents(new CustomDeathListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CustomDeathListener(this), this);
 
         Bukkit.getPluginManager().registerEvents(new MapReset(), this);
         Bukkit.getPluginManager().registerEvents(new Spectator(), this);
@@ -279,66 +292,14 @@ public class Core extends JavaPlugin implements PluginMessageListener {
     public void onPluginMessageReceived(String arg0, Player arg1, byte[] arg2) {
 
     }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("uhc")) {
-            ArrayList<String> l = new ArrayList<>();
-
-            if (args.length == 1) {
-                l.add("stats");
-                l.add("team");
-                if (sender.hasPermission("uhc.start")) {
-                    l.add("start");
-                }
-                if (sender.hasPermission("uhc.admin")) {
-                    l.add("restart");
-                    l.add("reload");
-                    l.add("setSpawn");
-                    l.add("setLobby");
-                    l.add("createLobby");
-                    l.add("createWorld");
-                    l.add("createHologram");
-                    l.add("addKit");
-                    l.add("tpToWorld");
-                    l.add("createTeamJoiner");
-                }
-            }
-            if (args.length == 2) {
-                l.add("team");
-                if (sender.hasPermission("uhc.admin")) {
-                    l.add("name");
-                    l.add("UltraHardCoreWorld");
-                    l.add("lowerby");
-                }
-            }
-            if (args.length == 3) {
-                if (sender.hasPermission("uhc.admin")) {
-                    l.add("deep");
-                    l.add("block");
-                }
-            }
-            if (args.length == 4) {
-                if (sender.hasPermission("uhc.admin")) {
-                    l.add("slot");
-                }
-            }
-            if (args.length == 5) {
-                if (sender.hasPermission("uhc.admin")) {
-                    l.add("price");
-                }
-            }
-            if (args.length == 6) {
-                if (sender.hasPermission("uhc.admin")) {
-                    l.add("lore");
-                }
-            }
-
-            Collections.sort(l);
-
-            return l;
-        }
-        return null;
+    
+    
+    //Instances
+    
+    public static Core getInstance() {
+        return instance;
     }
-
+    
+    
+    
 }

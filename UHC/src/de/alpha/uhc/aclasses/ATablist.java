@@ -43,11 +43,11 @@ public class ATablist {
     public static void sendStandingInGameTablist() {
         for (Player all : Bukkit.getOnlinePlayers()) {
             header = header.replace("[player]", all.getDisplayName());
-            header = header.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+            header = header.replace("[playercount]", Integer.toString(Core.getInstance().getInGamePlayers().size()));
             header = header.replace("[gamestatus]", GState.getGStateName());
 
             footer = footer.replace("[player]", all.getDisplayName());
-            footer = footer.replace("[playercount]", Integer.toString(Core.getInGamePlayers().size()));
+            footer = footer.replace("[playercount]", Integer.toString(Core.getInstance().getInGamePlayers().size()));
             footer = footer.replace("[gamestatus]", GState.getGStateName());
 
             SimpleTablist.setTablistHeaderFooter(all, null, null);

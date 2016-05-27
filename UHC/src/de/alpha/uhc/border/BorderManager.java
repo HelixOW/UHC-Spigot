@@ -50,7 +50,7 @@ public class BorderManager {
             @Override
             public void run() {
 
-                Bukkit.broadcastMessage(Core.getPrefix() + moved);
+                Bukkit.broadcastMessage(Core.getInstance().getPrefix() + moved);
                 size = Border.getSize() - moving;
                 Border.changesize(size);
                 for (Player all : Bukkit.getOnlinePlayers()) {

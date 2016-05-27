@@ -320,8 +320,8 @@ public class AScoreboard {
 
         if(!ShowIngameScoreboard) { return; }
 
-        String alive = ingamePlayersLiving.replace("[livingPlayerscount]", Integer.toString(Core.getInGamePlayers().size()));
-        String specs = ingameSpectators.replace("[spectatorcount]", Integer.toString(Core.getSpecs().size()));
+        String alive = ingamePlayersLiving.replace("[livingPlayerscount]", Integer.toString(Core.getInstance().getInGamePlayers().size()));
+        String specs = ingameSpectators.replace("[spectatorcount]", Integer.toString(Core.getInstance().getSpecs().size()));
         String kit = ingameKit.replace("[kit]", LobbyListener.getSelKit(p));
         String team = ingameTeam.replace("[team]", "" + ATeam.getTeamColor(ATeam.getPlayerTeam(p)) + ATeam.getPlayerTeam(p));
         String bordersize = ingameBorder.replace("[bordersize]", Integer.toString(Border.getSize()));
@@ -423,7 +423,7 @@ public class AScoreboard {
 
     public static void updateInGamePlayersLiving(Player p) {
         Objective b = p.getScoreboard().getObjective("UHCInGame");
-        String a = ingamePlayersLiving.replace("[livingPlayerscount]", Integer.toString(Core.getInGamePlayers().size()));
+        String a = ingamePlayersLiving.replace("[livingPlayerscount]", Integer.toString(Core.getInstance().getInGamePlayers().size()));
         p.getScoreboard().resetScores(cTeamA.get(p));
         cTeamA.put(p, a);
         b.getScore(a).setScore(sTeamA.get(p));
@@ -431,7 +431,7 @@ public class AScoreboard {
 
     public static void updateInGameSpectators(Player p) {
         Objective b = p.getScoreboard().getObjective("UHCInGame");
-        String a = ingameSpectators.replace("[spectatorcount]", Integer.toString(Core.getSpecs().size()));
+        String a = ingameSpectators.replace("[spectatorcount]", Integer.toString(Core.getInstance().getSpecs().size()));
         p.getScoreboard().resetScores(cTeamS.get(p));
         cTeamS.put(p, a);
         b.getScore(a).setScore(sTeamS.get(p));

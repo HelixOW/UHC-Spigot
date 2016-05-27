@@ -25,7 +25,7 @@ public class CoinsCommand extends SimpleCommand<Core> {
     public boolean execute(CommandSender cs, String label, String[] args) {
         if (cs instanceof Player) return false;
         if (args.length == 0) {
-            cs.sendMessage(Core.getPrefix() + "§7/coins <add/remove> <amount> <Player>");
+            cs.sendMessage(Core.getInstance().getPrefix() + "§7/coins <add/remove> <amount> <Player>");
         }
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("add")) {
@@ -33,7 +33,7 @@ public class CoinsCommand extends SimpleCommand<Core> {
                     Stats s = new Stats(Bukkit.getPlayer(args[2]));
                     s.addCoins(Integer.parseInt(args[1]));
                     String a = rew.replace("[Coins]", args[1]);
-                    Bukkit.getPlayer(args[2]).sendMessage(Core.getPrefix() + a);
+                    Bukkit.getPlayer(args[2]).sendMessage(Core.getInstance().getPrefix() + a);
                 }
             } else if (args[0].equalsIgnoreCase("remove")) {
                 if (Bukkit.getPlayer(args[2]) != null) {

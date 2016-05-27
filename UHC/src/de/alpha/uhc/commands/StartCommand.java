@@ -38,10 +38,10 @@ public class StartCommand extends SimpleCommand<Core> {
             if (cs.hasPermission("UHC.start")) {
                 Timer.changeTime();
             } else {
-                cs.sendMessage(Core.getPrefix() + UHCCommand.getNoperms());
+                cs.sendMessage(Core.getInstance().getPrefix() + UHCCommand.getNoperms());
             }
         } else {
-            cs.sendMessage(Core.getPrefix() + StartCommand.getErr());
+            cs.sendMessage(Core.getInstance().getPrefix() + StartCommand.getErr());
         }
         return false;
     }

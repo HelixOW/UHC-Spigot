@@ -83,7 +83,7 @@ public class AWorld {
                 if (SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn")) {
                     if (SpawnFileManager.getSpawnFile().isConfigurationSection("Lobby") && SpawnFileManager.getLobbyWorldName().equals(SpawnFileManager.getSpawnWorldName())) {
                         if (!(lobbyAsSchematic && Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
-                            p.sendMessage(Core.getPrefix() + "§cBecause your Lobby and Spawn is in one World. The World is not resetting itself.");
+                            p.sendMessage(Core.getInstance().getPrefix() + "§cBecause your Lobby and Spawn is in one World. The World is not resetting itself.");
                             GState.setGameState(GState.LOBBY);
                             return;
                         }
@@ -91,7 +91,7 @@ public class AWorld {
                 }
 
                 if (!(SpawnFileManager.getSpawnFile().isConfigurationSection("Spawn"))) {
-                    p.sendMessage(Core.getPrefix() + "§cYou haven't created a custom World spawnpoint.");
+                    p.sendMessage(Core.getInstance().getPrefix() + "§cYou haven't created a custom World spawnpoint.");
                     GState.setGameState(GState.LOBBY);
                     worldName = "UHC";
                 } else {
@@ -108,7 +108,7 @@ public class AWorld {
                                 @Override
                                 public void run() {
                                     worldName = "UHC";
-                                    Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + " §aUHC World loaded");
+                                    Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + " §aUHC World loaded");
 
                                     SpawnFileManager.SetSpawn(0, Bukkit.getWorld(worldName).getHighestBlockAt(0, 0).getLocation().getY(), 0, Bukkit.getWorld(worldName));
 
@@ -124,7 +124,7 @@ public class AWorld {
                                         LobbyPasteUtil.pasteLobby(loc);
                                         SpawnFileManager.SetLobby(0, 200, 0, 0, 0, w);
 
-                                        p.sendMessage(Core.getPrefix() + "§aLobbyschematic pasted sucessfully");
+                                        p.sendMessage(Core.getInstance().getPrefix() + "§aLobbyschematic pasted sucessfully");
                                     }
                                 }
                             }.runTaskLater(Core.getInstance(), 20);
@@ -141,7 +141,7 @@ public class AWorld {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + " §aUHC World reseted");
+                            Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + " §aUHC World reseted");
 
                             SpawnFileManager.SetSpawn(0, Bukkit.getWorld(worldName).getHighestBlockAt(0, 0).getLocation().getY(), 0, Bukkit.getWorld(worldName));
 
@@ -156,7 +156,7 @@ public class AWorld {
                                 LobbyPasteUtil.pasteLobby(loc);
                                 SpawnFileManager.SetLobby(0, 200, 0, 0, 0, w);
 
-                                p.sendMessage(Core.getPrefix() + "§aLobbyschematic pasted sucessfully");
+                                p.sendMessage(Core.getInstance().getPrefix() + "§aLobbyschematic pasted sucessfully");
                             }
                         }
                     }.runTaskLater(Core.getInstance(), 20);

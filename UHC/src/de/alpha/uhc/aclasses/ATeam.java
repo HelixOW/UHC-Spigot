@@ -103,7 +103,7 @@ public class ATeam implements Listener {
         if (teamNames.contains(teamToPut)) {
             if (isFull(teamToPut)) {
                 full = full.replace("[team]", getTeamColor(teamToPut) + teamToPut);
-                p.sendMessage(Core.getPrefix() + full);
+                p.sendMessage(Core.getInstance().getPrefix() + full);
                 full = MessageFileManager.getMSGFile().getColorString("Teams.full");
             } else {
                 if (teamC.containsKey(teamToPut)) {
@@ -115,7 +115,7 @@ public class ATeam implements Listener {
                     if (teamC.get(teamToPut) > teamMax.get(teamToPut)) {
                         teamC.put(teamToPut, teamC.get(teamToPut) - 1);
                         full = full.replace("[team]", getTeamColor(teamToPut) + teamToPut);
-                        p.sendMessage(Core.getPrefix() + full);
+                        p.sendMessage(Core.getInstance().getPrefix() + full);
                         full = MessageFileManager.getMSGFile().getColorString("Teams.full");
                         return;
                     }
@@ -123,8 +123,8 @@ public class ATeam implements Listener {
 
                 teams.put(p, teamToPut);
                 chosen = chosen.replace("[team]", getTeamColor(teamToPut) + teamToPut);
-                p.sendMessage(Core.getPrefix() + chosen);
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 10, 0); //TODO: multi
+                p.sendMessage(Core.getInstance().getPrefix() + chosen);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 10, 0);
                 p.spigot().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 0, 0, 5, 5, 5, 50, 100, 5);
                 p.setDisplayName(getTeamColor(teamToPut) + p.getName());
                 p.setPlayerListName(getTeamColor(teamToPut) + p.getName());
@@ -134,7 +134,7 @@ public class ATeam implements Listener {
         } else {
             String a = noExist.replace("[team]", teamToPut);
             String b = allTeams.replace("[teams]", "" + teamNames);
-            p.sendMessage(Core.getPrefix() + a + "\n       " + b);
+            p.sendMessage(Core.getInstance().getPrefix() + a + "\n       " + b);
         }
     }
 
@@ -142,7 +142,7 @@ public class ATeam implements Listener {
         try {
             return ChatColor.valueOf(TeamFile.getTeamColorAsString(team));
         } catch (IllegalArgumentException e) {
-            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cThe Team §4" + team + " §cis invalid.");
+            Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + "§cThe Team §4" + team + " §cis invalid.");
         }
         return ChatColor.RESET;
     }
@@ -240,7 +240,7 @@ public class ATeam implements Listener {
             }
 
         } catch (IllegalArgumentException e) {
-            Bukkit.getConsoleSender().sendMessage(Core.getPrefix() + "§cThe Team §4" + team + " §cis invalid.");
+            Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + "§cThe Team §4" + team + " §cis invalid.");
         }
 
         return 12;

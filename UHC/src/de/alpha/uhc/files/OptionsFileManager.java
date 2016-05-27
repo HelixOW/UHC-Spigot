@@ -136,8 +136,8 @@ public class OptionsFileManager {
 
         InGameListener.setSize(file.getInt("Border.size"));
 
-        Core.setPrefix(file.getColorString("Prefix"));
-        Core.setMySQLActive(file.getBoolean("MySQL"));
+        Core.getInstance().setPrefix(file.getColorString("Prefix"));
+        Core.getInstance().setMySQLActive(file.getBoolean("MySQL"));
 
         PlayerJoinListener.setMpc(file.getInt("Countdown.maximum_Player_Count"));
         PlayerJoinListener.setKitItem(Material.getMaterial(file.getString("Kit.item").toUpperCase()));
