@@ -1,47 +1,52 @@
 package de.alpha.uhc.commands;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.timer.Timer;
-import de.popokaka.alphalibary.command.SimpleCommand;
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 
-import java.util.List;
+import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
+import de.popokaka.alphalibary.command.SimpleCommand;
 
 public class StartCommand extends SimpleCommand<Core> {
 	
-    private static boolean use;
-    private static String err;
+    private boolean use;
+    private String err;
+    private Core pl;
+    private Registery r;
 
     public StartCommand(Core plugin, String[] aliases) {
         super(plugin, "start", "Short the timer to 10 seconds", aliases);
+        this.pl = plugin;
+        this.r = pl.getRegistery();
     }
 
-    private static boolean inUse() {
+    private boolean inUse() {
         return use;
     }
 
-    public static void setUse(boolean a) {
-        StartCommand.use = a;
+    public void setUse(boolean a) {
+        this.use = a;
     }
 
-    private static String getErr() {
+    private String getErr() {
         return err;
     }
 
-    public static void setErr(String a) {
-        StartCommand.err = a;
+    public void setErr(String a) {
+        this.err = a;
     }
 
     @Override
     public boolean execute(CommandSender cs, String label, String[] args) {
-        if (StartCommand.inUse()) {
+        if (this.inUse()) {
             if (cs.hasPermission("UHC.start")) {
-                Timer.changeTime();
+                r.getTimer().changeTime();
             } else {
-                cs.sendMessage(Core.getInstance().getPrefix() + UHCCommand.getNoperms());
+                cs.sendMessage(pl.getPrefix() + Core.getInstance().getRegistery().getUHCCommand().getNoperms());
             }
         } else {
-            cs.sendMessage(Core.getInstance().getPrefix() + StartCommand.getErr());
+            cs.sendMessage(pl.getPrefix() + this.getErr());
         }
         return false;
     }

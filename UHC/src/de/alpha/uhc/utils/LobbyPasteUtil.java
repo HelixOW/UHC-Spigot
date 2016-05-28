@@ -1,5 +1,14 @@
 package de.alpha.uhc.utils;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.Vector;
@@ -7,23 +16,18 @@ import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.schematic.SchematicFormat;
 import com.sk89q.worldedit.world.DataException;
-import de.alpha.uhc.Core;
-import de.alpha.uhc.files.SpawnFileManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 
-import java.io.File;
-import java.io.IOException;
+import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
 
 public class LobbyPasteUtil {
 	
 	private Core pl;
+	private Registery r;
 	
 	public LobbyPasteUtil(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     @SuppressWarnings("deprecation")
@@ -47,9 +51,9 @@ public class LobbyPasteUtil {
 
     public  void removeLobby() {
 
-        if (SpawnFileManager.getLobby() == null) return;
+        if (r.getSpawnFileManager().getLobby() == null) return;
 
-        World w = Bukkit.getWorld(SpawnFileManager.getLobbyWorldName());
+        World w = Bukkit.getWorld(r.getSpawnFileManager().getLobbyWorldName());
         Location l1 = new Location(w, -50, 155, -50);
         Location l2 = new Location(w, 50, 255, 50);
 

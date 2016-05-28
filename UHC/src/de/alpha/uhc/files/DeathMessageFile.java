@@ -1,15 +1,17 @@
 package de.alpha.uhc.files;
 
 import de.alpha.uhc.Core;
-import de.alpha.uhc.Listener.CustomDeathListener;
+import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class DeathMessageFile {
 	
 	private Core pl;
+	private Registery r;
 	
 	public DeathMessageFile(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  final SimpleFile file = getDeathFile();
@@ -40,24 +42,24 @@ public class DeathMessageFile {
     }
 
     public  void loadDeathMessages() {
-        CustomDeathListener.setBlockExplode(file.getColorString("Block Explosion"));
-        CustomDeathListener.setContact(file.getColorString("Contact with Cactus"));
-        CustomDeathListener.setDrown(file.getColorString("Drowning"));
-        CustomDeathListener.setPvp(file.getColorString("PvP"));
-        CustomDeathListener.setEntityExplode(file.getColorString("Entity Explosion"));
-        CustomDeathListener.setFall(file.getColorString("Fall"));
-        CustomDeathListener.setAnvil(file.getColorString("Falling Block"));
-        CustomDeathListener.setFire(file.getColorString("Fire"));
-        CustomDeathListener.setLava(file.getColorString("Lava"));
-        CustomDeathListener.setLight(file.getColorString("Lava"));
-        CustomDeathListener.setPotion(file.getColorString("Potion"));
-        CustomDeathListener.setArrow(file.getColorString("Arrow"));
-        CustomDeathListener.setHunger(file.getColorString("Starvation"));
-        CustomDeathListener.setBurried(file.getColorString("Suffocation"));
-        CustomDeathListener.setKill(file.getColorString("Suicide"));
-        CustomDeathListener.setThorns(file.getColorString("Thorns"));
-        CustomDeathListener.setVoidd(file.getColorString("Void"));
-        CustomDeathListener.setWither(file.getColorString("Wither"));
+        r.getCustomDeathListener().setBlockExplode(file.getColorString("Block Explosion"));
+        r.getCustomDeathListener().setContact(file.getColorString("Contact with Cactus"));
+        r.getCustomDeathListener().setDrown(file.getColorString("Drowning"));
+        r.getCustomDeathListener().setPvp(file.getColorString("PvP"));
+        r.getCustomDeathListener().setEntityExplode(file.getColorString("Entity Explosion"));
+        r.getCustomDeathListener().setFall(file.getColorString("Fall"));
+        r.getCustomDeathListener().setAnvil(file.getColorString("Falling Block"));
+        r.getCustomDeathListener().setFire(file.getColorString("Fire"));
+        r.getCustomDeathListener().setLava(file.getColorString("Lava"));
+        r.getCustomDeathListener().setLight(file.getColorString("Lava"));
+        r.getCustomDeathListener().setPotion(file.getColorString("Potion"));
+        r.getCustomDeathListener().setArrow(file.getColorString("Arrow"));
+        r.getCustomDeathListener().setHunger(file.getColorString("Starvation"));
+        r.getCustomDeathListener().setBurried(file.getColorString("Suffocation"));
+        r.getCustomDeathListener().setKill(file.getColorString("Suicide"));
+        r.getCustomDeathListener().setThorns(file.getColorString("Thorns"));
+        r.getCustomDeathListener().setVoidd(file.getColorString("Void"));
+        r.getCustomDeathListener().setWither(file.getColorString("Wither"));
     }
 
 }

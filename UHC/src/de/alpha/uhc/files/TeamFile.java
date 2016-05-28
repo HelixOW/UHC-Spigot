@@ -1,15 +1,17 @@
 package de.alpha.uhc.files;
 
 import de.alpha.uhc.Core;
-import de.alpha.uhc.aclasses.ATeam;
+import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class TeamFile {
 	
 	private Core pl;
+	private Registery r;
 	
 	public TeamFile(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  final SimpleFile file = getTeamFile();
@@ -54,14 +56,14 @@ public class TeamFile {
     public  void loadTeams() {
 
         for (String names : file.getConfigurationSection("Teams").getKeys(false)) {
-            if (!(ATeam.getTeamNames().contains(file.getString("Teams." + names + ".name")))) {
-                ATeam.getTeamNames().add(file.getString("Teams." + names + ".name"));
+            if (!(r.getATeam().getTeamNames().contains(file.getString("Teams." + names + ".name")))) {
+            	r.getATeam().getTeamNames().add(file.getString("Teams." + names + ".name"));
             }
-            if (!(ATeam.getTeamColors().contains(file.getString("Teams." + names + ".color")))) {
-                ATeam.getTeamColors().add(file.getString("Teams." + names + ".color"));
+            if (!(r.getATeam().getTeamColors().contains(file.getString("Teams." + names + ".color")))) {
+            	r.getATeam().getTeamColors().add(file.getString("Teams." + names + ".color"));
             }
-            if (!(ATeam.getTeamMax().containsKey("Teams." + names + ".maxSize"))) {
-                ATeam.getTeamMax().put(file.getString("Teams." + names + ".name"), file.getInt("Teams." + names + ".maxSize"));
+            if (!(r.getATeam().getTeamMax().containsKey("Teams." + names + ".maxSize"))) {
+            	r.getATeam().getTeamMax().put(file.getString("Teams." + names + ".name"), file.getInt("Teams." + names + ".maxSize"));
             }
         }
     }

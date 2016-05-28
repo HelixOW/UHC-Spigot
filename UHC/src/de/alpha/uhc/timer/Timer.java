@@ -1,39 +1,35 @@
 package de.alpha.uhc.timer;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.Listener.GameEndListener;
-import de.alpha.uhc.Listener.LobbyListener;
-import de.alpha.uhc.aclasses.AScoreboard;
-import de.alpha.uhc.aclasses.ATablist;
-import de.alpha.uhc.aclasses.AWorld;
-import de.alpha.uhc.border.Border;
-import de.alpha.uhc.border.BorderManager;
-import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.files.OptionsFileManager;
-import de.alpha.uhc.kits.KitFileManager;
-import de.alpha.uhc.utils.LobbyPasteUtil;
-import de.popokaka.alphalibary.item.ItemBuilder;
-import de.popokaka.alphalibary.nms.SimpleActionBar;
-import de.popokaka.alphalibary.nms.SimpleTitle;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import  de.alpha.uhc.files.SpawnFileManager.*;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.Registery;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.nms.SimpleActionBar;
+import de.popokaka.alphalibary.nms.SimpleTitle;
 
 
 public class Timer {
 	
 	private Core pl;
+	private Registery r;
 	
 	public Timer(Core c) {
-		pl = c;
+		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  String countmsg;
@@ -68,47 +64,47 @@ public class Timer {
     private  String BungeeServer;
 
     public  void setCountmsg(String countmsg) {
-        Timer.countmsg = countmsg;
+        this.countmsg = countmsg;
     }
 
     public  void setNep(String nep) {
-        Timer.nep = nep;
+    	this.nep = nep;
     }
 
     public  void setGracemsg(String gracemsg) {
-        Timer.gracemsg = gracemsg;
+    	this.gracemsg = gracemsg;
     }
 
     public  void setEnd(String end) {
-        Timer.end = end;
+    	this.end = end;
     }
 
     public  void setEndmsg(String endmsg) {
-        Timer.endmsg = endmsg;
+    	this.endmsg = endmsg;
     }
 
     public  void setDmmsg(String dmmsg) {
-        Timer.dmmsg = dmmsg;
+    	this.dmmsg = dmmsg;
     }
 
     public  void setPvpmsg(String pvpmsg) {
-        Timer.pvpmsg = pvpmsg;
+    	this.pvpmsg = pvpmsg;
     }
 
     public  void setPvpstart(String pvpstart) {
-        Timer.pvpstart = pvpstart;
+    	this.pvpstart = pvpstart;
     }
 
     public  void setComMode(boolean comMode) {
-        Timer.comMode = comMode;
+    	this.comMode = comMode;
     }
 
     public  void setComItem(Material comItem) {
-        Timer.comItem = comItem;
+    	this.comItem = comItem;
     }
 
     public  void setComName(String comName) {
-        Timer.comName = comName;
+    	this.comName = comName;
     }
 
     public  boolean isDm() {
@@ -116,7 +112,7 @@ public class Timer {
     }
 
     public  void setDm(boolean dm) {
-        Timer.dm = dm;
+    	this.dm = dm;
     }
 
     public  int getPc() {
@@ -124,7 +120,7 @@ public class Timer {
     }
 
     public  void setPc(int pc) {
-        Timer.pc = pc;
+    	this.pc = pc;
     }
 
     public  int getGracetime() {
@@ -132,7 +128,7 @@ public class Timer {
     }
 
     public  void setMax(int max) {
-        Timer.max = max;
+    	this.max = max;
     }
 
     public  int getuDM() {
@@ -140,11 +136,11 @@ public class Timer {
     }
 
     public  void setuDM(int uDM) {
-        Timer.uDM = uDM;
+    	this.uDM = uDM;
     }
 
     public  void setTbpvp(int tbpvp) {
-        Timer.tbpvp = tbpvp;
+    	this.tbpvp = tbpvp;
     }
 
     public  int getPrePvP() {
@@ -152,7 +148,7 @@ public class Timer {
     }
 
     public  void setPrePvP(int prePvP) {
-        Timer.prePvP = prePvP;
+    	this.prePvP = prePvP;
     }
 
     public  BukkitTask getA() {
@@ -160,7 +156,7 @@ public class Timer {
     }
 
     public  void setA(BukkitTask a) {
-        Timer.a = a;
+    	this.a = a;
     }
 
     public  BukkitTask getB() {
@@ -168,7 +164,7 @@ public class Timer {
     }
 
     public  void setB(BukkitTask b) {
-        Timer.b = b;
+    	this.b = b;
     }
 
     public  BukkitTask getC() {
@@ -176,7 +172,7 @@ public class Timer {
     }
 
     public  void setC(BukkitTask c) {
-        Timer.c = c;
+    	this.c = c;
     }
 
     public  BukkitTask getE() {
@@ -184,7 +180,7 @@ public class Timer {
     }
 
     public  void setE(BukkitTask e) {
-        Timer.e = e;
+    	this.e = e;
     }
 
     public  BukkitTask getDd() {
@@ -203,7 +199,7 @@ public class Timer {
 
         if (GState.isState(GState.LOBBY)) {
 
-            createSpawnWorld();
+            r.getSpawnFileManager().createSpawnWorld();
 
             a = new BukkitRunnable() {
 
@@ -229,13 +225,13 @@ public class Timer {
                                             countmsg = countmsg.replace("[time]", Integer.toString(high));
                                             all.sendMessage(pl.getPrefix() + countmsg);
                                             SimpleTitle.sendTitle(all, " ", countmsg, 1, 2, 1);
-                                            all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);//TODO: multi
+                                            all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
                                             Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 
                                                 @Override
                                                 public void run() {
 
-                                                    countmsg = MessageFileManager.getMSGFile().getColorString("Announcements.Countdown");
+                                                    countmsg = r.getMessageFile().getMSGFile().getColorString("Announcements.Countdown");
 
                                                 }
                                             }, 2);
@@ -246,13 +242,13 @@ public class Timer {
                                             countmsg = countmsg.replace("[time]", Integer.toString(high));
                                             all.sendMessage(pl.getPrefix() + countmsg);
                                             SimpleActionBar.send(all, countmsg);
-                                            all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);//TODO: multi
+                                            all.playSound(all.getLocation(), Sound.BLOCK_NOTE_BASS, 1F, 0F);
                                             Bukkit.getScheduler().scheduleSyncDelayedTask(Core.getInstance(), new Runnable() {
 
                                                 @Override
                                                 public void run() {
 
-                                                    countmsg = MessageFileManager.getMSGFile().getColorString("Announcements.Countdown");
+                                                    countmsg = r.getMessageFile().getMSGFile().getColorString("Announcements.Countdown");
                                                 }
                                             }, 2);
                                         }
@@ -261,47 +257,47 @@ public class Timer {
 
                                             a.cancel();
 
-                                            if (AWorld.isLobbyAsSchematic()) {
-                                                LobbyPasteUtil.removeLobby();
+                                            if (r.getAWorld().isLobbyAsSchematic()) {
+                                                r.getLobbyPasteUtil().removeLobby();
                                             }
 
                                             for (Player ig : pl.getInGamePlayers()) {
 
-                                                if (!AWorld.isLobbyAsSchematic()) {
+                                                if (!r.getAWorld().isLobbyAsSchematic()) {
 
                                                     try {
 
-                                                        if (getSpawn() == null) {
+                                                        if (r.getSpawnFileManager().getSpawn() == null) {
                                                             ig.teleport(ig.getWorld().getHighestBlockAt(ig.getWorld().getSpawnLocation()).getLocation());
-                                                            Border.setDistanceLoc(ig.getWorld().getSpawnLocation());
+                                                            r.getBorder().setDistanceLoc(ig.getWorld().getSpawnLocation());
                                                         } else {
-                                                            Location l = getSpawn();
+                                                            Location l = r.getSpawnFileManager().getSpawn();
 
-                                                            Location r = l.getWorld().getHighestBlockAt(getRandomLocation(l, l.getBlockX() - max, l.getBlockX() + max, l.getBlockZ() - max, l.getBlockZ() + max)).getLocation();
+                                                            Location rr = l.getWorld().getHighestBlockAt(r.getSpawnFileManager().getRandomLocation(l, l.getBlockX() - max, l.getBlockX() + max, l.getBlockZ() - max, l.getBlockZ() + max)).getLocation();
 
-                                                            ig.teleport(r);
-                                                            Border.setDistanceLoc(getSpawn());
+                                                            ig.teleport(rr);
+                                                            r.getBorder().setDistanceLoc(r.getSpawnFileManager().getSpawn());
                                                         }
                                                     } catch (Exception e) {
                                                         ig.teleport(ig.getWorld().getHighestBlockAt(ig.getWorld().getSpawnLocation()).getLocation());
-                                                        Border.setDistanceLoc(ig.getWorld().getSpawnLocation());
+                                                        r.getBorder().setDistanceLoc(ig.getWorld().getSpawnLocation());
                                                     }
 
                                                 } else {
-                                                    Border.setDistanceLoc(getLobby().getWorld().getHighestBlockAt(getLobby()).getLocation());
+                                                    r.getBorder().setDistanceLoc(r.getSpawnFileManager().getLobby().getWorld().getHighestBlockAt(r.getSpawnFileManager().getLobby()).getLocation());
                                                 }
                                                 b.cancel();
 
                                                 all.playSound(all.getLocation(), Sound.BLOCK_NOTE_HARP, 1F, 0F);
                                                 all.getWorld().setGameRuleValue("naturalRegeneration", "false");
                                                 startGracePeriod();
-                                                Border.border();
+                                                r.getBorder().border();
                                                 GState.setGameState(GState.GRACE);
                                                 all.setGameMode(GameMode.SURVIVAL);
-                                                ATablist.sendStandingInGameTablist();
+                                                r.getATablist().sendStandingInGameTablist();
 
-                                                if (LobbyListener.hasSelKit(ig)) {
-                                                    for (ItemStack is : new KitFileManager().getContents(LobbyListener.getSelKit(ig)).getContents()) {
+                                                if (r.getLobbyListener().hasSelKit(ig)) {
+                                                    for (ItemStack is : r.getKitFile().getContents(r.getLobbyListener().getSelKit(ig)).getContents()) {
                                                         if (is != null) {
                                                             if (!(ig.getInventory().contains(is))) {
                                                                 ig.getInventory().addItem(is);
@@ -342,7 +338,7 @@ public class Timer {
                 }
             }
             all.getInventory().clear();
-            AScoreboard.sendAntiFlickerInGameBoard(all);
+            r.getAScoreboard().sendAntiFlickerInGameBoard(all);
         }
 
         c = new BukkitRunnable() {
@@ -359,12 +355,12 @@ public class Timer {
                         @Override
                         public void run() {
                             for (Player all : Bukkit.getOnlinePlayers()) {
-                                AScoreboard.updateInGamePvPTime(all);
+                            	r.getAScoreboard().updateInGamePvPTime(all);
                             }
                             if (gracetime % 10 == 0 && gracetime > 0) {
                                 gracemsg = gracemsg.replace("[time]", Integer.toString(gracetime));
                                 Bukkit.broadcastMessage(pl.getPrefix() + gracemsg);
-                                gracemsg = MessageFileManager.getMSGFile().getColorString("Announcements.Peaceperiod.timer");
+                                gracemsg = r.getMessageFile().getMSGFile().getColorString("Announcements.Peaceperiod.timer");
                                 return;
                             }
 
@@ -373,13 +369,13 @@ public class Timer {
                                 e.cancel();
 
                                 Bukkit.broadcastMessage(pl.getPrefix() + end);
-                                new BorderManager().set();
+                                r.getBorderManager().set();
                                 for (final Player all : pl.getInGamePlayers()) {
                                     all.showPlayer(all);
                                     giveCompass(all);
                                     GState.setGameState(GState.PREGAME);
                                     startSilentGStateWatcher();
-                                    ATablist.sendStandingInGameTablist();
+                                    r.getATablist().sendStandingInGameTablist();
                                     all.damage(1);
                                     new BukkitRunnable() {
                                         public void run() {
@@ -402,7 +398,7 @@ public class Timer {
             @Override
             public void run() {
                 for (Player all : Bukkit.getOnlinePlayers()) {
-                    AScoreboard.updateInGamePvPTime(all);
+                    r.getAScoreboard().updateInGamePvPTime(all);
                 }
                 if (prePvP > 0) {
                     for (Player all : Bukkit.getOnlinePlayers()) {
@@ -429,7 +425,7 @@ public class Timer {
             @Override
             public void run() {
                 for (Player all : Bukkit.getOnlinePlayers()) {
-                    AScoreboard.updateInGamePvPTime(all);
+                    r.getAScoreboard().updateInGamePvPTime(all);
                 }
                 if (uDM % 5 == 0 && uDM > 10) {
                     for (Player all : Bukkit.getOnlinePlayers()) {
@@ -455,27 +451,27 @@ public class Timer {
 
     public void startDeathMatch() {
         for (Player ingame : pl.getInGamePlayers()) {
-            if (getSpawn() == null) {
+            if (r.getSpawnFileManager().getSpawn() == null) {
                 Location l = ingame.getWorld().getSpawnLocation();
 
-                Location r = getRandomLocation(l, l.getBlockX() - 20, l.getBlockX() + 20, l.getBlockZ() - 20, l.getBlockZ() + 20);
+                Location rr = r.getSpawnFileManager().getRandomLocation(l, l.getBlockX() - 20, l.getBlockX() + 20, l.getBlockZ() - 20, l.getBlockZ() + 20);
 
-                Location lr = r != null ? r.getWorld().getHighestBlockAt(r.getBlockX(), r.getBlockZ()).getLocation() : null;
+                Location lr = rr != null ? rr.getWorld().getHighestBlockAt(rr.getBlockX(), rr.getBlockZ()).getLocation() : null;
                 ingame.teleport(lr);
-                Border.setSize(50);
+                r.getBorder().setSize(50);
             } else {
-                Location l = getSpawn();
+                Location l = r.getSpawnFileManager().getSpawn();
 
-                Location r = getRandomLocation(l, l.getBlockX() - 20, l.getBlockX() + 20, l.getBlockZ() - 20, l.getBlockZ() + 20);
+                Location rr = r.getSpawnFileManager().getRandomLocation(l, l.getBlockX() - 20, l.getBlockX() + 20, l.getBlockZ() - 20, l.getBlockZ() + 20);
 
-                Location lr = r != null ? r.getWorld().getHighestBlockAt(r.getBlockX(), r.getBlockZ()).getLocation() : null;
+                Location lr = rr != null ? rr.getWorld().getHighestBlockAt(rr.getBlockX(), rr.getBlockZ()).getLocation() : null;
 
                 ingame.teleport(lr);
-                Border.setSize(50);
+                r.getBorder().setSize(50);
             }
         }
         for (Player all : Bukkit.getOnlinePlayers()) {
-            AScoreboard.setInGamePvPTime(all);
+            r.getAScoreboard().setInGamePvPTime(all);
         }
         GState.setGameState(GState.PREDEATHMATCH);
         ee = new BukkitRunnable() {
@@ -502,7 +498,7 @@ public class Timer {
                         if (tbpvp == 0) {
                             for (Player all : Bukkit.getOnlinePlayers()) {
                                 GState.setGameState(GState.DEATHMATCH);
-                                all.playSound(all.getLocation(), Sound.BLOCK_NOTE_PLING, 10F, 0);//TODO: multi
+                                all.playSound(all.getLocation(), Sound.BLOCK_NOTE_PLING, 10F, 0);
                             }
                             ee.cancel();
                         }
@@ -518,7 +514,7 @@ public class Timer {
         endTime = 10;
         GState.setGameState(GState.RESTART);
 
-        ATablist.sendStandingInGameTablist();
+        r.getATablist().sendStandingInGameTablist();
 
         f = new BukkitRunnable() {
 
@@ -531,7 +527,7 @@ public class Timer {
                     Bukkit.broadcastMessage(pl.getPrefix() + endmsg);
                     endTime = endTime - 1;
 
-                    endmsg = MessageFileManager.getMSGFile().getColorString("Announcements.End");
+                    endmsg = r.getMessageFile().getMSGFile().getColorString("Announcements.End");
                 } else if (endTime == 0) {
 
                     for (Player all : Bukkit.getOnlinePlayers()) {
@@ -543,7 +539,7 @@ public class Timer {
 
                             all.sendPluginMessage(pl, "BungeeCord", out.toByteArray());
                         } else {
-                            all.kickPlayer(pl.getPrefix() + GameEndListener.getKick());
+                            all.kickPlayer(pl.getPrefix() + r.getGameEndListener().getKick());
                         }
                     }
                     f.cancel();
@@ -559,15 +555,15 @@ public class Timer {
     }
 
     private  void resetTime() {
-        high = OptionsFileManager.getConfigFile().getInt("Countdown.lobby");
+        high = r.getOptionsFile().getConfigFile().getInt("Countdown.lobby");
         for (Player all : Bukkit.getOnlinePlayers()) {
             all.setLevel(high);
         }
     }
 
     public  void setCountdownTime() {
-        high = OptionsFileManager.getConfigFile().getInt("Countdown.lobby");
-        gracetime = OptionsFileManager.getConfigFile().getInt("Countdown.graceperiod");
+        high = r.getOptionsFile().getConfigFile().getInt("Countdown.lobby");
+        gracetime = r.getOptionsFile().getConfigFile().getInt("Countdown.graceperiod");
     }
 
     private  void giveCompass(Player p) {

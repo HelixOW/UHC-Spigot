@@ -1,23 +1,29 @@
 package de.alpha.uhc.utils;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.files.HologramFileManager;
-import de.popokaka.alphalibary.reflection.ReflectionUtil;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
+import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
+import de.popokaka.alphalibary.reflection.ReflectionUtil;
+
 public class HoloUtil {
+	
+	private Core pl;
+	private Registery r;
 
 	public HoloUtil(Core c) {
+		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 	
     public void createHologram(Player p, int id, double remove) {
-        Location loc = new HologramFileManager().getLocation(id).subtract(0, remove, 0);
+        Location loc = r.getHologramFile().getLocation(id).subtract(0, remove, 0);
 
-        String name = new HologramFileManager().getName(id);
+        String name = r.getHologramFile().getName(id);
 
         Class<?> cWorld = ReflectionUtil.getNmsClass("World");
         Class<?>[] param = {double.class, double.class, double.class, float.class, float.class};
@@ -63,12 +69,11 @@ public class HoloUtil {
     }
 
     public void showHologram(Player p) {
-        for (int id = 0; id < new HologramFileManager().holocount(); id++) {
+        for (int id = 0; id < r.getHologramFile().holocount(); id++) {
 
-            Location loc = new HologramFileManager().getLocation(id);
+            Location loc = r.getHologramFile().getLocation(id);
 
-
-            String name = new HologramFileManager().getName(id);
+            String name = r.getHologramFile().getName(id);
 
             Class<?> cWorld = ReflectionUtil.getNmsClass("World");
             Class<?>[] param = {double.class, double.class, double.class, float.class, float.class};

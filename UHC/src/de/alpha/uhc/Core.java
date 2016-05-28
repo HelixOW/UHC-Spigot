@@ -9,31 +9,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-import de.alpha.uhc.Listener.GameEndListener;
-import de.alpha.uhc.commands.CoinsCommand;
-import de.alpha.uhc.commands.StartCommand;
-import de.alpha.uhc.commands.StatsCommand;
-import de.alpha.uhc.commands.UHCCommand;
-import de.alpha.uhc.files.ArmorStandFile;
-import de.alpha.uhc.files.CommandsFile;
-import de.alpha.uhc.files.DeathMessageFile;
-import de.alpha.uhc.files.DropFile;
-import de.alpha.uhc.files.HologramFileManager;
-import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.files.OptionsFileManager;
-import de.alpha.uhc.files.ScoreboardFile;
-import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.files.TeamFile;
-import de.alpha.uhc.kits.GUI;
-import de.alpha.uhc.timer.Timer;
-import de.alpha.uhc.utils.MapReset;
 import de.popokaka.alphalibary.file.SimpleFile;
 import de.popokaka.alphalibary.mysql.MySQLAPI;
 import de.popokaka.alphalibary.mysql.MySQLManager;
@@ -121,40 +102,36 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         GState.setGameState(GState.RESTART);
 
         //Load Variables out of Configs
-        OptionsFileManager.addOptions();
-        OptionsFileManager.loadOptions();
+        getRegistery().getOptionsFile().addOptions();
+        getRegistery().getOptionsFile().loadOptions();
 
-        MessageFileManager.addMessages();
-        MessageFileManager.loadMessages();
+        getRegistery().getMessageFile().addMessages();
+        getRegistery().getMessageFile().loadMessages();
 
-        SpawnFileManager.getSpawnFile();
-        SpawnFileManager.registerRegions();
+        getRegistery().getSpawnFileManager().getSpawnFile();
+        getRegistery().getSpawnFileManager().registerRegions();
 
-        TeamFile.addDefaultTeams();
-        TeamFile.loadTeams();
+        getRegistery().getTeamFile().addDefaultTeams();
+        getRegistery().getTeamFile().loadTeams();
 
-        HologramFileManager.getHologramFile().save();
+        getRegistery().getHologramFile().getHologramFile().save();
 
-        ScoreboardFile.addScores();
-        ScoreboardFile.loadScores();
+        getRegistery().getScoreboardFile().addScores();
+        getRegistery().getScoreboardFile().loadScores();
 
-        DropFile.addDrops();
-        DropFile.loadDrops();
+        getRegistery().getDropFile().addDrops();
+        getRegistery().getDropFile().loadDrops();
 
-        DeathMessageFile.addDeathMessages();
-        DeathMessageFile.loadDeathMessages();
+        getRegistery().getDeathMessagesFile().addDeathMessages();
+        getRegistery().getDeathMessagesFile().loadDeathMessages();
 
-        CommandsFile.addCommands();
-        CommandsFile.loadCommands();
+        getRegistery().getCommandsFile().addCommands();
+        getRegistery().getCommandsFile().loadCommands();
         
-        ArmorStandFile.getASFile().save();
-
-        //Register Commands & Events
-        registerCommands();
-        registerEvents();
+        getRegistery().getArmorstandFile().getASFile().save();
 
         //Fill the Kits Inventory
-        GUI.fill();
+        getRegistery().getGui().fill();
 
         //Checks if MySQL is active
         if (isMySQLActive()) {
@@ -172,24 +149,24 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         for (Player all : Bukkit.getOnlinePlayers()) {
-            if (GameEndListener.isBungeeMode()) {
+            if (getRegistery().getGameEndListener().isBungeeMode()) {
                 //Send all Players to Lobby Server
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
                 out.writeUTF("Connect");
-                out.writeUTF(GameEndListener.getBungeeServer());
+                out.writeUTF(getRegistery().getGameEndListener().getBungeeServer());
 
                 all.sendPluginMessage(Core.getInstance(), "BungeeCord", out.toByteArray());
             } else {
                 //Kick the players from the server
-                all.kickPlayer(this.getPrefix() + GameEndListener.getKick());
+                all.kickPlayer(this.getPrefix() + getRegistery().getGameEndListener().getKick());
             }
         }
         //Create schematics folder
         new SimpleFile("plugins/UHC/schematics", "NoUse.yml").save();
 
         //Set the Countdowntime to the value of the config
-        Timer.setCountdownTime();
+        getRegistery().getTimer().setCountdownTime();
 
         //Registers the custom crafting recipes
         registerCrafting();
@@ -197,7 +174,7 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         //Recreate the World
         getRegistery().getAWorld().performReset();
 
-        if (Timer.getPc() <= 1) {
+        if (getRegistery().getTimer().getPc() <= 1) {
             //Print error message to inform serverowner
             Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC won't end until you reload or leave the Server. If it's only 1 Player.");
         }
@@ -221,7 +198,7 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         }
 
         //Reset placed Blocks
-        MapReset.restore();
+        getRegistery().getMapReset().restore();
         //Successfull disabled message
         Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC by AlphaHelix is now disabled!");
     }
@@ -243,14 +220,6 @@ public class Core extends JavaPlugin implements PluginMessageListener {
 
     }
 
-    private void registerCommands() {
-    	
-        getCommand("uhc").setExecutor(new UHCCommand(getInstance()));
-        new CoinsCommand(this, new String[]{});
-        new StartCommand(this, new String[]{});
-        new StatsCommand(this, new String[]{});
-    }
-
     private void createTables() {
 
         MySQLManager.exCreateTableQry(
@@ -260,26 +229,6 @@ public class Core extends JavaPlugin implements PluginMessageListener {
                 MySQLManager.createColumn("Deaths", 500),
                 MySQLManager.createColumn("Coins", 500),
                 MySQLManager.createColumn("Kits", 500));
-    }
-
-    private void registerEvents() {
-    	PluginManager p = Bukkit.getPluginManager();
-    	
-    	p.registerEvents(reg.getPlayerJoinListener(), getInstance());
-    	p.registerEvents(reg.getInGameListener(), getInstance());
-    	p.registerEvents(reg.getMiningListener(), getInstance());
-    	p.registerEvents(reg.getDeathListener(), getInstance());
-    	p.registerEvents(reg.getLobbyListener(), getInstance());
-    	p.registerEvents(reg.getCraftListener(), getInstance());
-    	p.registerEvents(reg.getChatListener(), getInstance());
-    	p.registerEvents(reg.getSoupListener(), getInstance());
-    	p.registerEvents(reg.getCustomDeathListener(), getInstance());
-    	p.registerEvents(reg.getMapReset(), getInstance());
-    	p.registerEvents(reg.getSpectator(), getInstance());
-    	p.registerEvents(reg.getRegions(), getInstance());
-    	p.registerEvents(reg.getATeam(), getInstance());
-    	p.registerEvents(reg.getMotdListener(), getInstance());
-    	p.registerEvents(reg.getGameEndListener(), getInstance());
     }
 
     @Override

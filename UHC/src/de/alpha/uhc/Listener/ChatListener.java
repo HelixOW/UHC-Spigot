@@ -1,8 +1,5 @@
 package de.alpha.uhc.Listener;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.aclasses.ATeam;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,12 +7,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.Registery;
+
 public class ChatListener implements Listener {
 	
 	private Core pl;
+	private Registery r;
 	
 	public ChatListener(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     @EventHandler
@@ -45,8 +48,8 @@ public class ChatListener implements Listener {
     public void onTeamChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         for (Player all : pl.getInGamePlayers()) {
-            if (e.getMessage().startsWith("#") && ATeam.hasSameTeam(e.getPlayer(), all)) {
-                all.sendMessage(pl.getPrefix() + "§7[" + ATeam.getTeamColor(ATeam.getPlayerTeam(e.getPlayer())) + ATeam.getPlayerTeam(e.getPlayer()) + "§7] " + e.getPlayer().getDisplayName() + " §7: " + e.getMessage().replaceFirst("#", ""));
+            if (e.getMessage().startsWith("#") && r.getATeam().hasSameTeam(e.getPlayer(), all)) {
+                all.sendMessage(pl.getPrefix() + "§7[" + r.getATeam().getTeamColor(r.getATeam().getPlayerTeam(e.getPlayer())) + r.getATeam().getPlayerTeam(e.getPlayer()) + "§7] " + e.getPlayer().getDisplayName() + " §7: " + e.getMessage().replaceFirst("#", ""));
             }
         }
     }

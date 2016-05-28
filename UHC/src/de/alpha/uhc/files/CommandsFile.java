@@ -1,16 +1,18 @@
 package de.alpha.uhc.files;
 
 import de.alpha.uhc.Core;
-import de.alpha.uhc.commands.StartCommand;
-import de.alpha.uhc.commands.StatsCommand;
+import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class CommandsFile {
 	
+	
 	private Core pl;
+	private Registery r;
 	
 	public CommandsFile(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  final SimpleFile file = getCmdFile();
@@ -28,12 +30,12 @@ public class CommandsFile {
     }
 
     public  void loadCommands() {
-        StartCommand.setUse(file.getBoolean("Use start command"));
-        StatsCommand.setUs(file.getBoolean("Use stats command"));
+        r.getStartCommand().setUse(file.getBoolean("Use start command"));
+        r.getStatsCommand().setUs(file.getBoolean("Use stats command"));
 
 
-        StartCommand.setErr(file.getColorString("start command disabled"));
-        StatsCommand.setEr(file.getColorString("stats command disabled"));
+        r.getStartCommand().setErr(file.getColorString("start command disabled"));
+        r.getStatsCommand().setEr(file.getColorString("stats command disabled"));
 
     }
 

@@ -13,10 +13,8 @@ import java.util.Map.Entry;
 
 public class KitManager {
 	
-	private Core pl;
 	
 	public KitManager(Core c) {
-		this.pl = c;
 	}
 
     @SuppressWarnings("deprecation")

@@ -1,16 +1,5 @@
 package de.alpha.uhc.Listener;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.aclasses.AScoreboard;
-import de.alpha.uhc.aclasses.ATablist;
-import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.timer.Timer;
-import de.alpha.uhc.utils.Spectator;
-import de.alpha.uhc.utils.Stats;
-import de.popokaka.alphalibary.item.ItemBuilder;
-import de.popokaka.alphalibary.item.data.SkullData;
-import de.popokaka.alphalibary.nms.SimpleTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -21,12 +10,22 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.Registery;
+import de.alpha.uhc.utils.Stats;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.item.data.SkullData;
+import de.popokaka.alphalibary.nms.SimpleTitle;
+
 public class GameEndListener implements Listener {
 	
 	private Core pl;
+	private Registery r;
 	
 	public GameEndListener(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  String win;
@@ -41,7 +40,7 @@ public class GameEndListener implements Listener {
     private  boolean cmdOnDeath;
 
     public  void setCmdDeath(String cmdDeath) {
-        GameEndListener.cmdDeath = cmdDeath;
+    	this.cmdDeath = cmdDeath;
     }
 
     private  boolean isCmdOnDeath() {
@@ -49,19 +48,19 @@ public class GameEndListener implements Listener {
     }
 
     public  void setCmdOnDeath(boolean cmdOnDeath) {
-        GameEndListener.cmdOnDeath = cmdOnDeath;
+    	this.cmdOnDeath = cmdOnDeath;
     }
 
     public  void setCmdOnEnd(boolean cmdOnEnd) {
-        GameEndListener.cmdOnEnd = cmdOnEnd;
+    	this.cmdOnEnd = cmdOnEnd;
     }
 
     public  void setCmdEnd(String cmd) {
-        GameEndListener.cmdEnd = cmd;
+    	this.cmdEnd = cmd;
     }
 
     public  void setWin(String win) {
-        GameEndListener.win = win;
+    	this.win = win;
     }
 
     public  String getKick() {
@@ -69,11 +68,11 @@ public class GameEndListener implements Listener {
     }
 
     public  void setKick(String kick) {
-        GameEndListener.kick = kick;
+    	this.kick = kick;
     }
 
     public  void setQuit(String quit) {
-        GameEndListener.quit = quit;
+    	this.quit = quit;
     }
 
     public  String getBungeeServer() {
@@ -103,14 +102,14 @@ public class GameEndListener implements Listener {
         pl.removeInGamePlayer(p);
         pl.addSpec(p);
 
-        Spectator.setSpec(p);
+        r.getSpectator().setSpec(p);
 
         p.getWorld().strikeLightningEffect(p.getLocation());
 
 
         //                        -=X Tablist X=-
 
-        ATablist.sendStandingInGameTablist();
+        r.getATablist().sendStandingInGameTablist();
 
 
         //                        -=X Stats X=-
@@ -128,8 +127,8 @@ public class GameEndListener implements Listener {
 
 
         for (Player all : Bukkit.getOnlinePlayers()) {
-            AScoreboard.updateInGamePlayersLiving(all);
-            AScoreboard.updateInGameSpectators(all);
+            r.getAScoreboard().updateInGamePlayersLiving(all);
+            r.getAScoreboard().updateInGameSpectators(all);
         }
 
         //                        -=X ItemDrop X=-
@@ -147,9 +146,9 @@ public class GameEndListener implements Listener {
         //                       -=X Game End X=-
 
         if (pl.getInGamePlayers().size() == 4) {
-            if (Timer.isDm()) {
-                Timer.getDd().cancel();
-                Timer.startDeathMatch();
+            if (r.getTimer().isDm()) {
+                r.getTimer().getDd().cancel();
+                r.getTimer().startDeathMatch();
             }
         }
 
@@ -157,7 +156,7 @@ public class GameEndListener implements Listener {
 
             if (pl.getInGamePlayers().size() == 0) {
 
-                Timer.startRestartTimer();
+            	r.getTimer().startRestartTimer();
 
                 new BukkitRunnable() {
 
@@ -184,9 +183,9 @@ public class GameEndListener implements Listener {
                 String b = cmdEnd.replace("[player]", winner.getName());
                 if (cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), b);
 
-                win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
+                win = r.getMessageFile().getMSGFile().getColorString("Announcements.Win");
 
-                Timer.startRestartTimer();
+                r.getTimer().startRestartTimer();
 
                 Bukkit.getScheduler().scheduleSyncDelayedTask(pl, new Runnable() {
 
@@ -226,17 +225,17 @@ public class GameEndListener implements Listener {
 
                 o.sendMessage(pl.getPrefix() + quit);
 
-                quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
+                quit = r.getMessageFile().getMSGFile().getColorString("Announcements.Leave");
             }
         } else {
             quit = quit.replace("[PlayerCount]", "§7[" + apc + " left]");
 
             Bukkit.broadcastMessage(pl.getPrefix() + quit);
 
-            quit = MessageFileManager.getMSGFile().getColorString("Announcements.Leave");
+            quit = r.getMessageFile().getMSGFile().getColorString("Announcements.Leave");
         }
 
-        ATablist.sendStandingInGameTablist();
+        r.getATablist().sendStandingInGameTablist();
 
         p.getInventory().clear();
 
@@ -249,8 +248,8 @@ public class GameEndListener implements Listener {
             }
 
             for (Player all : Bukkit.getOnlinePlayers()) {
-                AScoreboard.updateInGamePlayersLiving(all);
-                AScoreboard.updateInGameSpectators(all);
+                r.getAScoreboard().updateInGamePlayersLiving(all);
+                r.getAScoreboard().updateInGameSpectators(all);
             }
 
             p.setGameMode(GameMode.SURVIVAL);
@@ -259,7 +258,7 @@ public class GameEndListener implements Listener {
 
                 if (pl.getInGamePlayers().size() == 0) {
 
-                    Timer.startRestartTimer();
+                	r.getTimer().startRestartTimer();
 
                     new BukkitRunnable() {
 
@@ -286,9 +285,9 @@ public class GameEndListener implements Listener {
                     if (cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), a);
 
 
-                    win = MessageFileManager.getMSGFile().getColorString("Announcements.Win");
+                    win = r.getMessageFile().getMSGFile().getColorString("Announcements.Win");
 
-                    Timer.startRestartTimer();
+                    r.getTimer().startRestartTimer();
 
                     new BukkitRunnable() {
 

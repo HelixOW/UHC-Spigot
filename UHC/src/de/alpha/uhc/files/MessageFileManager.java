@@ -2,22 +2,17 @@ package de.alpha.uhc.files;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
-import de.alpha.uhc.Listener.*;
-import de.alpha.uhc.aclasses.ATablist;
-import de.alpha.uhc.aclasses.ATeam;
-import de.alpha.uhc.border.BorderManager;
-import de.alpha.uhc.commands.CoinsCommand;
-import de.alpha.uhc.commands.UHCCommand;
-import de.alpha.uhc.kits.GUI;
-import de.alpha.uhc.timer.Timer;
+import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class MessageFileManager {
 	
 	private Core pl;
+	private Registery r;
 	
 	public MessageFileManager(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     public  SimpleFile getMSGFile() {
@@ -86,8 +81,8 @@ public class MessageFileManager {
     public  void loadMessages() {
         SimpleFile file = getMSGFile();
 
-        ATablist.setHeader(file.getColorString("Tablist.Top"));
-        ATablist.setFooter(file.getColorString("Tablist.Bottom"));
+        r.getATablist().setHeader(file.getColorString("Tablist.Top"));
+        r.getATablist().setFooter(file.getColorString("Tablist.Bottom"));
 
         GState.setLobby(file.getString("GameStatus.Lobby"));
         GState.setGrace(file.getString("GameStatus.Grace"));
@@ -96,52 +91,52 @@ public class MessageFileManager {
         GState.setDeathmatch(file.getString("GameStatus.Deathmatch"));
         GState.setRestart(file.getString("GameStatus.Restart"));
 
-        MotdListener.setLobby(file.getColorString("Motd.Lobby"));
-        MotdListener.setGrace(file.getColorString("Motd.Grace"));
-        MotdListener.setIngame(file.getColorString("Motd.InGame"));
-        MotdListener.setRestart(file.getColorString("Motd.Restart"));
+        r.getMotdListener().setLobby(file.getColorString("Motd.Lobby"));
+        r.getMotdListener().setGrace(file.getColorString("Motd.Grace"));
+        r.getMotdListener().setIngame(file.getColorString("Motd.InGame"));
+        r.getMotdListener().setRestart(file.getColorString("Motd.Restart"));
 
-        ATeam.setChosen(file.getColorString("Teams.chosen"));
-        ATeam.setNoExist(file.getColorString("Teams.do not exist"));
-        ATeam.setAllTeams(file.getColorString("Teams.all"));
-        ATeam.setFull(file.getColorString("Teams.full"));
+        r.getATeam().setChosen(file.getColorString("Teams.chosen"));
+        r.getATeam().setNoExist(file.getColorString("Teams.do not exist"));
+        r.getATeam().setAllTeams(file.getColorString("Teams.all"));
+        r.getATeam().setFull(file.getColorString("Teams.full"));
 
-        LobbyListener.setSel(file.getColorString("Kits.GUI.Selected"));
-        LobbyListener.setBought(file.getColorString("Kits.GUI.Bought"));
-        LobbyListener.setCoinsneed(file.getColorString("Kits.GUI.No Coins"));
+        r.getLobbyListener().setSel(file.getColorString("Kits.GUI.Selected"));
+        r.getLobbyListener().setBought(file.getColorString("Kits.GUI.Bought"));
+        r.getLobbyListener().setCoinsneed(file.getColorString("Kits.GUI.No Coins"));
 
-        UHCCommand.setNoplayer(file.getColorString("Commands.Warns.OnlyPlayers"));
-        UHCCommand.setNoperms(file.getColorString("Commands.Warns.NoPermissions"));
-        UHCCommand.setSpawnset(file.getColorString("Commands.Admin.SpawnSet"));
-        UHCCommand.setLobbyset(file.getColorString("Commands.Admin.LobbySet"));
+        r.getUHCCommand().setNoplayer(file.getColorString("Commands.Warns.OnlyPlayers"));
+        r.getUHCCommand().setNoperms(file.getColorString("Commands.Warns.NoPermissions"));
+        r.getUHCCommand().setSpawnset(file.getColorString("Commands.Admin.SpawnSet"));
+        r.getUHCCommand().setLobbyset(file.getColorString("Commands.Admin.LobbySet"));
 
-        Timer.setPvpstart(file.getColorString("Announcements.PvP.end"));
-        Timer.setPvpmsg(file.getColorString("Announcements.PvP.timer"));
-        Timer.setDmmsg(file.getColorString("Announcements.DeathMatch.timer"));
-        Timer.setCountmsg(file.getColorString("Announcements.Countdown"));
-        Timer.setNep(file.getColorString("Announcements.NotEnoughPlayers"));
-        Timer.setGracemsg(file.getColorString("Announcements.Peaceperiod.timer"));
-        Timer.setEnd(file.getColorString("Announcements.Peaceperiod.end"));
-        Timer.setEndmsg(file.getColorString("Announcements.End"));
+        r.getTimer().setPvpstart(file.getColorString("Announcements.PvP.end"));
+        r.getTimer().setPvpmsg(file.getColorString("Announcements.PvP.timer"));
+        r.getTimer().setDmmsg(file.getColorString("Announcements.DeathMatch.timer"));
+        r.getTimer().setCountmsg(file.getColorString("Announcements.Countdown"));
+        r.getTimer().setNep(file.getColorString("Announcements.NotEnoughPlayers"));
+        r.getTimer().setGracemsg(file.getColorString("Announcements.Peaceperiod.timer"));
+        r.getTimer().setEnd(file.getColorString("Announcements.Peaceperiod.end"));
+        r.getTimer().setEndmsg(file.getColorString("Announcements.End"));
 
-        GameEndListener.setWin(file.getColorString("Announcements.Win"));
-        GameEndListener.setKick(file.getColorString("Announcements.Restart"));
-        GameEndListener.setQuit(file.getColorString("Announcements.Leave"));
+        r.getGameEndListener().setWin(file.getColorString("Announcements.Win"));
+        r.getGameEndListener().setKick(file.getColorString("Announcements.Restart"));
+        r.getGameEndListener().setQuit(file.getColorString("Announcements.Leave"));
 
-        InGameListener.setNtrack(file.getColorString("Compass.NoPlayerInRange"));
-        InGameListener.setTrack(file.getColorString("Compass.PlayerInRange"));
-        InGameListener.setTrackteam(file.getColorString("Compass.TeamPlayerInRange"));
+        r.getInGameListener().setNtrack(file.getColorString("Compass.NoPlayerInRange"));
+        r.getInGameListener().setTrack(file.getColorString("Compass.PlayerInRange"));
+        r.getInGameListener().setTrackteam(file.getColorString("Compass.TeamPlayerInRange"));
 
-        PlayerJoinListener.setJoin(file.getColorString("Announcements.Join"));
-        PlayerJoinListener.setFull(file.getColorString("Warns.FullServer"));
-        PlayerJoinListener.setTitle(file.getColorString("Join.Title"));
-        PlayerJoinListener.setSubtitle(file.getColorString("Join.Subtitle"));
+        r.getPlayerJoinListener().setJoin(file.getColorString("Announcements.Join"));
+        r.getPlayerJoinListener().setFull(file.getColorString("Warns.FullServer"));
+        r.getPlayerJoinListener().setTitle(file.getColorString("Join.Title"));
+        r.getPlayerJoinListener().setSubtitle(file.getColorString("Join.Subtitle"));
 
-        BorderManager.setMoved(file.getColorString("Announcements.Border.Move"));
+        r.getBorderManager().setMoved(file.getColorString("Announcements.Border.Move"));
 
-        CoinsCommand.setRew(file.getColorString("Reward"));
+        r.getCoinsCommand().setRew(file.getColorString("Reward"));
 
-        GUI.setTitle(file.getColorString("Kits.GUI.Title"));
+        r.getGui().setTitle(file.getColorString("Kits.GUI.Title"));
     }
 
 }

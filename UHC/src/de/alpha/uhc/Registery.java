@@ -1,5 +1,8 @@
 package de.alpha.uhc;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
+
 import de.alpha.uhc.Listener.ChatListener;
 import de.alpha.uhc.Listener.CraftListener;
 import de.alpha.uhc.Listener.CustomDeathListener;
@@ -17,6 +20,9 @@ import de.alpha.uhc.aclasses.ATeam;
 import de.alpha.uhc.aclasses.AWorld;
 import de.alpha.uhc.border.Border;
 import de.alpha.uhc.border.BorderManager;
+import de.alpha.uhc.commands.CoinsCommand;
+import de.alpha.uhc.commands.StartCommand;
+import de.alpha.uhc.commands.StatsCommand;
 import de.alpha.uhc.commands.UHCCommand;
 import de.alpha.uhc.files.ArmorStandFile;
 import de.alpha.uhc.files.CommandsFile;
@@ -87,12 +93,16 @@ public class Registery {
 	private Spectator s;
 	private Stats ss;
 	private UHCCommand uc;
+	private CoinsCommand cc;
+	private StartCommand stc;
+	private StatsCommand ssc;
 	
 	public Registery(Core c) {
 		this.pl = c;
 	}
 	
 	public void registerAll() {
+		//Clazzes
 		as = new AScoreboard(pl);
 		atab = new ATablist(pl);
 		ateam = new ATeam(pl);
@@ -133,9 +143,40 @@ public class Registery {
 		r = new Regions(pl);
 		s = new Spectator(pl);
 		ss = new Stats(pl);
-		uc = new UHCCommand(pl);
+		
+		// Commands
+		registerCommands();
+		
+		// Events
+		registerEvents();
 	}
 	
+	private void registerCommands() {
+		uc = new UHCCommand(pl);
+		cc = new CoinsCommand(pl, new String[]{});
+		stc = new StartCommand(pl, new String[]{});
+		ssc = new StatsCommand(pl, new String[]{});
+	}
+	
+	private void registerEvents() {
+    	PluginManager p = Bukkit.getPluginManager();
+    	
+    	p.registerEvents(this.getPlayerJoinListener(), pl);
+    	p.registerEvents(this.getInGameListener(), pl);
+    	p.registerEvents(this.getMiningListener(), pl);
+    	p.registerEvents(this.getDeathListener(), pl);
+    	p.registerEvents(this.getLobbyListener(), pl);
+    	p.registerEvents(this.getCraftListener(), pl);
+    	p.registerEvents(this.getChatListener(), pl);
+    	p.registerEvents(this.getSoupListener(), pl);
+    	p.registerEvents(this.getCustomDeathListener(), pl);
+    	p.registerEvents(this.getMapReset(), pl);
+    	p.registerEvents(this.getSpectator(), pl);
+    	p.registerEvents(this.getRegions(), pl);
+    	p.registerEvents(this.getATeam(), pl);
+    	p.registerEvents(this.getMotdListener(), pl);
+    	p.registerEvents(this.getGameEndListener(), pl);
+    }
 	
 	//Getters
     
@@ -301,5 +342,17 @@ public class Registery {
     
     public UHCCommand getUHCCommand() {
     	return uc;
+    }
+    
+    public CoinsCommand getCoinsCommand() {
+    	return cc;
+    }
+    
+    public StartCommand getStartCommand() {
+    	return stc;
+    }
+    
+    public StatsCommand getStatsCommand() {
+    	return ssc;
     }
 }

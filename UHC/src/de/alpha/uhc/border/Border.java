@@ -21,7 +21,7 @@ public class Border {
     private  Location arena;
 
     public  void setDmg(double dmg) {
-        Border.dmg = dmg;
+        this.dmg = dmg;
     }
 
     public  int getSize() {

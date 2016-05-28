@@ -1,10 +1,5 @@
 package de.alpha.uhc.utils;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.aclasses.ATeam;
-import de.alpha.uhc.files.ArmorStandFile;
-import de.popokaka.alphalibary.item.ItemBuilder;
-import de.popokaka.alphalibary.item.data.SkullData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,18 +8,25 @@ import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.item.data.SkullData;
+
 public class ArmorStandUtil {
 	
 	private Core pl;
+	private Registery r;
 	
 	public ArmorStandUtil(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     public void spawn(Location l, String name) {
-        if (!(ATeam.getTeamNames().contains(name))) {
-            String a = ATeam.getNoExist().replace("[team]", name);
-            String b = ATeam.getAllTeams().replace("[teams]", "" + name);
+        if (!(r.getATeam().getTeamNames().contains(name))) {
+            String a = r.getATeam().getNoExist().replace("[team]", name);
+            String b = r.getATeam().getAllTeams().replace("[teams]", "" + name);
             Bukkit.getConsoleSender().sendMessage(pl.getPrefix() + a + "\n" + b);
             return;
         }
@@ -40,9 +42,9 @@ public class ArmorStandUtil {
         LeatherArmorMeta b = (LeatherArmorMeta) pants.getItemMeta();
         LeatherArmorMeta c = (LeatherArmorMeta) boots.getItemMeta();
 
-        a.setColor(ATeam.getTeamItemColor(name));
-        b.setColor(ATeam.getTeamItemColor(name));
-        c.setColor(ATeam.getTeamItemColor(name));
+        a.setColor(r.getATeam().getTeamItemColor(name));
+        b.setColor(r.getATeam().getTeamItemColor(name));
+        c.setColor(r.getATeam().getTeamItemColor(name));
 
         chest.setItemMeta(a);
         pants.setItemMeta(b);
@@ -55,12 +57,12 @@ public class ArmorStandUtil {
 
         as.setBasePlate(false);
         as.setArms(true);
-        as.setCustomName(ATeam.getTeamColor(name) + name);
+        as.setCustomName(r.getATeam().getTeamColor(name) + name);
         as.setVisible(true);
         as.setGravity(false);
         as.setCustomNameVisible(true);
         
-        ArmorStandFile.addArmorStand(l);
+        r.getArmorstandFile().addArmorStand(l);
     }
     
     public  void removeArmorStand(Location l) {

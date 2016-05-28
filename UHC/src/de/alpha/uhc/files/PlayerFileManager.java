@@ -8,10 +8,7 @@ import org.bukkit.inventory.Inventory;
 
 public class PlayerFileManager {
 	
-	private Core pl;
-	
 	public PlayerFileManager(Core c) {
-		this.pl = c;
 	}
 
     public  Inventory i;

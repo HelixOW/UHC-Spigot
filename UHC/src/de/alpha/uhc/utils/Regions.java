@@ -1,7 +1,8 @@
 package de.alpha.uhc.utils;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.files.SpawnFileManager;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,15 +11,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
 
 public class Regions implements Listener {
 	
 	private Core pl;
+	private Registery r;
 	
 	public Regions(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  ArrayList<Cuboid> regions = new ArrayList<>();
@@ -33,7 +36,7 @@ public class Regions implements Listener {
     }
 
     public  void setMaterial(String material) {
-        Regions.material = material;
+        this.material = material;
     }
 
     public  boolean isLobby() {
@@ -41,7 +44,7 @@ public class Regions implements Listener {
     }
 
     public  void setLobby(boolean lobby) {
-        Regions.lobby = lobby;
+        this.lobby = lobby;
     }
 
     public  void addRegion(Cuboid toAdd) {
@@ -68,7 +71,7 @@ public class Regions implements Listener {
 
     public  boolean isInRegion(Location loc) {
 
-        if (!(SpawnFileManager.getSpawnFile().isConfigurationSection("Lobbyregion"))) return true;
+        if (!(r.getSpawnFileManager().getSpawnFile().isConfigurationSection("Lobbyregion"))) return true;
 
         for (Cuboid c : regions) {
 
@@ -88,8 +91,8 @@ public class Regions implements Listener {
 
         Material m = Material.getMaterial(material.toUpperCase());
 
-        if (p.getInventory().getItemInMainHand() == null) return;//TODO: multi
-        if (!(p.getInventory().getItemInMainHand().getType().equals(m))) return;//TODO: multi
+        if (p.getInventory().getItemInMainHand() == null) return;
+        if (!(p.getInventory().getItemInMainHand().getType().equals(m))) return;
         if (!(p.hasPermission("uhc.admin"))) return;
         if (!lobby) return;
 

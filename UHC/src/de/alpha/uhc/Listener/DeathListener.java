@@ -51,122 +51,122 @@ public class DeathListener implements Listener {
 
 
     public  void setPig(boolean pig) {
-        DeathListener.pig = pig;
+        this.pig = pig;
     }
 
 
     public  void setZombie(boolean zombie) {
-        DeathListener.zombie = zombie;
+    	this.zombie = zombie;
     }
 
 
     public  void setCow(boolean cow) {
-        DeathListener.cow = cow;
+    	this.cow = cow;
     }
 
 
     public  void setChicken(boolean chicken) {
-        DeathListener.chicken = chicken;
+    	this.chicken = chicken;
     }
 
 
     public  void setSpider(boolean spider) {
-        DeathListener.spider = spider;
+    	this.spider = spider;
     }
 
 
     public  void setSkeleton(boolean skeleton) {
-        DeathListener.skeleton = skeleton;
+    	this.skeleton = skeleton;
     }
 
 
     public  void setSheep(boolean sheep) {
-        DeathListener.sheep = sheep;
+    	this.sheep = sheep;
     }
 
 
     public  void setRabbit(boolean rabbit) {
-        DeathListener.rabbit = rabbit;
+    	this.rabbit = rabbit;
     }
 
 
     public  void setPigA(int pigA) {
-        DeathListener.pigA = pigA;
+    	this.pigA = pigA;
     }
 
 
     public  void setZombieA(int zombieA) {
-        DeathListener.zombieA = zombieA;
+    	this.zombieA = zombieA;
     }
 
 
     public  void setCowA(int cowA) {
-        DeathListener.cowA = cowA;
+    	this.cowA = cowA;
     }
 
 
     public  void setChickenA(int chickenA) {
-        DeathListener.chickenA = chickenA;
+    	this.chickenA = chickenA;
     }
 
 
     public  void setSpiderA(int spiderA) {
-        DeathListener.spiderA = spiderA;
+    	this.spiderA = spiderA;
     }
 
 
     public  void setSkeletonA(int skeletonA) {
-        DeathListener.skeletonA = skeletonA;
+    	this.skeletonA = skeletonA;
     }
 
 
     public  void setSheepA(int sheepA) {
-        DeathListener.sheepA = sheepA;
+    	this.sheepA = sheepA;
     }
 
 
     public  void setRabbitA(int rabbitA) {
-        DeathListener.rabbitA = rabbitA;
+    	this.rabbitA = rabbitA;
     }
 
 
     public  void setPigM(Material pigM) {
-        DeathListener.pigM = pigM;
+    	this.pigM = pigM;
     }
 
 
     public  void setZombieM(Material zombieM) {
-        DeathListener.zombieM = zombieM;
+    	this.zombieM = zombieM;
     }
 
 
     public  void setCowM(Material cowM) {
-        DeathListener.cowM = cowM;
+    	this.cowM = cowM;
     }
 
 
     public  void setChickenM(Material chickenM) {
-        DeathListener.chickenM = chickenM;
+    	this.chickenM = chickenM;
     }
 
 
     public  void setSpiderM(Material spiderM) {
-        DeathListener.spiderM = spiderM;
+    	this.spiderM = spiderM;
     }
 
 
     public  void setSkeletonM(Material skeletonM) {
-        DeathListener.skeletonM = skeletonM;
+    	this.skeletonM = skeletonM;
     }
 
 
     public  void setSheepM(Material sheepM) {
-        DeathListener.sheepM = sheepM;
+    	this.sheepM = sheepM;
     }
 
 
     public  void setRabbitM(Material rabbitM) {
-        DeathListener.rabbitM = rabbitM;
+    	this.rabbitM = rabbitM;
     }
 
 

@@ -9,10 +9,7 @@ import de.popokaka.alphalibary.file.SimpleFile;
 
 public class ArmorStandFile {
 	
-	private Core pl;
-	
 	public ArmorStandFile(Core c) {
-		this.pl = c;
 	}
 	
     private  SimpleFile file = getASFile();

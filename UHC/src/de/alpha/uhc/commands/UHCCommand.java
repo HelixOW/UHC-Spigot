@@ -11,30 +11,18 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
-import de.alpha.uhc.aclasses.ATeam;
-import de.alpha.uhc.files.ArmorStandFile;
-import de.alpha.uhc.files.CommandsFile;
-import de.alpha.uhc.files.DeathMessageFile;
-import de.alpha.uhc.files.DropFile;
-import de.alpha.uhc.files.HologramFileManager;
-import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.files.OptionsFileManager;
-import de.alpha.uhc.files.ScoreboardFile;
-import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.files.TeamFile;
-import de.alpha.uhc.kits.GUI;
-import de.alpha.uhc.timer.Timer;
-import de.alpha.uhc.utils.ArmorStandUtil;
+import de.alpha.uhc.Registery;
 import de.alpha.uhc.utils.Cuboid;
-import de.alpha.uhc.utils.Regions;
 import de.alpha.uhc.utils.Stats;
 
 public class UHCCommand implements CommandExecutor {
 	
 	private Core pl;
+	private Registery r;
 	
 	public UHCCommand(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  String noplayer;
@@ -48,7 +36,7 @@ public class UHCCommand implements CommandExecutor {
     }
 
     public  void setNoplayer(String noplayer) {
-        UHCCommand.noplayer = noplayer;
+        this.noplayer = noplayer;
     }
 
     public  String getNoperms() {
@@ -56,15 +44,15 @@ public class UHCCommand implements CommandExecutor {
     }
 
     public  void setNoperms(String noperms) {
-        UHCCommand.noperms = noperms;
+        this.noperms = noperms;
     }
 
     public  void setSpawnset(String spawnset) {
-        UHCCommand.spawnset = spawnset;
+        this.spawnset = spawnset;
     }
 
     public  void setLobbyset(String lobbyset) {
-        UHCCommand.lobbyset = lobbyset;
+        this.lobbyset = lobbyset;
     }
 
     public  boolean isTeamMode() {
@@ -72,7 +60,7 @@ public class UHCCommand implements CommandExecutor {
     }
 
     public  void setTeamMode(boolean teamMode) {
-        UHCCommand.teamMode = teamMode;
+        this.teamMode = teamMode;
     }
 
     @Override
@@ -91,7 +79,7 @@ public class UHCCommand implements CommandExecutor {
                 if (GState.isState(GState.LOBBY)) {
                     if (args[0].equalsIgnoreCase("team")) {
                         if (teamMode) {
-                            ATeam.addPlayerToTeam(p, args[1]);
+                        	r.getATeam().addPlayerToTeam(p, args[1]);
                             return true;
                         }
                     }
@@ -101,7 +89,7 @@ public class UHCCommand implements CommandExecutor {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("team") || args[0].equalsIgnoreCase("teams")) {
 
-                    String a = ATeam.getAllTeams().replace("[teams]", "" + ATeam.getTeamNames());
+                    String a = r.getATeam().getAllTeams().replace("[teams]", "" + r.getATeam().getTeamNames());
                     p.sendMessage(Core.getInstance().getPrefix() + a);
                     return true;
                 }
@@ -112,7 +100,7 @@ public class UHCCommand implements CommandExecutor {
 
                 if (p.hasPermission("UHC.start")) {
                     if (args[0].equalsIgnoreCase("start")) {
-                        Timer.changeTime();
+                    	r.getTimer().changeTime();
                         return true;
                     }
                 } else {
@@ -163,46 +151,46 @@ public class UHCCommand implements CommandExecutor {
                     }
                     if (args[0].equalsIgnoreCase("reload")) {
 
-                        OptionsFileManager.addOptions();
-                        OptionsFileManager.loadOptions();
+                        r.getOptionsFile().addOptions();
+                        r.getOptionsFile().loadOptions();
 
-                        MessageFileManager.addMessages();
-                        MessageFileManager.loadMessages();
+                        r.getMessageFile().addMessages();
+                        r.getMessageFile().loadMessages();
 
-                        SpawnFileManager.getSpawnFile();
-                        SpawnFileManager.registerRegions();
+                        r.getSpawnFileManager().getSpawnFile();
+                        r.getSpawnFileManager().registerRegions();
 
-                        TeamFile.addDefaultTeams();
-                        TeamFile.loadTeams();
+                        r.getTeamFile().addDefaultTeams();
+                        r.getTeamFile().loadTeams();
 
-                        HologramFileManager.getHologramFile().save();
+                        r.getHologramFile().getHologramFile().save();
 
-                        DropFile.addDrops();
-                        DropFile.loadDrops();
+                        r.getDropFile().addDrops();
+                        r.getDropFile().loadDrops();
 
-                        ScoreboardFile.addScores();
-                        ScoreboardFile.loadScores();
+                        r.getScoreboardFile().addScores();
+                        r.getScoreboardFile().loadScores();
 
-                        DeathMessageFile.addDeathMessages();
-                        DeathMessageFile.loadDeathMessages();
+                        r.getDeathMessagesFile().addDeathMessages();
+                        r.getDeathMessagesFile().loadDeathMessages();
 
-                        CommandsFile.addCommands();
-                        CommandsFile.loadCommands();
+                        r.getCommandsFile().addCommands();
+                        r.getCommandsFile().loadCommands();
                         
-                        ArmorStandFile.getASFile().save();
+                        r.getArmorstandFile().getASFile().save();
 
                         p.sendMessage(Core.getInstance().getPrefix() + "§cAll configs has been reloaded");
                         return true;
                     }
 
                     if(args[0].equalsIgnoreCase("removeTeamJoiner")) {
-                    	ArmorStandUtil.removeArmorStand(p.getLocation());
+                    	r.getArmorStandUtil().removeArmorStand(p.getLocation());
                     	p.sendMessage(Core.getInstance().getPrefix() + "TeamJoiner successfully removed");
                     }
                     
                     if (args[0].equalsIgnoreCase("setSpawn")) {
 
-                        SpawnFileManager.SetSpawn(p.getLocation().getX(),
+                    	r.getSpawnFileManager().SetSpawn(p.getLocation().getX(),
                                 p.getLocation().getY(),
                                 p.getLocation().getZ(),
                                 p.getWorld());
@@ -213,7 +201,7 @@ public class UHCCommand implements CommandExecutor {
 
                     if (args[0].equalsIgnoreCase("setLobby")) {
 
-                        SpawnFileManager.SetLobby(p.getLocation().getX(),
+                    	r.getSpawnFileManager().SetLobby(p.getLocation().getX(),
                                 p.getLocation().getY(),
                                 p.getLocation().getZ(),
                                 p.getLocation().getYaw(),
@@ -225,10 +213,10 @@ public class UHCCommand implements CommandExecutor {
                     }
 
                     if (args[0].equalsIgnoreCase("createLobby")) {
-                        if (Regions.getDefined(p)) {
+                        if (r.getRegions().getDefined(p)) {
 
-                            Regions.addRegion((new Cuboid(Regions.getPos1(p), Regions.getPos2(p))));
-                            SpawnFileManager.addRegion(Regions.getPos1(p), Regions.getPos2(p));
+                            r.getRegions().addRegion((new Cuboid(r.getRegions().getPos1(p), r.getRegions().getPos2(p))));
+                            r.getSpawnFileManager().addRegion(r.getRegions().getPos1(p), r.getRegions().getPos2(p));
 
                             p.sendMessage(Core.getInstance().getPrefix() + "§7You have created a lobbyregion.");
                             return true;
@@ -244,7 +232,7 @@ public class UHCCommand implements CommandExecutor {
                 	
                 	if (args[0].equalsIgnoreCase("createTeamJoiner")) {
                 		pl.getRegistery().getArmorStandUtil().spawn(p.getLocation(), args[1]);
-                        p.sendMessage(Core.getInstance().getPrefix() + "§a Setted Teamjoiner for team " + ATeam.getTeamColor(args[1]) + args[1]);
+                        p.sendMessage(Core.getInstance().getPrefix() + "§a Setted Teamjoiner for team " + r.getATeam().getTeamColor(args[1]) + args[1]);
                         return true;
                     }
 
@@ -329,7 +317,7 @@ public class UHCCommand implements CommandExecutor {
 
                         pl.getRegistery().getKitFile().addKit(args[1], p.getInventory(), args[2], Integer.parseInt(args[3]), lore, Integer.parseInt(args[4]));
                         p.sendMessage(Core.getInstance().getPrefix() + "§7You have set the kit §a" + args[1] + " §7with GUI-block §a" + args[2] + "§7 on GUI-slot §a" + args[3] + "§7 with the price of §a" + args[4] + " §7and the lore §a" + lore);
-                        GUI.fill();
+                        r.getGui().fill();
                         return true;
                     }
                 }

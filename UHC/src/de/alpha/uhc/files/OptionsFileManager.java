@@ -3,26 +3,17 @@ package de.alpha.uhc.files;
 import org.bukkit.Material;
 
 import de.alpha.uhc.Core;
-import de.alpha.uhc.Listener.GameEndListener;
-import de.alpha.uhc.Listener.InGameListener;
-import de.alpha.uhc.Listener.MotdListener;
-import de.alpha.uhc.Listener.PlayerJoinListener;
-import de.alpha.uhc.Listener.SoupListener;
-import de.alpha.uhc.aclasses.ATeam;
-import de.alpha.uhc.border.Border;
-import de.alpha.uhc.border.BorderManager;
-import de.alpha.uhc.commands.UHCCommand;
-import de.alpha.uhc.timer.Timer;
-import de.alpha.uhc.utils.Regions;
-import de.alpha.uhc.utils.Spectator;
+import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class OptionsFileManager {
 	
 	private Core pl;
+	private Registery r;
 	
 	public OptionsFileManager(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     public  SimpleFile getConfigFile() {
@@ -104,68 +95,68 @@ public class OptionsFileManager {
     public void loadOptions() {
         SimpleFile file = getConfigFile();
 
-        ATeam.setMaterialName(file.getString("Team.Item"));
-        ATeam.setTitle(file.getColorString("Team.GUI.Title"));
-        ATeam.setBlockName(file.getString("Team.GUI.Block"));
+        r.getATeam().setMaterialName(file.getString("Team.Item"));
+        r.getATeam().setTitle(file.getColorString("Team.GUI.Title"));
+        r.getATeam().setBlockName(file.getString("Team.GUI.Block"));
 
-        Spectator.setSpecItem(file.getString("Spectator.Item"));
-        Spectator.setSpecName(file.getColorString("Spectator.Itemname"));
-        Spectator.setTitle(file.getColorString("Spectator.GUI.Title"));
+        r.getSpectator().setSpecItem(file.getString("Spectator.Item"));
+        r.getSpectator().setSpecName(file.getColorString("Spectator.Itemname"));
+        r.getSpectator().setTitle(file.getColorString("Spectator.GUI.Title"));
 
-        MotdListener.setCustommotd(file.getBoolean("Status Motd"));
+        r.getMotdListener().setCustommotd(file.getBoolean("Status Motd"));
 
         pl.getRegistery().getAWorld().setWr(file.getBoolean("Reset World"));
         pl.getRegistery().getAWorld().setLobbyAsSchematic(file.getBoolean("Lobby.asSchematic"));
 
-        Timer.setPrePvP(file.getInt("Countdown.no PvP period in minutes"));
-        Timer.setTbpvp(file.getInt("Deathmatch.time before pvp in seconds"));
-        Timer.setDm(file.getBoolean("Deathmatch.enabled"));
-        Timer.setuDM(file.getInt("Deathmatch.begins after min"));
-        Timer.setBungeeMode(file.getBoolean("BungeeMode"));
-        Timer.setBungeeServer(file.getString("BungeeServer"));
-        Timer.setMax(file.getInt("Spawnradius"));
-        Timer.setPc(file.getInt("Countdown.minimum_Player_Count"));
-        Timer.setComMode(file.getBoolean("InGame.give Compass"));
-        Timer.setComName(file.getColorString("InGame.Compassitemname"));
-        Timer.setComItem(Material.getMaterial(file.getString("InGame.Compassitem").toUpperCase()));
+        r.getTimer().setPrePvP(file.getInt("Countdown.no PvP period in minutes"));
+        r.getTimer().setTbpvp(file.getInt("Deathmatch.time before pvp in seconds"));
+        r.getTimer().setDm(file.getBoolean("Deathmatch.enabled"));
+        r.getTimer().setuDM(file.getInt("Deathmatch.begins after min"));
+        r.getTimer().setBungeeMode(file.getBoolean("BungeeMode"));
+        r.getTimer().setBungeeServer(file.getString("BungeeServer"));
+        r.getTimer().setMax(file.getInt("Spawnradius"));
+        r.getTimer().setPc(file.getInt("Countdown.minimum_Player_Count"));
+        r.getTimer().setComMode(file.getBoolean("InGame.give Compass"));
+        r.getTimer().setComName(file.getColorString("InGame.Compassitemname"));
+        r.getTimer().setComItem(Material.getMaterial(file.getString("InGame.Compassitem").toUpperCase()));
 
-        GameEndListener.setBungeeMode(file.getBoolean("BungeeMode"));
-        GameEndListener.setBungeeServer(file.getString("BungeeServer"));
-        GameEndListener.setCmdEnd(file.getString("Command.to execute.on End"));
-        GameEndListener.setCmdOnEnd(file.getBoolean("Command.on End"));
-        GameEndListener.setCmdDeath(file.getString("Command.to execute.on Death"));
-        GameEndListener.setCmdOnDeath(file.getBoolean("Command.on Death"));
+        r.getGameEndListener().setBungeeMode(file.getBoolean("BungeeMode"));
+        r.getGameEndListener().setBungeeServer(file.getString("BungeeServer"));
+        r.getGameEndListener().setCmdEnd(file.getString("Command.to execute.on End"));
+        r.getGameEndListener().setCmdOnEnd(file.getBoolean("Command.on End"));
+        r.getGameEndListener().setCmdDeath(file.getString("Command.to execute.on Death"));
+        r.getGameEndListener().setCmdOnDeath(file.getBoolean("Command.on Death"));
 
-        UHCCommand.setTeamMode(file.getBoolean("TeamMode"));
+        r.getUHCCommand().setTeamMode(file.getBoolean("TeamMode"));
 
-        Regions.setMaterial(file.getString("Lobby.createTool"));
-        Regions.setLobby(file.getBoolean("Lobby.region"));
+        r.getRegions().setMaterial(file.getString("Lobby.createTool"));
+        r.getRegions().setLobby(file.getBoolean("Lobby.region"));
 
-        Border.setSize(file.getInt("Border.size"));
-        Border.setDmg(file.getDouble("Border.damage"));
+        r.getBorder().setSize(file.getInt("Border.size"));
+        r.getBorder().setDmg(file.getDouble("Border.damage"));
 
-        InGameListener.setSize(file.getInt("Border.size"));
+        r.getInGameListener().setSize(file.getInt("Border.size"));
 
         Core.getInstance().setPrefix(file.getColorString("Prefix"));
         Core.getInstance().setMySQLActive(file.getBoolean("MySQL"));
 
-        PlayerJoinListener.setMpc(file.getInt("Countdown.maximum_Player_Count"));
-        PlayerJoinListener.setKitItem(Material.getMaterial(file.getString("Kit.item").toUpperCase()));
-        PlayerJoinListener.setKitName(file.getColorString("Kit.name"));
-        PlayerJoinListener.setKitMode(file.getBoolean("Kits"));
-        PlayerJoinListener.setTeamName(file.getColorString("Team.Name"));
-        PlayerJoinListener.setTeamItem(Material.getMaterial(file.getString("Team.Item").toUpperCase()));
-        PlayerJoinListener.setLeaveMode(file.getBoolean("Lobby.give leaveitem"));
-        PlayerJoinListener.setLeaveName(file.getColorString("Lobby.Leaveitemname"));
-        PlayerJoinListener.setLeaveItem(Material.getMaterial(file.getString("Lobby.Leaveitem").toUpperCase()));
-        PlayerJoinListener.setStartMode(file.getBoolean("Lobby.give startitem"));
-        PlayerJoinListener.setStartName(file.getColorString("Lobby.Startitemname"));
-        PlayerJoinListener.setStartItem(Material.getMaterial(file.getString("Lobby.Startitem").toUpperCase()));
+        r.getPlayerJoinListener().setMpc(file.getInt("Countdown.maximum_Player_Count"));
+        r.getPlayerJoinListener().setKitItem(Material.getMaterial(file.getString("Kit.item").toUpperCase()));
+        r.getPlayerJoinListener().setKitName(file.getColorString("Kit.name"));
+        r.getPlayerJoinListener().setKitMode(file.getBoolean("Kits"));
+        r.getPlayerJoinListener().setTeamName(file.getColorString("Team.Name"));
+        r.getPlayerJoinListener().setTeamItem(Material.getMaterial(file.getString("Team.Item").toUpperCase()));
+        r.getPlayerJoinListener().setLeaveMode(file.getBoolean("Lobby.give leaveitem"));
+        r.getPlayerJoinListener().setLeaveName(file.getColorString("Lobby.Leaveitemname"));
+        r.getPlayerJoinListener().setLeaveItem(Material.getMaterial(file.getString("Lobby.Leaveitem").toUpperCase()));
+        r.getPlayerJoinListener().setStartMode(file.getBoolean("Lobby.give startitem"));
+        r.getPlayerJoinListener().setStartName(file.getColorString("Lobby.Startitemname"));
+        r.getPlayerJoinListener().setStartItem(Material.getMaterial(file.getString("Lobby.Startitem").toUpperCase()));
 
-        SoupListener.setBoost(file.getDouble("Soup.healthboost"));
+        r.getSoupListener().setBoost(file.getDouble("Soup.healthboost"));
 
-        BorderManager.setMoveable(file.getBoolean("Border.getCloser"));
-        BorderManager.setMoving(file.getInt("Border.movingBlocks"));
-        BorderManager.setTime((file.getInt("Border.moving after min") * 20) * 60);
+        r.getBorderManager().setMoveable(file.getBoolean("Border.getCloser"));
+        r.getBorderManager().setMoving(file.getInt("Border.movingBlocks"));
+        r.getBorderManager().setTime((file.getInt("Border.moving after min") * 20) * 60);
     }
 }

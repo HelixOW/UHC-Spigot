@@ -1,6 +1,7 @@
 package de.alpha.uhc.kits;
 
 import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.file.SimpleFile;
 import org.bukkit.inventory.Inventory;
 
@@ -9,9 +10,11 @@ import java.util.ArrayList;
 public class KitFileManager {
 	
 	private Core pl;
+	private Registery r;
 	
 	public KitFileManager(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private final SimpleFile file = getKitFile();
@@ -27,13 +30,13 @@ public class KitFileManager {
             file.setDefault(kitName + ".GUI.Slot", slot);
             file.setDefault(kitName + ".GUI.Block", block);
             file.setDefault(kitName + ".price", price);
-            file.setDefault(kitName + ".Contents", KitManager.InventoryToString(i));
+            file.setDefault(kitName + ".Contents", r.getKitManager().InventoryToString(i));
         } else {
             file.set(kitName + ".GUI.Lore", lore);
             file.set(kitName + ".GUI.Slot", slot);
             file.set(kitName + ".GUI.Block", block);
             file.set(kitName + ".price", price);
-            file.set(kitName + ".Contents", KitManager.InventoryToString(i));
+            file.set(kitName + ".Contents", r.getKitManager().InventoryToString(i));
             file.save();
         }
     }
@@ -55,7 +58,7 @@ public class KitFileManager {
     }
 
     public Inventory getContents(String kitName) {
-        return KitManager.StringToInventory(file.getString(kitName + ".Contents"));
+        return r.getKitManager().StringToInventory(file.getString(kitName + ".Contents"));
     }
 
     public ArrayList<String> getAllKits() {

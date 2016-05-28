@@ -1,37 +1,43 @@
 package de.alpha.uhc.border;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.aclasses.AScoreboard;
-import de.popokaka.alphalibary.nms.SimpleTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
+import de.popokaka.alphalibary.nms.SimpleTitle;
+
 public class BorderManager {
 	
+	private Core pl;
+	private Registery r;
+	
 	public BorderManager(Core c) {
+		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  boolean moveable;
     private  String moved;
     private  int moving;
     private  int time;
-    private int size = Border.getSize();
+    private int size = r.getBorder().getSize();
 
     public  void setMoveable(boolean moveable) {
-        BorderManager.moveable = moveable;
+        this.moveable = moveable;
     }
 
     public  void setMoved(String moved) {
-        BorderManager.moved = moved;
+        this.moved = moved;
     }
 
     public  void setMoving(int moving) {
-        BorderManager.moving = moving;
+        this.moving = moving;
     }
 
     public  void setTime(int time) {
-        BorderManager.time = time;
+        this.time = time;
     }
 
     public int getSize() {
@@ -54,10 +60,10 @@ public class BorderManager {
             public void run() {
 
                 Bukkit.broadcastMessage(Core.getInstance().getPrefix() + moved);
-                size = Border.getSize() - moving;
-                Border.changesize(size);
+                size = r.getBorder().getSize() - moving;
+                r.getBorder().changesize(size);
                 for (Player all : Bukkit.getOnlinePlayers()) {
-                    AScoreboard.updateInGameBorder(all);
+                	r.getAScoreboard().updateInGameBorder(all);
                     SimpleTitle.sendTitle(all, " ", moved, 1, 2, 1);
                 }
 

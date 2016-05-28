@@ -1,26 +1,32 @@
 package de.alpha.uhc.aclasses;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.files.MessageFileManager;
-import de.popokaka.alphalibary.nms.SimpleTablist;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.Registery;
+import de.popokaka.alphalibary.nms.SimpleTablist;
+
 public class ATablist {
 	
+	private Core pl;
+	private Registery r;
+	
 	public ATablist(Core c) {
+		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  String header;
     private  String footer;
 
     public  void setHeader(String header) {
-        ATablist.header = header;
+        this.header = header;
     }
 
     public  void setFooter(String footer) {
-        ATablist.footer = footer;
+        this.footer = footer;
     }
 
     public  void sendStandingLobbyTablist() {
@@ -36,8 +42,8 @@ public class ATablist {
             SimpleTablist.setTablistHeaderFooter(all, null, null);
             SimpleTablist.setTablistHeaderFooter(all, header, footer);
 
-            header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
-            footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
+            header = r.getMessageFile().getMSGFile().getColorString("Tablist.Top");
+            footer = r.getMessageFile().getMSGFile().getColorString("Tablist.Bottom");
         }
 
 
@@ -56,8 +62,8 @@ public class ATablist {
             SimpleTablist.setTablistHeaderFooter(all, null, null);
             SimpleTablist.setTablistHeaderFooter(all, header, footer);
 
-            header = MessageFileManager.getMSGFile().getColorString("Tablist.Top");
-            footer = MessageFileManager.getMSGFile().getColorString("Tablist.Bottom");
+            header = r.getMessageFile().getMSGFile().getColorString("Tablist.Top");
+            footer = r.getMessageFile().getMSGFile().getColorString("Tablist.Bottom");
         }
     }
 }

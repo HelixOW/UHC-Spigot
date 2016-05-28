@@ -1,6 +1,7 @@
 package de.alpha.uhc.commands;
 
 import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
 import de.alpha.uhc.utils.Stats;
 import de.popokaka.alphalibary.command.SimpleCommand;
 import org.bukkit.command.CommandSender;
@@ -10,40 +11,44 @@ import java.util.List;
 
 public class StatsCommand extends SimpleCommand<Core> {
 
-    private static boolean us;
-    private static String er;
+    private boolean us;
+    private String er;
+    private Core pl;
+    private Registery r;
 
     public StatsCommand(Core plugin, String[] aliases) {
         super(plugin, "stats", "See your Statistics of UHC", aliases);
+        this.pl = plugin;
+        this.r = pl.getRegistery();
     }
 
-    private static boolean inUs() {
+    private boolean inUs() {
         return us;
     }
 
-    public static void setUs(boolean a) {
+    public void setUs(boolean a) {
         us = a;
     }
 
-    private static String getEr() {
+    private String getEr() {
         return er;
     }
 
-    public static void setEr(String a) {
-        StatsCommand.er = a;
+    public void setEr(String a) {
+        this.er = a;
     }
 
     @Override
     public boolean execute(CommandSender cs, String label, String[] args) {
         if (!(cs instanceof Player)) {
-            cs.sendMessage(Core.getInstance().getPrefix() + UHCCommand.getNoplayer());
+            cs.sendMessage(pl.getPrefix() + r.getUHCCommand().getNoplayer());
             return false;
         }
         if (inUs()) {
             Player p = (Player) cs;
             new Stats(p).sendStats();
         } else {
-            cs.sendMessage(Core.getInstance().getPrefix() + getEr());
+            cs.sendMessage(pl.getPrefix() + getEr());
         }
         return false;
     }

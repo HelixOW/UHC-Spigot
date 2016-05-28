@@ -1,6 +1,7 @@
 package de.alpha.uhc.files;
 
 import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.file.SimpleFile;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -9,9 +10,11 @@ import org.bukkit.World;
 public class HologramFileManager {
 	
 	private Core pl;
+	private Registery r;
 	
 	public HologramFileManager(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  final SimpleFile file = getHologramFile();
@@ -48,7 +51,7 @@ public class HologramFileManager {
         if (Bukkit.getWorld(file.getString(id + ".world")) != null) {
             w = Bukkit.getWorld(file.getString(id + ".world"));
         } else {
-            w = Bukkit.getWorld(SpawnFileManager.getLobbyWorldName());
+            w = Bukkit.getWorld(r.getSpawnFileManager().getLobbyWorldName());
         }
 
         return new Location(w, x, y, z);

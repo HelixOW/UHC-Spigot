@@ -1,14 +1,7 @@
 package de.alpha.uhc.Listener;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.aclasses.AScoreboard;
-import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.kits.GUI;
-import de.alpha.uhc.kits.KitFileManager;
-import de.alpha.uhc.utils.Regions;
-import de.alpha.uhc.utils.Stats;
+import java.util.HashMap;
+
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
@@ -25,14 +18,19 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
-import java.util.HashMap;
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
+import de.alpha.uhc.Registery;
+import de.alpha.uhc.utils.Stats;
 
 public class LobbyListener implements Listener {
 	
 	private Core pl;
+	private Registery r;
 	
 	public LobbyListener(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  final HashMap<Player, String> kit = new HashMap<>();
@@ -41,15 +39,15 @@ public class LobbyListener implements Listener {
     private  String coinsneed;
 
     public  void setSel(String sel) {
-        LobbyListener.sel = sel;
+        this.sel = sel;
     }
 
     public  void setBought(String bought) {
-        LobbyListener.bought = bought;
+        this.bought = bought;
     }
 
     public  void setCoinsneed(String coinsneed) {
-        LobbyListener.coinsneed = coinsneed;
+        this.coinsneed = coinsneed;
     }
 
     public  boolean hasSelKit(Player p) {
@@ -85,13 +83,13 @@ public class LobbyListener implements Listener {
         Player p = e.getPlayer();
 
         if (!(GState.isState(GState.LOBBY))) return;
-        if (!Regions.isLobby()) return;
+        if (!r.getRegions().isLobby()) return;
 
-        if (!Regions.isInRegion(e.getTo())) {
-            if (SpawnFileManager.getLobby() == null) {
+        if (!r.getRegions().isInRegion(e.getTo())) {
+            if (r.getSpawnFileManager().getLobby() == null) {
                 p.teleport(p.getWorld().getSpawnLocation());
             } else {
-                p.teleport(SpawnFileManager.getLobby());
+                p.teleport(r.getSpawnFileManager().getLobby());
             }
         }
 
@@ -140,11 +138,11 @@ public class LobbyListener implements Listener {
 
         if (!(GState.isState(GState.LOBBY))) return;
         if (e.getPlayer().getInventory().getItemInMainHand() == null) return;
-        if (!(e.getPlayer().getInventory().getItemInMainHand().getType().equals(PlayerJoinListener.getKitItem())))
+        if (!(e.getPlayer().getInventory().getItemInMainHand().getType().equals(r.getPlayerJoinListener().getKitItem())))
             return;
 
         e.setCancelled(true);
-        GUI.open(e.getPlayer());
+        r.getGui().open(e.getPlayer());
 
     }
 
@@ -152,37 +150,37 @@ public class LobbyListener implements Listener {
     public void onInvClick(InventoryClickEvent e) {
 
         if (e.getClickedInventory() == null) return;
-        if (!(e.getClickedInventory().getName().equalsIgnoreCase(GUI.getTitle()))) return;
+        if (!(e.getClickedInventory().getName().equalsIgnoreCase(r.getGui().getTitle()))) return;
         if (!(e.getWhoClicked() instanceof Player)) return;
 
         Player p = (Player) e.getWhoClicked();
 
         e.setCancelled(true);
 
-        for (String kits : new KitFileManager().getAllKits()) {
-            if (e.getCurrentItem().getType().equals(Material.getMaterial(new KitFileManager().getMaterial(kits).toUpperCase()))) {
+        for (String kits : r.getKitFile().getAllKits()) {
+            if (e.getCurrentItem().getType().equals(Material.getMaterial(r.getKitFile().getMaterial(kits).toUpperCase()))) {
                 if (new Stats(p).getKits().contains(kits)) {
                     kit.put(p, kits);
                     sel = sel.replace("[Kit]", kits);
                     p.sendMessage(pl.getPrefix() + sel);
                     p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
-                    sel = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Selected");
+                    sel = r.getMessageFile().getMSGFile().getColorString("Kits.GUI.Selected");
                     p.closeInventory();
                     break;
-                } else if (new Stats(p).getCoins() >= new KitFileManager().getPrice(kits)) {
-                    new Stats(p).removeCoins(new KitFileManager().getPrice(kits));
+                } else if (new Stats(p).getCoins() >= r.getKitFile().getPrice(kits)) {
+                    new Stats(p).removeCoins(r.getKitFile().getPrice(kits));
                     new Stats(p).addKit(kits);
                     if (kit.containsKey(p)) {
                         kit.remove(p);
                     }
                     kit.put(p, kits);
                     bought = bought.replace("[Kit]", kits);
-                    bought = bought.replace("[Coins]", Integer.toString(new KitFileManager().getPrice(kits)));
+                    bought = bought.replace("[Coins]", Integer.toString(r.getKitFile().getPrice(kits)));
                     p.sendMessage(pl.getPrefix() + bought);
-                    bought = MessageFileManager.getMSGFile().getColorString("Kits.GUI.Bought");
+                    bought = r.getMessageFile().getMSGFile().getColorString("Kits.GUI.Bought");
                     p.closeInventory();
                     p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
-                    AScoreboard.setLobbyScoreboard(p);
+                    r.getAScoreboard().setLobbyScoreboard(p);
                     break;
                 } else {
                     p.sendMessage(pl.getPrefix() + coinsneed);

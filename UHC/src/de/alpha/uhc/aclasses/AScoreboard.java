@@ -11,15 +11,14 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
-import de.alpha.uhc.Listener.LobbyListener;
-import de.alpha.uhc.border.Border;
-import de.alpha.uhc.files.SpawnFileManager;
-import de.alpha.uhc.timer.Timer;
 import de.alpha.uhc.utils.Stats;
 
 public class AScoreboard {
 	
+	private Core pl;
+	
 	public AScoreboard(Core c) {
+		this.pl = c;
 	}
 
     private  final HashMap<Player, Integer> sTeamA = new HashMap<>();
@@ -80,151 +79,151 @@ public class AScoreboard {
     private  String ingamePvPmsg;
 
     public  void setShowLobbyScoreboard(boolean showLobbyScoreboard) {
-        ShowLobbyScoreboard = showLobbyScoreboard;
+    	this.ShowLobbyScoreboard = showLobbyScoreboard;
     }
 
     public  void setShowLobbyKills(boolean showLobbyKills) {
-        ShowLobbyKills = showLobbyKills;
+    	this.ShowLobbyKills = showLobbyKills;
     }
 
     public  void setShowLobbyDeaths(boolean showLobbyDeaths) {
-        ShowLobbyDeaths = showLobbyDeaths;
+    	this.ShowLobbyDeaths = showLobbyDeaths;
     }
 
     public  void setShowLobbyCoins(boolean showLobbyCoins) {
-        ShowLobbyCoins = showLobbyCoins;
+    	this.ShowLobbyCoins = showLobbyCoins;
     }
 
     public  void setShowLobbyPlayercount(boolean showLobbyPlayercount) {
-        ShowLobbyPlayercount = showLobbyPlayercount;
+    	this.ShowLobbyPlayercount = showLobbyPlayercount;
     }
 
     public  void setShowLobbyTeam(boolean showLobbyTeam) {
-        ShowLobbyTeam = showLobbyTeam;
+    	this.ShowLobbyTeam = showLobbyTeam;
     }
 
     public  void setShowLobbyBar(boolean showLobbyBar) {
-        ShowLobbyBar = showLobbyBar;
+    	this.ShowLobbyBar = showLobbyBar;
     }
 
     public  void setLobbyTitle(String lobbyTitle) {
-        AScoreboard.lobbyTitle = lobbyTitle;
+        this.lobbyTitle = lobbyTitle;
     }
 
     public  void setLobbyKills(String lobbyKills) {
-        AScoreboard.lobbyKills = lobbyKills;
+    	this.lobbyKills = lobbyKills;
     }
 
     public  void setLobbyDeaths(String lobbyDeaths) {
-        AScoreboard.lobbyDeaths = lobbyDeaths;
+    	this.lobbyDeaths = lobbyDeaths;
     }
 
     public  void setLobbyCoins(String lobbyCoins) {
-        AScoreboard.lobbyCoins = lobbyCoins;
+    	this.lobbyCoins = lobbyCoins;
     }
 
     public  void setLobbyPlayercount(String lobbyPlayercount) {
-        AScoreboard.lobbyPlayercount = lobbyPlayercount;
+    	this.lobbyPlayercount = lobbyPlayercount;
     }
 
     public  void setLobbyTeam(String lobbyTeam) {
-        AScoreboard.lobbyTeam = lobbyTeam;
+    	this.lobbyTeam = lobbyTeam;
     }
 
     public  void setLobbyBar(String lobbyBar) {
-        AScoreboard.lobbyBar = lobbyBar;
+    	this.lobbyBar = lobbyBar;
     }
 
     public  void setShowInGameScoreboard(boolean showInGameScoreboard) {
-        ShowIngameScoreboard = showInGameScoreboard;
+    	this.ShowIngameScoreboard = showInGameScoreboard;
     }
 
     public  void setShowInGamePlayersLiving(boolean showInGamePlayersLiving) {
-        ShowInGamePlayersLiving = showInGamePlayersLiving;
+    	this.ShowInGamePlayersLiving = showInGamePlayersLiving;
     }
 
     public  void setShowInGameSpectators(boolean showInGameSpectators) {
-        ShowInGameSpectators = showInGameSpectators;
+    	this.ShowInGameSpectators = showInGameSpectators;
     }
 
     public  void setShowInGameKit(boolean showInGameKit) {
-        ShowInGameKit = showInGameKit;
+    	this.ShowInGameKit = showInGameKit;
     }
 
     public  void setShowInGameCenter(boolean showInGameCenter) {
-        ShowInGameCenter = showInGameCenter;
+    	this.ShowInGameCenter = showInGameCenter;
     }
 
     public  void setShowInGameTeam(boolean showInGameTeam) {
-        ShowInGameTeam = showInGameTeam;
+    	this.ShowInGameTeam = showInGameTeam;
     }
 
     public  void setShowInGameBorder(boolean showInGameBorder) {
-        ShowInGameBorder = showInGameBorder;
+    	this.ShowInGameBorder = showInGameBorder;
     }
 
     public  void setShowInGamePvP(boolean showInGamePvP) {
-        ShowInGamePvP = showInGamePvP;
+    	this.ShowInGamePvP = showInGamePvP;
     }
 
     public  void setShowInGameBar(boolean showInGameBar) {
-        ShowInGameBar = showInGameBar;
+    	this.ShowInGameBar = showInGameBar;
     }
 
     public  void setIngameTitle(String ingameTitle) {
-        AScoreboard.ingameTitle = ingameTitle;
+    	this.ingameTitle = ingameTitle;
     }
 
     public  void setIngamePlayersLiving(String ingamePlayersLiving) {
-        AScoreboard.ingamePlayersLiving = ingamePlayersLiving;
+    	this.ingamePlayersLiving = ingamePlayersLiving;
     }
 
     public  void setIngameSpectators(String ingameSpectators) {
-        AScoreboard.ingameSpectators = ingameSpectators;
+    	this.ingameSpectators = ingameSpectators;
     }
 
     public  void setIngameKit(String ingameKit) {
-        AScoreboard.ingameKit = ingameKit;
+    	this.ingameKit = ingameKit;
     }
 
     public  void setIngameCenter(String ingameCenter) {
-        AScoreboard.ingameCenter = ingameCenter;
+    	this.ingameCenter = ingameCenter;
     }
 
     //                 		-=X Scores X=-
 
     public  void setIngameTeam(String ingameTeam) {
-        AScoreboard.ingameTeam = ingameTeam;
+    	this.ingameTeam = ingameTeam;
     }
 
     public  void setIngameBorder(String ingameBorder) {
-        AScoreboard.ingameBorder = ingameBorder;
+    	this.ingameBorder = ingameBorder;
     }
 
     public  void setIngamePvP(String ingamePvP) {
-        AScoreboard.ingamePvP = ingamePvP;
+    	this.ingamePvP = ingamePvP;
     }
 
     public  void setIngameBar(String ingameBar) {
-        AScoreboard.ingameBar = ingameBar;
+    	this.ingameBar = ingameBar;
     }
 
     public  void setShowHealthUName(boolean showHealthUName) {
-        ShowHealthUName = showHealthUName;
+    	this.ShowHealthUName = showHealthUName;
     }
 
     public  void setShowHealthInTab(boolean showHealthInTab) {
-        ShowHealthInTab = showHealthInTab;
+    	this.ShowHealthInTab = showHealthInTab;
     }
 
     public  void setDmgin(String dmgin) {
-        AScoreboard.dmgin = dmgin;
+    	this.dmgin = dmgin;
     }
 
     //  					-=X Strings on Board X=-
 
     public  void setPvpin(String pvpin) {
-        AScoreboard.pvpin = pvpin;
+    	this.pvpin = pvpin;
     }
 
     public  HashMap<Player, String> getA() {
@@ -244,7 +243,7 @@ public class AScoreboard {
     }
 
     public  void setIngamePvPmsg(String ingamePvPmsg) {
-        AScoreboard.ingamePvPmsg = ingamePvPmsg;
+    	this.ingamePvPmsg = ingamePvPmsg;
     }
 
     public  void setLobbyScoreboard(Player p) {
@@ -259,7 +258,7 @@ public class AScoreboard {
         obj.setDisplayName(lobbyTitle);
 
         if (ShowLobbyTeam) {
-            String a = lobbyTeam.replace("[team]", "" + ATeam.getTeamColor(ATeam.getPlayerTeam(p)) + ATeam.getPlayerTeam(p));
+            String a = lobbyTeam.replace("[team]", "" + pl.getRegistery().getATeam().getTeamColor(pl.getRegistery().getATeam().getPlayerTeam(p)) + pl.getRegistery().getATeam().getPlayerTeam(p));
             obj.getScore(a).setScore(score);
             A.put(p, a);
             aa = score;
@@ -310,7 +309,7 @@ public class AScoreboard {
 
     public  void updateLobbyTeam(Player p) {
         Objective objP = p.getScoreboard().getObjective("UHCLobby");
-        String a = lobbyTeam.replace("[team]", "" + ATeam.getTeamColor(ATeam.getPlayerTeam(p)) + ATeam.getPlayerTeam(p));
+        String a = lobbyTeam.replace("[team]", "" + pl.getRegistery().getATeam().getTeamColor(pl.getRegistery().getATeam().getPlayerTeam(p)) + pl.getRegistery().getATeam().getPlayerTeam(p));
         p.getScoreboard().resetScores(A.get(p));
         A.put(p, a);
         objP.getScore(a).setScore(aa);
@@ -326,12 +325,12 @@ public class AScoreboard {
 
         String alive = ingamePlayersLiving.replace("[livingPlayerscount]", Integer.toString(Core.getInstance().getInGamePlayers().size()));
         String specs = ingameSpectators.replace("[spectatorcount]", Integer.toString(Core.getInstance().getSpecs().size()));
-        String kit = ingameKit.replace("[kit]", LobbyListener.getSelKit(p));
-        String team = ingameTeam.replace("[team]", "" + ATeam.getTeamColor(ATeam.getPlayerTeam(p)) + ATeam.getPlayerTeam(p));
-        String bordersize = ingameBorder.replace("[bordersize]", Integer.toString(Border.getSize()));
-        String inGameTime = ingamePvP.replace("[time]", Integer.toString(Timer.getuDM()));
-        String GraceTime = dmgin.replace("[time]", Integer.toString(Timer.getGracetime()));
-        String PreGame = pvpin.replace("[time]", Integer.toString(Timer.getPrePvP()));
+        String kit = ingameKit.replace("[kit]", pl.getRegistery().getLobbyListener().getSelKit(p));
+        String team = ingameTeam.replace("[team]", "" + pl.getRegistery().getATeam().getTeamColor(pl.getRegistery().getATeam().getPlayerTeam(p)) + pl.getRegistery().getATeam().getPlayerTeam(p));
+        String bordersize = ingameBorder.replace("[bordersize]", Integer.toString(pl.getRegistery().getBorder().getSize()));
+        String inGameTime = ingamePvP.replace("[time]", Integer.toString(pl.getRegistery().getTimer().getuDM()));
+        String GraceTime = dmgin.replace("[time]", Integer.toString(pl.getRegistery().getTimer().getGracetime()));
+        String PreGame = pvpin.replace("[time]", Integer.toString(pl.getRegistery().getTimer().getPrePvP()));
 
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName(ingameTitle);
@@ -359,8 +358,8 @@ public class AScoreboard {
         }
 
         if (ShowInGameCenter) {
-            if (SpawnFileManager.getSpawn() == null && p.getWorld().getName().equals(SpawnFileManager.getSpawnWorldName())) {
-                int dis = (int) p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation());
+            if (pl.getRegistery().getSpawnFileManager().getSpawn() == null && p.getWorld().getName().equals(pl.getRegistery().getSpawnFileManager().getSpawnWorldName())) {
+                int dis = (int) p.getLocation().distance(pl.getRegistery().getSpawnFileManager().getSpawn().getWorld().getHighestBlockAt(pl.getRegistery().getSpawnFileManager().getSpawn().getBlockX(), pl.getRegistery().getSpawnFileManager().getSpawn().getBlockZ()).getLocation());
                 String a = ingameCenter.replace("[distanceToCenter]", Integer.toString(dis));
                 cTeamD.put(p, a);
                 obj.getScore(a).setScore(score++);
@@ -446,8 +445,8 @@ public class AScoreboard {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!(SpawnFileManager.getSpawn() == null && p.getWorld().getName().equals(SpawnFileManager.getSpawnWorldName()))) {
-                    int dis = (int) p.getLocation().distance(SpawnFileManager.getSpawn().getWorld().getHighestBlockAt(SpawnFileManager.getSpawn().getBlockX(), SpawnFileManager.getSpawn().getBlockZ()).getLocation());
+                if (!(pl.getRegistery().getSpawnFileManager().getSpawn() == null && p.getWorld().getName().equals(pl.getRegistery().getSpawnFileManager().getSpawnWorldName()))) {
+                    int dis = (int) p.getLocation().distance(pl.getRegistery().getSpawnFileManager().getSpawn().getWorld().getHighestBlockAt(pl.getRegistery().getSpawnFileManager().getSpawn().getBlockX(), pl.getRegistery().getSpawnFileManager().getSpawn().getBlockZ()).getLocation());
                     String a = ingameCenter.replace("[distanceToCenter]", Integer.toString(dis));
                     p.getScoreboard().resetScores(cTeamD.get(p));
                     cTeamD.put(p, a);
@@ -465,7 +464,7 @@ public class AScoreboard {
 
     public  void updateInGameBorder(Player p) {
         Objective b = p.getScoreboard().getObjective("UHCInGame");
-        String a = ingameBorder.replace("[bordersize]", Integer.toString(Border.getSize()));
+        String a = ingameBorder.replace("[bordersize]", Integer.toString(pl.getRegistery().getBorder().getSize()));
         p.getScoreboard().resetScores(cTeamB.get(p));
         cTeamB.put(p, a);
         b.getScore(a).setScore(sTeamB.get(p));
@@ -473,9 +472,9 @@ public class AScoreboard {
 
     public  void updateInGamePvPTime(final Player p) {
         final Objective b = p.getScoreboard().getObjective("UHCInGame");
-        String inGameTime = ingamePvP.replace("[time]", Integer.toString(Timer.getuDM()));
-        String GraceTime = dmgin.replace("[time]", Integer.toString(Timer.getGracetime()));
-        String PreGame = pvpin.replace("[time]", Integer.toString(Timer.getPrePvP()));
+        String inGameTime = ingamePvP.replace("[time]", Integer.toString(pl.getRegistery().getTimer().getuDM()));
+        String GraceTime = dmgin.replace("[time]", Integer.toString(pl.getRegistery().getTimer().getGracetime()));
+        String PreGame = pvpin.replace("[time]", Integer.toString(pl.getRegistery().getTimer().getPrePvP()));
         if (!(cTeamP.containsKey(p))) {
             if (ShowInGamePvP) {
                 if (GState.isState(GState.PREGAME)) {
@@ -495,7 +494,7 @@ public class AScoreboard {
             return;
         }
         if (GState.isState(GState.INGAME)) {
-            String a = ingamePvP.replace("[time]", Integer.toString(Timer.getuDM()));
+            String a = ingamePvP.replace("[time]", Integer.toString(pl.getRegistery().getTimer().getuDM()));
             p.getScoreboard().resetScores(cTeamP.get(p));
             cTeamP.put(p, a);
             b.getScore(a).setScore(sTeamP.get(p));
@@ -504,7 +503,7 @@ public class AScoreboard {
             @Override
             public void run() {
                 if (GState.isState(GState.GRACE)) {
-                    String a = dmgin.replace("[time]", Integer.toString(Timer.getGracetime()));
+                    String a = dmgin.replace("[time]", Integer.toString(pl.getRegistery().getTimer().getGracetime()));
                     p.getScoreboard().resetScores(cTeamP.get(p));
                     cTeamP.put(p, a);
                     b.getScore(a).setScore(sTeamP.get(p));
@@ -515,7 +514,7 @@ public class AScoreboard {
             @Override
             public void run() {
                 if (GState.isState(GState.PREGAME)) {
-                    String a = pvpin.replace("[time]", Integer.toString(Timer.getPrePvP()));
+                    String a = pvpin.replace("[time]", Integer.toString(pl.getRegistery().getTimer().getPrePvP()));
                     p.getScoreboard().resetScores(cTeamP.get(p));
                     cTeamP.put(p, a);
                     b.getScore(a).setScore(sTeamP.get(p));

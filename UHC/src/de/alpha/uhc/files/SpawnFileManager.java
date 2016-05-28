@@ -1,20 +1,23 @@
 package de.alpha.uhc.files;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.utils.Cuboid;
-import de.alpha.uhc.utils.Regions;
-import de.popokaka.alphalibary.file.SimpleFile;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 
+import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
+import de.alpha.uhc.utils.Cuboid;
+import de.popokaka.alphalibary.file.SimpleFile;
+
 public class SpawnFileManager {
 	
 	private Core pl;
+	private Registery r;
 	
 	public SpawnFileManager(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  final SimpleFile cfg = getSpawnFile();
@@ -153,14 +156,14 @@ public class SpawnFileManager {
             return;
         }
 
-        Regions.addRegion(new Cuboid(getRegionLoc("pos1"), getRegionLoc("pos2")));
+        r.getRegions().addRegion(new Cuboid(getRegionLoc("pos1"), getRegionLoc("pos2")));
 
     }
 
     private  Location getRegionLoc(String name) {
 
         if (!cfg.isConfigurationSection("Lobbyregion")) {
-            Regions.setLobby(false);
+            r.getRegions().setLobby(false);
             return null;
         }
 

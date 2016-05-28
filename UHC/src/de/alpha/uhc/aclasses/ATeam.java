@@ -23,13 +23,17 @@ import org.bukkit.inventory.ItemStack;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
-import de.alpha.uhc.files.MessageFileManager;
-import de.alpha.uhc.files.TeamFile;
+import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class ATeam implements Listener {
 	
+	private Core pl;
+	private Registery r;
+	
 	public ATeam(Core c) {
+		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  String chosen;
@@ -58,7 +62,7 @@ public class ATeam implements Listener {
     }
 
     public  void setChosen(String chosen) {
-        ATeam.chosen = chosen;
+        this.chosen = chosen;
     }
 
     public  String getNoExist() {
@@ -66,7 +70,7 @@ public class ATeam implements Listener {
     }
 
     public  void setNoExist(String noExist) {
-        ATeam.noExist = noExist;
+    	this.noExist = noExist;
     }
 
     public  String getAllTeams() {
@@ -74,23 +78,23 @@ public class ATeam implements Listener {
     }
 
     public  void setAllTeams(String allTeams) {
-        ATeam.allTeams = allTeams;
+    	this.allTeams = allTeams;
     }
 
     public  void setMaterialName(String materialName) {
-        ATeam.materialName = materialName;
+    	this.materialName = materialName;
     }
 
     public  void setBlockName(String blockName) {
-        ATeam.blockName = blockName;
+    	this.blockName = blockName;
     }
 
     public  void setTitle(String title) {
-        ATeam.title = title;
+    	this.title = title;
     }
 
     public  void setFull(String full) {
-        ATeam.full = full;
+    	this.full = full;
     }
 
     public  void removePlayerFromTeam(Player p) {
@@ -107,7 +111,7 @@ public class ATeam implements Listener {
             if (isFull(teamToPut)) {
                 full = full.replace("[team]", getTeamColor(teamToPut) + teamToPut);
                 p.sendMessage(Core.getInstance().getPrefix() + full);
-                full = MessageFileManager.getMSGFile().getColorString("Teams.full");
+                full = r.getMessageFile().getMSGFile().getColorString("Teams.full");
             } else {
                 if (teamC.containsKey(teamToPut)) {
                     if (!(teams.containsKey(p))) {
@@ -119,7 +123,7 @@ public class ATeam implements Listener {
                         teamC.put(teamToPut, teamC.get(teamToPut) - 1);
                         full = full.replace("[team]", getTeamColor(teamToPut) + teamToPut);
                         p.sendMessage(Core.getInstance().getPrefix() + full);
-                        full = MessageFileManager.getMSGFile().getColorString("Teams.full");
+                        full = r.getMessageFile().getMSGFile().getColorString("Teams.full");
                         return;
                     }
                 }
@@ -131,8 +135,8 @@ public class ATeam implements Listener {
                 p.spigot().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 0, 0, 5, 5, 5, 50, 100, 5);
                 p.setDisplayName(getTeamColor(teamToPut) + p.getName());
                 p.setPlayerListName(getTeamColor(teamToPut) + p.getName());
-                AScoreboard.updateLobbyTeam(p);
-                chosen = MessageFileManager.getMSGFile().getColorString("Teams.chosen");
+                r.getAScoreboard().updateLobbyTeam(p);
+                chosen = r.getMessageFile().getMSGFile().getColorString("Teams.chosen");
             }
         } else {
             String a = noExist.replace("[team]", teamToPut);
@@ -143,7 +147,7 @@ public class ATeam implements Listener {
 
     public  ChatColor getTeamColor(String team) {
         try {
-            return ChatColor.valueOf(TeamFile.getTeamColorAsString(team));
+            return ChatColor.valueOf(r.getTeamFile().getTeamColorAsString(team));
         } catch (IllegalArgumentException e) {
             Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + "§cThe Team §4" + team + " §cis invalid.");
         }
@@ -151,46 +155,46 @@ public class ATeam implements Listener {
     }
 
     public  Color getTeamItemColor(String team) {
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("orange")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("orange")) {
             return Color.ORANGE;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("light_purple")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("light_purple")) {
             return Color.FUCHSIA;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("aqua")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("aqua")) {
             return Color.AQUA;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("yellow")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("yellow")) {
             return Color.YELLOW;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("green")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("green")) {
             return Color.LIME;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("red")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("red")) {
             return Color.MAROON;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_grey")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_grey")) {
             return Color.GRAY;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("grey")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("grey")) {
             return Color.SILVER;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_aqua")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_aqua")) {
             return Color.NAVY;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_purple")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_purple")) {
             return Color.PURPLE;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("blue")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("blue")) {
             return Color.BLUE;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_green")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_green")) {
             return Color.OLIVE;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_red")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_red")) {
             return Color.RED;
         }
-        if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("black")) {
+        if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("black")) {
             return Color.BLACK;
         }
 
@@ -199,46 +203,46 @@ public class ATeam implements Listener {
 
     private  int getTeamColorAsInteger(String team) {
         try {
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("orange")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("orange")) {
                 return 1;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("light_purple")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("light_purple")) {
                 return 2;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("aqua")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("aqua")) {
                 return 3;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("yellow")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("yellow")) {
                 return 4;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("green")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("green")) {
                 return 5;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("red")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("red")) {
                 return 6;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_grey")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_grey")) {
                 return 7;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("grey")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("grey")) {
                 return 8;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_aqua")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_aqua")) {
                 return 9;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_purple")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_purple")) {
                 return 10;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("blue")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("blue")) {
                 return 11;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_green")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_green")) {
                 return 13;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("dark_red")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("dark_red")) {
                 return 14;
             }
-            if (TeamFile.getTeamColorAsString(team).equalsIgnoreCase("black")) {
+            if (r.getTeamFile().getTeamColorAsString(team).equalsIgnoreCase("black")) {
                 return 15;
             }
 
@@ -361,7 +365,7 @@ public class ATeam implements Listener {
         ArmorStand as = (ArmorStand) e.getRightClicked();
         if (!(as.isCustomNameVisible())) return;
         String name = "";
-        for (String names : TeamFile.getTeamFile().getConfigurationSection("Teams").getKeys(false)) {
+        for (String names : r.getTeamFile().getTeamFile().getConfigurationSection("Teams").getKeys(false)) {
             if (ChatColor.stripColor(as.getCustomName()).equalsIgnoreCase(names)) {
                 name = names;
             }

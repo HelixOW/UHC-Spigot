@@ -1,15 +1,17 @@
 package de.alpha.uhc.files;
 
 import de.alpha.uhc.Core;
-import de.alpha.uhc.aclasses.AScoreboard;
+import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.file.SimpleFile;
 
 public class ScoreboardFile {
 	
 	private Core pl;
+	private Registery r;
 	
 	public ScoreboardFile(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  final SimpleFile file = getScoreboardFile();
@@ -81,47 +83,47 @@ public class ScoreboardFile {
 
     public  void loadScores() {
 
-        AScoreboard.setShowLobbyScoreboard(file.getBoolean("Scoreboard.Lobby.show"));
-        AScoreboard.setShowLobbyKills(file.getBoolean("Scoreboard.Lobby.Kills.show"));
-        AScoreboard.setShowLobbyDeaths(file.getBoolean("Scoreboard.Lobby.Deaths.show"));
-        AScoreboard.setShowLobbyCoins(file.getBoolean("Scoreboard.Lobby.Coins.show"));
-        AScoreboard.setShowLobbyPlayercount(file.getBoolean("Scoreboard.Lobby.Playercount.show"));
-        AScoreboard.setShowLobbyTeam(file.getBoolean("Scoreboard.Lobby.Team.show"));
-        AScoreboard.setShowLobbyBar(file.getBoolean("Scoreboard.Lobby.Bar.show"));
+        r.getAScoreboard().setShowLobbyScoreboard(file.getBoolean("Scoreboard.Lobby.show"));
+        r.getAScoreboard().setShowLobbyKills(file.getBoolean("Scoreboard.Lobby.Kills.show"));
+        r.getAScoreboard().setShowLobbyDeaths(file.getBoolean("Scoreboard.Lobby.Deaths.show"));
+        r.getAScoreboard().setShowLobbyCoins(file.getBoolean("Scoreboard.Lobby.Coins.show"));
+        r.getAScoreboard().setShowLobbyPlayercount(file.getBoolean("Scoreboard.Lobby.Playercount.show"));
+        r.getAScoreboard().setShowLobbyTeam(file.getBoolean("Scoreboard.Lobby.Team.show"));
+        r.getAScoreboard().setShowLobbyBar(file.getBoolean("Scoreboard.Lobby.Bar.show"));
 
-        AScoreboard.setLobbyTitle(file.getColorString("Scoreboard.Lobby.title"));
-        AScoreboard.setLobbyKills(file.getColorString("Scoreboard.Lobby.Kills.message"));
-        AScoreboard.setLobbyDeaths(file.getColorString("Scoreboard.Lobby.Deaths.message"));
-        AScoreboard.setLobbyCoins(file.getColorString("Scoreboard.Lobby.Coins.message"));
-        AScoreboard.setLobbyPlayercount(file.getColorString("Scoreboard.Lobby.Playercount.message"));
-        AScoreboard.setLobbyTeam(file.getColorString("Scoreboard.Lobby.Team.message"));
-        AScoreboard.setLobbyBar(file.getColorString("Scoreboard.Lobby.Bar.message"));
+        r.getAScoreboard().setLobbyTitle(file.getColorString("Scoreboard.Lobby.title"));
+        r.getAScoreboard().setLobbyKills(file.getColorString("Scoreboard.Lobby.Kills.message"));
+        r.getAScoreboard().setLobbyDeaths(file.getColorString("Scoreboard.Lobby.Deaths.message"));
+        r.getAScoreboard().setLobbyCoins(file.getColorString("Scoreboard.Lobby.Coins.message"));
+        r.getAScoreboard().setLobbyPlayercount(file.getColorString("Scoreboard.Lobby.Playercount.message"));
+        r.getAScoreboard().setLobbyTeam(file.getColorString("Scoreboard.Lobby.Team.message"));
+        r.getAScoreboard().setLobbyBar(file.getColorString("Scoreboard.Lobby.Bar.message"));
 
-        AScoreboard.setShowInGameScoreboard(file.getBoolean("Scoreboard.InGame.show"));
-        AScoreboard.setShowInGamePlayersLiving(file.getBoolean("Scoreboard.InGame.Living Players.show"));
-        AScoreboard.setShowInGameSpectators(file.getBoolean("Scoreboard.InGame.Spectators.show"));
-        AScoreboard.setShowInGameKit(file.getBoolean("Scoreboard.InGame.Kit.show"));
-        AScoreboard.setShowInGameTeam(file.getBoolean("Scoreboard.InGame.Team.show"));
-        AScoreboard.setShowInGameCenter(file.getBoolean("Scoreboard.InGame.Center.show"));
-        AScoreboard.setShowInGameBorder(file.getBoolean("Scoreboard.InGame.Border.show"));
-        AScoreboard.setShowInGamePvP(file.getBoolean("Scoreboard.InGame.Until Deathmatch.show"));
-        AScoreboard.setShowInGameBar(file.getBoolean("Scoreboard.InGame.Bar.show"));
+        r.getAScoreboard().setShowInGameScoreboard(file.getBoolean("Scoreboard.InGame.show"));
+        r.getAScoreboard().setShowInGamePlayersLiving(file.getBoolean("Scoreboard.InGame.Living Players.show"));
+        r.getAScoreboard().setShowInGameSpectators(file.getBoolean("Scoreboard.InGame.Spectators.show"));
+        r.getAScoreboard().setShowInGameKit(file.getBoolean("Scoreboard.InGame.Kit.show"));
+        r.getAScoreboard().setShowInGameTeam(file.getBoolean("Scoreboard.InGame.Team.show"));
+        r.getAScoreboard().setShowInGameCenter(file.getBoolean("Scoreboard.InGame.Center.show"));
+        r.getAScoreboard().setShowInGameBorder(file.getBoolean("Scoreboard.InGame.Border.show"));
+        r.getAScoreboard().setShowInGamePvP(file.getBoolean("Scoreboard.InGame.Until Deathmatch.show"));
+        r.getAScoreboard().setShowInGameBar(file.getBoolean("Scoreboard.InGame.Bar.show"));
 
-        AScoreboard.setIngameTitle(file.getColorString("Scoreboard.InGame.title"));
-        AScoreboard.setIngamePlayersLiving(file.getColorString("Scoreboard.InGame.Living Players.message"));
-        AScoreboard.setIngameSpectators(file.getColorString("Scoreboard.InGame.Spectators.message"));
-        AScoreboard.setIngameKit(file.getColorString("Scoreboard.InGame.Kit.message"));
-        AScoreboard.setIngameTeam(file.getColorString("Scoreboard.InGame.Team.message"));
-        AScoreboard.setIngameCenter(file.getColorString("Scoreboard.InGame.Center.message"));
-        AScoreboard.setIngameBorder(file.getColorString("Scoreboard.InGame.Border.message"));
-        AScoreboard.setIngamePvP(file.getColorString("Scoreboard.InGame.Until Deathmatch.message"));
-        AScoreboard.setIngamePvPmsg(file.getColorString("Scoreboard.InGame.Deathmatch.message"));
-        AScoreboard.setIngameBar(file.getColorString("Scoreboard.InGame.Bar.message"));
+        r.getAScoreboard().setIngameTitle(file.getColorString("Scoreboard.InGame.title"));
+        r.getAScoreboard().setIngamePlayersLiving(file.getColorString("Scoreboard.InGame.Living Players.message"));
+        r.getAScoreboard().setIngameSpectators(file.getColorString("Scoreboard.InGame.Spectators.message"));
+        r.getAScoreboard().setIngameKit(file.getColorString("Scoreboard.InGame.Kit.message"));
+        r.getAScoreboard().setIngameTeam(file.getColorString("Scoreboard.InGame.Team.message"));
+        r.getAScoreboard().setIngameCenter(file.getColorString("Scoreboard.InGame.Center.message"));
+        r.getAScoreboard().setIngameBorder(file.getColorString("Scoreboard.InGame.Border.message"));
+        r.getAScoreboard().setIngamePvP(file.getColorString("Scoreboard.InGame.Until Deathmatch.message"));
+        r.getAScoreboard().setIngamePvPmsg(file.getColorString("Scoreboard.InGame.Deathmatch.message"));
+        r.getAScoreboard().setIngameBar(file.getColorString("Scoreboard.InGame.Bar.message"));
 
-        AScoreboard.setDmgin(file.getColorString("Scoreboard.InGame.Until Detahmatch.Until Damage.message"));
-        AScoreboard.setPvpin(file.getColorString("Scoreboard.InGame.Until Detahmatch.Until PvP.message"));
+        r.getAScoreboard().setDmgin(file.getColorString("Scoreboard.InGame.Until Detahmatch.Until Damage.message"));
+        r.getAScoreboard().setPvpin(file.getColorString("Scoreboard.InGame.Until Detahmatch.Until PvP.message"));
 
-        AScoreboard.setShowHealthUName(file.getBoolean("Scoreboard.Health.UnderName.show"));
-        AScoreboard.setShowHealthInTab(file.getBoolean("Scoreboard.Health.InTab.show"));
+        r.getAScoreboard().setShowHealthUName(file.getBoolean("Scoreboard.Health.UnderName.show"));
+        r.getAScoreboard().setShowHealthInTab(file.getBoolean("Scoreboard.Health.InTab.show"));
     }
 }

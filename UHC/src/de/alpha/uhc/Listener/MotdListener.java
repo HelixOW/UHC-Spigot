@@ -18,23 +18,23 @@ public class MotdListener implements Listener {
     private  boolean custommotd;
 
     public  void setLobby(String lobby) {
-        MotdListener.lobby = lobby;
+        this.lobby = lobby;
     }
 
     public  void setGrace(String grace) {
-        MotdListener.grace = grace;
+    	this.grace = grace;
     }
 
     public  void setIngame(String ingame) {
-        MotdListener.ingame = ingame;
+    	this.ingame = ingame;
     }
 
     public  void setRestart(String restart) {
-        MotdListener.restart = restart;
+    	this.restart = restart;
     }
 
     public  void setCustommotd(boolean custommotd) {
-        MotdListener.custommotd = custommotd;
+    	this.custommotd = custommotd;
     }
 
     @EventHandler

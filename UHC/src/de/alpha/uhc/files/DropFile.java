@@ -1,17 +1,19 @@
 package de.alpha.uhc.files;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.Listener.DeathListener;
-import de.alpha.uhc.Listener.MiningListener;
-import de.popokaka.alphalibary.file.SimpleFile;
 import org.bukkit.Material;
+
+import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
+import de.popokaka.alphalibary.file.SimpleFile;
 
 public class DropFile {
 	
 	private Core pl;
+	private Registery r;
 	
 	public DropFile(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  final SimpleFile file = getDropFile();
@@ -67,53 +69,53 @@ public class DropFile {
 
     public  void loadDrops() {
 
-        DeathListener.setPig(file.getBoolean("Mobs.Pig.enabled"));
-        DeathListener.setZombie(file.getBoolean("Mobs.Zombie.enabled"));
-        DeathListener.setCow(file.getBoolean("Mobs.Cow.enabled"));
-        DeathListener.setChicken(file.getBoolean("Mobs.Chicken.enabled"));
-        DeathListener.setSpider(file.getBoolean("Mobs.Spider.enabled"));
-        DeathListener.setSkeleton(file.getBoolean("Mobs.Skeleton.enabled"));
-        DeathListener.setSheep(file.getBoolean("Mobs.Sheep.enabled"));
-        DeathListener.setRabbit(file.getBoolean("Mobs.Rabbit.enabled"));
+        r.getDeathListener().setPig(file.getBoolean("Mobs.Pig.enabled"));
+        r.getDeathListener().setZombie(file.getBoolean("Mobs.Zombie.enabled"));
+        r.getDeathListener().setCow(file.getBoolean("Mobs.Cow.enabled"));
+        r.getDeathListener().setChicken(file.getBoolean("Mobs.Chicken.enabled"));
+        r.getDeathListener().setSpider(file.getBoolean("Mobs.Spider.enabled"));
+        r.getDeathListener().setSkeleton(file.getBoolean("Mobs.Skeleton.enabled"));
+        r.getDeathListener().setSheep(file.getBoolean("Mobs.Sheep.enabled"));
+        r.getDeathListener().setRabbit(file.getBoolean("Mobs.Rabbit.enabled"));
 
-        DeathListener.setPigA(getAmountByString(file.getString("Mobs.Pig.drop")));
-        DeathListener.setZombieA(getAmountByString(file.getString("Mobs.Zombie.drop")));
-        DeathListener.setCowA(getAmountByString(file.getString("Mobs.Cow.drop")));
-        DeathListener.setChickenA(getAmountByString(file.getString("Mobs.Chicken.drop")));
-        DeathListener.setChickenA(getAmountByString(file.getString("Mobs.Chicken.drop")));
-        DeathListener.setSpiderA(getAmountByString(file.getString("Mobs.Spider.drop")));
-        DeathListener.setSkeletonA(getAmountByString(file.getString("Mobs.Skeleton.drop")));
-        DeathListener.setSheepA(getAmountByString(file.getString("Mobs.Sheep.drop")));
-        DeathListener.setRabbitA(getAmountByString(file.getString("Mobs.Rabbit.drop")));
+        r.getDeathListener().setPigA(getAmountByString(file.getString("Mobs.Pig.drop")));
+        r.getDeathListener().setZombieA(getAmountByString(file.getString("Mobs.Zombie.drop")));
+        r.getDeathListener().setCowA(getAmountByString(file.getString("Mobs.Cow.drop")));
+        r.getDeathListener().setChickenA(getAmountByString(file.getString("Mobs.Chicken.drop")));
+        r.getDeathListener().setChickenA(getAmountByString(file.getString("Mobs.Chicken.drop")));
+        r.getDeathListener().setSpiderA(getAmountByString(file.getString("Mobs.Spider.drop")));
+        r.getDeathListener().setSkeletonA(getAmountByString(file.getString("Mobs.Skeleton.drop")));
+        r.getDeathListener().setSheepA(getAmountByString(file.getString("Mobs.Sheep.drop")));
+        r.getDeathListener().setRabbitA(getAmountByString(file.getString("Mobs.Rabbit.drop")));
 
-        DeathListener.setPigM(getMaterialByString(file.getString("Mobs.Pig.drop")));
-        DeathListener.setZombieM(getMaterialByString(file.getString("Mobs.Zombie.drop")));
-        DeathListener.setCowM(getMaterialByString(file.getString("Mobs.Cow.drop")));
-        DeathListener.setChickenM(getMaterialByString(file.getString("Mobs.Chicken.drop")));
-        DeathListener.setSpiderM(getMaterialByString(file.getString("Mobs.Spider.drop")));
-        DeathListener.setSkeletonM(getMaterialByString(file.getString("Mobs.Skeleton.drop")));
-        DeathListener.setSheepM(getMaterialByString(file.getString("Mobs.Sheep.drop")));
-        DeathListener.setRabbitM(getMaterialByString(file.getString("Mobs.Rabbit.drop")));
+        r.getDeathListener().setPigM(getMaterialByString(file.getString("Mobs.Pig.drop")));
+        r.getDeathListener().setZombieM(getMaterialByString(file.getString("Mobs.Zombie.drop")));
+        r.getDeathListener().setCowM(getMaterialByString(file.getString("Mobs.Cow.drop")));
+        r.getDeathListener().setChickenM(getMaterialByString(file.getString("Mobs.Chicken.drop")));
+        r.getDeathListener().setSpiderM(getMaterialByString(file.getString("Mobs.Spider.drop")));
+        r.getDeathListener().setSkeletonM(getMaterialByString(file.getString("Mobs.Skeleton.drop")));
+        r.getDeathListener().setSheepM(getMaterialByString(file.getString("Mobs.Sheep.drop")));
+        r.getDeathListener().setRabbitM(getMaterialByString(file.getString("Mobs.Rabbit.drop")));
 
 
-        MiningListener.setCoal(file.getBoolean("Blocks.Ore.Coal.enabled"));
-        MiningListener.setIron(file.getBoolean("Blocks.Ore.Iron.enabled"));
-        MiningListener.setGold(file.getBoolean("Blocks.Ore.Gold.enabled"));
-        MiningListener.setDia(file.getBoolean("Blocks.Ore.Diamond.enabled"));
-        MiningListener.setGravel(file.getBoolean("Blocks.Gravel.enabled"));
-        MiningListener.setWood(file.getBoolean("Blocks.Wood.enabled"));
+        r.getMiningListener().setCoal(file.getBoolean("Blocks.Ore.Coal.enabled"));
+        r.getMiningListener().setIron(file.getBoolean("Blocks.Ore.Iron.enabled"));
+        r.getMiningListener().setGold(file.getBoolean("Blocks.Ore.Gold.enabled"));
+        r.getMiningListener().setDia(file.getBoolean("Blocks.Ore.Diamond.enabled"));
+        r.getMiningListener().setGravel(file.getBoolean("Blocks.Gravel.enabled"));
+        r.getMiningListener().setWood(file.getBoolean("Blocks.Wood.enabled"));
 
-        MiningListener.setCoalA(getAmountByString(file.getString("Blocks.Ore.Coal.drop")));
-        MiningListener.setIronA(getAmountByString(file.getString("Blocks.Ore.Iron.drop")));
-        MiningListener.setGoldA(getAmountByString(file.getString("Blocks.Ore.Gold.drop")));
-        MiningListener.setDiaA(getAmountByString(file.getString("Blocks.Ore.Diamond.drop")));
-        MiningListener.setGravelA(getAmountByString(file.getString("Blocks.Gravel.drop")));
+        r.getMiningListener().setCoalA(getAmountByString(file.getString("Blocks.Ore.Coal.drop")));
+        r.getMiningListener().setIronA(getAmountByString(file.getString("Blocks.Ore.Iron.drop")));
+        r.getMiningListener().setGoldA(getAmountByString(file.getString("Blocks.Ore.Gold.drop")));
+        r.getMiningListener().setDiaA(getAmountByString(file.getString("Blocks.Ore.Diamond.drop")));
+        r.getMiningListener().setGravelA(getAmountByString(file.getString("Blocks.Gravel.drop")));
 
-        MiningListener.setCoalM(getMaterialByString(file.getString("Blocks.Ore.Coal.drop")));
-        MiningListener.setIronM(getMaterialByString(file.getString("Blocks.Ore.Iron.drop")));
-        MiningListener.setGoldM(getMaterialByString(file.getString("Blocks.Ore.Gold.drop")));
-        MiningListener.setDiaM(getMaterialByString(file.getString("Blocks.Ore.Diamond.drop")));
-        MiningListener.setGravelM(getMaterialByString(file.getString("Blocks.Gravel.drop")));
+        r.getMiningListener().setCoalM(getMaterialByString(file.getString("Blocks.Ore.Coal.drop")));
+        r.getMiningListener().setIronM(getMaterialByString(file.getString("Blocks.Ore.Iron.drop")));
+        r.getMiningListener().setGoldM(getMaterialByString(file.getString("Blocks.Ore.Gold.drop")));
+        r.getMiningListener().setDiaM(getMaterialByString(file.getString("Blocks.Ore.Diamond.drop")));
+        r.getMiningListener().setGravelM(getMaterialByString(file.getString("Blocks.Gravel.drop")));
     }
 
     private  Material getMaterialByString(String block) {

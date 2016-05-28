@@ -1,8 +1,5 @@
 package de.alpha.uhc.Listener;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.GState;
-import de.alpha.uhc.utils.BlockUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -11,6 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+
+import de.alpha.uhc.Core;
+import de.alpha.uhc.GState;
 
 public class MiningListener implements Listener {
 	
@@ -39,82 +39,82 @@ public class MiningListener implements Listener {
 
 
     public  void setWood(boolean wood) {
-        MiningListener.wood = wood;
+        this.wood = wood;
     }
 
 
     public  void setCoal(boolean coal) {
-        MiningListener.coal = coal;
+    	this.coal = coal;
     }
 
 
     public  void setIron(boolean iron) {
-        MiningListener.iron = iron;
+    	this.iron = iron;
     }
 
 
     public  void setGold(boolean gold) {
-        MiningListener.gold = gold;
+    	this.gold = gold;
     }
 
 
     public  void setDia(boolean dia) {
-        MiningListener.dia = dia;
+    	this.dia = dia;
     }
 
 
     public  void setGravel(boolean gravel) {
-        MiningListener.gravel = gravel;
+    	this.gravel = gravel;
     }
 
 
     public  void setCoalA(int coalA) {
-        MiningListener.coalA = coalA;
+    	this.coalA = coalA;
     }
 
 
     public  void setIronA(int ironA) {
-        MiningListener.ironA = ironA;
+    	this.ironA = ironA;
     }
 
 
     public  void setGoldA(int goldA) {
-        MiningListener.goldA = goldA;
+    	this.goldA = goldA;
     }
 
 
     public  void setDiaA(int diaA) {
-        MiningListener.diaA = diaA;
+    	this.diaA = diaA;
     }
 
 
     public  void setGravelA(int gravelA) {
-        MiningListener.gravelA = gravelA;
+    	this.gravelA = gravelA;
     }
 
 
     public  void setCoalM(Material coalM) {
-        MiningListener.coalM = coalM;
+    	this.coalM = coalM;
     }
 
 
     public  void setIronM(Material ironM) {
-        MiningListener.ironM = ironM;
+    	this.ironM = ironM;
     }
 
 
     public  void setGoldM(Material goldM) {
-        MiningListener.goldM = goldM;
+    	this.goldM = goldM;
     }
 
 
     public  void setDiaM(Material diaM) {
-        MiningListener.diaM = diaM;
+    	this.diaM = diaM;
     }
 
 
     public  void setGravelM(Material gravelM) {
-        MiningListener.gravelM = gravelM;
+    	this.gravelM = gravelM;
     }
 
 
@@ -143,7 +143,7 @@ public class MiningListener implements Listener {
                             }
                             loc.getBlock().breakNaturally();
                             for (int i = -13; i<=13; i++) {
-                                for (BlockFace bf : BlockUtil.getRelative()) {
+                                for (BlockFace bf : Core.getInstance().getRegistery().getBlockUtil().getRelative()) {
                                     if (loc.getBlock().getRelative(bf).getType().equals(Material.LEAVES) || loc.getBlock().getRelative(bf).getType().equals(Material.LEAVES_2)) {
                                         loc.getBlock().getRelative(bf).breakNaturally();
                                         if (loc.getBlock().getRelative(bf, i).getType().equals(Material.LEAVES) || loc.getBlock().getRelative(bf, 2).getType().equals(Material.LEAVES_2))

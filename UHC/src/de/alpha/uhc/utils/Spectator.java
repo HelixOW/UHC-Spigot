@@ -1,8 +1,5 @@
 package de.alpha.uhc.utils;
 
-import de.alpha.uhc.Core;
-import de.popokaka.alphalibary.item.ItemBuilder;
-import de.popokaka.alphalibary.item.data.SkullData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -18,10 +15,19 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerExpChangeEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+
+import de.alpha.uhc.Core;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.item.data.SkullData;
 
 public class Spectator implements Listener {
 	
@@ -36,15 +42,15 @@ public class Spectator implements Listener {
     private  String title;
 
     public  void setSpecItem(String specItem) {
-        Spectator.specItem = specItem;
+        this.specItem = specItem;
     }
 
     public  void setSpecName(String specName) {
-        Spectator.specName = specName;
+        this.specName = specName;
     }
 
     public  void setTitle(String title) {
-        Spectator.title = title;
+        this.title = title;
     }
 
     public void setSpec(Player p) {
