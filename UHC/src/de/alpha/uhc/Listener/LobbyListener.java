@@ -21,7 +21,6 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.Registery;
-import de.alpha.uhc.utils.Stats;
 
 public class LobbyListener implements Listener {
 	
@@ -159,7 +158,7 @@ public class LobbyListener implements Listener {
 
         for (String kits : r.getKitFile().getAllKits()) {
             if (e.getCurrentItem().getType().equals(Material.getMaterial(r.getKitFile().getMaterial(kits).toUpperCase()))) {
-                if (new Stats(p).getKits().contains(kits)) {
+                if (r.getStats().getKits(p).contains(kits)) {
                     kit.put(p, kits);
                     sel = sel.replace("[Kit]", kits);
                     p.sendMessage(pl.getPrefix() + sel);
@@ -167,9 +166,9 @@ public class LobbyListener implements Listener {
                     sel = r.getMessageFile().getMSGFile().getColorString("Kits.GUI.Selected");
                     p.closeInventory();
                     break;
-                } else if (new Stats(p).getCoins() >= r.getKitFile().getPrice(kits)) {
-                    new Stats(p).removeCoins(r.getKitFile().getPrice(kits));
-                    new Stats(p).addKit(kits);
+                } else if (r.getStats().getCoins(p) >= r.getKitFile().getPrice(kits)) {
+                	r.getStats().removeCoins(r.getKitFile().getPrice(kits), p);
+                	r.getStats().addKit(kits, p);
                     if (kit.containsKey(p)) {
                         kit.remove(p);
                     }

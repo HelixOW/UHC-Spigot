@@ -13,7 +13,6 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.Registery;
 import de.alpha.uhc.utils.Cuboid;
-import de.alpha.uhc.utils.Stats;
 
 public class UHCCommand implements CommandExecutor {
 	
@@ -94,7 +93,7 @@ public class UHCCommand implements CommandExecutor {
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("stats")) {
-                    new Stats(p).sendStats();
+                    r.getStats().sendStats(p);
                     return true;
                 }
 

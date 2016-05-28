@@ -11,14 +11,16 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
-import de.alpha.uhc.utils.Stats;
+import de.alpha.uhc.Registery;
 
 public class AScoreboard {
 	
 	private Core pl;
+	private Registery r;
 	
 	public AScoreboard(Core c) {
 		this.pl = c;
+		this.r = pl.getRegistery();
 	}
 
     private  final HashMap<Player, Integer> sTeamA = new HashMap<>();
@@ -282,19 +284,19 @@ public class AScoreboard {
         }
 
         if (ShowLobbyCoins) {
-            String a = lobbyCoins.replace("[coins]", "" + new Stats(p).getCoins());
+            String a = lobbyCoins.replace("[coins]", "" + r.getStats().getCoins(p));
             obj.getScore(a).setScore(score);
             score++;
         }
 
         if (ShowLobbyDeaths) {
-            String a = lobbyDeaths.replace("[deaths]", "" + new Stats(p).getDeaths());
+            String a = lobbyDeaths.replace("[deaths]", "" + r.getStats().getDeaths(p));
             obj.getScore(a).setScore(score);
             score++;
         }
 
         if (ShowLobbyKills) {
-            String a = lobbyKills.replace("[kills]", "" + new Stats(p).getKills());
+            String a = lobbyKills.replace("[kills]", "" + r.getStats().getKills(p));
             obj.getScore(a).setScore(score);
             score++;
         }

@@ -138,7 +138,9 @@ public class Registery {
 		asu = new ArmorStandUtil(pl);
 		bu = new BlockUtil(pl);
 		hu = new HoloUtil(pl);
-		lpu = new LobbyPasteUtil(pl);
+		if(getAWorld().isLobbyAsSchematic()) {
+			lpu = new LobbyPasteUtil(pl);
+		}
 		mr = new MapReset(pl);
 		r = new Regions(pl);
 		s = new Spectator(pl);

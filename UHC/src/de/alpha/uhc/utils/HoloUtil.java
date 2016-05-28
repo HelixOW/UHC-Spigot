@@ -39,9 +39,9 @@ public class HoloUtil {
 
             Object hc = holoConstructor != null ? holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld())) : null;
             name = name.replace("[Player]", p.getDisplayName());
-            name = name.replace("[Kills]", Integer.toString(new Stats(p).getKills()));
-            name = name.replace("[Deaths]", Integer.toString(new Stats(p).getDeaths()));
-            name = name.replace("[Coins]", Integer.toString(new Stats(p).getCoins()));
+            name = name.replace("[Kills]", Integer.toString(r.getStats().getKills(p)));
+            name = name.replace("[Deaths]", Integer.toString(r.getStats().getDeaths(p)));
+            name = name.replace("[Coins]", Integer.toString(r.getStats().getCoins(p)));
 
 
             cholo.getMethod("setLocation", param)
@@ -89,9 +89,9 @@ public class HoloUtil {
 
                 Object hc = holoConstructor != null ? holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld())) : null;
                 name = name.replace("[Player]", p.getDisplayName());
-                name = name.replace("[Kills]", Integer.toString(new Stats(p).getKills()));
-                name = name.replace("[Deaths]", Integer.toString(new Stats(p).getDeaths()));
-                name = name.replace("[Coins]", Integer.toString(new Stats(p).getCoins()));
+                name = name.replace("[Kills]", Integer.toString(r.getStats().getKills(p)));
+                name = name.replace("[Deaths]", Integer.toString(r.getStats().getDeaths(p)));
+                name = name.replace("[Coins]", Integer.toString(r.getStats().getCoins(p)));
 
                 cholo.getMethod("setLocation", param)
                         .invoke(hc,

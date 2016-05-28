@@ -13,7 +13,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.alpha.uhc.Core;
 import de.alpha.uhc.GState;
 import de.alpha.uhc.Registery;
-import de.alpha.uhc.utils.Stats;
 import de.popokaka.alphalibary.item.ItemBuilder;
 import de.popokaka.alphalibary.item.data.SkullData;
 import de.popokaka.alphalibary.nms.SimpleTitle;
@@ -115,9 +114,9 @@ public class GameEndListener implements Listener {
         //                        -=X Stats X=-
 
 
-        if (p.getKiller() != null) new Stats(p.getKiller()).addKill();
+        if(p.getKiller() != null) r.getStats().addKill(p.getKiller());
 
-        new Stats(p).addDeath();
+        r.getStats().addDeath(p);
 
         String a = cmdDeath.replace("[player]", p.getName());
         if (isCmdOnDeath()) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), a);

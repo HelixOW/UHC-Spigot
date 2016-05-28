@@ -1,13 +1,13 @@
 package de.alpha.uhc.commands;
 
-import de.alpha.uhc.Core;
-import de.alpha.uhc.Registery;
-import de.alpha.uhc.utils.Stats;
-import de.popokaka.alphalibary.command.SimpleCommand;
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.List;
+import de.alpha.uhc.Core;
+import de.alpha.uhc.Registery;
+import de.popokaka.alphalibary.command.SimpleCommand;
 
 public class StatsCommand extends SimpleCommand<Core> {
 
@@ -46,7 +46,7 @@ public class StatsCommand extends SimpleCommand<Core> {
         }
         if (inUs()) {
             Player p = (Player) cs;
-            new Stats(p).sendStats();
+           r.getStats().sendStats(p);
         } else {
             cs.sendMessage(pl.getPrefix() + getEr());
         }

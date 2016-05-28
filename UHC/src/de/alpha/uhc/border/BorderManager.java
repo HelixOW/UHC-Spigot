@@ -8,12 +8,13 @@ import de.alpha.uhc.Core;
 import de.alpha.uhc.Registery;
 import de.popokaka.alphalibary.nms.SimpleTitle;
 
-public class BorderManager {
+public class BorderManager extends Border{
 	
 	private Core pl;
 	private Registery r;
 	
 	public BorderManager(Core c) {
+		super(c);
 		this.pl = c;
 		this.r = pl.getRegistery();
 	}
@@ -22,7 +23,7 @@ public class BorderManager {
     private  String moved;
     private  int moving;
     private  int time;
-    private int size = r.getBorder().getSize();
+    private int size = getSize();
 
     public  void setMoveable(boolean moveable) {
         this.moveable = moveable;
