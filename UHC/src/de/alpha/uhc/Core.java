@@ -182,7 +182,6 @@ public class Core extends JavaPlugin implements PluginMessageListener {
 
         //Print out successfully loaded message
         Bukkit.getConsoleSender().sendMessage(prefix + "§aUHC by AlphaHelix is now enabled!");
-        System.out.println(MySQLAPI.tableExists());
     }
 
     @Override

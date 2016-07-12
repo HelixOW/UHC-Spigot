@@ -96,7 +96,6 @@ public class AWorld {
                     if (r.getSpawnFileManager().getSpawnFile().isConfigurationSection("Lobby") && r.getSpawnFileManager().getLobbyWorldName().equals(r.getSpawnFileManager().getSpawnWorldName())) {
                         if (!(lobbyAsSchematic && Bukkit.getPluginManager().isPluginEnabled("WorldEdit"))) {
                             p.sendMessage(Core.getInstance().getPrefix() + "§cBecause your Lobby and Spawn is in one World. The World is not resetting itself.");
-                            GState.setGameState(GState.LOBBY);
                             return;
                         }
                     }
@@ -104,7 +103,6 @@ public class AWorld {
 
                 if (!(r.getSpawnFileManager().getSpawnFile().isConfigurationSection("Spawn"))) {
                     p.sendMessage(Core.getInstance().getPrefix() + "§cYou haven't created a custom World spawnpoint.");
-                    GState.setGameState(GState.LOBBY);
                     worldName = "UHC";
                 } else {
                     worldName = r.getSpawnFileManager().getSpawnWorldName();
@@ -126,8 +124,6 @@ public class AWorld {
 
                                     if (!(Bukkit.getWorld(worldName).getSpawnLocation().getChunk().isLoaded()))
                                         Bukkit.getWorld(worldName).getSpawnLocation().getChunk().load();
-
-                                    GState.setGameState(GState.LOBBY);
 
                                     if (lobbyAsSchematic && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
                                         World w = Bukkit.getWorld("UHC");
@@ -154,13 +150,14 @@ public class AWorld {
                         @Override
                         public void run() {
                             Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + " §aUHC World reseted");
-
+                            
+                            GState.setGameState(GState.LOBBY);
+                            
                             r.getSpawnFileManager().SetSpawn(0, Bukkit.getWorld(worldName).getHighestBlockAt(0, 0).getLocation().getY(), 0, Bukkit.getWorld(worldName));
 
                             if (!(Bukkit.getWorld(worldName).getSpawnLocation().getChunk().isLoaded()))
                                 Bukkit.getWorld(worldName).getSpawnLocation().getChunk().load();
 
-                            GState.setGameState(GState.LOBBY);
                             if (lobbyAsSchematic && Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
                                 World w = Bukkit.getWorld("UHC");
                                 Location loc = new Location(w, 0, 200, 0, 0, 0);
@@ -211,5 +208,6 @@ public class AWorld {
         unloadWorld(arena);
         deleteWorld(arena.getWorldFolder());
         createNewWorld();
+        GState.setGameState(GState.LOBBY);
     }
 }
