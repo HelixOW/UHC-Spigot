@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 
 import com.google.gson.Gson;
@@ -13,61 +14,71 @@ import com.mojang.util.UUIDTypeAdapter;
 
 public class UUIDFetcher {
 
-   private static final Gson gson = new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
+	private static final Gson gson = new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
 
-   private static final String UUID_URL = "https://api.mojang.com/users/profiles/minecraft/%s?at=%d";
-   private static final String NAME_URL = "https://api.mojang.com/user/profiles/%s/names";
+	private static final String UUID_URL = "https://api.mojang.com/users/profiles/minecraft/%s?at=%d";
+	private static final String NAME_URL = "https://api.mojang.com/user/profiles/%s/names";
 
-   public static UUID getUUID(String name) {
-      name = name.toLowerCase();
+	@SuppressWarnings("deprecation")
+	public static UUID getUUID(String name) {
+		name = name.toLowerCase();
 
-      try {
+		try {
+			if (Bukkit.getOnlineMode()) {
+				HttpURLConnection connection = (HttpURLConnection) new URL(
+						String.format(UUID_URL, name, System.currentTimeMillis() / 1000)).openConnection();
+				connection.setReadTimeout(5000);
 
-         HttpURLConnection connection = (HttpURLConnection) new URL(String.format(UUID_URL, name, System.currentTimeMillis() / 1000)).openConnection();
-         connection.setReadTimeout(5000);
+				PlayerUUID player = gson.fromJson(
+						new BufferedReader(new InputStreamReader(connection.getInputStream())), PlayerUUID.class);
 
-         PlayerUUID player = gson.fromJson(new BufferedReader(new InputStreamReader(connection.getInputStream())), PlayerUUID.class);
+				return player.getId();
+			} else {
+				return Bukkit.getOfflinePlayer(name).getUniqueId();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-         return player.getId();
+	public static String getName(UUID uuid) {
 
-      } catch (Exception e) {
-         e.printStackTrace();
-         return null;
-      }
-   }
+		try {
+			if (Bukkit.getOnlineMode()) {
+				HttpURLConnection connection = (HttpURLConnection) new URL(
+						String.format(NAME_URL, UUIDTypeAdapter.fromUUID(uuid))).openConnection();
+				connection.setReadTimeout(5000);
+	
+				PlayerUUID[] allUserNames = gson.fromJson(
+						new BufferedReader(new InputStreamReader(connection.getInputStream())), PlayerUUID[].class);
+				PlayerUUID currentName = allUserNames[allUserNames.length - 1];
+	
+				return currentName.getName();
+			} else {
+				return Bukkit.getOfflinePlayer(uuid).getName();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
-   public static String getName(UUID uuid) {
-
-      try {
-
-         HttpURLConnection connection = (HttpURLConnection) new URL(String.format(NAME_URL, UUIDTypeAdapter.fromUUID(uuid))).openConnection();
-         connection.setReadTimeout(5000);
-
-         PlayerUUID[] allUserNames = gson.fromJson(new BufferedReader(new InputStreamReader(connection.getInputStream())), PlayerUUID[].class);
-         PlayerUUID currentName = allUserNames[allUserNames.length - 1];
-
-         return currentName.getName();
-
-      } catch (Exception e) {
-         e.printStackTrace();
-         return null;
-      }
-
-   }
+	}
 
 }
+
 class PlayerUUID {
 
-   private String name;
+	private String name;
 
-   public String getName() {
-      return name;
-   }
+	public String getName() {
+		return name;
+	}
 
-   public UUID getId() {
-      return id;
-   }
+	public UUID getId() {
+		return id;
+	}
 
-   private UUID id;
+	private UUID id;
 
 }
