@@ -155,6 +155,7 @@ public class Registery {
 	
 	private void registerCommands() {
 		uc = new UHCCommand(pl);
+		pl.getCommand("uhc").setExecutor(uc);
 		cc = new CoinsCommand(pl, new String[]{});
 		stc = new StartCommand(pl, new String[]{});
 		ssc = new StatsCommand(pl, new String[]{});

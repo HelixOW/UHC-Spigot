@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
@@ -203,25 +204,28 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         Bukkit.getConsoleSender().sendMessage(prefix + "§cUHC by AlphaHelix is now disabled!");
     }
 
-    @SuppressWarnings("deprecation")
     private void registerCrafting() {
 
         //create golden Apple recipe
         ShapedRecipe goldenApple = new ShapedRecipe(new ItemStack(Material.GOLDEN_APPLE));
-
+        MaterialData data = new MaterialData(Material.SKULL_ITEM);
+        
+        data.toItemStack(1).setDurability((short) 3);
+        
         goldenApple.shape(
                 "GGG",
                 "GxG",
                 "GGG");
 
         goldenApple.setIngredient('G', Material.GOLD_INGOT);
-        goldenApple.setIngredient('x', Material.SKULL_ITEM, 3);
+        goldenApple.setIngredient('x', Material.SKULL_ITEM);
+        goldenApple.setIngredient('x', data);
         Bukkit.addRecipe(goldenApple);
 
     }
 
     private void createTables() {
-
+    	
         MySQLManager.exCreateTableQry(
                 MySQLManager.createColumn("Player", 50),
                 MySQLManager.createColumn("UUID", 75),
