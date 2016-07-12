@@ -1,6 +1,7 @@
 package de.alpha.uhc.Listener;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -24,173 +25,196 @@ import de.alpha.uhc.GState;
 import de.alpha.uhc.Registery;
 
 public class LobbyListener implements Listener {
-	
+
 	private Core pl;
 	private Registery r;
-	
+
 	public LobbyListener(Core c) {
 		this.pl = c;
 		this.r = pl.getRegistery();
 	}
 
-    private  final HashMap<Player, String> kit = new HashMap<>();
-    private  String sel;
-    private  String bought;
-    private  String coinsneed;
+	private HashMap<Player, String> kit = new HashMap<>();
+	private LinkedList<String> allowedBuilders = new LinkedList<>();
+	private String sel;
+	private String bought;
+	private String coinsneed;
+	
+	public void setAllowBuild(Player p, boolean build) {
+		if(build) allowedBuilders.add(p.getName());
+		else allowedBuilders.remove(p.getName());
+	}
+	
+	public boolean getAllowBuild(Player p) {
+		if(allowedBuilders.contains(p.getName())) return true;
+		return false;
+	}
 
-    public  void setSel(String sel) {
-        this.sel = sel;
-    }
+	public void setSel(String sel) {
+		this.sel = sel;
+	}
 
-    public  void setBought(String bought) {
-        this.bought = bought;
-    }
+	public void setBought(String bought) {
+		this.bought = bought;
+	}
 
-    public  void setCoinsneed(String coinsneed) {
-        this.coinsneed = coinsneed;
-    }
+	public void setCoinsneed(String coinsneed) {
+		this.coinsneed = coinsneed;
+	}
 
-    public  boolean hasSelKit(Player p) {
-        return kit.containsKey(p);
-    }
+	public boolean hasSelKit(Player p) {
+		return kit.containsKey(p);
+	}
 
-    public  String getSelKit(Player p) {
-        if (kit.containsKey(p)) {
-            return kit.get(p);
-        }
-        return "";
-    }
+	public String getSelKit(Player p) {
+		if (kit.containsKey(p)) {
+			return kit.get(p);
+		}
+		return "";
+	}
 
-    @EventHandler
-    public void onChunkUnLoad(ChunkUnloadEvent e) {
-        if (e.getWorld().getName().equals("world")) {
-            e.setCancelled(true);
-        }
-    }
+	@EventHandler
+	public void onChunkUnLoad(ChunkUnloadEvent e) {
+		if (e.getWorld().getName().equals("world")) {
+			e.setCancelled(true);
+		}
+	}
 
-    @EventHandler
-    public void onHunger(FoodLevelChangeEvent e) {
+	@EventHandler
+	public void onHunger(FoodLevelChangeEvent e) {
 
-        if (GState.isState(GState.LOBBY) || GState.isState(GState.GRACE)) {
-            e.setFoodLevel(20);
-        }
+		if (GState.isState(GState.LOBBY) || GState.isState(GState.GRACE)) {
+			e.setFoodLevel(20);
+		}
 
-    }
+	}
 
-    @EventHandler
-    public void onMove(PlayerMoveEvent e) {
+	@EventHandler
+	public void onMove(PlayerMoveEvent e) {
 
-        Player p = e.getPlayer();
+		Player p = e.getPlayer();
 
-        if (!(GState.isState(GState.LOBBY))) return;
-        if (!r.getRegions().isLobby()) return;
+		if (!(GState.isState(GState.LOBBY)))
+			return;
+		if (!r.getRegions().isLobby())
+			return;
 
-        if (!r.getRegions().isInRegion(e.getTo())) {
-            if (r.getSpawnFileManager().getLobby() == null) {
-                p.teleport(p.getWorld().getSpawnLocation());
-            } else {
-                p.teleport(r.getSpawnFileManager().getLobby());
-            }
-        }
+		if (!r.getRegions().isInRegion(e.getTo())) {
+			if (r.getSpawnFileManager().getLobby() == null) {
+				p.teleport(p.getWorld().getSpawnLocation());
+			} else {
+				p.teleport(r.getSpawnFileManager().getLobby());
+			}
+		}
 
-    }
+	}
 
-    @EventHandler
-    public void onSpawn(CreatureSpawnEvent e) {
-        if (GState.isState(GState.LOBBY)) {
-            if(!(e.getEntity() instanceof ArmorStand)) {
-                e.setCancelled(true);
-            }
-        }
-    }
+	@EventHandler
+	public void onSpawn(CreatureSpawnEvent e) {
+		if (GState.isState(GState.LOBBY)) {
+			if (!(e.getEntity() instanceof ArmorStand)) {
+				e.setCancelled(true);
+			}
+		}
+	}
 
-    @EventHandler
-    public void onHurt(EntityDamageEvent e) {
+	@EventHandler
+	public void onHurt(EntityDamageEvent e) {
 
-        if (e.getEntity() instanceof Player) {
-            if (GState.isState(GState.LOBBY) || GState.isState(GState.GRACE)) {
-                e.setCancelled(true);
-            }
-        }
+		if (e.getEntity() instanceof Player) {
+			if (GState.isState(GState.LOBBY) || GState.isState(GState.GRACE)) {
+				e.setCancelled(true);
+			}
+		}
 
-    }
+	}
 
-    @EventHandler
-    public void onBreak(BlockBreakEvent e) {
+	@EventHandler
+	public void onBreak(BlockBreakEvent e) {
+		
+		if(allowedBuilders.contains(e.getPlayer().getName())) return;
+		if (GState.isState(GState.LOBBY) || GState.isState(GState.RESTART)) {
+			e.setCancelled(true);
+		}
 
-        if (GState.isState(GState.LOBBY) || GState.isState(GState.RESTART)) {
-            e.setCancelled(true);
-        }
+	}
 
-    }
+	@EventHandler
+	public void onPlace(BlockPlaceEvent e) {
+		
+		if(allowedBuilders.contains(e.getPlayer().getName())) return;
+		if (GState.isState(GState.LOBBY) || GState.isState(GState.RESTART)) {
+			e.setCancelled(true);
+		}
 
-    @EventHandler
-    public void onPlace(BlockPlaceEvent e) {
+	}
 
-        if (GState.isState(GState.LOBBY) || GState.isState(GState.RESTART)) {
-            e.setCancelled(true);
-        }
+	@EventHandler
+	public void onInterAct(PlayerInteractEvent e) {
 
-    }
+		if (!(GState.isState(GState.LOBBY)))
+			return;
+		if (e.getPlayer().getInventory().getItemInMainHand() == null)
+			return;
+		if (!(e.getPlayer().getInventory().getItemInMainHand().getType()
+				.equals(r.getPlayerJoinListener().getKitItem())))
+			return;
 
-    @EventHandler
-    public void onInterAct(PlayerInteractEvent e) {
+		e.setCancelled(true);
+		r.getGui().open(e.getPlayer());
 
-        if (!(GState.isState(GState.LOBBY))) return;
-        if (e.getPlayer().getInventory().getItemInMainHand() == null) return;
-        if (!(e.getPlayer().getInventory().getItemInMainHand().getType().equals(r.getPlayerJoinListener().getKitItem())))
-            return;
+	}
 
-        e.setCancelled(true);
-        r.getGui().open(e.getPlayer());
+	@EventHandler
+	public void onInvClick(InventoryClickEvent e) {
 
-    }
+		if (e.getClickedInventory() == null)
+			return;
+		if (!(e.getWhoClicked() instanceof Player))
+			return;
+		if (getAllowBuild((Player)e.getWhoClicked())) return;
+		if (e.getClickedInventory().getType().equals(InventoryType.PLAYER)) {
+			e.setCancelled(true);
+			return;
+		}
+		if (!(e.getClickedInventory().getName().equalsIgnoreCase(r.getGui().getTitle())))
+			return;
 
-    @EventHandler
-    public void onInvClick(InventoryClickEvent e) {
+		Player p = (Player) e.getWhoClicked();
 
-        if (e.getClickedInventory() == null) return;
-        if (!(e.getWhoClicked() instanceof Player)) return;
-        if(e.getClickedInventory().getType().equals(InventoryType.PLAYER)) {
-        	e.setCancelled(true);
-        	return;
-        }
-        if (!(e.getClickedInventory().getName().equalsIgnoreCase(r.getGui().getTitle()))) return;
-        
-        Player p = (Player) e.getWhoClicked();
-        
-        e.setCancelled(true);
+		e.setCancelled(true);
 
-        for (String kits : r.getKitFile().getAllKits()) {
-            if (e.getCurrentItem().getType().equals(Material.getMaterial(r.getKitFile().getMaterial(kits).toUpperCase()))) {
-                if (r.getStats().getKits(p).contains(kits)) {
-                    kit.put(p, kits);
-                    sel = sel.replace("[Kit]", kits);
-                    p.sendMessage(pl.getPrefix() + sel);
-                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
-                    sel = r.getMessageFile().getMSGFile().getColorString("Kits.GUI.Selected");
-                    p.closeInventory();
-                    break;
-                } else if (r.getStats().getCoins(p) >= r.getKitFile().getPrice(kits)) {
-                	r.getStats().removeCoins(r.getKitFile().getPrice(kits), p);
-                	r.getStats().addKit(kits, p);
-                    if (kit.containsKey(p)) {
-                        kit.remove(p);
-                    }
-                    kit.put(p, kits);
-                    bought = bought.replace("[Kit]", kits);
-                    bought = bought.replace("[Coins]", Integer.toString(r.getKitFile().getPrice(kits)));
-                    p.sendMessage(pl.getPrefix() + bought);
-                    bought = r.getMessageFile().getMSGFile().getColorString("Kits.GUI.Bought");
-                    p.closeInventory();
-                    p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
-                    r.getAScoreboard().setLobbyScoreboard(p);
-                    break;
-                } else {
-                    p.sendMessage(pl.getPrefix() + coinsneed);
-                }
-            }
-        }
-    }
+		for (String kits : r.getKitFile().getAllKits()) {
+			if (e.getCurrentItem().getType()
+					.equals(Material.getMaterial(r.getKitFile().getMaterial(kits).toUpperCase()))) {
+				if (r.getStats().getKits(p).contains(kits)) {
+					kit.put(p, kits);
+					sel = sel.replace("[Kit]", kits);
+					p.sendMessage(pl.getPrefix() + sel);
+					p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
+					sel = r.getMessageFile().getMSGFile().getColorString("Kits.GUI.Selected");
+					p.closeInventory();
+					break;
+				} else if (r.getStats().getCoins(p) >= r.getKitFile().getPrice(kits)) {
+					r.getStats().removeCoins(r.getKitFile().getPrice(kits), p);
+					r.getStats().addKit(kits, p);
+					if (kit.containsKey(p)) {
+						kit.remove(p);
+					}
+					kit.put(p, kits);
+					bought = bought.replace("[Kit]", kits);
+					bought = bought.replace("[Coins]", Integer.toString(r.getKitFile().getPrice(kits)));
+					p.sendMessage(pl.getPrefix() + bought);
+					bought = r.getMessageFile().getMSGFile().getColorString("Kits.GUI.Bought");
+					p.closeInventory();
+					p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1, 1);
+					r.getAScoreboard().setLobbyScoreboard(p);
+					break;
+				} else {
+					p.sendMessage(pl.getPrefix() + coinsneed);
+				}
+			}
+		}
+	}
 
 }
