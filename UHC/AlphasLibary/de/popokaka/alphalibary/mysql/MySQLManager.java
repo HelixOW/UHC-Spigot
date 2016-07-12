@@ -57,7 +57,7 @@ public class MySQLManager {
 			}
 		}
 	}
-
+	
 	public static void exInsertQry(String... values) {
 		StringBuilder tableinfostr = new StringBuilder();
 		for (int i = 1; i <= getColumnAmount(); i++) {
@@ -78,6 +78,19 @@ public class MySQLManager {
 			}
 		}
 	}
+	
+	public static ResultSet exOrderQry(String sel, String orderColumn) {
+		if (MySQLAPI.isConnected()) {
+			try {
+				String qry = "SELECT " + sel + " FROM " + "UHC" + " ORDER BY " + orderColumn +" asc";
+				PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
+				return prepstate.getResultSet();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
 	public static void exUpdateQry(String conditionvalue, String column, String updatevalue) {
 		if (MySQLAPI.isConnected()) {
@@ -90,7 +103,6 @@ public class MySQLManager {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
 

@@ -126,6 +126,7 @@ public class UHCCommand implements CommandExecutor {
                     p.sendMessage("§7 /uhc removeTeamJoiner - removes the TeamJoiner at your current Location");
                     p.sendMessage("§7 /uhc stats - see your stats");
                     p.sendMessage("§7 /uhc build - build in the lobby");
+                    p.sendMessage("§7 /uhc updateRanks - updates the ranking wall");
                     p.sendMessage("§8---===XXX===---");
                     return true;
                 } else {
@@ -139,6 +140,10 @@ public class UHCCommand implements CommandExecutor {
 
             if (p.hasPermission("UHC.admin")) {
                 if (args.length == 1) {
+                	if (args[0].equalsIgnoreCase("updateRanks")) {
+                		r.getARanking().updateCMD();
+                		p.sendMessage(pl.getPrefix() + "§aDone!");
+                	}
                 	if (args[0].equalsIgnoreCase("build")) {
                 		r.getLobbyListener().setAllowBuild(p, !(r.getLobbyListener().getAllowBuild(p)));
                 		if(r.getLobbyListener().getAllowBuild(p)) {

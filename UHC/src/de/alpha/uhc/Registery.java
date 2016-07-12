@@ -13,7 +13,9 @@ import de.alpha.uhc.Listener.LobbyListener;
 import de.alpha.uhc.Listener.MiningListener;
 import de.alpha.uhc.Listener.MotdListener;
 import de.alpha.uhc.Listener.PlayerJoinListener;
+import de.alpha.uhc.Listener.RankTriggerListener;
 import de.alpha.uhc.Listener.SoupListener;
+import de.alpha.uhc.aclasses.ARanking;
 import de.alpha.uhc.aclasses.AScoreboard;
 import de.alpha.uhc.aclasses.ATablist;
 import de.alpha.uhc.aclasses.ATeam;
@@ -32,6 +34,7 @@ import de.alpha.uhc.files.HologramFileManager;
 import de.alpha.uhc.files.MessageFileManager;
 import de.alpha.uhc.files.OptionsFileManager;
 import de.alpha.uhc.files.PlayerFileManager;
+import de.alpha.uhc.files.RankingFile;
 import de.alpha.uhc.files.ScoreboardFile;
 import de.alpha.uhc.files.SpawnFileManager;
 import de.alpha.uhc.files.TeamFile;
@@ -52,6 +55,7 @@ public class Registery {
 	
 	private Core pl;
 	
+	private ARanking ar;
 	private AScoreboard as;
 	private ATablist atab;
 	private ATeam ateam;
@@ -66,6 +70,7 @@ public class Registery {
 	private MessageFileManager mfm;
 	private OptionsFileManager ofm;
 	private PlayerFileManager pfm;
+	private RankingFile rf;
 	private ScoreboardFile sf;
 	private SpawnFileManager sfm;
 	private TeamFile tf;
@@ -82,6 +87,7 @@ public class Registery {
 	private MiningListener miningl;
 	private MotdListener motdl;
 	private PlayerJoinListener pjl;
+	private RankTriggerListener rtl;
 	private SoupListener soupl;
 	private Timer t;
 	private ArmorStandUtil asu;
@@ -103,6 +109,7 @@ public class Registery {
 	
 	public void registerAll() {
 		//Clazzes
+		ar = new ARanking(pl);
 		as = new AScoreboard(pl);
 		atab = new ATablist(pl);
 		ateam = new ATeam(pl);
@@ -117,6 +124,7 @@ public class Registery {
 		mfm = new MessageFileManager(pl);
 		ofm = new OptionsFileManager(pl);
 		pfm = new PlayerFileManager(pl);
+		rf = new RankingFile(pl);
 		sf = new ScoreboardFile(pl);
 		sfm = new SpawnFileManager(pl);
 		tf = new TeamFile(pl);
@@ -133,6 +141,7 @@ public class Registery {
 		miningl = new MiningListener(pl);
 		motdl = new MotdListener(pl);
 		pjl = new PlayerJoinListener(pl);
+		rtl = new RankTriggerListener(pl);
 		soupl = new SoupListener(pl);
 		t = new Timer(pl);
 		asu = new ArmorStandUtil(pl);
@@ -179,10 +188,15 @@ public class Registery {
     	p.registerEvents(this.getATeam(), pl);
     	p.registerEvents(this.getMotdListener(), pl);
     	p.registerEvents(this.getGameEndListener(), pl);
+    	p.registerEvents(this.getRankTriggerListener(), pl);
     }
 	
 	//Getters
     
+	public ARanking getARanking() {
+		return ar;
+	}
+	
     public AScoreboard getAScoreboard() {
     	return as;
     }
@@ -237,6 +251,10 @@ public class Registery {
     
     public PlayerFileManager getPlayerFile() {
     	return pfm;
+    }
+    
+    public RankingFile getRankingFile() {
+    	return rf;
     }
     
     public ScoreboardFile getScoreboardFile() {
@@ -301,6 +319,10 @@ public class Registery {
     
     public PlayerJoinListener getPlayerJoinListener() {
     	return pjl;
+    }
+    
+    public RankTriggerListener getRankTriggerListener() {
+    	return rtl;
     }
     
     public SoupListener getSoupListener() {

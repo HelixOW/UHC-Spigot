@@ -1,5 +1,6 @@
 package de.alpha.uhc.utils;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import de.alpha.uhc.Core;
@@ -13,12 +14,22 @@ public class Stats {
     private boolean isMysql;
     private Registery r;
     
+    private String player;
+    private String kills;
+    private String deaths;
+    private String coins;
+    private String points;
+    private String kits;
     
     public Stats(Core c) {
 		this.pl = c;
 		this.r = pl.getRegistery();
 		this.isMysql = pl.isMySQLActive();
 	}
+    
+    public void setMySQL(boolean check) {
+    	this.isMysql = check;
+    }
 
     public int getCoins(Player p) {
         if (isMysql) {
@@ -26,6 +37,14 @@ public class Stats {
             return Integer.parseInt(sql);
         }
         return r.getPlayerFile().getPlayerCoins(p);
+    }
+    
+    public int getPoints(OfflinePlayer p) {
+    	if(isMysql) {
+    		String sql = MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Points").toString();
+    		return Integer.parseInt(sql);
+    	}
+    	return r.getPlayerFile().getPlayerPoints(p);
     }
 
     public int getKills(Player p) {
@@ -83,6 +102,13 @@ public class Stats {
         }
         r.getPlayerFile().addPlayerCoins(p, amount);
     }
+    
+    public void addPoints(int amount, OfflinePlayer p) {
+    	if (isMysql) {
+            MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Points", Integer.toString(getPoints(p) + amount));
+        }
+        r.getPlayerFile().addPlayerPoints(p, amount);
+    }
 
     public void removeCoins(int amount, Player p) {
         if (isMysql) {
@@ -90,15 +116,71 @@ public class Stats {
         }
         r.getPlayerFile().removePlayerCoins(p, amount);
     }
+    
+    public void removePoints(int amount, OfflinePlayer p) {
+    	if (isMysql) {
+            MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Points", Integer.toString(getPoints(p) - amount));
+        }
+        r.getPlayerFile().removePlayerPoints(p, amount);
+    }
 
     public void sendStats(Player p) {
 
         p.sendMessage("§8---===XXX===---\n"
-                + "§6Player§7: " + p.getDisplayName() + "\n"
-                + "§6Kills§7: §a" + getKills(p) + "\n"
-                + "§6Deaths§7: §c" + getDeaths(p) + "\n"
-                + "§6Coins§7: §c" + getCoins(p) + "\n"
-                + "§6Kits§7: §c" + getKits(p) + "\n"
+                + getPlayerM() + p.getDisplayName() + "\n"
+                + getKillsM() + getKills(p) + "\n"
+                + getDeathsM() + getDeaths(p) + "\n"
+                + getCoinsM() + getCoins(p) + "\n"
+                + getPointsM() + getPoints(p) + "\n"
+                + getKitsM() + getKits(p) + "\n"
                 + "§8---===XXX===---");
     }
+
+	public String getPlayerM() {
+		return player;
+	}
+
+	public void setPlayerM(String player) {
+		this.player = player;
+	}
+
+	public String getKillsM() {
+		return kills;
+	}
+
+	public void setKillsM(String kills) {
+		this.kills = kills;
+	}
+
+	public String getDeathsM() {
+		return deaths;
+	}
+
+	public void setDeathsM(String deaths) {
+		this.deaths = deaths;
+	}
+
+	public String getCoinsM() {
+		return coins;
+	}
+
+	public void setCoinsM(String coins) {
+		this.coins = coins;
+	}
+
+	public String getPointsM() {
+		return points;
+	}
+
+	public void setPointsM(String points) {
+		this.points = points;
+	}
+
+	public String getKitsM() {
+		return kits;
+	}
+
+	public void setKitsM(String kits) {
+		this.kits = kits;
+	}
 }

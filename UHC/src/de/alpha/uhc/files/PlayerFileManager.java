@@ -3,6 +3,8 @@ package de.alpha.uhc.files;
 import de.alpha.uhc.Core;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.file.SimpleFile;
+
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -25,6 +27,8 @@ public class PlayerFileManager {
             file.setDefault("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".deaths", 0);
             file.setDefault("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins", 0);
             file.setDefault("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kits", "");
+            file.setDefault("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".count", file.getConfigurationSection("Players").getKeys(false).size()+1);
+            file.setDefault("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points", 0);
         } catch (NullPointerException ignore){}
 
     }
@@ -46,6 +50,14 @@ public class PlayerFileManager {
     public String getPlayerKits(Player p) {
         return file.getString("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kits");
     }
+    
+    public int getPlayersCount(Player p) {
+    	return file.getInt("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".count");
+    }
+    
+    public int getPlayerPoints(OfflinePlayer p) {
+    	return file.getInt("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points");
+    }
 
     public void addPlayerKit(Player p, String kit) {
         file.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kits", getPlayerKits(p) + kit + ",");
@@ -61,6 +73,11 @@ public class PlayerFileManager {
         file.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".deaths", getPlayerDeaths(p) + 1);
         file.save();
     }
+    
+    public void addPlayerPoints(OfflinePlayer p, int points) {
+    	file.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points", getPlayerPoints(p) + points);
+        file.save();
+    }
 
     public void addPlayerCoins(Player p, int coins) {
         file.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins", getPlayerCoins(p) + coins);
@@ -69,6 +86,11 @@ public class PlayerFileManager {
 
     public void removePlayerCoins(Player p, int coins) {
         file.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins", getPlayerCoins(p) - coins);
+        file.save();
+    }
+    
+    public void removePlayerPoints(OfflinePlayer p, int points) {
+    	file.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points", getPlayerPoints(p) - points);
         file.save();
     }
 

@@ -129,13 +129,18 @@ public class Core extends JavaPlugin implements PluginMessageListener {
         getRegistery().getCommandsFile().addCommands();
         getRegistery().getCommandsFile().loadCommands();
         
+        getRegistery().getRankingFile().addLines();
+        getRegistery().getRankingFile().loadLines();
+        getRegistery().getRankingFile().loadSigns();
+        
         getRegistery().getArmorstandFile().getASFile().save();
 
         //Fill the Kits Inventory
         getRegistery().getGui().fill();
-
+        
         //Checks if MySQL is active
         if (isMySQLActive()) {
+        	getRegistery().getStats().setMySQL(true);
             try {
                 //Connect to Database and create the Tables if it's not existing
                 MySQLAPI.initMySQLAPI(this);
@@ -174,6 +179,9 @@ public class Core extends JavaPlugin implements PluginMessageListener {
 
         //Recreate the World
         getRegistery().getAWorld().performReset();
+        
+        //Crate Ranking Wall
+        getRegistery().getARanking().update();
 
         if (getRegistery().getTimer().getPc() <= 1) {
             //Print error message to inform serverowner
@@ -232,7 +240,9 @@ public class Core extends JavaPlugin implements PluginMessageListener {
                 MySQLManager.createColumn("Kills", 500),
                 MySQLManager.createColumn("Deaths", 500),
                 MySQLManager.createColumn("Coins", 500),
-                MySQLManager.createColumn("Kits", 500));
+                MySQLManager.createColumn("Kits", 500),
+                MySQLManager.createColumn("Count", 500),
+                MySQLManager.createColumn("Points", 500));
     }
 
     @Override
