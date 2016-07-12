@@ -1,7 +1,9 @@
 package de.popokaka.alphalibary.mysql;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.bukkit.Bukkit;
@@ -35,6 +37,17 @@ public class MySQLAPI {
 
 	public static boolean isConnected() {
 		return con != null;
+	}
+	
+	public static boolean tableExists() {
+		try {
+			DatabaseMetaData meta = getMySQLConnection().getMetaData();
+			ResultSet rs = meta.getTables(null, null, "uhc", new String[]{"uhc"});
+			if(rs.next()) return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public static Plugin getPlugin() {

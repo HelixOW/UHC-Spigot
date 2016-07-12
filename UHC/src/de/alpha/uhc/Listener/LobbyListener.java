@@ -14,6 +14,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
@@ -149,11 +150,15 @@ public class LobbyListener implements Listener {
     public void onInvClick(InventoryClickEvent e) {
 
         if (e.getClickedInventory() == null) return;
-        if (!(e.getClickedInventory().getName().equalsIgnoreCase(r.getGui().getTitle()))) return;
         if (!(e.getWhoClicked() instanceof Player)) return;
-
+        if(e.getClickedInventory().getType().equals(InventoryType.PLAYER)) {
+        	e.setCancelled(true);
+        	return;
+        }
+        if (!(e.getClickedInventory().getName().equalsIgnoreCase(r.getGui().getTitle()))) return;
+        
         Player p = (Player) e.getWhoClicked();
-
+        
         e.setCancelled(true);
 
         for (String kits : r.getKitFile().getAllKits()) {

@@ -32,9 +32,15 @@ public class MySQLManager {
 		
 		if(MySQLAPI.isConnected()){	
 			try {
-				String qry = "CREATE TABLE IF NOT EXISTS " + "UHC" + " (" + tableinfo + ")";
-				PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
-				prepstate.executeUpdate();
+				if(MySQLAPI.tableExists()) {
+					String qry = "ALTER TABLE UHC ADD (Count INT)";
+					PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
+					prepstate.executeUpdate();
+				} else {
+					String qry = "CREATE TABLE IF NOT EXISTS " + "UHC" + " (" + tableinfo + ")";
+					PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
+					prepstate.executeUpdate();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}	
