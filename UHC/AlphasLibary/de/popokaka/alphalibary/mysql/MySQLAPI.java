@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import de.alpha.uhc.Core;
+
 public class MySQLAPI {
 	private static String username;
 	private static String password;
@@ -31,20 +33,25 @@ public class MySQLAPI {
 	}
 
 	public static int getCountNumber() {
-		try {
-			String qry = "SELECT COUNT FROM uhc";
-			PreparedStatement prepstate = getMySQLConnection().prepareStatement(qry);
-			ResultSet rs = prepstate.executeQuery();
-
-			int in = 0;
-
-			while (rs.next()) {
-				in = Integer.parseInt(rs.getString("COUNT")) + 1;
+		if(Core.getInstance().isMySQLActive()) {
+			if(!isConnected()) return 0;
+			try {
+				String qry = "SELECT COUNT FROM uhc";
+				PreparedStatement prepstate = getMySQLConnection().prepareStatement(qry);
+				ResultSet rs = prepstate.executeQuery();
+	
+				int in = 0;
+	
+				while (rs.next()) {
+					in = Integer.parseInt(rs.getString("COUNT")) + 1;
+				}
+				return in;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return 0;
 			}
-			return in;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return 0;
+		} else {
+			return Core.getInstance().getRegistery().getPlayerFile().getRows();
 		}
 	}
 
@@ -71,8 +78,8 @@ public class MySQLAPI {
 				con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username,
 						password);
 			} catch (SQLException e) {
-				Bukkit.getConsoleSender().sendMessage("Fehler bei Anmeldung in Database!");
-				e.printStackTrace();
+				Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + "§cCan't connect to database!");
+				Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + "§cPlease check your mysql.yml file at plugins/MySQLAPI!");
 			}
 		}
 	}

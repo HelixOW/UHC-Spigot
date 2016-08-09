@@ -173,7 +173,7 @@ public class LobbyListener implements Listener {
 		if (!(e.getWhoClicked() instanceof Player))
 			return;
 		if (getAllowBuild((Player)e.getWhoClicked())) return;
-		if (e.getClickedInventory().getType().equals(InventoryType.PLAYER)) {
+		if (e.getClickedInventory().getType().equals(InventoryType.PLAYER) && GState.isState(GState.LOBBY)) {
 			e.setCancelled(true);
 			return;
 		}

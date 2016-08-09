@@ -1,19 +1,17 @@
 package de.alpha.uhc.files;
 
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+
 import de.alpha.uhc.Core;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.file.SimpleFile;
-
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 
 public class PlayerFileManager {
 	
 	public PlayerFileManager(Core c) {
 	}
 
-    public  Inventory i;
     private final SimpleFile file = getPlayerFile();
 
     public  SimpleFile getPlayerFile() {
@@ -31,6 +29,10 @@ public class PlayerFileManager {
             file.setDefault("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points", 0);
         } catch (NullPointerException ignore){}
 
+    }
+    
+    public int getRows() {
+    	return file.getConfigurationSection("Players").getKeys(false).size();
     }
 
     public int getPlayerCoins(Player p) {

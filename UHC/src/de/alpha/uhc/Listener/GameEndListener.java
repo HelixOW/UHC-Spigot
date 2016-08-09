@@ -114,9 +114,13 @@ public class GameEndListener implements Listener {
         //                        -=X Stats X=-
 
 
-        if(p.getKiller() != null) r.getStats().addKill(p.getKiller());
-
+        if(p.getKiller() != null) {
+        	r.getStats().addKill(p.getKiller());
+        	r.getStats().addPoints(50, p.getKiller());
+        }
+        
         r.getStats().addDeath(p);
+        r.getStats().removePoints(25, p);
 
         String a = cmdDeath.replace("[player]", p.getName());
         if (isCmdOnDeath()) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), a);
@@ -178,6 +182,8 @@ public class GameEndListener implements Listener {
                 for (Player all : Bukkit.getOnlinePlayers()) {
                     SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
                 }
+                
+                r.getStats().addPoints(500, winner);
 
                 String b = cmdEnd.replace("[player]", winner.getName());
                 if (cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), b);
@@ -250,6 +256,12 @@ public class GameEndListener implements Listener {
                 r.getAScoreboard().updateInGamePlayersLiving(all);
                 r.getAScoreboard().updateInGameSpectators(all);
             }
+            
+            r.getStats().addDeath(p);
+            r.getStats().removePoints(25, p);
+
+            String b = cmdDeath.replace("[player]", p.getName());
+            if (isCmdOnDeath()) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), b);
 
             p.setGameMode(GameMode.SURVIVAL);
 
@@ -279,7 +291,9 @@ public class GameEndListener implements Listener {
                     for (Player all : Bukkit.getOnlinePlayers()) {
                         SimpleTitle.sendTitle(all, " ", win, 1, 2, 1);
                     }
-
+                    
+                    r.getStats().addPoints(500, winner);
+                    
                     String a = cmdEnd.replace("[player]", winner.getName());
                     if (cmdOnEnd) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), a);
 

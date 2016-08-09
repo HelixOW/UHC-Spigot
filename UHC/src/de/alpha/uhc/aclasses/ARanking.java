@@ -37,20 +37,34 @@ public class ARanking {
 	}
 
 	public void update() {
-
-		if (firstPlace == null || secondPlace == null || thirdPlace == null) {
-			System.out.println("null");
+		
+		if(!(pl.isMySQLActive())) {
+			System.out.println(pl.getPrefix() + "§cYou need a MySQL database to have rankings.");
+			return;
+		}
+		
+		if(!(MySQLAPI.isConnected())) {
+			Bukkit.getConsoleSender().sendMessage(pl.getPrefix() + "§cYour server has no connection to the database.");
+			Bukkit.getConsoleSender().sendMessage(pl.getPrefix() + "§cTherefore the rankings cannot been load.");
 			return;
 		}
 
-		try {
-			ResultSet rs = MySQLAPI.getMySQLConnection().createStatement()
-					.executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
-			int in = MySQLAPI.getCountNumber() + 1;
+		if (firstPlace == null || secondPlace == null || thirdPlace == null) return;
 
-			while (rs.next()) {
-				in--;
-				rank.put(in, rs.getString("UUID"));
+		try {
+			ResultSet rs = null;
+			if(pl.isMySQLActive()) {
+				rs = MySQLAPI.getMySQLConnection().createStatement()
+					.executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
+			}
+			
+			int in = MySQLAPI.getCountNumber() + 1;
+			
+			if(pl.isMySQLActive()) {
+				while (rs.next()) {
+					in--;
+					rank.put(in, rs.getString("UUID"));
+				}
 			}
 
 			LinkedList<Location> locs = new LinkedList<>();
@@ -75,7 +89,7 @@ public class ARanking {
 				s.setOwner(name);
 				s.update();
 
-				Location sig = new Location(locs.get(i).getWorld(), locs.get(i).getX(), locs.get(i).getY() - 1,
+				Location sig = new Location(locs.get(i).getWorld(), locs.get(i).getX(), locs.get(i).getY(),
 						locs.get(i).getZ());
 
 				if (sig.getBlock().getState() instanceof Sign) {
@@ -93,7 +107,12 @@ public class ARanking {
 					String d = line4.replace("[rank]", Integer.toString(id)).replace("[player]", name)
 							.replace("[points]", Integer.toString(
 									r.getStats().getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
-
+					
+					System.out.println(a);
+					System.out.println(b);
+					System.out.println(c);
+					System.out.println(d);
+					
 					sign.setLine(0, a);
 					sign.setLine(1, b);
 					sign.setLine(2, c);

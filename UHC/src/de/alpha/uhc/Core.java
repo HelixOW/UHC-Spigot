@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
@@ -216,9 +215,10 @@ public class Core extends JavaPlugin implements PluginMessageListener {
 
         //create golden Apple recipe
         ShapedRecipe goldenApple = new ShapedRecipe(new ItemStack(Material.GOLDEN_APPLE));
-        MaterialData data = new MaterialData(Material.SKULL_ITEM);
         
-        data.toItemStack(1).setDurability((short) 3);
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM);
+        
+        skull.setDurability((short) 3);
         
         goldenApple.shape(
                 "GGG",
@@ -227,7 +227,7 @@ public class Core extends JavaPlugin implements PluginMessageListener {
 
         goldenApple.setIngredient('G', Material.GOLD_INGOT);
         goldenApple.setIngredient('x', Material.SKULL_ITEM);
-        goldenApple.setIngredient('x', data);
+        goldenApple.setIngredient('x', skull.getData());
         Bukkit.addRecipe(goldenApple);
 
     }

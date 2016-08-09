@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+
+import de.alpha.uhc.Core;
+
 public class MySQLManager {
 
 	private static final HashMap<String, String> tableinfo = new HashMap<>();
@@ -41,7 +45,8 @@ public class MySQLManager {
 				PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
 				prepstate.executeUpdate();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + "§cWasn't able to create the UHC database.");
+				Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + "§cPlease check your connection to the database.");
 			}
 		}
 	}

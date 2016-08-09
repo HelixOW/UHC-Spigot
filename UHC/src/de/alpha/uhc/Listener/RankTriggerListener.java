@@ -24,12 +24,15 @@ public class RankTriggerListener implements Listener {
 				if (e.getLine(2).equalsIgnoreCase("Place 1")) {
 					r.getARanking().setFirstPlace(e.getBlock().getLocation().add(0, 1, 0));
 					r.getRankingFile().addSign(e.getBlock().getLocation(), 1);
+					r.getARanking().update();
 				} else if (e.getLine(2).equalsIgnoreCase("Place 2")) {
 					r.getARanking().setSecondPlace(e.getBlock().getLocation().add(0, 1, 0));
 					r.getRankingFile().addSign(e.getBlock().getLocation(), 2);
+					r.getARanking().update();
 				} else if (e.getLine(2).equalsIgnoreCase("Place 3")) {
 					r.getARanking().setThirdPlace(e.getBlock().getLocation().add(0, 1, 0));
 					r.getRankingFile().addSign(e.getBlock().getLocation(), 3);
+					r.getARanking().update();
 				}
 			}
 		}

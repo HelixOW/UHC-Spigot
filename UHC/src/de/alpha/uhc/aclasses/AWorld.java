@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -118,6 +119,8 @@ public class AWorld {
                                 @Override
                                 public void run() {
                                     worldName = "UHC";
+                                    Bukkit.getWorld("UHC").setDifficulty(Difficulty.HARD);
+                                    GState.setGameState(GState.LOBBY);
                                     Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + " §aUHC World loaded");
 
                                     r.getSpawnFileManager().SetSpawn(0, Bukkit.getWorld(worldName).getHighestBlockAt(0, 0).getLocation().getY(), 0, Bukkit.getWorld(worldName));
@@ -149,9 +152,9 @@ public class AWorld {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + " §aUHC World reseted");
-                            
+                        	Bukkit.getWorld("UHC").setDifficulty(Difficulty.HARD);
                             GState.setGameState(GState.LOBBY);
+                            Bukkit.getConsoleSender().sendMessage(Core.getInstance().getPrefix() + " §aUHC World reseted");
                             
                             r.getSpawnFileManager().SetSpawn(0, Bukkit.getWorld(worldName).getHighestBlockAt(0, 0).getLocation().getY(), 0, Bukkit.getWorld(worldName));
 
