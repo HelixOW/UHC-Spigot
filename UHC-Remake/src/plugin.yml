@@ -1,0 +1,10 @@
+name: UHC-Remake
+author: AlphaHelix
+version: Alpha 1.0
+main: de.alphahelix.uhc.UHC
+softdepend: [WorldEdit]
+
+commands:
+  uhc:
+    usage: /uhc
+    description: The Basic UHC Command.
