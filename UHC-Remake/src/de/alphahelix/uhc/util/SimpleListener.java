@@ -1,5 +1,7 @@
 package de.alphahelix.uhc.util;
 
+import java.util.logging.Logger;
+
 import org.bukkit.event.Listener;
 
 import de.alphahelix.uhc.Registery;
@@ -9,11 +11,13 @@ public class SimpleListener implements Listener {
 	
 	private UHC uhc;
 	private Registery register;
+	private Logger log;
 
 	public SimpleListener(UHC uhc) {
 		setUhc(uhc);
 		setRegister(getUhc().getRegister());
-		getUhc().getRegister().addListener(this);
+		getUhc().getRegister().getListeners().add(this);
+		setLog(getUhc().getLog());
 	}
 
 	public UHC getUhc() {
@@ -30,6 +34,14 @@ public class SimpleListener implements Listener {
 
 	private void setRegister(Registery register) {
 		this.register = register;
+	}
+
+	public Logger getLog() {
+		return log;
+	}
+
+	private void setLog(Logger log) {
+		this.log = log;
 	}
 	
 	

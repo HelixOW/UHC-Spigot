@@ -108,11 +108,6 @@ public class ARanking {
 							.replace("[points]", Integer.toString(
 									r.getStats().getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 					
-					System.out.println(a);
-					System.out.println(b);
-					System.out.println(c);
-					System.out.println(d);
-					
 					sign.setLine(0, a);
 					sign.setLine(1, b);
 					sign.setLine(2, c);

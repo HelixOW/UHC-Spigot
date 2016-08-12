@@ -10,13 +10,22 @@ import java.util.Objects;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import de.alphahelix.uhc.UHC;
+import de.popokaka.alphalibary.UUID.UUIDFetcher;
 
 public class MySQLManager {
 
 	private static final HashMap<String, String> tableinfo = new HashMap<>();
 	private static final ArrayList<String> tablenames = new ArrayList<>();
+
+	public static boolean containsPlayer(Player p) {
+		if (getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kills") == null) {
+			return false;
+		}
+		return true;
+	}
 
 	public static void exCreateTableQry(String... columns) {
 		String tableinfo;
@@ -45,8 +54,10 @@ public class MySQLManager {
 				PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
 				prepstate.executeUpdate();
 			} catch (SQLException e) {
-				Bukkit.getConsoleSender().sendMessage(UHC.getInstance().getPrefix() + "§cWasn't able to create the UHC database.");
-				Bukkit.getConsoleSender().sendMessage(UHC.getInstance().getPrefix() + "§cPlease check your connection to the database.");
+				Bukkit.getConsoleSender()
+						.sendMessage(UHC.getInstance().getPrefix() + "§cWasn't able to create the UHC database.");
+				Bukkit.getConsoleSender()
+						.sendMessage(UHC.getInstance().getPrefix() + "§cPlease check your connection to the database.");
 			}
 		}
 	}
@@ -62,7 +73,7 @@ public class MySQLManager {
 			}
 		}
 	}
-	
+
 	public static void exInsertQry(String... values) {
 		StringBuilder tableinfostr = new StringBuilder();
 		for (int i = 1; i <= getColumnAmount(); i++) {
@@ -83,11 +94,11 @@ public class MySQLManager {
 			}
 		}
 	}
-	
+
 	public static ResultSet exOrderQry(String sel, String orderColumn) {
 		if (MySQLAPI.isConnected()) {
 			try {
-				String qry = "SELECT " + sel + " FROM " + "UHC" + " ORDER BY " + orderColumn +" asc";
+				String qry = "SELECT " + sel + " FROM " + "UHC" + " ORDER BY " + orderColumn + " asc";
 				PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
 				return prepstate.getResultSet();
 			} catch (Exception e) {

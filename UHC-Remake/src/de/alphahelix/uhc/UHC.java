@@ -35,8 +35,18 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private boolean soup;
 	private boolean scenarios;
 	private boolean statusMOTD;
+	private boolean kits;
 	private int spawnradius;
 	private Logger log;
+	
+	/*
+	 * - Stats
+	 * - Ranking
+	 * - PlayerFile
+	 * - Kits (No Clickable things)
+	 * - Stats Command
+	 */
+	
 	
 	@Override
 	public void onEnable() {
@@ -245,6 +255,12 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	public void setSpawnradius(int spawnradius) {
 		this.spawnradius = spawnradius;
 	}
-	
-	
+
+	public boolean isKits() {
+		return kits;
+	}
+
+	public void setKits(boolean kits) {
+		this.kits = kits;
+	}
 }

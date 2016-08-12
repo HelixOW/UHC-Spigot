@@ -3,9 +3,9 @@ package de.alphahelix.uhc.files;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.util.EasyFile;
 
-public class MainOptions extends EasyFile {
+public class MainOptionsFile extends EasyFile {
 	
-	public MainOptions(UHC uhc) {
+	public MainOptionsFile(UHC uhc) {
 		super("Main-Options.uhc", uhc);
 	}
 	
@@ -15,7 +15,6 @@ public class MainOptions extends EasyFile {
 		setDefault("Bungeecord Fallbackserver", "lobby");
 		setDefault("MySQL", false);
 		setDefault("Soup", false);
-		setDefault("Scenarios", false);
 		setDefault("Spawndispersal", 20);
 		setDefault("Status MOTD", true);
 	}

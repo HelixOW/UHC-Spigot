@@ -51,7 +51,7 @@ public class MySQLAPI {
 				return 0;
 			}
 		} else {
-			return 0;//UHC.getInstance().getRegister().getPlayerFile().getRows();
+			return UHC.getInstance().getRegister().getPlayerFile().getConfigurationSection("Players").getKeys(false).size();
 		}
 	}
 
