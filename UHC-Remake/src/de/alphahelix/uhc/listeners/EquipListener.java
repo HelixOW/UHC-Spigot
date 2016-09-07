@@ -20,6 +20,8 @@ public class EquipListener extends SimpleListener {
 	public void onJoin(PlayerJoinEvent e) {
 
 		Player p = e.getPlayer();
+		
+		p.getInventory().clear();
 
 		if (getUhc().isScenarios()) {
 			p.getInventory()

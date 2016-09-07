@@ -12,7 +12,7 @@ public class Kit {
 	private String name;
 	private ItemStack guiBlock;
 	private Inventory inventory;
-
+	
 	public Kit(String name, int price, Inventory inventory, int guiSlot, ItemStack guiBlock) {
 		setName(name);
 		setPrice(price);

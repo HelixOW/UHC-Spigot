@@ -15,12 +15,14 @@ import de.alphahelix.uhc.files.PlayerFile;
 import de.alphahelix.uhc.files.StatsFile;
 import de.alphahelix.uhc.files.scenarios.ScenarioFile;
 import de.alphahelix.uhc.inventories.KitInventory;
+import de.alphahelix.uhc.listeners.ChatListener;
 import de.alphahelix.uhc.listeners.EquipListener;
 import de.alphahelix.uhc.listeners.KitChooseListener;
 import de.alphahelix.uhc.listeners.RegisterListener;
 import de.alphahelix.uhc.util.EasyFile;
 import de.alphahelix.uhc.util.PlayerUtil;
 import de.alphahelix.uhc.util.StatsUtil;
+import de.alphahelix.uhc.util.TranslatorUtil;
 
 public class Registery {
 
@@ -30,6 +32,7 @@ public class Registery {
 	
 	private PlayerUtil playerUtil;
 	private StatsUtil statsUtil;
+	private TranslatorUtil translatorUtil;
 	
 	private KitInventory kitInventory;
 	
@@ -43,6 +46,7 @@ public class Registery {
 	private KitChooseListener kitChooseListener;
 	private RegisterListener registerListener;
 	private EquipListener equipListener;
+	private ChatListener chatListener;
 
 	public Registery(UHC uhc) {
 		setUhc(uhc);
@@ -76,12 +80,14 @@ public class Registery {
 		
 		setPlayerUtil(new PlayerUtil(getUhc()));
 		setStatsUtil(new StatsUtil(getUhc()));
+		setTranslatorUtil(new TranslatorUtil(getUhc()));
 		
 		setKitInventory(new KitInventory(getUhc()));
 		
 		setKitChooseListener(new KitChooseListener(getUhc()));
 		setRegisterListener(new RegisterListener(getUhc()));
 		setEquipListener(new EquipListener(getUhc()));
+		setChatListener(new ChatListener(getUhc()));
 		
 		registerCommands();
 		registerEvents();
@@ -134,6 +140,14 @@ public class Registery {
 	public void setEquipListener(EquipListener equipListener) {
 		this.equipListener = equipListener;
 	}
+	
+	public ChatListener getChatListener() {
+		return chatListener;
+	}
+
+	public void setChatListener(ChatListener chatListener) {
+		this.chatListener = chatListener;
+	}
 
 	public ArrayList<Listener> getListeners() {
 		return listeners;
@@ -153,6 +167,14 @@ public class Registery {
 		this.playerUtil = playerUtil;
 	}
 	
+	public TranslatorUtil getTranslatorUtil() {
+		return translatorUtil;
+	}
+
+	public void setTranslatorUtil(TranslatorUtil translatorUtil) {
+		this.translatorUtil = translatorUtil;
+	}
+
 	public StatsUtil getStatsUtil() {
 		return statsUtil;
 	}
