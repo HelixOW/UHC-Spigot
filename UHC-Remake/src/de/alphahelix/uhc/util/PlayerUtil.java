@@ -16,7 +16,7 @@ public class PlayerUtil extends Util{
 		super(uhc);
 		setAll(new LinkedList<String>());
 		setSurvivors(new LinkedList<String>());
-		setDeaths(new LinkedList<String>());
+		setDeads(new LinkedList<String>());
 	}
 
 	//All Players
@@ -57,13 +57,18 @@ public class PlayerUtil extends Util{
 		if(survivors.contains(p.getName())) survivors.remove(p.getName());
 	}
 	
+	public boolean isSurivor(Player p) {
+		if(survivors.contains(p.getName())) return true;
+		return false;
+	}
+	
 	//Death Players | Spectators |
 
-	public LinkedList<String> getDeaths() {
+	public LinkedList<String> getDeads() {
 		return deaths;
 	}
 
-	private void setDeaths(LinkedList<String> deaths) {
+	private void setDeads(LinkedList<String> deaths) {
 		this.deaths = deaths;
 	}
 	
@@ -73,5 +78,20 @@ public class PlayerUtil extends Util{
 	
 	public void removeDead(Player p) {
 		if(deaths.contains(p.getName())) deaths.remove(p.getName());
+	}
+	
+	public boolean isDead(Player p) {
+		if(deaths.contains(p.getName())) return true;
+		return false;
+	}
+	
+	//Other
+	
+	public int getMinimumPlayerCount() {
+		return getRegister().getMainOptionsFile().getInt("Minimum players");
+	}
+	
+	public int getMaximumPlayerCount() {
+		return getRegister().getMainOptionsFile().getInt("Maximum players");
 	}
 }

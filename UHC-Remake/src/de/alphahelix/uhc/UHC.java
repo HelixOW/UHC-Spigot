@@ -54,6 +54,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		this.setRegister(new Registery(getInstance()));
 		this.setLog();
 		this.setConsolePrefix("["+this.getName()+"] ");
+		this.setRestartMessage("");
 		
 		getRegister().registerAll();
 		
@@ -82,6 +83,8 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		
 		Bukkit.getMessenger().registerOutgoingPluginChannel(getInstance(), "BungeeCord");
 		
+		if(isDebug()) log.log(Level.INFO, getConsolePrefix() + "Successfully kicked "+Bukkit.getOnlinePlayers().size()+" Players.");
+		
 		for(Player toKick : Bukkit.getOnlinePlayers()) {
 			if(isBunggeMode()) {
 				ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -94,7 +97,6 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 				toKick.kickPlayer(getPrefix() + getRestartMessage());
 			}
 		}
-		if(isDebug()) log.log(Level.INFO, getConsolePrefix() + "Successfully kicked "+Bukkit.getOnlinePlayers().size()+" Players.");
 		
 		new File("plugins/UHC/schematics").mkdirs();
 		new File("plugins/UHC/scenarios").mkdirs();
@@ -106,6 +108,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		//TODO: Create Ranking Wall
 		
 		log.log(Level.INFO, getConsolePrefix() + "UHC by AlphaHelix successfully loaded and enabled.");
+		GState.setCurrentState(GState.LOBBY);
 	}
 	
 	@Override

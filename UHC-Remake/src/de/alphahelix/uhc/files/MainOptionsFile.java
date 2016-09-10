@@ -11,12 +11,15 @@ public class MainOptionsFile extends EasyFile {
 	
 	public void addValues() {
 		setDefault("Prefix", "&7[&6UHC&8-&6Remake&7] ");
+		setDefault("Restartmessage", "&7The Server has stopped. Now loading a new round of UHC.");
 		setDefault("Bungeecord", false);
 		setDefault("Bungeecord Fallbackserver", "lobby");
 		setDefault("MySQL", false);
 		setDefault("Soup", false);
 		setDefault("Spawndispersal", 20);
 		setDefault("Status MOTD", true);
+		setDefault("Minimum players", 4);
+		setDefault("Maximum players", 64);
 	}
 	
 	public void loadValues() {

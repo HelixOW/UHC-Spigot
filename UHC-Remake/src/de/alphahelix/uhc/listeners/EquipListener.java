@@ -22,6 +22,7 @@ public class EquipListener extends SimpleListener {
 		Player p = e.getPlayer();
 		
 		p.getInventory().clear();
+		getRegister().getPlayerUtil().addAll(p);
 
 		if (getUhc().isScenarios()) {
 			p.getInventory()

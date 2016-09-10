@@ -14,6 +14,8 @@ public class MainMessageFile extends EasyFile {
 		setDefault("Scenario Mode", "&7This UHC server is running in &cScenario Mode&7. Due to that the server doesn't allow kits.");
 		setDefault("No Permissions", "&7You don't have &cpermissions &7to execute that command!");
 		setDefault("Kit chosen", "&7You've §asuccessfully chosen §7the kit &8: &a[kit]§7!");
+		setDefault("Spectator Prefix", "§7[§4X§7] §c");
+		setDefault("Lobby time left info", "&aGame starts in &7[time] &8seconds.");
 	}
 
 }
