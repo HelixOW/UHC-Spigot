@@ -13,7 +13,7 @@ import org.bukkit.SkullType;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
 
-import de.alphahelix.uhc.util.Util;
+import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.mysql.MySQLAPI;
 

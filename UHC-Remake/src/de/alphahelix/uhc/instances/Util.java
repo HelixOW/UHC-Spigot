@@ -1,4 +1,4 @@
-package de.alphahelix.uhc.util;
+package de.alphahelix.uhc.instances;
 
 import java.util.logging.Logger;
 
@@ -43,5 +43,18 @@ public class Util {
 
 	private void setLog(Logger log) {
 		this.log = log;
+	}
+	
+	public double round(double value, int precision) {
+		int scale = (int) Math.pow(10, precision);
+		return (double) Math.round(value * scale) / scale;
+	}
+	
+	public double calcMin(int sec) {
+		return (sec / (3600/60.0));
+	}
+	
+	public double calcHours(int sec) {
+		return sec / 3600;
 	}
 }

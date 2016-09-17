@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import org.bukkit.entity.Player;
 
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.util.EasyFile;
+import de.alphahelix.uhc.instances.EasyFile;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.file.SimpleFile;
 
@@ -38,6 +38,12 @@ public class PlayerFile extends EasyFile {
 	@Override
 	public SimpleFile getFile() {
 		return super.getFile();
+	}
+
+	@Override
+	public void addValues() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

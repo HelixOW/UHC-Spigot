@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -29,6 +30,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private String consolePrefix;
 	private String lobbyServer;
 	private String restartMessage;
+	private String trackerName;
 	private boolean MySQLMode;
 	private boolean debug;
 	private boolean bunggeMode;
@@ -36,6 +38,8 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private boolean scenarios;
 	private boolean statusMOTD;
 	private boolean kits;
+	private boolean teams;
+	private boolean tracker;
 	private int spawnradius;
 	private Logger log;
 	
@@ -59,9 +63,6 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		getRegister().registerAll();
 		
 		GState.setCurrentState(GState.END);
-		
-		//TODO: Configs
-		
 		
 		if(isMySQLMode()) {
 			try {
@@ -101,6 +102,8 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		new File("plugins/UHC/schematics").mkdirs();
 		new File("plugins/UHC/scenarios").mkdirs();
 		
+		getRegister().getLocationsFile().initalizeLobbyAndArena();
+		
 		//TODO: Set Countdowntime to configvalue
 		
 		registerCrafting();
@@ -109,10 +112,22 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		
 		log.log(Level.INFO, getConsolePrefix() + "UHC by AlphaHelix successfully loaded and enabled.");
 		GState.setCurrentState(GState.LOBBY);
+		
+		final long lastModified = getFile().lastModified();
+
+		new BukkitRunnable() {
+		    public void run() {
+		        if (getFile().lastModified() > lastModified) {
+		            cancel();
+		            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "reload");
+		        }
+		    }
+		}.runTaskTimer(this, 0, 20);
 	}
 	
 	@Override
 	public void onDisable() {
+		getRegister().getStatsUtil().pushCacheToBackUp();
 		if(isMySQLMode()) {
 			try {
 				MySQLAPI.closeMySQLConnection();
@@ -265,5 +280,29 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 
 	public void setKits(boolean kits) {
 		this.kits = kits;
+	}
+
+	public boolean isTeams() {
+		return teams;
+	}
+
+	public void setTeams(boolean teams) {
+		this.teams = teams;
+	}
+
+	public boolean isTracker() {
+		return tracker;
+	}
+
+	public void setTracker(boolean tracker) {
+		this.tracker = tracker;
+	}
+
+	public String getTrackerName() {
+		return trackerName;
+	}
+
+	public void setTrackerName(String trackerName) {
+		this.trackerName = trackerName;
 	}
 }

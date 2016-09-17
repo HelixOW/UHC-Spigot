@@ -369,7 +369,7 @@ public class Timer {
                                 e.cancel();
 
                                 Bukkit.broadcastMessage(pl.getPrefix() + end);
-                                r.getBorderManager().set();
+//                                r.getBorderManager().set();
                                 for (final Player all : pl.getInGamePlayers()) {
                                     all.showPlayer(all);
                                     giveCompass(all);

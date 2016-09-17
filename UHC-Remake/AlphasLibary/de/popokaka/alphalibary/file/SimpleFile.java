@@ -2,7 +2,11 @@ package de.popokaka.alphalibary.file;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -91,7 +95,7 @@ public class SimpleFile extends YamlConfiguration {
 	 * @param path The path inside the file where the ItemStackArray should be serialized to
 	 * @param array The ItemStackArray you want to serialize
 	 */
-	public void setItemStackArray(String path, ItemStack[] array) {
+	public void setItemStackArray(String path, ItemStack... array) {
 		set(path, array);
 		save();
 	}
@@ -102,8 +106,107 @@ public class SimpleFile extends YamlConfiguration {
 	 * @return The ItemStackArray at the given path
 	 */
 	public ItemStack[] getItemStackArray(String path) {
-		java.util.List<?> var = getList(path);
+		List<?> var = getList(path);
 		return var.toArray(new ItemStack[var.size()]);
+	}
+	
+	public void setMaterialStringList(String path, String... array) {
+		ArrayList<String> stacks = new ArrayList<>();
+		for(String is : array) stacks.add(is);
+		set(path, stacks);
+		save();
+	}
+	
+	public List<String> getMaterialStringList(String path) {
+		return getStringList(path);
+	}
+	
+	public void setItemStackList(String path, ItemStack... array) {
+		ArrayList<ItemStack> stacks = new ArrayList<>();
+		for(ItemStack is : array) stacks.add(is);
+		set(path, stacks);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ItemStack> getItemStackList(String path) {
+		return (List<ItemStack>) getList(path);
+	}
+	
+	public void setLocation(String path, Location loc, boolean deserialized) {
+		if (deserialized) {
+			String location = loc.getX() + "," + loc.getY() + "," + loc.getZ()
+					+ "," + String.valueOf(loc.getWorld().getName()) + ","
+					+ loc.getYaw() + "," + loc.getPitch();
+			set(path, location);
+		} else {
+			set(path + ".x", loc.getX());
+			set(path + ".y", loc.getY());
+			set(path + ".z", loc.getZ());
+			set(path + ".world", loc.getWorld().getName());
+			set(path + ".yaw", loc.getYaw());
+			set(path + ".pitch", loc.getPitch());
+		}
+		save();
+	}
+
+	public NotInitLocation getLocation(String path, boolean serialized) {
+
+		if (serialized) {
+			try {
+
+				String s = getString(path);
+				String[] array = s.split(",");
+				double x = Double.parseDouble(array[0]);
+				double y = Double.valueOf(array[1]);
+				double z = Double.valueOf(array[2]);
+				String world = array[3];
+				float yaw = Float.valueOf(array[4]);
+				float pitch = Float.valueOf(array[5]);
+
+				NotInitLocation loc = new NotInitLocation(x, y, z, world, yaw,
+						pitch);
+
+				return loc;
+			} catch (Exception e) {
+				e.printStackTrace();
+				// System.out.println("Die Location war nicht deserialized");
+			}
+			return null;
+		} else {
+
+			double x;
+			double y;
+			double z;
+			String world = "";
+			float yaw = 0F;
+			float pitch = 0F;
+
+			try {
+				x = getDouble(path + ".x");
+				y = getDouble(path + ".y");
+				z = getDouble(path + ".z");
+			} catch (Exception e) {
+				System.out.println("Location " + path + ": "
+						+ ChatColor.DARK_RED + "Konnte nicht gelesen werden!");
+				return null;
+			}
+
+			try {
+				world = String.valueOf(get(path + ".world"));
+			} catch (Exception e) {
+				System.out.println("Location " + path + ": Weltname nicht vorhanden!");
+			}
+			try {
+				yaw = getLong(path + ".yaw");
+				pitch = getLong(path + ".pitch");
+			} catch (Exception e) {
+				System.out.println("Location " + path + ": Weltname nicht vorhanden!");
+			}
+
+			NotInitLocation loc = new NotInitLocation(x, y, z, world, yaw,
+					pitch);
+			return loc;
+		}
 	}
 
 	/**

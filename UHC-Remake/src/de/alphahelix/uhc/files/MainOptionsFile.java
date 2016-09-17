@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.files;
 
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.util.EasyFile;
+import de.alphahelix.uhc.instances.EasyFile;
 
 public class MainOptionsFile extends EasyFile {
 	
@@ -11,15 +11,27 @@ public class MainOptionsFile extends EasyFile {
 	
 	public void addValues() {
 		setDefault("Prefix", "&7[&6UHC&8-&6Remake&7] ");
+		setDefault("Spectator Prefix", "§7[§4X§7] §c");
 		setDefault("Restartmessage", "&7The Server has stopped. Now loading a new round of UHC.");
 		setDefault("Bungeecord", false);
 		setDefault("Bungeecord Fallbackserver", "lobby");
 		setDefault("MySQL", false);
 		setDefault("Soup", false);
 		setDefault("Spawndispersal", 20);
+		setDefault("Tracker.equip", true);
+		setDefault("Tracker.name", "&dTracker");
 		setDefault("Status MOTD", true);
 		setDefault("Minimum players", 4);
 		setDefault("Maximum players", 64);
+		setDefault("Points + on kill", 50);
+		setDefault("Points - on death", 25);
+		setDefault("Points + on win", 500);
+		setDefault("Coins + on kill", 50);
+		setDefault("Coins - on death", 25);
+		setDefault("Coins + on win", 500);
+		setDefault("Command on kill", "");
+		setDefault("Command on death", "");
+		setDefault("Command on win", "");
 	}
 	
 	public void loadValues() {

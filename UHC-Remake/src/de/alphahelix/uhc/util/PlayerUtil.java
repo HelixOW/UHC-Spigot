@@ -2,9 +2,11 @@ package de.alphahelix.uhc.util;
 
 import java.util.LinkedList;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.Util;
 
 public class PlayerUtil extends Util{
 
@@ -17,6 +19,28 @@ public class PlayerUtil extends Util{
 		setAll(new LinkedList<String>());
 		setSurvivors(new LinkedList<String>());
 		setDeads(new LinkedList<String>());
+	}
+	
+	public void clearUp(Player p) {
+		p.getInventory().clear();
+		p.getEnderChest().clear();
+		p.getEquipment().clear();
+		
+		p.setAllowFlight(false);
+		p.setFlySpeed((float) 0.1);
+		p.getInventory().setArmorContents(null);
+		p.setBedSpawnLocation(null);
+		p.setExp(0);
+		p.setFireTicks(0);
+		p.setFlying(false);
+		p.setFoodLevel(20);
+		p.setGameMode(GameMode.SURVIVAL);
+		p.setGlowing(false);
+		p.setHealth(20.0);
+		p.setInvulnerable(false);
+		p.setLevel(0);
+		p.setMaxHealth(20);
+		p.setTotalExperience(0);
 	}
 
 	//All Players

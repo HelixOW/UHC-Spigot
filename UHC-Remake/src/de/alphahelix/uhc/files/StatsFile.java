@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.files;
 
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.util.EasyFile;
+import de.alphahelix.uhc.instances.EasyFile;
 
 public class StatsFile extends EasyFile {
 

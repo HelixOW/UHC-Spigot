@@ -15,17 +15,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.util.EasyFile;
-import de.alphahelix.uhc.util.Kit;
+import de.alphahelix.uhc.instances.EasyFile;
+import de.alphahelix.uhc.instances.Kit;
 
 public class KitsFile extends EasyFile {
-	
+
 	private HashMap<String, Kit> kits = new HashMap<>();
 
 	public KitsFile(UHC uhc) {
 		super("Kits.uhc", uhc);
 	}
-	
+
 	@Override
 	public void addValues() {
 		setDefault("GUI.Name", "&6Kits");
@@ -35,7 +35,7 @@ public class KitsFile extends EasyFile {
 		setDefault("Kit.Item Slot", 0);
 		save();
 	}
-	
+
 	public void addKit(String kitName, Inventory i, String block, int slot, int price) {
 		if (!contains(kitName)) {
 			setDefault(kitName + ".GUI.Slot", slot);
@@ -52,34 +52,42 @@ public class KitsFile extends EasyFile {
 	}
 
 	public Kit getKit(String kitName) {
-		if(contains(kitName)) {
-			return new Kit(kitName, getInt(kitName + ".price"),
-					StringToInventory(getString(kitName + ".Contents")),
-					getInt(kitName + ".GUI.Slot"),
-					new ItemStack(Material.getMaterial(getString(kitName + ".GUI.Block").toUpperCase())));
+		kitName = kitName.replace("§", "&");
+		kitName = kitName.replace("0º", "&");
+		kitName = kitName.contains("0&") ? kitName.replace("0&", "&") : kitName;
+		if (this.contains(kitName)) {
+				return new Kit(kitName, getInt(kitName + ".price"), StringToInventory(getString(kitName + ".Contents")),
+						getInt(kitName + ".GUI.Slot"),
+						new ItemStack(Material.getMaterial(getString(kitName + ".GUI.Block").toUpperCase())));
 		}
-		getLog().log(Level.SEVERE, "The kit "+kitName+" doesn't exist inside the Kits.uhc");
+		getLog().log(Level.SEVERE, "The kit " + kitName + " doesn't exist inside the Kits.uhc");
 		return null;
 	}
-	
+
 	public List<Kit> getKits() {
 		LinkedList<Kit> kits = new LinkedList<>();
-		for(String kitName : getKeys(false)) {
+		for (String kitName : getKeys(false)) {
 			try {
 				kits.add(getKit(kitName));
-			} catch(Exception e) {
+			} catch (Exception e) {
 				continue;
 			}
 		}
 		return kits;
 	}
-	
+
 	public void setKit(Player p, Kit k) {
 		kits.put(p.getName(), k);
 	}
-	
+
 	public Kit getKitByPlayer(Player p) {
 		return kits.containsKey(p.getName()) ? kits.get(p.getName()) : null;
+	}
+
+	public boolean hasKit(Player p) {
+		if (getKitByPlayer(p) == null)
+			return false;
+		return true;
 	}
 
 	@SuppressWarnings("deprecation")

@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.util.Kit;
-import de.alphahelix.uhc.util.Util;
+import de.alphahelix.uhc.instances.Kit;
+import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class KitInventory extends Util {
@@ -16,7 +16,7 @@ public class KitInventory extends Util {
 
 	public KitInventory(UHC uhc) {
 		super(uhc);
-		setInv(Bukkit.createInventory(null, 54, getRegister().getKitsFile().getColorString("GUI.Name")));
+		setInv(Bukkit.createInventory(null, ((getRegister().getKitsFile().getKits().size()/9)+1) * 9, getRegister().getKitsFile().getColorString("GUI.Name")));
 	}
 
 	public void fillInventory() {
@@ -26,7 +26,8 @@ public class KitInventory extends Util {
 		}
 		for (Kit kit : getRegister().getKitsFile().getKits()) {
 			getInv().setItem(kit.getGuiSlot(),
-					new ItemBuilder(kit.getGuiBlock().getType()).setName(kit.getName()).build());
+					new ItemBuilder(kit.getGuiBlock().getType()).setName(kit.getName())
+					.setLore("§7" + Integer.toString(kit.getPrice()) + " §eCoins").build());
 		}
 	}
 

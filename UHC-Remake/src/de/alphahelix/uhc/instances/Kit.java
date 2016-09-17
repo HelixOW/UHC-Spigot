@@ -1,4 +1,4 @@
-package de.alphahelix.uhc.util;
+package de.alphahelix.uhc.instances;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

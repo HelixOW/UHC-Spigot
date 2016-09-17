@@ -70,8 +70,8 @@ public class ItemBuilder {
 	/**
 	 * Set a custom amount for the ItemStack
 	 */
-	public ItemBuilder setAmount() {
-		this.amount = 8;
+	public ItemBuilder setAmount(int amount) {
+		this.amount = amount;
 		return this;
 	}
 	

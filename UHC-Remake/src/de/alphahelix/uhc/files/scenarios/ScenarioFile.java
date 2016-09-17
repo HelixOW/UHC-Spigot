@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.files.scenarios;
 
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.util.EasyFile;
+import de.alphahelix.uhc.instances.EasyFile;
 
 public class ScenarioFile extends EasyFile {
 

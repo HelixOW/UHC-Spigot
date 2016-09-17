@@ -1,12 +1,16 @@
-package de.alphahelix.uhc.util;
+package de.alphahelix.uhc.instances;
 
 import java.util.logging.Logger;
+
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import de.alphahelix.uhc.Registery;
 import de.alphahelix.uhc.UHC;
 import de.popokaka.alphalibary.file.SimpleFile;
+import de.popokaka.alphalibary.item.ItemBuilder;
 
-public class EasyFile extends SimpleFile {
+public abstract class EasyFile extends SimpleFile {
 
 	private UHC uhc;
 	private Registery register;
@@ -22,8 +26,7 @@ public class EasyFile extends SimpleFile {
 		getRegister().getEasyFiles().add(this);
 	}
 
-	public void addValues() {
-	};
+	public abstract void addValues();
 
 	public void loadValues() {
 	};
@@ -35,6 +38,17 @@ public class EasyFile extends SimpleFile {
 
 	public SimpleFile getFile() {
 		return new SimpleFile("plugins/UHC", name);
+	}
+
+	public ItemBuilder getItemBuilder(String path) {
+		String[] data = getString(path).split(";");
+		return new ItemBuilder(Material.getMaterial(data[0])).setAmount(Integer.parseInt(data[1]))
+				.setDamage(Short.parseShort(data[2]));
+	}
+
+	public void setItem(String path, ItemStack item) {
+		set(path, item.getType() + ";" + item.getAmount() + ";" + item.getDurability());
+		save();
 	}
 
 	public UHC getUhc() {

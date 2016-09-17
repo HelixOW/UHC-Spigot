@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.util.SimpleListener;
+import de.alphahelix.uhc.instances.SimpleListener;
 
 public class ChatListener extends SimpleListener {
 
@@ -24,14 +24,14 @@ public class ChatListener extends SimpleListener {
 
 		if (getRegister().getPlayerUtil().isDead(p)) {
 			for (String dead : getRegister().getPlayerUtil().getDeads()) {
-				Bukkit.getPlayer(dead).sendMessage(getRegister().getMessageFile().getColorString("Spectator Prefix")
+				Bukkit.getPlayer(dead).sendMessage(getRegister().getMainOptionsFile().getColorString("Spectator Prefix")
 						+ p.getDisplayName() + "§8: " + e.getMessage());
 			}
 		}
 
 		if (GState.isState(GState.IN_GAME) || GState.isState(GState.PERIOD_OF_PEACE) || GState.isState(GState.END)) {
 			for (String survivor : getRegister().getPlayerUtil().getSurvivors()) {
-				if (!e.getMessage().startsWith("#")) {
+				if (!e.getMessage().startsWith(getRegister().getTeamFile().getString("Team.Chat"))) {
 					Bukkit.getPlayer(survivor)
 							.sendMessage(getUhc().getPrefix() + p.getDisplayName() + "§8: " + e.getMessage());
 				}
@@ -39,6 +39,12 @@ public class ChatListener extends SimpleListener {
 		} else {
 			for (String all : getRegister().getPlayerUtil().getAll()) {
 				Bukkit.getPlayer(all).sendMessage(getUhc().getPrefix() + p.getDisplayName() + "§8: " + e.getMessage());
+			}
+		}
+		
+		if(e.getMessage().startsWith(getRegister().getTeamFile().getString("Team.Chat"))){
+			for(Player teamler : getRegister().getTeamManagerUtil().getTeamByPlayer(p).getPlayers()) {
+				teamler.sendMessage(getUhc().getPrefix() + p.getDisplayName() + "§8: " + e.getMessage().substring(1, e.getMessage().length()));
 			}
 		}
 	}

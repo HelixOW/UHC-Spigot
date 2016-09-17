@@ -11,16 +11,33 @@ public class RotatingParticle {
 	private double t;
 	private double r;
 	private Effect part;
-	private int[] intData;
-	private float[] floatData;
+	
+	private int id;
+	private int data;
+	
+	private float offX;
+	private float offY;
+	private float offZ;
+	
+	private float speed;
+	private int count;
+	
 
-	public RotatingParticle(Player player, double t, double radius, Effect particle, int[] iData, float[] fData) {
+	public RotatingParticle(Player player, double t, double radius, Effect particle, int id, int data, float oX, float oY, float oZ, float speed, int count) {
 		this.p = player;
 		this.t = t;
 		this.r = radius;
 		this.part = particle;
-		this.intData = iData;
-		this.floatData = fData;
+		
+		this.id = id;
+		this.data = data;
+		
+		this.offX = oX;
+		this.offY = oY;
+		this.offZ = oZ;
+		
+		this.speed = speed;
+		this.count = count;
 	}
 
 	public void rotateAroundYAxis() {
@@ -32,8 +49,8 @@ public class RotatingParticle {
 		v = rotateAroundAxisY(v, 10);
 		loc.add(v.getX(), v.getY(), v.getZ());
 
-		p.spigot().playEffect(loc, part, intData[0], intData[1], floatData[0], floatData[1], floatData[2], floatData[3],
-				intData[2], intData[3]);
+		p.spigot().playEffect(loc, part, id, data, offX, offY, offZ, speed,
+				count, (int) r);
 		loc.subtract(v.getX(), v.getY(), v.getZ());
 	}
 	
@@ -46,8 +63,8 @@ public class RotatingParticle {
 		v = rotateAroundAxisX(v, 10);
 		loc.add(v.getX(), v.getY(), v.getZ());
 
-		p.spigot().playEffect(loc, part, intData[0], intData[1], floatData[0], floatData[1], floatData[2], floatData[3],
-				intData[2], intData[3]);
+		p.spigot().playEffect(loc, part, id, data, offX, offY, offZ, speed,
+				count, (int) r);
 		loc.subtract(v.getX(), v.getY(), v.getZ());
 	}
 	
@@ -60,8 +77,8 @@ public class RotatingParticle {
 		v = rotateAroundAxisZ(v, 10);
 		loc.add(v.getX(), v.getY(), v.getZ());
 
-		p.spigot().playEffect(loc, part, intData[0], intData[1], floatData[0], floatData[1], floatData[2], floatData[3],
-				intData[2], intData[3]);
+		p.spigot().playEffect(loc, part, id, data, offX, offY, offZ, speed,
+				count, (int) r);
 		loc.subtract(v.getX(), v.getY(), v.getZ());
 	}
 
