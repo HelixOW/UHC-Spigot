@@ -1,5 +1,7 @@
 package de.alphahelix.uhc.listeners;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,16 +20,18 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
+import de.popokaka.alphalibary.inventorys.SimpleMovingInventory;
 import de.popokaka.alphalibary.item.ItemBuilder;
 import de.popokaka.alphalibary.item.data.SkullData;
 
 public class SpectatorListener extends SimpleListener {
+
+	private static ArrayList<ItemStack> skulls = new ArrayList<>();
 
 	public SpectatorListener(UHC uhc) {
 		super(uhc);
@@ -47,7 +51,7 @@ public class SpectatorListener extends SimpleListener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onExp(PlayerExpChangeEvent e) {
 		if (getRegister().getPlayerUtil().isDead(e.getPlayer())) {
@@ -128,35 +132,26 @@ public class SpectatorListener extends SimpleListener {
 
 		Player p = e.getPlayer();
 
-		if (!(getRegister().getPlayerUtil().isDead(p)))
+		if (getRegister().getPlayerUtil().isSurivor(p))
 			return;
 
-		if (e.getClickedBlock() == null)
-			return;
-		if (e.getClickedBlock().getType().equals(Material.CHEST))
+		if (e.getClickedBlock() != null && e.getClickedBlock().getType().equals(Material.CHEST))
 			e.setCancelled(true);
 
 		if (p.getInventory().getItemInMainHand().getType().equals(Material.getMaterial(UHC.getInstance().getRegister()
 				.getSpectatorFile().getString("Spectator.Item").replace(" ", "_").toUpperCase()))) {
 
-			Inventory inv = Bukkit.createInventory(null,
-					((getRegister().getPlayerUtil().getSurvivors().size() / 9) + 1) * 9,
-					getRegister().getSpectatorFile().getColorString("GUI.Name"));
-
-			for (int i = 0; i < inv.getSize(); i++)
-				inv.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE).setDamage((short) 7).setName(" ").build());
-
 			for (String pl : getRegister().getPlayerUtil().getSurvivors()) {
 
 				ItemStack item = new ItemBuilder(Material.SKULL_ITEM).setDamage((short) 3)
 						.setName("§l§o" + Bukkit.getPlayer(pl).getDisplayName())
-						.addItemData(new SkullData(Bukkit.getPlayer(pl).getName())).build();
-
-				inv.addItem(item);
-
+						.addItemData(new SkullData(pl)).build();
+				
+				skulls.add(item);
 			}
-
-			p.openInventory(inv);
+			
+			new SimpleMovingInventory(getUhc(), skulls, getRegister().getSpectatorFile().getColorString("GUI.Name"), p, ((getRegister().getPlayerUtil().getSurvivors().size() / 9) + 1) * 18);
+			skulls.clear();
 		}
 	}
 
@@ -177,11 +172,9 @@ public class SpectatorListener extends SimpleListener {
 				Player player = Bukkit.getPlayerExact(playername);
 
 				if (player != null) {
-
 					e.setCancelled(true);
 					p.teleport(player);
 					p.closeInventory();
-
 				}
 			}
 			if (e.getCurrentItem().getType() == Material.STAINED_GLASS_PANE) {

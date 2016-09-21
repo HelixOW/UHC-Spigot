@@ -38,7 +38,10 @@ public class GameEndsListener extends SimpleListener {
 	public void onDeath(PlayerDeathEvent e) {
 		final Player dead = e.getEntity();
 
-		e.setDeathMessage(getRegister().getDeathMessageFile().getColorString(""));
+		e.setDeathMessage(getRegister().getDeathMessageFile().getMessage(e.getEntity().getLastDamageCause().getCause())
+				.replace("[player]", dead.getDisplayName())
+				.replace("[entity]", e.getEntity().getKiller() instanceof Player ? dead.getKiller().getName()
+						: getRegister().getDeathMessageFile().getColorString("[entity] is a mob")));
 
 		getRegister().getPlayerUtil().removeSurvivor(dead);
 		getRegister().getPlayerUtil().addDead(dead);
@@ -118,7 +121,7 @@ public class GameEndsListener extends SimpleListener {
 
 			if (getRegister().getPlayerUtil().getSurvivors().size() == 0) {
 
-				getRegister().getRestartTimer().startEndTimer();
+				Bukkit.reload();
 				return;
 			}
 
@@ -139,7 +142,7 @@ public class GameEndsListener extends SimpleListener {
 			if (!getRegister().getMainOptionsFile().getString("Command on win").equals(""))
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), getRegister().getMainOptionsFile()
 						.getString("Command on win").replace("[player]", getWinnerName()));
-
+			
 			getRegister().getRestartTimer().startEndTimer();
 		}
 	}
@@ -153,19 +156,21 @@ public class GameEndsListener extends SimpleListener {
 
 		if (!(GState.isState(GState.LOBBY) || GState.isState(GState.END))) {
 			if (!isSpec) {
-				Villager villager = (Villager) p.getWorld().spawnEntity(p.getLocation(), EntityType.VILLAGER);
-
-				villager.setCustomNameVisible(true);
-				villager.setCustomName(p.getName());
-
-				villager.getEquipment().setArmorContents(p.getInventory().getArmorContents());
-				villager.setHealth(p.getHealth());
-
-				villager.setAI(false);
-
-				playerLogOut.put(p.getName(), p.getLocation());
-				playerDummies.put(p.getName(), villager);
-				playerInv.put(p.getName(), p.getInventory());
+				if(!(getRegister().getPlayerUtil().getSurvivors().size() <= 2)) {	
+					Villager villager = (Villager) p.getWorld().spawnEntity(p.getLocation(), EntityType.VILLAGER);
+	
+					villager.setCustomNameVisible(true);
+					villager.setCustomName(p.getName());
+	
+					villager.getEquipment().setArmorContents(p.getInventory().getArmorContents());
+					villager.setHealth(p.getHealth());
+	
+					villager.setAI(false);
+	
+					playerLogOut.put(p.getName(), p.getLocation());
+					playerDummies.put(p.getName(), villager);
+					playerInv.put(p.getName(), p.getInventory());
+				}
 			}
 
 			for (String other : getRegister().getPlayerUtil().getAll()) {
@@ -174,18 +179,16 @@ public class GameEndsListener extends SimpleListener {
 				getRegister().getScoreboardUtil().updateAlive(Bukkit.getPlayer(other));
 				getRegister().getScoreboardUtil().updateSpecs(Bukkit.getPlayer(other));
 			}
-			
-			System.out.println(getRegister().getPlayerUtil().getSurvivors().size());
 
 			if (getRegister().getPlayerUtil().getSurvivors().size() <= 1) {
 				GState.setCurrentState(GState.END);
-				
+
 				for (String other : getRegister().getPlayerUtil().getSurvivors()) {
 					if (Bukkit.getPlayer(other) == null)
 						continue;
 					getRegister().getPlayerUtil().removeAll(Bukkit.getPlayer(other));
 				}
-				
+
 				if (getRegister().getPlayerUtil().getSurvivors().size() == 0) {
 
 					Bukkit.reload();

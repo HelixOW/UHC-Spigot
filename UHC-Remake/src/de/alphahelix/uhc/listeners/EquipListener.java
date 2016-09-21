@@ -37,7 +37,7 @@ public class EquipListener extends SimpleListener {
 			p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(32);
 
 		if (!GState.isState(GState.LOBBY)) {
-			if(getRegister().getPlayerUtil().isDead(p)) {
+			if(!getRegister().getPlayerUtil().isSurivor(p)) {
 				new Spectator(p, getRegister().getLocationsFile().getArena());
 				getRegister().getScoreboardUtil().setIngameScoreboard(p);
 	
@@ -46,6 +46,7 @@ public class EquipListener extends SimpleListener {
 						continue;
 					getRegister().getScoreboardUtil().setIngameScoreboard(Bukkit.getPlayer(other));
 				}
+				return;
 			}
 			
 			getRegister().getGameEndsListener().getPlayerDummie(p).remove();
@@ -110,6 +111,5 @@ public class EquipListener extends SimpleListener {
 		}
 		
 		if(GState.isState(GState.LOBBY) || GState.isState(GState.END)) getRegister().getPlayerUtil().removeAll(p);
-		getRegister().getPlayerUtil().removeDead(p);
 	}
 }

@@ -14,8 +14,8 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class WarmUpTimer extends Util {
 
-	private BukkitTask timer;
-	private BukkitTask warmup;
+	private static BukkitTask timer;
+	private static BukkitTask warmup;
 	private int time;
 	private double min;
 	private double h;
@@ -62,13 +62,13 @@ public class WarmUpTimer extends Util {
 		if (!GState.isState(GState.WARMUP))
 			return;
 
-		resetTime();
-		
 		if (timer != null) {
 			if (Bukkit.getScheduler().isCurrentlyRunning(timer.getTaskId()))
 				return;
 			return;
 		}
+		
+		resetTime();
 
 		timer = new BukkitRunnable() {
 			public void run() {

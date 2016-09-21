@@ -25,6 +25,7 @@ public class UUIDFetcher {
 
 	@SuppressWarnings("deprecation")
 	public static UUID getUUID(String name) {
+		if(name == null) return UUID.randomUUID();
 		name = name.toLowerCase();
 		
 		if(uuids.containsKey(name)) return uuids.get(name);

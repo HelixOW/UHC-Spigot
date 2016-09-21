@@ -98,7 +98,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		if(isScenarios() && !isKits()) {
 			setKits(false);
 			Scenarios.getRandomScenario();
-		} else {
+		} else if(isKits()){
 			setKits(true);
 			setScenarios(false);
 		}

@@ -18,8 +18,8 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class LobbyTimer extends Util {
 
-	private BukkitTask timer;
-	private BukkitTask lobby;
+	private static BukkitTask timer;
+	private static BukkitTask lobby;
 	private int time;
 	private double min;
 
@@ -46,13 +46,13 @@ public class LobbyTimer extends Util {
 	public void startLobbyCountdown() {
 		if (GState.isState(GState.LOBBY)) {
 
-			resetTime();
-			
 			if (timer != null) {
 				if (Bukkit.getScheduler().isCurrentlyRunning(timer.getTaskId()))
 					return;
 				return;
 			}
+			
+			resetTime();
 			
 			timer = new BukkitRunnable() {
 				public void run() {

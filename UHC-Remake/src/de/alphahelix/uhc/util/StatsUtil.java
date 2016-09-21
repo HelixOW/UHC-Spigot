@@ -215,20 +215,30 @@ public class StatsUtil extends Util {
 		if (getUhc().isMySQLMode()) {
 			if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(),
 					"Coins") == null) {
-				int coins = getRegister().getPlayerFile()
-						.getInt("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins");
-				getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins",
-						coins - 1);
+				int coins = getCoins(p);
+				if (coins - amount < 0)
+					getRegister().getPlayerFile()
+							.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins", 0);
+				else
+					getRegister().getPlayerFile()
+							.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins", coins - amount);
+
 				getRegister().getPlayerFile().save();
 			}
-			MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Coins",
-					Integer.toString(getCoins(p) - amount));
+			if (getCoins(p) - amount < 0)
+				MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Coins", Integer.toString(0));
+			else
+				MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Coins",
+						Integer.toString(getCoins(p) - amount));
 			return;
 		}
-		int coins = getRegister().getPlayerFile()
-				.getInt("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins");
-		getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins",
-				coins - 1);
+		int coins = getCoins(p);
+		if (coins - amount < 0)
+			getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins", 0);
+		else
+			getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins",
+					coins - amount);
+
 		getRegister().getPlayerFile().save();
 	}
 
@@ -348,16 +358,30 @@ public class StatsUtil extends Util {
 		if (getUhc().isMySQLMode()) {
 			if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(),
 					"Points") == null) {
-				getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points",
-						getPoints(p) - amount);
+				int points = getPoints(p);
+				if (points - amount < 0)
+					getRegister().getPlayerFile()
+							.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points", 0);
+				else
+					getRegister().getPlayerFile()
+							.set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points", points - amount);
+
 				getRegister().getPlayerFile().save();
 			}
-			MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Points",
-					Integer.toString(getPoints(p) - amount));
+			if (getPoints(p) - amount < 0)
+				MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Points", Integer.toString(0));
+			else
+				MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Points",
+						Integer.toString(getPoints(p) - amount));
 			return;
 		}
-		getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points",
-				getPoints(p) - amount);
+		int points = getPoints(p);
+		if (points - amount < 0)
+			getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points", 0);
+		else
+			getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points",
+					points - amount);
+
 		getRegister().getPlayerFile().save();
 	}
 

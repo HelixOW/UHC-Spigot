@@ -16,8 +16,8 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class GraceTimer extends Util {
 
-	private BukkitTask timer;
-	private BukkitTask grace;
+	private static BukkitTask timer;
+	private static BukkitTask grace;
 	private int time;
 	private double min;
 	private double h;
@@ -26,7 +26,7 @@ public class GraceTimer extends Util {
 	public GraceTimer(UHC uhc) {
 		super(uhc);
 	}
-
+	
 	public void stopTimer() {
 		if (timer != null)
 			timer.cancel();
@@ -64,13 +64,13 @@ public class GraceTimer extends Util {
 		if (!GState.isState(GState.PERIOD_OF_PEACE))
 			return;
 
-		resetTime();
-		
 		if (timer != null) {
 			if (Bukkit.getScheduler().isCurrentlyRunning(timer.getTaskId()))
 				return;
 			return;
 		}
+		
+		resetTime();
 
 		timer = new BukkitRunnable() {
 			public void run() {
@@ -145,13 +145,14 @@ public class GraceTimer extends Util {
 									SimpleActionBar.send(p, getUhc().getPrefix()
 											+ getRegister().getMessageFile().getColorString("Period of Peace ended"));
 
-									for (String others : getRegister().getPlayerUtil().getAll())
+									for (String others : getRegister().getPlayerUtil().getAll()) {
+										if(Bukkit.getPlayer(others) == null) continue;
 										p.hidePlayer(Bukkit.getPlayer(others));
+									}
 
 									for (String alives : getRegister().getPlayerUtil().getSurvivors()) {
-										Player alive = Bukkit.getPlayer(alives);
-
-										p.showPlayer(alive);
+										if(Bukkit.getPlayer(alives) == null) continue;
+										p.showPlayer(Bukkit.getPlayer(alives));
 									}
 									if (getUhc().isTracker())
 										p.getInventory().addItem(new ItemBuilder(Material.COMPASS)

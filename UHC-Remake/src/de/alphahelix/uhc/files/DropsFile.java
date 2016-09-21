@@ -24,7 +24,7 @@ public class DropsFile extends EasyFile {
 		setMaterialStringList("Zombie", "grilled pork:3:0", "rotten flesh:1:0");
 		setMaterialStringList("Cow", "leather:8:0", "cooked beef:1:0");
 		setMaterialStringList("Chicken", "arrow:3:0", "feather:1:0");
-		setMaterialStringList("Spidr", "string:2:0", "spider eye:1:0");
+		setMaterialStringList("Spider", "string:2:0", "spider eye:1:0");
 		setMaterialStringList("Sheep", "cooked mutton:3:0", "wool:1:0");
 		setMaterialStringList("Rabbit", "cooked rabbit:3:0", "leather:2:0");
 		setMaterialStringList("Horse", "cooked beef:3:0", "leather:4:0");

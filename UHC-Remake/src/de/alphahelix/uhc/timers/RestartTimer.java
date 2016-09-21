@@ -59,22 +59,26 @@ public class RestartTimer extends Util {
 	}
 
 	public void startEndTimer() {
-		if (!GState.isState(GState.DEATHMATCH))
+		if (!GState.isState(GState.END))
 			return;
-
-		resetTime();
 
 		if (timer != null) {
 			if (Bukkit.getScheduler().isCurrentlyRunning(timer.getTaskId()))
 				return;
 			return;
 		}
+		
+		resetTime();
+		getRegister().getGraceTimer().stopTimer();
+		getRegister().getWarmUpTimer().stopTimer();
+		getRegister().getDeathmatchTimer().stopTimer();
+		getRegister().getStartDeathmatchTimer().stopTimer();
 
 		timer = new BukkitRunnable() {
 			public void run() {
 				if (time > 0) {
 					time--;
-
+					
 					end = new BukkitRunnable() {
 						public void run() {
 							for (String pName : getRegister().getPlayerUtil().getAll()) {

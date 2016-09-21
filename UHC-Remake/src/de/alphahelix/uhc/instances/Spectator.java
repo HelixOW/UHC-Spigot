@@ -23,6 +23,7 @@ public class Spectator {
 		p.setPlayerListName("§7[§4X§7] §c" + p.getDisplayName());
 		p.setAllowFlight(true);
 		p.setFlying(true);
+		p.setInvulnerable(true);
 		new BukkitRunnable() {
 			public void run() {
 				equipSpecStuff(p);

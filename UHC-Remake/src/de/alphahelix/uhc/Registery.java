@@ -48,7 +48,8 @@ import de.alphahelix.uhc.listeners.RegisterListener;
 import de.alphahelix.uhc.listeners.SpectatorListener;
 import de.alphahelix.uhc.listeners.TeamListener;
 import de.alphahelix.uhc.listeners.TimerListener;
-import de.alphahelix.uhc.listeners.scenarios.ScenarioListener;
+import de.alphahelix.uhc.listeners.scenarios.ArrowListener;
+import de.alphahelix.uhc.listeners.scenarios.HalfOreListener;
 import de.alphahelix.uhc.timers.DeathmatchTimer;
 import de.alphahelix.uhc.timers.GraceTimer;
 import de.alphahelix.uhc.timers.LobbyTimer;
@@ -68,7 +69,6 @@ public class Registery {
 
 	private UHC uhc;
 	private ArrayList<Listener> listeners;
-	private ArrayList<ScenarioListener> scenListeners;
 	private ArrayList<EasyFile> easyFiles;
 	
 	private PlayerUtil playerUtil;
@@ -124,16 +124,42 @@ public class Registery {
 	private SpectatorListener spectatorListener;
 	private GameEndsListener gameEndsListener;
 	private DeathListener deathListener;
-	private ScenarioListener scenarioListener;
-
+	
 	public Registery(UHC uhc) {
 		setUhc(uhc);
 		setListeners(new ArrayList<Listener>());
 		setEasyFiles(new ArrayList<EasyFile>());
-		setScenListeners(new ArrayList<ScenarioListener>());
 	}
-
+	
 	// Registering
+	
+	private void registerEvents() {
+		PluginManager pm = Bukkit.getPluginManager();
+		for (Listener listener : getListeners()) {
+			pm.registerEvents(listener, getUhc());
+		}
+	}
+	
+	private void registerCommands() {
+		new StatsCommand(getUhc(), "stats", "Check your or others stats", "records");
+		new UHCAdminCommands(getUhc(), "uhcAdmin", "Mange the server configurations via commands.", "uhcA");
+		new UHCSetUpCommand(getUhc(), "uhcSetup", "Setup all of your options", "uhcS");
+		new StartCommand(getUhc(), "start", "Short or strech the lobby time.", "start");
+	}
+	
+	private void registerTeams() {
+		if(getTeamFile().getConfigurationSection("Teams") == null) return;
+		
+		for(String t : getTeamFile().getConfigurationSection("Teams").getKeys(false)) {
+			t = "Teams."+t; 
+			new UHCTeam(getTeamFile().getColorString(t+".name"),
+					getTeamFile().getColorString(t+".prefix"),
+					(byte) getTeamFile().getInt(t+".data"),
+					getTeamFile().getInt(t+".max Players"),
+					getTeamFile().getInt(t+".slot"),
+					getTeamFile().getBoolean(t+".name"));
+		}
+	}
 
 	public void registerAll() {
 		
@@ -199,13 +225,9 @@ public class Registery {
 		setSpectatorListener(new SpectatorListener(getUhc()));
 		setGameEndsListener(new GameEndsListener(getUhc()));
 		setDeathListener(new DeathListener(getUhc()));
-		setScenarioListener(new ScenarioListener(getUhc()));
 		
-		
-		
-		for(ScenarioListener sl : getScenListeners()) {
-			sl.register();
-		}
+		new HalfOreListener(getUhc());
+		new ArrowListener(getUhc());
 		
 		setLobbyTimer(new LobbyTimer(getUhc()));
 		setGraceTimer(new GraceTimer(getUhc()));
@@ -232,33 +254,6 @@ public class Registery {
 		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
 	}
 
-	private void registerEvents() {
-		PluginManager pm = Bukkit.getPluginManager();
-		for (Listener listener : getListeners()) {
-			pm.registerEvents(listener, getUhc());
-		}
-	}
-	
-	private void registerCommands() {
-		new StatsCommand(getUhc(), "stats", "Check your or others stats", "records");
-		new UHCAdminCommands(getUhc(), "uhcAdmin", "Mange the server configurations via commands.", "uhcA");
-		new UHCSetUpCommand(getUhc(), "uhcSetup", "Setup all of your options", "uhcS");
-		new StartCommand(getUhc(), "start", "Short or strech the lobby time.", "start");
-	}
-	
-	private void registerTeams() {
-		if(getTeamFile().getConfigurationSection("Teams") == null) return;
-		
-		for(String t : getTeamFile().getConfigurationSection("Teams").getKeys(false)) {
-			t = "Teams."+t; 
-			new UHCTeam(getTeamFile().getColorString(t+".name"),
-					getTeamFile().getColorString(t+".prefix"),
-					(byte) getTeamFile().getInt(t+".data"),
-					getTeamFile().getInt(t+".max Players"),
-					getTeamFile().getInt(t+".slot"),
-					getTeamFile().getBoolean(t+".name"));
-		}
-	}
 
 	// Instance
 
@@ -685,21 +680,5 @@ public class Registery {
 
 	public void setPreviewInventory(PreviewInventory previewInventory) {
 		this.previewInventory = previewInventory;
-	}
-
-	public ScenarioListener getScenarioListener() {
-		return scenarioListener;
-	}
-
-	public void setScenarioListener(ScenarioListener scenarioListener) {
-		this.scenarioListener = scenarioListener;
-	}
-
-	public ArrayList<ScenarioListener> getScenListeners() {
-		return scenListeners;
-	}
-
-	public void setScenListeners(ArrayList<ScenarioListener> scenListeners) {
-		this.scenListeners = scenListeners;
 	}
 }

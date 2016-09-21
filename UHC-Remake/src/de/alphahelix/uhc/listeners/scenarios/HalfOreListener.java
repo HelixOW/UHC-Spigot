@@ -7,15 +7,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 
-public class MiningListener extends ScenarioListener {
+public class HalfOreListener extends SimpleListener {
 
 	private static ArrayList<String> miners = new ArrayList<>();
 
-	public MiningListener(UHC uhc) {
+	public HalfOreListener(UHC uhc) {
 		super(uhc);
 	}
 
@@ -27,14 +27,9 @@ public class MiningListener extends ScenarioListener {
 	public void onMine(BlockBreakEvent e) {
 		Player p = e.getPlayer();
 		
-		System.out.println("ohoho");
-		
 		if(e.isCancelled()) return;
 
-		if (GState.isState(GState.LOBBY) || GState.isState(GState.END))
-			return;
-		
-		if(!Scenarios.isScenario(Scenarios.HALF_ORES)) return;
+		if(!scenarioCheck(Scenarios.HALF_ORES)) return;
 		
 		if(!e.getBlock().getType().name().contains("ORE")) return;
 		

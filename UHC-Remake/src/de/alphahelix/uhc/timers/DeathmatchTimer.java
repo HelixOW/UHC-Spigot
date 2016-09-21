@@ -14,8 +14,8 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class DeathmatchTimer extends Util {
 
-	private BukkitTask timer;
-	private BukkitTask deathmatch;
+	private static BukkitTask timer;
+	private static BukkitTask deathmatch;
 	private int time;
 	private double min;
 	private double h;
@@ -62,13 +62,13 @@ public class DeathmatchTimer extends Util {
 		if (!GState.isState(GState.IN_GAME))
 			return;
 
-		resetTime();
-		
 		if (timer != null) {
 			if (Bukkit.getScheduler().isCurrentlyRunning(timer.getTaskId()))
 				return;
 			return;
 		}
+		
+		resetTime();
 
 		timer = new BukkitRunnable() {
 			public void run() {

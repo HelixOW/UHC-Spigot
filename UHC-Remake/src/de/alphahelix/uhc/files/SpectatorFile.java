@@ -14,7 +14,7 @@ public class SpectatorFile extends EasyFile {
 		setDefault("GUI.Name", "§aTeleport");
 		setDefault("Spectator.Item", "magma cream");
 		setDefault("Spectator.Item Name", "&cTeleporter");
-		setDefault("Spectator.Item Slot", 6);
+		setDefault("Spectator.Item Slot", 4);
 	}
 
 }

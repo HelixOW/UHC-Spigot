@@ -117,7 +117,7 @@ public enum Scenarios {
 	
 	public static Scenarios getRandomScenario() {
 //		played = VALUES.get(RANDOM.nextInt(SIZE));
-		played = Scenarios.HALF_ORES;
+		played = Scenarios.THREE_TIME_ARROWS;
 		return played;
 	}
 	
