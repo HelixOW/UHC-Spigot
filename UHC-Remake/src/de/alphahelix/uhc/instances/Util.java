@@ -1,5 +1,6 @@
 package de.alphahelix.uhc.instances;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import de.alphahelix.uhc.Registery;
@@ -43,6 +44,15 @@ public class Util {
 
 	private void setLog(Logger log) {
 		this.log = log;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> toList(T... args) {
+		ArrayList<T> toReturn = new ArrayList<>();
+		for(T type : args) {
+			toReturn.add(type);
+		}
+		return toReturn;
 	}
 	
 	public double round(double value, int precision) {

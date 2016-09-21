@@ -47,7 +47,7 @@ public class SpectatorListener extends SimpleListener {
 			}
 		}
 	}
-
+	
 	@EventHandler
 	public void onExp(PlayerExpChangeEvent e) {
 		if (getRegister().getPlayerUtil().isDead(e.getPlayer())) {

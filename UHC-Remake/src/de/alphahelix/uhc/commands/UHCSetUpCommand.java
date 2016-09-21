@@ -11,7 +11,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 
-public class UHCSetUpCommand extends SimpleCommand<UHC>{
+public class UHCSetUpCommand extends SimpleCommand<UHC> {
 
 	public UHCSetUpCommand(UHC plugin, String command, String description, String... aliases) {
 		super(plugin, command, description, aliases);
@@ -46,7 +46,7 @@ public class UHCSetUpCommand extends SimpleCommand<UHC>{
 			} else if(args[0].equalsIgnoreCase("setDeathmatch")) {
 				UHC.getInstance().getRegister().getLocationsFile().setArena(p.getLocation());
 				p.sendMessage(UHC.getInstance().getPrefix() + "You've set the deathmatch spot to §ayour Location§7!");
-			} 
+			}
 		} else {
 			TextComponent msg = new TextComponent(
 					UHC.getInstance().getPrefix() + "§7Please click §chere §7to see the wiki");

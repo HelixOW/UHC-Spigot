@@ -50,7 +50,7 @@ public class ScoreboardFile extends EasyFile {
 		setDefault("Ingame.message.time infos.until damage", " &1Damage &7> [time]");
 		setDefault("Ingame.message.time infos.until pvp", " &3PvP &7> [time]");
 		setDefault("Ingame.message.time infos.deathmatch", " &eDeathmatch &7> now");
-		setDefault("Ingame.message.winner", " &3 &7> [player]");
+		setDefault("Ingame.message.end", " &3 &7> Restart");
 		setDefault("Ingame.message.bar", "&7>>----------<<");
 	}
 

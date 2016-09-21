@@ -84,7 +84,7 @@ public class UHCTeam {
 	}
 
 	public void removeTeam(Player p) {
-		if (isInTeam(p))
+		if (players.contains(p))
 			players.remove(p);
 	}
 

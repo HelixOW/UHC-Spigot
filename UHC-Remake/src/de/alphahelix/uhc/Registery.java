@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alphahelix.uhc.commands.StartCommand;
 import de.alphahelix.uhc.commands.StatsCommand;
@@ -12,12 +13,15 @@ import de.alphahelix.uhc.commands.UHCAdminCommands;
 import de.alphahelix.uhc.commands.UHCSetUpCommand;
 import de.alphahelix.uhc.files.BorderFile;
 import de.alphahelix.uhc.files.ConfirmFile;
+import de.alphahelix.uhc.files.CraftingFile;
+import de.alphahelix.uhc.files.DeathmessageFile;
 import de.alphahelix.uhc.files.DropsFile;
 import de.alphahelix.uhc.files.KitsFile;
 import de.alphahelix.uhc.files.LocationsFile;
 import de.alphahelix.uhc.files.MainMessageFile;
 import de.alphahelix.uhc.files.MainOptionsFile;
 import de.alphahelix.uhc.files.PlayerFile;
+import de.alphahelix.uhc.files.ScenarioFile;
 import de.alphahelix.uhc.files.ScoreboardConstructFile;
 import de.alphahelix.uhc.files.ScoreboardFile;
 import de.alphahelix.uhc.files.SpectatorFile;
@@ -27,14 +31,15 @@ import de.alphahelix.uhc.files.TablistFile;
 import de.alphahelix.uhc.files.TeamFile;
 import de.alphahelix.uhc.files.TimerFile;
 import de.alphahelix.uhc.files.UnitFile;
-import de.alphahelix.uhc.files.scenarios.ScenarioFile;
 import de.alphahelix.uhc.instances.EasyFile;
 import de.alphahelix.uhc.instances.UHCTeam;
 import de.alphahelix.uhc.inventories.ConfirmInventory;
 import de.alphahelix.uhc.inventories.KitInventory;
+import de.alphahelix.uhc.inventories.PreviewInventory;
 import de.alphahelix.uhc.inventories.TeamInventory;
 import de.alphahelix.uhc.listeners.ChatListener;
 import de.alphahelix.uhc.listeners.ConfirmListener;
+import de.alphahelix.uhc.listeners.DeathListener;
 import de.alphahelix.uhc.listeners.EquipListener;
 import de.alphahelix.uhc.listeners.GStateListener;
 import de.alphahelix.uhc.listeners.GameEndsListener;
@@ -43,6 +48,7 @@ import de.alphahelix.uhc.listeners.RegisterListener;
 import de.alphahelix.uhc.listeners.SpectatorListener;
 import de.alphahelix.uhc.listeners.TeamListener;
 import de.alphahelix.uhc.listeners.TimerListener;
+import de.alphahelix.uhc.listeners.scenarios.ScenarioListener;
 import de.alphahelix.uhc.timers.DeathmatchTimer;
 import de.alphahelix.uhc.timers.GraceTimer;
 import de.alphahelix.uhc.timers.LobbyTimer;
@@ -56,11 +62,13 @@ import de.alphahelix.uhc.util.ScoreboardUtil;
 import de.alphahelix.uhc.util.StatsUtil;
 import de.alphahelix.uhc.util.TablistUtil;
 import de.alphahelix.uhc.util.TeamManagerUtil;
+import de.alphahelix.uhc.util.WorldUtil;
 
 public class Registery {
 
 	private UHC uhc;
 	private ArrayList<Listener> listeners;
+	private ArrayList<ScenarioListener> scenListeners;
 	private ArrayList<EasyFile> easyFiles;
 	
 	private PlayerUtil playerUtil;
@@ -70,6 +78,7 @@ public class Registery {
 	private ScoreboardUtil scoreboardUtil;
 	private LobbyUtil lobbyUtil;
 	private TeamManagerUtil teamManagerUtil;
+	private WorldUtil worldUtil;
 	
 	private LobbyTimer lobbyTimer;
 	private GraceTimer graceTimer;
@@ -81,6 +90,7 @@ public class Registery {
 	private KitInventory kitInventory;
 	private ConfirmInventory confirmInventory;
 	private TeamInventory teamInventory;
+	private PreviewInventory previewInventory;
 	
 	private PlayerFile playerFile;
 	private MainOptionsFile mainOptionsFile;
@@ -100,6 +110,8 @@ public class Registery {
 	private TeamFile teamFile;
 	private SpectatorFile spectatorFile;
 	private DropsFile dropsFile;
+	private DeathmessageFile deathMessageFile;
+	private CraftingFile craftingFile;
 	
 	private KitChooseListener kitChooseListener;
 	private RegisterListener registerListener;
@@ -111,11 +123,14 @@ public class Registery {
 	private TeamListener teamListener;
 	private SpectatorListener spectatorListener;
 	private GameEndsListener gameEndsListener;
+	private DeathListener deathListener;
+	private ScenarioListener scenarioListener;
 
 	public Registery(UHC uhc) {
 		setUhc(uhc);
 		setListeners(new ArrayList<Listener>());
 		setEasyFiles(new ArrayList<EasyFile>());
+		setScenListeners(new ArrayList<ScenarioListener>());
 	}
 
 	// Registering
@@ -140,6 +155,8 @@ public class Registery {
 		setTeamFile(new TeamFile(getUhc()));
 		setSpectatorFile(new SpectatorFile(getUhc()));
 		setDropsFile(new DropsFile(getUhc()));
+		setDeathMessageFile(new DeathmessageFile(getUhc()));
+		setCraftingFile(new CraftingFile(getUhc()));
 		
 		for(EasyFile easyFile : getEasyFiles()) {
 			easyFile.register(easyFile);
@@ -151,7 +168,7 @@ public class Registery {
 		getUhc().setSoup(getMainOptionsFile().getBoolean("Soup"));
 		getUhc().setSpawnradius(getMainOptionsFile().getInt("Spawndispersal"));
 		getUhc().setStatusMOTD(getMainOptionsFile().getBoolean("Status MOTD"));
-		getUhc().setScenarios(getScenarioFile().getBoolean("Scenarios"));
+		getUhc().setScenarios(getScenarioFile().getBoolean("Scenarios enabled"));
 		getUhc().setKits(getKitsFile().getBoolean("Kits"));
 		getUhc().setTeams(getTeamFile().getBoolean("Teams enabled"));
 		getUhc().setTracker(getMainOptionsFile().getBoolean("Tracker.euip"));
@@ -164,10 +181,12 @@ public class Registery {
 		setScoreboardUtil(new ScoreboardUtil(getUhc()));
 		setLobbyUtil(new LobbyUtil(getUhc()));
 		setTeamManagerUtil(new TeamManagerUtil(getUhc()));
+		setWorldUtil(new WorldUtil(getUhc()));
 		
 		setKitInventory(new KitInventory(getUhc()));
 		setConfirmInventory(new ConfirmInventory(getUhc()));
 		setTeamInventory(new TeamInventory(getUhc()));
+		setPreviewInventory(new PreviewInventory(getUhc()));
 		
 		setKitChooseListener(new KitChooseListener(getUhc()));
 		setRegisterListener(new RegisterListener(getUhc()));
@@ -179,6 +198,14 @@ public class Registery {
 		setTeamListener(new TeamListener(getUhc()));
 		setSpectatorListener(new SpectatorListener(getUhc()));
 		setGameEndsListener(new GameEndsListener(getUhc()));
+		setDeathListener(new DeathListener(getUhc()));
+		setScenarioListener(new ScenarioListener(getUhc()));
+		
+		
+		
+		for(ScenarioListener sl : getScenListeners()) {
+			sl.register();
+		}
 		
 		setLobbyTimer(new LobbyTimer(getUhc()));
 		setGraceTimer(new GraceTimer(getUhc()));
@@ -193,6 +220,12 @@ public class Registery {
 		
 		getConfirmInventory().fillInventory();
 		getTeamInventory().fillInventory();
+		
+		new BukkitRunnable() {
+			public void run() {
+				getWorldUtil().createWorld();
+			}
+		}.runTaskLater(getUhc(), 5);
 		
 		getBorderUtil().changeSize(getBorderFile().getInt("size"));
 		
@@ -614,4 +647,59 @@ public class Registery {
 		this.restartTimer = restartTimer;
 	}
 
+	public DeathmessageFile getDeathMessageFile() {
+		return deathMessageFile;
+	}
+
+	public void setDeathMessageFile(DeathmessageFile deathMessageFile) {
+		this.deathMessageFile = deathMessageFile;
+	}
+
+	public DeathListener getDeathListener() {
+		return deathListener;
+	}
+
+	public void setDeathListener(DeathListener deathListener) {
+		this.deathListener = deathListener;
+	}
+
+	public WorldUtil getWorldUtil() {
+		return worldUtil;
+	}
+
+	public void setWorldUtil(WorldUtil worldUtil) {
+		this.worldUtil = worldUtil;
+	}
+
+	public CraftingFile getCraftingFile() {
+		return craftingFile;
+	}
+
+	public void setCraftingFile(CraftingFile craftingFile) {
+		this.craftingFile = craftingFile;
+	}
+
+	public PreviewInventory getPreviewInventory() {
+		return previewInventory;
+	}
+
+	public void setPreviewInventory(PreviewInventory previewInventory) {
+		this.previewInventory = previewInventory;
+	}
+
+	public ScenarioListener getScenarioListener() {
+		return scenarioListener;
+	}
+
+	public void setScenarioListener(ScenarioListener scenarioListener) {
+		this.scenarioListener = scenarioListener;
+	}
+
+	public ArrayList<ScenarioListener> getScenListeners() {
+		return scenListeners;
+	}
+
+	public void setScenListeners(ArrayList<ScenarioListener> scenListeners) {
+		this.scenListeners = scenListeners;
+	}
 }

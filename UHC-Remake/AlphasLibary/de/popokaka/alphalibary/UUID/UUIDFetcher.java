@@ -3,6 +3,7 @@ package de.popokaka.alphalibary.UUID;
 import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -13,7 +14,10 @@ import com.google.gson.GsonBuilder;
 import com.mojang.util.UUIDTypeAdapter;
 
 public class UUIDFetcher {
-
+	
+	private static HashMap<UUID, String> names = new HashMap<>();
+	private static HashMap<String, UUID> uuids = new HashMap<>();
+	
 	private static final Gson gson = new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
 
 	private static final String UUID_URL = "https://api.mojang.com/users/profiles/minecraft/%s?at=%d";
@@ -22,7 +26,9 @@ public class UUIDFetcher {
 	@SuppressWarnings("deprecation")
 	public static UUID getUUID(String name) {
 		name = name.toLowerCase();
-
+		
+		if(uuids.containsKey(name)) return uuids.get(name);
+		
 		try {
 			if (Bukkit.getOnlineMode()) {
 				HttpURLConnection connection = (HttpURLConnection) new URL(
@@ -31,9 +37,12 @@ public class UUIDFetcher {
 
 				PlayerUUID player = gson.fromJson(
 						new BufferedReader(new InputStreamReader(connection.getInputStream())), PlayerUUID.class);
-
+				
+				uuids.put(name, player.getId());
+				
 				return player.getId();
 			} else {
+				uuids.put(name, Bukkit.getOfflinePlayer(name).getUniqueId());
 				return Bukkit.getOfflinePlayer(name).getUniqueId();
 			}
 		} catch (Exception e) {
@@ -45,6 +54,8 @@ public class UUIDFetcher {
 	}
 
 	public static String getName(UUID uuid) {
+		
+		if(names.containsKey(uuid)) return names.get(uuid);
 
 		try {
 			if (Bukkit.getOnlineMode()) {
@@ -55,9 +66,12 @@ public class UUIDFetcher {
 				PlayerUUID[] allUserNames = gson.fromJson(
 						new BufferedReader(new InputStreamReader(connection.getInputStream())), PlayerUUID[].class);
 				PlayerUUID currentName = allUserNames[allUserNames.length - 1];
-
+				
+				names.put(uuid, currentName.getName());
+				
 				return currentName.getName();
 			} else {
+				names.put(uuid, Bukkit.getOfflinePlayer(uuid).getName());
 				return Bukkit.getOfflinePlayer(uuid).getName();
 			}
 		} catch (Exception e) {

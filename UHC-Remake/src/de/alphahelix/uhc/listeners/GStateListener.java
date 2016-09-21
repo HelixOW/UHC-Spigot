@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -32,9 +33,9 @@ public class GStateListener extends SimpleListener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-
+		
 		p.teleport(getRegister().getLocationsFile().getLobby());
-
+		
 		getRegister().getTablistUtil().sendTablist();
 	}
 
@@ -117,6 +118,16 @@ public class GStateListener extends SimpleListener {
 	public void onHurt(EntityDamageEvent e) {
 		if (e.getEntity() instanceof Player) {
 			if (GState.isState(GState.LOBBY) || GState.isState(GState.PERIOD_OF_PEACE)) {
+				e.setCancelled(true);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onEntityHurt(EntityDamageByEntityEvent e) {
+		if(!(e.getDamager() instanceof Player) ) return;
+		if (e.getEntity() instanceof Player) {
+			if (GState.isState(GState.LOBBY) || GState.isState(GState.PERIOD_OF_PEACE) || GState.isState(GState.WARMUP)) {
 				e.setCancelled(true);
 			}
 		}

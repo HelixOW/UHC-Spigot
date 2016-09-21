@@ -324,14 +324,12 @@ public class ScoreboardUtil extends Util {
 					ssb.setValue(i,
 							getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.deathmatch"));
 				} else if (GState.isState(GState.END)) {
-					if (getRegister().getScoreboardFile().getColorString("Ingame.message.winner")
-							.replace("[player]", getRegister().getGameEndsListener().getWinnerName()).length() > 32) {
+					if (getRegister().getScoreboardFile().getColorString("Ingame.message.end").length() > 32) {
 						getUhc().getLog().log(Level.WARNING,
 								"String for winner is too long. Short in your scoreboard.uhc");
 						continue;
 					}
-					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.winner")
-							.replace("[player]", getRegister().getGameEndsListener().getWinnerName()));
+					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.end"));
 				}
 			} else if (lineValue.contains("[bar]")) {
 				if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.bar"))
@@ -458,13 +456,11 @@ public class ScoreboardUtil extends Util {
 			}
 
 			else if (GState.isState(GState.END)) {
-				if (getRegister().getScoreboardFile().getColorString("Ingame.message.winner")
-						.replace("[player]", getRegister().getGameEndsListener().getWinnerName()).length() > 32) {
+				if (getRegister().getScoreboardFile().getColorString("Ingame.message.end").length() > 32) {
 					getUhc().getLog().log(Level.WARNING, "String for winner is too long. Short in your scoreboard.uhc");
 					continue;
 				}
-				ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.winner")
-						.replace("[player]", getRegister().getGameEndsListener().getWinnerName()));
+				ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.end"));
 			}
 		}
 	}

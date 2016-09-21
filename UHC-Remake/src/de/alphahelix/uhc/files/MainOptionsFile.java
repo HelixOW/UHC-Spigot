@@ -6,7 +6,7 @@ import de.alphahelix.uhc.instances.EasyFile;
 public class MainOptionsFile extends EasyFile {
 	
 	public MainOptionsFile(UHC uhc) {
-		super("Main-Options.uhc", uhc);
+		super("mainOptions.uhc", uhc);
 	}
 	
 	public void addValues() {
@@ -18,6 +18,7 @@ public class MainOptionsFile extends EasyFile {
 		setDefault("MySQL", false);
 		setDefault("Soup", false);
 		setDefault("Spawndispersal", 20);
+		setDefault("Remove Attack Cooldown", true);
 		setDefault("Tracker.equip", true);
 		setDefault("Tracker.name", "&dTracker");
 		setDefault("Status MOTD", true);

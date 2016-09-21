@@ -18,7 +18,17 @@ public class DropsFile extends EasyFile {
 	@Override
 	public void addValues() {
 		setDefault("Deathchest", true);
+		setMaterialStringList("Description", "Item:Amount:Durability", "Add other items below each other");
 		setMaterialStringList("Player", "gold ingot:8:0", "skull item:1:3");
+		setMaterialStringList("Pig", "grilled pork:3:0", "pork:1:0");
+		setMaterialStringList("Zombie", "grilled pork:3:0", "rotten flesh:1:0");
+		setMaterialStringList("Cow", "leather:8:0", "cooked beef:1:0");
+		setMaterialStringList("Chicken", "arrow:3:0", "feather:1:0");
+		setMaterialStringList("Spidr", "string:2:0", "spider eye:1:0");
+		setMaterialStringList("Sheep", "cooked mutton:3:0", "wool:1:0");
+		setMaterialStringList("Rabbit", "cooked rabbit:3:0", "leather:2:0");
+		setMaterialStringList("Horse", "cooked beef:3:0", "leather:4:0");
+		setMaterialStringList("Creeper", "gunpoweder:2:0", "tnt:1:0");
 	}
 	
 	public ArrayList<ItemStack> readValues(String value) {

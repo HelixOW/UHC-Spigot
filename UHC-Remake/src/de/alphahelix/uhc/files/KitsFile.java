@@ -23,12 +23,15 @@ public class KitsFile extends EasyFile {
 	private HashMap<String, Kit> kits = new HashMap<>();
 
 	public KitsFile(UHC uhc) {
-		super("Kits.uhc", uhc);
+		super("kits.uhc", uhc);
 	}
 
 	@Override
 	public void addValues() {
 		setDefault("GUI.Name", "&6Kits");
+		setDefault("Preview GUI.Name", "&3Preview&7: [kit]");
+		setDefault("Preview GUI.Next page", "&aNext Page");
+		setDefault("Preview GUI.Previous page", "&cPrevious Page");
 		setDefault("Kits", true);
 		setDefault("Kit.Item", "IRON SWORD");
 		setDefault("Kit.Item Name", "&6Kits");

@@ -12,7 +12,7 @@ import de.popokaka.alphalibary.file.SimpleFile;
 public class PlayerFile extends EasyFile {
 
 	public PlayerFile(UHC uhc) {
-		super("Players.uhc", uhc);
+		super("players.uhc", uhc);
 		register(this);
 	}
 	

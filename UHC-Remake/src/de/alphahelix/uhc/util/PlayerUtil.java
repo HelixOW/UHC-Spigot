@@ -77,13 +77,24 @@ public class PlayerUtil extends Util{
 		if(!(survivors.contains(p.getName()))) survivors.add(p.getName());
 	}
 	
+	public void addSurvivor(String name) {
+		if(!(survivors.contains(name))) survivors.add(name);
+	}
+	
 	public void removeSurvivor(Player p) {
 		if(survivors.contains(p.getName())) survivors.remove(p.getName());
 	}
 	
+	public void removeSurvivor(String name) {
+		if(survivors.contains(name)) survivors.remove(name);
+	}
+	
 	public boolean isSurivor(Player p) {
-		if(survivors.contains(p.getName())) return true;
-		return false;
+		return survivors.contains(p.getName());
+	}
+	
+	public boolean isSurvivor(String name) {
+		return survivors.contains(name);
 	}
 	
 	//Death Players | Spectators |
@@ -104,9 +115,20 @@ public class PlayerUtil extends Util{
 		if(deaths.contains(p.getName())) deaths.remove(p.getName());
 	}
 	
+	public void addDead(String name) {
+		if(!(deaths.contains(name))) deaths.add(name);
+	}
+	
+	public void removeDead(String name) {
+		if(deaths.contains(name)) deaths.remove(name);
+	}
+	
 	public boolean isDead(Player p) {
-		if(deaths.contains(p.getName())) return true;
-		return false;
+		return deaths.contains(p.getName());
+	}
+	
+	public boolean isDead(String name) {
+		return deaths.contains(name);
 	}
 	
 	//Other

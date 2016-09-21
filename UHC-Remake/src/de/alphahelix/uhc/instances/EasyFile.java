@@ -1,5 +1,6 @@
 package de.alphahelix.uhc.instances;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.bukkit.Material;
@@ -25,6 +26,15 @@ public abstract class EasyFile extends SimpleFile {
 		setName(name);
 		getRegister().getEasyFiles().add(this);
 	}
+	
+	public EasyFile(String path, String name, UHC uhc) {
+		super("plugins/UHC/"+path, name);
+		setUhc(uhc);
+		setRegister(getUhc().getRegister());
+		setLog(getUhc().getLog());
+		setName(name);
+		getRegister().getEasyFiles().add(this);
+	}
 
 	public abstract void addValues();
 
@@ -34,6 +44,10 @@ public abstract class EasyFile extends SimpleFile {
 	public void register(EasyFile easy) {
 		easy.addValues();
 		easy.loadValues();
+	}
+	
+	public Material getMaterial(String path) {
+		return Material.getMaterial(getString(path).replace(" ", "_").toUpperCase());
 	}
 
 	public SimpleFile getFile() {
@@ -49,6 +63,16 @@ public abstract class EasyFile extends SimpleFile {
 	public void setItem(String path, ItemStack item) {
 		set(path, item.getType() + ";" + item.getAmount() + ";" + item.getDurability());
 		save();
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> toList(T... args) {
+		ArrayList<T> toReturn = new ArrayList<>();
+		for(T type : args) {
+			toReturn.add(type);
+		}
+		return toReturn;
 	}
 
 	public UHC getUhc() {

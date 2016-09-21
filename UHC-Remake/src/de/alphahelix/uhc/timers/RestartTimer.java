@@ -134,7 +134,7 @@ public class RestartTimer extends Util {
 									continue;
 								}
 
-								else if (time < 10 && time != 0) {
+								if (time < 10 && time != 0) {
 									p.sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
 											.getColorString("End time left info")
 											.replace("[time]", Double.toString(time)).replace("[unit]", "seconds"));
@@ -147,7 +147,7 @@ public class RestartTimer extends Util {
 									continue;
 								}
 
-								else if (time == 0) {
+								if (time == 0) {
 									timer.cancel();
 
 									p.sendMessage(getUhc().getPrefix()
@@ -155,10 +155,10 @@ public class RestartTimer extends Util {
 
 									SimpleActionBar.send(p, getUhc().getPrefix()
 											+ getRegister().getMessageFile().getColorString("End ended"));
-
+									
+									Bukkit.reload();
+									
 									end.cancel();
-
-									Bukkit.shutdown();
 								}
 							}
 						}

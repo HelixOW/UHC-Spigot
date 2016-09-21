@@ -22,29 +22,26 @@ public class LocationsFile extends EasyFile {
 	}
 
 	public void initalizeLobbyAndArena() {
-
-		if (Bukkit.getWorld("UHC") == null) {
-			Bukkit.createWorld(new WorldCreator("UHC"));
-		}
-		if(contains("Lobby")) {
+		
+		if(getString("Lobby") != null) {
 			if (!(getLocation("Lobby", true) == null)) {
 				if (getLocation("Lobby", true).build().getWorld() == null) {
 					String[] values = getString("Lobby").split(",");
-	
+					
 					Bukkit.createWorld(new WorldCreator(values[3]));
 				}
 			}
 		}
-		if(contains("Arena")) {
+		if(getString("Arena") != null) {
 			if (!(getLocation("Arena", true) == null)) {
 				if (getLocation("Arena", true).build().getWorld() == null) {
 					String[] values = getString("Arena").split(",");
-	
+					
 					Bukkit.createWorld(new WorldCreator(values[3]));
 				}
 			}
 		}
-		if(contains("Deathmatch")) {
+		if(getString("Deathmatch") != null) {
 			if (!(getLocation("Deathmatch", true) == null)) {
 				if (getLocation("Deathmatch", true).build().getWorld() == null) {
 					String[] values = getString("Deathmatch").split(",");

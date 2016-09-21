@@ -16,6 +16,7 @@ public class TablistUtil extends Util {
 
 	public void sendTablist() {
 		for (String pNames : getRegister().getPlayerUtil().getAll()) {
+			if(Bukkit.getPlayer(pNames) == null) continue;
 			Player p = Bukkit.getPlayer(pNames);
 
 			SimpleTablist.setTablistHeaderFooter(p, null, null);

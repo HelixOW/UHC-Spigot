@@ -6,7 +6,7 @@ import de.alphahelix.uhc.instances.EasyFile;
 public class MainMessageFile extends EasyFile {
 
 	public MainMessageFile(UHC uhc) {
-		super("Main-Messages.uhc", uhc);
+		super("messages.uhc", uhc);
 	}
 	
 	@Override

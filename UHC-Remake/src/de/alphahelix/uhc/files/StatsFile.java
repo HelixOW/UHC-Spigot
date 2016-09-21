@@ -6,7 +6,7 @@ import de.alphahelix.uhc.instances.EasyFile;
 public class StatsFile extends EasyFile {
 
 	public StatsFile(UHC uhc) {
-		super("StatsMessages.uhc", uhc);
+		super("statsMessages.uhc", uhc);
 	}
 	
 	@Override

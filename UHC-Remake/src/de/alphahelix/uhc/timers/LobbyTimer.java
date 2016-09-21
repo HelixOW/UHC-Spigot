@@ -47,20 +47,20 @@ public class LobbyTimer extends Util {
 		if (GState.isState(GState.LOBBY)) {
 
 			resetTime();
-
+			
 			if (timer != null) {
 				if (Bukkit.getScheduler().isCurrentlyRunning(timer.getTaskId()))
 					return;
 				return;
 			}
-
+			
 			timer = new BukkitRunnable() {
 				public void run() {
 
 					if (!(getRegister().getPlayerUtil().getAll().size() >= getRegister().getPlayerUtil()
 							.getMinimumPlayerCount()))
 						return;
-
+					
 					if (time > 0) {
 						time--;
 
@@ -77,7 +77,7 @@ public class LobbyTimer extends Util {
 										min = calcMin(time);
 
 										p.setLevel(time);
-
+										
 										if (min % 1 == 0 && time > 10 && time != 0) {
 											p.sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
 													.getColorString("Lobby time left info")
@@ -93,6 +93,7 @@ public class LobbyTimer extends Util {
 															: getRegister().getUnitFile().getColorString("Seconds"))),
 													1, 2, 1);
 											p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
+										
 										}
 
 										if (time % 30 == 0 && !(min % 1 == 0)) {
@@ -161,7 +162,11 @@ public class LobbyTimer extends Util {
 
 											getRegister().getTablistUtil().sendTablist();
 											getRegister().getScoreboardUtil().setIngameScoreboard(p);
-
+											for(String o : getRegister().getPlayerUtil().getAll()) {
+												if(Bukkit.getPlayer(o) == null) continue;
+												getRegister().getScoreboardUtil().setIngameScoreboard(Bukkit.getPlayer(o));
+											}
+											
 											if (getUhc().isKits()) {
 												if (getRegister().getKitsFile().hasKit(p)) {
 													for (ItemStack is : getRegister().getKitsFile().getKitByPlayer(p)

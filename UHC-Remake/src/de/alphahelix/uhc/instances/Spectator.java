@@ -32,6 +32,25 @@ public class Spectator {
 			Bukkit.getPlayer(ig).hidePlayer(p);
 		}
 	}
+	
+	public Spectator(final Player p, Location l) {
+		p.teleport(l);
+		p.setCanPickupItems(false);
+		p.setVelocity(p.getVelocity().setY(20D));
+		p.setTotalExperience(0);
+		p.setGameMode(GameMode.ADVENTURE);
+		p.setPlayerListName("§7[§4X§7] §c" + p.getDisplayName());
+		p.setAllowFlight(true);
+		p.setFlying(true);
+		new BukkitRunnable() {
+			public void run() {
+				equipSpecStuff(p);
+			}
+		}.runTaskLater(UHC.getInstance(), 20);
+		for (String ig : UHC.getInstance().getRegister().getPlayerUtil().getSurvivors()) {
+			Bukkit.getPlayer(ig).hidePlayer(p);
+		}
+	}
 
 	private void equipSpecStuff(Player p) {
 		p.getInventory().setItem(UHC.getInstance().getRegister().getSpectatorFile().getInt("Spectator.Item Slot"),
