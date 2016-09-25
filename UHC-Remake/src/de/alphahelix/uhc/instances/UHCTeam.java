@@ -114,7 +114,7 @@ public class UHCTeam {
 	}
 
 	public void setColoredName(Player p) {
-		p.setDisplayName(prefix + "[" + name + "] " + p.getName() + " r");
+		p.setDisplayName(prefix + "[" + name + "] " + p.getName() + " §r");
 		p.setPlayerListName(prefix + p.getName());
 	}
 }

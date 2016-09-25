@@ -14,17 +14,15 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class WarmUpTimer extends Util {
 
-	private static BukkitTask timer;
-	private static BukkitTask warmup;
+	private static BukkitTask timer, warmup;
 	private int time;
-	private double min;
-	private double h;
-	private boolean hourSend;
-	
+	private double min, h;
+	private boolean hourSend, customTime;
+
 	public WarmUpTimer(UHC uhc) {
 		super(uhc);
 	}
-	
+
 	public void stopTimer() {
 		if (timer != null)
 			timer.cancel();
@@ -42,11 +40,11 @@ public class WarmUpTimer extends Util {
 	public double getHourTime() {
 		return calcHours(time);
 	}
-	
+
 	public String getTime() {
-		if(getHourTime() > 1 && getMinTime() > 60 && time > 60)
+		if (getHourTime() > 1 && getMinTime() > 60 && time > 60)
 			return Double.toString(round(getHourTime(), 1)) + getRegister().getUnitFile().getColorString("Hours");
-		else if(getHourTime() < 1 && getMinTime() < 60 && time > 60) 
+		else if (getHourTime() < 1 && getMinTime() < 60 && time > 60)
 			return Double.toString(round(getMinTime(), 1)) + getRegister().getUnitFile().getColorString("Minutes");
 		else
 			return Integer.toString(time) + getRegister().getUnitFile().getColorString("Seconds");
@@ -57,7 +55,7 @@ public class WarmUpTimer extends Util {
 			return true;
 		return false;
 	}
-	
+
 	public void startWarmUpTimer() {
 		if (!GState.isState(GState.WARMUP))
 			return;
@@ -67,8 +65,8 @@ public class WarmUpTimer extends Util {
 				return;
 			return;
 		}
-		
-		resetTime();
+		if (!customTime)
+			resetTime();
 
 		timer = new BukkitRunnable() {
 			public void run() {
@@ -82,12 +80,12 @@ public class WarmUpTimer extends Util {
 
 								if (p == null)
 									return;
-								
+
 								min = calcMin(time);
 								h = calcHours(time);
-								
+
 								getRegister().getScoreboardUtil().updateTime(p);
-								
+
 								if ((h % 1 == 0 && !hourSend) && min > 60 && time != 0) {
 									hourSend = true;
 									p.sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
@@ -133,8 +131,8 @@ public class WarmUpTimer extends Util {
 									p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
 									continue;
 								}
-								
-								else if(time == 0) {
+
+								else if (time == 0) {
 									timer.cancel();
 
 									p.sendMessage(getUhc().getPrefix()
@@ -161,4 +159,8 @@ public class WarmUpTimer extends Util {
 		time = getRegister().getTimerFile().getInt("WarmUp.length");
 	}
 
+	public void setTime(int t) {
+		time = t;
+		customTime = true;
+	}
 }

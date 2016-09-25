@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
@@ -35,17 +36,24 @@ public class GStateListener extends SimpleListener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		
+
 		p.teleport(getRegister().getLocationsFile().getLobby());
-		
+
 		getRegister().getTablistUtil().sendTablist();
 	}
-	
+
 	@EventHandler
 	public void onRegen(EntityRegainHealthEvent e) {
-		if(!(e.getEntity() instanceof Player)) return;
-		
+		if (!(e.getEntity() instanceof Player))
+			return;
+
 		e.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onItemComsune(PlayerItemConsumeEvent e) {
+		if (GState.isState(GState.LOBBY))
+			e.setCancelled(true);
 	}
 
 	@EventHandler
@@ -55,15 +63,17 @@ public class GStateListener extends SimpleListener {
 
 		if (!GState.isState(GState.LOBBY))
 			return;
-		if(getRegister().getLobbyUtil().hasBuildPermission((Player) e.getWhoClicked())) return;
+		if (getRegister().getLobbyUtil().hasBuildPermission((Player) e.getWhoClicked()))
+			return;
 		if (e.getClickedInventory().getType().equals(InventoryType.PLAYER))
 			e.setCancelled(true);
 	}
-	
+
 	@EventHandler
 	public void onTeleport(PlayerPortalEvent e) {
-		if(!GState.isState(GState.LOBBY)) return;
-		
+		if (!GState.isState(GState.LOBBY))
+			return;
+
 		e.setCancelled(true);
 	}
 
@@ -71,7 +81,8 @@ public class GStateListener extends SimpleListener {
 	public void onBlockInvOpen(InventoryOpenEvent e) {
 		if (!GState.isState(GState.LOBBY))
 			return;
-		if(getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer())) return;
+		if (getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer()))
+			return;
 		if (!(e.getInventory().getType().equals(InventoryType.CHEST)
 				|| e.getInventory().getType().equals(InventoryType.ENDER_CHEST))) {
 			e.setCancelled(true);
@@ -84,7 +95,8 @@ public class GStateListener extends SimpleListener {
 			return;
 		if (e.getClickedBlock() == null)
 			return;
-		if(getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer())) return;
+		if (getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer()))
+			return;
 		if (e.getClickedBlock().getType().equals(Material.CHEST)
 				|| e.getClickedBlock().getType().equals(Material.ENDER_CHEST))
 			e.setCancelled(true);
@@ -93,7 +105,8 @@ public class GStateListener extends SimpleListener {
 	@EventHandler
 	public void onCollect(PlayerPickupItemEvent e) {
 		if (GState.isState(GState.LOBBY)) {
-			if(getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer())) return;
+			if (getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer()))
+				return;
 			e.setCancelled(true);
 		}
 	}
@@ -111,7 +124,7 @@ public class GStateListener extends SimpleListener {
 			e.setFoodLevel(20);
 		}
 	}
-	
+
 	@EventHandler
 	public void onAlternateSpawn(EntitySpawnEvent e) {
 		if (GState.isState(GState.LOBBY)) {
@@ -138,12 +151,14 @@ public class GStateListener extends SimpleListener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onEntityHurt(EntityDamageByEntityEvent e) {
-		if(!(e.getDamager() instanceof Player) ) return;
+		if (!(e.getDamager() instanceof Player))
+			return;
 		if (e.getEntity() instanceof Player) {
-			if (GState.isState(GState.LOBBY) || GState.isState(GState.PERIOD_OF_PEACE) || GState.isState(GState.WARMUP)) {
+			if (GState.isState(GState.LOBBY) || GState.isState(GState.PERIOD_OF_PEACE)
+					|| GState.isState(GState.WARMUP)) {
 				e.setCancelled(true);
 			}
 		}
@@ -171,7 +186,8 @@ public class GStateListener extends SimpleListener {
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent e) {
 		if (GState.isState(GState.LOBBY)) {
-			if(getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer())) return;
+			if (getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer()))
+				return;
 			e.setCancelled(true);
 		}
 	}

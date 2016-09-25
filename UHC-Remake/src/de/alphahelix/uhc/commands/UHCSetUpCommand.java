@@ -44,8 +44,11 @@ public class UHCSetUpCommand extends SimpleCommand<UHC> {
 				UHC.getInstance().getRegister().getLocationsFile().setArena(p.getLocation());
 				p.sendMessage(UHC.getInstance().getPrefix() + "You've set the arenaspawn to §ayour Location§7!");
 			} else if(args[0].equalsIgnoreCase("setDeathmatch")) {
-				UHC.getInstance().getRegister().getLocationsFile().setArena(p.getLocation());
+				UHC.getInstance().getRegister().getLocationsFile().setDeathmatch(p.getLocation());
 				p.sendMessage(UHC.getInstance().getPrefix() + "You've set the deathmatch spot to §ayour Location§7!");
+			} else if(args[0].equals("setNether")) {
+				UHC.getInstance().getRegister().getLocationsFile().setNetherArena(p.getLocation());
+				p.sendMessage(UHC.getInstance().getPrefix() + "You've set the nether spot to §ayour Location§7!");
 			}
 		} else {
 			TextComponent msg = new TextComponent(

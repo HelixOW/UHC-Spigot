@@ -21,31 +21,44 @@ public class LocationsFile extends EasyFile {
 		setLocation("Deathmatch", loc, true);
 	}
 
+	public void setNetherArena(Location loc) {
+		setLocation("Arena Nether", loc, true);
+	}
+
 	public void initalizeLobbyAndArena() {
-		
-		if(getString("Lobby") != null) {
+
+		if (getString("Lobby") != null) {
 			if (!(getLocation("Lobby", true) == null)) {
 				if (getLocation("Lobby", true).build().getWorld() == null) {
 					String[] values = getString("Lobby").split(",");
-					
+
 					Bukkit.createWorld(new WorldCreator(values[3]));
 				}
 			}
 		}
-		if(getString("Arena") != null) {
+		if (getString("Arena") != null) {
 			if (!(getLocation("Arena", true) == null)) {
 				if (getLocation("Arena", true).build().getWorld() == null) {
 					String[] values = getString("Arena").split(",");
-					
+
 					Bukkit.createWorld(new WorldCreator(values[3]));
 				}
 			}
 		}
-		if(getString("Deathmatch") != null) {
+		if (getString("Arena Nether") != null) {
+			if (!(getLocation("Arena Nether", true) == null)) {
+				if (getLocation("Arena Nether", true).build().getWorld() == null) {
+					String[] values = getString("Arena Nether").split(",");
+
+					Bukkit.createWorld(new WorldCreator(values[3]));
+				}
+			}
+		}
+		if (getString("Deathmatch") != null) {
 			if (!(getLocation("Deathmatch", true) == null)) {
 				if (getLocation("Deathmatch", true).build().getWorld() == null) {
 					String[] values = getString("Deathmatch").split(",");
-	
+
 					Bukkit.createWorld(new WorldCreator(values[3]));
 				}
 			}
@@ -53,9 +66,13 @@ public class LocationsFile extends EasyFile {
 	}
 
 	public Location getLobby() {
-		if (getLocation("Lobby", true).build() != null)
-			return getLocation("Lobby", true).build();
-		return Bukkit.getWorld("UHC").getHighestBlockAt(Bukkit.getWorld("UHC").getSpawnLocation()).getLocation();
+		if (contains("Lobby")) {
+			if (getLocation("Lobby", true).build() != null)
+				return getLocation("Lobby", true).build();
+		}
+		if (Bukkit.getWorld("world") == null)
+			return null;
+		return Bukkit.getWorld("world").getHighestBlockAt(Bukkit.getWorld("world").getSpawnLocation()).getLocation();
 	}
 
 	public void setArena(Location loc) {
@@ -63,16 +80,32 @@ public class LocationsFile extends EasyFile {
 	}
 
 	public Location getArena() {
-		if (getLocation("Arena", true).build() != null)
-			return getLocation("Arena", true).build();
+		if (contains("Arena")) {
+			if (getLocation("Arena", true).build() != null)
+				return getLocation("Arena", true).build();
+		}
+		if (Bukkit.getWorld("UHC") == null)
+			return null;
 		return Bukkit.getWorld("UHC").getHighestBlockAt(Bukkit.getWorld("UHC").getSpawnLocation()).getLocation();
 	}
 
+	public Location getNetherArena() {
+		if (contains("Arena Nether")) {
+			if (getLocation("Arena Nether", true).build() != null)
+				return getLocation("Arena Nether", true).build();
+		}
+		if (Bukkit.getWorld("UHC-Nether") == null)
+			return null;
+		return Bukkit.getWorld("UHC-Nether").getSpawnLocation();
+	}
+
 	public Location getDeathmatch() {
-		if(contains("Deathmatch")) {
+		if (contains("Deathmatch")) {
 			if (getLocation("Deathmatch", true).build() != null)
 				return getLocation("Deathmatch", true).build();
 		}
+		if (Bukkit.getWorld("UHC") == null)
+			return null;
 		return Bukkit.getWorld("UHC").getHighestBlockAt(Bukkit.getWorld("UHC").getSpawnLocation()).getLocation();
 	}
 

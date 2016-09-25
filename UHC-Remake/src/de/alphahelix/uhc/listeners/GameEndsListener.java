@@ -27,15 +27,15 @@ import de.alphahelix.uhc.instances.Spectator;
 import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class GameEndsListener extends SimpleListener {
-
-	public GameEndsListener(UHC uhc) {
-		super(uhc);
-	}
-
+	
 	private HashMap<String, Location> playerLogOut = new HashMap<>();
 	private HashMap<String, Villager> playerDummies = new HashMap<>();
 	private HashMap<String, PlayerInventory> playerInv = new HashMap<>();
 	private String winnerName = "AlphaHelix";
+
+	public GameEndsListener(UHC uhc) {
+		super(uhc);
+	}
 
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
@@ -90,16 +90,27 @@ public class GameEndsListener extends SimpleListener {
 		Inventory cInv = null;
 		ArrayList<ItemStack> dropList = new ArrayList<>();
 
-		for (final ItemStack drops : getRegister().getDropsFile().readValues("Player")) {
-			if (getRegister().getDropsFile().getBoolean("Deathchest")) {
-				dead.getLocation().getBlock().setType(Material.CHEST);
-				final Chest c = (Chest) dead.getLocation().getBlock().getState();
-				cInv = c.getBlockInventory();
+		if (scenarioCheck(Scenarios.KILLSWITCH)) {
+			if(dead.getKiller() instanceof Player) {
+				dead.getKiller().getInventory().clear();
+				dead.getKiller().getInventory().setContents(dead.getInventory().getContents());
+				dead.getKiller().getInventory().setArmorContents(dead.getInventory().getArmorContents());
 			}
-			dropList.add(drops);
+		} else {
+			for (final ItemStack drops : getRegister().getDropsFile().readValues("Player")) {
+				if (getRegister().getDropsFile().getBoolean("Deathchest")) {
+					dead.getLocation().getBlock().setType(Material.CHEST);
+					final Chest c = (Chest) dead.getLocation().getBlock().getState();
+					cInv = c.getBlockInventory();
+				}
+				if (Math.random() < getRegister().getDropsFile().getChance("Player", drops))
+					dropList.add(drops);
+			}
 		}
 
-		if (scenarioCheck(Scenarios.BAREBONES)) {
+		if (
+
+		scenarioCheck(Scenarios.BAREBONES)) {
 			dropList = new ArrayList<>();
 
 			dropList.add(new ItemStack(Material.DIAMOND, 1));

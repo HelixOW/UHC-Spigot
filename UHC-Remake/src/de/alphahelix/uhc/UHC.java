@@ -2,11 +2,16 @@ package de.alphahelix.uhc;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -38,7 +43,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private boolean tracker;
 	private int spawnradius;
 	private Logger log;
-	
+
 	@Override
 	public void onEnable() {
 		this.setInstance(this);
@@ -46,9 +51,9 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		this.setLog();
 		this.setConsolePrefix("[" + this.getName() + "] ");
 		this.setRestartMessage("");
-		
+
 		getRegister().registerAll();
-		
+
 		GState.setCurrentState(GState.END);
 
 		if (isMySQLMode()) {
@@ -94,15 +99,15 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		registerCrafting();
 
 		// TODO: Create Ranking Wall
-		
-		if(isScenarios() && !isKits()) {
+
+		if (isScenarios() && !isKits()) {
 			setKits(false);
 			Scenarios.getRandomScenario();
-		} else if(isKits()){
+		} else if (isKits()) {
 			setKits(true);
 			setScenarios(false);
 		}
-		
+
 		log.log(Level.INFO, getConsolePrefix() + "UHC by AlphaHelix successfully loaded and enabled.");
 		GState.setCurrentState(GState.LOBBY);
 
@@ -135,7 +140,32 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private void registerCrafting() {
 		getRegister().getCraftingFile().registerAllCrafting();
 		if (isDebug())
-			log.log(Level.INFO, getConsolePrefix() + "registered crafting recipe for Goldenhead.");
+			log.log(Level.INFO, getConsolePrefix() + "registered crafting recipes.");
+
+		new BukkitRunnable() {
+			public void run() {
+				if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.MOUNTAINEERING))) {
+					Iterator<Recipe> recipes = Bukkit.recipeIterator();
+					Recipe r;
+					while (recipes.hasNext()) {
+						r = recipes.next();
+
+						if (r != null && r.getResult().getType().equals(Material.ENCHANTMENT_TABLE))
+							recipes.remove();
+					}
+
+					ShapedRecipe sr = new ShapedRecipe(new ItemStack(Material.ENCHANTMENT_TABLE));
+
+					sr.shape("xbx", "eoe", "ooo");
+
+					sr.setIngredient('b', Material.BOOK);
+					sr.setIngredient('e', Material.EMERALD);
+					sr.setIngredient('o', Material.OBSIDIAN);
+
+					Bukkit.addRecipe(sr);
+				}
+			}
+		}.runTaskLater(getInstance(), 80);
 	}
 
 	@Override

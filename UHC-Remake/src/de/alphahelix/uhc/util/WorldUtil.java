@@ -4,8 +4,10 @@ import java.io.File;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 
+import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
 
@@ -35,16 +37,35 @@ public class WorldUtil extends Util {
 	}
 
 	public World createWorld() {
-		
+		if (getRegister().getLocationsFile().getArena() == null) {
+			new BiomeUtil();
+			return Bukkit.createWorld(new WorldCreator("UHC"));
+		}
 		File path = getRegister().getLocationsFile().getArena().getWorld().getWorldFolder();
-		
+		String name = getRegister().getLocationsFile().getArena().getWorld().getName();
+
 		unloadWorld(getRegister().getLocationsFile().getArena().getWorld());
 		deleteWorld(path);
-		
-		String[] values = getRegister().getLocationsFile().getString("Arena").split(",");
-		
+
 		new BiomeUtil();
+
+		return Bukkit.createWorld(new WorldCreator(name));
+	}
+
+	public World createNetherWorld() {
+		if (!getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.DIMENSIONAL_INVERSION)))
+			return null;
+		if(!Scenarios.isScenario(Scenarios.DIMENSIONAL_INVERSION)) return null;
 		
-		return Bukkit.createWorld(new WorldCreator(values[3]));
+		if (getRegister().getLocationsFile().getNetherArena() == null) {
+			return Bukkit.createWorld(new WorldCreator("UHC-Nether").environment(Environment.NETHER));
+		}
+		File path = getRegister().getLocationsFile().getNetherArena().getWorld().getWorldFolder();
+		String name = getRegister().getLocationsFile().getNetherArena().getWorld().getName();
+
+		unloadWorld(getRegister().getLocationsFile().getNetherArena().getWorld());
+		deleteWorld(path);
+
+		return Bukkit.createWorld(new WorldCreator(name).environment(Environment.NETHER));
 	}
 }

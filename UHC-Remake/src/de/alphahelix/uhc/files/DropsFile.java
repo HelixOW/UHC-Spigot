@@ -18,18 +18,18 @@ public class DropsFile extends EasyFile {
 	@Override
 	public void addValues() {
 		setDefault("Deathchest", true);
-		setMaterialStringList("Description", "Item:Amount:Durability", "Add other items below each other");
-		setMaterialStringList("Player", "gold ingot:8:0", "skull item:1:3");
-		setMaterialStringList("Pig", "grilled pork:3:0", "pork:1:0");
-		setMaterialStringList("Zombie", "grilled pork:3:0", "rotten flesh:1:0");
-		setMaterialStringList("Cow", "leather:8:0", "cooked beef:1:0");
-		setMaterialStringList("Chicken", "arrow:3:0", "feather:1:0");
-		setMaterialStringList("Spider", "string:2:0", "spider eye:1:0");
-		setMaterialStringList("Sheep", "cooked mutton:3:0", "wool:1:0");
-		setMaterialStringList("Rabbit", "cooked rabbit:3:0", "leather:2:0");
-		setMaterialStringList("Horse", "cooked beef:3:0", "leather:4:0");
-		setMaterialStringList("Creeper", "gunpoweder:2:0", "tnt:1:0");
-		setMaterialStringList("Leaves", "sapling:1:0", "apple:2:0");
+		setMaterialStringList("Description", "Item:Amount:Durability:chance", "Add other items below each other");
+		setMaterialStringList("Player", "gold ingot:8:0:1.0", "skull item:1:3:1.0");
+		setMaterialStringList("Pig", "grilled pork:3:0:0.5", "pork:1:0:1.0");
+		setMaterialStringList("Zombie", "grilled pork:3:0:0.5", "rotten flesh:1:0:0.5");
+		setMaterialStringList("Cow", "leather:8:0:0.5", "cooked beef:1:0:0.5");
+		setMaterialStringList("Chicken", "arrow:3:0:0.5", "feather:1:0:0.5");
+		setMaterialStringList("Spider", "string:2:0:0.5", "spider eye:1:0:0.5");
+		setMaterialStringList("Sheep", "cooked mutton:3:0:0.5", "wool:1:0:0.5");
+		setMaterialStringList("Rabbit", "cooked rabbit:3:0:0.5", "leather:2:0:0.5");
+		setMaterialStringList("Horse", "cooked beef:3:0:0.5", "leather:4:0:0.5");
+		setMaterialStringList("Creeper", "gunpoweder:2:0:0.5", "tnt:1:0:0.5");
+		setMaterialStringList("Leaves", "sapling:1:0:0.5", "apple:2:0:0.5");
 	}
 	
 	public ArrayList<ItemStack> readValues(String value) {
@@ -44,5 +44,15 @@ public class DropsFile extends EasyFile {
 			toReturn.add(new ItemStack(m, amount, damage));
 		}
 		return toReturn;
+	}
+	
+	public Double getChance(String value, ItemStack s) {
+		Double tr = 1.0;
+		for(String chances : getMaterialStringList(value)) {
+			if(Material.getMaterial(chances.split(":")[0].replace(" ", "_").toUpperCase()).equals(s.getType())) {
+				tr = Double.parseDouble(chances.split(":")[3]);
+			}
+		}
+		return tr;
 	}
 }

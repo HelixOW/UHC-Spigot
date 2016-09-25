@@ -175,4 +175,8 @@ public class GraceTimer extends Util {
 	private void resetTime() {
 		time = getRegister().getTimerFile().getInt("Period of peace.length");
 	}
+	
+	public void setTime(int t) {
+		time = t;
+	}
 }

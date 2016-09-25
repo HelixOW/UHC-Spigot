@@ -163,5 +163,8 @@ public class StartDeathMatchTimer extends Util {
 	private void resetTime() {
 		time = getRegister().getTimerFile().getInt("Deathmatch.lenght");
 	}
-
+	
+	public void setTime(int t) {
+		time = t;
+	}
 }

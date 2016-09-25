@@ -16,7 +16,7 @@ public class DamageDogersListener extends SimpleListener {
 
 	public DamageDogersListener(UHC uhc) {
 		super(uhc);
-		amount = new Random().nextInt(getRegister().getPlayerUtil().getSurvivors().size());
+		amount = new Random().nextInt(25);
 	}
 
 	@EventHandler
@@ -27,7 +27,7 @@ public class DamageDogersListener extends SimpleListener {
 			return;
 		if (!(e.getEntity() instanceof Player))
 			return;
-
+		
 		if (amount > 0) {
 			((Player) e.getEntity()).setHealth(0.0);
 

@@ -74,12 +74,44 @@ import de.alphahelix.uhc.listeners.scenarios.CivilisationListener;
 import de.alphahelix.uhc.listeners.scenarios.CompensationListener;
 import de.alphahelix.uhc.listeners.scenarios.DamageDogersListener;
 import de.alphahelix.uhc.listeners.scenarios.DiamondlessListener;
+import de.alphahelix.uhc.listeners.scenarios.DimensonalInversionListener;
+import de.alphahelix.uhc.listeners.scenarios.DoubleOrNothingListener;
+import de.alphahelix.uhc.listeners.scenarios.DungeonMazeListener;
+import de.alphahelix.uhc.listeners.scenarios.EightLeggedFreaksListener;
+import de.alphahelix.uhc.listeners.scenarios.EnderDanceListener;
+import de.alphahelix.uhc.listeners.scenarios.EnderDragonRushListener;
+import de.alphahelix.uhc.listeners.scenarios.EntropyListener;
+import de.alphahelix.uhc.listeners.scenarios.EveryRoseListener;
+import de.alphahelix.uhc.listeners.scenarios.FalloutListener;
+import de.alphahelix.uhc.listeners.scenarios.FlowerPowerListener;
+import de.alphahelix.uhc.listeners.scenarios.FoodNeophobiaListener;
+import de.alphahelix.uhc.listeners.scenarios.GoToHellListener;
+import de.alphahelix.uhc.listeners.scenarios.GoldenFleeceListener;
+import de.alphahelix.uhc.listeners.scenarios.GoneFishingListener;
+import de.alphahelix.uhc.listeners.scenarios.GunsNRosesListener;
 import de.alphahelix.uhc.listeners.scenarios.HalfOreListener;
 import de.alphahelix.uhc.listeners.scenarios.HashtagBowListener;
+import de.alphahelix.uhc.listeners.scenarios.HealthDonorListener;
+import de.alphahelix.uhc.listeners.scenarios.InventorsListener;
+import de.alphahelix.uhc.listeners.scenarios.ItemHuntListener;
+import de.alphahelix.uhc.listeners.scenarios.JackpotListener;
+import de.alphahelix.uhc.listeners.scenarios.KingsListener;
+import de.alphahelix.uhc.listeners.scenarios.LightsOutListener;
+import de.alphahelix.uhc.listeners.scenarios.LiveWithRegretListener;
+import de.alphahelix.uhc.listeners.scenarios.LongshotListener;
+import de.alphahelix.uhc.listeners.scenarios.LootchestListener;
+import de.alphahelix.uhc.listeners.scenarios.LucyInTheSkyWithDiamondsListener;
+import de.alphahelix.uhc.listeners.scenarios.MoleListener;
 import de.alphahelix.uhc.listeners.scenarios.MonsterIncListener;
+import de.alphahelix.uhc.listeners.scenarios.NightmareModeListener;
+import de.alphahelix.uhc.listeners.scenarios.NineSlotsListener;
+import de.alphahelix.uhc.listeners.scenarios.TheHobbitListener;
 import de.alphahelix.uhc.timers.BestPvETimer;
 import de.alphahelix.uhc.timers.DamageCycleTimer;
 import de.alphahelix.uhc.timers.DeathmatchTimer;
+import de.alphahelix.uhc.timers.EntropyTimer;
+import de.alphahelix.uhc.timers.FalloutTimer;
+import de.alphahelix.uhc.timers.GoToHellTimer;
 import de.alphahelix.uhc.timers.GraceTimer;
 import de.alphahelix.uhc.timers.LobbyTimer;
 import de.alphahelix.uhc.timers.RestartTimer;
@@ -117,6 +149,9 @@ public class Registery {
 	private RestartTimer restartTimer;
 	private BestPvETimer bestPvETimer;
 	private DamageCycleTimer damageCycleTimer;
+	private EntropyTimer entropyTimer;
+	private FalloutTimer falloutTimer;
+	private GoToHellTimer goToHellTimer;
 	
 	private KitInventory kitInventory;
 	private ConfirmInventory confirmInventory;
@@ -267,6 +302,9 @@ public class Registery {
 		setRestartTimer(new RestartTimer(getUhc()));
 		setBestPvETimer(new BestPvETimer(getUhc()));
 		setDamageCycleTimer(new DamageCycleTimer(getUhc()));
+		setEntropyTimer(new EntropyTimer(getUhc()));
+		setFalloutTimer(new FalloutTimer(getUhc()));
+		setGoToHellTimer(new GoToHellTimer(getUhc()));
 		
 		new ArmorListener(getUhc());
 		
@@ -297,6 +335,35 @@ public class Registery {
 		new CompensationListener(getUhc());
 		new DamageDogersListener(getUhc());
 		new DiamondlessListener(getUhc());
+		new DimensonalInversionListener(getUhc());
+		new DoubleOrNothingListener(getUhc());
+		new DungeonMazeListener(getUhc());
+		new EightLeggedFreaksListener(getUhc());
+		new EnderDanceListener(getUhc());
+		new EnderDragonRushListener(getUhc());
+		new EntropyListener(getUhc());
+		new EveryRoseListener(getUhc());
+		new FalloutListener(getUhc());
+		new FlowerPowerListener(getUhc());
+		new FoodNeophobiaListener(getUhc());
+		new GoldenFleeceListener(getUhc());
+		new GoneFishingListener(getUhc());
+		new GoToHellListener(getUhc());
+		new GunsNRosesListener(getUhc());
+		new HealthDonorListener(getUhc());
+		new TheHobbitListener(getUhc());
+		new InventorsListener(getUhc());
+		new ItemHuntListener(getUhc());
+		new JackpotListener(getUhc());
+		new KingsListener(getUhc());
+		new LightsOutListener(getUhc());
+		new LiveWithRegretListener(getUhc());
+		new LucyInTheSkyWithDiamondsListener(getUhc());
+		new LongshotListener(getUhc());
+		new LootchestListener(getUhc());
+		new MoleListener(getUhc());
+		new NightmareModeListener(getUhc());
+		new NineSlotsListener(getUhc());
 		
 		registerCommands();
 		registerEvents();
@@ -308,6 +375,12 @@ public class Registery {
 		new BukkitRunnable() {
 			public void run() {
 				getWorldUtil().createWorld();
+			}
+		}.runTaskLater(getUhc(), 5);
+		
+		new BukkitRunnable() {
+			public void run() {
+				getWorldUtil().createNetherWorld();
 			}
 		}.runTaskLater(getUhc(), 5);
 		
@@ -766,5 +839,29 @@ public class Registery {
 
 	public void setDamageCycleTimer(DamageCycleTimer damageCycleTimer) {
 		this.damageCycleTimer = damageCycleTimer;
+	}
+
+	public EntropyTimer getEntropyTimer() {
+		return entropyTimer;
+	}
+
+	public void setEntropyTimer(EntropyTimer entropyTimer) {
+		this.entropyTimer = entropyTimer;
+	}
+
+	public FalloutTimer getFalloutTimer() {
+		return falloutTimer;
+	}
+
+	public void setFalloutTimer(FalloutTimer falloutTimer) {
+		this.falloutTimer = falloutTimer;
+	}
+
+	public GoToHellTimer getGoToHellTimer() {
+		return goToHellTimer;
+	}
+
+	public void setGoToHellTimer(GoToHellTimer goToHellTimer) {
+		this.goToHellTimer = goToHellTimer;
 	}
 }

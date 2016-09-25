@@ -32,6 +32,7 @@ public class MainMessageFile extends EasyFile {
 		setDefault("Border has moved", "&7The Border has moved by &c[blocks] blocks&7!");
 		setDefault("Picked team", "&7You've picked the team &b[team]&7!");
 		setDefault("Team is full", "&7Sorry, but you &ccan't join &7this team!");
+		setDefault("First crafted Item", "&7[player] has crafted a &a[item] &7for the first time.");
 	}
 
 }

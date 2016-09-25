@@ -21,10 +21,9 @@ import org.bukkit.entity.Villager;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Scenarios;
@@ -46,6 +45,8 @@ public class DeathListener extends SimpleListener {
 		if (GState.isState(GState.LOBBY) || GState.isState(GState.END))
 			return;
 
+		double random = Math.random();
+
 		if (e.getEntity() instanceof Villager && e.getEntity().isCustomNameVisible()) {
 			e.getDrops().clear();
 			getRegister().getPlayerUtil().removeSurvivor(e.getEntity().getCustomName());
@@ -66,20 +67,13 @@ public class DeathListener extends SimpleListener {
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Player")) {
 				if (getRegister().getDropsFile().getBoolean("Deathchest")) {
 					e.getEntity().getLocation().getBlock().setType(Material.CHEST);
-					final Chest c = (Chest) e.getEntity().getLocation().getBlock().getState();
+					Chest c = (Chest) e.getEntity().getLocation().getBlock().getState();
 
-					if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-						new BukkitRunnable() {
-							public void run() {
-								c.getBlockInventory().addItem(drops);
-							}
-						}.runTaskLater(getUhc(), 10);
-					} else {
+					if (random < getRegister().getDropsFile().getChance("Player", drops))
 						c.getBlockInventory().addItem(drops);
-					}
 				} else {
-					dropList.add(drops);
+					if (random < getRegister().getDropsFile().getChance("Player", drops))
+						dropList.add(drops);
 				}
 			}
 
@@ -143,7 +137,8 @@ public class DeathListener extends SimpleListener {
 					return;
 				Bukkit.getPlayer(other)
 						.sendMessage(getRegister().getDeathMessageFile()
-								.getMessage(e.getEntity().getLastDamageCause() == null ? DamageCause.SUICIDE : e.getEntity().getLastDamageCause().getCause())
+								.getMessage(e.getEntity().getLastDamageCause() == null ? DamageCause.SUICIDE
+										: e.getEntity().getLastDamageCause().getCause())
 								.replace("[player]", ((Player) e.getEntity()).getName())
 								.replace("[entity]", (e.getEntity().getKiller() == null
 										? getRegister().getDeathMessageFile().getColorString("[entity] is a mob")
@@ -152,52 +147,62 @@ public class DeathListener extends SimpleListener {
 		} else if (e.getEntity() instanceof Pig) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Pig")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Pig", drops))
+					dropList.add(drops);
 			}
 		} else if (e.getEntity() instanceof Zombie) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Zombie")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Zombie", drops))
+					dropList.add(drops);
 			}
 		} else if (e.getEntity() instanceof Cow) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Cow")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Cow", drops))
+					dropList.add(drops);
 			}
 		} else if (e.getEntity() instanceof Chicken) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Chicken")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Chicken", drops))
+					dropList.add(drops);
 			}
 		} else if (e.getEntity() instanceof Spider) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Spider")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Spider", drops))
+					dropList.add(drops);
 			}
 		} else if (e.getEntity() instanceof Skeleton) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Skeleton")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Skeleton", drops))
+					dropList.add(drops);
 			}
 		} else if (e.getEntity() instanceof Sheep) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Sheep")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Sheep", drops))
+					dropList.add(drops);
 			}
 		} else if (e.getEntity() instanceof Rabbit) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Rabbit")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Rabbit", drops))
+					dropList.add(drops);
 			}
 		} else if (e.getEntity() instanceof Horse) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Horse")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Horse", drops))
+					dropList.add(drops);
 			}
 		} else if (e.getEntity() instanceof Creeper) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Creeper")) {
-				dropList.add(drops);
+				if (random < getRegister().getDropsFile().getChance("Creeper", drops))
+					dropList.add(drops);
 			}
 		}
 
@@ -243,10 +248,22 @@ public class DeathListener extends SimpleListener {
 		if (e.getEntity() instanceof Zombie)
 			if (scenarioCheck(Scenarios.BETA_ZOMBIE))
 				dropList.add(new ItemStack(Material.FEATHER));
-		
-		//Bombers
-		if(scenarioCheck(Scenarios.BOMBERS))
+
+		// Bombers
+		if (scenarioCheck(Scenarios.BOMBERS))
 			dropList.add(new ItemStack(Material.TNT));
+
+		// Golden Fleece
+		if (e.getEntity() instanceof Sheep) {
+			if (scenarioCheck(Scenarios.GOLDEN_FLEECE)) {
+				if (random < 0.6) {
+					dropList.add(makeArray(new ItemStack(Material.IRON_INGOT), new ItemStack(Material.GOLD_INGOT),
+							new ItemStack(Material.DIAMOND))[new Random().nextInt(
+									makeArray(new ItemStack(Material.IRON_INGOT), new ItemStack(Material.GOLD_INGOT),
+											new ItemStack(Material.DIAMOND)).length)]);
+				}
+			}
+		}
 
 		for (ItemStack is : dropList) {
 			e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), is);

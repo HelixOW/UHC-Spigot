@@ -33,35 +33,35 @@ Damage Dodgers - The first x amount of players to take damage are killed.
 Diamondless - Diamonds and sometimes gold drop nothing or something bad. Depends on the host, but there could be an enchanting table setup at 0,0.
 Dimensional Inversion - The overworld and nether replace each other.
 Double Or Nothing - On mine of iron, diamond, or gold ore you have a 50% chance of 2 of the ore dropping or no ores dropping.
-DungeonMaze - 	DungeonMaze generates an infinite world with a lot of cool and strange stuff in it. The world contains 7 layers of epicness, each layer does have different content. All the layers contains a lot of monsters, but also a lot of treasures.
+DungeonMaze - All players start of with 1 torch. Torches can't be recrafted. You get 1 torch for every 20 stones you mine.
 Eight-Legged Freaks - All hostile mobs spawn as different types of spiders with different abilities.
-Ender Dance - You must be the first person/team to play a jukebox on top of one of the obsidian pillars in the End.
-EnderDragon Rush - First person to kill the Ender Dragon wins. The game does not end unless either all players are dead or the Dragon has been killed.
+Ender Dance - When you place a jukebox in the end you will get fully healed. (Only works 1 a game).
+EnderDragon Rush - First player to enter the end. Will get fully healed.
 Entropy - Every 10 min 1XP level is "drained" from you. If you don't have any levels when the drain occurs, you die.
 Every Rose - Everyone starts with a Thorns III golden chestplate.
 Fallout - If you are not below Y=60 after 45 min, you will take 0.5 hearts of damage.
 Flower Power - Every time you break a flower it has a 20% chance of dropping a random item in the game.
-Food Neophobia - When you eat a piece of food, you can now only eat that type of food. Each time you eat a different kind of food you take an allocated amount of damage that the host will decide.
+Food Neophobia - When you eat a piece of food, you can now only eat that type of food. Each time you eat a different kind of food you take damage of 1 heart. 
 Golden Fleece - Sheep have a chance of dropping iron, gold or diamonds. But there's also a chance that a skeleton can spawn with full gold armor.
-Gone Fishin - This scenario is based on fishing! Everyone starts with infinite levels, 20 anvils and a fushing rod with luck of the sea level 250 and unbreaking 150. Enchant Tables would have to be disabled, so that will kind of force you to fish for enchants!(you can get enchanted books when fishing)
+Gone Fishin - This scenario is based on fishing! Everyone starts with infinite levels, 20 anvils and a fishing rod with luck of the sea level 250 and unbreaking 150. Enchant Tables would have to be disabled, so that will kind of force you to fish for enchants!(you can get enchanted books when fishing)
 Go To Hell - You have 45 minutes to gear up before you must enter the Nether. Every 30 seconds you spend in the overworld thereafter you will take half a heart.
 Guns N Roses - When you break a poppy you get 1 arrow. When you break a rose bush you get 4 arrows. You have a 2% chance of getting a bow from both of them.
 Health Donor - Allows health transfer between players.
 The Hobbit - At the start of the game, everyone will be given a goldn nugget(which signifies as your own ring). Once you right click it, it will disappear from your inventory and will give invisibility for 30 seconds.
 Inventors - The first person to craft any item will be broadcasted in chat.
-Item Hunt - There are two ways to win this. The first one is to be the last man standing and the second is to complete a set list of items by trying to collect them.
-Jackpot - Every time someone mines gold or diamond, what they received is added to a Pot.
+Item Hunt - When you find various items from a list. You will receive new health.
+Jackpot - Every time someone mines gold or diamond, what they received is given to a random player.
 Killswitch - You take your victim's inventory in place of yours upon killing them.
 Kings - A king on each team gets effects and must be protected.
-Kings Of The Sky - An unbreakable golden block located 200 blocks above 0,0 heals you half a heart every minute. To prevent a hide and shoot feel(get shot by someone, block yourself off and heal), you cannot place blocks within a certain radius of the golden block and you will swap places with someone when you've shot them(much like Switcheroo).
+Kings Of The Sky - An unbreakable golden block located 200 blocks above 0,0 heals you half a heart every minute.
 Lights Out - Torches cannot be placed.
-Live with Regret - Players who died before PVP was enabled respawn with a random debuff.
+Live with Regret - Players how died in UHC will be playing with neusea.
 Lucy's In The Sky With Diamonds - 	An invincible player- who can still take damage- flies through the sky with their coordinates broadcasted every 2 minutes. With each damage Lucy takes, the person who damaged them, will get rewarded with a diamond. Lucy cannot take damage 20- ticks after when they gets damaged. Diamond ores drop cat(music disc), and you start with a bow and 16 arrows.
 Longshots - Longshots are defined as 75 blocks or more, and will heal the attacker 1 heart, and damage the victim 1.5x more.
 Loot Crates - Every 10 minutes, players will be given a "loot crate" filled with goodies. There are two tiers, an Ender Chest being tier 2 and a normal chest tier 1.
-Mole - Moles on each team work together to take out the normal teams.
+Mole - Player are equipped with shovel and they need to dig tunnels, 'cause they can only see under the earth
 Mountaineering - Emeralds are now needed to craft enchantment tables instead of diamonds.
-Mystery Teams - Teams are unknown until meeting and comparing wool.
+Mystery - Teams are unknown until meeting and comparing wool.
 Nightmare mode - Variety of changes to mobs to make them more difficult.
 Nine Slots - The inventory aside from the hotbar can't be used.
 noFurnace - Furnaces cannot be crafted.

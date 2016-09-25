@@ -71,8 +71,16 @@ public abstract class SimpleListener implements Listener {
 
 	public Player[] makeArray(List<String> pNames) {
 		List<Player> players = new LinkedList<>();
-		for (String s : pNames)
+		for (String s : pNames) {
+			if (Bukkit.getPlayerExact(s) == null)
+				continue;
 			players.add(Bukkit.getPlayerExact(s));
+		}
 		return players.toArray(new Player[players.size()]);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T[] makeArray(T... types) {
+		return types;
 	}
 }

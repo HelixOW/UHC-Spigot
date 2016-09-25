@@ -8,23 +8,22 @@ import org.bukkit.scheduler.BukkitTask;
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Sounds;
 import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.timers.InGameStartEvent;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.nms.SimpleActionBar;
 import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class DeathmatchTimer extends Util {
 
-	private static BukkitTask timer;
-	private static BukkitTask deathmatch;
+	private static BukkitTask timer, deathmatch;
 	private int time;
-	private double min;
-	private double h;
-	private boolean hourSend;
-	
+	private double min, h;
+	private boolean hourSend, customTime;
+
 	public DeathmatchTimer(UHC uhc) {
 		super(uhc);
 	}
-	
+
 	public void stopTimer() {
 		if (timer != null)
 			timer.cancel();
@@ -42,11 +41,11 @@ public class DeathmatchTimer extends Util {
 	public double getHourTime() {
 		return calcHours(time);
 	}
-	
+
 	public String getTime() {
-		if(getHourTime() > 1 && getMinTime() > 60 && time > 60)
+		if (getHourTime() > 1 && getMinTime() > 60 && time > 60)
 			return Double.toString(round(getHourTime(), 1)) + getRegister().getUnitFile().getColorString("Hours");
-		else if(getHourTime() < 1 && getMinTime() < 60 && time > 60) 
+		else if (getHourTime() < 1 && getMinTime() < 60 && time > 60)
 			return Double.toString(round(getMinTime(), 1)) + getRegister().getUnitFile().getColorString("Minutes");
 		else
 			return Integer.toString(time) + getRegister().getUnitFile().getColorString("Seconds");
@@ -57,7 +56,7 @@ public class DeathmatchTimer extends Util {
 			return true;
 		return false;
 	}
-	
+
 	public void startDeathMatchTimer() {
 		if (!GState.isState(GState.IN_GAME))
 			return;
@@ -67,9 +66,11 @@ public class DeathmatchTimer extends Util {
 				return;
 			return;
 		}
+		if (!customTime)
+			resetTime();
 		
-		resetTime();
-		
+		Bukkit.getPluginManager().callEvent(new InGameStartEvent());
+
 		timer = new BukkitRunnable() {
 			public void run() {
 				if (time > 0) {
@@ -82,12 +83,12 @@ public class DeathmatchTimer extends Util {
 
 								if (p == null)
 									return;
-								
+
 								min = calcMin(time);
 								h = calcHours(time);
-								
+
 								getRegister().getScoreboardUtil().updateTime(p);
-								
+
 								if ((h % 1 == 0 && !hourSend) && min > 60 && time != 0) {
 									hourSend = true;
 									p.sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
@@ -133,8 +134,8 @@ public class DeathmatchTimer extends Util {
 									p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
 									continue;
 								}
-								
-								else if(time == 0) {
+
+								else if (time == 0) {
 									timer.cancel();
 
 									p.sendMessage(getUhc().getPrefix()
@@ -142,9 +143,9 @@ public class DeathmatchTimer extends Util {
 
 									SimpleActionBar.send(p, getUhc().getPrefix()
 											+ getRegister().getMessageFile().getColorString("Deathmatch ended"));
-									
+
 									p.teleport(getRegister().getLocationsFile().getDeathmatch());
-									
+
 									GState.setCurrentState(GState.DEATHMATCH_WARMUP);
 
 									getRegister().getStartDeathmatchTimer().startDeathMatchTimer();
@@ -161,5 +162,10 @@ public class DeathmatchTimer extends Util {
 
 	private void resetTime() {
 		time = getRegister().getTimerFile().getInt("Deathmatch warmup.length");
+	}
+
+	public void setTime(int t) {
+		time = t;
+		customTime = true;
 	}
 }
