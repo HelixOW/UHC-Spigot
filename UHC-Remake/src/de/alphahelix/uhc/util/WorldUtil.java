@@ -3,6 +3,7 @@ package de.alphahelix.uhc.util;
 import java.io.File;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
@@ -48,8 +49,12 @@ public class WorldUtil extends Util {
 		deleteWorld(path);
 
 		new BiomeUtil();
+		
+		World tr = Bukkit.createWorld(new WorldCreator(name));
+		
+		tr.setDifficulty(Difficulty.HARD);
 
-		return Bukkit.createWorld(new WorldCreator(name));
+		return tr;
 	}
 
 	public World createNetherWorld() {

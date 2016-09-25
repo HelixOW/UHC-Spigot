@@ -27,7 +27,7 @@ public enum Scenarios {
 		while (!UHC.getInstance().getRegister().getScenarioFile().isEnabled(getRawScenarioName(played))) {
 			played = VALUES.get(RANDOM.nextInt(SIZE));
 		}
-		played = Scenarios.NINE_SLOTS;
+		played = Scenarios.POTENTIAL_PERMANENT;
 		return played;
 	}
 
