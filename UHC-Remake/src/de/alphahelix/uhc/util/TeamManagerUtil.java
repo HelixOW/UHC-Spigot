@@ -173,6 +173,13 @@ public class TeamManagerUtil extends Util {
 				return t;
 		return null;
 	}
+	
+	public boolean isSameTeam(Player p, Player p2) {
+		if(isInOneTeam(p) != null && isInOneTeam(p2) != null) {
+			return isInOneTeam(p).equals(isInOneTeam(p2));
+		}
+		return false;
+	}
 
 	public void splitPlayersIntoTeams() {
 		for(Player p : Bukkit.getOnlinePlayers()) {

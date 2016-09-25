@@ -77,6 +77,7 @@ public class EquipListener extends SimpleListener {
 					new ItemBuilder(Material.getMaterial(getRegister().getScenarioFile().getString("Scenarios Item")
 							.replace(" ", "_").toUpperCase()))
 									.setName(getRegister().getScenarioFile().getColorString("Scenarios Item Name").replace("-", getRegister().getScenarioFile().getCustomScenarioName(Scenarios.getScenario())))
+									.setLore(getRegister().getScenarioHelpFile().getScenarioDescription(Scenarios.getScenario()))
 									.build());
 		} else if (getUhc().isKits()) {
 			p.getInventory().setItem(getRegister().getKitsFile().getInt("Kit.Item Slot"),

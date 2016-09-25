@@ -37,20 +37,23 @@ public class TeamListener extends SimpleListener {
 
 	@EventHandler
 	public void onHit(EntityDamageByEntityEvent e) {
+		if (GState.isState(GState.LOBBY))
+			return;
 		if (e.getEntity() instanceof Villager && e.getEntity().isCustomNameVisible()
 				&& e.getDamager() instanceof Player) {
-			if (getRegister().getTeamManagerUtil().isInOneTeam(
-					(Player) Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName()))) != null) {
-				if (getRegister().getTeamManagerUtil().isInOneTeam((Player) e.getDamager()) != null) {
+			if (getRegister().getTeamManagerUtil().isSameTeam(
+					(Player) Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())),
+					(Player) e.getDamager()))
+				if (getRegister().getPlayerUtil().getSurvivors().size() > getRegister().getTeamManagerUtil()
+						.isInOneTeam(
+								(Player) Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())))
+						.getSize())
 					e.setCancelled(true);
-				}
-			}
 		} else if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
-			if (getRegister().getTeamManagerUtil().isInOneTeam((Player) e.getEntity()) != null) {
-				if (getRegister().getTeamManagerUtil().isInOneTeam((Player) e.getDamager()) != null) {
+			if (getRegister().getTeamManagerUtil().isSameTeam((Player) e.getEntity(), (Player) e.getDamager()))
+				if (getRegister().getPlayerUtil().getSurvivors().size() > getRegister().getTeamManagerUtil()
+						.isInOneTeam((Player) e.getEntity()).getSize())
 					e.setCancelled(true);
-				}
-			}
 		}
 	}
 

@@ -69,7 +69,7 @@ public class DeathmatchTimer extends Util {
 		}
 		
 		resetTime();
-
+		
 		timer = new BukkitRunnable() {
 			public void run() {
 				if (time > 0) {

@@ -1,5 +1,9 @@
 package de.alphahelix.uhc.listeners;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -16,11 +20,14 @@ import org.bukkit.entity.Spider;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
@@ -28,11 +35,13 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class DeathListener extends SimpleListener {
 
+	private List<ItemStack> dropList = new ArrayList<>();
+
 	public DeathListener(UHC uhc) {
 		super(uhc);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onDeath(final EntityDeathEvent e) {
 		if (GState.isState(GState.LOBBY) || GState.isState(GState.END))
 			return;
@@ -70,16 +79,7 @@ public class DeathListener extends SimpleListener {
 						c.getBlockInventory().addItem(drops);
 					}
 				} else {
-					if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-						new BukkitRunnable() {
-							public void run() {
-								e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-							}
-						}.runTaskLater(getUhc(), 10);
-					} else {
-						e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-					}
+					dropList.add(drops);
 				}
 			}
 
@@ -143,7 +143,7 @@ public class DeathListener extends SimpleListener {
 					return;
 				Bukkit.getPlayer(other)
 						.sendMessage(getRegister().getDeathMessageFile()
-								.getMessage(e.getEntity().getLastDamageCause().getCause())
+								.getMessage(e.getEntity().getLastDamageCause() == null ? DamageCause.SUICIDE : e.getEntity().getLastDamageCause().getCause())
 								.replace("[player]", ((Player) e.getEntity()).getName())
 								.replace("[entity]", (e.getEntity().getKiller() == null
 										? getRegister().getDeathMessageFile().getColorString("[entity] is a mob")
@@ -152,144 +152,104 @@ public class DeathListener extends SimpleListener {
 		} else if (e.getEntity() instanceof Pig) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Pig")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
-		}  else if (e.getEntity() instanceof Zombie) {
+		} else if (e.getEntity() instanceof Zombie) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Zombie")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
-		}  else if (e.getEntity() instanceof Cow) {
+		} else if (e.getEntity() instanceof Cow) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Cow")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
-		}  else if (e.getEntity() instanceof Chicken) {
+		} else if (e.getEntity() instanceof Chicken) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Chicken")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
-		}  else if (e.getEntity() instanceof Spider) {
+		} else if (e.getEntity() instanceof Spider) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Spider")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
-		}  else if (e.getEntity() instanceof Skeleton) {
+		} else if (e.getEntity() instanceof Skeleton) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Skeleton")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
-		}  else if (e.getEntity() instanceof Sheep) {
+		} else if (e.getEntity() instanceof Sheep) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Sheep")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
-		}  else if (e.getEntity() instanceof Rabbit) {
+		} else if (e.getEntity() instanceof Rabbit) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Rabbit")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
-		}  else if (e.getEntity() instanceof Horse) {
+		} else if (e.getEntity() instanceof Horse) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Horse")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
-		}  else if (e.getEntity() instanceof Creeper) {
+		} else if (e.getEntity() instanceof Creeper) {
 			e.getDrops().clear();
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Creeper")) {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), drops);
-				}
+				dropList.add(drops);
 			}
 		}
-	}
 
+		// Bald Chicken
+
+		if (e.getEntity() instanceof Chicken) {
+			if (scenarioCheck(Scenarios.BALD_CHICKEN)) {
+				ItemStack tr = null;
+				for (ItemStack drop : dropList) {
+					if (drop.getType().equals(Material.FEATHER))
+						tr = drop;
+				}
+				if (tr != null)
+					dropList.remove(tr);
+			}
+		} else if (e.getEntity() instanceof Skeleton) {
+			if (scenarioCheck(Scenarios.BALD_CHICKEN)) {
+				ItemStack tr = null;
+				for (ItemStack drop : dropList) {
+					if (drop.getType().equals(Material.ARROW))
+						tr = drop;
+				}
+				if (tr != null)
+					dropList.remove(tr);
+				dropList.add(new ItemStack(Material.ARROW, new Random(4).nextInt(8)));
+			}
+		}
+
+		// BareBones
+
+		if (e.getEntity() instanceof Villager && e.getEntity().isCustomNameVisible()) {
+			if (scenarioCheck(Scenarios.BAREBONES)) {
+				dropList = new ArrayList<>();
+
+				dropList.add(new ItemStack(Material.DIAMOND, 1));
+				dropList.add(new ItemStack(Material.GOLDEN_APPLE, 1));
+				dropList.add(new ItemStack(Material.ARROW, 32));
+				dropList.add(new ItemStack(Material.STRING, 2));
+			}
+		}
+
+		// Beta Zombie
+		if (e.getEntity() instanceof Zombie)
+			if (scenarioCheck(Scenarios.BETA_ZOMBIE))
+				dropList.add(new ItemStack(Material.FEATHER));
+		
+		//Bombers
+		if(scenarioCheck(Scenarios.BOMBERS))
+			dropList.add(new ItemStack(Material.TNT));
+
+		for (ItemStack is : dropList) {
+			e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), is);
+		}
+	}
 }

@@ -11,6 +11,7 @@ import de.alphahelix.uhc.commands.StartCommand;
 import de.alphahelix.uhc.commands.StatsCommand;
 import de.alphahelix.uhc.commands.UHCAdminCommands;
 import de.alphahelix.uhc.commands.UHCSetUpCommand;
+import de.alphahelix.uhc.events.armor.ArmorListener;
 import de.alphahelix.uhc.files.BorderFile;
 import de.alphahelix.uhc.files.ConfirmFile;
 import de.alphahelix.uhc.files.CraftingFile;
@@ -22,6 +23,7 @@ import de.alphahelix.uhc.files.MainMessageFile;
 import de.alphahelix.uhc.files.MainOptionsFile;
 import de.alphahelix.uhc.files.PlayerFile;
 import de.alphahelix.uhc.files.ScenarioFile;
+import de.alphahelix.uhc.files.ScenarioHelpFile;
 import de.alphahelix.uhc.files.ScoreboardConstructFile;
 import de.alphahelix.uhc.files.ScoreboardFile;
 import de.alphahelix.uhc.files.SpectatorFile;
@@ -48,8 +50,35 @@ import de.alphahelix.uhc.listeners.RegisterListener;
 import de.alphahelix.uhc.listeners.SpectatorListener;
 import de.alphahelix.uhc.listeners.TeamListener;
 import de.alphahelix.uhc.listeners.TimerListener;
+import de.alphahelix.uhc.listeners.scenarios.AppleFamineListener;
+import de.alphahelix.uhc.listeners.scenarios.ArmorVHealthListener;
 import de.alphahelix.uhc.listeners.scenarios.ArrowListener;
+import de.alphahelix.uhc.listeners.scenarios.BackPackListener;
+import de.alphahelix.uhc.listeners.scenarios.BareBonesListener;
+import de.alphahelix.uhc.listeners.scenarios.BenchBlitzListener;
+import de.alphahelix.uhc.listeners.scenarios.BestPvEListener;
+import de.alphahelix.uhc.listeners.scenarios.BiomeParanoiaListener;
+import de.alphahelix.uhc.listeners.scenarios.BlitzListener;
+import de.alphahelix.uhc.listeners.scenarios.BlockRushListener;
+import de.alphahelix.uhc.listeners.scenarios.BlockedListener;
+import de.alphahelix.uhc.listeners.scenarios.BloodyDiamondsListener;
+import de.alphahelix.uhc.listeners.scenarios.BloodyLapisListener;
+import de.alphahelix.uhc.listeners.scenarios.BombersListener;
+import de.alphahelix.uhc.listeners.scenarios.BowfighterListener;
+import de.alphahelix.uhc.listeners.scenarios.CaptainsListener;
+import de.alphahelix.uhc.listeners.scenarios.CatsEyesListener;
+import de.alphahelix.uhc.listeners.scenarios.CertainCircumstancesListener;
+import de.alphahelix.uhc.listeners.scenarios.ChickenListener;
+import de.alphahelix.uhc.listeners.scenarios.CityWorldListener;
+import de.alphahelix.uhc.listeners.scenarios.CivilisationListener;
+import de.alphahelix.uhc.listeners.scenarios.CompensationListener;
+import de.alphahelix.uhc.listeners.scenarios.DamageDogersListener;
+import de.alphahelix.uhc.listeners.scenarios.DiamondlessListener;
 import de.alphahelix.uhc.listeners.scenarios.HalfOreListener;
+import de.alphahelix.uhc.listeners.scenarios.HashtagBowListener;
+import de.alphahelix.uhc.listeners.scenarios.MonsterIncListener;
+import de.alphahelix.uhc.timers.BestPvETimer;
+import de.alphahelix.uhc.timers.DamageCycleTimer;
 import de.alphahelix.uhc.timers.DeathmatchTimer;
 import de.alphahelix.uhc.timers.GraceTimer;
 import de.alphahelix.uhc.timers.LobbyTimer;
@@ -86,6 +115,8 @@ public class Registery {
 	private DeathmatchTimer deathmatchTimer;
 	private StartDeathMatchTimer startDeathmatchTimer;
 	private RestartTimer restartTimer;
+	private BestPvETimer bestPvETimer;
+	private DamageCycleTimer damageCycleTimer;
 	
 	private KitInventory kitInventory;
 	private ConfirmInventory confirmInventory;
@@ -112,6 +143,7 @@ public class Registery {
 	private DropsFile dropsFile;
 	private DeathmessageFile deathMessageFile;
 	private CraftingFile craftingFile;
+	private ScenarioHelpFile scenarioHelpFile;
 	
 	private KitChooseListener kitChooseListener;
 	private RegisterListener registerListener;
@@ -157,7 +189,7 @@ public class Registery {
 					(byte) getTeamFile().getInt(t+".data"),
 					getTeamFile().getInt(t+".max Players"),
 					getTeamFile().getInt(t+".slot"),
-					getTeamFile().getBoolean(t+".name"));
+					getTeamFile().getBoolean(t+".colored Name"));
 		}
 	}
 
@@ -183,6 +215,7 @@ public class Registery {
 		setDropsFile(new DropsFile(getUhc()));
 		setDeathMessageFile(new DeathmessageFile(getUhc()));
 		setCraftingFile(new CraftingFile(getUhc()));
+		setScenarioHelpFile(new ScenarioHelpFile(getUhc()));
 		
 		for(EasyFile easyFile : getEasyFiles()) {
 			easyFile.register(easyFile);
@@ -226,15 +259,44 @@ public class Registery {
 		setGameEndsListener(new GameEndsListener(getUhc()));
 		setDeathListener(new DeathListener(getUhc()));
 		
-		new HalfOreListener(getUhc());
-		new ArrowListener(getUhc());
-		
 		setLobbyTimer(new LobbyTimer(getUhc()));
 		setGraceTimer(new GraceTimer(getUhc()));
 		setWarmUpTimer(new WarmUpTimer(getUhc()));
 		setDeathmatchTimer(new DeathmatchTimer(getUhc()));
 		setStartDeathmatchTimer(new StartDeathMatchTimer(getUhc()));
 		setRestartTimer(new RestartTimer(getUhc()));
+		setBestPvETimer(new BestPvETimer(getUhc()));
+		setDamageCycleTimer(new DamageCycleTimer(getUhc()));
+		
+		new ArmorListener(getUhc());
+		
+		new HalfOreListener(getUhc());
+		new ArrowListener(getUhc());
+		new MonsterIncListener(getUhc());
+		new AppleFamineListener(getUhc());
+		new ArmorVHealthListener(getUhc());
+		new BackPackListener(getUhc());
+		new BareBonesListener(getUhc());
+		new BenchBlitzListener(getUhc());
+		new BestPvEListener(getUhc());
+		new BloodyLapisListener(getUhc());
+		new BiomeParanoiaListener(getUhc());
+		new BlitzListener(getUhc());
+		new BlockedListener(getUhc());
+		new BlockRushListener(getUhc());
+		new BloodyDiamondsListener(getUhc());
+		new HashtagBowListener(getUhc());
+		new BombersListener(getUhc());
+		new BowfighterListener(getUhc());
+		new CatsEyesListener(getUhc());
+		new CaptainsListener(getUhc());
+		new CertainCircumstancesListener(getUhc());
+		new ChickenListener(getUhc());
+		new CivilisationListener(getUhc());
+		new CityWorldListener(getUhc());
+		new CompensationListener(getUhc());
+		new DamageDogersListener(getUhc());
+		new DiamondlessListener(getUhc());
 		
 		registerCommands();
 		registerEvents();
@@ -680,5 +742,29 @@ public class Registery {
 
 	public void setPreviewInventory(PreviewInventory previewInventory) {
 		this.previewInventory = previewInventory;
+	}
+
+	public ScenarioHelpFile getScenarioHelpFile() {
+		return scenarioHelpFile;
+	}
+
+	public void setScenarioHelpFile(ScenarioHelpFile scenarioHelpFile) {
+		this.scenarioHelpFile = scenarioHelpFile;
+	}
+
+	public BestPvETimer getBestPvETimer() {
+		return bestPvETimer;
+	}
+
+	public void setBestPvETimer(BestPvETimer bestPvETimer) {
+		this.bestPvETimer = bestPvETimer;
+	}
+
+	public DamageCycleTimer getDamageCycleTimer() {
+		return damageCycleTimer;
+	}
+
+	public void setDamageCycleTimer(DamageCycleTimer damageCycleTimer) {
+		this.damageCycleTimer = damageCycleTimer;
 	}
 }

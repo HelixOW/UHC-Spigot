@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitTask;
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Sounds;
 import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.timers.LobbyEndEvent;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.nms.SimpleActionBar;
 import de.popokaka.alphalibary.nms.SimpleTitle;
@@ -68,6 +69,13 @@ public class LobbyTimer extends Util {
 							public void run() {
 								if (getRegister().getPlayerUtil().getAll().size() >= getRegister().getPlayerUtil()
 										.getMinimumPlayerCount()) {
+									if(time == 0) {
+										new BukkitRunnable() {
+											public void run() {
+												Bukkit.getPluginManager().callEvent(new LobbyEndEvent());
+											}
+										}.runTaskLater(getUhc(), 20);
+									}
 									for (String pName : getRegister().getPlayerUtil().getAll()) {
 										Player p = Bukkit.getPlayer(pName);
 
@@ -177,7 +185,7 @@ public class LobbyTimer extends Util {
 													}
 												}
 											}
-
+											
 										}
 									}
 								} else {

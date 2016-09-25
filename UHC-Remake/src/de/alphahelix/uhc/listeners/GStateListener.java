@@ -9,6 +9,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,6 +19,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
 import de.alphahelix.uhc.GState;
@@ -38,6 +40,13 @@ public class GStateListener extends SimpleListener {
 		
 		getRegister().getTablistUtil().sendTablist();
 	}
+	
+	@EventHandler
+	public void onRegen(EntityRegainHealthEvent e) {
+		if(!(e.getEntity() instanceof Player)) return;
+		
+		e.setCancelled(true);
+	}
 
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
@@ -49,6 +58,13 @@ public class GStateListener extends SimpleListener {
 		if(getRegister().getLobbyUtil().hasBuildPermission((Player) e.getWhoClicked())) return;
 		if (e.getClickedInventory().getType().equals(InventoryType.PLAYER))
 			e.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onTeleport(PlayerPortalEvent e) {
+		if(!GState.isState(GState.LOBBY)) return;
+		
+		e.setCancelled(true);
 	}
 
 	@EventHandler

@@ -3,15 +3,14 @@
 Monsters Inc - If you place a door on the map, go through it and there's 2 or more doors on the map, you will be teleported to one of those doors.
 AppleFamine - Apples do not drop from trees.
 Armor v Health - For every half Armor Point you add to your Armor bar, half a Health Point will be taken away from your Health. Any health lost to armor will not be healed back.
-Assassins - Each player has a target that they must kill. Killing anyone that is not your target or assassin will result in no items dropping. When your target dies, you get their target.
-Assault and Battery - To2 Where one person can only do meelee damage to players, while the other one can only do ranged attacks. If a teammate dies, you can do both meelee and ranged attacks.
+vein Miner - Mine all related ores.
 Backpacks - Players have extra inventory space(the backpack), that they can access using a command. When a player dies the "backpack" drops as a chest.
 Bald_Chicken -  Chickens do not drop feathers on death, instead, skeletons drop an amount between 4 and 8 arrows on death.
 Barebones - The Nether is disabled, and iron is the highest tier you can obtain through gearing up. When a player dies, they will drop 1 diamond, 1 golden apple, 32 arrows, and 2 string. You cannot craft an enchantment table, anvil, or golden apple. Mining any ore except coal or iron will drop an iron ingot.
 Bench Blitz - You can only craft one workbench.
 Best PvE - At the beginning of the game, all players are added to an exclusive list called Best PvE. When you take damage, you leave the list, and the only way, to join once more, is to get a player kill. From the start of the game, every 10 minutes, the players on the Best PvE list will get healed by 1 heart, and added potential heart.
 Beta Zombies - Zombies drop feathers.
-Big Crack - There is a chunk error across the map that players have to bridge over to get to the other side.
+Bloody Lapis - See Bloody Diamonds
 Biome Paranoia - When players are in a different biome their name will turn a certain color on tab.
 Blitz - Everyone starts at 2.5 hearts. At Deathmatch everyone left will be healed.
 Blocked - You can't break the blocks that you place. Other players can break blocks that you place, and you can break blocks that other players place.
@@ -21,13 +20,13 @@ Bloody Diamonds - On mine of diamonds, you take 1 heart of damage.
 Bombers - Everyone starts out with an unbreakable flint and steel, most animals and monsters drop TNT.
 Bowfighters - Everyone is given 1 arrow,2 string and an Infinity book. The highest tier of melee weapon you can get is wood sword/stone axe.
 Cat's Eyes - Everyone has permanent Night Vision.
-Captains - Random players are assigned as "Captains" who then choose their teammates.
+Captains - Every player has can only craft up Iron Swords. Nothing less nothing better
 Certain Circumstances - There is a solo, to2, to3, to4, to5 and a to6. Captains for each team or picked pre-game randomly. They get to pick their team. Each team gets different starting items/effects.
 Chicken - Everyone starts with 0.5 hearts and an enchanted golden apple.
 Chunk Apocalypse - The map is riddled with chunk errors.
 Civilisation - Teams of 8-12 will not be spawned together. You're allowed to either keep it a secret or tell everyone or people who you trust that you're setting up a vase at your area. You can also do it nomadic style. Ores 50% do not drop, animals do not spawn. Every civilisation spawn with 64 emeralds, 64 bread and 3 carrots, which are meant to be for farming. There are also various specialties.
-City World - Loot chests occur in mineshafts, sewers, and bunkers.
-Compensation - When a player on a team dies, the player's max health is divided up and added to the max health of the player's teammates. The extra health received will regenerate in 30 seconds.
+City World - Every player starts with a fully filled inv with random blocks(which symbolise their items from the store)
+Compensation - When a player on dies, the player's max health is divided up by 4 and added to the max health of the killer. The extra health received will regenerate in 30 seconds.
 Cut Clean - No furnaces required. Items requiring cooking drop their cooked variety.
 Damage Cycle - Every 5 min a type of damage is selected to randomly onehit you.
 Damage Dodgers - The first x amount of players to take damage are killed.

@@ -1,8 +1,11 @@
 package de.alphahelix.uhc.instances;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -50,7 +53,9 @@ public abstract class SimpleListener implements Listener {
 
 	public boolean scenarioCheck(Scenarios s) {
 		if (!(GState.isState(GState.LOBBY) || GState.isState(GState.END))) {
-			return Scenarios.isScenario(s);
+			if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(s)))
+				return Scenarios.isScenario(s);
+			return false;
 		}
 		return false;
 	}
@@ -62,5 +67,12 @@ public abstract class SimpleListener implements Listener {
 				cooldownList.remove(key);
 			}
 		}.runTaskLaterAsynchronously(getUhc(), length);
+	}
+
+	public Player[] makeArray(List<String> pNames) {
+		List<Player> players = new LinkedList<>();
+		for (String s : pNames)
+			players.add(Bukkit.getPlayerExact(s));
+		return players.toArray(new Player[players.size()]);
 	}
 }

@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitTask;
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Sounds;
 import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.timers.DeathMatchStartEvent;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.nms.SimpleActionBar;
 import de.popokaka.alphalibary.nms.SimpleTitle;
@@ -69,6 +70,8 @@ public class StartDeathMatchTimer extends Util {
 		}
 		
 		resetTime();
+		
+		Bukkit.getPluginManager().callEvent(new DeathMatchStartEvent());
 
 		timer = new BukkitRunnable() {
 			public void run() {

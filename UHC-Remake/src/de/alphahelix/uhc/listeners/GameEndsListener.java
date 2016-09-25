@@ -1,5 +1,6 @@
 package de.alphahelix.uhc.listeners;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -11,13 +12,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.instances.Spectator;
@@ -38,7 +41,9 @@ public class GameEndsListener extends SimpleListener {
 	public void onDeath(PlayerDeathEvent e) {
 		final Player dead = e.getEntity();
 
-		e.setDeathMessage(getRegister().getDeathMessageFile().getMessage(e.getEntity().getLastDamageCause().getCause())
+		e.setDeathMessage(getRegister().getDeathMessageFile()
+				.getMessage(e.getEntity().getLastDamageCause() == null ? DamageCause.SUICIDE
+						: e.getEntity().getLastDamageCause().getCause())
 				.replace("[player]", dead.getDisplayName())
 				.replace("[entity]", e.getEntity().getKiller() instanceof Player ? dead.getKiller().getName()
 						: getRegister().getDeathMessageFile().getColorString("[entity] is a mob")));
@@ -82,32 +87,32 @@ public class GameEndsListener extends SimpleListener {
 
 		e.getDrops().clear();
 
+		Inventory cInv = null;
+		ArrayList<ItemStack> dropList = new ArrayList<>();
+
 		for (final ItemStack drops : getRegister().getDropsFile().readValues("Player")) {
 			if (getRegister().getDropsFile().getBoolean("Deathchest")) {
 				dead.getLocation().getBlock().setType(Material.CHEST);
 				final Chest c = (Chest) dead.getLocation().getBlock().getState();
+				cInv = c.getBlockInventory();
+			}
+			dropList.add(drops);
+		}
 
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
+		if (scenarioCheck(Scenarios.BAREBONES)) {
+			dropList = new ArrayList<>();
 
-					new BukkitRunnable() {
-						public void run() {
-							c.getBlockInventory().addItem(drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					c.getBlockInventory().addItem(drops);
-				}
+			dropList.add(new ItemStack(Material.DIAMOND, 1));
+			dropList.add(new ItemStack(Material.GOLDEN_APPLE, 1));
+			dropList.add(new ItemStack(Material.ARROW, 32));
+			dropList.add(new ItemStack(Material.STRING, 2));
+		}
+
+		for (ItemStack td : dropList) {
+			if (getRegister().getDropsFile().getBoolean("Deathchest")) {
+				cInv.addItem(td);
 			} else {
-				if (drops.getType().equals(Material.SKULL_ITEM) && drops.getDurability() == 3) {
-
-					new BukkitRunnable() {
-						public void run() {
-							dead.getWorld().dropItemNaturally(dead.getLocation(), drops);
-						}
-					}.runTaskLater(getUhc(), 10);
-				} else {
-					dead.getWorld().dropItemNaturally(dead.getLocation(), drops);
-				}
+				dead.getWorld().dropItemNaturally(dead.getLocation(), td);
 			}
 		}
 
@@ -142,7 +147,7 @@ public class GameEndsListener extends SimpleListener {
 			if (!getRegister().getMainOptionsFile().getString("Command on win").equals(""))
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), getRegister().getMainOptionsFile()
 						.getString("Command on win").replace("[player]", getWinnerName()));
-			
+
 			getRegister().getRestartTimer().startEndTimer();
 		}
 	}
@@ -156,17 +161,17 @@ public class GameEndsListener extends SimpleListener {
 
 		if (!(GState.isState(GState.LOBBY) || GState.isState(GState.END))) {
 			if (!isSpec) {
-				if(!(getRegister().getPlayerUtil().getSurvivors().size() <= 2)) {	
+				if (!(getRegister().getPlayerUtil().getSurvivors().size() <= 2)) {
 					Villager villager = (Villager) p.getWorld().spawnEntity(p.getLocation(), EntityType.VILLAGER);
-	
+
 					villager.setCustomNameVisible(true);
 					villager.setCustomName(p.getName());
-	
+
 					villager.getEquipment().setArmorContents(p.getInventory().getArmorContents());
 					villager.setHealth(p.getHealth());
-	
+
 					villager.setAI(false);
-	
+
 					playerLogOut.put(p.getName(), p.getLocation());
 					playerDummies.put(p.getName(), villager);
 					playerInv.put(p.getName(), p.getInventory());

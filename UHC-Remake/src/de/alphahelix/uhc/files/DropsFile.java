@@ -29,6 +29,7 @@ public class DropsFile extends EasyFile {
 		setMaterialStringList("Rabbit", "cooked rabbit:3:0", "leather:2:0");
 		setMaterialStringList("Horse", "cooked beef:3:0", "leather:4:0");
 		setMaterialStringList("Creeper", "gunpoweder:2:0", "tnt:1:0");
+		setMaterialStringList("Leaves", "sapling:1:0", "apple:2:0");
 	}
 	
 	public ArrayList<ItemStack> readValues(String value) {

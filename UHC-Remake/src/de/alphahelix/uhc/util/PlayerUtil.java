@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
@@ -36,11 +37,15 @@ public class PlayerUtil extends Util{
 		p.setFoodLevel(20);
 		p.setGameMode(GameMode.SURVIVAL);
 		p.setGlowing(false);
+		p.setMaxHealth(20.0);
 		p.setHealth(20.0);
 		p.setInvulnerable(false);
 		p.setLevel(0);
 		p.setMaxHealth(20);
 		p.setTotalExperience(0);
+		for(PotionEffect pe : p.getActivePotionEffects()) {
+			p.removePotionEffect(pe.getType());
+		}
 	}
 
 	//All Players
