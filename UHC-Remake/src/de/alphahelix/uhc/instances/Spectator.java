@@ -16,6 +16,7 @@ public class Spectator {
 		Location l = p.getLocation();
 		p.spigot().respawn();
 		p.teleport(l);
+		UHC.getInstance().getRegister().getPlayerUtil().clearUp(p);
 		p.setCanPickupItems(false);
 		p.setVelocity(p.getVelocity().setY(20D));
 		p.setTotalExperience(0);
@@ -36,6 +37,7 @@ public class Spectator {
 	
 	public Spectator(final Player p, Location l) {
 		p.teleport(l);
+		UHC.getInstance().getRegister().getPlayerUtil().clearUp(p);
 		p.setCanPickupItems(false);
 		p.setVelocity(p.getVelocity().setY(20D));
 		p.setTotalExperience(0);

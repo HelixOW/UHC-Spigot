@@ -22,6 +22,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.UHC;
@@ -46,6 +47,10 @@ public class GStateListener extends SimpleListener {
 	public void onRegen(EntityRegainHealthEvent e) {
 		if (!(e.getEntity() instanceof Player))
 			return;
+		
+		Player p = (Player) e.getEntity();
+		
+		if(p.hasPotionEffect(PotionEffectType.REGENERATION)) return;
 
 		e.setCancelled(true);
 	}

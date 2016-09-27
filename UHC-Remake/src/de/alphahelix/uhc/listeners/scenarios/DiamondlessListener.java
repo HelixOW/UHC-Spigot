@@ -1,7 +1,5 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.Random;
-
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -33,17 +31,15 @@ public class DiamondlessListener extends SimpleListener {
 		if (!scenarioCheck(Scenarios.DIAMONDLESS))
 			return;
 
-		int r = new Random().nextInt(10) + 1;
-
 		if (e.getBlock().getType().equals(Material.DIAMOND_ORE)) {
 			e.setCancelled(true);
 			e.getBlock().setType(Material.AIR);
-			if (new Random().nextInt(2) + 1 == 1) {
+			if (Math.random() < 0.5) {
 				e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.ROTTEN_FLESH));
 			}
 		}
 
-		else if (r == 1 && e.getBlock().getType().equals(Material.GOLD_ORE)) {
+		else if (Math.random() < 0.5 && e.getBlock().getType().equals(Material.GOLD_ORE)) {
 			e.setCancelled(true);
 			e.getBlock().setType(Material.AIR);
 		}

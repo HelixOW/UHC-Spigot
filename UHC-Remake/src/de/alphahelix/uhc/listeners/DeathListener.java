@@ -264,6 +264,14 @@ public class DeathListener extends SimpleListener {
 				}
 			}
 		}
+		
+		// Sheep Lovers
+		if(e.getEntity() instanceof Sheep) {
+			if(scenarioCheck(Scenarios.SHEEP_LOVERS)) {
+				dropList.clear();
+				dropList.add(new ItemStack(Material.RAW_BEEF, getRegister().getDropsFile().getRandomInteger(1, 3)));
+			}
+		}
 
 		for (ItemStack is : dropList) {
 			e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), is);

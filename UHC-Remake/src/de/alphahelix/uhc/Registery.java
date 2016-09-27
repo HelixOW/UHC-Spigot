@@ -81,6 +81,7 @@ import de.alphahelix.uhc.listeners.scenarios.EightLeggedFreaksListener;
 import de.alphahelix.uhc.listeners.scenarios.EnderDanceListener;
 import de.alphahelix.uhc.listeners.scenarios.EnderDragonRushListener;
 import de.alphahelix.uhc.listeners.scenarios.EntropyListener;
+import de.alphahelix.uhc.listeners.scenarios.ErraticPvPListener;
 import de.alphahelix.uhc.listeners.scenarios.EveryRoseListener;
 import de.alphahelix.uhc.listeners.scenarios.FalloutListener;
 import de.alphahelix.uhc.listeners.scenarios.FlowerPowerListener;
@@ -108,13 +109,31 @@ import de.alphahelix.uhc.listeners.scenarios.NineSlotsListener;
 import de.alphahelix.uhc.listeners.scenarios.NoFurnaceListener;
 import de.alphahelix.uhc.listeners.scenarios.NoGoingBackListener;
 import de.alphahelix.uhc.listeners.scenarios.NoNetherListener;
+import de.alphahelix.uhc.listeners.scenarios.NoSprintListener;
 import de.alphahelix.uhc.listeners.scenarios.NotShinyEnoughListener;
 import de.alphahelix.uhc.listeners.scenarios.OneHealListener;
 import de.alphahelix.uhc.listeners.scenarios.PopeyeListener;
 import de.alphahelix.uhc.listeners.scenarios.PotentialPermanentListener;
+import de.alphahelix.uhc.listeners.scenarios.PotionSwapListener;
 import de.alphahelix.uhc.listeners.scenarios.PuppyPowerListener;
 import de.alphahelix.uhc.listeners.scenarios.PvCListener;
+import de.alphahelix.uhc.listeners.scenarios.PyrophobiaListener;
+import de.alphahelix.uhc.listeners.scenarios.PyrotechnicsListener;
+import de.alphahelix.uhc.listeners.scenarios.RandomStarterItemsListener;
+import de.alphahelix.uhc.listeners.scenarios.RiskyRetrievalListener;
+import de.alphahelix.uhc.listeners.scenarios.SelectOresListener;
+import de.alphahelix.uhc.listeners.scenarios.SharedHealthListener;
+import de.alphahelix.uhc.listeners.scenarios.SheepLoversListener;
+import de.alphahelix.uhc.listeners.scenarios.SkyHighListener;
+import de.alphahelix.uhc.listeners.scenarios.SwitcherooListener;
+import de.alphahelix.uhc.listeners.scenarios.TeamInventoryListener;
 import de.alphahelix.uhc.listeners.scenarios.TheHobbitListener;
+import de.alphahelix.uhc.listeners.scenarios.TimberListener;
+import de.alphahelix.uhc.listeners.scenarios.TreeDropsListener;
+import de.alphahelix.uhc.listeners.scenarios.TripleOresListener;
+import de.alphahelix.uhc.listeners.scenarios.UltraParanoidListener;
+import de.alphahelix.uhc.listeners.scenarios.VeinMinerListener;
+import de.alphahelix.uhc.listeners.scenarios.XtrAppleListener;
 import de.alphahelix.uhc.timers.BestPvETimer;
 import de.alphahelix.uhc.timers.DamageCycleTimer;
 import de.alphahelix.uhc.timers.DeathmatchTimer;
@@ -124,8 +143,11 @@ import de.alphahelix.uhc.timers.GoToHellTimer;
 import de.alphahelix.uhc.timers.GraceTimer;
 import de.alphahelix.uhc.timers.LobbyTimer;
 import de.alphahelix.uhc.timers.RestartTimer;
+import de.alphahelix.uhc.timers.SkyHighTimer;
+import de.alphahelix.uhc.timers.SoulBrothersListener;
 import de.alphahelix.uhc.timers.StartDeathMatchTimer;
 import de.alphahelix.uhc.timers.WarmUpTimer;
+import de.alphahelix.uhc.util.BiomeUtil;
 import de.alphahelix.uhc.util.BorderUtil;
 import de.alphahelix.uhc.util.LobbyUtil;
 import de.alphahelix.uhc.util.PlayerUtil;
@@ -161,6 +183,7 @@ public class Registery {
 	private EntropyTimer entropyTimer;
 	private FalloutTimer falloutTimer;
 	private GoToHellTimer goToHellTimer;
+	private SkyHighTimer skyHighTimer;
 	
 	private KitInventory kitInventory;
 	private ConfirmInventory confirmInventory;
@@ -314,6 +337,9 @@ public class Registery {
 		setEntropyTimer(new EntropyTimer(getUhc()));
 		setFalloutTimer(new FalloutTimer(getUhc()));
 		setGoToHellTimer(new GoToHellTimer(getUhc()));
+		setSkyHighTimer(new SkyHighTimer(getUhc()));
+		
+		getBorderUtil().changeSize(getBorderFile().getInt("size"));
 		
 		new ArmorListener(getUhc());
 		
@@ -351,6 +377,7 @@ public class Registery {
 		new EnderDanceListener(getUhc());
 		new EnderDragonRushListener(getUhc());
 		new EntropyListener(getUhc());
+		new ErraticPvPListener(getUhc());
 		new EveryRoseListener(getUhc());
 		new FalloutListener(getUhc());
 		new FlowerPowerListener(getUhc());
@@ -376,12 +403,31 @@ public class Registery {
 		new NoFurnaceListener(getUhc());
 		new NoGoingBackListener(getUhc());
 		new NoNetherListener(getUhc());
+		new NoSprintListener(getUhc());
 		new NotShinyEnoughListener(getUhc());
 		new OneHealListener(getUhc());
 		new PopeyeListener(getUhc());
 		new PuppyPowerListener(getUhc());
 		new PvCListener(getUhc());
 		new PotentialPermanentListener(getUhc());
+		new PotionSwapListener(getUhc());
+		new PyrophobiaListener(getUhc());
+		new PyrotechnicsListener(getUhc());
+		new RandomStarterItemsListener(getUhc());
+		new RiskyRetrievalListener(getUhc());
+		new SelectOresListener(getUhc());
+		new SharedHealthListener(getUhc());
+		new SheepLoversListener(getUhc());
+		new SkyHighListener(getUhc());
+		new SoulBrothersListener(getUhc());
+		new SwitcherooListener(getUhc());
+		new TeamInventoryListener(getUhc());
+		new TimberListener(getUhc());
+		new TripleOresListener(getUhc());
+		new TreeDropsListener(getUhc());
+		new UltraParanoidListener(getUhc());
+		new VeinMinerListener(getUhc());
+		new XtrAppleListener(getUhc());
 		
 		registerCommands();
 		registerEvents();
@@ -389,6 +435,16 @@ public class Registery {
 		
 		getConfirmInventory().fillInventory();
 		getTeamInventory().fillInventory();
+		
+		if (getUhc().isScenarios() && !getUhc().isKits()) {
+			getUhc().setKits(false);
+			Scenarios.getRandomScenario();
+		} else if (getUhc().isKits()) {
+			getUhc().setKits(true);
+			getUhc().setScenarios(false);
+		}
+		
+		getLocationsFile().initalizeLobbyAndArena();
 		
 		new BukkitRunnable() {
 			public void run() {
@@ -402,7 +458,11 @@ public class Registery {
 			}
 		}.runTaskLater(getUhc(), 5);
 		
-		getBorderUtil().changeSize(getBorderFile().getInt("size"));
+		new BukkitRunnable() {
+			public void run() {
+				new BiomeUtil();
+			}
+		}.runTaskLater(getUhc(), 15);
 		
 		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
 	}
@@ -881,5 +941,13 @@ public class Registery {
 
 	public void setGoToHellTimer(GoToHellTimer goToHellTimer) {
 		this.goToHellTimer = goToHellTimer;
+	}
+
+	public SkyHighTimer getSkyHighTimer() {
+		return skyHighTimer;
+	}
+
+	public void setSkyHighTimer(SkyHighTimer skyHighTimer) {
+		this.skyHighTimer = skyHighTimer;
 	}
 }

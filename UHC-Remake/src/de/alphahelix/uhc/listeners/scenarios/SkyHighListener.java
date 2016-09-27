@@ -7,19 +7,18 @@ import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
 import de.alphahelix.uhc.instances.SimpleListener;
 
-public class GoToHellListener extends SimpleListener {
+public class SkyHighListener extends SimpleListener {
 
-	public GoToHellListener(UHC uhc) {
+	public SkyHighListener(UHC uhc) {
 		super(uhc);
 	}
 	
 	@EventHandler
 	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.GO_TO_HELL))
+		if (!scenarioCheck(Scenarios.SKY_HIGH))
 			return;
 
 		getRegister().getDeathmatchTimer().setTime((45 * 60) + getRegister().getTimerFile().getInt("Deathmatch warmup.length"));
-		getRegister().getGoToHellTimer().startCooldown();
+		getRegister().getFalloutTimer().startCooldown();
 	}
-
 }

@@ -43,7 +43,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private boolean tracker;
 	private int spawnradius;
 	private Logger log;
-
+	
 	@Override
 	public void onEnable() {
 		this.setInstance(this);
@@ -51,7 +51,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		this.setLog();
 		this.setConsolePrefix("[" + this.getName() + "] ");
 		this.setRestartMessage("");
-
+		
 		getRegister().registerAll();
 
 		GState.setCurrentState(GState.END);
@@ -94,19 +94,9 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 
 		new File("plugins/UHC/schematics").mkdirs();
 
-		getRegister().getLocationsFile().initalizeLobbyAndArena();
-
 		registerCrafting();
 
 		// TODO: Create Ranking Wall
-
-		if (isScenarios() && !isKits()) {
-			setKits(false);
-			Scenarios.getRandomScenario();
-		} else if (isKits()) {
-			setKits(true);
-			setScenarios(false);
-		}
 
 		log.log(Level.INFO, getConsolePrefix() + "UHC by AlphaHelix successfully loaded and enabled.");
 		GState.setCurrentState(GState.LOBBY);
@@ -171,7 +161,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	@Override
 	public void onPluginMessageReceived(String arg0, Player arg1, byte[] arg2) {
 	}
-
+	
 	public static UHC getInstance() {
 		return instance;
 	}

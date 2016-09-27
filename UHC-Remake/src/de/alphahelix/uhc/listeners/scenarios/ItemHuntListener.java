@@ -58,7 +58,7 @@ public class ItemHuntListener extends SimpleListener {
 		for (Material m : Material.values()) {
 			if(amount <= 0) break;
 			if (Math.random() < 0.07) {
-				items.add(m.name().toLowerCase());
+				items.add("§7" + m.name().toLowerCase());
 				amount--;
 			}
 		}

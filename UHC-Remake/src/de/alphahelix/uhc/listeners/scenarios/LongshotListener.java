@@ -19,7 +19,7 @@ public class LongshotListener extends SimpleListener {
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
 		if (e.isCancelled())
 			return;
-		if (!scenarioCheck(Scenarios.LONGSHOTS))
+		if (!scenarioCheck(Scenarios.LONGSHOTS) || scenarioCheck(Scenarios.REWARDING_LONGSHOTS))
 			return;
 		if (!(e.getDamager() instanceof Arrow) || !(e.getEntity() instanceof Player)) {
 			return;

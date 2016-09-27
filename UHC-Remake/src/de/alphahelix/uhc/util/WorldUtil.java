@@ -7,6 +7,7 @@ import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
 
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
@@ -38,20 +39,61 @@ public class WorldUtil extends Util {
 	}
 
 	public World createWorld() {
+		World tr = null;
 		if (getRegister().getLocationsFile().getArena() == null) {
-			new BiomeUtil();
-			return Bukkit.createWorld(new WorldCreator("UHC"));
-		}
-		File path = getRegister().getLocationsFile().getArena().getWorld().getWorldFolder();
-		String name = getRegister().getLocationsFile().getArena().getWorld().getName();
 
-		unloadWorld(getRegister().getLocationsFile().getArena().getWorld());
+			if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.URBAN))) {
+				if (Scenarios.isScenario(Scenarios.URBAN)) {
+					tr = Bukkit.createWorld(new WorldCreator("UHC").type(WorldType.FLAT));
+					tr.setDifficulty(Difficulty.HARD);
+					return tr;
+				}
+			} else if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.VAST_TRACK_O_MOUNTAIN))) {
+				if (Scenarios.isScenario(Scenarios.VAST_TRACK_O_MOUNTAIN)) {
+					tr = Bukkit.createWorld(new WorldCreator("UHC").type(WorldType.AMPLIFIED));
+					tr.setDifficulty(Difficulty.HARD);
+					return tr;
+				}
+			}
+
+			tr = Bukkit.createWorld(new WorldCreator("UHC"));
+			tr.setDifficulty(Difficulty.HARD);
+			return tr;
+
+		}
+
+		File path = null;
+		String name = "";
+
+		if (getRegister().getLocationsFile().getArena().getWorld() == null) {
+			path = new File(getRegister().getLocationsFile().getArenaWorldName());
+			name = getRegister().getLocationsFile().getArenaWorldName();
+		} else {
+			path = getRegister().getLocationsFile().getArena().getWorld().getWorldFolder();
+			name = getRegister().getLocationsFile().getArena().getWorld().getName();
+
+			unloadWorld(getRegister().getLocationsFile().getArena().getWorld());
+		}
+
 		deleteWorld(path);
 
-		new BiomeUtil();
+		if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.URBAN))) {
+			if (Scenarios.isScenario(Scenarios.URBAN))
+				tr = Bukkit.createWorld(new WorldCreator(name).type(WorldType.FLAT));
+			else
+				tr = Bukkit.createWorld(new WorldCreator(name));
+		} 
 		
-		World tr = Bukkit.createWorld(new WorldCreator(name));
+		else if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.VAST_TRACK_O_MOUNTAIN))) {
+			if (Scenarios.isScenario(Scenarios.VAST_TRACK_O_MOUNTAIN))
+				tr = Bukkit.createWorld(new WorldCreator(name).type(WorldType.AMPLIFIED));
+			else
+				tr = Bukkit.createWorld(new WorldCreator(name));
+		}
 		
+		else
+			tr = Bukkit.createWorld(new WorldCreator(name));
+
 		tr.setDifficulty(Difficulty.HARD);
 
 		return tr;
@@ -60,8 +102,9 @@ public class WorldUtil extends Util {
 	public World createNetherWorld() {
 		if (!getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.DIMENSIONAL_INVERSION)))
 			return null;
-		if(!Scenarios.isScenario(Scenarios.DIMENSIONAL_INVERSION)) return null;
-		
+		if (!Scenarios.isScenario(Scenarios.DIMENSIONAL_INVERSION))
+			return null;
+
 		if (getRegister().getLocationsFile().getNetherArena() == null) {
 			return Bukkit.createWorld(new WorldCreator("UHC-Nether").environment(Environment.NETHER));
 		}
@@ -71,6 +114,10 @@ public class WorldUtil extends Util {
 		unloadWorld(getRegister().getLocationsFile().getNetherArena().getWorld());
 		deleteWorld(path);
 
-		return Bukkit.createWorld(new WorldCreator(name).environment(Environment.NETHER));
+		World tr = Bukkit.createWorld(new WorldCreator(name).environment(Environment.NETHER));
+
+		tr.setDifficulty(Difficulty.HARD);
+
+		return tr;
 	}
 }

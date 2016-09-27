@@ -17,6 +17,7 @@ public class DamageCycleListener extends SimpleListener {
 	public void onEnd(LobbyEndEvent e) {
 		if(!scenarioCheck(Scenarios.DAMAGE_CYCLE)) return;
 		
+		getRegister().getDeathmatchTimer().setTime((45 * 60) + getRegister().getTimerFile().getInt("Deathmatch warmup.length"));
 		getRegister().getDamageCycleTimer().startCycleTimer();
 	}
 	

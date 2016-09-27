@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Scenarios;
@@ -28,6 +29,7 @@ import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class GameEndsListener extends SimpleListener {
 	
+	private Inventory cInv = null;
 	private HashMap<String, Location> playerLogOut = new HashMap<>();
 	private HashMap<String, Villager> playerDummies = new HashMap<>();
 	private HashMap<String, PlayerInventory> playerInv = new HashMap<>();
@@ -85,32 +87,31 @@ public class GameEndsListener extends SimpleListener {
 			getRegister().getScoreboardUtil().updateSpecs(Bukkit.getPlayer(other));
 		}
 
-		e.getDrops().clear();
-
-		Inventory cInv = null;
 		ArrayList<ItemStack> dropList = new ArrayList<>();
 
 		if (scenarioCheck(Scenarios.KILLSWITCH)) {
-			if(dead.getKiller() instanceof Player) {
+			if (dead.getKiller() instanceof Player) {
 				dead.getKiller().getInventory().clear();
 				dead.getKiller().getInventory().setContents(dead.getInventory().getContents());
 				dead.getKiller().getInventory().setArmorContents(dead.getInventory().getArmorContents());
 			}
 		} else {
+			if (getRegister().getDropsFile().getBoolean("Deathchest")) {
+				dead.getLocation().getBlock().setType(Material.CHEST);
+				Chest c = (Chest) dead.getLocation().getBlock().getState();
+				cInv = c.getBlockInventory();
+			}
+
 			for (final ItemStack drops : getRegister().getDropsFile().readValues("Player")) {
-				if (getRegister().getDropsFile().getBoolean("Deathchest")) {
-					dead.getLocation().getBlock().setType(Material.CHEST);
-					final Chest c = (Chest) dead.getLocation().getBlock().getState();
-					cInv = c.getBlockInventory();
-				}
 				if (Math.random() < getRegister().getDropsFile().getChance("Player", drops))
 					dropList.add(drops);
 			}
+
+			for (final ItemStack drops : e.getDrops())
+				dropList.add(drops);
 		}
 
-		if (
-
-		scenarioCheck(Scenarios.BAREBONES)) {
+		if (scenarioCheck(Scenarios.BAREBONES)) {
 			dropList = new ArrayList<>();
 
 			dropList.add(new ItemStack(Material.DIAMOND, 1));
@@ -119,12 +120,28 @@ public class GameEndsListener extends SimpleListener {
 			dropList.add(new ItemStack(Material.STRING, 2));
 		}
 
-		for (ItemStack td : dropList) {
-			if (getRegister().getDropsFile().getBoolean("Deathchest")) {
+		if (scenarioCheck(Scenarios.TIME_BOMB)) {
+			for(ItemStack td : dropList) {
 				cInv.addItem(td);
-			} else {
-				dead.getWorld().dropItemNaturally(dead.getLocation(), td);
 			}
+			new BukkitRunnable() {
+				public void run() {
+					dead.getWorld().createExplosion(dead.getLocation().getX(), dead.getLocation().getY(), dead.getLocation().getZ(), 10, false, true);
+					cInv.getLocation().getBlock().setType(Material.AIR);
+				}
+			}.runTaskLater(getUhc(), 600);
+		} else {
+			for (ItemStack td : dropList) {
+				if (getRegister().getDropsFile().getBoolean("Deathchest")) {
+					cInv.addItem(td);
+				} else {
+					dead.getWorld().dropItemNaturally(dead.getLocation(), td);
+				}
+			}
+		}
+		
+		if(scenarioCheck(Scenarios.ZOMBIES)) {
+			dead.getWorld().spawnEntity(dead.getLocation(), EntityType.ZOMBIE);
 		}
 
 		if (getRegister().getPlayerUtil().getSurvivors().size() == 4) {

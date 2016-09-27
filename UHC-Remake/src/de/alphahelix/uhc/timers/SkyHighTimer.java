@@ -7,11 +7,11 @@ import org.bukkit.scheduler.BukkitTask;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
 
-public class FalloutTimer extends Util {
+public class SkyHighTimer extends Util {
 
 	private static BukkitTask cooldown, damage;
 
-	public FalloutTimer(UHC uhc) {
+	public SkyHighTimer(UHC uhc) {
 		super(uhc);
 	}
 
@@ -55,7 +55,7 @@ public class FalloutTimer extends Util {
 				for (String pName : getRegister().getPlayerUtil().getSurvivors()) {
 					if (Bukkit.getPlayer(pName) == null)
 						continue;
-					if (Bukkit.getPlayer(pName).getLocation().getBlockY() > 60)
+					if (Bukkit.getPlayer(pName).getLocation().getBlockY() < 101)
 						Bukkit.getPlayer(pName).damage(1.0);
 				}
 			}

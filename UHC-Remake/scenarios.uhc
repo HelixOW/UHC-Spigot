@@ -3,7 +3,6 @@
 Monsters Inc - If you place a door on the map, go through it and there's 2 or more doors on the map, you will be teleported to one of those doors.
 AppleFamine - Apples do not drop from trees.
 Armor v Health - For every half Armor Point you add to your Armor bar, half a Health Point will be taken away from your Health. Any health lost to armor will not be healed back.
-vein Miner - Mine all related ores.
 Backpacks - Players have extra inventory space(the backpack), that they can access using a command. When a player dies the "backpack" drops as a chest.
 Bald_Chicken -  Chickens do not drop feathers on death, instead, skeletons drop an amount between 4 and 8 arrows on death.
 Barebones - The Nether is disabled, and iron is the highest tier you can obtain through gearing up. When a player dies, they will drop 1 diamond, 1 golden apple, 32 arrows, and 2 string. You cannot craft an enchantment table, anvil, or golden apple. Mining any ore except coal or iron will drop an iron ingot.
@@ -38,6 +37,7 @@ Eight-Legged Freaks - All hostile mobs spawn as different types of spiders with 
 Ender Dance - When you place a jukebox in the end you will get fully healed. (Only works 1 a game).
 EnderDragon Rush - First player to enter the end. Will get fully healed.
 Entropy - Every 10 min 1XP level is "drained" from you. If you don't have any levels when the drain occurs, you die.
+ErraticPvP - PvP will randomly toggle on and off between 1 and 3 minute intervals after 25 minutes.
 Every Rose - Everyone starts with a Thorns III golden chestplate.
 Fallout - If you are not below Y=60 after 45 min, you will take 0.5 hearts of damage.
 Flower Power - Every time you break a flower it has a 20% chance of dropping a random item in the game.
@@ -67,6 +67,7 @@ Nine Slots - The inventory aside from the hotbar can't be used.
 noFurnace - Furnaces cannot be crafted.
 No Going Back - Once you go to the Nether, there is no going back to the Overworld. Once you go to the End, there is no going back to the Overworld and the Nether. Meetup will be in the End.
 noNether - name says all.
+noSprint - players are not allowed to sprint
 Not Shiny Enough - Enchant tables and anvils are not craftable.
 One Heal - At start, you get a golden hoe, which fully heals you once. After your heal, the hoe disappears. You can still heal from golden apples and golden heads, however.
 Popeye - At the start of the game everyone will receive spinach(cactus green or green wool). When you right click it, you will get Strength I for 5 seconds.
@@ -74,25 +75,25 @@ Puppy Power - Everyone spawns with a stack of bones, rotten flesh, and wolf eggs
 PvC - The only way to damage other players is to use cacti!
 Potential Permanent - You start the game with the normal 10(permanent) hearts and 10 absorption hearts. If you heal- when you have full health- the absorption hearts become the "permanent" hearts(potential). However, if you take damage, the absorption hearts will be gone forever. Say you took 1 heart of damage, you now have 10 normal hearts and 9 absorption hearts. Once you have enough to heal, you will only heal up to 19 hearts.
 PotionSwap - After scatter all players will receive the same potion effects( Speed I, Strength I, Haste I, Jumb Boost I, Invisibility I, Resistance I orFire Resistance I). After every 5 minutes another potion effect is randomly chosen.
-Pyrophobia - Water and ice is replaced with lava, leaving no way to obtain water. Mobs are now fire resistant. Sugar cane can be obtained from decaying leaves and obsidian can still be found underground.
+Pyrophobia - You can't obtain water. Mobs are now fire resistant. Sugar cane can be obtained from decaying leaves and obsidian can still be found underground.
 Pyrotechnics - All damage (except when caused by fire) ignites you. All players start out with a water source block.
-Random Starter Items - Random items with a random amount are given before the match starts. The host can decide how many items they want to give.
+Random Starter Items - Random items with a random amount are given before the match starts.
 Rewarding Longshots - When shooting and hitting people with a bow from a variable distance, you will be rewarded with various different items.
 Risky Retrieval - All the gold and diamonds you mine will be sent to a enderchest, located at 0,0.
 Select Ores - You can only mine up to a certain amount of diamond, gold and iron. The limit for diamond is 10, gold is 32 and iron is 64.
-Self-Diagnosis - It's unable to see your own and opponent's health and your hunger bar.
 Shared Health - Health on a team is shared, so damage is distributed evenly.
 Sheep Lovers - Sheep become useful! Upon killing them, they drop 1-3 uncooked beef. If you sheer them, there's a 5% chance that they could drop a gold ingot.
 Sky High - After 45 minutes, any player below y=101 will begin to take half a heart of damage every 30 seconds.
-Soul Brothers - This is preferably played in a To2 match. There will be three worlds, one teammate in world 1 and the other in world 2. World 1 and 2 will have the same seed, three doesn't have to. This means that you could tell where a temple or village is and the other teammate can "raid" it as well. After 1 hour everyone will be scattered into world 3 and the match will progress as normal. Normal as in you are reunited with your teammate and will continue as a team. Keep in mind that when scattering people to world 1+2 you should scatter at different places!
+Soul Brothers - If you sneak, your damage will be added to your soul brother. If he dies you will take the damage. 
 Switcheroo - Evertime you shoot and hit a person, you both switch places where you were standing.
-Team Inventory - Throughout the game, you and your teammates can access an inventory that is shared among your team. There is no physical inventory, so any teammate can access it from anywhere.
+Team Inventory - Throughout the game, you and your teammates can access an inventory that is shared among your team. There is no physical inventory, so any teammate can access it from anywhere with a enderchest in your hand.
+Timber - Fell trees with one punch.
 Time Bomb - Only allows a certain amount of time to pick up loot before the "corpse" explodes.
-Triple Ores - The drops of ores are tripled. If its ie iron, it will drop in its smelted form, with three ingots. Gravel also drops triple flint.
+Triple Ores - The drops of ores are tripled. Gravel also drops triple flint.
 Tree Drops - Gold and Diamonds do not drop anything/but xp. But in Tree Drops, gold has a 0.5% chance of dropping from a leave. Diamonds have a 0.1%. And last buy definitely not least!, feathers have a chance of 10% dropping.
 Ultra Paranoid - When something happens (a player taking damage, healing, and/or mining gold, etc.) their coordinates are broadcast.
-Urban - The map is flat and full of villages.
-Urban Sprawl - The map is generated normally and full of villages and other structures.
+Urban - A flat new World.
 Vast Track o Mountain - Vast Tracks 'o Mountain is a simple amplified World.
+Vein Miner - Mine all related ores.
 XtrApple - Apple drop rates are increased by 40%.
 Zombies - When a player dies, a zombie will spawn.
