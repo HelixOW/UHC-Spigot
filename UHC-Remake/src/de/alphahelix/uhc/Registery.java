@@ -17,6 +17,7 @@ import de.alphahelix.uhc.files.ConfirmFile;
 import de.alphahelix.uhc.files.CraftingFile;
 import de.alphahelix.uhc.files.DeathmessageFile;
 import de.alphahelix.uhc.files.DropsFile;
+import de.alphahelix.uhc.files.HologramFile;
 import de.alphahelix.uhc.files.KitsFile;
 import de.alphahelix.uhc.files.LocationsFile;
 import de.alphahelix.uhc.files.MainMessageFile;
@@ -149,7 +150,9 @@ import de.alphahelix.uhc.timers.StartDeathMatchTimer;
 import de.alphahelix.uhc.timers.WarmUpTimer;
 import de.alphahelix.uhc.util.BiomeUtil;
 import de.alphahelix.uhc.util.BorderUtil;
+import de.alphahelix.uhc.util.HologramUtil;
 import de.alphahelix.uhc.util.LobbyUtil;
+import de.alphahelix.uhc.util.NPCUtil;
 import de.alphahelix.uhc.util.PlayerUtil;
 import de.alphahelix.uhc.util.ScoreboardUtil;
 import de.alphahelix.uhc.util.StatsUtil;
@@ -171,6 +174,8 @@ public class Registery {
 	private LobbyUtil lobbyUtil;
 	private TeamManagerUtil teamManagerUtil;
 	private WorldUtil worldUtil;
+	private HologramUtil hologramUtil;
+	private NPCUtil npcUtil;
 	
 	private LobbyTimer lobbyTimer;
 	private GraceTimer graceTimer;
@@ -211,6 +216,7 @@ public class Registery {
 	private DeathmessageFile deathMessageFile;
 	private CraftingFile craftingFile;
 	private ScenarioHelpFile scenarioHelpFile;
+	private HologramFile hologramFile;
 	
 	private KitChooseListener kitChooseListener;
 	private RegisterListener registerListener;
@@ -283,6 +289,7 @@ public class Registery {
 		setDeathMessageFile(new DeathmessageFile(getUhc()));
 		setCraftingFile(new CraftingFile(getUhc()));
 		setScenarioHelpFile(new ScenarioHelpFile(getUhc()));
+		setHologramFile(new HologramFile(getUhc()));
 		
 		for(EasyFile easyFile : getEasyFiles()) {
 			easyFile.register(easyFile);
@@ -308,6 +315,8 @@ public class Registery {
 		setLobbyUtil(new LobbyUtil(getUhc()));
 		setTeamManagerUtil(new TeamManagerUtil(getUhc()));
 		setWorldUtil(new WorldUtil(getUhc()));
+		setHologramUtil(new HologramUtil(getUhc()));
+		setNpcUtil(new NPCUtil(getUhc()));
 		
 		setKitInventory(new KitInventory(getUhc()));
 		setConfirmInventory(new ConfirmInventory(getUhc()));
@@ -949,5 +958,29 @@ public class Registery {
 
 	public void setSkyHighTimer(SkyHighTimer skyHighTimer) {
 		this.skyHighTimer = skyHighTimer;
+	}
+
+	public HologramFile getHologramFile() {
+		return hologramFile;
+	}
+
+	public void setHologramFile(HologramFile hologramFile) {
+		this.hologramFile = hologramFile;
+	}
+
+	public HologramUtil getHologramUtil() {
+		return hologramUtil;
+	}
+
+	public void setHologramUtil(HologramUtil hologramUtil) {
+		this.hologramUtil = hologramUtil;
+	}
+
+	public NPCUtil getNpcUtil() {
+		return npcUtil;
+	}
+
+	public void setNpcUtil(NPCUtil npcUtil) {
+		this.npcUtil = npcUtil;
 	}
 }

@@ -24,6 +24,15 @@ public class SaveField {
 		return null;
 	}
 	
+	public Object get(Object instance , boolean stackTrace) {
+		try {
+			return f.get(instance);
+		} catch (Exception e) {
+			if(stackTrace) e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public void set(Object instance , Object value , boolean stackTrace) {
 		try {
 			f.set(instance, value);

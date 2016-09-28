@@ -2,14 +2,15 @@ package de.alphahelix.uhc.commands;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.alphahelix.uhc.UHC;
 import de.popokaka.alphalibary.command.SimpleCommand;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class UHCSetUpCommand extends SimpleCommand<UHC> {
 
@@ -49,6 +50,37 @@ public class UHCSetUpCommand extends SimpleCommand<UHC> {
 			} else if(args[0].equals("setNether")) {
 				UHC.getInstance().getRegister().getLocationsFile().setNetherArena(p.getLocation());
 				p.sendMessage(UHC.getInstance().getPrefix() + "You've set the nether spot to §ayour Location§7!");
+			}
+		} else if(args[0].equalsIgnoreCase("createHologram")) {
+			String name = "";
+			if(args[1].equalsIgnoreCase("lower")) {
+				for (Player all : Bukkit.getOnlinePlayers()) {
+	                for (int i = 3; i < args.length; i++) {
+	                    name = name + args[i] + " ";
+	                }
+	                
+	                UHC.getInstance().getRegister().getHologramFile().addHologram(name, p.getLocation(), Double.parseDouble(args[2]));
+
+	                for (int i = 0; i < UHC.getInstance().getRegister().getHologramFile().getHologramcount(); i++) {
+	                    UHC.getInstance().getRegister().getHologramUtil().createHologram(all, i, Double.parseDouble(args[2]));
+	                }
+	            }
+	            p.sendMessage(UHC.getInstance().getPrefix() + "§7You have created a new Hologram");
+	            return true;
+			} else {
+				for (Player all : Bukkit.getOnlinePlayers()) {
+                    for (int i = 1; i < args.length; i++) {
+                        name = name + args[i] + " ";
+                    }
+
+                    UHC.getInstance().getRegister().getHologramFile().addHologram(name, p.getLocation(), 0);
+
+                    for (int i = 0; i < UHC.getInstance().getRegister().getHologramFile().getHologramcount(); i++) {
+                        UHC.getInstance().getRegister().getHologramUtil().createHologram(all, i, 0);
+                    }
+                }
+                p.sendMessage(UHC.getInstance().getPrefix() + "§7You have created a new Hologram");
+                return true;
 			}
 		} else {
 			TextComponent msg = new TextComponent(

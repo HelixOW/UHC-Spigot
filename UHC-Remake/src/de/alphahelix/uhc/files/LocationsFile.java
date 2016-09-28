@@ -2,6 +2,7 @@ package de.alphahelix.uhc.files;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.WorldCreator;
 
 import de.alphahelix.uhc.UHC;
@@ -54,8 +55,21 @@ public class LocationsFile extends EasyFile {
 				}
 			}
 		}
-	}
+		if(getString("NPC") != null) {
+			if(!(getLocation("NPC", true) == null)) {
+				if(getLocation("NPC", true).build().getWorld() == null) {
+					String[] values = getString("NPC").split(",");
 
+					Bukkit.createWorld(new WorldCreator(values[3]));
+				}
+			}
+		}
+	}
+	
+	public void addNPC(Location loc, OfflinePlayer p) {
+		setLocation(p.getName(), loc, true);
+	}
+	
 	public Location getLobby() {
 		if (contains("Lobby")) {
 			if (getLocation("Lobby", true).build() != null)

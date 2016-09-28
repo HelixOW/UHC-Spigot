@@ -45,6 +45,16 @@ private static final String version;
 		}
 	}
 	
+	public static SaveField getDeclaredField(String name , Class<?> clazz) {
+		try {
+			Field f = clazz.getDeclaredField(name);
+			return new SaveField(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	
 	//############################################## METHODS #####################################
 	
@@ -105,7 +115,7 @@ private static final String version;
 		return getClass("org.bukkit.craftbukkit." + version + "." + name , true);
 	}
 
-	private static Object getEntityPlayer(Player p) {
+	public static Object getEntityPlayer(Player p) {
 		try {
 			return getCraftBukkitClass("entity.CraftPlayer").getMethod("getHandle").invoke(p);
 		} catch (Exception e) {

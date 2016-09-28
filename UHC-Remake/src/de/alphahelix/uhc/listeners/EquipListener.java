@@ -29,9 +29,11 @@ public class EquipListener extends SimpleListener {
 		Player p = e.getPlayer();
 
 		e.setJoinMessage(null);
-
+		
 		getRegister().getPlayerUtil().clearUp(p);
 		getRegister().getPlayerUtil().addAll(p);
+		
+		getRegister().getNpcUtil().spawn(p.getLocation(), p);
 		
 		if(getRegister().getMainOptionsFile().getBoolean("Remove Attack Cooldown")) 
 			p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(32);
@@ -69,7 +71,8 @@ public class EquipListener extends SimpleListener {
 			Bukkit.getPlayer(other).sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
 					.getColorString("Player has joined").replace("[player]", p.getDisplayName()));
 		}
-
+		
+		getRegister().getHologramUtil().showHologram(p);
 		getRegister().getScoreboardUtil().setLobbyScoreboard(p);
 
 		if (getUhc().isScenarios()) {
