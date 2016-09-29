@@ -3,6 +3,7 @@ package de.alphahelix.uhc.util;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -138,24 +139,24 @@ public class TeamManagerUtil extends Util {
 		this.maxTeammember = maxPlayer;
 	}
 
-	public UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot, boolean isColoredName) {
-		UHCTeam created = new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, isColoredName);
+	public UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot, boolean isColoredName, Color c) {
+		UHCTeam created = new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, isColoredName, c);
 		return created;
 	}
 
 	public UHCTeam registerTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot,
-			boolean isColoredName) {
-		UHCTeam created = new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, isColoredName);
+			boolean isColoredName, Color c) {
+		UHCTeam created = new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, isColoredName, c);
 		return created;
 	}
 
-	public UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot) {
-		UHCTeam created = new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, true);
+	public UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot, Color c) {
+		UHCTeam created = new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, true, c);
 		return created;
 	}
 
-	public UHCTeam registerTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot) {
-		UHCTeam created = new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, true);
+	public UHCTeam registerTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot, Color c) {
+		UHCTeam created = new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, true, c);
 		return created;
 	}
 

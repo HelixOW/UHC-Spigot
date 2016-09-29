@@ -106,7 +106,7 @@ public class GStateListener extends SimpleListener {
 				|| e.getClickedBlock().getType().equals(Material.ENDER_CHEST))
 			e.setCancelled(true);
 	}
-
+	
 	@EventHandler
 	public void onCollect(PlayerPickupItemEvent e) {
 		if (GState.isState(GState.LOBBY)) {

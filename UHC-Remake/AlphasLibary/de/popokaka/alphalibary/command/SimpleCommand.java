@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class SimpleCommand<P extends JavaPlugin> extends Command {
-
+	
 	private static String VERSION;
 
 	static {
@@ -54,7 +54,7 @@ public abstract class SimpleCommand<P extends JavaPlugin> extends Command {
 			exc.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public abstract boolean execute(CommandSender cs, String label, String[] args);
 

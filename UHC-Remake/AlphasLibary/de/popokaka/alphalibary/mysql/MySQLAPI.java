@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import de.alphahelix.uhc.UHC;
@@ -33,15 +32,16 @@ public class MySQLAPI {
 	}
 
 	public static int getCountNumber() {
-		if(UHC.getInstance().isMySQLMode()) {
-			if(!isConnected()) return 0;
+		if (UHC.getInstance().isMySQLMode()) {
+			if (!isConnected())
+				return 0;
 			try {
 				String qry = "SELECT COUNT FROM uhc";
 				PreparedStatement prepstate = getMySQLConnection().prepareStatement(qry);
 				ResultSet rs = prepstate.executeQuery();
-	
+
 				int in = 0;
-	
+
 				while (rs.next()) {
 					in = Integer.parseInt(rs.getString("COUNT")) + 1;
 				}
@@ -51,7 +51,8 @@ public class MySQLAPI {
 				return 0;
 			}
 		} else {
-			return UHC.getInstance().getRegister().getPlayerFile().getConfigurationSection("Players").getKeys(false).size();
+			return UHC.getInstance().getRegister().getPlayerFile().getConfigurationSection("Players").getKeys(false)
+					.size();
 		}
 	}
 
@@ -67,20 +68,14 @@ public class MySQLAPI {
 		return MySQLAPI.plugin;
 	}
 
-	public static void initMySQLAPI(Plugin plugin) {
+	public static void initMySQLAPI(Plugin plugin) throws SQLException {
 		MySQLAPI.plugin = plugin;
 
 		MySQLFileManager.setStandardMySQL();
 		MySQLFileManager.readMySQL();
 
 		if (!isConnected()) {
-			try {
-				con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username,
-						password);
-			} catch (SQLException e) {
-				Bukkit.getConsoleSender().sendMessage(UHC.getInstance().getPrefix() + "§cCan't connect to database!");
-				Bukkit.getConsoleSender().sendMessage(UHC.getInstance().getPrefix() + "§cPlease check your mysql.uhc file at plugins/MySQLAPI!");
-			}
+			con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
 		}
 	}
 

@@ -1,12 +1,15 @@
 package de.alphahelix.uhc.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -103,5 +106,30 @@ public class TeamListener extends SimpleListener {
 				getRegister().getTeamInventory().openInventory(p);
 			}
 		}
+	}
+
+	@EventHandler
+	public void onArmorStandDestroy(EntityDamageByEntityEvent e) {
+		if (!GState.isState(GState.LOBBY))
+			return;
+		if (e.getEntity() instanceof ArmorStand)
+			e.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onTeamJoin(PlayerInteractAtEntityEvent e) {
+		if (!(e.getRightClicked() instanceof ArmorStand))
+			return;
+		if (!(GState.isState(GState.LOBBY)))
+			return;
+		if (!(e.getRightClicked().isCustomNameVisible()))
+			return;
+		if (getRegister().getTeamManagerUtil()
+				.getTeamByName(ChatColor.stripColor(e.getRightClicked().getCustomName())) == null)
+			return;
+		
+		e.setCancelled(true);
+		getRegister().getTeamManagerUtil().getTeamByName(ChatColor.stripColor(e.getRightClicked().getCustomName()))
+				.addToTeam(e.getPlayer());
 	}
 }

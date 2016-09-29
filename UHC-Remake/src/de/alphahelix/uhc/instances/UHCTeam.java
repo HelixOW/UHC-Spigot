@@ -2,6 +2,7 @@ package de.alphahelix.uhc.instances;
 
 import java.util.ArrayList;
 
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,20 +18,27 @@ public class UHCTeam {
 	private int maxPlayer;
 	private int invSlot;
 	private boolean isColoredName;
+	private Color color;
 
-	public UHCTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot, boolean isColoredName){//Erstellt ein Team mit dem Teamnamen, Farbkrzel, TeamIcon Farb byte, Maximale Playeranzahl, den TeamIcon Inventarslot, und ob die namen von den Spielern farbig sein sollen 
+	public UHCTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot, boolean isColoredName, Color color) {
 		this.name = name;
 		this.prefix = prefix.replace("&", "§");
 		this.colorData = colorData;
 		this.maxPlayer = maxPlayer;
 		this.invSlot = invSlot;
 		this.isColoredName = isColoredName;
+		this.color = color;
 		this.players = new ArrayList<Player>();
 		UHC.getInstance().getRegister().getTeamManagerUtil().addTeam(this);
+		
 	}
 
 	public byte getColorData() {
 		return colorData;
+	}
+
+	public Color getColor() {
+		return color;
 	}
 
 	public boolean getColoredName() {
@@ -42,16 +50,16 @@ public class UHCTeam {
 	}
 
 	public ArrayList<Player> getPlayers() {
-											
+
 		return players;
 	}
 
-	public String getPrefix() { 
+	public String getPrefix() {
 		return prefix;
 	}
 
 	public int getMaxPlayer() {
-								
+
 		return maxPlayer;
 	}
 
@@ -77,9 +85,11 @@ public class UHCTeam {
 			if (isColoredName)
 				setColoredName(p);
 			UHC.getInstance().getRegister().getScoreboardUtil().updateTeam(p, this);
-			p.sendMessage(UHC.getInstance().getPrefix() + UHC.getInstance().getRegister().getMessageFile().getColorString("Picked team").replace("[team]", prefix + name));
+			p.sendMessage(UHC.getInstance().getPrefix() + UHC.getInstance().getRegister().getMessageFile()
+					.getColorString("Picked team").replace("[team]", prefix + name));
 		} else {
-			p.sendMessage(UHC.getInstance().getPrefix() + UHC.getInstance().getRegister().getMessageFile().getColorString("Team is full"));
+			p.sendMessage(UHC.getInstance().getPrefix()
+					+ UHC.getInstance().getRegister().getMessageFile().getColorString("Team is full"));
 		}
 	}
 

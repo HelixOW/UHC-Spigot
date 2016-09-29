@@ -33,8 +33,6 @@ public class EquipListener extends SimpleListener {
 		getRegister().getPlayerUtil().clearUp(p);
 		getRegister().getPlayerUtil().addAll(p);
 		
-		getRegister().getNpcUtil().spawn(p.getLocation(), p);
-		
 		if(getRegister().getMainOptionsFile().getBoolean("Remove Attack Cooldown")) 
 			p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(32);
 

@@ -1,5 +1,7 @@
 package de.alphahelix.uhc.files;
 
+import org.bukkit.Color;
+
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.EasyFile;
 
@@ -18,15 +20,19 @@ public class TeamFile extends EasyFile {
 		setDefault("Team.Item Name", "&bTeams");
 		setDefault("Team.Item Slot", 2);
 		setDefault("Team.Chat", "@");
-		addTeam("Test Team", "7", 2, 1, 0, true);
+		addTeam("Preview", "&7", 2, 1, 0, true, Color.YELLOW);
 	}
 	
-	public void addTeam(String name, String prefix, int maxPlayer, int data, int slot, boolean colored) {
+	public void addTeam(String name, String prefix, int maxPlayer, int data, int slot, boolean colored, Color c) {
 		setDefault("Teams."+name+".name", name);
 		setDefault("Teams."+name+".prefix", prefix);
 		setDefault("Teams."+name+".data", data);
 		setDefault("Teams."+name+".max Players", maxPlayer);
 		setDefault("Teams."+name+".slot", slot);
 		setDefault("Teams."+name+".colored Name", colored);
+		
+		setDefault("Teams."+name+".color.red", c.getRed());
+		setDefault("Teams."+name+".color.green", c.getGreen());
+		setDefault("Teams."+name+".color.blue", c.getBlue());
 	}
 }

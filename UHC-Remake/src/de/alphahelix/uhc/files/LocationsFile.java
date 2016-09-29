@@ -17,6 +17,10 @@ public class LocationsFile extends EasyFile {
 	public void setLobby(Location loc) {
 		setLocation("Lobby", loc, true);
 	}
+	
+	public void setArena(Location loc) {
+		setLocation("Arena", loc, true);
+	}
 
 	public void setDeathmatch(Location loc) {
 		setLocation("Deathmatch", loc, true);
@@ -24,6 +28,19 @@ public class LocationsFile extends EasyFile {
 
 	public void setNetherArena(Location loc) {
 		setLocation("Arena Nether", loc, true);
+	}
+	
+	public void addArmorStand(Location loc, String name) {
+		setLocation("ArmorStands."+name+".location", loc, true);
+	}
+	
+	public void addNPC(Location loc, OfflinePlayer p) {
+		setLocation(p.getName(), loc, true);
+	}
+	
+	public void removeArmorStand(String name) {
+		set("ArmorStands."+name, null);
+		save();
 	}
 
 	public void initalizeLobbyAndArena() {
@@ -55,19 +72,6 @@ public class LocationsFile extends EasyFile {
 				}
 			}
 		}
-		if(getString("NPC") != null) {
-			if(!(getLocation("NPC", true) == null)) {
-				if(getLocation("NPC", true).build().getWorld() == null) {
-					String[] values = getString("NPC").split(",");
-
-					Bukkit.createWorld(new WorldCreator(values[3]));
-				}
-			}
-		}
-	}
-	
-	public void addNPC(Location loc, OfflinePlayer p) {
-		setLocation(p.getName(), loc, true);
 	}
 	
 	public Location getLobby() {
@@ -78,10 +82,6 @@ public class LocationsFile extends EasyFile {
 		if (Bukkit.getWorld("world") == null)
 			return null;
 		return Bukkit.getWorld("world").getHighestBlockAt(Bukkit.getWorld("world").getSpawnLocation()).getLocation();
-	}
-
-	public void setArena(Location loc) {
-		setLocation("Arena", loc, true);
 	}
 
 	public Location getArena() {

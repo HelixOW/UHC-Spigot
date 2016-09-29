@@ -3,6 +3,7 @@ package de.alphahelix.uhc;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -35,7 +36,6 @@ import de.alphahelix.uhc.files.TeamFile;
 import de.alphahelix.uhc.files.TimerFile;
 import de.alphahelix.uhc.files.UnitFile;
 import de.alphahelix.uhc.instances.EasyFile;
-import de.alphahelix.uhc.instances.UHCTeam;
 import de.alphahelix.uhc.inventories.ConfirmInventory;
 import de.alphahelix.uhc.inventories.KitInventory;
 import de.alphahelix.uhc.inventories.PreviewInventory;
@@ -165,7 +165,7 @@ public class Registery {
 	private UHC uhc;
 	private ArrayList<Listener> listeners;
 	private ArrayList<EasyFile> easyFiles;
-	
+
 	private PlayerUtil playerUtil;
 	private StatsUtil statsUtil;
 	private TablistUtil tablistUtil;
@@ -176,7 +176,7 @@ public class Registery {
 	private WorldUtil worldUtil;
 	private HologramUtil hologramUtil;
 	private NPCUtil npcUtil;
-	
+
 	private LobbyTimer lobbyTimer;
 	private GraceTimer graceTimer;
 	private WarmUpTimer warmUpTimer;
@@ -189,12 +189,12 @@ public class Registery {
 	private FalloutTimer falloutTimer;
 	private GoToHellTimer goToHellTimer;
 	private SkyHighTimer skyHighTimer;
-	
+
 	private KitInventory kitInventory;
 	private ConfirmInventory confirmInventory;
 	private TeamInventory teamInventory;
 	private PreviewInventory previewInventory;
-	
+
 	private PlayerFile playerFile;
 	private MainOptionsFile mainOptionsFile;
 	private KitsFile kitsFile;
@@ -217,7 +217,7 @@ public class Registery {
 	private CraftingFile craftingFile;
 	private ScenarioHelpFile scenarioHelpFile;
 	private HologramFile hologramFile;
-	
+
 	private KitChooseListener kitChooseListener;
 	private RegisterListener registerListener;
 	private EquipListener equipListener;
@@ -229,45 +229,45 @@ public class Registery {
 	private SpectatorListener spectatorListener;
 	private GameEndsListener gameEndsListener;
 	private DeathListener deathListener;
-	
+
 	public Registery(UHC uhc) {
 		setUhc(uhc);
 		setListeners(new ArrayList<Listener>());
 		setEasyFiles(new ArrayList<EasyFile>());
 	}
-	
+
 	// Registering
-	
+
 	private void registerEvents() {
 		PluginManager pm = Bukkit.getPluginManager();
 		for (Listener listener : getListeners()) {
 			pm.registerEvents(listener, getUhc());
 		}
 	}
-	
+
 	private void registerCommands() {
 		new StatsCommand(getUhc(), "stats", "Check your or others stats", "records");
 		new UHCAdminCommands(getUhc(), "uhcAdmin", "Mange the server configurations via commands.", "uhcA");
 		new UHCSetUpCommand(getUhc(), "uhcSetup", "Setup all of your options", "uhcS");
 		new StartCommand(getUhc(), "start", "Short or strech the lobby time.", "start");
 	}
-	
+
 	private void registerTeams() {
-		if(getTeamFile().getConfigurationSection("Teams") == null) return;
-		
-		for(String t : getTeamFile().getConfigurationSection("Teams").getKeys(false)) {
-			t = "Teams."+t; 
-			new UHCTeam(getTeamFile().getColorString(t+".name"),
-					getTeamFile().getColorString(t+".prefix"),
-					(byte) getTeamFile().getInt(t+".data"),
-					getTeamFile().getInt(t+".max Players"),
-					getTeamFile().getInt(t+".slot"),
-					getTeamFile().getBoolean(t+".colored Name"));
+		if (getTeamFile().getConfigurationSection("Teams") == null)
+			return;
+
+		for (String t : getTeamFile().getConfigurationSection("Teams").getKeys(false)) {
+			t = "Teams." + t;
+			getTeamManagerUtil().registerTeam(getTeamFile().getColorString(t + ".name"),
+					getTeamFile().getColorString(t + ".prefix"), (byte) getTeamFile().getInt(t + ".data"),
+					getTeamFile().getInt(t + ".max Players"), getTeamFile().getInt(t + ".slot"),
+					getTeamFile().getBoolean(t + ".colored Name"), Color.fromRGB(getTeamFile().getInt(t + ".color.red"),
+							getTeamFile().getInt(t + ".color.green"), getTeamFile().getInt(t + ".color.blue")));
 		}
 	}
 
 	public void registerAll() {
-		
+
 		setPlayerFile(new PlayerFile(getUhc()));
 		setMainOptionsFile(new MainOptionsFile(getUhc()));
 		setKitsFile(new KitsFile(getUhc()));
@@ -290,11 +290,11 @@ public class Registery {
 		setCraftingFile(new CraftingFile(getUhc()));
 		setScenarioHelpFile(new ScenarioHelpFile(getUhc()));
 		setHologramFile(new HologramFile(getUhc()));
-		
-		for(EasyFile easyFile : getEasyFiles()) {
+
+		for (EasyFile easyFile : getEasyFiles()) {
 			easyFile.register(easyFile);
 		}
-		
+
 		getUhc().setMySQLMode(getMainOptionsFile().getBoolean("MySQL"));
 		getUhc().setBunggeMode(getMainOptionsFile().getBoolean("Bungeecord"));
 		getUhc().setLobbyServer(getMainOptionsFile().getString("Bungeecord Fallbackserver"));
@@ -306,7 +306,7 @@ public class Registery {
 		getUhc().setTeams(getTeamFile().getBoolean("Teams enabled"));
 		getUhc().setTracker(getMainOptionsFile().getBoolean("Tracker.euip"));
 		getUhc().setTrackerName(getMainOptionsFile().getColorString("Tracker.name"));
-		
+
 		setPlayerUtil(new PlayerUtil(getUhc()));
 		setStatsUtil(new StatsUtil(getUhc()));
 		setTablistUtil(new TablistUtil(getUhc()));
@@ -317,12 +317,12 @@ public class Registery {
 		setWorldUtil(new WorldUtil(getUhc()));
 		setHologramUtil(new HologramUtil(getUhc()));
 		setNpcUtil(new NPCUtil(getUhc()));
-		
+
 		setKitInventory(new KitInventory(getUhc()));
 		setConfirmInventory(new ConfirmInventory(getUhc()));
 		setTeamInventory(new TeamInventory(getUhc()));
 		setPreviewInventory(new PreviewInventory(getUhc()));
-		
+
 		setKitChooseListener(new KitChooseListener(getUhc()));
 		setRegisterListener(new RegisterListener(getUhc()));
 		setEquipListener(new EquipListener(getUhc()));
@@ -334,7 +334,7 @@ public class Registery {
 		setSpectatorListener(new SpectatorListener(getUhc()));
 		setGameEndsListener(new GameEndsListener(getUhc()));
 		setDeathListener(new DeathListener(getUhc()));
-		
+
 		setLobbyTimer(new LobbyTimer(getUhc()));
 		setGraceTimer(new GraceTimer(getUhc()));
 		setWarmUpTimer(new WarmUpTimer(getUhc()));
@@ -347,11 +347,11 @@ public class Registery {
 		setFalloutTimer(new FalloutTimer(getUhc()));
 		setGoToHellTimer(new GoToHellTimer(getUhc()));
 		setSkyHighTimer(new SkyHighTimer(getUhc()));
-		
+
 		getBorderUtil().changeSize(getBorderFile().getInt("size"));
-		
+
 		new ArmorListener(getUhc());
-		
+
 		new HalfOreListener(getUhc());
 		new ArrowListener(getUhc());
 		new MonsterIncListener(getUhc());
@@ -437,14 +437,14 @@ public class Registery {
 		new UltraParanoidListener(getUhc());
 		new VeinMinerListener(getUhc());
 		new XtrAppleListener(getUhc());
-		
+
 		registerCommands();
 		registerEvents();
 		registerTeams();
-		
+
 		getConfirmInventory().fillInventory();
 		getTeamInventory().fillInventory();
-		
+
 		if (getUhc().isScenarios() && !getUhc().isKits()) {
 			getUhc().setKits(false);
 			Scenarios.getRandomScenario();
@@ -452,30 +452,29 @@ public class Registery {
 			getUhc().setKits(true);
 			getUhc().setScenarios(false);
 		}
-		
+
 		getLocationsFile().initalizeLobbyAndArena();
-		
+
 		new BukkitRunnable() {
 			public void run() {
 				getWorldUtil().createWorld();
 			}
 		}.runTaskLater(getUhc(), 5);
-		
+
 		new BukkitRunnable() {
 			public void run() {
 				getWorldUtil().createNetherWorld();
 			}
 		}.runTaskLater(getUhc(), 5);
-		
+
 		new BukkitRunnable() {
 			public void run() {
 				new BiomeUtil();
 			}
 		}.runTaskLater(getUhc(), 15);
-		
+
 		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
 	}
-
 
 	// Instance
 
@@ -486,9 +485,9 @@ public class Registery {
 	private void setUhc(UHC uhc) {
 		this.uhc = uhc;
 	}
-	
+
 	// Listeners
-	
+
 	public KitChooseListener getKitChooseListener() {
 		return kitChooseListener;
 	}
@@ -504,7 +503,7 @@ public class Registery {
 	public void setRegisterListener(RegisterListener registerListener) {
 		this.registerListener = registerListener;
 	}
-	
+
 	public EquipListener getEquipListener() {
 		return equipListener;
 	}
@@ -512,7 +511,7 @@ public class Registery {
 	public void setEquipListener(EquipListener equipListener) {
 		this.equipListener = equipListener;
 	}
-	
+
 	public ChatListener getChatListener() {
 		return chatListener;
 	}
@@ -530,15 +529,15 @@ public class Registery {
 	}
 
 	// Utils
-	
+
 	public PlayerUtil getPlayerUtil() {
 		return playerUtil;
 	}
-	
+
 	public void setPlayerUtil(PlayerUtil playerUtil) {
 		this.playerUtil = playerUtil;
 	}
-	
+
 	public StatsUtil getStatsUtil() {
 		return statsUtil;
 	}
@@ -546,10 +545,9 @@ public class Registery {
 	public void setStatsUtil(StatsUtil statsUtil) {
 		this.statsUtil = statsUtil;
 	}
-	
 
 	// Files
-	
+
 	public PlayerFile getPlayerFile() {
 		return playerFile;
 	}
@@ -581,7 +579,7 @@ public class Registery {
 	private void setKitsFile(KitsFile kitsFile) {
 		this.kitsFile = kitsFile;
 	}
-	
+
 	public MainMessageFile getMessageFile() {
 		return messageFile;
 	}
@@ -607,7 +605,7 @@ public class Registery {
 	}
 
 	// Inventories
-	
+
 	public KitInventory getKitInventory() {
 		return kitInventory;
 	}

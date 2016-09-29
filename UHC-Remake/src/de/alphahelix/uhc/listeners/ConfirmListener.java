@@ -40,7 +40,7 @@ public class ConfirmListener extends SimpleListener {
 					
 					String msg = getRegister().getMessageFile().getColorString("Kit chosen").replace("[kit]",
 							getRegister().getKitChooseListener().getKitWhichPlayerWantToBuy((Player) e.getWhoClicked())
-									.getName());
+									.getName().replace("_", " "));
 
 					getRegister().getKitsFile().setKit((Player) e.getWhoClicked(), getRegister().getKitChooseListener()
 							.getKitWhichPlayerWantToBuy((Player) e.getWhoClicked()));

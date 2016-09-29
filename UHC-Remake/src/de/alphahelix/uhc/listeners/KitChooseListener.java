@@ -62,7 +62,7 @@ public class KitChooseListener extends SimpleListener {
 				if (e.getAction().equals(InventoryAction.PICKUP_ALL)) {
 					if (getRegister().getStatsUtil().hasKit(k, (Player) e.getWhoClicked())) {
 						String msg = getRegister().getMessageFile().getColorString("Kit chosen").replace("[kit]",
-								k.getName());
+								k.getName().replace("_", " "));
 
 						getRegister().getStatsUtil().addKit(k, (Player) e.getWhoClicked());
 

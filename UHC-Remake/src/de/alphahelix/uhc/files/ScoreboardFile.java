@@ -20,13 +20,15 @@ public class ScoreboardFile extends EasyFile {
 		setDefault("Lobby.show.kit", true);
 		setDefault("Lobby.show.bar", true);
 		
+		setDefault("Lobby.message.identifier ([i])", "&7>");
+		
 		setDefault("Lobby.title", "&7>-= &aLobby &7=-<");
-		setDefault("Lobby.message.kills", " &cKills &7> [kills]");
-		setDefault("Lobby.message.deaths", " &cDeaths &7> [deaths]");
-		setDefault("Lobby.message.coins", " &6Coins &7> [coins]");
-		setDefault("Lobby.message.points", " &bPoints &7> [points]");
-		setDefault("Lobby.message.kit", " &aKit &7> [kit]");
-		setDefault("Lobby.message.team", " &bTeam &7> [team]");
+		setDefault("Lobby.message.kills", " &cKills [i] [kills]");
+		setDefault("Lobby.message.deaths", " &cDeaths [i] [deaths]");
+		setDefault("Lobby.message.coins", " &6Coins [i] [coins]");
+		setDefault("Lobby.message.points", " &bPoints [i] [points]");
+		setDefault("Lobby.message.kit", " &aKit [i] [kit]");
+		setDefault("Lobby.message.team", " &bTeam [i] [team]");
 		setDefault("Lobby.message.bar", "&7>>----------<<");
 		
 		setDefault("Ingame.show.scoreboard", true);

@@ -26,7 +26,7 @@ public class KitInventory extends Util {
 		}
 		for (Kit kit : getRegister().getKitsFile().getKits()) {
 			getInv().setItem(kit.getGuiSlot(),
-					new ItemBuilder(kit.getGuiBlock().getType()).setName(kit.getName())
+					new ItemBuilder(kit.getGuiBlock().getType()).setName(kit.getName().replace("_", " "))
 					.setLore("§7" + Integer.toString(kit.getPrice()) + " §eCoins").build());
 		}
 	}
