@@ -3,7 +3,9 @@ package de.alphahelix.uhc.timers;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -16,6 +18,7 @@ import de.alphahelix.uhc.events.timers.LobbyEndEvent;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.nms.SimpleActionBar;
 import de.popokaka.alphalibary.nms.SimpleTitle;
+import de.popokaka.alphalibary.utils.Cuboid;
 
 public class LobbyTimer extends Util {
 
@@ -23,6 +26,7 @@ public class LobbyTimer extends Util {
 	private static BukkitTask lobby;
 	private int time;
 	private double min;
+	private static boolean isAlreadyPasted;
 
 	public LobbyTimer(UHC uhc) {
 		super(uhc);
@@ -52,16 +56,22 @@ public class LobbyTimer extends Util {
 					return;
 				return;
 			}
-			
+
 			resetTime();
-			
+
+			if (!isAlreadyPasted) {
+				isAlreadyPasted = true;
+				getRegister().getSchematicManagerUtil().load(getRegister().getMainOptionsFile().getString("Lobby.filename"));
+				getRegister().getSchematicManagerUtil().paste(getRegister().getLocationsFile().getArena().add(0, 140, 0));
+			}
+
 			timer = new BukkitRunnable() {
 				public void run() {
 
 					if (!(getRegister().getPlayerUtil().getAll().size() >= getRegister().getPlayerUtil()
 							.getMinimumPlayerCount()))
 						return;
-					
+
 					if (time > 0) {
 						time--;
 
@@ -69,7 +79,7 @@ public class LobbyTimer extends Util {
 							public void run() {
 								if (getRegister().getPlayerUtil().getAll().size() >= getRegister().getPlayerUtil()
 										.getMinimumPlayerCount()) {
-									if(time == 0) {
+									if (time == 0) {
 										new BukkitRunnable() {
 											public void run() {
 												Bukkit.getPluginManager().callEvent(new LobbyEndEvent());
@@ -85,7 +95,7 @@ public class LobbyTimer extends Util {
 										min = calcMin(time);
 
 										p.setLevel(time);
-										
+
 										if (min % 1 == 0 && time > 10 && time != 0) {
 											p.sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
 													.getColorString("Lobby time left info")
@@ -101,7 +111,7 @@ public class LobbyTimer extends Util {
 															: getRegister().getUnitFile().getColorString("Seconds"))),
 													1, 2, 1);
 											p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-										
+
 										}
 
 										if (time % 30 == 0 && !(min % 1 == 0)) {
@@ -139,7 +149,15 @@ public class LobbyTimer extends Util {
 
 											p.getInventory().clear();
 
-											// TODO: Remove Lobby Schematic
+											if (getUhc().isLobbyAsSchematic()) {
+												World w = getRegister().getLocationsFile().getArena().getWorld();
+												Location l1 = new Location(w, -75, 155, -75);
+												Location l2 = new Location(w, 75, 255, 75);
+
+												for (Block b : new Cuboid(l1, l2).getBlocks()) {
+													b.setType(Material.AIR);
+												}
+											}
 
 											Location worldSpawn = getRegister().getLocationsFile().getArena();
 											Location playerSpawn = worldSpawn.getWorld()
@@ -165,16 +183,18 @@ public class LobbyTimer extends Util {
 											p.setGameMode(GameMode.SURVIVAL);
 
 											getRegister().getGraceTimer().startGraceTimer();
-											
+
 											getRegister().getPlayerUtil().addSurvivor(p);
 
 											getRegister().getTablistUtil().sendTablist();
 											getRegister().getScoreboardUtil().setIngameScoreboard(p);
-											for(String o : getRegister().getPlayerUtil().getAll()) {
-												if(Bukkit.getPlayer(o) == null) continue;
-												getRegister().getScoreboardUtil().setIngameScoreboard(Bukkit.getPlayer(o));
+											for (String o : getRegister().getPlayerUtil().getAll()) {
+												if (Bukkit.getPlayer(o) == null)
+													continue;
+												getRegister().getScoreboardUtil()
+														.setIngameScoreboard(Bukkit.getPlayer(o));
 											}
-											
+
 											if (getUhc().isKits()) {
 												if (getRegister().getKitsFile().hasKit(p)) {
 													for (ItemStack is : getRegister().getKitsFile().getKitByPlayer(p)
@@ -185,7 +205,7 @@ public class LobbyTimer extends Util {
 													}
 												}
 											}
-											
+
 										}
 									}
 								} else {

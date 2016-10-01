@@ -2,11 +2,14 @@ package de.alphahelix.uhc.files;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.WorldCreator;
+import org.bukkit.block.Block;
 
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.EasyFile;
+import de.popokaka.alphalibary.utils.Cuboid;
 
 public class LocationsFile extends EasyFile {
 
@@ -91,7 +94,16 @@ public class LocationsFile extends EasyFile {
 	public Location getLobby() {
 		if (contains("Lobby")) {
 			if (getLocation("Lobby", true).build() != null)
-				return getLocation("Lobby", true).build();
+				if(getUhc().isLobbyAsSchematic()) {
+					for(Block b : new Cuboid(getArena().clone().add(0, 140, 0).clone().subtract(75, 100, 75), getArena().clone().add(0, 140, 0).clone().add(75, 100, 75)).getBlocks()) {
+						if(b.getType().equals(Material.getMaterial(getRegister().getMainOptionsFile().getString("Lobby.spawnblock.type").replace(" ", "_").toUpperCase()))) {
+							return b.getLocation().clone().add(0, getRegister().getMainOptionsFile().getInt("Lobby.spawnblock.lower") + 1, 0);
+						}
+					}
+					return getArena().add(1, 140, 1);
+				}
+				else
+					return getLocation("Lobby", true).build();
 		}
 		if (Bukkit.getWorld("world") == null)
 			return null;

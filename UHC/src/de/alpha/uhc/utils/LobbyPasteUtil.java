@@ -60,6 +60,5 @@ public class LobbyPasteUtil {
         for (Block b : new Cuboid(l1, l2).getBlocks()) {
             b.setType(Material.AIR);
         }
-
     }
 }

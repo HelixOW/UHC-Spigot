@@ -31,6 +31,11 @@ public class MainOptionsFile extends EasyFile {
 		setDefault("Tracker.equip", true);
 		setDefault("Tracker.name", "&dTracker");
 		
+		setDefault("Lobby.as schematic", true);
+		setDefault("Lobby.filename", "lobby");
+		setDefault("Lobby.spawnblock.type", "diamond block");
+		setDefault("Lobby.spawnblock.lower", 5);
+		
 		setDefault("Status MOTD", true);
 		
 		setDefault("Minimum players", 4);

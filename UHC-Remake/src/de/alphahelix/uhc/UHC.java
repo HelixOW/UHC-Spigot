@@ -41,6 +41,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private boolean kits;
 	private boolean teams;
 	private boolean tracker;
+	private boolean lobbyAsSchematic;
 	private int spawnradius;
 	private Logger log;
 	
@@ -303,5 +304,13 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 
 	public void setTrackerName(String trackerName) {
 		this.trackerName = trackerName;
+	}
+
+	public boolean isLobbyAsSchematic() {
+		return lobbyAsSchematic;
+	}
+
+	public void setLobbyAsSchematic(boolean lobbyAsSchematic) {
+		this.lobbyAsSchematic = lobbyAsSchematic;
 	}
 }

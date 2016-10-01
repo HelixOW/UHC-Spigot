@@ -9,6 +9,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alphahelix.uhc.commands.InfoCommand;
+import de.alphahelix.uhc.commands.SchematicCommand;
 import de.alphahelix.uhc.commands.StartCommand;
 import de.alphahelix.uhc.commands.StatsCommand;
 import de.alphahelix.uhc.commands.UHCAdminCommands;
@@ -50,6 +51,7 @@ import de.alphahelix.uhc.listeners.GStateListener;
 import de.alphahelix.uhc.listeners.GameEndsListener;
 import de.alphahelix.uhc.listeners.KitChooseListener;
 import de.alphahelix.uhc.listeners.RegisterListener;
+import de.alphahelix.uhc.listeners.SchematicListener;
 import de.alphahelix.uhc.listeners.SpectatorListener;
 import de.alphahelix.uhc.listeners.TeamListener;
 import de.alphahelix.uhc.listeners.TimerListener;
@@ -162,6 +164,7 @@ import de.alphahelix.uhc.util.StatsUtil;
 import de.alphahelix.uhc.util.TablistUtil;
 import de.alphahelix.uhc.util.TeamManagerUtil;
 import de.alphahelix.uhc.util.WorldUtil;
+import de.alphahelix.uhc.util.schematic.SchematicManagerUtil;
 
 public class Registery {
 
@@ -180,6 +183,7 @@ public class Registery {
 	private HologramUtil hologramUtil;
 	private NPCUtil npcUtil;
 	private RankingUtil rankingUtil;
+	private SchematicManagerUtil schematicManagerUtil;
 
 	private LobbyTimer lobbyTimer;
 	private GraceTimer graceTimer;
@@ -234,6 +238,7 @@ public class Registery {
 	private SpectatorListener spectatorListener;
 	private GameEndsListener gameEndsListener;
 	private DeathListener deathListener;
+	private SchematicListener schematicListener;
 
 	public Registery(UHC uhc) {
 		setUhc(uhc);
@@ -256,6 +261,7 @@ public class Registery {
 		new UHCSetUpCommand(getUhc(), "uhcSetup", "Setup all of your options", "uhcS");
 		new StartCommand(getUhc(), "start", "Short or strech the lobby time.", "start");
 		new InfoCommand(getUhc(), "informations", "Get informations about the current scenario", "scenario", "infos");
+		new SchematicCommand(getUhc(), "schematic", "Create your own uhc schematics", "schem");
 	}
 
 	private void registerTeams() {
@@ -314,6 +320,7 @@ public class Registery {
 		getUhc().setTeams(getTeamFile().getBoolean("Teams enabled"));
 		getUhc().setTracker(getMainOptionsFile().getBoolean("Tracker.euip"));
 		getUhc().setTrackerName(getMainOptionsFile().getColorString("Tracker.name"));
+		getUhc().setLobbyAsSchematic(getMainOptionsFile().getBoolean("Lobby.as schematic"));
 		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
 
 		setPlayerUtil(new PlayerUtil(getUhc()));
@@ -327,6 +334,7 @@ public class Registery {
 		setHologramUtil(new HologramUtil(getUhc()));
 		setNpcUtil(new NPCUtil(getUhc()));
 		setRankingUtil(new RankingUtil(getUhc()));
+		setSchematicManagerUtil(new SchematicManagerUtil(getUhc()));
 
 		setKitInventory(new KitInventory(getUhc()));
 		setConfirmInventory(new ConfirmInventory(getUhc()));
@@ -344,6 +352,7 @@ public class Registery {
 		setSpectatorListener(new SpectatorListener(getUhc()));
 		setGameEndsListener(new GameEndsListener(getUhc()));
 		setDeathListener(new DeathListener(getUhc()));
+		setSchematicListener(new SchematicListener(getUhc()));
 
 		setLobbyTimer(new LobbyTimer(getUhc()));
 		setGraceTimer(new GraceTimer(getUhc()));
@@ -1010,5 +1019,21 @@ public class Registery {
 
 	public void setRankingUtil(RankingUtil rankingUtil) {
 		this.rankingUtil = rankingUtil;
+	}
+
+	public SchematicManagerUtil getSchematicManagerUtil() {
+		return schematicManagerUtil;
+	}
+
+	public void setSchematicManagerUtil(SchematicManagerUtil schematicManagerUtil) {
+		this.schematicManagerUtil = schematicManagerUtil;
+	}
+
+	public SchematicListener getSchematicListener() {
+		return schematicListener;
+	}
+
+	public void setSchematicListener(SchematicListener schematicListener) {
+		this.schematicListener = schematicListener;
 	}
 }

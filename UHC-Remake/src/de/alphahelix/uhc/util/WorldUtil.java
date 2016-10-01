@@ -46,18 +46,21 @@ public class WorldUtil extends Util {
 				if (Scenarios.isScenario(Scenarios.URBAN)) {
 					tr = Bukkit.createWorld(new WorldCreator("UHC").type(WorldType.FLAT));
 					tr.setDifficulty(Difficulty.HARD);
+					tr.getSpawnLocation().getChunk().load();
 					return tr;
 				}
 			} else if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.VAST_TRACK_O_MOUNTAIN))) {
 				if (Scenarios.isScenario(Scenarios.VAST_TRACK_O_MOUNTAIN)) {
 					tr = Bukkit.createWorld(new WorldCreator("UHC").type(WorldType.AMPLIFIED));
 					tr.setDifficulty(Difficulty.HARD);
+					tr.getSpawnLocation().getChunk().load();
 					return tr;
 				}
 			}
 
 			tr = Bukkit.createWorld(new WorldCreator("UHC"));
 			tr.setDifficulty(Difficulty.HARD);
+			tr.getSpawnLocation().getChunk().load();
 			return tr;
 
 		}
@@ -95,18 +98,24 @@ public class WorldUtil extends Util {
 			tr = Bukkit.createWorld(new WorldCreator(name));
 
 		tr.setDifficulty(Difficulty.HARD);
+		tr.getSpawnLocation().getChunk().load();
 
 		return tr;
 	}
 
 	public World createNetherWorld() {
 		if (!getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.DIMENSIONAL_INVERSION)))
-			return null;
+			return getRegister().getLocationsFile().getArena().getWorld();
 		if (!Scenarios.isScenario(Scenarios.DIMENSIONAL_INVERSION))
-			return null;
+			return getRegister().getLocationsFile().getArena().getWorld();
 
 		if (getRegister().getLocationsFile().getNetherArena() == null) {
-			return Bukkit.createWorld(new WorldCreator("UHC-Nether").environment(Environment.NETHER));
+			World tr = Bukkit.createWorld(new WorldCreator("UHC-Nether").environment(Environment.NETHER));
+			
+			tr.setDifficulty(Difficulty.HARD);
+			tr.getSpawnLocation().getChunk().load();
+			
+			return tr;
 		}
 		File path = getRegister().getLocationsFile().getNetherArena().getWorld().getWorldFolder();
 		String name = getRegister().getLocationsFile().getNetherArena().getWorld().getName();
@@ -117,6 +126,7 @@ public class WorldUtil extends Util {
 		World tr = Bukkit.createWorld(new WorldCreator(name).environment(Environment.NETHER));
 
 		tr.setDifficulty(Difficulty.HARD);
+		tr.getSpawnLocation().getChunk().load();
 
 		return tr;
 	}

@@ -70,7 +70,7 @@ public class GStateListener extends SimpleListener {
 	@EventHandler
 	public void onLogin(AsyncPlayerPreLoginEvent e) {
 		if (GState.isState(GState.END)) {
-			e.disallow(Result.KICK_OTHER, getUhc().getRestartMessage());
+			e.disallow(Result.KICK_WHITELIST, getUhc().getRestartMessage());
 		}
 	}
 

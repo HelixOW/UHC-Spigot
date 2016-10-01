@@ -75,7 +75,7 @@ public class MySQLAPI {
 		MySQLFileManager.readMySQL();
 
 		if (!isConnected()) {
-			con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
+			con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true", username, password);
 		}
 	}
 
