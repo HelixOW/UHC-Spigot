@@ -22,16 +22,16 @@ public class StartCommand extends SimpleCommand<UHC> {
 		Player p = (Player) cs;
 		
 		if (!p.hasPermission("uhc.start")) {
-			p.sendMessage(UHC.getInstance().getPrefix() + UHC.getInstance().getRegister().getMessageFile().getColorString("No Permissions"));
+			p.sendMessage(getPlugin().getPrefix() + getPlugin().getRegister().getMessageFile().getColorString("No Permissions"));
 			return true;
 		}
 
 		if (args.length == 0) {
-			UHC.getInstance().getRegister().getLobbyTimer().changeTime(10);
+			getPlugin().getRegister().getLobbyTimer().changeTime(10);
 		} else if (args.length == 1) {
-			UHC.getInstance().getRegister().getLobbyTimer().changeTime(Integer.parseInt(args[0]));
+			getPlugin().getRegister().getLobbyTimer().changeTime(Integer.parseInt(args[0]));
 		} else {
-			p.sendMessage(UHC.getInstance().getPrefix() + UHC.getInstance().getRegister().getMessageFile().getColorString("Command not found"));
+			p.sendMessage(getPlugin().getPrefix() + getPlugin().getRegister().getMessageFile().getColorString("Command not found"));
 		}
 
 		return true;

@@ -287,6 +287,7 @@ public class StatsUtil extends Util {
 			cache.get(p.getName()).addKits(kit);
 			return;
 		}
+
 		if (getUhc().isMySQLMode()) {
 			if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(),
 					"Kits") == null) {
@@ -296,6 +297,7 @@ public class StatsUtil extends Util {
 			}
 			MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Kits",
 					getKitsAsString(p) + kit.getName() + " ,");
+			return;
 		}
 		getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kits",
 				getKitsAsString(p) + kit.getName() + " ,");
@@ -386,6 +388,45 @@ public class StatsUtil extends Util {
 	}
 
 	// Rank
+	
+	// /uhcsetup createRankingArmorstand 1
+	
+	public OfflinePlayer getPlayerByRank(int r) {
+		TreeMap<String, Integer> points = new TreeMap<>();
+		TreeMap<Integer, String> rank = new TreeMap<>();
+		
+		if (getUhc().isMySQLMode()) {
+			try {
+				ResultSet rs = MySQLAPI.getMySQLConnection().createStatement()
+						.executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
+				
+				int in = MySQLAPI.getCountNumber() + 1;
+				
+				while (rs.next()) {
+					in--;
+					rank.put(in, rs.getString("UUID"));
+				}
+				
+				return Bukkit.getOfflinePlayer(UUID.fromString(rank.get(r)));
+			} catch (Exception e) {
+				if (getUhc().isDebug())
+					getLog().log(Level.SEVERE, "Something went during loading the stats. Skipping...", e.getMessage());
+				return Bukkit.getOfflinePlayer(UUIDFetcher.getUUID("AlphaHelix"));
+			}
+		}
+		for (String UUIDs : getRegister().getPlayerFile().getConfigurationSection("Players").getKeys(false)) {
+			String playerName = UUIDFetcher.getName(UUID.fromString(UUIDs));
+			points.put(playerName, getPoints(Bukkit.getOfflinePlayer(UUID.fromString(UUIDs))));
+		}
+
+		SortedSet<Map.Entry<String, Integer>> ss = entriesSortedByValues(points);
+		
+		for (Entry<String, Integer> name : ss) {
+			rank.put(name.getValue(), name.getKey());
+		}
+
+		return Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(rank.get(r)));
+	}
 
 	public int getRank(OfflinePlayer p) {
 

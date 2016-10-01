@@ -44,6 +44,10 @@ public class UltraParanoidListener extends SimpleListener {
 
 	@EventHandler
 	public void onPlayerItemConsume(PlayerItemConsumeEvent e) {
+		if (e.isCancelled())
+			return;
+		if (!scenarioCheck(Scenarios.ULTRA_PARANOID))
+			return;
 		Player p = e.getPlayer();
 
 		if (e.getItem().getType() == Material.GOLDEN_APPLE) {

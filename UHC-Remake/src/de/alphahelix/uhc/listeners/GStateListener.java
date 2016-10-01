@@ -15,12 +15,15 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.potion.PotionEffectType;
 
@@ -32,6 +35,43 @@ public class GStateListener extends SimpleListener {
 
 	public GStateListener(UHC uhc) {
 		super(uhc);
+	}
+
+	@EventHandler
+	public void onPing(ServerListPingEvent e) {
+		if (!getRegister().getMainOptionsFile().getBoolean("Status MOTD"))
+			return;
+		
+		switch (GState.getCurrentState()) {
+		case LOBBY:
+			e.setMotd(getRegister().getMOTDFile().getColorString("Lobby"));
+			break;
+		case PERIOD_OF_PEACE:
+			e.setMotd(getRegister().getMOTDFile().getColorString("Period of peace"));
+			break;
+		case WARMUP:
+			e.setMotd(getRegister().getMOTDFile().getColorString("Warmup"));
+			break;
+		case IN_GAME:
+			e.setMotd(getRegister().getMOTDFile().getColorString("Ingame"));
+			break;
+		case DEATHMATCH_WARMUP:
+			e.setMotd(getRegister().getMOTDFile().getColorString("Deathmatch warmup"));
+			break;
+		case DEATHMATCH:
+			e.setMotd(getRegister().getMOTDFile().getColorString("Deathmatch"));
+			break;
+		case END:
+			e.setMotd(getRegister().getMOTDFile().getColorString("End"));
+			break;
+		}
+	}
+
+	@EventHandler
+	public void onLogin(AsyncPlayerPreLoginEvent e) {
+		if (GState.isState(GState.END)) {
+			e.disallow(Result.KICK_OTHER, getUhc().getRestartMessage());
+		}
 	}
 
 	@EventHandler
@@ -47,10 +87,11 @@ public class GStateListener extends SimpleListener {
 	public void onRegen(EntityRegainHealthEvent e) {
 		if (!(e.getEntity() instanceof Player))
 			return;
-		
+
 		Player p = (Player) e.getEntity();
-		
-		if(p.hasPotionEffect(PotionEffectType.REGENERATION)) return;
+
+		if (p.hasPotionEffect(PotionEffectType.REGENERATION))
+			return;
 
 		e.setCancelled(true);
 	}
@@ -106,7 +147,7 @@ public class GStateListener extends SimpleListener {
 				|| e.getClickedBlock().getType().equals(Material.ENDER_CHEST))
 			e.setCancelled(true);
 	}
-	
+
 	@EventHandler
 	public void onCollect(PlayerPickupItemEvent e) {
 		if (GState.isState(GState.LOBBY)) {

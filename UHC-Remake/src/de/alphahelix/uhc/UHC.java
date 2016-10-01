@@ -96,10 +96,9 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 
 		registerCrafting();
 
-		// TODO: Create Ranking Wall
+		getRegister().getRankingUtil().updateArmorStands();
 
 		log.log(Level.INFO, getConsolePrefix() + "UHC by AlphaHelix successfully loaded and enabled.");
-		GState.setCurrentState(GState.LOBBY);
 
 		final long lastModified = getFile().lastModified();
 

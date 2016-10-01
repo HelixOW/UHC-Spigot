@@ -124,11 +124,12 @@ public class TeamListener extends SimpleListener {
 			return;
 		if (!(e.getRightClicked().isCustomNameVisible()))
 			return;
+		e.setCancelled(true);
+		
 		if (getRegister().getTeamManagerUtil()
 				.getTeamByName(ChatColor.stripColor(e.getRightClicked().getCustomName())) == null)
 			return;
 		
-		e.setCancelled(true);
 		getRegister().getTeamManagerUtil().getTeamByName(ChatColor.stripColor(e.getRightClicked().getCustomName()))
 				.addToTeam(e.getPlayer());
 	}

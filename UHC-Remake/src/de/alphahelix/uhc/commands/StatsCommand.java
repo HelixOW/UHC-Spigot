@@ -22,18 +22,18 @@ public class StatsCommand extends SimpleCommand<UHC> {
 		if(!(cs instanceof Player)) return true;
 		
 		if(args.length == 0) {
-			UHC.getInstance().getRegister().getStatsUtil().sendStats((Player) cs, (Player) cs);
+			getPlugin().getRegister().getStatsUtil().sendStats((Player) cs, (Player) cs);
 			return true;
 		}
 		if(args.length == 1)  {
 			if(Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(args[0])) == null) {
-				((Player)cs).sendMessage(UHC.getInstance().getPrefix() + UHC.getInstance().getRegister().getStatsFile().getNoPlayerMessage());
+				((Player)cs).sendMessage(getPlugin().getPrefix() + getPlugin().getRegister().getStatsFile().getNoPlayerMessage());
 				 return true;
 			}
-			UHC.getInstance().getRegister().getStatsUtil().sendStats((Player) cs, Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(args[0])));
+			getPlugin().getRegister().getStatsUtil().sendStats((Player) cs, Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(args[0])));
 			return true;
 		} else {
-			((Player)cs).sendMessage(UHC.getInstance().getPrefix() + UHC.getInstance().getRegister().getStatsFile().getErrorMessage());
+			((Player)cs).sendMessage(getPlugin().getPrefix() + getPlugin().getRegister().getStatsFile().getErrorMessage());
 		}
 		
 		return true;
@@ -42,7 +42,7 @@ public class StatsCommand extends SimpleCommand<UHC> {
 	@Override
 	public List<String> tabComplete(CommandSender cs, String label, String[] args) {
 		ArrayList<String> suggetions = new ArrayList<String>();
-		suggetions.add("statistics");
+		suggetions.add("stats");
 		return suggetions;
 	}
 

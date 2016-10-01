@@ -14,21 +14,21 @@ public class ScoreboardConstructFile extends EasyFile{
 		setDefault("Lobby.lines", 16);
 		
 		setDefault("Lobby.line.16", "[out]");
-		setDefault("Lobby.line.15", "[out]");
-		setDefault("Lobby.line.14", "[out]");
-		setDefault("Lobby.line.13", "[out]");
-		setDefault("Lobby.line.12", "[out]");
-		setDefault("Lobby.line.11", "[team]");
-		setDefault("Lobby.line.10", "[out]");
-		setDefault("Lobby.line.9", "[out]");
-		setDefault("Lobby.line.8", "[blank]");
-		setDefault("Lobby.line.7", "[kills]");
-		setDefault("Lobby.line.6", "[deaths]");
+		setDefault("Lobby.line.15", "[bar]");
+		setDefault("Lobby.line.14", "[blank]");
+		setDefault("Lobby.line.13", "[kills]");
+		setDefault("Lobby.line.12", "[deaths]");
+		setDefault("Lobby.line.11", "[blank]");
+		setDefault("Lobby.line.10", "[bar]");
+		setDefault("Lobby.line.9", "[blank]");
+		setDefault("Lobby.line.8", "[coins]");
+		setDefault("Lobby.line.7", "[points]");
+		setDefault("Lobby.line.6", "[blank]");
 		setDefault("Lobby.line.5", "[bar]");
-		setDefault("Lobby.line.4", "[coins]");
-		setDefault("Lobby.line.3", "[points]");
-		setDefault("Lobby.line.2", "[bar]");
-		setDefault("Lobby.line.1", "[kit]");
+		setDefault("Lobby.line.4", "[blank]");
+		setDefault("Lobby.line.3", "[kit]");
+		setDefault("Lobby.line.2", "[team]");
+		setDefault("Lobby.line.1", "[bar]");
 		
 		setDefault("Ingame.lines", 16);
 		

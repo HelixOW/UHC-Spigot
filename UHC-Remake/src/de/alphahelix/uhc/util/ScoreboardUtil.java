@@ -1,10 +1,9 @@
 package de.alphahelix.uhc.util;
 
-import java.util.logging.Level;
-
 import org.bukkit.entity.Player;
 
 import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Kit;
 import de.alphahelix.uhc.instances.UHCTeam;
@@ -25,18 +24,18 @@ public class ScoreboardUtil extends Util {
 			return;
 
 		SimpleScoreboard ssb = new SimpleScoreboard("uhc-lobby",
-				getRegister().getScoreboardFile().getColorString("Lobby.title"));
+				getRegister().getScoreboardFile().getColorString("Lobby.title"), iden);
 		int max = getRegister().getScoreboardConstructFile().getInt("Lobby.lines");
 
-		if (max > 32)
-			return;
+		if (max > 16)
+			max = 16;
 		for (int i = 0; i < max; i++) {
 			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Lobby.line." + i);
 			if (lineValue.contains("[out]"))
 				continue;
 			else if (lineValue.contains("[blank]")) {
 				String repeat = new String(new char[i]).replace("\0", " ");
-				ssb.setValue(i, repeat);
+				ssb.setValue(i, repeat, iden);
 			}
 
 			else if (lineValue.contains("[kills]")) {
@@ -45,7 +44,8 @@ public class ScoreboardUtil extends Util {
 				ssb.setValue(i,
 						getRegister().getScoreboardFile().getColorString("Lobby.message.kills")
 								.replace("[kills]", Integer.toString(getRegister().getStatsUtil().getKills(p)))
-								.replace("[i]", iden));
+								.replace("[i]", iden),
+						iden);
 			}
 
 			else if (lineValue.contains("[deaths]")) {
@@ -54,7 +54,8 @@ public class ScoreboardUtil extends Util {
 				ssb.setValue(i,
 						getRegister().getScoreboardFile().getColorString("Lobby.message.deaths")
 								.replace("[deaths]", Integer.toString(getRegister().getStatsUtil().getDeaths(p)))
-								.replace("[i]", iden));
+								.replace("[i]", iden),
+						iden);
 			}
 
 			else if (lineValue.contains("[coins]")) {
@@ -63,7 +64,8 @@ public class ScoreboardUtil extends Util {
 				ssb.setValue(i,
 						getRegister().getScoreboardFile().getColorString("Lobby.message.coins")
 								.replace("[coins]", Integer.toString(getRegister().getStatsUtil().getCoins(p)))
-								.replace("[i]", iden));
+								.replace("[i]", iden),
+						iden);
 			}
 
 			else if (lineValue.contains("[points]")) {
@@ -72,7 +74,8 @@ public class ScoreboardUtil extends Util {
 				ssb.setValue(i,
 						getRegister().getScoreboardFile().getColorString("Lobby.message.points")
 								.replace("[points]", Integer.toString(getRegister().getStatsUtil().getPoints(p)))
-								.replace("[i]", iden));
+								.replace("[i]", iden),
+						iden);
 			}
 
 			else if (lineValue.contains("[team]")) {
@@ -80,30 +83,41 @@ public class ScoreboardUtil extends Util {
 					continue;
 				if (getRegister().getTeamManagerUtil().isInOneTeam(p) == null) {
 					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Lobby.message.team")
-							.replace("[team]", "-").replace("[i]", iden));
+							.replace("[team]", "-").replace("[i]", iden), iden);
 				}
 			}
 
-			else if (lineValue.contains("[kit]")) {
-				if (!getRegister().getScoreboardFile().getBoolean("Lobby.show.kit"))
-					continue;
-				if (getRegister().getScoreboardFile().getColorString("Lobby.message.kit").replace("[kit]", "-")
-						.length() > 32) {
-					getUhc().getLog().log(Level.WARNING, "String for kit is too long. Short in your scoreboard.uhc");
-					continue;
+			else if (lineValue.contains("[kit]") || lineValue.contains("[scenario]")) {
+				if (getUhc().isKits() && !getUhc().isScenarios()) {
+					if (!getRegister().getScoreboardFile().getBoolean("Lobby.show.kit"))
+						continue;
+					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Lobby.message.kit")
+							.replace("[kit]", "-").replace("[i]", iden), iden);
 				}
-				ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Lobby.message.kit")
-						.replace("[kit]", "-").replace("[i]", iden));
+
+				else if (getUhc().isScenarios()) {
+					if (!getRegister().getScoreboardFile().getBoolean("Lobby.show.scenario"))
+						continue;
+
+					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Lobby.message.scenario")
+							.replace("[scenario]", "-").replace("[i]", iden), iden);
+
+					ssb.updateValue(i,
+							getRegister().getScoreboardFile().getColorString("Lobby.message.scenario")
+									.replace("[scenario]",
+											getRegister().getScenarioFile()
+													.getCustomScenarioName(Scenarios.getScenario()))
+									.replace("[i]", iden),
+							iden);
+				}
 			}
 
 			else if (lineValue.contains("[bar]")) {
 				if (!getRegister().getScoreboardFile().getBoolean("Lobby.show.bar"))
 					continue;
-				if (getRegister().getScoreboardFile().getColorString("Lobby.message.bar").length() > 32) {
-					getUhc().getLog().log(Level.WARNING, "String for bar is too long. Short in your scoreboard.uhc");
-					continue;
-				}
-				ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Lobby.message.bar"));
+				ssb.setValue(i,
+						getRegister().getScoreboardFile().getColorString("Lobby.message.bar").replace("[i]", iden),
+						iden);
 			}
 		}
 
@@ -115,8 +129,8 @@ public class ScoreboardUtil extends Util {
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Lobby.lines");
 
-		if (max > 32)
-			return;
+		if (max > 16)
+			max = 16;
 		for (int i = 0; i < max; i++) {
 			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Lobby.line." + i);
 			if (!lineValue.contains("[kit]"))
@@ -131,8 +145,8 @@ public class ScoreboardUtil extends Util {
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Lobby.lines");
 
-		if (max > 32)
-			return;
+		if (max > 16)
+			max = 16;
 		for (int i = 0; i < max; i++) {
 			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Lobby.line." + i);
 			if (!lineValue.contains("[team]"))
@@ -147,11 +161,11 @@ public class ScoreboardUtil extends Util {
 			return;
 
 		SimpleScoreboard ssb = new SimpleScoreboard("uhc-ingame",
-				getRegister().getScoreboardFile().getColorString("Ingame.title"));
+				getRegister().getScoreboardFile().getColorString("Ingame.title"), iden);
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 
-		if (max > 32)
-			return;
+		if (max > 16)
+			max = 16;
 		for (int i = 0; i < max; i++) {
 			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Ingame.line." + i);
 			if (lineValue.contains("[out]"))
@@ -159,7 +173,7 @@ public class ScoreboardUtil extends Util {
 
 			else if (lineValue.contains("[blank]")) {
 				String repeat = new String(new char[i]).replace("\0", " ");
-				ssb.setValue(i, repeat);
+				ssb.setValue(i, repeat, iden);
 			}
 
 			else if (lineValue.contains("[alive]")) {
@@ -169,7 +183,8 @@ public class ScoreboardUtil extends Util {
 						getRegister().getScoreboardFile().getColorString("Ingame.message.alive")
 								.replace("[alive]",
 										Integer.toString(getRegister().getPlayerUtil().getSurvivors().size()))
-								.replace("[i]", iden));
+								.replace("[i]", iden),
+						iden);
 			}
 
 			else if (lineValue.contains("[specs]")) {
@@ -178,99 +193,146 @@ public class ScoreboardUtil extends Util {
 				ssb.setValue(i,
 						getRegister().getScoreboardFile().getColorString("Ingame.message.specs")
 								.replace("[specs]", Integer.toString(getRegister().getPlayerUtil().getDeads().size()))
-								.replace("[i]", iden));
+								.replace("[i]", iden),
+						iden);
 			}
 
-			else if (lineValue.contains("[kit]")) {
-				if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.kit"))
-					continue;
+			if (lineValue.contains("[kit]") || lineValue.contains("[scenario]")) {
+				if (getUhc().isKits() && !getUhc().isScenarios()) {
+					if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.kit"))
+						continue;
 
-				ssb.setValue(i,
-						getRegister().getScoreboardFile().getColorString("Ingame.message.kit").replace("[kit]", "-"));
+					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.kit")
+							.replace("[kit]", "-"), iden);
 
-				if (getRegister().getKitsFile().getKitByPlayer(p) != null) {
+					if (getRegister().getKitsFile().getKitByPlayer(p) != null) {
+						ssb.updateValue(i,
+								getRegister().getScoreboardFile()
+										.getColorString("Ingame.message.kit").replace("[kit]", getRegister()
+												.getKitsFile().getKitByPlayer(p).getName().replace("_", " "))
+										.replace("[i]", iden),
+								iden);
+					}
+				} else if (getUhc().isScenarios()) {
+					if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.scenario"))
+						continue;
+
+					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.scenario")
+							.replace("[scenario]", "-"), iden);
+
 					ssb.updateValue(i,
-							getRegister().getScoreboardFile().getColorString("Lobby.message.kit")
-									.replace("[kit]", getRegister().getKitsFile().getKitByPlayer(p).getName().replace("_", " "))
+							getRegister().getScoreboardFile().getColorString("Ingame.message.scenario")
+									.replace("[scenario]",
+											getRegister().getScenarioFile()
+													.getCustomScenarioName(Scenarios.getScenario()))
 									.replace("[i]", iden),
 							iden);
+
 				}
 			}
 
 			else if (lineValue.contains("[team]")) {
 				if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.team"))
 					continue;
+
 				if (getRegister().getTeamManagerUtil().isInOneTeam(p) == null) {
 					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.team")
-							.replace("[team]", "-").replace("[i]", iden));
-				} else {
+							.replace("[team]", "-").replace("[i]", iden), iden);
+				}
+
+				else {
+					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.team")
+							.replace("[team]", "-").replace("[i]", iden), iden);
+
 					ssb.updateValue(i,
-							getRegister().getScoreboardFile().getColorString("Ingame.message.team").replace("[team]",
-									getRegister().getTeamManagerUtil().isInOneTeam(p).getPrefix()
-											+ getRegister().getTeamManagerUtil().isInOneTeam(p).getName()).replace("[i]", iden), iden);
+							getRegister().getScoreboardFile().getColorString("Ingame.message.team")
+									.replace("[team]",
+											getRegister().getTeamManagerUtil().isInOneTeam(p).getPrefix()
+													+ getRegister().getTeamManagerUtil().isInOneTeam(p).getName())
+									.replace("[i]", iden),
+							iden);
 				}
 			}
 
 			else if (lineValue.contains("[center]")) {
 				if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.center"))
 					continue;
-				ssb.setValue(i,
-						getRegister().getScoreboardFile().getColorString("Ingame.message.center").replace("[center]",
-								getRegister().getLocationsFile().getArena().getBlockX() + "/"
-										+ getRegister().getLocationsFile().getArena().getBlockZ()).replace("[i]", iden));
+				String v = getRegister().getScoreboardFile().getColorString("Ingame.message.center")
+						.replace("[center]", getRegister().getLocationsFile().getArena().getBlockX() + "/"
+								+ getRegister().getLocationsFile().getArena().getBlockZ())
+						.replace("[i]", iden);
+
+				ssb.setValue(i, v, iden);
 			}
 
 			else if (lineValue.contains("[border]")) {
 				if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.border"))
 					continue;
-				ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.border")
-						.replace("[border]", Integer.toString(getRegister().getBorderUtil().getSize())).replace("[i]", iden));
+				String v = getRegister().getScoreboardFile().getColorString("Ingame.message.border")
+						.replace("[border]", Integer.toString(getRegister().getBorderUtil().getSize()))
+						.replace("[i]", iden);
+
+				ssb.setValue(i, v, iden);
 			}
 
 			else if (lineValue.contains("[time infos]")) {
 				if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.time infos"))
 					continue;
 				if (GState.isState(GState.PERIOD_OF_PEACE)) {
-					ssb.setValue(i,
-							getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.until damage")
-									.replace("[time]", getRegister().getGraceTimer().getTime()).replace("[i]", iden));
+					String v = getRegister().getScoreboardFile()
+							.getColorString("Ingame.message.time infos.until damage")
+							.replace("[time]", getRegister().getGraceTimer().getTime()).replace("[i]", iden);
+
+					ssb.setValue(i, v, iden);
 
 				}
 
 				else if (GState.isState(GState.WARMUP)) {
-					ssb.setValue(i,
-							getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.until pvp")
-									.replace("[time]", getRegister().getWarmUpTimer().getTime()).replace("[i]", iden));
+					String v = getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.until pvp")
+							.replace("[time]", getRegister().getWarmUpTimer().getTime()).replace("[i]", iden);
+
+					ssb.setValue(i, v, iden);
 				}
 
 				else if (GState.isState(GState.IN_GAME)) {
-					ssb.setValue(i,
-							getRegister().getScoreboardFile()
-									.getColorString("Ingame.message.time infos.until deathmatch")
-									.replace("[time]", getRegister().getDeathmatchTimer().getTime()).replace("[i]", iden));
+					String v = getRegister().getScoreboardFile()
+							.getColorString("Ingame.message.time infos.until deathmatch")
+							.replace("[time]", getRegister().getDeathmatchTimer().getTime()).replace("[i]", iden);
+
+					System.out.println(v.length());
+
+					ssb.setValue(i, v, iden);
 				}
 
 				else if (GState.isState(GState.DEATHMATCH_WARMUP)) {
-					ssb.setValue(i,
-							getRegister().getScoreboardFile()
-									.getColorString("Ingame.message.time infos.until deathmatch")
-									.replace("[time]", getRegister().getStartDeathmatchTimer().getTime()).replace("[i]", iden));
+					String v = getRegister().getScoreboardFile()
+							.getColorString("Ingame.message.time infos.until deathmatch")
+							.replace("[time]", getRegister().getStartDeathmatchTimer().getTime()).replace("[i]", iden);
+
+					ssb.setValue(i, v, iden);
 				}
 
 				else if (GState.isState(GState.DEATHMATCH)) {
-					ssb.setValue(i,
-							getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.deathmatch").replace("[i]", iden));
+					String v = getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.deathmatch")
+							.replace("[i]", iden);
+
+					ssb.setValue(i, v, iden);
 				}
 
 				else if (GState.isState(GState.END)) {
-					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.end").replace("[i]", iden));
+					String v = getRegister().getScoreboardFile().getColorString("Ingame.message.end").replace("[i]",
+							iden);
+
+					ssb.setValue(i, v, iden);
 				}
 			}
 
 			else if (lineValue.contains("[bar]")) {
 				if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.bar"))
 					continue;
-				ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.bar").replace("[i]", iden));
+				String v = getRegister().getScoreboardFile().getColorString("Ingame.message.bar").replace("[i]", iden);
+
+				ssb.setValue(i, v, iden);
 			}
 		}
 
@@ -282,16 +344,19 @@ public class ScoreboardUtil extends Util {
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 
-		if (max > 32)
-			return;
+		if (max > 16)
+			max = 16;
 		for (int i = 0; i < max; i++) {
 			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Ingame.line." + i);
 			if (!lineValue.contains("[alive]"))
 				continue;
 			if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.alive"))
 				continue;
-			ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.alive").replace("[alive]",
-					Integer.toString(getRegister().getPlayerUtil().getSurvivors().size())).replace("[i]", iden));
+			ssb.setValue(i,
+					getRegister().getScoreboardFile().getColorString("Ingame.message.alive")
+							.replace("[alive]", Integer.toString(getRegister().getPlayerUtil().getSurvivors().size()))
+							.replace("[i]", iden),
+					iden);
 		}
 	}
 
@@ -300,16 +365,19 @@ public class ScoreboardUtil extends Util {
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 
-		if (max > 32)
-			return;
+		if (max > 16)
+			max = 16;
 		for (int i = 0; i < max; i++) {
 			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Ingame.line." + i);
 			if (!lineValue.contains("[specs]"))
 				continue;
 			if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.specs"))
 				continue;
-			ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.specs").replace("[specs]",
-					Integer.toString(getRegister().getPlayerUtil().getDeads().size())).replace("[i]", iden));
+			ssb.setValue(i,
+					getRegister().getScoreboardFile().getColorString("Ingame.message.specs")
+							.replace("[specs]", Integer.toString(getRegister().getPlayerUtil().getDeads().size()))
+							.replace("[i]", iden),
+					iden);
 		}
 	}
 
@@ -318,40 +386,58 @@ public class ScoreboardUtil extends Util {
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 
-		if (max > 32)
-			return;
+		if (max > 16)
+			max = 16;
 		for (int i = 0; i < max; i++) {
 			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Ingame.line." + i);
 			if (!lineValue.contains("[time infos]"))
 				continue;
 			if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.time infos"))
 				continue;
+
 			if (GState.isState(GState.PERIOD_OF_PEACE)) {
-				ssb.setValue(i,
-						getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.until damage")
-								.replace("[time]", getRegister().getGraceTimer().getTime()).replace("[i]", iden));
+				String v = getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.until damage")
+						.replace("[time]", getRegister().getGraceTimer().getTime()).replace("[i]", iden);
+
+				ssb.setValue(i, v, iden);
+
 			}
 
 			else if (GState.isState(GState.WARMUP)) {
-				ssb.setValue(i,
-						getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.until pvp")
-								.replace("[time]", getRegister().getWarmUpTimer().getTime()).replace("[i]", iden));
+				String v = getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.until pvp")
+						.replace("[time]", getRegister().getWarmUpTimer().getTime()).replace("[i]", iden);
+
+				ssb.setValue(i, v, iden);
+
 			}
 
 			else if (GState.isState(GState.IN_GAME)) {
-				ssb.setValue(i,
-						getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.until deathmatch")
-								.replace("[time]", getRegister().getDeathmatchTimer().getTime()).replace("[i]", iden));
+				String v = getRegister().getScoreboardFile()
+						.getColorString("Ingame.message.time infos.until deathmatch")
+						.replace("[time]", getRegister().getDeathmatchTimer().getTime()).replace("[i]", iden);
+
+				ssb.setValue(i, v, iden);
 			}
 
 			else if (GState.isState(GState.DEATHMATCH_WARMUP)) {
-				ssb.setValue(i,
-						getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.until deathmatch")
-								.replace("[time]", getRegister().getStartDeathmatchTimer().getTime()).replace("[i]", iden));
+				String v = getRegister().getScoreboardFile()
+						.getColorString("Ingame.message.time infos.until deathmatch")
+						.replace("[time]", getRegister().getStartDeathmatchTimer().getTime()).replace("[i]", iden);
+
+				ssb.setValue(i, v, iden);
+			}
+
+			else if (GState.isState(GState.DEATHMATCH)) {
+				String v = getRegister().getScoreboardFile().getColorString("Ingame.message.time infos.deathmatch")
+						.replace("[i]", iden);
+
+				ssb.setValue(i, v, iden);
 			}
 
 			else if (GState.isState(GState.END)) {
-				ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.end").replace("[i]", iden));
+				String v = getRegister().getScoreboardFile().getColorString("Ingame.message.end").replace("[i]", iden);
+
+				ssb.setValue(i, v, iden);
 			}
 		}
 	}
@@ -361,16 +447,20 @@ public class ScoreboardUtil extends Util {
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 
-		if (max > 32)
-			return;
+		if (max > 16)
+			max = 16;
 		for (int i = 0; i < max; i++) {
 			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Ingame.line." + i);
 			if (!lineValue.contains("[border]"))
 				continue;
 			if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.border"))
 				continue;
-			ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Ingame.message.border")
-					.replace("[border]", Integer.toString(getRegister().getBorderUtil().getSize())).replace("[i]", iden));
+
+			String v = getRegister().getScoreboardFile().getColorString("Ingame.message.border")
+					.replace("[border]", Integer.toString(getRegister().getBorderUtil().getSize()))
+					.replace("[i]", iden);
+
+			ssb.setValue(i, v, iden);
 		}
 	}
 }

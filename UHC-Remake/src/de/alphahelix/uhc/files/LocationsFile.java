@@ -38,8 +38,22 @@ public class LocationsFile extends EasyFile {
 		setLocation(p.getName(), loc, true);
 	}
 	
+	public void addRankingArmorStand(Location loc, int rank) {
+		setLocation("Rankings.Armorstands."+rank, loc, true);
+	}
+	
 	public void removeArmorStand(String name) {
 		set("ArmorStands."+name, null);
+		save();
+	}
+	
+	public void removeNPC(OfflinePlayer p) {
+		set(p.getName(), null);
+		save();
+	}
+	
+	public void removeRankingArmorstand(int rank) {
+		set("Rankings.Armorstands."+rank, null);
 		save();
 	}
 
@@ -124,6 +138,14 @@ public class LocationsFile extends EasyFile {
 		return Bukkit.getWorld("UHC").getHighestBlockAt(Bukkit.getWorld("UHC").getSpawnLocation()).getLocation();
 	}
 
+	public Location getRankingNPCLocation(int rank) {
+		if(contains("Rankings.NPC"+rank)) {
+			if(getLocation("Rankings.NPC."+rank, true).build() != null)
+				return getLocation("Rankings.NPC."+rank, true).build();
+		}
+		return Bukkit.getWorlds().get(0).getSpawnLocation();
+	}
+	
 	@Override
 	public void addValues() {
 

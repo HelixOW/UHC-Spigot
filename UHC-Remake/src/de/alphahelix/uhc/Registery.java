@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.alphahelix.uhc.commands.InfoCommand;
 import de.alphahelix.uhc.commands.StartCommand;
 import de.alphahelix.uhc.commands.StatsCommand;
 import de.alphahelix.uhc.commands.UHCAdminCommands;
@@ -21,6 +22,7 @@ import de.alphahelix.uhc.files.DropsFile;
 import de.alphahelix.uhc.files.HologramFile;
 import de.alphahelix.uhc.files.KitsFile;
 import de.alphahelix.uhc.files.LocationsFile;
+import de.alphahelix.uhc.files.MOTDFile;
 import de.alphahelix.uhc.files.MainMessageFile;
 import de.alphahelix.uhc.files.MainOptionsFile;
 import de.alphahelix.uhc.files.PlayerFile;
@@ -154,6 +156,7 @@ import de.alphahelix.uhc.util.HologramUtil;
 import de.alphahelix.uhc.util.LobbyUtil;
 import de.alphahelix.uhc.util.NPCUtil;
 import de.alphahelix.uhc.util.PlayerUtil;
+import de.alphahelix.uhc.util.RankingUtil;
 import de.alphahelix.uhc.util.ScoreboardUtil;
 import de.alphahelix.uhc.util.StatsUtil;
 import de.alphahelix.uhc.util.TablistUtil;
@@ -176,6 +179,7 @@ public class Registery {
 	private WorldUtil worldUtil;
 	private HologramUtil hologramUtil;
 	private NPCUtil npcUtil;
+	private RankingUtil rankingUtil;
 
 	private LobbyTimer lobbyTimer;
 	private GraceTimer graceTimer;
@@ -217,6 +221,7 @@ public class Registery {
 	private CraftingFile craftingFile;
 	private ScenarioHelpFile scenarioHelpFile;
 	private HologramFile hologramFile;
+	private MOTDFile mOTDFile;
 
 	private KitChooseListener kitChooseListener;
 	private RegisterListener registerListener;
@@ -250,6 +255,7 @@ public class Registery {
 		new UHCAdminCommands(getUhc(), "uhcAdmin", "Mange the server configurations via commands.", "uhcA");
 		new UHCSetUpCommand(getUhc(), "uhcSetup", "Setup all of your options", "uhcS");
 		new StartCommand(getUhc(), "start", "Short or strech the lobby time.", "start");
+		new InfoCommand(getUhc(), "informations", "Get informations about the current scenario", "scenario", "infos");
 	}
 
 	private void registerTeams() {
@@ -290,6 +296,7 @@ public class Registery {
 		setCraftingFile(new CraftingFile(getUhc()));
 		setScenarioHelpFile(new ScenarioHelpFile(getUhc()));
 		setHologramFile(new HologramFile(getUhc()));
+		setMOTDFile(new MOTDFile(getUhc()));
 
 		for (EasyFile easyFile : getEasyFiles()) {
 			easyFile.register(easyFile);
@@ -299,6 +306,7 @@ public class Registery {
 		getUhc().setBunggeMode(getMainOptionsFile().getBoolean("Bungeecord"));
 		getUhc().setLobbyServer(getMainOptionsFile().getString("Bungeecord Fallbackserver"));
 		getUhc().setSoup(getMainOptionsFile().getBoolean("Soup"));
+		getUhc().setDebug(getMainOptionsFile().getBoolean("debugging"));
 		getUhc().setSpawnradius(getMainOptionsFile().getInt("Spawndispersal"));
 		getUhc().setStatusMOTD(getMainOptionsFile().getBoolean("Status MOTD"));
 		getUhc().setScenarios(getScenarioFile().getBoolean("Scenarios enabled"));
@@ -306,6 +314,7 @@ public class Registery {
 		getUhc().setTeams(getTeamFile().getBoolean("Teams enabled"));
 		getUhc().setTracker(getMainOptionsFile().getBoolean("Tracker.euip"));
 		getUhc().setTrackerName(getMainOptionsFile().getColorString("Tracker.name"));
+		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
 
 		setPlayerUtil(new PlayerUtil(getUhc()));
 		setStatsUtil(new StatsUtil(getUhc()));
@@ -317,6 +326,7 @@ public class Registery {
 		setWorldUtil(new WorldUtil(getUhc()));
 		setHologramUtil(new HologramUtil(getUhc()));
 		setNpcUtil(new NPCUtil(getUhc()));
+		setRankingUtil(new RankingUtil(getUhc()));
 
 		setKitInventory(new KitInventory(getUhc()));
 		setConfirmInventory(new ConfirmInventory(getUhc()));
@@ -444,7 +454,7 @@ public class Registery {
 
 		getConfirmInventory().fillInventory();
 		getTeamInventory().fillInventory();
-
+		
 		if (getUhc().isScenarios() && !getUhc().isKits()) {
 			getUhc().setKits(false);
 			Scenarios.getRandomScenario();
@@ -473,7 +483,11 @@ public class Registery {
 			}
 		}.runTaskLater(getUhc(), 15);
 
-		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
+		new BukkitRunnable() {
+			public void run() {
+				GState.setCurrentState(GState.LOBBY);
+			}
+		}.runTaskLaterAsynchronously(getUhc(), 20 * 3);
 	}
 
 	// Instance
@@ -980,5 +994,21 @@ public class Registery {
 
 	public void setNpcUtil(NPCUtil npcUtil) {
 		this.npcUtil = npcUtil;
+	}
+
+	public MOTDFile getMOTDFile() {
+		return mOTDFile;
+	}
+
+	public void setMOTDFile(MOTDFile mOTDFile) {
+		this.mOTDFile = mOTDFile;
+	}
+
+	public RankingUtil getRankingUtil() {
+		return rankingUtil;
+	}
+
+	public void setRankingUtil(RankingUtil rankingUtil) {
+		this.rankingUtil = rankingUtil;
 	}
 }

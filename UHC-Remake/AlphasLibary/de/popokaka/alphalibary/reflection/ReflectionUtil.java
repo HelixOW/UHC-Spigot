@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -115,7 +116,7 @@ private static final String version;
 		return getClass("org.bukkit.craftbukkit." + version + "." + name , true);
 	}
 
-	public static Object getEntityPlayer(Player p) {
+	public static Object getEntityPlayer(OfflinePlayer p) {
 		try {
 			return getCraftBukkitClass("entity.CraftPlayer").getMethod("getHandle").invoke(p);
 		} catch (Exception e) {
@@ -152,7 +153,7 @@ private static final String version;
 		
 	}
 	
-	public static Object getEnumGamemode(Player p) {
+	public static Object getEnumGamemode(OfflinePlayer p) {
 		try {
 
 			Field fInteractManager = ReflectionUtil.getNmsClass("EntityPlayer").getField("playerInteractManager");

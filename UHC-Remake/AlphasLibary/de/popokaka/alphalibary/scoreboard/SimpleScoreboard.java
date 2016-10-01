@@ -26,7 +26,6 @@ public class SimpleScoreboard {
 
 	private Scoreboard scoreboard = null;
 	private Objective objective = null;
-	private Scroller scroller;
 
 	private final List<BoardLine> boardLines = new ArrayList<>();
 
@@ -41,7 +40,7 @@ public class SimpleScoreboard {
 		}
 	}
 
-	public SimpleScoreboard(String scoreboardRegisterName, String displayName, String... lines) {
+	public SimpleScoreboard(String scoreboardRegisterName, String displayName, String iden, String... lines) {
 		Validate.isTrue(lines.length < colors.size(), "Too many lines!");
 
 		scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
@@ -59,7 +58,7 @@ public class SimpleScoreboard {
 		}
 
 		for (int i = 0; i < lines.length; i++)
-			setValue(i, lines[i]);
+			setValue(i, lines[i], iden);
 	}
 
 	private BoardLine getBoardLine(final int line) {
@@ -71,94 +70,140 @@ public class SimpleScoreboard {
 		}).findFirst().orElse(null);
 	}
 
-	public void setValue(int line, String value) {
-		Iterable<String> res = Splitter.fixedLength(value.length() / 2).split(value);
-		String[] pns = Iterables.toArray(res, String.class);
-		BoardLine bl = getBoardLine(line);
+	public void setValue(int line, String value, final String iden) {
+		if (!value.contains(iden)) {
+			Iterable<String> res = Splitter.fixedLength(value.length() / 2).split(value);
+			String[] text = Iterables.toArray(res, String.class);
+			final BoardLine bl = getBoardLine(line);
+			final String cc = ChatColor.getLastColors(text[0]);
 
-		String lastColorPartOne = ChatColor.getLastColors(pns[0]);
-		String firstColorPartTwo = getFirstColorOfText(pns[1]);
+			objective.getScore(bl.getColor().toString()).setScore(line);
 
-		String partOne = pns[0];
-		String partTwo = pns[1];
+			bl.getTeam().setPrefix(text[0]);
+			bl.getTeam().setSuffix(text[1].startsWith("§") ? text[1] : cc + text[1]);
+		} else {
 
-		Validate.notNull(bl, "Unable to find BoardLine with index of " + line + ".");
+			final String[] text = value.split(iden);
+			final BoardLine bl = getBoardLine(line);
 
-		objective.getScore(bl.getColor().toString()).setScore(line);
+			objective.getScore(bl.getColor().toString()).setScore(line);
 
-		bl.getTeam().setPrefix(partOne);
-		if (partTwo.startsWith("§"))
-			for (ChatColor c : ChatColor.values()) {
-				String t = firstColorPartTwo + partTwo.replaceFirst("" + c.getChar(), "");
-				bl.getTeam().setSuffix(t);
+			if (text[0].length() > 12) {
+				if (text[1].length() > 12) {
+					final Scroller left = new Scroller(text[0], 10, 2, '§');
+					final Scroller right = new Scroller(text[1], 8, 2, '§');
+
+					bl.getTeam().setPrefix(left.next());
+					bl.getTeam().setSuffix(iden + right.next());
+
+					new BukkitRunnable() {
+						public void run() {
+							bl.getTeam().setPrefix(left.next());
+							bl.getTeam().setSuffix(iden + right.next());
+						}
+					}.runTaskTimerAsynchronously(UHC.getInstance(), 0, 10);
+				}
+
+				// When only left is too long
+				else {
+					final Scroller left = new Scroller(text[0], 10, 2, '§');
+
+					bl.getTeam().setPrefix(left.next());
+					bl.getTeam().setSuffix(iden + text[1]);
+
+					new BukkitRunnable() {
+						public void run() {
+							bl.getTeam().setPrefix(left.next());
+						}
+					}.runTaskTimerAsynchronously(UHC.getInstance(), 0, 10);
+				}
 			}
-		else {
-			String t = lastColorPartOne + partTwo;
-			bl.getTeam().setSuffix(t);
+
+			// When left is correct
+			else {
+
+				if (text[1].length() > 12) {
+					final Scroller right = new Scroller(text[1], 8, 2, '§');
+
+					bl.getTeam().setPrefix(text[0]);
+					bl.getTeam().setSuffix(iden + right.next());
+
+					new BukkitRunnable() {
+						public void run() {
+							bl.getTeam().setSuffix(iden + right.next());
+						}
+					}.runTaskTimerAsynchronously(UHC.getInstance(), 0, 10);
+				}
+
+				// When everything is perfect
+				else {
+
+					bl.getTeam().setPrefix(text[0]);
+					bl.getTeam().setSuffix(iden + text[1]);
+				}
+			}
 		}
 	}
-	
-	public void updateValue(final int line, final  String value, final String identifier) {
-		if(!value.contains(identifier)) return;
-		
+
+	public void updateValue(final int line, final String value, final String identifier) {
+		if (!value.contains(identifier))
+			return;
+
 		final String[] text = value.split(identifier);
 		final BoardLine bl = getBoardLine(line);
-		
-		scroller = new Scroller(text[1], 10, 2, '§');
-		
-		bl.getTeam().setPrefix(text[0]);
-		bl.getTeam().setSuffix(text[1]);
-		
-		new BukkitRunnable() {
-			public void run() {
-				bl.getTeam().setPrefix(text[0] + identifier);
-				bl.getTeam().setSuffix(scroller.next());
+
+		if (text[0].length() > 12) {
+			if (text[1].length() > 12) {
+				final Scroller left = new Scroller(text[0], 10, 2, '§');
+				final Scroller right = new Scroller(text[1], 8, 2, '§');
+
+				bl.getTeam().setPrefix(left.next());
+				bl.getTeam().setSuffix(identifier + right.next());
+
+				new BukkitRunnable() {
+					public void run() {
+						bl.getTeam().setPrefix(left.next());
+						bl.getTeam().setSuffix(identifier + right.next());
+					}
+				}.runTaskTimerAsynchronously(UHC.getInstance(), 0, 10);
 			}
-		}.runTaskTimerAsynchronously(UHC.getInstance(), 0, 10);
-	}
 
-//	public void updateValue(int line, String value) {
-//		Iterable<String> res = Splitter.fixedLength(value.length() / 2).split(value);
-//		String[] pns = Iterables.toArray(res, String.class);
-//		final BoardLine bl = getBoardLine(line);
-//
-//		final String lastColorPartOne = ChatColor.getLastColors(pns[0]);
-//		final String firstColorPartTwo = getFirstColorOfText(pns[1]);
-//
-//		final String partOne = pns[0];
-//		final String partTwo = pns[1];
-//
-//		Validate.notNull(bl, "Unable to find BoardLine with index of " + line + ".");
-//
-//		objective.getScore(bl.getColor().toString()).setScore(line);
-//
-//		bl.getTeam().setPrefix(partOne);
-//		if (partTwo.startsWith("§"))
-//			for (ChatColor c : ChatColor.values()) {
-//				String t = firstColorPartTwo + partTwo.replaceFirst("" + c.getChar(), "");
-//				scrollerPart1 = new Scroller(t, 12, 5, '§');
-//				bl.getTeam().setSuffix(t);
-//			}
-//		else {
-//			String t = lastColorPartOne + partTwo;
-//			scrollerPart2 = new Scroller(t, 12, 5, '§');
-//			bl.getTeam().setSuffix(t);
-//		}
-//
-//		new BukkitRunnable() {
-//			public void run() {
-//				if (partTwo.startsWith("§"))
-//					bl.getTeam().setSuffix(scrollerPart1.next());
-//				else
-//					bl.getTeam().setSuffix(scrollerPart2.next());
-//			}
-//		}.runTaskTimer(UHC.getInstance(), 0, 10);
-//	}
+			// When only left is too long
+			else {
+				final Scroller left = new Scroller(text[0], 10, 2, '§');
 
-	private String getFirstColorOfText(String text) {
-		if (text.contains("§") && !text.endsWith("§"))
-			return "" + ChatColor.getByChar(text.charAt(text.indexOf("§") + 1)).getChar();
-		return "";
+				bl.getTeam().setPrefix(left.next());
+				bl.getTeam().setSuffix(identifier + text[1]);
+
+				new BukkitRunnable() {
+					public void run() {
+						bl.getTeam().setPrefix(left.next());
+					}
+				}.runTaskTimerAsynchronously(UHC.getInstance(), 0, 10);
+			}
+		}
+
+		// When left is correct
+		else {
+			if (text[1].length() > 12) {
+				final Scroller right = new Scroller(text[1], 8, 2, '§');
+
+				bl.getTeam().setPrefix(text[0]);
+				bl.getTeam().setSuffix(identifier + right.next());
+
+				new BukkitRunnable() {
+					public void run() {
+						bl.getTeam().setSuffix(identifier + right.next());
+					}
+				}.runTaskTimerAsynchronously(UHC.getInstance(), 0, 10);
+			}
+
+			// When everything is perfect
+			else {
+				bl.getTeam().setPrefix(text[0]);
+				bl.getTeam().setSuffix(identifier + text[1]);
+			}
+		}
 	}
 
 	public void removeLine(int line) {

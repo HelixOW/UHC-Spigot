@@ -43,7 +43,7 @@ public class MySQLAPI {
 				int in = 0;
 
 				while (rs.next()) {
-					in = Integer.parseInt(rs.getString("COUNT")) + 1;
+					in += 1;
 				}
 				return in;
 			} catch (SQLException e) {

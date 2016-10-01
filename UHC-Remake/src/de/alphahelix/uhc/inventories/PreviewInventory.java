@@ -22,6 +22,6 @@ public class PreviewInventory extends Util{
 			if(is == null) continue;
 			stacks.add(is);
 		}
-		new SimpleMovingInventory(getUhc(), stacks, getRegister().getKitsFile().getColorString("Preview GUI.Name").replace("[kit]", k.getName()), p, 9*5);
+		new SimpleMovingInventory(getUhc(), stacks, getRegister().getKitsFile().getColorString("Preview GUI.Name").replace("[kit]", k.getName().replace("_", " ")), p, 9*5);
 	}
 }

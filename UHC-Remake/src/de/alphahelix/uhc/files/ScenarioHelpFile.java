@@ -22,4 +22,11 @@ public class ScenarioHelpFile extends EasyFile {
 		}
 		return new String[]{""};
 	}
+	
+	public String getScenarioDescriptionAsOneString(Scenarios s) {
+		if(isSet(Scenarios.getRawScenarioName(s))) {
+			return getColorString(Scenarios.getRawScenarioName(s)).replace("\n", "");
+		}
+		return "";
+	}
 }

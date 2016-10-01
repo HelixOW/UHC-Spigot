@@ -30,13 +30,12 @@ public class KitChooseListener extends SimpleListener {
 
 		if (!GState.isState(GState.LOBBY))
 			return;
-		
-		
+
 		if (e.getPlayer().getInventory().getItemInMainHand().getType()
 				.equals(Material.getMaterial(getRegister().getKitsFile().getString("Kit.Item").replace(" ", "_")))) {
-			if (!getUhc().isKits()) {
-				e.getPlayer().sendMessage(
-						getUhc().getPrefix() + getRegister().getMainOptionsFile().getColorString("Warnings.Scenario Mode"));
+			if (!getUhc().isKits() && getUhc().isScenarios()) {
+				e.getPlayer().sendMessage(getUhc().getPrefix()
+						+ getRegister().getMainOptionsFile().getColorString("Warnings.Scenario Mode"));
 				return;
 			}
 			getRegister().getKitInventory().fillInventory();
@@ -58,8 +57,14 @@ public class KitChooseListener extends SimpleListener {
 		e.setCancelled(true);
 
 		for (Kit k : getRegister().getKitsFile().getKits()) {
+			
 			if (e.getCurrentItem().getType().equals(k.getGuiBlock().getType())) {
+				
 				if (e.getAction().equals(InventoryAction.PICKUP_ALL)) {
+					if ((getRegister().getKitsFile().hasKit((Player) e.getWhoClicked()) && getRegister().getKitsFile()
+							.getKitByPlayer((Player) e.getWhoClicked()).getName().equals(k.getName())))
+						return;
+					
 					if (getRegister().getStatsUtil().hasKit(k, (Player) e.getWhoClicked())) {
 						String msg = getRegister().getMessageFile().getColorString("Kit chosen").replace("[kit]",
 								k.getName().replace("_", " "));
@@ -70,17 +75,23 @@ public class KitChooseListener extends SimpleListener {
 						e.getWhoClicked().closeInventory();
 						getRegister().getScoreboardUtil().updateKit((Player) e.getWhoClicked(), k);
 						e.getWhoClicked().sendMessage(getUhc().getPrefix() + msg);
-					} else if (getRegister().getStatsUtil().getCoins((Player) e.getWhoClicked()) >= k.getPrice()) {
+					}
+
+					else if (getRegister().getStatsUtil().getCoins((Player) e.getWhoClicked()) >= k.getPrice()) {
 						boughts.put(e.getWhoClicked().getName(), k);
 
 						getRegister().getConfirmInventory().openInventory((Player) e.getWhoClicked());
-					} else {
+					}
+
+					else {
 						e.getWhoClicked().sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
-								.getColorString("Not enough Coins").replace("[kit]", k.getName()));
+								.getColorString("Not enough Coins").replace("[kit]", k.getName().replace("_", " ")));
 						return;
 					}
-				} else {
-					if(k.getName().equals(e.getCurrentItem().getItemMeta().getDisplayName()))
+				}
+
+				else {
+					if (k.getName().replace("_", " ").equals(e.getCurrentItem().getItemMeta().getDisplayName()))
 						getRegister().getPreviewInventory().fillInventory((Player) e.getWhoClicked(), k);
 				}
 			}

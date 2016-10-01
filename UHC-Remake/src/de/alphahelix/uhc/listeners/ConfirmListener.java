@@ -27,28 +27,34 @@ public class ConfirmListener extends SimpleListener {
 		e.setCancelled(true);
 
 		if (e.getCurrentItem().hasItemMeta()) {
+
 			if (e.getCurrentItem().getItemMeta().hasDisplayName()) {
+
 				if (e.getCurrentItem().getItemMeta().getDisplayName()
 						.equals(getRegister().getConfirmFile().getColorString("Accept.name"))) {
 
 					getRegister().getStatsUtil().removePoints((Player) e.getWhoClicked(), getRegister()
 							.getKitChooseListener().getKitWhichPlayerWantToBuy((Player) e.getWhoClicked()).getPrice());
-					
+
 					getRegister().getStatsUtil().addKit(
 							getRegister().getKitChooseListener().getKitWhichPlayerWantToBuy((Player) e.getWhoClicked()),
 							(Player) e.getWhoClicked());
-					
+
 					String msg = getRegister().getMessageFile().getColorString("Kit chosen").replace("[kit]",
 							getRegister().getKitChooseListener().getKitWhichPlayerWantToBuy((Player) e.getWhoClicked())
 									.getName().replace("_", " "));
 
 					getRegister().getKitsFile().setKit((Player) e.getWhoClicked(), getRegister().getKitChooseListener()
 							.getKitWhichPlayerWantToBuy((Player) e.getWhoClicked()));
+					
 					e.getWhoClicked().closeInventory();
-					getRegister().getScoreboardUtil().updateKit((Player) e.getWhoClicked(), getRegister().getKitChooseListener()
-							.getKitWhichPlayerWantToBuy((Player) e.getWhoClicked()));
+					
+					getRegister().getScoreboardUtil().updateKit((Player) e.getWhoClicked(), getRegister()
+							.getKitChooseListener().getKitWhichPlayerWantToBuy((Player) e.getWhoClicked()));
 					e.getWhoClicked().sendMessage(getUhc().getPrefix() + msg);
-				} else if (e.getCurrentItem().getItemMeta().getDisplayName()
+				}
+
+				else if (e.getCurrentItem().getItemMeta().getDisplayName()
 						.equals(getRegister().getConfirmFile().getColorString("Denied.name"))) {
 					e.getWhoClicked().closeInventory();
 					getRegister().getKitInventory().openInventory((Player) e.getWhoClicked());

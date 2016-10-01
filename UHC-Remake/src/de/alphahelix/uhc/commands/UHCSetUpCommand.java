@@ -71,6 +71,16 @@ public class UHCSetUpCommand extends SimpleCommand<UHC> {
 				getPlugin().getRegister().getNpcUtil().spawnArmorStand(p.getLocation(), args[1]);
 				p.sendMessage(getPlugin().getPrefix() + "You've created a new Armorstand to join teams");
 			}
+			
+			else if(args[0].equalsIgnoreCase("createRankingArmorstand")) {
+				getPlugin().getRegister().getNpcUtil().spawnRankingArmorStand(p.getLocation(), Integer.parseInt(args[1]));
+				p.sendMessage(getPlugin().getPrefix() + "You've created the NPC for place " + args[1]);
+			}
+			
+			if (args[0].equalsIgnoreCase("removeRankingArmorstand")) {
+				getPlugin().getRegister().getNpcUtil().removeRankingArmorStand(p.getLocation(), Integer.parseInt(args[1]));
+				p.sendMessage(getPlugin().getPrefix() + "You've successfully removed the Armorstand! For place : " + args[1] + "");
+			}
 		} 
 		
 		else if (args[0].equalsIgnoreCase("createHologram")) {

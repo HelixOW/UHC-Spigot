@@ -20,7 +20,7 @@ public class TablistUtil extends Util {
 			Player p = Bukkit.getPlayer(pNames);
 
 			SimpleTablist.setTablistHeaderFooter(p, null, null);
-
+			
 			SimpleTablist.setTablistHeaderFooter(p,
 					getRegister().getTablistFile().getColorString("Header")
 						.replace("[player]", p.getDisplayName())
