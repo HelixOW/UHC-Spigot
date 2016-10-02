@@ -21,6 +21,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.server.ServerListPingEvent;
@@ -30,6 +31,7 @@ import org.bukkit.potion.PotionEffectType;
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
+import de.popokaka.alphalibary.utils.LocationUtil;
 
 public class GStateListener extends SimpleListener {
 
@@ -41,7 +43,7 @@ public class GStateListener extends SimpleListener {
 	public void onPing(ServerListPingEvent e) {
 		if (!getRegister().getMainOptionsFile().getBoolean("Status MOTD"))
 			return;
-		
+
 		switch (GState.getCurrentState()) {
 		case LOBBY:
 			e.setMotd(getRegister().getMOTDFile().getColorString("Lobby"));
@@ -68,10 +70,33 @@ public class GStateListener extends SimpleListener {
 	}
 
 	@EventHandler
+	public void onMove(PlayerMoveEvent e) {
+		if (!GState.isState(GState.LOBBY))
+			return;
+		if (e.getTo().getBlockX() == e.getFrom().getBlockX() && e.getTo().getBlockY() == e.getFrom().getBlockY()
+				&& e.getTo().getBlockZ() == e.getFrom().getBlockZ())
+			return;
+		if (getRegister().getLobbyUtil().hasBuildPermission(e.getPlayer()))
+			return;
+		if (!getUhc().isLobbyAsSchematic())
+			return;
+
+		if (!LocationUtil.isInside(e.getTo(), getRegister().getLocationsFile().getLobby().clone().subtract(75, 50, 75),
+				getRegister().getLocationsFile().getLobby().clone().add(75, 50, 75))) {
+			e.getPlayer().teleport(getRegister().getLocationsFile().getLobby());
+			e.setCancelled(true);
+		}
+	}
+
+	@EventHandler
 	public void onLogin(AsyncPlayerPreLoginEvent e) {
 		if (GState.isState(GState.END)) {
 			e.disallow(Result.KICK_WHITELIST, getUhc().getRestartMessage());
+			return;
 		}
+
+		if (getRegister().getPlayerUtil().getMaximumPlayerCount() <= getRegister().getPlayerUtil().getAll().size())
+			e.disallow(Result.KICK_FULL, getRegister().getMessageFile().getColorString("Full"));
 	}
 
 	@EventHandler

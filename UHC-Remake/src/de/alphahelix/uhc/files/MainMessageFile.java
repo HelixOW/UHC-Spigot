@@ -13,6 +13,7 @@ public class MainMessageFile extends EasyFile {
 	public void addValues() {
 		setDefault("Player has joined", "&7+[player]");
 		setDefault("Player has left", "&7-[player]");
+		setDefault("Full", "We are sorry but this round is full!");
 		setDefault("Scenario Mode", "&7This UHC server is running in &cScenario Mode&7. Due to that the server doesn't allow kits.");
 		setDefault("No Permissions", "&7You don't have &cpermissions &7to execute that command!");
 		setDefault("Command not found", "&7Can't find the command :C. Try again!");

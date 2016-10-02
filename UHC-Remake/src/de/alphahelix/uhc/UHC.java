@@ -100,17 +100,6 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		getRegister().getRankingUtil().updateArmorStands();
 
 		log.log(Level.INFO, getConsolePrefix() + "UHC by AlphaHelix successfully loaded and enabled.");
-
-		final long lastModified = getFile().lastModified();
-
-		new BukkitRunnable() {
-			public void run() {
-				if (getFile().lastModified() > lastModified) {
-					cancel();
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "reload");
-				}
-			}
-		}.runTaskTimer(this, 0, 20);
 	}
 
 	@Override

@@ -130,26 +130,30 @@ public class BorderUtil extends Util {
 			return;
 		if (message != null)
 			return;
-
-		message = new BukkitRunnable() {
+		
+		new BukkitRunnable() {
 			public void run() {
-				changeSize(size - getRegister().getBorderFile().getInt("moving distance"));
+				message = new BukkitRunnable() {
+					public void run() {
+						changeSize(size - getRegister().getBorderFile().getInt("moving distance"));
 
-				for (String pname : getRegister().getPlayerUtil().getAll()) {
-					if(Bukkit.getPlayer(pname) == null) continue;
-					Player p = Bukkit.getPlayer(pname);
+						for (String pname : getRegister().getPlayerUtil().getAll()) {
+							if(Bukkit.getPlayer(pname) == null) continue;
+							Player p = Bukkit.getPlayer(pname);
 
-					getRegister().getScoreboardUtil().updateBorder(p);
-					SimpleTitle.sendTitle(p, " ",
-							getRegister().getMessageFile().getColorString("Border has moved").replace("[blocks]",
-									Integer.toString(getRegister().getBorderFile().getInt("moving distance"))),
-							1, 2, 1);
-					p.sendMessage(getUhc().getPrefix()
-							+ getRegister().getMessageFile().getColorString("Border has moved").replace("[blocks]",
-									Integer.toString(getRegister().getBorderFile().getInt("moving distance"))));
+							getRegister().getScoreboardUtil().updateBorder(p);
+							SimpleTitle.sendTitle(p, " ",
+									getRegister().getMessageFile().getColorString("Border has moved").replace("[blocks]",
+											Integer.toString(getRegister().getBorderFile().getInt("moving distance"))),
+									1, 2, 1);
+							p.sendMessage(getUhc().getPrefix()
+									+ getRegister().getMessageFile().getColorString("Border has moved").replace("[blocks]",
+											Integer.toString(getRegister().getBorderFile().getInt("moving distance"))));
 
-				}
+						}
+					}
+				}.runTaskTimer(getUhc(), 0, ((getRegister().getBorderFile().getLong("delay (min)") * 20) * 60));
 			}
-		}.runTaskTimer(getUhc(), 0, ((getRegister().getBorderFile().getLong("delay (min)") * 20) * 60));
+		}.runTaskLater(getUhc(), ((getRegister().getBorderFile().getLong("delay (min)") * 20) * 60));
 	}
 }

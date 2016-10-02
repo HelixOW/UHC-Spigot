@@ -92,10 +92,10 @@ public class UHCSetUpCommand extends SimpleCommand<UHC> {
 					}
 
 					getPlugin().getRegister().getHologramFile().addHologram(name, p.getLocation(),
-							Double.parseDouble(args[2]));
+							Double.parseDouble(args[1]));
 
 					for (int i = 0; i < getPlugin().getRegister().getHologramFile().getHologramcount(); i++) {
-						getPlugin().getRegister().getHologramUtil().createHologram(all, i, Double.parseDouble(args[2]));
+						getPlugin().getRegister().getHologramUtil().createHologram(all, i, Double.parseDouble(args[1]));
 					}
 				}
 				p.sendMessage(getPlugin().getPrefix() + "§7You have created a new Hologram");

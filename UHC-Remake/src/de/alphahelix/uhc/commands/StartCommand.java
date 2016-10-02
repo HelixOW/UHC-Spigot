@@ -21,7 +21,7 @@ public class StartCommand extends SimpleCommand<UHC> {
 
 		Player p = (Player) cs;
 		
-		if (!p.hasPermission("uhc.start")) {
+		if (!(p.hasPermission("uhc.start") || p.hasPermission("uhc.admin"))) {
 			p.sendMessage(getPlugin().getPrefix() + getPlugin().getRegister().getMessageFile().getColorString("No Permissions"));
 			return true;
 		}
