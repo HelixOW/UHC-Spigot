@@ -58,7 +58,8 @@ public class KitChooseListener extends SimpleListener {
 
 		for (Kit k : getRegister().getKitsFile().getKits()) {
 			
-			if (e.getCurrentItem().getType().equals(k.getGuiBlock().getType())) {
+			if (e.getCurrentItem().getType().equals(k.getGuiBlock().getType())
+					&& e.getCurrentItem().getItemMeta().getDisplayName().equals(k.getName().replace("_", " "))) {
 				
 				if (e.getAction().equals(InventoryAction.PICKUP_ALL)) {
 					if ((getRegister().getKitsFile().hasKit((Player) e.getWhoClicked()) && getRegister().getKitsFile()
@@ -68,8 +69,6 @@ public class KitChooseListener extends SimpleListener {
 					if (getRegister().getStatsUtil().hasKit(k, (Player) e.getWhoClicked())) {
 						String msg = getRegister().getMessageFile().getColorString("Kit chosen").replace("[kit]",
 								k.getName().replace("_", " "));
-
-						getRegister().getStatsUtil().addKit(k, (Player) e.getWhoClicked());
 
 						getRegister().getKitsFile().setKit((Player) e.getWhoClicked(), k);
 						e.getWhoClicked().closeInventory();

@@ -34,6 +34,7 @@ public class MainMessageFile extends EasyFile {
 		setDefault("Picked team", "&7You've picked the team &b[team]&7!");
 		setDefault("Team is full", "&7Sorry, but you &ccan't join &7this team!");
 		setDefault("First crafted Item", "&7[player] has crafted a &a[item] &7for the first time.");
+		setDefault("Crate dropped", "You just got a [crate] crate &7dropped!");
 	}
 
 }

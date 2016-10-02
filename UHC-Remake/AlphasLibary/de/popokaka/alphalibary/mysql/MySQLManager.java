@@ -54,6 +54,7 @@ public class MySQLManager {
 				PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
 				prepstate.executeUpdate();
 			} catch (SQLException e) {
+				e.printStackTrace();
 				Bukkit.getConsoleSender()
 						.sendMessage(UHC.getInstance().getPrefix() + "§cWasn't able to create the UHC database.");
 				Bukkit.getConsoleSender()

@@ -94,6 +94,13 @@ public class EquipListener extends SimpleListener {
 							getRegister().getTeamFile().getString("Team.Item").replace(" ", "_").toUpperCase()))
 									.setName(getRegister().getTeamFile().getColorString("Team.Item Name")).build());
 		}
+		
+		if(getUhc().isCrates()) {
+			p.getInventory().setItem(getRegister().getUhcCrateFile().getInt("Crate.Item slot"),
+					new ItemBuilder(Material.getMaterial(
+							getRegister().getUhcCrateFile().getString("Crate.Item").replace(" ", "_").toUpperCase()))
+							.setName(getRegister().getUhcCrateFile().getColorString("Crate.Item Name")).build());
+		}
 
 	}
 

@@ -7,12 +7,16 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.alphahelix.uhc.UHC;
+import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class SimpleFile extends YamlConfiguration {
 	
@@ -96,7 +100,23 @@ public class SimpleFile extends YamlConfiguration {
 	 * @param array The ItemStackArray you want to serialize
 	 */
 	public void setItemStackArray(String path, ItemStack... array) {
-		set(path, array);
+		ArrayList<String> gInfo = new ArrayList<>();
+		ArrayList<String> mInfo = new ArrayList<>();
+		for(ItemStack s : array) {
+			if(s == null) continue;
+			//Material:Amout:Damage
+			gInfo.add(s.getType().name().toLowerCase()
+					+":"+s.getAmount()
+					+":"+s.getDurability()
+					+":"+s.getEnchantments());
+			
+			// Name:ItemFlags:Lore
+			ItemMeta m = s.getItemMeta();
+			mInfo.add(m.getDisplayName()
+					+":"+m.getItemFlags());
+		}
+		set(path, gInfo);
+		set(path + ".meta", mInfo);
 		save();
 	}
 
@@ -106,8 +126,28 @@ public class SimpleFile extends YamlConfiguration {
 	 * @return The ItemStackArray at the given path
 	 */
 	public ItemStack[] getItemStackArray(String path) {
-		List<?> var = getList(path);
-		return var.toArray(new ItemStack[var.size()]);
+		List<String> gInfo = getStringList(path);
+		List<String> mInfo = getStringList(path+".meta");
+		ArrayList<ItemStack> tr = new ArrayList<>();
+		
+		for(String infos : gInfo) {
+			String[] g = infos.split(":");
+			
+			Material mat = Material.getMaterial(g[0]);
+			int amount = Integer.parseInt(g[1]);
+			short dura = Short.parseShort(g[2]);
+			
+			for(String infosB : mInfo) {
+				String[] m = infosB.split(":");
+				
+				String name = m[0];
+				ItemFlag ifg = ItemFlag.valueOf(m[1].replace(" ", "_").toUpperCase());
+				
+				tr.add(new ItemBuilder(mat).setAmount(amount).setDamage(dura).setName(name).addItemFlags(ifg).build());
+			}
+		}
+		
+		return tr.toArray(new ItemStack[tr.size()]);
 	}
 	
 	public void setMaterialStringList(String path, String... array) {

@@ -42,6 +42,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private boolean teams;
 	private boolean tracker;
 	private boolean lobbyAsSchematic;
+	private boolean crates;
 	private int spawnradius;
 	private Logger log;
 	
@@ -60,11 +61,22 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 		if (isMySQLMode()) {
 			try {
 				MySQLAPI.initMySQLAPI(getInstance());
-				MySQLManager.exCreateTableQry(MySQLManager.createColumn("Player", 50),
-						MySQLManager.createColumn("UUID", 75), MySQLManager.createColumn("Kills", 500),
-						MySQLManager.createColumn("Deaths", 500), MySQLManager.createColumn("Coins", 500),
-						MySQLManager.createColumn("Kits", 500), MySQLManager.createColumn("Count", 500),
-						MySQLManager.createColumn("Points", 500));
+				MySQLManager.exCreateTableQry(
+						MySQLManager.createColumn("Player", 50),
+						MySQLManager.createColumn("UUID", 75),
+						MySQLManager.createColumn("Kills", 500),
+						MySQLManager.createColumn("Deaths", 500),
+						MySQLManager.createColumn("Coins", 500),
+						MySQLManager.createColumn("Points", 500),
+						MySQLManager.createColumn("Count", 500),
+						MySQLManager.createColumn("Kits", 500),
+						MySQLManager.createColumn("NORMALCrates", 500),
+						MySQLManager.createColumn("UNCOMMONCrates", 500),
+						MySQLManager.createColumn("RARECrates", 500),
+						MySQLManager.createColumn("SUPERRARECrates", 500),
+						MySQLManager.createColumn("EPICCrates", 500),
+						MySQLManager.createColumn("LEGENDARYCrates", 500)
+						);
 			} catch (Exception e) {
 				if (isDebug())
 					log.log(Level.WARNING,
@@ -104,7 +116,6 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 
 	@Override
 	public void onDisable() {
-		getRegister().getStatsUtil().pushCacheToBackUp();
 		if (isMySQLMode()) {
 			try {
 				MySQLAPI.closeMySQLConnection();
@@ -301,5 +312,13 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 
 	public void setLobbyAsSchematic(boolean lobbyAsSchematic) {
 		this.lobbyAsSchematic = lobbyAsSchematic;
+	}
+
+	public boolean isCrates() {
+		return crates;
+	}
+
+	public void setCrates(boolean crates) {
+		this.crates = crates;
 	}
 }

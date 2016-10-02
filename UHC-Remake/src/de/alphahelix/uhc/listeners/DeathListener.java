@@ -29,6 +29,7 @@ import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
+import de.alphahelix.uhc.instances.UHCCrate;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.nms.SimpleTitle;
 
@@ -74,6 +75,21 @@ public class DeathListener extends SimpleListener {
 				} else {
 					if (random < getRegister().getDropsFile().getChance("Player", drops))
 						dropList.add(drops);
+				}
+			}
+			
+			if (e.getEntity().getKiller() != null && e.getEntity().getKiller() instanceof Player) {
+				getRegister().getStatsUtil().addKill(e.getEntity().getKiller());
+				getRegister().getStatsUtil().addPoints(e.getEntity().getKiller(),
+						getRegister().getMainOptionsFile().getInt("Points + on kill"));
+				getRegister().getStatsUtil().addCoins(e.getEntity().getKiller(),
+						getRegister().getMainOptionsFile().getInt("Coins + on kill"));
+				
+				if(getUhc().isCrates()) {
+					UHCCrate c = getRegister().getUhcCrateFile().getRandomCrate();
+					if(Math.random() <= getRegister().getUhcCrateFile().getRarerityInPercent(c)) {
+						getRegister().getStatsUtil().addCrate(c, e.getEntity().getKiller());
+					}
 				}
 			}
 

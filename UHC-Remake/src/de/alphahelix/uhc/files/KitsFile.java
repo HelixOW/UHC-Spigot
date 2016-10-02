@@ -36,7 +36,6 @@ public class KitsFile extends EasyFile {
 		setDefault("Kit.Item", "IRON SWORD");
 		setDefault("Kit.Item Name", "&6Kits");
 		setDefault("Kit.Item Slot", 0);
-		save();
 	}
 
 	public void addKit(String kitName, Inventory i, String block, int slot, int price) {
@@ -55,13 +54,10 @@ public class KitsFile extends EasyFile {
 	}
 
 	public Kit getKit(String kitName) {
-		kitName = kitName.replace("§", "&");
-		kitName = kitName.replace("0º", "&");
-		kitName = kitName.contains("0&") ? kitName.replace("0&", "&") : kitName;
 		if (this.contains(kitName)) {
-				return new Kit(kitName, getInt(kitName + ".price"), StringToInventory(getString(kitName + ".Contents")),
-						getInt(kitName + ".GUI.Slot"),
-						new ItemStack(Material.getMaterial(getString(kitName + ".GUI.Block").toUpperCase())));
+			return new Kit(kitName, getInt(kitName + ".price"), StringToInventory(getString(kitName + ".Contents")),
+					getInt(kitName + ".GUI.Slot"),
+					new ItemStack(Material.getMaterial(getString(kitName + ".GUI.Block").toUpperCase())));
 		}
 		getLog().log(Level.SEVERE, "The kit " + kitName + " doesn't exist inside the Kits.uhc");
 		return null;
@@ -71,7 +67,7 @@ public class KitsFile extends EasyFile {
 		LinkedList<Kit> kits = new LinkedList<>();
 		for (String kitName : getKeys(false)) {
 			try {
-				kits.add(getKit(kitName));
+				kits.add(getKit(kitName.replace("§", "&")));
 			} catch (Exception e) {
 				continue;
 			}

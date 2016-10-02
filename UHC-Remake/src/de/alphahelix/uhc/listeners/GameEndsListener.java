@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
@@ -25,6 +24,7 @@ import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.instances.Spectator;
+import de.alphahelix.uhc.instances.UHCCrate;
 import de.popokaka.alphalibary.nms.SimpleTitle;
 
 public class GameEndsListener extends SimpleListener {
@@ -42,13 +42,20 @@ public class GameEndsListener extends SimpleListener {
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
 		final Player dead = e.getEntity();
-
-		e.setDeathMessage(getRegister().getDeathMessageFile()
-				.getMessage(e.getEntity().getLastDamageCause() == null ? DamageCause.SUICIDE
-						: e.getEntity().getLastDamageCause().getCause())
-				.replace("[player]", dead.getDisplayName())
-				.replace("[entity]", e.getEntity().getKiller() instanceof Player ? dead.getKiller().getName()
-						: getRegister().getDeathMessageFile().getColorString("[entity] is a mob")));
+		
+		e.setDeathMessage(null);
+		
+		for (String other : getRegister().getPlayerUtil().getAll()) {
+			if (Bukkit.getPlayer(other) == null)
+				return;
+			Bukkit.getPlayer(other)
+					.sendMessage(getRegister().getDeathMessageFile()
+							.getMessage(e.getEntity().getLastDamageCause().getCause())
+							.replace("[player]", e.getEntity().getCustomName())
+							.replace("[entity]", (e.getEntity().getKiller() == null
+									? getRegister().getDeathMessageFile().getColorString("[entity] is a mob")
+									: e.getEntity().getKiller().getName())));
+		}
 
 		getRegister().getPlayerUtil().removeSurvivor(dead);
 		getRegister().getPlayerUtil().addDead(dead);
@@ -56,15 +63,22 @@ public class GameEndsListener extends SimpleListener {
 		new Spectator(dead);
 
 		dead.getWorld().strikeLightning(dead.getLocation());
-
+		
 		getRegister().getTablistUtil().sendTablist();
 
-		if (dead.getKiller() != null) {
+		if (dead.getKiller() != null && dead.getKiller() instanceof Player) {
 			getRegister().getStatsUtil().addKill(dead.getKiller());
 			getRegister().getStatsUtil().addPoints(dead.getKiller(),
 					getRegister().getMainOptionsFile().getInt("Points + on kill"));
 			getRegister().getStatsUtil().addCoins(dead.getKiller(),
 					getRegister().getMainOptionsFile().getInt("Coins + on kill"));
+			
+			if(getUhc().isCrates()) {
+				UHCCrate c = getRegister().getUhcCrateFile().getRandomCrate();
+				if(Math.random() <= getRegister().getUhcCrateFile().getRarerityInPercent(c)) {
+					getRegister().getStatsUtil().addCrate(c, dead.getKiller());
+				}
+			}
 		}
 
 		getRegister().getStatsUtil().addDeath(dead);

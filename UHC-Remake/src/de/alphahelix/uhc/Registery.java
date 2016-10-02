@@ -37,12 +37,20 @@ import de.alphahelix.uhc.files.StatusFile;
 import de.alphahelix.uhc.files.TablistFile;
 import de.alphahelix.uhc.files.TeamFile;
 import de.alphahelix.uhc.files.TimerFile;
+import de.alphahelix.uhc.files.UHCCrateFile;
 import de.alphahelix.uhc.files.UnitFile;
 import de.alphahelix.uhc.instances.EasyFile;
 import de.alphahelix.uhc.inventories.ConfirmInventory;
+import de.alphahelix.uhc.inventories.CrateInventory;
 import de.alphahelix.uhc.inventories.KitInventory;
 import de.alphahelix.uhc.inventories.PreviewInventory;
 import de.alphahelix.uhc.inventories.TeamInventory;
+import de.alphahelix.uhc.inventories.crates.EpicCrateInventory;
+import de.alphahelix.uhc.inventories.crates.LegendaryCrateListener;
+import de.alphahelix.uhc.inventories.crates.NormalCrateInventory;
+import de.alphahelix.uhc.inventories.crates.RareCrateInventory;
+import de.alphahelix.uhc.inventories.crates.SuperrareCrateInventory;
+import de.alphahelix.uhc.inventories.crates.UnCommonCrateInventory;
 import de.alphahelix.uhc.listeners.ChatListener;
 import de.alphahelix.uhc.listeners.ConfirmListener;
 import de.alphahelix.uhc.listeners.DeathListener;
@@ -55,6 +63,7 @@ import de.alphahelix.uhc.listeners.SchematicListener;
 import de.alphahelix.uhc.listeners.SpectatorListener;
 import de.alphahelix.uhc.listeners.TeamListener;
 import de.alphahelix.uhc.listeners.TimerListener;
+import de.alphahelix.uhc.listeners.UHCCrateListener;
 import de.alphahelix.uhc.listeners.scenarios.AppleFamineListener;
 import de.alphahelix.uhc.listeners.scenarios.ArmorVHealthListener;
 import de.alphahelix.uhc.listeners.scenarios.ArrowListener;
@@ -202,6 +211,14 @@ public class Registery {
 	private ConfirmInventory confirmInventory;
 	private TeamInventory teamInventory;
 	private PreviewInventory previewInventory;
+	private CrateInventory crateInventory;
+	
+	private NormalCrateInventory normalCrateInventory;
+	private UnCommonCrateInventory unCommonCrateInventory;
+	private RareCrateInventory rareCrateInventory;
+	private SuperrareCrateInventory superrareCrateInventory;
+	private EpicCrateInventory epicCrateInventory;
+	private LegendaryCrateListener legendaryCrateInventory;
 
 	private PlayerFile playerFile;
 	private MainOptionsFile mainOptionsFile;
@@ -226,6 +243,7 @@ public class Registery {
 	private ScenarioHelpFile scenarioHelpFile;
 	private HologramFile hologramFile;
 	private MOTDFile mOTDFile;
+	private UHCCrateFile uhcCrateFile;
 
 	private KitChooseListener kitChooseListener;
 	private RegisterListener registerListener;
@@ -239,6 +257,7 @@ public class Registery {
 	private GameEndsListener gameEndsListener;
 	private DeathListener deathListener;
 	private SchematicListener schematicListener;
+	private UHCCrateListener uhcCrateListener;
 
 	public Registery(UHC uhc) {
 		setUhc(uhc);
@@ -257,7 +276,7 @@ public class Registery {
 
 	private void registerCommands() {
 		new StatsCommand(getUhc(), "stats", "Check your or others stats", "records");
-		new UHCAdminCommands(getUhc(), "uhcAdmin", "Mange the server configurations via commands.", "uhcA");
+		new UHCAdminCommands(getUhc(), "uhcAdmin", "Manage some server configurations via commands.", "uhcA");
 		new UHCSetUpCommand(getUhc(), "uhcSetup", "Setup all of your options", "uhcS");
 		new StartCommand(getUhc(), "start", "Short or strech the lobby time.", "start");
 		new InfoCommand(getUhc(), "informations", "Get informations about the current scenario", "scenario", "infos");
@@ -277,7 +296,7 @@ public class Registery {
 							getTeamFile().getInt(t + ".color.green"), getTeamFile().getInt(t + ".color.blue")));
 		}
 	}
-
+	
 	public void registerAll() {
 
 		setPlayerFile(new PlayerFile(getUhc()));
@@ -303,6 +322,7 @@ public class Registery {
 		setScenarioHelpFile(new ScenarioHelpFile(getUhc()));
 		setHologramFile(new HologramFile(getUhc()));
 		setMOTDFile(new MOTDFile(getUhc()));
+		setUhcCrateFile(new UHCCrateFile(getUhc()));
 
 		for (EasyFile easyFile : getEasyFiles()) {
 			easyFile.register(easyFile);
@@ -321,6 +341,7 @@ public class Registery {
 		getUhc().setTracker(getMainOptionsFile().getBoolean("Tracker.euip"));
 		getUhc().setTrackerName(getMainOptionsFile().getColorString("Tracker.name"));
 		getUhc().setLobbyAsSchematic(getMainOptionsFile().getBoolean("Lobby.as schematic"));
+		getUhc().setCrates(getUhcCrateFile().getBoolean("Crates"));
 		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
 
 		setPlayerUtil(new PlayerUtil(getUhc()));
@@ -340,6 +361,14 @@ public class Registery {
 		setConfirmInventory(new ConfirmInventory(getUhc()));
 		setTeamInventory(new TeamInventory(getUhc()));
 		setPreviewInventory(new PreviewInventory(getUhc()));
+		setCrateInventory(new CrateInventory(getUhc()));
+		
+		setNormalCrateInventory(new NormalCrateInventory(getUhc()));
+		setUnCommonCrateInventory(new UnCommonCrateInventory(getUhc()));
+		setRareCrateInventory(new RareCrateInventory(getUhc()));
+		setSuperrareCrateInventory(new SuperrareCrateInventory(getUhc()));
+		setEpicCrateInventory(new EpicCrateInventory(getUhc()));
+		setLegendaryCrateInventory(new LegendaryCrateListener(getUhc()));
 
 		setKitChooseListener(new KitChooseListener(getUhc()));
 		setRegisterListener(new RegisterListener(getUhc()));
@@ -353,6 +382,7 @@ public class Registery {
 		setGameEndsListener(new GameEndsListener(getUhc()));
 		setDeathListener(new DeathListener(getUhc()));
 		setSchematicListener(new SchematicListener(getUhc()));
+		setUhcCrateListener(new UHCCrateListener(getUhc()));
 
 		setLobbyTimer(new LobbyTimer(getUhc()));
 		setGraceTimer(new GraceTimer(getUhc()));
@@ -460,6 +490,8 @@ public class Registery {
 		registerCommands();
 		registerEvents();
 		registerTeams();
+		
+		getUhcCrateFile().initRarerityContent();
 
 		getConfirmInventory().fillInventory();
 		getTeamInventory().fillInventory();
@@ -1035,5 +1067,77 @@ public class Registery {
 
 	public void setSchematicListener(SchematicListener schematicListener) {
 		this.schematicListener = schematicListener;
+	}
+
+	public UHCCrateFile getUhcCrateFile() {
+		return uhcCrateFile;
+	}
+
+	public void setUhcCrateFile(UHCCrateFile uhcCrateFile) {
+		this.uhcCrateFile = uhcCrateFile;
+	}
+
+	public CrateInventory getCrateInventory() {
+		return crateInventory;
+	}
+
+	public void setCrateInventory(CrateInventory crateInventory) {
+		this.crateInventory = crateInventory;
+	}
+
+	public UHCCrateListener getUhcCrateListener() {
+		return uhcCrateListener;
+	}
+
+	public void setUhcCrateListener(UHCCrateListener uhcCrateListener) {
+		this.uhcCrateListener = uhcCrateListener;
+	}
+
+	public NormalCrateInventory getNormalCrateInventory() {
+		return normalCrateInventory;
+	}
+
+	public void setNormalCrateInventory(NormalCrateInventory normalCrateInventory) {
+		this.normalCrateInventory = normalCrateInventory;
+	}
+
+	public UnCommonCrateInventory getUnCommonCrateInventory() {
+		return unCommonCrateInventory;
+	}
+
+	public void setUnCommonCrateInventory(UnCommonCrateInventory unCommonCrateInventory) {
+		this.unCommonCrateInventory = unCommonCrateInventory;
+	}
+
+	public RareCrateInventory getRareCrateInventory() {
+		return rareCrateInventory;
+	}
+
+	public void setRareCrateInventory(RareCrateInventory rareCrateInventory) {
+		this.rareCrateInventory = rareCrateInventory;
+	}
+
+	public SuperrareCrateInventory getSuperrareCrateInventory() {
+		return superrareCrateInventory;
+	}
+
+	public void setSuperrareCrateInventory(SuperrareCrateInventory superrareCrateInventory) {
+		this.superrareCrateInventory = superrareCrateInventory;
+	}
+
+	public EpicCrateInventory getEpicCrateInventory() {
+		return epicCrateInventory;
+	}
+
+	public void setEpicCrateInventory(EpicCrateInventory epicCrateInventory) {
+		this.epicCrateInventory = epicCrateInventory;
+	}
+
+	public LegendaryCrateListener getLegendaryCrateInventory() {
+		return legendaryCrateInventory;
+	}
+
+	public void setLegendaryCrateInventory(LegendaryCrateListener legendaryCrateInventory) {
+		this.legendaryCrateInventory = legendaryCrateInventory;
 	}
 }
