@@ -1,3 +1,6 @@
+Please not that this plugin is currently under maintenance. The downloaded version of spigot doesn't contain all features listed below.
+
+
 # UHC
 ***
 ##  Informations
