@@ -1,6 +1,6 @@
 # UHC
 ***
-
+##  Informations
 - Bungeecord support.
 - Over / Nether world reset.
 - Beautiful teams inventory / armorstands.
@@ -37,8 +37,41 @@
 - Titles & Actionsbars.
 - Soup heal (configureable).
 - Holograms with informations.
-- Create new Crafting recipes (see configuration wiki).
+- Create new crafting recipes (see configuration wiki).
+- Crate system to draw new kits (configureable).
 - Nice developers with good support.
 - And much more things to come. (Suggetions can be done by writing a pm at spigotmc.org @AlphaHelix).
+</br>
 
+***
+
+## Screenshots
+### Scoreboards
+ Lobby: </br>
+  > Scenarios enabled: </br>
+    [![lobby-scoreboard](https://i.gyazo.com/379f0d5452d6d154d1b4c4722c55c3e3.png)](https://gyazo.com/379f0d5452d6d154d1b4c4722c55c3e3)
+  </br>
+  > Kits enabled: </br>
+    [![kits-scoreboard](https://i.gyazo.com/6db156ce755723b6a7a325b502f84708.png)](https://gyazo.com/6db156ce755723b6a7a325b502f84708)
+</br>
+ Ingame: </br>
+  > Scenarios enabled: </br>
+   [![scoreboard-scen](https://i.gyazo.com/70ce1c34368204ec0e30314e7aad7caa.png)](https://gyazo.com/70ce1c34368204ec0e30314e7aad7caa)
+  </br>
+  > Kits enabled: </br>
+    [![ingame-scoreboard](https://i.gyazo.com/3588fdbdeebf15c2aa110adcbb204e4e.png)](https://gyazo.com/3588fdbdeebf15c2aa110adcbb204e4e)
+</br>
+***
+## Configurations
+See the wiki here : https://github.com/AlphaHelixDev/UHC-Spigot/wiki/Configurations
+***
+## Commands
+See the wiki here : https://github.com/AlphaHelixDev/UHC-Spigot/wiki/Commands
+***
+## Bugs
+Found a bug? Report it here : https://github.com/AlphaHelixDev/UHC-Spigot/issues
+***
+## Terms of Service
+1. Do not reupload this plugin and mark it as yours.
+2. Do not decompile this plugin without my permission.
 ***
