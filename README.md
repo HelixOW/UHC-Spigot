@@ -9,7 +9,8 @@ The Alpha & Beta phase will only be Minecraft 1.9+ compatible. 1.8 might be adde
 - Beautiful teams inventory / armorstands.
 - Configurable Team GUI (see wiki for that).
 - No limit of players per team.
-- Nice anti flicker scoreboard system (configureable).
+- Nice animated anti flicker scoreboard system (configureable).
+- Moving scoreboard texts.
 - Innovative world border.
 - Shrinking ,speed and size of worldborder configureable.
 - Buy, preview and create custom kits.
