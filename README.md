@@ -41,7 +41,8 @@ The Alpha & Beta phase will only be Minecraft 1.9+ compatible. 1.8 might be adde
 - Soup heal (configureable).
 - Holograms with informations.
 - Create new crafting recipes (see configuration wiki).
-- Crate system to draw new kits (configureable).
+- Crate system to draw new kits (see configuration wiki).
+- Back to lobby item (configureable).
 - Nice developers with good support.
 - And much more things to come. (Suggetions can be done by writing a pm at spigotmc.org @AlphaHelix).
 </br>
