@@ -40,3 +40,4 @@
 - Create new Crafting recipes (see configuration wiki).
 - Nice developers with good support.
 - And much more things to come. (Suggetions can be done by writing a pm at spigotmc.org @AlphaHelix).
+***
