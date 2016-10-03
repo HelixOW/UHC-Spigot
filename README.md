@@ -1,5 +1,6 @@
 # UHC
-In the Alpha & Beta Phase bugs of the 1.9 Version have priority to be fixed!
+In the Alpha & Beta Phase bugs of the 1.9 Version have priority to be fixed!</br>
+Also 1.8 will only be 1 Version Until release 1.9 however will get updates with new features.
 ***
 ##  Informations
 - Bungeecord support.
