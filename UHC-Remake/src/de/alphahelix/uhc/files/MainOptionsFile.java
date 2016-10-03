@@ -11,7 +11,7 @@ public class MainOptionsFile extends EasyFile {
 	
 	public void addValues() {
 		setDefault("Prefix", "&7[&6UHC&8-&6Remake&7] ");
-		setDefault("Spectator Prefix", "§7[§4X§7] §c");
+		setDefault("Spectator Prefix", "&7[&4X&7] &c");
 		
 		setDefault("Restartmessage", "&7The Server has stopped. Now loading a new round of UHC.");
 		
