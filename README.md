@@ -1,5 +1,5 @@
 # UHC
-The Alpha & Beta phase will only be Minecraft 1.9+ compatible. 1.8 might be added (not 100% sure).
+In the Alpha & Beta Phase bugs of the 1.9 Version have priority to be fixed!
 ***
 ##  Informations
 - Bungeecord support.
