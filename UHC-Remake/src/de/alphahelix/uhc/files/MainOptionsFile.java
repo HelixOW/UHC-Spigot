@@ -27,6 +27,8 @@ public class MainOptionsFile extends EasyFile {
 		setDefault("Spawndispersal", 20);
 		
 		setDefault("Remove Attack Cooldown", true);
+		setDefault("Pregenerate World.enabled", true);
+		setDefault("Pregenerate World.size", 1000);
 		
 		setDefault("Tracker.equip", true);
 		setDefault("Tracker.name", "&dTracker");

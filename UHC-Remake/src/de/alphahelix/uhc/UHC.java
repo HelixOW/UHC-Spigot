@@ -44,6 +44,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private boolean lobbyAsSchematic;
 	private boolean crates;
 	private boolean lobby;
+	private boolean pregen;
 	private int spawnradius;
 	private Logger log;
 	
@@ -329,5 +330,13 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 
 	public void setLobby(boolean lobby) {
 		this.lobby = lobby;
+	}
+
+	public boolean isPregen() {
+		return pregen;
+	}
+
+	public void setPregen(boolean pregen) {
+		this.pregen = pregen;
 	}
 }

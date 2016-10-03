@@ -162,7 +162,6 @@ import de.alphahelix.uhc.timers.SkyHighTimer;
 import de.alphahelix.uhc.timers.SoulBrothersListener;
 import de.alphahelix.uhc.timers.StartDeathMatchTimer;
 import de.alphahelix.uhc.timers.WarmUpTimer;
-import de.alphahelix.uhc.util.BiomeUtil;
 import de.alphahelix.uhc.util.BorderUtil;
 import de.alphahelix.uhc.util.HologramUtil;
 import de.alphahelix.uhc.util.LobbyUtil;
@@ -213,7 +212,7 @@ public class Registery {
 	private TeamInventory teamInventory;
 	private PreviewInventory previewInventory;
 	private CrateInventory crateInventory;
-	
+
 	private NormalCrateInventory normalCrateInventory;
 	private UnCommonCrateInventory unCommonCrateInventory;
 	private RareCrateInventory rareCrateInventory;
@@ -298,7 +297,7 @@ public class Registery {
 							getTeamFile().getInt(t + ".color.green"), getTeamFile().getInt(t + ".color.blue")));
 		}
 	}
-	
+
 	public void registerAll() {
 
 		setPlayerFile(new PlayerFile(getUhc()));
@@ -346,6 +345,7 @@ public class Registery {
 		getUhc().setLobbyAsSchematic(getMainOptionsFile().getBoolean("Lobby.as schematic"));
 		getUhc().setCrates(getUhcCrateFile().getBoolean("Crates"));
 		getUhc().setLobby(getLobbyFile().getBoolean("Lobby"));
+		getUhc().setPregen(getMainOptionsFile().getBoolean("Pregenerate World.enabled"));
 		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
 
 		setPlayerUtil(new PlayerUtil(getUhc()));
@@ -366,7 +366,7 @@ public class Registery {
 		setTeamInventory(new TeamInventory(getUhc()));
 		setPreviewInventory(new PreviewInventory(getUhc()));
 		setCrateInventory(new CrateInventory(getUhc()));
-		
+
 		setNormalCrateInventory(new NormalCrateInventory(getUhc()));
 		setUnCommonCrateInventory(new UnCommonCrateInventory(getUhc()));
 		setRareCrateInventory(new RareCrateInventory(getUhc()));
@@ -494,12 +494,12 @@ public class Registery {
 		registerCommands();
 		registerEvents();
 		registerTeams();
-		
+
 		getUhcCrateFile().initRarerityContent();
 
 		getConfirmInventory().fillInventory();
 		getTeamInventory().fillInventory();
-		
+
 		if (getUhc().isScenarios() && !getUhc().isKits()) {
 			getUhc().setKits(false);
 			Scenarios.getRandomScenario();
@@ -519,20 +519,10 @@ public class Registery {
 		new BukkitRunnable() {
 			public void run() {
 				getWorldUtil().createNetherWorld();
+				if (getUhc().isPregen())
+					getWorldUtil().preGenerateWorld();
 			}
 		}.runTaskLater(getUhc(), 5);
-
-		new BukkitRunnable() {
-			public void run() {
-				new BiomeUtil();
-			}
-		}.runTaskLater(getUhc(), 15);
-
-		new BukkitRunnable() {
-			public void run() {
-				GState.setCurrentState(GState.LOBBY);
-			}
-		}.runTaskLaterAsynchronously(getUhc(), 20 * 3);
 	}
 
 	// Instance
