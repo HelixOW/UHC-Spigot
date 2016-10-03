@@ -29,18 +29,18 @@ public class EquipListener extends SimpleListener {
 		Player p = e.getPlayer();
 
 		e.setJoinMessage(null);
-		
+
 		getRegister().getPlayerUtil().clearUp(p);
 		getRegister().getPlayerUtil().addAll(p);
-		
-		if(getRegister().getMainOptionsFile().getBoolean("Remove Attack Cooldown")) 
+
+		if (getRegister().getMainOptionsFile().getBoolean("Remove Attack Cooldown"))
 			p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(32);
 
 		if (!GState.isState(GState.LOBBY)) {
-			if(!getRegister().getPlayerUtil().isSurivor(p)) {
+			if (!getRegister().getPlayerUtil().isSurivor(p)) {
 				new Spectator(p, getRegister().getLocationsFile().getArena());
 				getRegister().getScoreboardUtil().setIngameScoreboard(p);
-	
+
 				for (String other : getRegister().getPlayerUtil().getAll()) {
 					if (Bukkit.getPlayer(other) == null)
 						continue;
@@ -48,18 +48,19 @@ public class EquipListener extends SimpleListener {
 				}
 				return;
 			}
-			
+
 			getRegister().getGameEndsListener().getPlayerDummie(p).remove();
 			p.teleport(getRegister().getGameEndsListener().getLogOutLocation(p));
-			
+
 			getRegister().getTablistUtil().sendTablist();
 			getRegister().getScoreboardUtil().setIngameScoreboard(p);
-			
-			for(ItemStack content : getRegister().getGameEndsListener().getPlayerInv(p).getContents()) {
-				if(content == null) continue;
+
+			for (ItemStack content : getRegister().getGameEndsListener().getPlayerInv(p).getContents()) {
+				if (content == null)
+					continue;
 				p.getInventory().addItem(content);
 			}
-			
+
 			return;
 		}
 
@@ -69,7 +70,7 @@ public class EquipListener extends SimpleListener {
 			Bukkit.getPlayer(other).sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
 					.getColorString("Player has joined").replace("[player]", p.getDisplayName()));
 		}
-		
+
 		getRegister().getHologramUtil().showHologram(p);
 		getRegister().getScoreboardUtil().setLobbyScoreboard(p);
 
@@ -77,8 +78,13 @@ public class EquipListener extends SimpleListener {
 			p.getInventory().setItem(getRegister().getScenarioFile().getInt("Scenarios Item Slot"),
 					new ItemBuilder(Material.getMaterial(getRegister().getScenarioFile().getString("Scenarios Item")
 							.replace(" ", "_").toUpperCase()))
-									.setName(getRegister().getScenarioFile().getColorString("Scenarios Item Name").replace("-", getRegister().getScenarioFile().getCustomScenarioName(Scenarios.getScenario())))
-									.setLore(getRegister().getScenarioHelpFile().getScenarioDescription(Scenarios.getScenario()))
+									.setName(
+											getRegister().getScenarioFile().getColorString("Scenarios Item Name")
+													.replace("-",
+															getRegister().getScenarioFile()
+																	.getCustomScenarioName(Scenarios.getScenario())))
+									.setLore(getRegister().getScenarioHelpFile()
+											.getScenarioDescription(Scenarios.getScenario()))
 									.build());
 		} else if (getUhc().isKits()) {
 			p.getInventory().setItem(getRegister().getKitsFile().getInt("Kit.Item Slot"),
@@ -94,12 +100,21 @@ public class EquipListener extends SimpleListener {
 							getRegister().getTeamFile().getString("Team.Item").replace(" ", "_").toUpperCase()))
 									.setName(getRegister().getTeamFile().getColorString("Team.Item Name")).build());
 		}
-		
-		if(getUhc().isCrates()) {
-			p.getInventory().setItem(getRegister().getUhcCrateFile().getInt("Crate.Item slot"),
+
+		if (getUhc().isCrates()) {
+			p.getInventory()
+					.setItem(getRegister().getUhcCrateFile().getInt("Crate.Item slot"),
+							new ItemBuilder(Material.getMaterial(getRegister().getUhcCrateFile().getString("Crate.Item")
+									.replace(" ", "_").toUpperCase()))
+											.setName(getRegister().getUhcCrateFile().getColorString("Crate.Item Name"))
+											.build());
+		}
+
+		if (getUhc().isLobby()) {
+			p.getInventory().setItem(getRegister().getLobbyFile().getInt("Item slot"),
 					new ItemBuilder(Material.getMaterial(
-							getRegister().getUhcCrateFile().getString("Crate.Item").replace(" ", "_").toUpperCase()))
-							.setName(getRegister().getUhcCrateFile().getColorString("Crate.Item Name")).build());
+							getRegister().getLobbyFile().getString("Item").replace(" ", "_").toUpperCase()))
+									.setName(getRegister().getLobbyFile().getColorString("Item name")).build());
 		}
 
 	}
@@ -114,11 +129,12 @@ public class EquipListener extends SimpleListener {
 			for (String other : getRegister().getPlayerUtil().getAll()) {
 				if (Bukkit.getPlayer(other) == null)
 					continue;
-				Bukkit.getPlayer(other).sendMessage(
-						getUhc().getPrefix() + getRegister().getMessageFile().getColorString("Player has left").replace("[player]", p.getDisplayName()));
+				Bukkit.getPlayer(other).sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
+						.getColorString("Player has left").replace("[player]", p.getDisplayName()));
 			}
 		}
-		
-		if(GState.isState(GState.LOBBY) || GState.isState(GState.END)) getRegister().getPlayerUtil().removeAll(p);
+
+		if (GState.isState(GState.LOBBY) || GState.isState(GState.END))
+			getRegister().getPlayerUtil().removeAll(p);
 	}
 }

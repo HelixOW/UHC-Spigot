@@ -22,6 +22,7 @@ import de.alphahelix.uhc.files.DeathmessageFile;
 import de.alphahelix.uhc.files.DropsFile;
 import de.alphahelix.uhc.files.HologramFile;
 import de.alphahelix.uhc.files.KitsFile;
+import de.alphahelix.uhc.files.LobbyFile;
 import de.alphahelix.uhc.files.LocationsFile;
 import de.alphahelix.uhc.files.MOTDFile;
 import de.alphahelix.uhc.files.MainMessageFile;
@@ -244,6 +245,7 @@ public class Registery {
 	private HologramFile hologramFile;
 	private MOTDFile mOTDFile;
 	private UHCCrateFile uhcCrateFile;
+	private LobbyFile lobbyFile;
 
 	private KitChooseListener kitChooseListener;
 	private RegisterListener registerListener;
@@ -323,6 +325,7 @@ public class Registery {
 		setHologramFile(new HologramFile(getUhc()));
 		setMOTDFile(new MOTDFile(getUhc()));
 		setUhcCrateFile(new UHCCrateFile(getUhc()));
+		setLobbyFile(new LobbyFile(getUhc()));
 
 		for (EasyFile easyFile : getEasyFiles()) {
 			easyFile.register(easyFile);
@@ -342,6 +345,7 @@ public class Registery {
 		getUhc().setTrackerName(getMainOptionsFile().getColorString("Tracker.name"));
 		getUhc().setLobbyAsSchematic(getMainOptionsFile().getBoolean("Lobby.as schematic"));
 		getUhc().setCrates(getUhcCrateFile().getBoolean("Crates"));
+		getUhc().setLobby(getLobbyFile().getBoolean("Lobby"));
 		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
 
 		setPlayerUtil(new PlayerUtil(getUhc()));
@@ -1139,5 +1143,13 @@ public class Registery {
 
 	public void setLegendaryCrateInventory(LegendaryCrateListener legendaryCrateInventory) {
 		this.legendaryCrateInventory = legendaryCrateInventory;
+	}
+
+	public LobbyFile getLobbyFile() {
+		return lobbyFile;
+	}
+
+	public void setLobbyFile(LobbyFile lobbyFile) {
+		this.lobbyFile = lobbyFile;
 	}
 }

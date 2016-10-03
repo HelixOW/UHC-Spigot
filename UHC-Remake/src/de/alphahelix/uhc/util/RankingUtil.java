@@ -14,6 +14,7 @@ public class RankingUtil extends Util {
 	}
 
 	public void updateArmorStands() {
+		if(!getRegister().getLocationsFile().isConfigurationSection("Rankings.Armorstands")) return;
 		for(String ranks : getRegister().getLocationsFile().getConfigurationSection("Rankings.Armorstands").getKeys(false)) {
 			Location l = getRegister().getLocationsFile().getRankingNPCLocation(Integer.parseInt(ranks));
 			

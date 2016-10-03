@@ -28,6 +28,9 @@ import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
@@ -168,9 +171,25 @@ public class GStateListener extends SimpleListener {
 			return;
 		if (getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer()))
 			return;
+
 		if (e.getClickedBlock().getType().equals(Material.CHEST)
 				|| e.getClickedBlock().getType().equals(Material.ENDER_CHEST))
 			e.setCancelled(true);
+
+		if (e.getPlayer().getInventory().getItemInMainHand() != null
+				&& e.getPlayer().getInventory().getItemInMainHand().hasItemMeta()
+				&& e.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasDisplayName()
+				&& e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName()
+						.equals(getRegister().getLobbyFile().getColorString("Item name"))) {
+			if (getUhc().isBunggeMode()) {
+				ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+				out.writeUTF("Connect");
+				out.writeUTF(getUhc().getLobbyServer());
+
+				e.getPlayer().sendPluginMessage(getUhc(), "BungeeCord", out.toByteArray());
+			}
+		}
 	}
 
 	@EventHandler
