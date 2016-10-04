@@ -1,6 +1,8 @@
 # UHC
 In the Alpha & Beta Phase bugs of the 1.9 Version have priority to be fixed!</br>
 Also 1.8 will only stay with the features of the first ALPHA Version Until release 1.9 however will get updates with new features.
+
+You need help with setting up UHC? Don't hesitate to contact me on SpigotMC @AlphaHelix before giving a bad review.
 ***
 ##  Informations
 - Bungeecord support.
