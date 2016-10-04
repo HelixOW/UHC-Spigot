@@ -94,6 +94,7 @@ public class SimpleFile extends YamlConfiguration {
 		} catch (Exception e) { return ""; }
 	}
 	
+	
 	/**
 	 * Save a ItemStackArray inside an file
 	 * @param path The path inside the file where the ItemStackArray should be serialized to

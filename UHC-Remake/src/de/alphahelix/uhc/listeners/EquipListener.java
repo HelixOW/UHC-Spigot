@@ -73,7 +73,9 @@ public class EquipListener extends SimpleListener {
 
 		getRegister().getHologramUtil().showHologram(p);
 		getRegister().getScoreboardUtil().setLobbyScoreboard(p);
-
+		
+		getRegister().getNpcUtil().prepareNPC(getRegister().getLocationsFile().getStatsNPCLocation(), p, p);
+		
 		if (getUhc().isScenarios()) {
 			p.getInventory().setItem(getRegister().getScenarioFile().getInt("Scenarios Item Slot"),
 					new ItemBuilder(Material.getMaterial(getRegister().getScenarioFile().getString("Scenarios Item")

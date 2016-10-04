@@ -1,6 +1,9 @@
 package de.alphahelix.uhc.files;
 
+import java.util.ArrayList;
+
 import org.bukkit.Color;
+import org.bukkit.Location;
 
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.EasyFile;
@@ -20,19 +23,28 @@ public class TeamFile extends EasyFile {
 		setDefault("Team.Item Name", "&bTeams");
 		setDefault("Team.Item Slot", 2);
 		setDefault("Team.Chat", "@");
-		addTeam("Preview", "&7", 2, 1, 0, true, Color.YELLOW);
+		addTeam("Preview", "&7", 2, 1, 0, true, Color.YELLOW, null);
 	}
-	
-	public void addTeam(String name, String prefix, int maxPlayer, int data, int slot, boolean colored, Color c) {
-		setDefault("Teams."+name+".name", name);
-		setDefault("Teams."+name+".prefix", prefix);
-		setDefault("Teams."+name+".data", data);
-		setDefault("Teams."+name+".max Players", maxPlayer);
-		setDefault("Teams."+name+".slot", slot);
-		setDefault("Teams."+name+".colored Name", colored);
-		
-		setDefault("Teams."+name+".color.red", c.getRed());
-		setDefault("Teams."+name+".color.green", c.getGreen());
-		setDefault("Teams."+name+".color.blue", c.getBlue());
+
+	public void setTeamMemberNPC(String teamName, int pos, Location loc) {
+		setLocation("Teams." + teamName + ".locations." + pos, loc, true);
+	}
+
+	public void addTeam(String name, String prefix, int maxPlayer, int data, int slot, boolean colored, Color c,
+			ArrayList<Location> armorStands) {
+		setDefault("Teams." + name + ".name", name);
+		setDefault("Teams." + name + ".prefix", prefix);
+		setDefault("Teams." + name + ".data", data);
+		setDefault("Teams." + name + ".max Players", maxPlayer);
+		setDefault("Teams." + name + ".slot", slot);
+		setDefault("Teams." + name + ".colored Name", colored);
+
+		setDefault("Teams." + name + ".color.red", c.getRed());
+		setDefault("Teams." + name + ".color.green", c.getGreen());
+		setDefault("Teams." + name + ".color.blue", c.getBlue());
+		if (armorStands != null)
+			if (armorStands.size() == maxPlayer)
+				for (int max = 0; max < maxPlayer; max++)
+					setLocation("Teams." + name + ".locations." + max, armorStands.get(max), true);
 	}
 }

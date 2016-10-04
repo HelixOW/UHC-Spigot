@@ -196,10 +196,9 @@ private static final String version;
 		}
 	}
 	
-	public static int getID(Entity e) {
+	public static int getID(Entity kills) {
 		try {
-			
-			Object entityEntity = getCraftBukkitClass("entity.CraftEntity").getMethod("getHandle").invoke(e);
+			Object entityEntity = getCraftBukkitClass("entity.CraftEntity").getMethod("getHandle").invoke(kills);
 			
 			return (int) getNmsClass("Entity").getMethod("getId").invoke(entityEntity);
 			
@@ -215,6 +214,17 @@ private static final String version;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public static int getEntityID(Object entity) {
+		try {
+			Field id = ReflectionUtil.getNmsClass("Entity").getDeclaredField("id");
+			id.setAccessible(true);
+			return id.getInt(entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
 		}
 	}
 	
@@ -246,7 +256,7 @@ private static final String version;
 
 		return array;
 	}
-
+	
 	public static Object[] serializeString(String[] strings) {
 
 		Object[] array = (Object[]) Array.newInstance(getNmsClass("IChatBaseComponent"), strings.length);

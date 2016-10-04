@@ -162,6 +162,7 @@ import de.alphahelix.uhc.timers.SkyHighTimer;
 import de.alphahelix.uhc.timers.SoulBrothersListener;
 import de.alphahelix.uhc.timers.StartDeathMatchTimer;
 import de.alphahelix.uhc.timers.WarmUpTimer;
+import de.alphahelix.uhc.util.BiomeUtil;
 import de.alphahelix.uhc.util.BorderUtil;
 import de.alphahelix.uhc.util.HologramUtil;
 import de.alphahelix.uhc.util.LobbyUtil;
@@ -521,6 +522,12 @@ public class Registery {
 				getWorldUtil().createNetherWorld();
 				if (getUhc().isPregen())
 					getWorldUtil().preGenerateWorld();
+				else 
+					new BukkitRunnable() {
+						public void run() {
+							new BiomeUtil();
+						}
+					}.runTaskLater(getUhc(), 10);
 			}
 		}.runTaskLater(getUhc(), 5);
 	}

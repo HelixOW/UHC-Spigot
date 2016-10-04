@@ -54,12 +54,19 @@ public class UHCSetUpCommand extends SimpleCommand<UHC> {
 				return true;
 			}
 
-			else if (args[0].equals("setNether")) {
+			else if (args[0].equalsIgnoreCase("setNether")) {
 				getPlugin().getRegister().getLocationsFile().setNetherArena(p.getLocation());
 				p.sendMessage(getPlugin().getPrefix() + "You've set the nether spot to §ayour Location§7!");
 				return true;
 			}
-		} else if (args.length == 2) {
+			else if (args[0].equalsIgnoreCase("setStatsNPC")) {
+				getPlugin().getRegister().getLocationsFile().addNPC(p.getLocation());
+				p.sendMessage(getPlugin().getPrefix() + "You've set the position of a NPC to show the stats at your location!");
+				return true;
+			}
+		}
+
+		else if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("removeArmorstand")) {
 				getPlugin().getRegister().getNpcUtil().removeArmorStand(p.getLocation(), args[1]);
 				p.sendMessage(getPlugin().getPrefix() + "You've successfully removed the Armorstand![" + args[1] + "]");
@@ -86,8 +93,9 @@ public class UHCSetUpCommand extends SimpleCommand<UHC> {
 						+ args[1] + "");
 				return true;
 			}
-			
-		} else if (args[0].equalsIgnoreCase("createHologram")) {
+		}
+
+		else if (args[0].equalsIgnoreCase("createHologram")) {
 			String name = "";
 			if (args[1].equalsIgnoreCase("lower")) {
 				for (Player all : Bukkit.getOnlinePlayers()) {

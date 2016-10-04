@@ -69,8 +69,6 @@ public class PacketUtil {
 		Class<?> cPlayerInfoData = ReflectionUtil.getNmsClass("PacketPlayOutPlayerInfo$PlayerInfoData");
 		Class<?> cEnumGamemode = ReflectionUtil.getNmsClass("WorldSettings$EnumGamemode");
 
-		
-		
 		try {
 			
 			Object pPacketPlayOutInfo = cPacketPlayOutPlayerInfo.getConstructor().newInstance();

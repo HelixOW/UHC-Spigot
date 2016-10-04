@@ -16,23 +16,20 @@ public abstract class EasyFile extends SimpleFile {
 	private UHC uhc;
 	private Registery register;
 	private Logger log;
-	private String name;
 
 	public EasyFile(String name, UHC uhc) {
 		super("plugins/UHC", name);
 		setUhc(uhc);
 		setRegister(getUhc().getRegister());
 		setLog(getUhc().getLog());
-		setName(name);
 		getRegister().getEasyFiles().add(this);
 	}
-	
+
 	public EasyFile(String path, String name, UHC uhc) {
-		super("plugins/UHC/"+path, name);
+		super("plugins/UHC/" + path, name);
 		setUhc(uhc);
 		setRegister(getUhc().getRegister());
 		setLog(getUhc().getLog());
-		setName(name);
 		getRegister().getEasyFiles().add(this);
 	}
 
@@ -45,13 +42,13 @@ public abstract class EasyFile extends SimpleFile {
 		easy.addValues();
 		easy.loadValues();
 	}
-	
+
 	public Material getMaterial(String path) {
 		return Material.getMaterial(getString(path).replace(" ", "_").toUpperCase());
 	}
 
 	public SimpleFile getFile() {
-		return new SimpleFile("plugins/UHC", name);
+		return this;
 	}
 
 	public ItemBuilder getItemBuilder(String path) {
@@ -63,13 +60,27 @@ public abstract class EasyFile extends SimpleFile {
 	public void setItem(String path, ItemStack item) {
 		set(path, item.getType() + ";" + item.getAmount() + ";" + item.getDurability());
 		save();
-		
 	}
-	
+
+	public boolean configContains(String arg) {
+		boolean boo = false;
+		ArrayList<String> keys = new ArrayList<String>();
+		keys.addAll(this.getKeys(false));
+		for (int i = 0; i < keys.size(); i++)
+			if (keys.get(i).equalsIgnoreCase(arg))
+				boo = true;
+
+		if (boo)
+			return true;
+		else
+			return false;
+
+	}
+
 	@SuppressWarnings("unchecked")
 	public <T> ArrayList<T> toList(T... args) {
 		ArrayList<T> toReturn = new ArrayList<>();
-		for(T type : args) {
+		for (T type : args) {
 			toReturn.add(type);
 		}
 		return toReturn;
@@ -97,9 +108,5 @@ public abstract class EasyFile extends SimpleFile {
 
 	private void setLog(Logger log) {
 		this.log = log;
-	}
-
-	private void setName(String filename) {
-		this.name = filename;
 	}
 }

@@ -103,7 +103,6 @@ public class TeamListener extends SimpleListener {
 
 				team.addToTeam(p);
 				p.closeInventory();
-				getRegister().getTeamInventory().openInventory(p);
 			}
 		}
 	}

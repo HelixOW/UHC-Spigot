@@ -20,6 +20,7 @@ public class StatsFile extends EasyFile {
 		setDefault("Coins", "&6Coins &7: &6[coins]");
 		setDefault("Points", "&6Points &7: &6[points]");
 		setDefault("Kits", "&6Kits &7: &6[kits]");
+		setDefault("StatsNPC", "&5Stats");
 	}
 	
 	public String getMessage() {

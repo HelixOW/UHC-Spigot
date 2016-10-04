@@ -14,10 +14,10 @@ import com.google.gson.GsonBuilder;
 import com.mojang.util.UUIDTypeAdapter;
 
 public class UUIDFetcher {
-	
+
 	private static HashMap<UUID, String> names = new HashMap<>();
 	private static HashMap<String, UUID> uuids = new HashMap<>();
-	
+
 	private static final Gson gson = new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
 
 	private static final String UUID_URL = "https://api.mojang.com/users/profiles/minecraft/%s?at=%d";
@@ -25,65 +25,56 @@ public class UUIDFetcher {
 
 	@SuppressWarnings("deprecation")
 	public static UUID getUUID(String name) {
-		if(name == null) return UUID.randomUUID();
+		if (name == null)
+			return UUID.randomUUID();
 		name = name.toLowerCase();
-		
-		if(uuids.containsKey(name)) return uuids.get(name);
-		
-		try {
-			if (Bukkit.getOnlineMode()) {
-				HttpURLConnection connection = (HttpURLConnection) new URL(
-						String.format(UUID_URL, name, System.currentTimeMillis() / 1000)).openConnection();
-				connection.setReadTimeout(5000);
 
-				PlayerUUID player = gson.fromJson(
-						new BufferedReader(new InputStreamReader(connection.getInputStream())), PlayerUUID.class);
-				
-				uuids.put(name, player.getId());
-				
-				return player.getId();
-			} else {
-				uuids.put(name, Bukkit.getOfflinePlayer(name).getUniqueId());
-				return Bukkit.getOfflinePlayer(name).getUniqueId();
-			}
+		if (uuids.containsKey(name))
+			return uuids.get(name);
+
+		try {
+			HttpURLConnection connection = (HttpURLConnection) new URL(
+					String.format(UUID_URL, name, System.currentTimeMillis() / 1000)).openConnection();
+			connection.setReadTimeout(5000);
+
+			PlayerUUID player = gson.fromJson(new BufferedReader(new InputStreamReader(connection.getInputStream())),
+					PlayerUUID.class);
+
+			uuids.put(name, player.getId());
+
+			return player.getId();
 		} catch (Exception e) {
 			Bukkit.getConsoleSender()
 					.sendMessage("Your server has no connection to the mojang servers or is runnig slowly.");
-			Bukkit.getConsoleSender().sendMessage("Therefore the UUID cannot be parsed.");
-			return null;
+			uuids.put(name, Bukkit.getOfflinePlayer(name).getUniqueId());
+			return Bukkit.getOfflinePlayer(name).getUniqueId();
 		}
 	}
 
 	public static String getName(UUID uuid) {
-		
-		if(names.containsKey(uuid)) return names.get(uuid);
+
+		if (names.containsKey(uuid))
+			return names.get(uuid);
 
 		try {
-			if (Bukkit.getOnlineMode()) {
-				HttpURLConnection connection = (HttpURLConnection) new URL(
-						String.format(NAME_URL, UUIDTypeAdapter.fromUUID(uuid))).openConnection();
-				connection.setReadTimeout(5000);
+			HttpURLConnection connection = (HttpURLConnection) new URL(
+					String.format(NAME_URL, UUIDTypeAdapter.fromUUID(uuid))).openConnection();
+			connection.setReadTimeout(5000);
 
-				PlayerUUID[] allUserNames = gson.fromJson(
-						new BufferedReader(new InputStreamReader(connection.getInputStream())), PlayerUUID[].class);
-				PlayerUUID currentName = allUserNames[allUserNames.length - 1];
-				
-				names.put(uuid, currentName.getName());
-				
-				return currentName.getName();
-			} else {
-				names.put(uuid, Bukkit.getOfflinePlayer(uuid).getName());
-				return Bukkit.getOfflinePlayer(uuid).getName();
-			}
+			PlayerUUID[] allUserNames = gson.fromJson(
+					new BufferedReader(new InputStreamReader(connection.getInputStream())), PlayerUUID[].class);
+			PlayerUUID currentName = allUserNames[allUserNames.length - 1];
+
+			names.put(uuid, currentName.getName());
+
+			return currentName.getName();
 		} catch (Exception e) {
 			Bukkit.getConsoleSender()
 					.sendMessage("§cYour server has no connection to the mojang servers or is runnig slow.");
-			Bukkit.getConsoleSender().sendMessage("§cTherefore the UUID cannot be parsed.");
-			return null;
+			names.put(uuid, Bukkit.getOfflinePlayer(uuid).getName());
+			return Bukkit.getOfflinePlayer(uuid).getName();
 		}
-
 	}
-
 }
 
 class PlayerUUID {

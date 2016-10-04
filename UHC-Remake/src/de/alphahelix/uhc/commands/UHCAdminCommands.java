@@ -47,7 +47,7 @@ public class UHCAdminCommands extends SimpleCommand<UHC> {
 		}
 
 		else if (args.length == 1) {
-			if (args[0].equalsIgnoreCase("startLobbyTimer")) {
+			if (args[0].equalsIgnoreCase("startLobby")) {
 				if (!getPlugin().getRegister().getLobbyTimer().isRunning()) {
 					getPlugin().getRegister().getLobbyTimer().startLobbyCountdown();
 					p.sendMessage(getPlugin().getPrefix() + "§7The lobbytimer now continues!");
@@ -58,7 +58,7 @@ public class UHCAdminCommands extends SimpleCommand<UHC> {
 				}
 			}
 
-			else if (args[0].equalsIgnoreCase("stopLobbyTimer")) {
+			else if (args[0].equalsIgnoreCase("stopLobby")) {
 				getPlugin().getRegister().getLobbyTimer().stopTimer();
 			}
 
