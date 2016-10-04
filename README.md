@@ -66,6 +66,9 @@ Also 1.8 will only stay with the features of the first ALPHA Version Until relea
   > Kits enabled: </br>
     [![ingame-scoreboard](https://i.gyazo.com/3588fdbdeebf15c2aa110adcbb204e4e.png)](https://gyazo.com/3588fdbdeebf15c2aa110adcbb204e4e)
 </br>
+### StatsNPC
+[![statsnpc](https://i.gyazo.com/044527bc9f9413a9997447a1c15aa0be.png)](https://gyazo.com/044527bc9f9413a9997447a1c15aa0be)
+</br>
 ***
 ## Configurations
 See the wiki here : https://github.com/AlphaHelixDev/UHC-Spigot/wiki/Configurations
