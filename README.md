@@ -2,6 +2,8 @@
 In the Alpha & Beta Phase bugs of the 1.9 Version have priority to be fixed!</br>
 Also 1.8 will only stay with the features of the first ALPHA Version Until release 1.9 however will get updates with new features.
 
+The 1.8 Plugins can be found here. Latest 1.8 Version is 2.2 ALPHA!
+
 You need help with setting up UHC? Don't hesitate to contact me on SpigotMC @AlphaHelix before giving a bad review.</br>
 You have an idea? Send it to me via SpigotMC @AlphaHelix.
 ***
