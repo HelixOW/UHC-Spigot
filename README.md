@@ -1,6 +1,9 @@
 # UHC
 In the Alpha & Beta Phase bugs of the 1.9 Version have priority to be fixed!</br>
-Also 1.8 will only be 1 Version Until release 1.9 however will get updates with new features.
+Also 1.8 will only stay with the features of the first ALPHA Version Until release 1.9 however will get updates with new features.
+
+You need help with setting up UHC? Don't hesitate to contact me on SpigotMC @AlphaHelix before giving a bad review.</br>
+You have an idea? Send it to me via SpigotMC @AlphaHelix.
 ***
 ##  Informations
 - Bungeecord support.
@@ -16,6 +19,7 @@ Also 1.8 will only be 1 Version Until release 1.9 however will get updates with 
 - 99 Scenarios, where if you enabled them 1 is played every round (see here [https://goo.gl/EzJip9] to have a list of them).
 - All messages are configureable.
 - Kills, deaths, coins, points, rank stats system.
+- NPC (Non player character) who shows your stats above his head.
 - 2 Types of Backend (MySQL or File).
 - Custom MOTDs for different states of the game.
 - Custom location for Deathmatch (can be own world etc.).
@@ -64,6 +68,9 @@ Also 1.8 will only be 1 Version Until release 1.9 however will get updates with 
   </br>
   > Kits enabled: </br>
     [![ingame-scoreboard](https://i.gyazo.com/3588fdbdeebf15c2aa110adcbb204e4e.png)](https://gyazo.com/3588fdbdeebf15c2aa110adcbb204e4e)
+</br>
+### StatsNPC
+[![statsnpc](https://i.gyazo.com/044527bc9f9413a9997447a1c15aa0be.png)](https://gyazo.com/044527bc9f9413a9997447a1c15aa0be)
 </br>
 ***
 ## Configurations
