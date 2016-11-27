@@ -1,4 +1,5 @@
 # UHC
+### Please notice that Java 8 is required!!!
 In the Alpha & Beta Phase bugs of the 1.9 Version have priority to be fixed!</br>
 Also 1.8 will only stay with the features of the first ALPHA Version Until release 1.9 however will get updates with new features.
 
