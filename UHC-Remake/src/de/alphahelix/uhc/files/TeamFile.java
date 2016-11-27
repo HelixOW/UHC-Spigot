@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.files;
 
-import java.util.ArrayList;
-
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.EasyFile;
 import org.bukkit.Color;
 import org.bukkit.Location;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.EasyFile;
+import java.util.ArrayList;
 
 public class TeamFile extends EasyFile {
 

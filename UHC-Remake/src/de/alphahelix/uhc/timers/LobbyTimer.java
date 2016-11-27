@@ -1,24 +1,21 @@
 package de.alphahelix.uhc.timers;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.Sounds;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.timers.LobbyEndEvent;
+import de.alphahelix.uhc.instances.Util;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.nms.SimpleActionBar;
+import de.popokaka.alphalibary.nms.SimpleTitle;
+import de.popokaka.alphalibary.utils.Cuboid;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-
-import de.alphahelix.uhc.GState;
-import de.alphahelix.uhc.Sounds;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.Util;
-import de.popokaka.alphalibary.nms.SimpleActionBar;
-import de.popokaka.alphalibary.nms.SimpleTitle;
-import de.popokaka.alphalibary.utils.Cuboid;
 
 public class LobbyTimer extends Util {
 
@@ -43,9 +40,11 @@ public class LobbyTimer extends Util {
 	}
 
 	public boolean isRunning() {
-		if (timer != null)
-			return true;
-		return false;
+		return timer != null;
+	}
+
+	public int getCurrentTimeInSeconds() {
+		return this.time;
 	}
 
 	public void startLobbyCountdown() {
@@ -61,8 +60,10 @@ public class LobbyTimer extends Util {
 
 			if (!isAlreadyPasted) {
 				isAlreadyPasted = true;
-				getRegister().getSchematicManagerUtil().load(getRegister().getMainOptionsFile().getString("Lobby.filename"));
-				getRegister().getSchematicManagerUtil().paste(getRegister().getLocationsFile().getArena().add(0, 140, 0));
+				getRegister().getSchematicManagerUtil()
+						.load(getRegister().getMainOptionsFile().getString("Lobby.filename"));
+				getRegister().getSchematicManagerUtil()
+						.paste(getRegister().getLocationsFile().getArena().add(0, 140, 0));
 			}
 
 			timer = new BukkitRunnable() {
@@ -83,8 +84,22 @@ public class LobbyTimer extends Util {
 										new BukkitRunnable() {
 											public void run() {
 												Bukkit.getPluginManager().callEvent(new LobbyEndEvent());
+												if (getUhc().isLobbyAsSchematic()) {
+													World w = getRegister().getLocationsFile().getArena().getWorld();
+													Location l1 = new Location(w, -75, 155, -75);
+													Location l2 = new Location(w, 75, 255, 75);
+
+													for (Block b : new Cuboid(l1, l2).getBlocks()) {
+														if (b.getType().equals(Material.AIR))
+															continue;
+														b.setType(Material.AIR);
+													}
+												}
 											}
 										}.runTaskLater(getUhc(), 20);
+									} else if (time == 10) {
+										Scenarios.setPlayedScenario(
+												getRegister().getScenarioInventory().getScenarioWithMostVotes());
 									}
 									for (String pName : getRegister().getPlayerUtil().getAll()) {
 										Player p = Bukkit.getPlayer(pName);
@@ -131,6 +146,27 @@ public class LobbyTimer extends Util {
 											p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
 										}
 
+										if (time == 10) {
+											getRegister().getScoreboardUtil().updateScenario(p,
+													Scenarios.getScenario());
+											p.getInventory().setItem(
+													getRegister().getScenarioFile().getInt("Scenarios Item Slot"),
+													new ItemBuilder(Material.getMaterial(getRegister().getScenarioFile()
+															.getString("Scenarios Item").replace(" ", "_")
+															.toUpperCase()))
+																	.setName(getRegister().getScenarioFile()
+																			.getColorString("Scenarios Item Name")
+																			.replace("-",
+																					getRegister().getScenarioFile()
+																							.getCustomScenarioName(
+																									Scenarios
+																											.getScenario())))
+																	.setLore(getRegister().getScenarioHelpFile()
+																			.getScenarioDescription(
+																					Scenarios.getScenario()))
+																	.build());
+										}
+
 										if (time < 10 && time != 0) {
 											p.sendMessage(getUhc().getPrefix() + getRegister().getMessageFile()
 													.getColorString("Lobby time left info")
@@ -148,16 +184,6 @@ public class LobbyTimer extends Util {
 											timer.cancel();
 
 											p.getInventory().clear();
-
-											if (getUhc().isLobbyAsSchematic()) {
-												World w = getRegister().getLocationsFile().getArena().getWorld();
-												Location l1 = new Location(w, -75, 155, -75);
-												Location l2 = new Location(w, 75, 255, 75);
-
-												for (Block b : new Cuboid(l1, l2).getBlocks()) {
-													b.setType(Material.AIR);
-												}
-											}
 
 											Location worldSpawn = getRegister().getLocationsFile().getArena();
 											Location playerSpawn = worldSpawn.getWorld()

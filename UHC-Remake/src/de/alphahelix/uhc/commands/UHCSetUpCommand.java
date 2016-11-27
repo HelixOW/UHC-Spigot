@@ -1,21 +1,21 @@
 package de.alphahelix.uhc.commands;
 
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
+import de.alphahelix.uhc.Registery;
 import de.alphahelix.uhc.UHC;
 import de.popokaka.alphalibary.command.SimpleCommand;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class UHCSetUpCommand extends SimpleCommand<UHC> {
+import java.util.List;
 
-	public UHCSetUpCommand(UHC plugin, String command, String description, String... aliases) {
-		super(plugin, command, description, aliases);
+public class UHCSetUpCommand extends SimpleCommand<UHC, Registery> {
+
+	public UHCSetUpCommand(UHC plugin, Registery r, String command, String description, String... aliases) {
+		super(plugin, r, command, description, aliases);
 	}
 
 	@Override
@@ -31,37 +31,43 @@ public class UHCSetUpCommand extends SimpleCommand<UHC> {
 					+ getPlugin().getRegister().getMessageFile().getColorString("No Permissions")));
 			return true;
 		} else if (args.length == 0) {
-			TextComponent msg = new TextComponent(getPlugin().getPrefix() + "§7Please click §chere §7to see the wiki");
+			TextComponent msg = new TextComponent(getPlugin().getPrefix() + "Â§7Please click Â§chere Â§7to see the wiki");
 			msg.setClickEvent(new ClickEvent(Action.OPEN_URL, "https://github.com/AlphaHelixDev/UHC-Spigot/wiki"));
 			p.spigot().sendMessage(msg);
 			return true;
 		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("setLobby")) {
 				getPlugin().getRegister().getLocationsFile().setLobby(p.getLocation());
-				p.sendMessage(getPlugin().getPrefix() + "You've set the lobby to §ayour Location§7!");
+				p.sendMessage(getPlugin().getPrefix() + "You've set the lobby to Â§ayour LocationÂ§7!");
 				return true;
 			}
 
 			else if (args[0].equalsIgnoreCase("setArena")) {
 				getPlugin().getRegister().getLocationsFile().setArena(p.getLocation());
-				p.sendMessage(getPlugin().getPrefix() + "You've set the arenaspawn to §ayour Location§7!");
+				p.sendMessage(getPlugin().getPrefix() + "You've set the arenaspawn to Â§ayour LocationÂ§7!");
 				return true;
 			}
 
 			else if (args[0].equalsIgnoreCase("setDeathmatch")) {
 				getPlugin().getRegister().getLocationsFile().setDeathmatch(p.getLocation());
-				p.sendMessage(getPlugin().getPrefix() + "You've set the deathmatch spot to §ayour Location§7!");
+				p.sendMessage(getPlugin().getPrefix() + "You've set the deathmatch spot to Â§ayour LocationÂ§7!");
 				return true;
 			}
 
 			else if (args[0].equalsIgnoreCase("setNether")) {
 				getPlugin().getRegister().getLocationsFile().setNetherArena(p.getLocation());
-				p.sendMessage(getPlugin().getPrefix() + "You've set the nether spot to §ayour Location§7!");
+				p.sendMessage(getPlugin().getPrefix() + "You've set the nether spot to Â§ayour LocationÂ§7!");
 				return true;
 			}
+			
 			else if (args[0].equalsIgnoreCase("setStatsNPC")) {
 				getPlugin().getRegister().getLocationsFile().addNPC(p.getLocation());
 				p.sendMessage(getPlugin().getPrefix() + "You've set the position of a NPC to show the stats at your location!");
+				return true;
+			}
+			
+			else if (args[0].equalsIgnoreCase("manageScenarios")) {
+				getPlugin().getRegister().getScenarioAdminInventory().fillInventory(p);
 				return true;
 			}
 		}
@@ -110,7 +116,7 @@ public class UHCSetUpCommand extends SimpleCommand<UHC> {
 						getPlugin().getRegister().getHologramUtil().createHologram(all, i, Double.parseDouble(args[1]));
 					}
 				}
-				p.sendMessage(getPlugin().getPrefix() + "§7You have created a new Hologram");
+				p.sendMessage(getPlugin().getPrefix() + "Â§7You have created a new Hologram");
 				return true;
 			}
 
@@ -126,12 +132,12 @@ public class UHCSetUpCommand extends SimpleCommand<UHC> {
 						getPlugin().getRegister().getHologramUtil().createHologram(all, i, 0);
 					}
 				}
-				p.sendMessage(getPlugin().getPrefix() + "§7You have created a new Hologram");
+				p.sendMessage(getPlugin().getPrefix() + "Â§7You have created a new Hologram");
 				return true;
 			}
 		}
 
-		TextComponent msg = new TextComponent(getPlugin().getPrefix() + "§7Please click §chere §7to see the wiki");
+		TextComponent msg = new TextComponent(getPlugin().getPrefix() + "Â§7Please click Â§chere Â§7to see the wiki");
 		msg.setClickEvent(new ClickEvent(Action.OPEN_URL, "https://github.com/AlphaHelixDev/UHC-Spigot/wiki"));
 		p.spigot().sendMessage(msg);
 		return true;

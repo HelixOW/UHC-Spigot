@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.timers;
 
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World.Environment;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
 
 public class GoToHellTimer extends SimpleListener {
 
@@ -26,9 +25,7 @@ public class GoToHellTimer extends SimpleListener {
 	}
 
 	public boolean isRunning() {
-		if (damage != null)
-			return true;
-		return false;
+		return damage != null;
 	}
 
 	public void startCooldown() {

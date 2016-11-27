@@ -1,15 +1,14 @@
 package de.alphahelix.uhc.files;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.EasyFile;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.EasyFile;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CraftingFile extends EasyFile {
 
@@ -31,7 +30,7 @@ public class CraftingFile extends EasyFile {
 		}
 	}
 
-	public ShapedRecipe getRecipe(String itemToCraft) {
+	private ShapedRecipe getRecipe(String itemToCraft) {
 		ArrayList<Character> variables = new ArrayList<>();
 		HashMap<Character, ItemStack> vars = new HashMap<>();
 
@@ -63,8 +62,8 @@ public class CraftingFile extends EasyFile {
 
 		recipe.shape(top, mid, bottom);
 
-		for (int i = 0; i < variables.size(); i++) {
-			recipe.setIngredient(variables.get(i), vars.get(variables.get(i)).getData());
+		for (Character variable : variables) {
+			recipe.setIngredient(variable, vars.get(variable).getData());
 		}
 
 		return recipe;

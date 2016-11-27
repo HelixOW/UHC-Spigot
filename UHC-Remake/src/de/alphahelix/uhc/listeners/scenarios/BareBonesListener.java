@@ -1,5 +1,8 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -8,10 +11,6 @@ import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
 
 public class BareBonesListener extends SimpleListener {
 

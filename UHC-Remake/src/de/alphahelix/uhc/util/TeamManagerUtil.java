@@ -1,16 +1,15 @@
 package de.alphahelix.uhc.util;
 
-import java.util.ArrayList;
-
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.UHCTeam;
+import de.alphahelix.uhc.instances.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.UHCTeam;
-import de.alphahelix.uhc.instances.Util;
+import java.util.ArrayList;
 
 public class TeamManagerUtil extends Util {
 
@@ -20,7 +19,7 @@ public class TeamManagerUtil extends Util {
 
 	public TeamManagerUtil(UHC pl) {
 		super(pl);
-		teams = new ArrayList<UHCTeam>();
+		teams = new ArrayList<>();
 		m = Material.getMaterial(getRegister().getTeamFile().getString("GUI.Content Material"));
 	}
 
@@ -140,24 +139,20 @@ public class TeamManagerUtil extends Util {
 	}
 
 	public UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot, boolean isColoredName, Color c) {
-		UHCTeam created = new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, isColoredName, c);
-		return created;
+		return new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, isColoredName, c);
 	}
 
 	public UHCTeam registerTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot,
 			boolean isColoredName, Color c) {
-		UHCTeam created = new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, isColoredName, c);
-		return created;
+		return new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, isColoredName, c);
 	}
 
 	public UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot, Color c) {
-		UHCTeam created = new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, true, c);
-		return created;
+		return new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, true, c);
 	}
 
 	public UHCTeam registerTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot, Color c) {
-		UHCTeam created = new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, true, c);
-		return created;
+		return new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, true, c);
 	}
 
 	public void addTeam(UHCTeam team) {
@@ -176,10 +171,7 @@ public class TeamManagerUtil extends Util {
 	}
 	
 	public boolean isSameTeam(Player p, Player p2) {
-		if(isInOneTeam(p) != null && isInOneTeam(p2) != null) {
-			return isInOneTeam(p).equals(isInOneTeam(p2));
-		}
-		return false;
+		return isInOneTeam(p) != null && isInOneTeam(p2) != null && isInOneTeam(p).equals(isInOneTeam(p2));
 	}
 
 	public void splitPlayersIntoTeams() {

@@ -1,22 +1,5 @@
 package de.alphahelix.uhc.util;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.UUID;
-import java.util.logging.Level;
-
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Kit;
 import de.alphahelix.uhc.instances.UHCCrate;
@@ -24,6 +7,15 @@ import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.mysql.MySQLAPI;
 import de.popokaka.alphalibary.mysql.MySQLManager;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.sql.ResultSet;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.logging.Level;
 
 public class StatsUtil extends Util {
 
@@ -200,15 +192,15 @@ public class StatsUtil extends Util {
 					"Kits") == null) {
 				String kit = getRegister().getPlayerFile()
 						.getString("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kits");
-				return kit.replace("ง", "&");
+				return kit.replace("ยง", "&");
 			}
 			String kit = MySQLManager
 					.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kits").toString();
-			return kit.replace("ง", "&");
+			return kit.replace("ยง", "&");
 		}
 		String kit = getRegister().getPlayerFile()
 				.getString("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kits");
-		return kit.replace("ง", "&");
+		return kit.replace("ยง", "&");
 	}
 
 	public ArrayList<String> getKitsAsList(OfflinePlayer p) {
@@ -223,7 +215,7 @@ public class StatsUtil extends Util {
 		String[] kits = kit.split(" ,");
 
 		for (String kitName : kits) {
-			playerKits.add(kitName.replace("ง", "&"));
+			playerKits.add(kitName.replace("ยง", "&"));
 		}
 		return playerKits;
 	}
@@ -236,29 +228,27 @@ public class StatsUtil extends Util {
 							"Kits") == null) {
 						getRegister().getPlayerFile().set(
 								"Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kits",
-								getKitsAsString(p) + kit.getName().replace("ง", "&") + " ,");
+								getKitsAsString(p) + kit.getName().replace("ยง", "&") + " ,");
 						getRegister().getPlayerFile().save();
 					}
 					MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Kits",
-							getKitsAsString(p) + kit.getName().replace("ง", "&") + " ,");
+							getKitsAsString(p) + kit.getName().replace("ยง", "&") + " ,");
 					return;
 				}
 				getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kits",
-						getKitsAsString(p) + kit.getName().replace("ง", "&") + " ,");
+						getKitsAsString(p) + kit.getName().replace("ยง", "&") + " ,");
 				getRegister().getPlayerFile().save();
 			}
 		}.runTaskLaterAsynchronously(getUhc(), 10);
 	}
 
 	public boolean hasKit(Kit k, OfflinePlayer p) {
-		if (getKitsAsList(p).contains(" "+k.getName().replace("ง", "&")) 
-				|| getKitsAsList(p).contains(" "+k.getName().replace("ง", "&")+",")
-				|| getKitsAsList(p).contains(","+k.getName().replace("ง", "&"))
-				|| getKitsAsList(p).contains(","+k.getName().replace("ง", "&")+" ")
-				|| getKitsAsList(p).contains(k.getName().replace("ง", "&")+",")
-				|| getKitsAsList(p).contains(k.getName().replace("ง", "&")))
-			return true;
-		return false;
+		return getKitsAsList(p).contains(" " + k.getName().replace("ยง", "&"))
+				|| getKitsAsList(p).contains(" " + k.getName().replace("ยง", "&") + ",")
+				|| getKitsAsList(p).contains("," + k.getName().replace("ยง", "&"))
+				|| getKitsAsList(p).contains("," + k.getName().replace("ยง", "&") + " ")
+				|| getKitsAsList(p).contains(k.getName().replace("ยง", "&") + ",")
+				|| getKitsAsList(p).contains(k.getName().replace("ยง", "&"));
 	}
 
 	// Crates
@@ -460,7 +450,7 @@ public class StatsUtil extends Util {
 				ResultSet rs = MySQLAPI.getMySQLConnection().createStatement()
 						.executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
 
-				int in = MySQLAPI.getCountNumber() + 1;
+				int in = MySQLManager.getCountNumber("uhc") + 1;
 
 				while (rs.next()) {
 					in--;
@@ -494,11 +484,11 @@ public class StatsUtil extends Util {
 
 		if (getUhc().isMySQLMode()) {
 			try {
-				ResultSet rs = null;
+				ResultSet rs;
 				rs = MySQLAPI.getMySQLConnection().createStatement()
 						.executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
 
-				int in = MySQLAPI.getCountNumber() + 1;
+				int in = MySQLManager.getCountNumber("uhc") + 1;
 
 				while (rs.next()) {
 					in--;
@@ -526,7 +516,7 @@ public class StatsUtil extends Util {
 	}
 
 	static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
-		SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<Map.Entry<K, V>>(new Comparator<Map.Entry<K, V>>() {
+		SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<>(new Comparator<Map.Entry<K, V>>() {
 			@Override
 			public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
 				int res = e1.getValue().compareTo(e2.getValue());
@@ -551,7 +541,7 @@ public class StatsUtil extends Util {
 				msg = msg.replace("[points]", Integer.toString(getPoints(p)));
 				msg = msg.replace("[kits]", getKitsAsString(p));
 
-				toSend.sendMessage("ง8---===XXX===---\n" + msg + "ง8---===XXX===---");
+				toSend.sendMessage("ยง8---===XXX===---\n" + msg + "ยง8---===XXX===---");
 			}
 		}.runTaskLaterAsynchronously(getUhc(), 10);
 	}

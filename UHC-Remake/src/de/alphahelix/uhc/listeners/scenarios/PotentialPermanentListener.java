@@ -1,7 +1,10 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.lang.reflect.InvocationTargetException;
-
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.Sounds;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.timers.LobbyEndEvent;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,11 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.Sounds;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
+import java.lang.reflect.InvocationTargetException;
 
 public class PotentialPermanentListener extends SimpleListener {
 
@@ -58,7 +57,7 @@ public class PotentialPermanentListener extends SimpleListener {
 			return;
 
 		Class<?> handle = null;
-		float absHearts = 00;
+		float absHearts = 0;
 		try {
 			handle = player.getClass().getMethod("getHandle").getReturnType();
 			absHearts = (float) handle.getMethod("getAbsorptionHearts").invoke(null);

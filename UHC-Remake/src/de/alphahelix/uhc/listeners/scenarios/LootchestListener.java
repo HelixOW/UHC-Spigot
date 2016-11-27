@@ -1,7 +1,10 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.Random;
-
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.timers.LobbyEndEvent;
+import de.alphahelix.uhc.instances.SimpleListener;
+import de.popokaka.alphalibary.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,11 +12,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.popokaka.alphalibary.item.ItemBuilder;
+import java.util.Random;
 
 public class LootchestListener extends SimpleListener {
 

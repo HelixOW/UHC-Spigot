@@ -1,21 +1,21 @@
 package de.alphahelix.uhc.util;
 
-import java.io.File;
-import java.util.logging.Level;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
-import org.bukkit.World;
-import org.bukkit.World.Environment;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
-
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.utils.Cuboid;
+import org.bukkit.*;
+import org.bukkit.World.Environment;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.File;
+import java.util.logging.Level;
 
 public class WorldUtil extends Util {
+	
+	private World tr;
+	private File path = null;
+	private String name = "";
 
 	public WorldUtil(UHC uhc) {
 		super(uhc);
@@ -40,8 +40,7 @@ public class WorldUtil extends Util {
 		}
 	}
 
-	public World createWorld() {
-		World tr = null;
+	public void createWorld() {
 		if (getRegister().getLocationsFile().getArena() == null) {
 
 			if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.URBAN))) {
@@ -49,7 +48,7 @@ public class WorldUtil extends Util {
 					tr = Bukkit.createWorld(new WorldCreator("UHC").type(WorldType.FLAT));
 					tr.setDifficulty(Difficulty.HARD);
 					tr.getSpawnLocation().getChunk().load();
-					return tr;
+					return;
 				}
 			} else if (getRegister().getScenarioFile()
 					.isEnabled(Scenarios.getRawScenarioName(Scenarios.VAST_TRACK_O_MOUNTAIN))) {
@@ -57,19 +56,16 @@ public class WorldUtil extends Util {
 					tr = Bukkit.createWorld(new WorldCreator("UHC").type(WorldType.AMPLIFIED));
 					tr.setDifficulty(Difficulty.HARD);
 					tr.getSpawnLocation().getChunk().load();
-					return tr;
+					return;
 				}
 			}
 
 			tr = Bukkit.createWorld(new WorldCreator("UHC"));
 			tr.setDifficulty(Difficulty.HARD);
 			tr.getSpawnLocation().getChunk().load();
-			return tr;
+			return;
 
 		}
-
-		File path = null;
-		String name = "";
 
 		if (getRegister().getLocationsFile().getArena().getWorld() == null) {
 			path = new File(getRegister().getLocationsFile().getArenaWorldName());
@@ -78,33 +74,40 @@ public class WorldUtil extends Util {
 			path = getRegister().getLocationsFile().getArena().getWorld().getWorldFolder();
 			name = getRegister().getLocationsFile().getArena().getWorld().getName();
 
-			unloadWorld(getRegister().getLocationsFile().getArena().getWorld());
+			new BukkitRunnable() {
+				public void run() {
+					unloadWorld(getRegister().getLocationsFile().getArena().getWorld());
+				}
+			}.runTaskLater(getUhc(), 5);
 		}
 
-		deleteWorld(path);
+		new BukkitRunnable() {
+			public void run() {
 
-		if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.URBAN))) {
-			if (Scenarios.isScenario(Scenarios.URBAN))
-				tr = Bukkit.createWorld(new WorldCreator(name).type(WorldType.FLAT));
-			else
-				tr = Bukkit.createWorld(new WorldCreator(name));
-		}
+				deleteWorld(path);
 
-		else if (getRegister().getScenarioFile()
-				.isEnabled(Scenarios.getRawScenarioName(Scenarios.VAST_TRACK_O_MOUNTAIN))) {
-			if (Scenarios.isScenario(Scenarios.VAST_TRACK_O_MOUNTAIN))
-				tr = Bukkit.createWorld(new WorldCreator(name).type(WorldType.AMPLIFIED));
-			else
-				tr = Bukkit.createWorld(new WorldCreator(name));
-		}
+				if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.URBAN))) {
+					if (Scenarios.isScenario(Scenarios.URBAN))
+						tr = Bukkit.createWorld(new WorldCreator(name).type(WorldType.FLAT));
+					else
+						tr = Bukkit.createWorld(new WorldCreator(name));
+				}
 
-		else
-			tr = Bukkit.createWorld(new WorldCreator(name));
+				else if (getRegister().getScenarioFile()
+						.isEnabled(Scenarios.getRawScenarioName(Scenarios.VAST_TRACK_O_MOUNTAIN))) {
+					if (Scenarios.isScenario(Scenarios.VAST_TRACK_O_MOUNTAIN))
+						tr = Bukkit.createWorld(new WorldCreator(name).type(WorldType.AMPLIFIED));
+					else
+						tr = Bukkit.createWorld(new WorldCreator(name));
+				}
 
-		tr.setDifficulty(Difficulty.HARD);
-		tr.getSpawnLocation().getChunk().load();
+				else
+					tr = Bukkit.createWorld(new WorldCreator(name));
 
-		return tr;
+				tr.setDifficulty(Difficulty.HARD);
+				tr.getSpawnLocation().getChunk().load();
+			}
+		}.runTaskLater(getUhc(), 10);
 	}
 
 	public World createNetherWorld() {
@@ -114,20 +117,20 @@ public class WorldUtil extends Util {
 			return getRegister().getLocationsFile().getArena().getWorld();
 
 		if (getRegister().getLocationsFile().getNetherArena() == null) {
-			World tr = Bukkit.createWorld(new WorldCreator("UHC-Nether").environment(Environment.NETHER));
+			tr = Bukkit.createWorld(new WorldCreator("UHC-Nether").environment(Environment.NETHER));
 
 			tr.setDifficulty(Difficulty.HARD);
 			tr.getSpawnLocation().getChunk().load();
 
 			return tr;
 		}
-		File path = getRegister().getLocationsFile().getNetherArena().getWorld().getWorldFolder();
-		String name = getRegister().getLocationsFile().getNetherArena().getWorld().getName();
+		path = getRegister().getLocationsFile().getNetherArena().getWorld().getWorldFolder();
+		name = getRegister().getLocationsFile().getNetherArena().getWorld().getName();
 
 		unloadWorld(getRegister().getLocationsFile().getNetherArena().getWorld());
 		deleteWorld(path);
 
-		World tr = Bukkit.createWorld(new WorldCreator(name).environment(Environment.NETHER));
+		tr = Bukkit.createWorld(new WorldCreator(name).environment(Environment.NETHER));
 
 		tr.setDifficulty(Difficulty.HARD);
 		tr.getSpawnLocation().getChunk().load();
@@ -153,9 +156,9 @@ public class WorldUtil extends Util {
 				endz);
 
 		r.generateChunks();
-		long duration = Long.valueOf(System.currentTimeMillis() - start);
-		long seconds = Long.valueOf(duration / 1000L);
-		long minutes = Long.valueOf(seconds / 60L);
+		long duration = System.currentTimeMillis() - start;
+		long seconds = duration / 1000L;
+		long minutes = seconds / 60L;
 
 		new BiomeUtil();
 		UHC.getInstance().getLog().log(Level.INFO,

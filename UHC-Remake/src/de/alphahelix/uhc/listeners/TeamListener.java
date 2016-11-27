@@ -1,5 +1,10 @@
 package de.alphahelix.uhc.listeners;
 
+import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
+import de.alphahelix.uhc.instances.UHCTeam;
+import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,16 +18,16 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import de.alphahelix.uhc.GState;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.instances.UHCTeam;
-import de.popokaka.alphalibary.UUID.UUIDFetcher;
-
 public class TeamListener extends SimpleListener {
+
+	private static boolean isFFA = false;
 
 	public TeamListener(UHC uhc) {
 		super(uhc);
+	}
+
+	public void setFFA() {
+		isFFA = true;
 	}
 
 	@EventHandler
@@ -51,12 +56,14 @@ public class TeamListener extends SimpleListener {
 						.isInOneTeam(
 								(Player) Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())))
 						.getSize())
-					e.setCancelled(true);
+					if (!isFFA)
+						e.setCancelled(true);
 		} else if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
 			if (getRegister().getTeamManagerUtil().isSameTeam((Player) e.getEntity(), (Player) e.getDamager()))
 				if (getRegister().getPlayerUtil().getSurvivors().size() > getRegister().getTeamManagerUtil()
 						.isInOneTeam((Player) e.getEntity()).getSize())
-					e.setCancelled(true);
+					if (!isFFA)
+						e.setCancelled(true);
 		}
 	}
 
@@ -124,11 +131,11 @@ public class TeamListener extends SimpleListener {
 		if (!(e.getRightClicked().isCustomNameVisible()))
 			return;
 		e.setCancelled(true);
-		
+
 		if (getRegister().getTeamManagerUtil()
 				.getTeamByName(ChatColor.stripColor(e.getRightClicked().getCustomName())) == null)
 			return;
-		
+
 		getRegister().getTeamManagerUtil().getTeamByName(ChatColor.stripColor(e.getRightClicked().getCustomName()))
 				.addToTeam(e.getPlayer());
 	}

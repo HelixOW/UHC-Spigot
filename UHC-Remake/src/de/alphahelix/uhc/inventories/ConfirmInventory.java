@@ -1,17 +1,16 @@
 package de.alphahelix.uhc.inventories;
 
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.Util;
+import de.popokaka.alphalibary.item.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
-import de.popokaka.alphalibary.item.ItemBuilder;
-
 public class ConfirmInventory extends Util {
 
-	Inventory i;
+	private Inventory i;
 
 	public ConfirmInventory(UHC uhc) {
 		super(uhc);
@@ -43,11 +42,11 @@ public class ConfirmInventory extends Util {
 		p.openInventory(getInv());
 	}
 
-	public Inventory getInv() {
+	private Inventory getInv() {
 		return i;
 	}
 
-	public void setInventory(Inventory i) {
+	private void setInventory(Inventory i) {
 		this.i = i;
 	}
 

@@ -1,8 +1,8 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.ArrayList;
-import java.util.Random;
-
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,9 +11,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.material.Door;
 
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MonsterIncListener extends SimpleListener {
 

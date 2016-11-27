@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.inventories;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Kit;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.item.ItemBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 public class KitInventory extends Util {
 
@@ -27,7 +26,7 @@ public class KitInventory extends Util {
 		for (Kit kit : getRegister().getKitsFile().getKits()) {
 			getInv().setItem(kit.getGuiSlot(),
 					new ItemBuilder(kit.getGuiBlock().getType()).setName(kit.getName().replace("_", " "))
-					.setLore("§7" + Integer.toString(kit.getPrice()) + " §eCoins").build());
+					.setLore("Â§7" + Integer.toString(kit.getPrice()) + " Â§eCoins").build());
 		}
 	}
 

@@ -57,13 +57,13 @@ public class MainOptionsFile extends EasyFile {
 	}
 	
 	public void loadValues() {
-		getUhc().setPrefix(getColorString("Prefix"));
-		getUhc().setBunggeMode(getBoolean("Bungeecord"));
-		getUhc().setLobbyServer("Bungeecord Fallbackserver");
-		getUhc().setMySQLMode(getBoolean("MySQL"));
-		getUhc().setSoup(getBoolean("Soup"));
-		getUhc().setScenarios(getBoolean("Scenarios"));
-		getUhc().setSpawnradius(getInt("Spawndispersal"));
-		getUhc().setStatusMOTD(getBoolean("Status MOTD"));
+		getPluginInstance().setPrefix(getColorString("Prefix"));
+		getPluginInstance().setBunggeMode(getBoolean("Bungeecord"));
+		getPluginInstance().setLobbyServer("Bungeecord Fallbackserver");
+		getPluginInstance().setMySQLMode(getBoolean("MySQL"));
+		getPluginInstance().setSoup(getBoolean("Soup"));
+		getPluginInstance().setScenarios(getBoolean("Scenarios"));
+		getPluginInstance().setSpawnradius(getInt("Spawndispersal"));
+		getPluginInstance().setStatusMOTD(getBoolean("Status MOTD"));
 	}
 }

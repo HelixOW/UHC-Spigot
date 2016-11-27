@@ -1,7 +1,5 @@
 package de.alphahelix.uhc.util;
 
-import org.bukkit.entity.Player;
-
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
@@ -9,6 +7,7 @@ import de.alphahelix.uhc.instances.Kit;
 import de.alphahelix.uhc.instances.UHCTeam;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.scoreboard.SimpleScoreboard;
+import org.bukkit.entity.Player;
 
 public class ScoreboardUtil extends Util {
 
@@ -23,7 +22,7 @@ public class ScoreboardUtil extends Util {
 		if (!getRegister().getScoreboardFile().getBoolean("Lobby.show.scoreboard"))
 			return;
 
-		SimpleScoreboard ssb = new SimpleScoreboard("uhc-lobby",
+		SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), "uhc-lobby",
 				getRegister().getScoreboardFile().getColorString("Lobby.title"), iden);
 		int max = getRegister().getScoreboardConstructFile().getInt("Lobby.lines");
 
@@ -31,9 +30,7 @@ public class ScoreboardUtil extends Util {
 			max = 16;
 		for (int i = 0; i < max; i++) {
 			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Lobby.line." + i);
-			if (lineValue.contains("[out]"))
-				continue;
-			else if (lineValue.contains("[blank]")) {
+			if (lineValue.contains("[blank]")) {
 				String repeat = new String(new char[i]).replace("\0", " ");
 				ssb.setValue(i, repeat, iden);
 			}
@@ -102,13 +99,14 @@ public class ScoreboardUtil extends Util {
 					ssb.setValue(i, getRegister().getScoreboardFile().getColorString("Lobby.message.scenario")
 							.replace("[scenario]", "-").replace("[i]", iden), iden);
 
-					ssb.updateValue(i,
-							getRegister().getScoreboardFile().getColorString("Lobby.message.scenario")
-									.replace("[scenario]",
-											getRegister().getScenarioFile()
-													.getCustomScenarioName(Scenarios.getScenario()))
-									.replace("[i]", iden),
-							iden);
+					if (!getUhc().isScenarioVoting())
+						ssb.updateValue(i,
+								getRegister().getScoreboardFile().getColorString("Lobby.message.scenario")
+										.replace("[scenario]",
+												getRegister().getScenarioFile()
+														.getCustomScenarioName(Scenarios.getScenario()))
+										.replace("[i]", iden),
+								iden);
 				}
 			}
 
@@ -124,8 +122,29 @@ public class ScoreboardUtil extends Util {
 		p.setScoreboard(ssb.getScoreboard());
 	}
 
+	public void updateScenario(Player p, Scenarios played) {
+		SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-lobby");
+
+		int max = getRegister().getScoreboardConstructFile().getInt("Lobby.lines");
+
+		if (max > 16)
+			max = 16;
+
+		for (int i = 0; i < max; i++) {
+			String lineValue = getRegister().getScoreboardConstructFile().getColorString("Lobby.line." + i);
+			if (!lineValue.contains("[kit]") || lineValue.contains("[scenario]"))
+				continue;
+
+			ssb.updateValue(i,
+					getRegister().getScoreboardFile().getColorString("Lobby.message.scenario")
+							.replace("[scenario]", getRegister().getScenarioFile().getCustomScenarioName(played))
+							.replace("[i]", iden),
+					iden);
+		}
+	}
+
 	public void updateKit(Player p, Kit k) {
-		SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-lobby");
+		SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-lobby");
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Lobby.lines");
 
@@ -141,7 +160,7 @@ public class ScoreboardUtil extends Util {
 	}
 
 	public void updateTeam(Player p, UHCTeam t) {
-		SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-lobby");
+		SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-lobby");
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Lobby.lines");
 
@@ -160,7 +179,7 @@ public class ScoreboardUtil extends Util {
 		if (!getRegister().getScoreboardFile().getBoolean("Ingame.show.scoreboard"))
 			return;
 
-		SimpleScoreboard ssb = new SimpleScoreboard("uhc-ingame",
+		SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), "uhc-ingame",
 				getRegister().getScoreboardFile().getColorString("Ingame.title"), iden);
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 
@@ -340,7 +359,7 @@ public class ScoreboardUtil extends Util {
 	}
 
 	public void updateAlive(Player p) {
-		SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-ingame");
+		SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-ingame");
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 
@@ -361,7 +380,7 @@ public class ScoreboardUtil extends Util {
 	}
 
 	public void updateSpecs(Player p) {
-		SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-ingame");
+		SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-ingame");
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 
@@ -382,7 +401,7 @@ public class ScoreboardUtil extends Util {
 	}
 
 	public void updateTime(Player p) {
-		SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-ingame");
+		SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-ingame");
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 
@@ -443,7 +462,7 @@ public class ScoreboardUtil extends Util {
 	}
 
 	public void updateBorder(Player p) {
-		SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-ingame");
+		SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-ingame");
 
 		int max = getRegister().getScoreboardConstructFile().getInt("Ingame.lines");
 

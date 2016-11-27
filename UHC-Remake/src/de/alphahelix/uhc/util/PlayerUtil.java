@@ -1,13 +1,12 @@
 package de.alphahelix.uhc.util;
 
-import java.util.LinkedList;
-
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.Util;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
+import java.util.LinkedList;
 
 public class PlayerUtil extends Util{
 

@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.timers;
 
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
 
 public class EntropyTimer extends Util{
 	
@@ -23,9 +22,7 @@ public class EntropyTimer extends Util{
 	}
 
 	public boolean isRunning() {
-		if (draining != null)
-			return true;
-		return false;
+		return draining != null;
 	}
 
 	public void startDrainingTimer() {

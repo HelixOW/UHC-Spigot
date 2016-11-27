@@ -1,30 +1,5 @@
 package de.alphahelix.uhc.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Chest;
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.Pig;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Rabbit;
-import org.bukkit.entity.Sheep;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Spider;
-import org.bukkit.entity.Villager;
-import org.bukkit.entity.Zombie;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.inventory.ItemStack;
-
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
@@ -32,6 +7,19 @@ import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.instances.UHCCrate;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.nms.SimpleTitle;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
+import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class DeathListener extends SimpleListener {
 
@@ -147,78 +135,80 @@ public class DeathListener extends SimpleListener {
 				getRegister().getRestartTimer().startEndTimer();
 			}
 
-		} else if (e.getEntity() instanceof Player) {
-			for (String other : getRegister().getPlayerUtil().getAll()) {
-				if (Bukkit.getPlayer(other) == null)
-					return;
-				Bukkit.getPlayer(other)
-						.sendMessage(getRegister().getDeathMessageFile()
-								.getMessage(e.getEntity().getLastDamageCause() == null ? DamageCause.SUICIDE
-										: e.getEntity().getLastDamageCause().getCause())
-								.replace("[player]", ((Player) e.getEntity()).getName())
-								.replace("[entity]", (e.getEntity().getKiller() == null
-										? getRegister().getDeathMessageFile().getColorString("[entity] is a mob")
-										: e.getEntity().getKiller().getName())));
-			}
-		} else if (e.getEntity() instanceof Pig) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Pig")) {
-				if (random < getRegister().getDropsFile().getChance("Pig", drops))
-					dropList.add(drops);
-			}
-		} else if (e.getEntity() instanceof Zombie) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Zombie")) {
-				if (random < getRegister().getDropsFile().getChance("Zombie", drops))
-					dropList.add(drops);
-			}
-		} else if (e.getEntity() instanceof Cow) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Cow")) {
-				if (random < getRegister().getDropsFile().getChance("Cow", drops))
-					dropList.add(drops);
-			}
-		} else if (e.getEntity() instanceof Chicken) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Chicken")) {
-				if (random < getRegister().getDropsFile().getChance("Chicken", drops))
-					dropList.add(drops);
-			}
-		} else if (e.getEntity() instanceof Spider) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Spider")) {
-				if (random < getRegister().getDropsFile().getChance("Spider", drops))
-					dropList.add(drops);
-			}
-		} else if (e.getEntity() instanceof Skeleton) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Skeleton")) {
-				if (random < getRegister().getDropsFile().getChance("Skeleton", drops))
-					dropList.add(drops);
-			}
-		} else if (e.getEntity() instanceof Sheep) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Sheep")) {
-				if (random < getRegister().getDropsFile().getChance("Sheep", drops))
-					dropList.add(drops);
-			}
-		} else if (e.getEntity() instanceof Rabbit) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Rabbit")) {
-				if (random < getRegister().getDropsFile().getChance("Rabbit", drops))
-					dropList.add(drops);
-			}
-		} else if (e.getEntity() instanceof Horse) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Horse")) {
-				if (random < getRegister().getDropsFile().getChance("Horse", drops))
-					dropList.add(drops);
-			}
-		} else if (e.getEntity() instanceof Creeper) {
-			e.getDrops().clear();
-			for (final ItemStack drops : getRegister().getDropsFile().readValues("Creeper")) {
-				if (random < getRegister().getDropsFile().getChance("Creeper", drops))
-					dropList.add(drops);
+		} else {
+			if (e.getEntity() instanceof Player) {
+				for (String other : getRegister().getPlayerUtil().getAll()) {
+					if (Bukkit.getPlayer(other) == null)
+						return;
+					Bukkit.getPlayer(other)
+							.sendMessage(getRegister().getDeathMessageFile()
+									.getMessage(e.getEntity().getLastDamageCause() == null ? DamageCause.SUICIDE
+											: e.getEntity().getLastDamageCause().getCause())
+									.replace("[player]", e.getEntity().getName())
+									.replace("[entity]", (e.getEntity().getKiller() == null
+											? getRegister().getDeathMessageFile().getColorString("[entity] is a mob")
+											: e.getEntity().getKiller().getName())));
+				}
+			} else if (e.getEntity() instanceof Pig) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Pig")) {
+					if (random < getRegister().getDropsFile().getChance("Pig", drops))
+						dropList.add(drops);
+				}
+			} else if (e.getEntity() instanceof Zombie) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Zombie")) {
+					if (random < getRegister().getDropsFile().getChance("Zombie", drops))
+						dropList.add(drops);
+				}
+			} else if (e.getEntity() instanceof Cow) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Cow")) {
+					if (random < getRegister().getDropsFile().getChance("Cow", drops))
+						dropList.add(drops);
+				}
+			} else if (e.getEntity() instanceof Chicken) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Chicken")) {
+					if (random < getRegister().getDropsFile().getChance("Chicken", drops))
+						dropList.add(drops);
+				}
+			} else if (e.getEntity() instanceof Spider) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Spider")) {
+					if (random < getRegister().getDropsFile().getChance("Spider", drops))
+						dropList.add(drops);
+				}
+			} else if (e.getEntity() instanceof Skeleton) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Skeleton")) {
+					if (random < getRegister().getDropsFile().getChance("Skeleton", drops))
+						dropList.add(drops);
+				}
+			} else if (e.getEntity() instanceof Sheep) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Sheep")) {
+					if (random < getRegister().getDropsFile().getChance("Sheep", drops))
+						dropList.add(drops);
+				}
+			} else if (e.getEntity() instanceof Rabbit) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Rabbit")) {
+					if (random < getRegister().getDropsFile().getChance("Rabbit", drops))
+						dropList.add(drops);
+				}
+			} else if (e.getEntity() instanceof Horse) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Horse")) {
+					if (random < getRegister().getDropsFile().getChance("Horse", drops))
+						dropList.add(drops);
+				}
+			} else if (e.getEntity() instanceof Creeper) {
+				e.getDrops().clear();
+				for (final ItemStack drops : getRegister().getDropsFile().readValues("Creeper")) {
+					if (random < getRegister().getDropsFile().getChance("Creeper", drops))
+						dropList.add(drops);
+				}
 			}
 		}
 

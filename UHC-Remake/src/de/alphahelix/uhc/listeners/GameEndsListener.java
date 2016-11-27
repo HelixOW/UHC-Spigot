@@ -1,8 +1,12 @@
 package de.alphahelix.uhc.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
+import de.alphahelix.uhc.instances.Spectator;
+import de.alphahelix.uhc.instances.UHCCrate;
+import de.popokaka.alphalibary.nms.SimpleTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,16 +23,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.alphahelix.uhc.GState;
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.instances.Spectator;
-import de.alphahelix.uhc.instances.UHCCrate;
-import de.popokaka.alphalibary.nms.SimpleTitle;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameEndsListener extends SimpleListener {
-	
+
 	private Inventory cInv = null;
 	private HashMap<String, Location> playerLogOut = new HashMap<>();
 	private HashMap<String, Villager> playerDummies = new HashMap<>();
@@ -42,12 +41,24 @@ public class GameEndsListener extends SimpleListener {
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
 		final Player dead = e.getEntity();
-		
+
 		e.setDeathMessage(null);
-		
+
 		for (String other : getRegister().getPlayerUtil().getAll()) {
 			if (Bukkit.getPlayer(other) == null)
 				return;
+			if (e.getEntity().getLastDamageCause() == null) {
+				Bukkit.getPlayer(other)
+						.sendMessage(getRegister().getDeathMessageFile().getMessage(null)
+								.replace("[player]", e.getEntity().getCustomName()).replace("[entity]",
+										getRegister().getDeathMessageFile().getColorString("[entity] is a mob")));
+			}
+			if (e.getEntity().getLastDamageCause().getCause() == null) {
+				Bukkit.getPlayer(other)
+						.sendMessage(getRegister().getDeathMessageFile().getMessage(null)
+								.replace("[player]", e.getEntity().getCustomName()).replace("[entity]",
+										getRegister().getDeathMessageFile().getColorString("[entity] is a mob")));
+			}
 			Bukkit.getPlayer(other)
 					.sendMessage(getRegister().getDeathMessageFile()
 							.getMessage(e.getEntity().getLastDamageCause().getCause())
@@ -63,7 +74,7 @@ public class GameEndsListener extends SimpleListener {
 		new Spectator(dead);
 
 		dead.getWorld().strikeLightning(dead.getLocation());
-		
+
 		getRegister().getTablistUtil().sendTablist();
 
 		if (dead.getKiller() != null && dead.getKiller() instanceof Player) {
@@ -72,10 +83,10 @@ public class GameEndsListener extends SimpleListener {
 					getRegister().getMainOptionsFile().getInt("Points + on kill"));
 			getRegister().getStatsUtil().addCoins(dead.getKiller(),
 					getRegister().getMainOptionsFile().getInt("Coins + on kill"));
-			
-			if(getUhc().isCrates()) {
+
+			if (getUhc().isCrates()) {
 				UHCCrate c = getRegister().getUhcCrateFile().getRandomCrate();
-				if(Math.random() <= getRegister().getUhcCrateFile().getRarerityInPercent(c)) {
+				if (Math.random() <= getRegister().getUhcCrateFile().getRarerityInPercent(c)) {
 					getRegister().getStatsUtil().addCrate(c, dead.getKiller());
 				}
 			}
@@ -135,12 +146,13 @@ public class GameEndsListener extends SimpleListener {
 		}
 
 		if (scenarioCheck(Scenarios.TIME_BOMB)) {
-			for(ItemStack td : dropList) {
+			for (ItemStack td : dropList) {
 				cInv.addItem(td);
 			}
 			new BukkitRunnable() {
 				public void run() {
-					dead.getWorld().createExplosion(dead.getLocation().getX(), dead.getLocation().getY(), dead.getLocation().getZ(), 10, false, true);
+					dead.getWorld().createExplosion(dead.getLocation().getX(), dead.getLocation().getY(),
+							dead.getLocation().getZ(), 10, false, true);
 					cInv.getLocation().getBlock().setType(Material.AIR);
 				}
 			}.runTaskLater(getUhc(), 600);
@@ -153,14 +165,18 @@ public class GameEndsListener extends SimpleListener {
 				}
 			}
 		}
-		
-		if(scenarioCheck(Scenarios.ZOMBIES)) {
+
+		if (scenarioCheck(Scenarios.ZOMBIES)) {
 			dead.getWorld().spawnEntity(dead.getLocation(), EntityType.ZOMBIE);
 		}
 
-		if (getRegister().getPlayerUtil().getSurvivors().size() == 4) {
+		if (getUhc().isTeams() && getRegister().getTeamManagerUtil().isInOneTeam(dead) != null)
+			if (getRegister().getPlayerUtil().getSurvivors()
+					.size() <= (getRegister().getTeamManagerUtil().isInOneTeam(dead).getPlayers().size()))
+				getRegister().getTeamListener().setFFA();
+
+		if (getRegister().getPlayerUtil().getSurvivors().size() == 4)
 			getRegister().getDeathmatchTimer().startDeathMatchTimer();
-		}
 
 		if (getRegister().getPlayerUtil().getSurvivors().size() <= 1) {
 

@@ -1,13 +1,12 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.inventory.ItemStack;
-
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
 
 public class SheepLoversListener extends SimpleListener {
 

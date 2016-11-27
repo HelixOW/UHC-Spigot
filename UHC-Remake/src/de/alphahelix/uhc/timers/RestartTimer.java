@@ -1,16 +1,15 @@
 package de.alphahelix.uhc.timers;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Sounds;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.nms.SimpleActionBar;
 import de.popokaka.alphalibary.nms.SimpleTitle;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class RestartTimer extends Util {
 
@@ -53,9 +52,7 @@ public class RestartTimer extends Util {
 	}
 
 	public boolean isRunning() {
-		if (timer != null)
-			return true;
-		return false;
+		return timer != null;
 	}
 
 	public void startEndTimer() {

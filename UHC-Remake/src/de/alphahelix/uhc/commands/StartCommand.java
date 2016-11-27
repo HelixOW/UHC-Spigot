@@ -1,17 +1,17 @@
 package de.alphahelix.uhc.commands;
 
-import java.util.List;
-
+import de.alphahelix.uhc.Registery;
+import de.alphahelix.uhc.UHC;
+import de.popokaka.alphalibary.command.SimpleCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.alphahelix.uhc.UHC;
-import de.popokaka.alphalibary.command.SimpleCommand;
+import java.util.List;
 
-public class StartCommand extends SimpleCommand<UHC> {
+public class StartCommand extends SimpleCommand<UHC, Registery> {
 
-	public StartCommand(UHC plugin, String command, String description, String... aliases) {
-		super(plugin, command, description, aliases);
+	public StartCommand(UHC plugin, Registery r, String command, String description, String... aliases) {
+		super(plugin, r, command, description, aliases);
 	}
 
 	@Override

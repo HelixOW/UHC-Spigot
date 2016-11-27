@@ -1,3 +1,5 @@
+// Version 1.0 ALPHA
+
 1/2 Ores - For every 2 ores you mine, 1 drops. Every single ore is seperate from one and another.
 3x Arrows - When you shoot with your bow, not one, but three arrows get shot out.
 Monsters Inc - If you place a door on the map, go through it and there's 2 or more doors on the map, you will be teleported to one of those doors.
@@ -85,7 +87,7 @@ Shared Health - Health on a team is shared, so damage is distributed evenly.
 Sheep Lovers - Sheep become useful! Upon killing them, they drop 1-3 uncooked beef. If you sheer them, there's a 5% chance that they could drop a gold ingot.
 Sky High - After 45 minutes, any player below y=101 will begin to take half a heart of damage every 30 seconds.
 Soul Brothers - If you sneak, your damage will be added to your soul brother. If he dies you will take the damage. 
-Switcheroo - Evertime you shoot and hit a person, you both switch places where you were standing.
+Switcheroo - Everytime you shoot and hit a person, you both switch places where you were standing.
 Team Inventory - Throughout the game, you and your teammates can access an inventory that is shared among your team. There is no physical inventory, so any teammate can access it from anywhere with a enderchest in your hand.
 Timber - Fell trees with one punch.
 Time Bomb - Only allows a certain amount of time to pick up loot before the "corpse" explodes.
@@ -97,3 +99,9 @@ Vast Track o Mountain - Vast Tracks 'o Mountain is a simple amplified World.
 Vein Miner - Mine all related ores.
 XtrApple - Apple drop rates are increased by 40%.
 Zombies - When a player dies, a zombie will spawn.
+
+// Version 2.3 BETA
+
+Birds - Every player can fly.
+Real time - The time in Minecraft and the so called 'real life' is the same.
+Craftable Teleportation - Rename an Enderpearl to a Player's name and you will be teleported into a 50 Block range if the player is online and still alive (right click enderpearl)

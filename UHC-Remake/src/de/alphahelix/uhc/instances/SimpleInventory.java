@@ -1,17 +1,17 @@
 package de.alphahelix.uhc.instances;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.logging.Logger;
-
+import de.alphahelix.uhc.Registery;
+import de.alphahelix.uhc.UHC;
+import de.popokaka.alphalibary.item.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import de.alphahelix.uhc.Registery;
-import de.alphahelix.uhc.UHC;
-import de.popokaka.alphalibary.item.ItemBuilder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 public abstract class SimpleInventory {
 	
@@ -38,14 +38,12 @@ public abstract class SimpleInventory {
 			getRawInventory().setItem(slot,
 					new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").setDamage((short) 7).build());
 		}
-	};
+	}
 	
 	@SuppressWarnings("unchecked")
 	public <T> ArrayList<T> toList(T... args) {
 		ArrayList<T> toReturn = new ArrayList<>();
-		for(T type : args) {
-			toReturn.add(type);
-		}
+		Collections.addAll(toReturn, args);
 		return toReturn;
 	}
 	

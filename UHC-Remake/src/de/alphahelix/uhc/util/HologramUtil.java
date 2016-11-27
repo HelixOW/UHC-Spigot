@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.util;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.reflection.ReflectionUtil;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class HologramUtil extends Util {
 
@@ -36,7 +35,7 @@ public class HologramUtil extends Util {
 			Object hc = holoConstructor != null
 					? holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld())) : null;
 
-			name = name.replace("&", "ง");
+			name = name.replace("&", "ยง");
 			name = name.replace("[player]", p.getDisplayName());
 			name = name.replace("[kills]", Integer.toString(getRegister().getStatsUtil().getKills(p)));
 			name = name.replace("[deaths]", Integer.toString(getRegister().getStatsUtil().getDeaths(p)));
@@ -82,7 +81,7 @@ public class HologramUtil extends Util {
 				Object hc = holoConstructor != null
 						? holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld())) : null;
 
-				name = name.replace("&", "ง");
+				name = name.replace("&", "ยง");
 				name = name.replace("[player]", p.getDisplayName());
 				name = name.replace("[kills]", Integer.toString(getRegister().getStatsUtil().getKills(p)));
 				name = name.replace("[deaths]", Integer.toString(getRegister().getStatsUtil().getDeaths(p)));

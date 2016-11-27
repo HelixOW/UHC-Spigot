@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerPortalEvent;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class EnderDragonRushListener extends SimpleListener {
 

@@ -1,10 +1,11 @@
 package de.alphahelix.uhc.instances;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import de.alphahelix.uhc.Registery;
 import de.alphahelix.uhc.UHC;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Logger;
 
 public class Util {
 	
@@ -49,9 +50,7 @@ public class Util {
 	@SuppressWarnings("unchecked")
 	public <T> ArrayList<T> toList(T... args) {
 		ArrayList<T> toReturn = new ArrayList<>();
-		for(T type : args) {
-			toReturn.add(type);
-		}
+		Collections.addAll(toReturn, args);
 		return toReturn;
 	}
 	

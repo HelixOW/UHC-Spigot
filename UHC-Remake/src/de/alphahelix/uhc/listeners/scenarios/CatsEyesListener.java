@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
 import de.alphahelix.uhc.instances.SimpleListener;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class CatsEyesListener extends SimpleListener {
 

@@ -1,18 +1,17 @@
 package de.alphahelix.uhc.instances;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Logger;
-
+import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.Registery;
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.alphahelix.uhc.GState;
-import de.alphahelix.uhc.Registery;
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class SimpleListener implements Listener {
 
@@ -53,9 +52,7 @@ public abstract class SimpleListener implements Listener {
 
 	public boolean scenarioCheck(Scenarios s) {
 		if (!(GState.isState(GState.LOBBY) || GState.isState(GState.END))) {
-			if (getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(s)))
-				return Scenarios.isScenario(s);
-			return false;
+			return getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(s)) && Scenarios.isScenario(s);
 		}
 		return false;
 	}

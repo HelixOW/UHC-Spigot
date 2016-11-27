@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.instances;
 
-import java.util.ArrayList;
-
+import de.alphahelix.uhc.UHC;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import de.alphahelix.uhc.UHC;
+import java.util.ArrayList;
 
 public class UHCTeam {
 
@@ -22,13 +21,13 @@ public class UHCTeam {
 
 	public UHCTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot, boolean isColoredName, Color color) {
 		this.name = name;
-		this.prefix = prefix.replace("&", "ง");
+		this.prefix = prefix.replace("&", "ยง");
 		this.colorData = colorData;
 		this.maxPlayer = maxPlayer;
 		this.invSlot = invSlot;
 		this.isColoredName = isColoredName;
 		this.color = color;
-		this.players = new ArrayList<Player>();
+		this.players = new ArrayList<>();
 		UHC.getInstance().getRegister().getTeamManagerUtil().addTeam(this);
 		
 	}
@@ -99,7 +98,7 @@ public class UHCTeam {
 	}
 
 	public ArrayList<String> getPlayerName() {
-		ArrayList<String> playerName = new ArrayList<String>();
+		ArrayList<String> playerName = new ArrayList<>();
 		for (Player p : players) {
 			playerName.add(p.getName());
 		}
@@ -107,7 +106,7 @@ public class UHCTeam {
 	}
 
 	public ArrayList<String> getColoredPlayerName() {
-		ArrayList<String> playerName = new ArrayList<String>();
+		ArrayList<String> playerName = new ArrayList<>();
 		for (Player p : players) {
 			playerName.add(prefix + p.getName());
 		}
@@ -124,7 +123,7 @@ public class UHCTeam {
 	}
 
 	public void setColoredName(Player p) {
-		p.setDisplayName(prefix + "[" + name + "] " + p.getName() + " งr");
+		p.setDisplayName(prefix + "[" + name + "] " + p.getName() + " ยงr");
 		p.setPlayerListName(prefix + p.getName());
 	}
 }

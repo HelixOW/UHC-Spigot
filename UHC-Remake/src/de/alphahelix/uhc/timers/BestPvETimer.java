@@ -1,13 +1,12 @@
 package de.alphahelix.uhc.timers;
 
-import java.util.ArrayList;
-
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
+import java.util.ArrayList;
 
 public class BestPvETimer extends Util {
 
@@ -24,9 +23,7 @@ public class BestPvETimer extends Util {
 	}
 
 	public boolean isRunning() {
-		if (best != null)
-			return true;
-		return false;
+		return best != null;
 	}
 
 	public void startBestTimer(final ArrayList<String> bestList) {

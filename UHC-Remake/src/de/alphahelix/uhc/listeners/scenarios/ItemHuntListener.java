@@ -1,18 +1,17 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
 import de.alphahelix.uhc.instances.SimpleListener;
 import de.popokaka.alphalibary.item.ItemBuilder;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ItemHuntListener extends SimpleListener {
 	
@@ -58,7 +57,7 @@ public class ItemHuntListener extends SimpleListener {
 		for (Material m : Material.values()) {
 			if(amount <= 0) break;
 			if (Math.random() < 0.07) {
-				items.add("ง7" + m.name().toLowerCase());
+				items.add("ยง7" + m.name().toLowerCase());
 				amount--;
 			}
 		}

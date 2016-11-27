@@ -1,5 +1,9 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.timers.LobbyEndEvent;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -7,11 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
 
 public class BowfighterListener extends SimpleListener {
 

@@ -1,9 +1,8 @@
 package de.alphahelix.uhc.util;
 
-import org.bukkit.Location;
-
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
+import org.bukkit.Location;
 
 public class RankingUtil extends Util {
 

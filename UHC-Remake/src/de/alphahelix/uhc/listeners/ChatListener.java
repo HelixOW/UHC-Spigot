@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.listeners;
 
+import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerAchievementAwardedEvent;
-
-import de.alphahelix.uhc.GState;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
 
 public class ChatListener extends SimpleListener {
 
@@ -25,7 +24,7 @@ public class ChatListener extends SimpleListener {
 		if (getRegister().getPlayerUtil().isDead(p)) {
 			for (String dead : getRegister().getPlayerUtil().getDeads()) {
 				Bukkit.getPlayer(dead).sendMessage(getRegister().getMainOptionsFile().getColorString("Spectator Prefix")
-						+ p.getDisplayName() + "ง8: " + e.getMessage());
+						+ p.getDisplayName() + "ยง8: " + e.getMessage());
 			}
 		}
 
@@ -33,18 +32,18 @@ public class ChatListener extends SimpleListener {
 			for (String survivor : getRegister().getPlayerUtil().getSurvivors()) {
 				if (!e.getMessage().startsWith(getRegister().getTeamFile().getString("Team.Chat"))) {
 					Bukkit.getPlayer(survivor)
-							.sendMessage(getUhc().getPrefix() + p.getDisplayName() + "ง8: " + e.getMessage());
+							.sendMessage(getUhc().getPrefix() + p.getDisplayName() + "ยง8: " + e.getMessage());
 				}
 			}
 		} else {
 			for (String all : getRegister().getPlayerUtil().getAll()) {
-				Bukkit.getPlayer(all).sendMessage(getUhc().getPrefix() + p.getDisplayName() + "ง8: " + e.getMessage());
+				Bukkit.getPlayer(all).sendMessage(getUhc().getPrefix() + p.getDisplayName() + "ยง8: " + e.getMessage());
 			}
 		}
 		
 		if(e.getMessage().startsWith(getRegister().getTeamFile().getString("Team.Chat"))){
 			for(Player teamler : getRegister().getTeamManagerUtil().getTeamByPlayer(p).getPlayers()) {
-				teamler.sendMessage(getUhc().getPrefix() + p.getDisplayName() + "ง8: " + e.getMessage().substring(1, e.getMessage().length()));
+				teamler.sendMessage(getUhc().getPrefix() + p.getDisplayName() + "ยง8: " + e.getMessage().substring(1, e.getMessage().length()));
 			}
 		}
 	}

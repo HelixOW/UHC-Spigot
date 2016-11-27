@@ -1,45 +1,36 @@
 package de.alphahelix.uhc.listeners;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
+import de.popokaka.alphalibary.utils.LocationUtil;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.potion.PotionEffectType;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-
-import de.alphahelix.uhc.GState;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.popokaka.alphalibary.utils.LocationUtil;
-
 public class GStateListener extends SimpleListener {
+
+	private Location lobbyCorner1, lobbyCorner2;
 
 	public GStateListener(UHC uhc) {
 		super(uhc);
+		lobbyCorner1 = getRegister().getLocationsFile().getLobby().clone().subtract(75, 50, 75);
+		lobbyCorner2 = getRegister().getLocationsFile().getLobby().clone().add(75, 50, 75);
 	}
 
 	@EventHandler
@@ -71,7 +62,7 @@ public class GStateListener extends SimpleListener {
 			break;
 		}
 	}
-
+	
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		if (!GState.isState(GState.LOBBY))
@@ -84,10 +75,8 @@ public class GStateListener extends SimpleListener {
 		if (!getUhc().isLobbyAsSchematic())
 			return;
 
-		if (!LocationUtil.isInside(e.getTo(), getRegister().getLocationsFile().getLobby().clone().subtract(75, 50, 75),
-				getRegister().getLocationsFile().getLobby().clone().add(75, 50, 75))) {
-			e.getPlayer().teleport(getRegister().getLocationsFile().getLobby());
-			e.setCancelled(true);
+		if (!LocationUtil.isInside(e.getTo(), lobbyCorner1, lobbyCorner2)) {
+			e.getPlayer().teleport(getRegister().getLocationsFile().getLobby().clone().add(0, 2, 0));
 		}
 	}
 
@@ -101,13 +90,13 @@ public class GStateListener extends SimpleListener {
 		if (getRegister().getPlayerUtil().getMaximumPlayerCount() <= getRegister().getPlayerUtil().getAll().size())
 			e.disallow(Result.KICK_FULL, getRegister().getMessageFile().getColorString("Full"));
 	}
-
+	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 
-		p.teleport(getRegister().getLocationsFile().getLobby());
-
+		p.teleport(getRegister().getLocationsFile().getLobby().clone().add(0, 2, 0));
+		
 		getRegister().getTablistUtil().sendTablist();
 	}
 
@@ -169,8 +158,7 @@ public class GStateListener extends SimpleListener {
 			return;
 		if (e.getClickedBlock() == null)
 			return;
-		if (getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer()))
-			return;
+		if (getRegister().getLobbyUtil().hasBuildPermission(e.getPlayer())) return;
 
 		if (e.getClickedBlock().getType().equals(Material.CHEST)
 				|| e.getClickedBlock().getType().equals(Material.ENDER_CHEST))
@@ -195,7 +183,7 @@ public class GStateListener extends SimpleListener {
 	@EventHandler
 	public void onCollect(PlayerPickupItemEvent e) {
 		if (GState.isState(GState.LOBBY)) {
-			if (getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer()))
+			if (getRegister().getLobbyUtil().hasBuildPermission(e.getPlayer()))
 				return;
 			e.setCancelled(true);
 		}
@@ -276,7 +264,7 @@ public class GStateListener extends SimpleListener {
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent e) {
 		if (GState.isState(GState.LOBBY)) {
-			if (getRegister().getLobbyUtil().hasBuildPermission((Player) e.getPlayer()))
+			if (getRegister().getLobbyUtil().hasBuildPermission(e.getPlayer()))
 				return;
 			e.setCancelled(true);
 		}

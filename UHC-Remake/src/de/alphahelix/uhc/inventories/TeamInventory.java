@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.inventories;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.UHCTeam;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.item.ItemBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 public class TeamInventory extends Util {
 

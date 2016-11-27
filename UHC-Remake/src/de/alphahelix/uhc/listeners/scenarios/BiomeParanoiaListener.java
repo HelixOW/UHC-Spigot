@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.Random;
-
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
+import java.util.Random;
 
 public class BiomeParanoiaListener extends SimpleListener {
 	

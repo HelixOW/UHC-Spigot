@@ -1,7 +1,9 @@
 package de.alphahelix.uhc.listeners;
 
-import java.util.HashMap;
-
+import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.Kit;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,10 +11,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import de.alphahelix.uhc.GState;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Kit;
-import de.alphahelix.uhc.instances.SimpleListener;
+import java.util.HashMap;
 
 public class KitChooseListener extends SimpleListener {
 

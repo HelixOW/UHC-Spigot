@@ -1,5 +1,8 @@
 package de.alphahelix.uhc.events.armor;
 
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.armor.ArmorEquipEvent.EquipMethod;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,10 +21,6 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
-
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.events.armor.ArmorEquipEvent.EquipMethod;
-import de.alphahelix.uhc.instances.SimpleListener;
 
 public class ArmorListener extends SimpleListener {
 

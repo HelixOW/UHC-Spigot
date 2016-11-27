@@ -1,5 +1,11 @@
 package de.alphahelix.uhc.listeners;
 
+import de.alphahelix.uhc.GState;
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
+import de.alphahelix.uhc.instances.Spectator;
+import de.popokaka.alphalibary.item.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -10,13 +16,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
-import de.alphahelix.uhc.GState;
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.instances.Spectator;
-import de.popokaka.alphalibary.item.ItemBuilder;
-
 public class EquipListener extends SimpleListener {
 
 	public EquipListener(UHC uhc) {
@@ -26,7 +25,7 @@ public class EquipListener extends SimpleListener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 
-		Player p = e.getPlayer();
+		final Player p = e.getPlayer();
 
 		e.setJoinMessage(null);
 
@@ -75,8 +74,18 @@ public class EquipListener extends SimpleListener {
 		getRegister().getScoreboardUtil().setLobbyScoreboard(p);
 		
 		getRegister().getNpcUtil().prepareNPC(getRegister().getLocationsFile().getStatsNPCLocation(), p, p);
-		
+
 		if (getUhc().isScenarios()) {
+			if(getUhc().isScenarioVoting())
+				p.getInventory().setItem(getRegister().getScenarioFile().getInt("Scenarios Item Slot"),
+						new ItemBuilder(Material.getMaterial(getRegister().getScenarioFile().getString("Scenarios Item")
+								.replace(" ", "_").toUpperCase()))
+										.setName(
+												getRegister().getScenarioFile().getColorString("Scenarios Item Name"))
+										.setLore(getRegister().getScenarioHelpFile()
+												.getScenarioDescription(Scenarios.NONE))
+										.build());
+			else
 			p.getInventory().setItem(getRegister().getScenarioFile().getInt("Scenarios Item Slot"),
 					new ItemBuilder(Material.getMaterial(getRegister().getScenarioFile().getString("Scenarios Item")
 							.replace(" ", "_").toUpperCase()))

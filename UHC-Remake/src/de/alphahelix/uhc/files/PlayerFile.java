@@ -1,13 +1,12 @@
 package de.alphahelix.uhc.files;
 
-import java.util.logging.Level;
-
-import org.bukkit.entity.Player;
-
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.EasyFile;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
-import de.popokaka.alphalibary.file.SimpleFile;
+import org.bukkit.entity.Player;
+
+import java.util.Objects;
+import java.util.logging.Level;
 
 public class PlayerFile extends EasyFile {
 
@@ -34,7 +33,7 @@ public class PlayerFile extends EasyFile {
 			
 			setDefault("Players."+uuid+".count", getConfigurationSection("Players").getKeys(false).size());
 			setDefault("Players."+uuid+".points", 0);
-			if(getString("Players."+uuid+".name") != p.getName()) {
+			if(!Objects.equals(getString("Players." + uuid + ".name"), p.getName())) {
 				set("Players."+uuid+".name", p.getName());
 				save();
 			}
@@ -42,17 +41,8 @@ public class PlayerFile extends EasyFile {
 			getLog().log(Level.SEVERE, "Can't add given player.", e.getMessage());
 		}
 	}
-	
-	@Override
-	public SimpleFile getFile() {
-		return super.getFile();
-	}
 
 	@Override
 	public void addValues() {
-		// TODO Auto-generated method stub
-		
 	}
-	
-	
 }

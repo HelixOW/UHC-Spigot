@@ -1,16 +1,15 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.LinkedList;
-
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.timers.LobbyEndEvent;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
+import java.util.LinkedList;
 
 public class KingsOfTheSkyListener extends SimpleListener {
 	

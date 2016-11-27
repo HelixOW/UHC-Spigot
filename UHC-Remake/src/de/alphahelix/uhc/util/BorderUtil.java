@@ -1,7 +1,9 @@
 package de.alphahelix.uhc.util;
 
-import java.util.Random;
-
+import de.alphahelix.uhc.Sounds;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.Util;
+import de.popokaka.alphalibary.nms.SimpleTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -10,10 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-import de.alphahelix.uhc.Sounds;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
-import de.popokaka.alphalibary.nms.SimpleTitle;
+import java.util.Random;
 
 public class BorderUtil extends Util {
 

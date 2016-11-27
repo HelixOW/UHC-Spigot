@@ -1,10 +1,5 @@
 package de.alphahelix.uhc.timers;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Sounds;
 import de.alphahelix.uhc.UHC;
@@ -12,6 +7,10 @@ import de.alphahelix.uhc.events.timers.DeathMatchStartEvent;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.nms.SimpleActionBar;
 import de.popokaka.alphalibary.nms.SimpleTitle;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class StartDeathMatchTimer extends Util {
 	
@@ -54,9 +53,7 @@ public class StartDeathMatchTimer extends Util {
 	}
 
 	public boolean isRunning() {
-		if (timer != null)
-			return true;
-		return false;
+		return timer != null;
 	}
 	
 	public void startDeathMatchTimer() {
@@ -121,7 +118,6 @@ public class StartDeathMatchTimer extends Util {
 															: getRegister().getUnitFile().getColorString("Seconds"))),
 											1, 2, 1);
 									p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-									continue;
 								}
 
 								else if (time < 10 && time != 0) {
@@ -134,7 +130,6 @@ public class StartDeathMatchTimer extends Util {
 													.replace("[time]", Double.toString(time))
 													.replace("[unit]", "seconds"));
 									p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-									continue;
 								}
 								
 								else if(time == 0) {

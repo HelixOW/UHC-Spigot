@@ -1,15 +1,14 @@
 package de.alphahelix.uhc.timers;
 
-import java.util.HashMap;
-
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageEvent;
-
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
 import de.popokaka.alphalibary.nms.SimpleActionBar;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
+
+import java.util.HashMap;
 
 public class SoulBrothersListener extends SimpleListener {
 
@@ -36,12 +35,12 @@ public class SoulBrothersListener extends SimpleListener {
 			if(soulBrotherhealth.get(p.getName()) > e.getDamage()) {
 				soulBrotherhealth.put(p.getName(), soulBrotherhealth.get(p.getName()) - e.getDamage());
 				e.setCancelled(true);
-				SimpleActionBar.send(p, "ง7" + soulBrotherhealth.get(p.getName()).intValue());
+				SimpleActionBar.send(p, "ยง7" + soulBrotherhealth.get(p.getName()).intValue());
 			}
 		} else {
 			soulBrotherhealth.put(p.getName(), p.getMaxHealth() - e.getDamage());
 			e.setCancelled(true);
-			SimpleActionBar.send(p, "ง7" + soulBrotherhealth.get(p.getName()).intValue());
+			SimpleActionBar.send(p, "ยง7" + soulBrotherhealth.get(p.getName()).intValue());
 		}
 	}
 }

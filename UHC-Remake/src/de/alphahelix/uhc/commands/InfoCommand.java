@@ -1,25 +1,25 @@
 package de.alphahelix.uhc.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.command.CommandSender;
-
+import de.alphahelix.uhc.Registery;
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.popokaka.alphalibary.command.SimpleCommand;
+import org.bukkit.command.CommandSender;
 
-public class InfoCommand extends SimpleCommand<UHC>{
+import java.util.ArrayList;
+import java.util.List;
 
-	public InfoCommand(UHC plugin, String command, String description, String... aliases) {
-		super(plugin, command, description, aliases);
+public class InfoCommand extends SimpleCommand<UHC, Registery>{
+
+	public InfoCommand(UHC plugin, Registery r, String command, String description, String... aliases) {
+		super(plugin, r, command, description, aliases);
 	}
 
 	@Override
 	public boolean execute(CommandSender cs, String label, String[] args) {
 		
 		if(getPlugin().isScenarios())
-			cs.sendMessage(getPlugin().getPrefix() + getPlugin().getRegister().getScenarioFile().getCustomScenarioName(Scenarios.getScenario()) + "ง8: " + getPlugin().getRegister().getScenarioHelpFile().getScenarioDescriptionAsOneString(Scenarios.getScenario()));
+			cs.sendMessage(getPlugin().getPrefix() + getPlugin().getRegister().getScenarioFile().getCustomScenarioName(Scenarios.getScenario()) + "ยง8: " + getPlugin().getRegister().getScenarioHelpFile().getScenarioDescriptionAsOneString(Scenarios.getScenario()));
 		else {
 			cs.sendMessage(getPlugin().getPrefix()
 					+ getPlugin().getRegister().getMainOptionsFile().getColorString("Warnings.Scenario Mode"));

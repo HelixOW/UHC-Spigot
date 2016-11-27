@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.util;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
 import de.popokaka.alphalibary.nms.SimpleTablist;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class TablistUtil extends Util {
 

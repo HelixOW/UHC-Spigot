@@ -17,7 +17,7 @@ public class MainMessageFile extends EasyFile {
 		setDefault("Scenario Mode", "&7This UHC server is running in &cScenario Mode&7. Due to that the server doesn't allow kits.");
 		setDefault("No Permissions", "&7You don't have &cpermissions &7to execute that command!");
 		setDefault("Command not found", "&7Can't find the command :C. Try again!");
-		setDefault("Kit chosen", "&7You've §asuccessfully chosen &7the kit &8: &a[kit]§7!");
+		setDefault("Kit chosen", "&7You've Â§asuccessfully chosen &7the kit &8: &a[kit]Â§7!");
 		setDefault("Not enough Coins", "&7You don't have &cenough &7coins to buy &7the kit &8: &a[kit]&7!");
 		setDefault("Lobby time left info", "&aGame starts in &7[time] [unit]&8.");
 		setDefault("Period of Peace time left info", "&aDamage in &7[time] [unit]&8.");
@@ -27,9 +27,10 @@ public class MainMessageFile extends EasyFile {
 		setDefault("Deathmatch time left info", "&aDeathmatch is in &7[time] [unit]&8.");
 		setDefault("Deathmatch ended", "&cAttention&7,&c please&7! It's time for the &4deathmatch&7!");
 		setDefault("End time left info", "&aServer will stop in &7[time] [unit]&8.");
+		setDefault("Team FFA", "&cGood Luck. You'll need it!");
 		setDefault("End ended", "&cRestart&7!");
 		setDefault("Winning message", "&7The player &a[player] &7has &awon UHC&7.");
-		setDefault("Not enough players", "§7There are §cnot enough §7players online. §cRestarting Timer&7.");
+		setDefault("Not enough players", "Â§7There are Â§cnot enough Â§7players online. Â§cRestarting Timer&7.");
 		setDefault("Border has moved", "&7The Border has moved by &c[blocks] blocks&7!");
 		setDefault("Picked team", "&7You've picked the team &b[team]&7!");
 		setDefault("Team is full", "&7Sorry, but you &ccan't join &7this team!");

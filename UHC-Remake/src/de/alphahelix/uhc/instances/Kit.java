@@ -1,9 +1,8 @@
 package de.alphahelix.uhc.instances;
 
+import de.alphahelix.uhc.UHC;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import de.alphahelix.uhc.UHC;
 
 public class Kit {
 
@@ -44,7 +43,7 @@ public class Kit {
 	}
 
 	public String getName() {
-		return name.replace("&", "ง");
+		return name.replace("&", "ยง");
 	}
 
 	private void setName(String name) {

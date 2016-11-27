@@ -1,15 +1,13 @@
 package de.alphahelix.uhc.listeners;
 
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
+import de.popokaka.alphalibary.UUID.UUIDFetcher;
+import de.popokaka.alphalibary.mysql.MySQLManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.popokaka.alphalibary.UUID.UUIDFetcher;
-import de.popokaka.alphalibary.mysql.MySQLAPI;
-import de.popokaka.alphalibary.mysql.MySQLManager;
 
 public class RegisterListener extends SimpleListener {
 
@@ -32,7 +30,7 @@ public class RegisterListener extends SimpleListener {
 						"0",                                             //Deaths
 						"0",                                             //Coins
 						"0",                                             //Points
-						Integer.toString(MySQLAPI.getCountNumber() + 1), //Count
+						Integer.toString(MySQLManager.getCountNumber("uhc") + 1), //Count
 						" ",                                             //Kits
 						
 						"0",                                              //Common Crates

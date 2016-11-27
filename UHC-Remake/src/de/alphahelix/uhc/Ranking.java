@@ -1,11 +1,9 @@
 package de.alphahelix.uhc;
 
-import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.UUID;
-import java.util.logging.Level;
-
+import de.alphahelix.uhc.instances.Util;
+import de.popokaka.alphalibary.UUID.UUIDFetcher;
+import de.popokaka.alphalibary.mysql.MySQLAPI;
+import de.popokaka.alphalibary.mysql.MySQLManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,9 +11,11 @@ import org.bukkit.SkullType;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
 
-import de.alphahelix.uhc.instances.Util;
-import de.popokaka.alphalibary.UUID.UUIDFetcher;
-import de.popokaka.alphalibary.mysql.MySQLAPI;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.UUID;
+import java.util.logging.Level;
 
 public class Ranking extends Util {
 
@@ -43,11 +43,11 @@ public class Ranking extends Util {
 					return;
 
 				try {
-					ResultSet rs = null;
+					ResultSet rs;
 					rs = MySQLAPI.getMySQLConnection().createStatement()
 							.executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
 
-					int in = MySQLAPI.getCountNumber() + 1;
+					int in = MySQLManager.getCountNumber("uhc") + 1;
 
 					while (rs.next()) {
 						in--;
@@ -126,8 +126,8 @@ public class Ranking extends Util {
 
 				for (String name : getRegister().getPlayerFile().getConfigurationSection("Players").getKeys(false)) {
 					rank.put(
-							Integer.valueOf(getRegister().getStatsUtil()
-									.getRank(Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(name)))),
+							getRegister().getStatsUtil()
+									.getRank(Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(name))),
 							UUIDFetcher.getUUID(name).toString());
 				}
 				for (int i = 0; i < locs.size(); i++) {
@@ -189,8 +189,8 @@ public class Ranking extends Util {
 
 			for (String name : getRegister().getPlayerFile().getConfigurationSection("Players").getKeys(false)) {
 				rank.put(
-						Integer.valueOf(getRegister().getStatsUtil()
-								.getRank(Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(name)))),
+						getRegister().getStatsUtil()
+								.getRank(Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(name))),
 						UUIDFetcher.getUUID(name).toString());
 			}
 			for (int i = 0; i < locs.size(); i++) {

@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.instances;
 
+import de.alphahelix.uhc.UHC;
+import de.popokaka.alphalibary.item.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import de.alphahelix.uhc.UHC;
-import de.popokaka.alphalibary.item.ItemBuilder;
 
 public class Spectator {
 
@@ -21,7 +20,7 @@ public class Spectator {
 		p.setVelocity(p.getVelocity().setY(20D));
 		p.setTotalExperience(0);
 		p.setGameMode(GameMode.ADVENTURE);
-		p.setPlayerListName("ง7[ง4Xง7] งc" + p.getDisplayName());
+		p.setPlayerListName("ยง7[ยง4Xยง7] ยงc" + p.getDisplayName());
 		p.setAllowFlight(true);
 		p.setFlying(true);
 		p.setInvulnerable(true);
@@ -42,7 +41,7 @@ public class Spectator {
 		p.setVelocity(p.getVelocity().setY(20D));
 		p.setTotalExperience(0);
 		p.setGameMode(GameMode.ADVENTURE);
-		p.setPlayerListName("ง7[ง4Xง7] งc" + p.getDisplayName());
+		p.setPlayerListName("ยง7[ยง4Xยง7] ยงc" + p.getDisplayName());
 		p.setAllowFlight(true);
 		p.setFlying(true);
 		new BukkitRunnable() {

@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.events.timers.InGameStartEvent;
 import de.alphahelix.uhc.instances.SimpleListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ErraticPvPListener extends SimpleListener {
 

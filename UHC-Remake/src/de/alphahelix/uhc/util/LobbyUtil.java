@@ -1,11 +1,10 @@
 package de.alphahelix.uhc.util;
 
-import java.util.LinkedList;
-
-import org.bukkit.entity.Player;
-
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
+import org.bukkit.entity.Player;
+
+import java.util.LinkedList;
 
 public class LobbyUtil extends Util{
 

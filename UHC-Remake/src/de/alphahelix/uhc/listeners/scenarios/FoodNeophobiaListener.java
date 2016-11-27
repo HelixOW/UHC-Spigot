@@ -1,15 +1,14 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.HashMap;
-
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
+import java.util.HashMap;
 
 public class FoodNeophobiaListener extends SimpleListener {
 

@@ -1,11 +1,10 @@
 package de.alphahelix.uhc.util;
 
-import java.lang.reflect.Field;
-
-import org.bukkit.WorldCreator;
-
 import de.alphahelix.uhc.GState;
 import de.popokaka.alphalibary.reflection.ReflectionUtil;
+import org.bukkit.WorldCreator;
+
+import java.lang.reflect.Field;
 
 public class BiomeUtil {
 
@@ -17,7 +16,7 @@ public class BiomeUtil {
 		removeOceanFromBioms();
 	}
 
-	public static void removeOceanFromBioms() {
+	private static void removeOceanFromBioms() {
 		try {
 			Object plainBiome = getBiomeFor("taiga");
 

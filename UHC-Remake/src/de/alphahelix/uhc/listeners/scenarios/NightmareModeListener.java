@@ -1,35 +1,21 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.Random;
-
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Blaze;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Enderman;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Silverfish;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Spider;
-import org.bukkit.entity.Witch;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
+import java.util.Random;
 
 public class NightmareModeListener extends SimpleListener {
 
@@ -84,7 +70,7 @@ public class NightmareModeListener extends SimpleListener {
 			return;
 		if (event.getEntity() instanceof Player) {
 			if (event.getDamager() instanceof Arrow) {
-				if (((Arrow) event.getDamager()) instanceof Skeleton) {
+				if ((event.getDamager()) instanceof Skeleton) {
 					((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 60, 1));
 				}
 				return;

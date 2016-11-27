@@ -1,7 +1,10 @@
 package de.alphahelix.uhc.listeners;
 
-import java.util.ArrayList;
-
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
+import de.popokaka.alphalibary.inventorys.SimpleMovingInventory;
+import de.popokaka.alphalibary.item.ItemBuilder;
+import de.popokaka.alphalibary.item.data.SkullData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,20 +17,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerExpChangeEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.popokaka.alphalibary.inventorys.SimpleMovingInventory;
-import de.popokaka.alphalibary.item.ItemBuilder;
-import de.popokaka.alphalibary.item.data.SkullData;
+import java.util.ArrayList;
 
 public class SpectatorListener extends SimpleListener {
 
@@ -144,13 +138,15 @@ public class SpectatorListener extends SimpleListener {
 			for (String pl : getRegister().getPlayerUtil().getSurvivors()) {
 
 				ItemStack item = new ItemBuilder(Material.SKULL_ITEM).setDamage((short) 3)
-						.setName("§l§o" + Bukkit.getPlayer(pl).getDisplayName())
-						.addItemData(new SkullData(pl)).build();
-				
+						.setName("Â§lÂ§o" + Bukkit.getPlayer(pl).getDisplayName()).addItemData(new SkullData(pl)).build();
+
 				skulls.add(item);
 			}
-			
-			new SimpleMovingInventory(getUhc(), skulls, getRegister().getSpectatorFile().getColorString("GUI.Name"), p, ((getRegister().getPlayerUtil().getSurvivors().size() / 9) + 1) * 18);
+
+			new SimpleMovingInventory(getUhc(), skulls, getRegister().getSpectatorFile().getColorString("GUI.Name"), p,
+					((getRegister().getPlayerUtil().getSurvivors().size() / 9) + 1) * 18,
+					getRegister().getKitsFile().getColorString("Preview GUI.Next page"),
+					getRegister().getKitsFile().getColorString("Preview GUI.Previous page"));
 			skulls.clear();
 		}
 	}

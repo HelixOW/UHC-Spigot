@@ -1,11 +1,10 @@
 package de.alphahelix.uhc.files;
 
-import java.util.Random;
-
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.EasyFile;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+
+import java.util.Random;
 
 public class DeathmessageFile extends EasyFile {
 
@@ -52,91 +51,97 @@ public class DeathmessageFile extends EasyFile {
 
 	public String getMessage(DamageCause dg) {
 		if (dg == null)
-			return "";
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.undefined")
+					.get(new Random(getStringList("Player.died.reason.undefined").size())
+							.nextInt(getStringList("Player.died.reason.undefined").size()))
+					.replace("&", "ยง");
 		if (dg.equals(DamageCause.BLOCK_EXPLOSION)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.tnt")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.tnt")
 					.get(new Random(getStringList("Player.died.reason.tnt").size())
 							.nextInt(getStringList("Player.died.reason.tnt").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.CONTACT)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.cactus")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.cactus")
 					.get(new Random(getStringList("Player.died.reason.cactus").size())
 							.nextInt(getStringList("Player.died.reason.cactus").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.CUSTOM)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.undefined")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.undefined")
 					.get(new Random(getStringList("Player.died.reason.undefined").size())
 							.nextInt(getStringList("Player.died.reason.undefined").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.DROWNING)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.drowned")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.drowned")
 					.get(new Random(getStringList("Player.died.reason.undefined").size())
 							.nextInt(getStringList("Player.died.reason.undefined").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.ENTITY_ATTACK) || dg.equals(DamageCause.PROJECTILE)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.entity")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.entity")
 					.get(new Random(getStringList("Player.died.reason.entity").size())
 							.nextInt(getStringList("Player.died.reason.entity").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.FALL)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.fall")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.fall")
 					.get(new Random(getStringList("Player.died.reason.fall").size())
 							.nextInt(getStringList("Player.died.reason.fall").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.FIRE) || dg.equals(DamageCause.FIRE_TICK) || dg.equals(DamageCause.LAVA)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.fire")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.fire")
 					.get(new Random(getStringList("Player.died.reason.fire").size())
 							.nextInt(getStringList("Player.died.reason.fire").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.FIRE)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.poison")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.poison")
 					.get(new Random(getStringList("Player.died.reason.poison").size())
 							.nextInt(getStringList("Player.died.reason.poison").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.STARVATION)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.starved")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.starved")
 					.get(new Random(getStringList("Player.died.reason.starved").size())
 							.nextInt(getStringList("Player.died.reason.starved").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.SUFFOCATION)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.suffocated")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.suffocated")
 					.get(new Random(getStringList("Player.died.reason.suffocated").size())
 							.nextInt(getStringList("Player.died.reason.suffocated").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.THORNS)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.thorns")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.thorns")
 					.get(new Random(getStringList("Player.died.reason.thorns").size())
 							.nextInt(getStringList("Player.died.reason.thorns").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
 		else if (dg.equals(DamageCause.WITHER)) {
-			return getUhc().getPrefix() + getStringList("Player.died.reason.wither")
+			return getPluginInstance().getPrefix() + getStringList("Player.died.reason.wither")
 					.get(new Random(getStringList("Player.died.reason.wither").size())
 							.nextInt(getStringList("Player.died.reason.wither").size()))
-					.replace("&", "ง");
+					.replace("&", "ยง");
 		}
 
-		return "";
+		return getPluginInstance().getPrefix() + getStringList("Player.died.reason.undefined")
+				.get(new Random(getStringList("Player.died.reason.undefined").size())
+						.nextInt(getStringList("Player.died.reason.undefined").size()))
+				.replace("&", "ยง");
 	}
 }

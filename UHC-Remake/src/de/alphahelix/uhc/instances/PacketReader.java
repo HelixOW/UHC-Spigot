@@ -1,15 +1,14 @@
 package de.alphahelix.uhc.instances;
 
-import java.lang.reflect.Field;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import de.popokaka.alphalibary.netty.NettyHandler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 public class PacketReader {
 
@@ -46,7 +45,7 @@ public class PacketReader {
 			Field field = obj.getDeclaredField(name);
 			field.setAccessible(true);
 			field.set(obj, value);
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 		}
 	}
 
@@ -55,7 +54,7 @@ public class PacketReader {
 			Field field = obj.getDeclaredField(name);
 			field.setAccessible(true);
 			return field.get(obj);
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 		}
 		return null;
 	}

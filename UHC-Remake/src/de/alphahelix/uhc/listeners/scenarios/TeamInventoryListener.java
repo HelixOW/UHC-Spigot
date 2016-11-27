@@ -1,7 +1,11 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.HashMap;
-
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.events.timers.LobbyEndEvent;
+import de.alphahelix.uhc.instances.SimpleListener;
+import de.alphahelix.uhc.instances.UHCTeam;
+import de.popokaka.alphalibary.item.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,12 +14,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.instances.UHCTeam;
-import de.popokaka.alphalibary.item.ItemBuilder;
+import java.util.HashMap;
 
 public class TeamInventoryListener extends SimpleListener {
 
@@ -76,6 +75,6 @@ public class TeamInventoryListener extends SimpleListener {
 				&& e.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasDisplayName()
 				&& e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName()
 						.contains(getRegister().getTeamManagerUtil().isInOneTeam(e.getPlayer()).getName()))
-			e.setBuild(true);;
+			e.setBuild(true);
 	}
 }

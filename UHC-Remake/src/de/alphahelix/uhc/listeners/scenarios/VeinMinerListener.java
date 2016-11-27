@@ -1,15 +1,14 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import java.util.ArrayList;
-
+import de.alphahelix.uhc.Scenarios;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import de.alphahelix.uhc.Scenarios;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
+import java.util.ArrayList;
 
 public class VeinMinerListener extends SimpleListener {
 

@@ -1,11 +1,10 @@
 package de.alphahelix.uhc.timers;
 
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
 
 public class FalloutTimer extends Util {
 
@@ -25,9 +24,7 @@ public class FalloutTimer extends Util {
 	}
 
 	public boolean isRunning() {
-		if (damage != null)
-			return true;
-		return false;
+		return damage != null;
 	}
 
 	public void startCooldown() {

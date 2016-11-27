@@ -1,12 +1,8 @@
 package de.alphahelix.uhc.files;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.EasyFile;
+import de.alphahelix.uhc.instances.Kit;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -14,9 +10,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.EasyFile;
-import de.alphahelix.uhc.instances.Kit;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Level;
 
 public class KitsFile extends EasyFile {
 
@@ -67,9 +66,8 @@ public class KitsFile extends EasyFile {
 		LinkedList<Kit> kits = new LinkedList<>();
 		for (String kitName : getKeys(false)) {
 			try {
-				kits.add(getKit(kitName.replace("ง", "&")));
+				kits.add(getKit(kitName.replace("ยง", "&")));
 			} catch (Exception e) {
-				continue;
 			}
 		}
 		return kits;
@@ -84,9 +82,7 @@ public class KitsFile extends EasyFile {
 	}
 
 	public boolean hasKit(Player p) {
-		if (getKitByPlayer(p) == null)
-			return false;
-		return true;
+		return getKitByPlayer(p) != null;
 	}
 
 	@SuppressWarnings("deprecation")

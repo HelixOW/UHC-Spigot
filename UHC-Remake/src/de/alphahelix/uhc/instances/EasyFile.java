@@ -1,42 +1,37 @@
 package de.alphahelix.uhc.instances;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import de.alphahelix.uhc.Registery;
 import de.alphahelix.uhc.UHC;
 import de.popokaka.alphalibary.file.SimpleFile;
 import de.popokaka.alphalibary.item.ItemBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
-public abstract class EasyFile extends SimpleFile {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Logger;
 
-	private UHC uhc;
+public abstract class EasyFile extends SimpleFile<UHC>{
+	
 	private Registery register;
-	private Logger log;
 
 	public EasyFile(String name, UHC uhc) {
-		super("plugins/UHC", name);
-		setUhc(uhc);
-		setRegister(getUhc().getRegister());
-		setLog(getUhc().getLog());
+		super("plugins/UHC", name, uhc);
+		setRegister(getPluginInstance().getRegister());
 		getRegister().getEasyFiles().add(this);
 	}
 
 	public EasyFile(String path, String name, UHC uhc) {
-		super("plugins/UHC/" + path, name);
-		setUhc(uhc);
-		setRegister(getUhc().getRegister());
-		setLog(getUhc().getLog());
+		super("plugins/UHC/" + path, name, uhc);
+		setRegister(getPluginInstance().getRegister());
 		getRegister().getEasyFiles().add(this);
 	}
 
 	public abstract void addValues();
 
 	public void loadValues() {
-	};
+	}
 
 	public void register(EasyFile easy) {
 		easy.addValues();
@@ -47,7 +42,7 @@ public abstract class EasyFile extends SimpleFile {
 		return Material.getMaterial(getString(path).replace(" ", "_").toUpperCase());
 	}
 
-	public SimpleFile getFile() {
+	public SimpleFile<UHC> getFile() {
 		return this;
 	}
 
@@ -64,49 +59,32 @@ public abstract class EasyFile extends SimpleFile {
 
 	public boolean configContains(String arg) {
 		boolean boo = false;
-		ArrayList<String> keys = new ArrayList<String>();
+		ArrayList<String> keys = new ArrayList<>();
 		keys.addAll(this.getKeys(false));
-		for (int i = 0; i < keys.size(); i++)
-			if (keys.get(i).equalsIgnoreCase(arg))
+		for (String key : keys)
+			if (key.equalsIgnoreCase(arg))
 				boo = true;
 
-		if (boo)
-			return true;
-		else
-			return false;
+		return boo;
 
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> ArrayList<T> toList(T... args) {
 		ArrayList<T> toReturn = new ArrayList<>();
-		for (T type : args) {
-			toReturn.add(type);
-		}
+		Collections.addAll(toReturn, args);
 		return toReturn;
-	}
-
-	public UHC getUhc() {
-		return uhc;
-	}
-
-	public void setUhc(UHC uhc) {
-		this.uhc = uhc;
 	}
 
 	public Registery getRegister() {
 		return register;
 	}
 
-	public void setRegister(Registery register) {
+	private void setRegister(Registery register) {
 		this.register = register;
 	}
 
 	public Logger getLog() {
-		return log;
-	}
-
-	private void setLog(Logger log) {
-		this.log = log;
+		return Bukkit.getLogger();
 	}
 }

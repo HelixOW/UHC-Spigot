@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.files;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.EasyFile;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.EasyFile;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class DropsFile extends EasyFile {
 
@@ -65,8 +64,7 @@ public class DropsFile extends EasyFile {
 		}
 		long range = (long) end - (long) start + 1;
 		long fraction = (long) (range * new Random().nextDouble());
-		int randomNumber = (int) (fraction + start);
 
-		return randomNumber;
+		return (int) (fraction + start);
 	}
 }

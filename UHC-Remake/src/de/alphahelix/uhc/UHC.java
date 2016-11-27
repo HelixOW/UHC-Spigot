@@ -1,33 +1,30 @@
 package de.alphahelix.uhc;
 
-import java.io.File;
-import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+import de.popokaka.alphalibary.AlphaPlugin;
+import de.popokaka.alphalibary.mysql.MySQLAPI;
+import de.popokaka.alphalibary.mysql.MySQLManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import java.io.File;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import de.popokaka.alphalibary.mysql.MySQLAPI;
-import de.popokaka.alphalibary.mysql.MySQLManager;
-
-public class UHC extends JavaPlugin implements PluginMessageListener {
+public class UHC extends AlphaPlugin implements PluginMessageListener {
 
 	private static UHC instance;
 
 	private Registery register;
-	private String prefix;
 	private String consolePrefix;
 	private String lobbyServer;
 	private String restartMessage;
@@ -36,7 +33,7 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private boolean debug;
 	private boolean bunggeMode;
 	private boolean soup;
-	private boolean scenarios;
+	private boolean scenarios, scenarioVoting;
 	private boolean statusMOTD;
 	private boolean kits;
 	private boolean teams;
@@ -47,6 +44,13 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 	private boolean pregen;
 	private int spawnradius;
 	private Logger log;
+	
+	/*
+	 * Changelog:
+	 * 	+ DeathNote Scenario added
+	 * 	+ Sessionlock fix
+	 * 	+ Scoreboard fix
+	 */
 	
 	@Override
 	public void onEnable() {
@@ -178,14 +182,6 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 
 	private void setRegister(Registery register) {
 		this.register = register;
-	}
-
-	public String getPrefix() {
-		return prefix;
-	}
-
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
 	}
 
 	public boolean isMySQLMode() {
@@ -338,5 +334,13 @@ public class UHC extends JavaPlugin implements PluginMessageListener {
 
 	public void setPregen(boolean pregen) {
 		this.pregen = pregen;
+	}
+
+	public boolean isScenarioVoting() {
+		return scenarioVoting;
+	}
+
+	public void setScenarioVoting(boolean scenarioVoting) {
+		this.scenarioVoting = scenarioVoting;
 	}
 }

@@ -1,9 +1,8 @@
 package de.alphahelix.uhc.files;
 
-import org.bukkit.Location;
-
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.EasyFile;
+import org.bukkit.Location;
 
 public class HologramFile extends EasyFile {
 

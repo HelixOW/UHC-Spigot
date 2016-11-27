@@ -1,13 +1,12 @@
 package de.alphahelix.uhc.timers;
 
-import java.util.Random;
-
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
+import java.util.Random;
 
 public class DamageCycleTimer extends Util {
 
@@ -24,9 +23,7 @@ public class DamageCycleTimer extends Util {
 	}
 
 	public boolean isRunning() {
-		if (cycle != null)
-			return true;
-		return false;
+		return cycle != null;
 	}
 
 	public void startCycleTimer() {

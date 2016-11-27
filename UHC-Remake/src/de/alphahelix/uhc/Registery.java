@@ -1,180 +1,23 @@
 package de.alphahelix.uhc;
 
-import java.util.ArrayList;
-
+import de.alphahelix.uhc.commands.*;
+import de.alphahelix.uhc.events.armor.ArmorListener;
+import de.alphahelix.uhc.files.*;
+import de.alphahelix.uhc.instances.EasyFile;
+import de.alphahelix.uhc.inventories.*;
+import de.alphahelix.uhc.inventories.crates.*;
+import de.alphahelix.uhc.listeners.*;
+import de.alphahelix.uhc.listeners.scenarios.*;
+import de.alphahelix.uhc.timers.*;
+import de.alphahelix.uhc.util.*;
+import de.alphahelix.uhc.util.schematic.SchematicManagerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import de.alphahelix.uhc.commands.InfoCommand;
-import de.alphahelix.uhc.commands.SchematicCommand;
-import de.alphahelix.uhc.commands.StartCommand;
-import de.alphahelix.uhc.commands.StatsCommand;
-import de.alphahelix.uhc.commands.UHCAdminCommands;
-import de.alphahelix.uhc.commands.UHCSetUpCommand;
-import de.alphahelix.uhc.events.armor.ArmorListener;
-import de.alphahelix.uhc.files.BorderFile;
-import de.alphahelix.uhc.files.ConfirmFile;
-import de.alphahelix.uhc.files.CraftingFile;
-import de.alphahelix.uhc.files.DeathmessageFile;
-import de.alphahelix.uhc.files.DropsFile;
-import de.alphahelix.uhc.files.HologramFile;
-import de.alphahelix.uhc.files.KitsFile;
-import de.alphahelix.uhc.files.LobbyFile;
-import de.alphahelix.uhc.files.LocationsFile;
-import de.alphahelix.uhc.files.MOTDFile;
-import de.alphahelix.uhc.files.MainMessageFile;
-import de.alphahelix.uhc.files.MainOptionsFile;
-import de.alphahelix.uhc.files.PlayerFile;
-import de.alphahelix.uhc.files.ScenarioFile;
-import de.alphahelix.uhc.files.ScenarioHelpFile;
-import de.alphahelix.uhc.files.ScoreboardConstructFile;
-import de.alphahelix.uhc.files.ScoreboardFile;
-import de.alphahelix.uhc.files.SpectatorFile;
-import de.alphahelix.uhc.files.StatsFile;
-import de.alphahelix.uhc.files.StatusFile;
-import de.alphahelix.uhc.files.TablistFile;
-import de.alphahelix.uhc.files.TeamFile;
-import de.alphahelix.uhc.files.TimerFile;
-import de.alphahelix.uhc.files.UHCCrateFile;
-import de.alphahelix.uhc.files.UnitFile;
-import de.alphahelix.uhc.instances.EasyFile;
-import de.alphahelix.uhc.inventories.ConfirmInventory;
-import de.alphahelix.uhc.inventories.CrateInventory;
-import de.alphahelix.uhc.inventories.KitInventory;
-import de.alphahelix.uhc.inventories.PreviewInventory;
-import de.alphahelix.uhc.inventories.TeamInventory;
-import de.alphahelix.uhc.inventories.crates.EpicCrateInventory;
-import de.alphahelix.uhc.inventories.crates.LegendaryCrateListener;
-import de.alphahelix.uhc.inventories.crates.NormalCrateInventory;
-import de.alphahelix.uhc.inventories.crates.RareCrateInventory;
-import de.alphahelix.uhc.inventories.crates.SuperrareCrateInventory;
-import de.alphahelix.uhc.inventories.crates.UnCommonCrateInventory;
-import de.alphahelix.uhc.listeners.ChatListener;
-import de.alphahelix.uhc.listeners.ConfirmListener;
-import de.alphahelix.uhc.listeners.DeathListener;
-import de.alphahelix.uhc.listeners.EquipListener;
-import de.alphahelix.uhc.listeners.GStateListener;
-import de.alphahelix.uhc.listeners.GameEndsListener;
-import de.alphahelix.uhc.listeners.KitChooseListener;
-import de.alphahelix.uhc.listeners.RegisterListener;
-import de.alphahelix.uhc.listeners.SchematicListener;
-import de.alphahelix.uhc.listeners.SpectatorListener;
-import de.alphahelix.uhc.listeners.TeamListener;
-import de.alphahelix.uhc.listeners.TimerListener;
-import de.alphahelix.uhc.listeners.UHCCrateListener;
-import de.alphahelix.uhc.listeners.scenarios.AppleFamineListener;
-import de.alphahelix.uhc.listeners.scenarios.ArmorVHealthListener;
-import de.alphahelix.uhc.listeners.scenarios.ArrowListener;
-import de.alphahelix.uhc.listeners.scenarios.BackPackListener;
-import de.alphahelix.uhc.listeners.scenarios.BareBonesListener;
-import de.alphahelix.uhc.listeners.scenarios.BenchBlitzListener;
-import de.alphahelix.uhc.listeners.scenarios.BestPvEListener;
-import de.alphahelix.uhc.listeners.scenarios.BiomeParanoiaListener;
-import de.alphahelix.uhc.listeners.scenarios.BlitzListener;
-import de.alphahelix.uhc.listeners.scenarios.BlockRushListener;
-import de.alphahelix.uhc.listeners.scenarios.BlockedListener;
-import de.alphahelix.uhc.listeners.scenarios.BloodyDiamondsListener;
-import de.alphahelix.uhc.listeners.scenarios.BloodyLapisListener;
-import de.alphahelix.uhc.listeners.scenarios.BombersListener;
-import de.alphahelix.uhc.listeners.scenarios.BowfighterListener;
-import de.alphahelix.uhc.listeners.scenarios.CaptainsListener;
-import de.alphahelix.uhc.listeners.scenarios.CatsEyesListener;
-import de.alphahelix.uhc.listeners.scenarios.CertainCircumstancesListener;
-import de.alphahelix.uhc.listeners.scenarios.ChickenListener;
-import de.alphahelix.uhc.listeners.scenarios.CityWorldListener;
-import de.alphahelix.uhc.listeners.scenarios.CivilisationListener;
-import de.alphahelix.uhc.listeners.scenarios.CompensationListener;
-import de.alphahelix.uhc.listeners.scenarios.DamageDogersListener;
-import de.alphahelix.uhc.listeners.scenarios.DiamondlessListener;
-import de.alphahelix.uhc.listeners.scenarios.DimensonalInversionListener;
-import de.alphahelix.uhc.listeners.scenarios.DoubleOrNothingListener;
-import de.alphahelix.uhc.listeners.scenarios.DungeonMazeListener;
-import de.alphahelix.uhc.listeners.scenarios.EightLeggedFreaksListener;
-import de.alphahelix.uhc.listeners.scenarios.EnderDanceListener;
-import de.alphahelix.uhc.listeners.scenarios.EnderDragonRushListener;
-import de.alphahelix.uhc.listeners.scenarios.EntropyListener;
-import de.alphahelix.uhc.listeners.scenarios.ErraticPvPListener;
-import de.alphahelix.uhc.listeners.scenarios.EveryRoseListener;
-import de.alphahelix.uhc.listeners.scenarios.FalloutListener;
-import de.alphahelix.uhc.listeners.scenarios.FlowerPowerListener;
-import de.alphahelix.uhc.listeners.scenarios.FoodNeophobiaListener;
-import de.alphahelix.uhc.listeners.scenarios.GoToHellListener;
-import de.alphahelix.uhc.listeners.scenarios.GoldenFleeceListener;
-import de.alphahelix.uhc.listeners.scenarios.GoneFishingListener;
-import de.alphahelix.uhc.listeners.scenarios.GunsNRosesListener;
-import de.alphahelix.uhc.listeners.scenarios.HalfOreListener;
-import de.alphahelix.uhc.listeners.scenarios.HashtagBowListener;
-import de.alphahelix.uhc.listeners.scenarios.HealthDonorListener;
-import de.alphahelix.uhc.listeners.scenarios.InventorsListener;
-import de.alphahelix.uhc.listeners.scenarios.ItemHuntListener;
-import de.alphahelix.uhc.listeners.scenarios.JackpotListener;
-import de.alphahelix.uhc.listeners.scenarios.KingsListener;
-import de.alphahelix.uhc.listeners.scenarios.LightsOutListener;
-import de.alphahelix.uhc.listeners.scenarios.LiveWithRegretListener;
-import de.alphahelix.uhc.listeners.scenarios.LongshotListener;
-import de.alphahelix.uhc.listeners.scenarios.LootchestListener;
-import de.alphahelix.uhc.listeners.scenarios.LucyInTheSkyWithDiamondsListener;
-import de.alphahelix.uhc.listeners.scenarios.MoleListener;
-import de.alphahelix.uhc.listeners.scenarios.MonsterIncListener;
-import de.alphahelix.uhc.listeners.scenarios.NightmareModeListener;
-import de.alphahelix.uhc.listeners.scenarios.NineSlotsListener;
-import de.alphahelix.uhc.listeners.scenarios.NoFurnaceListener;
-import de.alphahelix.uhc.listeners.scenarios.NoGoingBackListener;
-import de.alphahelix.uhc.listeners.scenarios.NoNetherListener;
-import de.alphahelix.uhc.listeners.scenarios.NoSprintListener;
-import de.alphahelix.uhc.listeners.scenarios.NotShinyEnoughListener;
-import de.alphahelix.uhc.listeners.scenarios.OneHealListener;
-import de.alphahelix.uhc.listeners.scenarios.PopeyeListener;
-import de.alphahelix.uhc.listeners.scenarios.PotentialPermanentListener;
-import de.alphahelix.uhc.listeners.scenarios.PotionSwapListener;
-import de.alphahelix.uhc.listeners.scenarios.PuppyPowerListener;
-import de.alphahelix.uhc.listeners.scenarios.PvCListener;
-import de.alphahelix.uhc.listeners.scenarios.PyrophobiaListener;
-import de.alphahelix.uhc.listeners.scenarios.PyrotechnicsListener;
-import de.alphahelix.uhc.listeners.scenarios.RandomStarterItemsListener;
-import de.alphahelix.uhc.listeners.scenarios.RiskyRetrievalListener;
-import de.alphahelix.uhc.listeners.scenarios.SelectOresListener;
-import de.alphahelix.uhc.listeners.scenarios.SharedHealthListener;
-import de.alphahelix.uhc.listeners.scenarios.SheepLoversListener;
-import de.alphahelix.uhc.listeners.scenarios.SkyHighListener;
-import de.alphahelix.uhc.listeners.scenarios.SwitcherooListener;
-import de.alphahelix.uhc.listeners.scenarios.TeamInventoryListener;
-import de.alphahelix.uhc.listeners.scenarios.TheHobbitListener;
-import de.alphahelix.uhc.listeners.scenarios.TimberListener;
-import de.alphahelix.uhc.listeners.scenarios.TreeDropsListener;
-import de.alphahelix.uhc.listeners.scenarios.TripleOresListener;
-import de.alphahelix.uhc.listeners.scenarios.UltraParanoidListener;
-import de.alphahelix.uhc.listeners.scenarios.VeinMinerListener;
-import de.alphahelix.uhc.listeners.scenarios.XtrAppleListener;
-import de.alphahelix.uhc.timers.BestPvETimer;
-import de.alphahelix.uhc.timers.DamageCycleTimer;
-import de.alphahelix.uhc.timers.DeathmatchTimer;
-import de.alphahelix.uhc.timers.EntropyTimer;
-import de.alphahelix.uhc.timers.FalloutTimer;
-import de.alphahelix.uhc.timers.GoToHellTimer;
-import de.alphahelix.uhc.timers.GraceTimer;
-import de.alphahelix.uhc.timers.LobbyTimer;
-import de.alphahelix.uhc.timers.RestartTimer;
-import de.alphahelix.uhc.timers.SkyHighTimer;
-import de.alphahelix.uhc.timers.SoulBrothersListener;
-import de.alphahelix.uhc.timers.StartDeathMatchTimer;
-import de.alphahelix.uhc.timers.WarmUpTimer;
-import de.alphahelix.uhc.util.BiomeUtil;
-import de.alphahelix.uhc.util.BorderUtil;
-import de.alphahelix.uhc.util.HologramUtil;
-import de.alphahelix.uhc.util.LobbyUtil;
-import de.alphahelix.uhc.util.NPCUtil;
-import de.alphahelix.uhc.util.PlayerUtil;
-import de.alphahelix.uhc.util.RankingUtil;
-import de.alphahelix.uhc.util.ScoreboardUtil;
-import de.alphahelix.uhc.util.StatsUtil;
-import de.alphahelix.uhc.util.TablistUtil;
-import de.alphahelix.uhc.util.TeamManagerUtil;
-import de.alphahelix.uhc.util.WorldUtil;
-import de.alphahelix.uhc.util.schematic.SchematicManagerUtil;
+import java.util.ArrayList;
 
 public class Registery {
 
@@ -213,6 +56,8 @@ public class Registery {
 	private TeamInventory teamInventory;
 	private PreviewInventory previewInventory;
 	private CrateInventory crateInventory;
+	private ScenarioInventory scenarioInventory;
+	private ScenarioAdminInventory scenarioAdminInventory;
 
 	private NormalCrateInventory normalCrateInventory;
 	private UnCommonCrateInventory unCommonCrateInventory;
@@ -260,6 +105,7 @@ public class Registery {
 	private DeathListener deathListener;
 	private SchematicListener schematicListener;
 	private UHCCrateListener uhcCrateListener;
+	private ScenarioListener scenarioListener;
 
 	public Registery(UHC uhc) {
 		setUhc(uhc);
@@ -277,12 +123,12 @@ public class Registery {
 	}
 
 	private void registerCommands() {
-		new StatsCommand(getUhc(), "stats", "Check your or others stats", "records");
-		new UHCAdminCommands(getUhc(), "uhcAdmin", "Manage some server configurations via commands.", "uhcA");
-		new UHCSetUpCommand(getUhc(), "uhcSetup", "Setup all of your options", "uhcS");
-		new StartCommand(getUhc(), "start", "Short or strech the lobby time.", "start");
-		new InfoCommand(getUhc(), "informations", "Get informations about the current scenario", "scenario", "infos");
-		new SchematicCommand(getUhc(), "schematic", "Create your own uhc schematics", "schem");
+		new StatsCommand(getUhc(), this, "stats", "Check your or others stats", "records");
+		new UHCAdminCommands(getUhc(), this, "uhcAdmin", "Manage some server configurations via commands.", "uhcA");
+		new UHCSetUpCommand(getUhc(), this, "uhcSetup", "Setup all of your options", "uhcS");
+		new StartCommand(getUhc(), this, "start", "Short or strech the lobby time.", "start");
+		new InfoCommand(getUhc(), this, "informations", "Get informations about the current scenario", "scenario", "infos");
+		new SchematicCommand(getUhc(), this, "schematic", "Create your own uhc schematics", "schem");
 	}
 
 	private void registerTeams() {
@@ -339,6 +185,7 @@ public class Registery {
 		getUhc().setSpawnradius(getMainOptionsFile().getInt("Spawndispersal"));
 		getUhc().setStatusMOTD(getMainOptionsFile().getBoolean("Status MOTD"));
 		getUhc().setScenarios(getScenarioFile().getBoolean("Scenarios enabled"));
+		getUhc().setScenarioVoting(getScenarioFile().getBoolean("Scenario voting"));
 		getUhc().setKits(getKitsFile().getBoolean("Kits"));
 		getUhc().setTeams(getTeamFile().getBoolean("Teams enabled"));
 		getUhc().setTracker(getMainOptionsFile().getBoolean("Tracker.euip"));
@@ -367,6 +214,8 @@ public class Registery {
 		setTeamInventory(new TeamInventory(getUhc()));
 		setPreviewInventory(new PreviewInventory(getUhc()));
 		setCrateInventory(new CrateInventory(getUhc()));
+		setScenarioInventory(new ScenarioInventory(getUhc()));
+		setScenarioAdminInventory(new ScenarioAdminInventory(getUhc()));
 
 		setNormalCrateInventory(new NormalCrateInventory(getUhc()));
 		setUnCommonCrateInventory(new UnCommonCrateInventory(getUhc()));
@@ -388,6 +237,7 @@ public class Registery {
 		setDeathListener(new DeathListener(getUhc()));
 		setSchematicListener(new SchematicListener(getUhc()));
 		setUhcCrateListener(new UHCCrateListener(getUhc()));
+		setScenarioListener(new ScenarioListener(getUhc()));
 
 		setLobbyTimer(new LobbyTimer(getUhc()));
 		setGraceTimer(new GraceTimer(getUhc()));
@@ -417,6 +267,7 @@ public class Registery {
 		new BestPvEListener(getUhc());
 		new BloodyLapisListener(getUhc());
 		new BiomeParanoiaListener(getUhc());
+		new BirdsListener(getUhc());
 		new BlitzListener(getUhc());
 		new BlockedListener(getUhc());
 		new BlockRushListener(getUhc());
@@ -430,8 +281,10 @@ public class Registery {
 		new ChickenListener(getUhc());
 		new CivilisationListener(getUhc());
 		new CityWorldListener(getUhc());
+        new CraftableTeleportationListener(getUhc());
 		new CompensationListener(getUhc());
 		new DamageDogersListener(getUhc());
+		new DamageCycleListener(getUhc());
 		new DiamondlessListener(getUhc());
 		new DimensonalInversionListener(getUhc());
 		new DoubleOrNothingListener(getUhc());
@@ -477,6 +330,7 @@ public class Registery {
 		new PyrophobiaListener(getUhc());
 		new PyrotechnicsListener(getUhc());
 		new RandomStarterItemsListener(getUhc());
+        new RealTimeListener(getUhc());
 		new RiskyRetrievalListener(getUhc());
 		new SelectOresListener(getUhc());
 		new SharedHealthListener(getUhc());
@@ -500,10 +354,14 @@ public class Registery {
 
 		getConfirmInventory().fillInventory();
 		getTeamInventory().fillInventory();
+		if (getUhc().isScenarios() && getUhc().isScenarioVoting()) {
+			getScenarioInventory().fillInventory();
+		}
 
 		if (getUhc().isScenarios() && !getUhc().isKits()) {
 			getUhc().setKits(false);
-			Scenarios.getRandomScenario();
+			if (!getUhc().isScenarioVoting())
+				Scenarios.getRandomScenario();
 		} else if (getUhc().isKits()) {
 			getUhc().setKits(true);
 			getUhc().setScenarios(false);
@@ -522,12 +380,12 @@ public class Registery {
 				getWorldUtil().createNetherWorld();
 				if (getUhc().isPregen())
 					getWorldUtil().preGenerateWorld();
-				else 
+				else
 					new BukkitRunnable() {
 						public void run() {
 							new BiomeUtil();
 						}
-					}.runTaskLater(getUhc(), 10);
+					}.runTaskLater(getUhc(), 15);
 			}
 		}.runTaskLater(getUhc(), 5);
 	}
@@ -1148,5 +1006,29 @@ public class Registery {
 
 	public void setLobbyFile(LobbyFile lobbyFile) {
 		this.lobbyFile = lobbyFile;
+	}
+
+	public ScenarioInventory getScenarioInventory() {
+		return scenarioInventory;
+	}
+
+	public void setScenarioInventory(ScenarioInventory scenarioInventory) {
+		this.scenarioInventory = scenarioInventory;
+	}
+
+	public ScenarioListener getScenarioListener() {
+		return scenarioListener;
+	}
+
+	public void setScenarioListener(ScenarioListener scenarioListener) {
+		this.scenarioListener = scenarioListener;
+	}
+
+	public ScenarioAdminInventory getScenarioAdminInventory() {
+		return scenarioAdminInventory;
+	}
+
+	public void setScenarioAdminInventory(ScenarioAdminInventory scenarioAdminInventory) {
+		this.scenarioAdminInventory = scenarioAdminInventory;
 	}
 }
