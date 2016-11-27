@@ -24,7 +24,6 @@ public class RealTimeListener extends SimpleListener {
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
         if(!scenarioCheck(Scenarios.REAL_TIME)) return;
-
         new BukkitRunnable() {
 
             @Override

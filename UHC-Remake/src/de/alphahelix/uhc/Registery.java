@@ -304,6 +304,7 @@ public class Registery {
 		new GunsNRosesListener(getUhc());
 		new HealthDonorListener(getUhc());
 		new TheHobbitListener(getUhc());
+        new HorselessListener(getUhc());
 		new InventorsListener(getUhc());
 		new ItemHuntListener(getUhc());
 		new JackpotListener(getUhc());
@@ -344,6 +345,7 @@ public class Registery {
 		new TreeDropsListener(getUhc());
 		new UltraParanoidListener(getUhc());
 		new VeinMinerListener(getUhc());
+		new WebCageListener(getUhc());
 		new XtrAppleListener(getUhc());
 
 		registerCommands();

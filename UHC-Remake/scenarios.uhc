@@ -104,4 +104,6 @@ Zombies - When a player dies, a zombie will spawn.
 
 Birds - Every player can fly.
 Real time - The time in Minecraft and the so called 'real life' is the same.
-Craftable Teleportation - Rename an Enderpearl to a Player's name and you will be teleported into a 50 Block range if the player is online and still alive (right click enderpearl)
+Web cage - When a player dies a 5*5*5 cage of cobwebs will be spawned at the deathlocation.
+Craftable Teleportation - Rename an Enderpearl to a Player's name and you will be teleported into a 50 Block range if the player is online and still alive (right click enderpearl).
+Horseless - Horses won't be spawned.
