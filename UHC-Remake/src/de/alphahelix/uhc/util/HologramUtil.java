@@ -37,10 +37,10 @@ public class HologramUtil extends Util {
 
 			name = name.replace("&", "§");
 			name = name.replace("[player]", p.getDisplayName());
-			name = name.replace("[kills]", Integer.toString(getRegister().getStatsUtil().getKills(p)));
-			name = name.replace("[deaths]", Integer.toString(getRegister().getStatsUtil().getDeaths(p)));
-			name = name.replace("[coins]", Integer.toString(getRegister().getStatsUtil().getCoins(p)));
-			name = name.replace("[rank]", Integer.toString(getRegister().getStatsUtil().getRank(p)));
+			name = name.replace("[kills]", Long.toString(getRegister().getStatsUtil().getKills(p)));
+			name = name.replace("[deaths]", Long.toString(getRegister().getStatsUtil().getDeaths(p)));
+			name = name.replace("[coins]", Long.toString(getRegister().getStatsUtil().getCoins(p)));
+			name = name.replace("[rank]", Long.toString(getRegister().getStatsUtil().getRank(p)));
 
 			cholo.getMethod("setLocation", param).invoke(hc, loc.getX(), loc.getY(), loc.getZ(), 0F, 0F);
 			cholo.getMethod("setInvisible", boolean.class).invoke(hc, true);
@@ -83,10 +83,10 @@ public class HologramUtil extends Util {
 
 				name = name.replace("&", "§");
 				name = name.replace("[player]", p.getDisplayName());
-				name = name.replace("[kills]", Integer.toString(getRegister().getStatsUtil().getKills(p)));
-				name = name.replace("[deaths]", Integer.toString(getRegister().getStatsUtil().getDeaths(p)));
-				name = name.replace("[coins]", Integer.toString(getRegister().getStatsUtil().getCoins(p)));
-				name = name.replace("[rank]", Integer.toString(getRegister().getStatsUtil().getRank(p)));
+				name = name.replace("[kills]", Long.toString(getRegister().getStatsUtil().getKills(p)));
+				name = name.replace("[deaths]", Long.toString(getRegister().getStatsUtil().getDeaths(p)));
+				name = name.replace("[coins]", Long.toString(getRegister().getStatsUtil().getCoins(p)));
+				name = name.replace("[rank]", Long.toString(getRegister().getStatsUtil().getRank(p)));
 
 				cholo.getMethod("setLocation", param).invoke(hc, loc.getX(), loc.getY(), loc.getZ(), 0F, 0F);
 				cholo.getMethod("setInvisible", boolean.class).invoke(hc, true);

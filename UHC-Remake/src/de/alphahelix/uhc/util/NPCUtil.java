@@ -150,35 +150,35 @@ public class NPCUtil extends Util {
             k.getClass().getMethod("setInvisible", boolean.class).invoke(k, true);
             k.getClass().getMethod("setCustomName", String.class).invoke(k,
                     getRegister().getStatsFile().getColorString("Kills").replace("[kills]",
-                            Integer.toString(getRegister().getStatsUtil().getKills(p))));
+                            Long.toString(getRegister().getStatsUtil().getKills(p))));
             k.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(k, true);
 
             d.getClass().getMethod("setLocation", param).invoke(d, loc.getX(), loc.getY() + 0.7, loc.getZ(), 0F, 0F);
             d.getClass().getMethod("setInvisible", boolean.class).invoke(d, true);
             d.getClass().getMethod("setCustomName", String.class).invoke(d,
                     getRegister().getStatsFile().getColorString("Deaths").replace("[deaths]",
-                            Integer.toString(getRegister().getStatsUtil().getDeaths(p))));
+                            Long.toString(getRegister().getStatsUtil().getDeaths(p))));
             c.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(d, true);
 
             c.getClass().getMethod("setLocation", param).invoke(c, loc.getX(), loc.getY() + 0.5, loc.getZ(), 0F, 0F);
             c.getClass().getMethod("setInvisible", boolean.class).invoke(c, true);
             c.getClass().getMethod("setCustomName", String.class).invoke(c,
                     getRegister().getStatsFile().getColorString("Coins").replace("[coins]",
-                            Integer.toString(getRegister().getStatsUtil().getCoins(p))));
+                            Long.toString(getRegister().getStatsUtil().getCoins(p))));
             c.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(c, true);
 
             po.getClass().getMethod("setLocation", param).invoke(po, loc.getX(), loc.getY() + 0.3, loc.getZ(), 0F, 0F);
             po.getClass().getMethod("setInvisible", boolean.class).invoke(po, true);
             po.getClass().getMethod("setCustomName", String.class).invoke(po,
                     getRegister().getStatsFile().getColorString("Points").replace("[points]",
-                            Integer.toString(getRegister().getStatsUtil().getPoints(p))));
+                            Long.toString(getRegister().getStatsUtil().getPoints(p))));
             po.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(po, true);
 
             r.getClass().getMethod("setLocation", param).invoke(r, loc.getX(), loc.getY() + 0.1, loc.getZ(), 0F, 0F);
             r.getClass().getMethod("setInvisible", boolean.class).invoke(r, true);
             r.getClass().getMethod("setCustomName", String.class).invoke(r,
                     getRegister().getStatsFile().getColorString("Rank").replace("[rank]",
-                            Integer.toString(getRegister().getStatsUtil().getRank(p))));
+                            Long.toString(getRegister().getStatsUtil().getRank(p))));
             r.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(r, true);
 
             ReflectionUtil.sendPacket(p, ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")

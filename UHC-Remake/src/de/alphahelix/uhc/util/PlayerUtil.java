@@ -1,11 +1,14 @@
 package de.alphahelix.uhc.util;
 
 import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.instances.PlayerInfo;
 import de.alphahelix.uhc.instances.Util;
 import org.bukkit.GameMode;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class PlayerUtil extends Util{
@@ -13,6 +16,7 @@ public class PlayerUtil extends Util{
 	private LinkedList<String> all;
 	private LinkedList<String> survivors;
 	private LinkedList<String> deaths;
+	private static HashMap<String, PlayerInfo> infos = new HashMap<>();
 	
 	public PlayerUtil(UHC uhc) {
 		super(uhc);
@@ -44,6 +48,27 @@ public class PlayerUtil extends Util{
 		p.setTotalExperience(0);
 		for(PotionEffect pe : p.getActivePotionEffects()) {
 			p.removePotionEffect(pe.getType());
+		}
+	}
+
+	public void removePlayerInfo(OfflinePlayer p) {
+        infos.remove(p.getName());
+    }
+
+	public boolean isInInfoMap(OfflinePlayer p) {
+        return infos.containsKey(p.getName());
+    }
+
+	public void setPlayerInfo(OfflinePlayer p, PlayerInfo playerInfo) {
+		infos.put(p.getName(), playerInfo);
+	}
+
+	public PlayerInfo getPlayerInfo(OfflinePlayer p) {
+		if(infos.containsKey(p.getName())) return infos.get(p.getName());
+		else {
+			PlayerInfo playerInfo = new PlayerInfo(p, 0, 0,0 , 0, 0, 0, 0, 0, 0, 0, "");
+			setPlayerInfo(p, playerInfo);
+            return playerInfo;
 		}
 	}
 

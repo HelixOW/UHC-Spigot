@@ -64,7 +64,9 @@ public class RestartTimer extends Util {
 				return;
 			return;
 		}
-		
+
+
+		getRegister().getStatsUtil().pushInformations();
 		resetTime();
 		getRegister().getGraceTimer().stopTimer();
 		getRegister().getWarmUpTimer().stopTimer();

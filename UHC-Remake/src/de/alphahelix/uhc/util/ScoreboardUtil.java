@@ -40,7 +40,7 @@ public class ScoreboardUtil extends Util {
 					continue;
 				ssb.setValue(i,
 						getRegister().getScoreboardFile().getColorString("Lobby.message.kills")
-								.replace("[kills]", Integer.toString(getRegister().getStatsUtil().getKills(p)))
+								.replace("[kills]", Long.toString(getRegister().getStatsUtil().getKills(p)))
 								.replace("[i]", iden),
 						iden);
 			}
@@ -50,7 +50,7 @@ public class ScoreboardUtil extends Util {
 					continue;
 				ssb.setValue(i,
 						getRegister().getScoreboardFile().getColorString("Lobby.message.deaths")
-								.replace("[deaths]", Integer.toString(getRegister().getStatsUtil().getDeaths(p)))
+								.replace("[deaths]", Long.toString(getRegister().getStatsUtil().getDeaths(p)))
 								.replace("[i]", iden),
 						iden);
 			}
@@ -60,7 +60,7 @@ public class ScoreboardUtil extends Util {
 					continue;
 				ssb.setValue(i,
 						getRegister().getScoreboardFile().getColorString("Lobby.message.coins")
-								.replace("[coins]", Integer.toString(getRegister().getStatsUtil().getCoins(p)))
+								.replace("[coins]", Long.toString(getRegister().getStatsUtil().getCoins(p)))
 								.replace("[i]", iden),
 						iden);
 			}
@@ -70,7 +70,7 @@ public class ScoreboardUtil extends Util {
 					continue;
 				ssb.setValue(i,
 						getRegister().getScoreboardFile().getColorString("Lobby.message.points")
-								.replace("[points]", Integer.toString(getRegister().getStatsUtil().getPoints(p)))
+								.replace("[points]", Long.toString(getRegister().getStatsUtil().getPoints(p)))
 								.replace("[i]", iden),
 						iden);
 			}

@@ -14,6 +14,10 @@ public class PlayerFile extends EasyFile {
 		super("players.uhc", uhc);
 		register(this);
 	}
+
+	public boolean containsPlayer(Player p) {
+		return configContains("Player."+ UUIDFetcher.getUUID(p.getName()).toString()+".name");
+	}
 	
 	public void addPlayer(Player p) {
 		try {

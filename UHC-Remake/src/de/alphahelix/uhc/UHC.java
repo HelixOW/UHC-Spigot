@@ -47,9 +47,11 @@ public class UHC extends AlphaPlugin implements PluginMessageListener {
 	
 	/*
 	 * Changelog:
-	 * 	+ DeathNote Scenario added
-	 * 	+ Sessionlock fix
-	 * 	+ Scoreboard fix
+	 * 		+ fixed lobby
+	 * 		+ fixed various crate bugs
+	 *		+ 1 player = game end
+	 *      + stats caching
+	 *      + more place for kills etc. (long instead of int)
 	 */
 	
 	@Override
@@ -167,7 +169,7 @@ public class UHC extends AlphaPlugin implements PluginMessageListener {
 	@Override
 	public void onPluginMessageReceived(String arg0, Player arg1, byte[] arg2) {
 	}
-	
+
 	public static UHC getInstance() {
 		return instance;
 	}

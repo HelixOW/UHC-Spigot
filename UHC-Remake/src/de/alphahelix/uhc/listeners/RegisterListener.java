@@ -1,7 +1,10 @@
 package de.alphahelix.uhc.listeners;
 
 import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.UHCCrateRarerity;
+import de.alphahelix.uhc.instances.PlayerInfo;
 import de.alphahelix.uhc.instances.SimpleListener;
+import de.alphahelix.uhc.util.StatsUtil;
 import de.popokaka.alphalibary.UUID.UUIDFetcher;
 import de.popokaka.alphalibary.mysql.MySQLManager;
 import org.bukkit.entity.Player;
@@ -18,10 +21,26 @@ public class RegisterListener extends SimpleListener {
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		
+
+        PlayerInfo playerInfo = new PlayerInfo(p, 0, 0,0 , 0, 0, 0, 0, 0, 0, 0, "");
+        StatsUtil su = getRegister().getStatsUtil();
+
 		if(getUhc().isMySQLMode()) {
 			if (MySQLManager.containsPlayer(p)) {
 				MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString() , "Player", p.getName());
+                playerInfo = new PlayerInfo(
+                        p,
+                        su.getKills(p),
+                        su.getDeaths(p),
+                        su.getCoins(p),
+                        su.getPoints(p),
+                        su.getCrateCount(UHCCrateRarerity.NORMAL, p),
+                        su.getCrateCount(UHCCrateRarerity.UNCOMMON, p),
+                        su.getCrateCount(UHCCrateRarerity.RARE, p),
+                        su.getCrateCount(UHCCrateRarerity.SUPERRARE, p),
+                        su.getCrateCount(UHCCrateRarerity.EPIC, p),
+                        su.getCrateCount(UHCCrateRarerity.LEGENDARY, p),
+                        su.getKitsAsString(p));
 			} else {
 				MySQLManager.exInsertQry(
 						p.getName(),                                     //Playername
@@ -41,8 +60,9 @@ public class RegisterListener extends SimpleListener {
 						"0"                                               //Legendary Crates
 						);
 			}
-		} else {
+		} else if(!getRegister().getPlayerFile().containsPlayer(p)){
 			getRegister().getPlayerFile().addPlayer(p);
 		}
+        getRegister().getPlayerUtil().setPlayerInfo(p, playerInfo);
 	}
 }

@@ -19,7 +19,7 @@ import java.util.logging.Level;
 
 public class Ranking extends Util {
 
-	private HashMap<Integer, String> rank;
+	private HashMap<Long, String> rank;
 	private Location firstPlace;
 	private Location secondPlace;
 	private Location thirdPlace;
@@ -30,7 +30,7 @@ public class Ranking extends Util {
 
 	public Ranking(UHC uhc) {
 		super(uhc);
-		setRank(new HashMap<Integer, String>());
+		setRank(new HashMap<Long, String>());
 	}
 
 	public void update() {
@@ -47,7 +47,7 @@ public class Ranking extends Util {
 					rs = MySQLAPI.getMySQLConnection().createStatement()
 							.executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
 
-					int in = MySQLManager.getCountNumber("uhc") + 1;
+					long in = MySQLManager.getCountNumber("uhc") + 1;
 
 					while (rs.next()) {
 						in--;
@@ -84,16 +84,16 @@ public class Ranking extends Util {
 							Sign sign = (Sign) sig.getBlock().getState();
 
 							String a = line1.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-									.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+									.replace("[points]", Long.toString(getRegister().getStatsUtil()
 											.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 							String b = line2.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-									.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+									.replace("[points]", Long.toString(getRegister().getStatsUtil()
 											.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 							String c = line3.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-									.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+									.replace("[points]", Long.toString(getRegister().getStatsUtil()
 											.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 							String d = line4.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-									.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+									.replace("[points]", Long.toString(getRegister().getStatsUtil()
 											.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 
 							sign.setLine(0, a);
@@ -155,16 +155,16 @@ public class Ranking extends Util {
 						Sign sign = (Sign) sig.getBlock().getState();
 
 						String a = line1.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-								.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+								.replace("[points]", Long.toString(getRegister().getStatsUtil()
 										.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 						String b = line2.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-								.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+								.replace("[points]", Long.toString(getRegister().getStatsUtil()
 										.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
-						String c = line3.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-								.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+						String c = line3.replace("[rank]", Long.toString(id)).replace("[player]", name)
+								.replace("[points]", Long.toString(getRegister().getStatsUtil()
 										.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 						String d = line4.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-								.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+								.replace("[points]", Long.toString(getRegister().getStatsUtil()
 										.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 
 						sign.setLine(0, a);
@@ -218,16 +218,16 @@ public class Ranking extends Util {
 					Sign sign = (Sign) sig.getBlock().getState();
 
 					String a = line1.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-							.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+							.replace("[points]", Long.toString(getRegister().getStatsUtil()
 									.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 					String b = line2.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-							.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+							.replace("[points]", Long.toString(getRegister().getStatsUtil()
 									.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 					String c = line3.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-							.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+							.replace("[points]", Long.toString(getRegister().getStatsUtil()
 									.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 					String d = line4.replace("[rank]", Integer.toString(id)).replace("[player]", name)
-							.replace("[points]", Integer.toString(getRegister().getStatsUtil()
+							.replace("[points]", Long.toString(getRegister().getStatsUtil()
 									.getPoints(Bukkit.getOfflinePlayer(UUID.fromString(rank.get(id))))));
 
 					sign.setLine(0, a);
@@ -242,11 +242,11 @@ public class Ranking extends Util {
 
 	}
 
-	public HashMap<Integer, String> getRank() {
+	public HashMap<Long, String> getRank() {
 		return rank;
 	}
 
-	private void setRank(HashMap<Integer, String> rank) {
+	private void setRank(HashMap<Long, String> rank) {
 		this.rank = rank;
 	}
 

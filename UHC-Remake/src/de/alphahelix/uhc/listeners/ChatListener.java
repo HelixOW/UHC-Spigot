@@ -49,13 +49,6 @@ public class ChatListener extends SimpleListener {
 	}
 
 	@EventHandler
-	public void onTeamChat(AsyncPlayerChatEvent e) {
-		e.setCancelled(true);
-
-		// TODO: Teams
-	}
-
-	@EventHandler
 	public void onAchivementAward(PlayerAchievementAwardedEvent e) {
 		e.setCancelled(true);
 	}

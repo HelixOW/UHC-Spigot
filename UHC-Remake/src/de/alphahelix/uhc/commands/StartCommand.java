@@ -39,7 +39,6 @@ public class StartCommand extends SimpleCommand<UHC, Registery> {
 
 	@Override
 	public List<String> tabComplete(CommandSender cs, String label, String[] args) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
