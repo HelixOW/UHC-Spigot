@@ -1,6 +1,9 @@
 # UHC
+### Please notice that Java 8 is required!!!
 In the Alpha & Beta Phase bugs of the 1.9 Version have priority to be fixed!</br>
 Also 1.8 will only stay with the features of the first ALPHA Version Until release 1.9 however will get updates with new features.
+
+The 1.8 Version can be found here(https://www.spigotmc.org/resources/uhc-remake-bungeecord-1-8-1-9-mysql-support-holograms-titles-scoreboards-much-more.18997/download?version=117834).
 
 You need help with setting up UHC? Don't hesitate to contact me on SpigotMC @AlphaHelix before giving a bad review.</br>
 You have an idea? Send it to me via SpigotMC @AlphaHelix.
