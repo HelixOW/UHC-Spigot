@@ -20,6 +20,7 @@ You have an idea? Send it to me via SpigotMC @AlphaHelix.
 - Shrinking ,speed and size of worldborder configureable.
 - Buy, preview and create custom kits.
 - 99 Scenarios, where if you enabled them 1 is played every round (see here [https://goo.gl/EzJip9] to have a list of them).
+- Scenario Voting
 - All messages are configureable.
 - Kills, deaths, coins, points, rank stats system.
 - NPC (Non player character) who shows your stats above his head.
