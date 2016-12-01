@@ -18,6 +18,8 @@ You have an idea? Send it to me via SpigotMC @AlphaHelix.
 - Moving scoreboard texts.
 - Innovative world border.
 - Shrinking ,speed and size of worldborder configureable.
+- Achievements
+- custom chat ranks (depend on kills, wins, points)
 - Buy, preview and create custom kits.
 - 99 Scenarios, where if you enabled them 1 is played every round (see here [https://goo.gl/EzJip9] to have a list of them).
 - Scenario Voting
