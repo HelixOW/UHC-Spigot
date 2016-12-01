@@ -10,35 +10,35 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class LongshotListener extends SimpleListener {
 
-	public LongshotListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.LONGSHOTS) || scenarioCheck(Scenarios.REWARDING_LONGSHOTS))
-			return;
-		if (!(e.getDamager() instanceof Arrow) || !(e.getEntity() instanceof Player)) {
-			return;
-		}
+    public LongshotListener(UHC uhc) {
+        super(uhc);
+    }
 
-		Player p = (Player) e.getEntity();
-		Arrow damager = (Arrow) e.getDamager();
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.LONGSHOTS) || scenarioCheck(Scenarios.REWARDING_LONGSHOTS))
+            return;
+        if (!(e.getDamager() instanceof Arrow) || !(e.getEntity() instanceof Player)) {
+            return;
+        }
 
-		if (!(damager.getShooter() instanceof Player)) {
-			return;
-		}
+        Player p = (Player) e.getEntity();
+        Arrow damager = (Arrow) e.getDamager();
 
-		Player k = (Player) damager.getShooter();
-		double distance = k.getLocation().distance(p.getLocation());
+        if (!(damager.getShooter() instanceof Player)) {
+            return;
+        }
 
-		if (distance >= 75) {
-			p.damage(3);
-			if (k.getHealth() > 18)
-				k.setHealth(20);
-			else k.setHealth(k.getHealth() + 2.0);
-		}
-	}
+        Player k = (Player) damager.getShooter();
+        double distance = k.getLocation().distance(p.getLocation());
+
+        if (distance >= 75) {
+            p.damage(3);
+            if (k.getHealth() > 18)
+                k.setHealth(20);
+            else k.setHealth(k.getHealth() + 2.0);
+        }
+    }
 }

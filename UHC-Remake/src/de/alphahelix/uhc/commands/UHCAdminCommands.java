@@ -1,11 +1,11 @@
 package de.alphahelix.uhc.commands;
 
+import de.alphahelix.alphalibary.UUID.UUIDFetcher;
+import de.alphahelix.alphalibary.command.SimpleCommand;
 import de.alphahelix.uhc.Registery;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.UHCCrateRarerity;
 import de.alphahelix.uhc.instances.Kit;
-import de.popokaka.alphalibary.UUID.UUIDFetcher;
-import de.popokaka.alphalibary.command.SimpleCommand;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -91,9 +91,14 @@ public class UHCAdminCommands extends SimpleCommand<UHC, Registery> {
                 }
             } else if (args[0].equalsIgnoreCase("dropCrate")) {
                 try {
+                    if (p.isOnline())
+                        p.sendMessage(getPlugin().getPrefix() + getRegister().getMessageFile().getColorString("Crate dropped")
+                                .replace("[crate]", UHCCrateRarerity.valueOf(args[1].toUpperCase()).getPrefix() + getPlugin().getRegister().getUhcCrateFile()
+                                        .getCrate(UHCCrateRarerity.valueOf(args[1].toUpperCase())).getName()));
                     getPlugin().getRegister().getStatsUtil().addCrate(getPlugin().getRegister().getUhcCrateFile()
                             .getCrate(UHCCrateRarerity.valueOf(args[1].toUpperCase())), p);
-                } catch (Exception ignore) {}
+                } catch (Exception ignore) {
+                }
             }
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("dropCrate")) {
@@ -105,8 +110,12 @@ public class UHCAdminCommands extends SimpleCommand<UHC, Registery> {
                                 Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(args[2])));
                         p.sendMessage(getPlugin().getPrefix() + "You've given " + args[2] + " a "
                                 + UHCCrateRarerity.valueOf(args[1].toUpperCase()).getPrefix() + args[1] + " crate!");
-
-                    } catch (Exception ignore) {}
+                        if (Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(args[2])).isOnline())
+                            Bukkit.getPlayer(args[2]).sendMessage(getPlugin().getPrefix() + getRegister().getMessageFile().getColorString("Crate dropped")
+                                    .replace("[crate]", UHCCrateRarerity.valueOf(args[1].toUpperCase()).getPrefix() + getPlugin().getRegister().getUhcCrateFile()
+                                            .getCrate(UHCCrateRarerity.valueOf(args[1].toUpperCase())).getName()));
+                    } catch (Exception ignore) {
+                    }
                 }
             }
         } else if (args.length == 5) {

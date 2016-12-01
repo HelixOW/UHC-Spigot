@@ -18,9 +18,9 @@ public class BirdsListener extends SimpleListener {
 
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if(!scenarioCheck(Scenarios.BIRDS)) return;
+        if (!scenarioCheck(Scenarios.BIRDS)) return;
 
-        for(Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
             p.setAllowFlight(true);
         }
     }

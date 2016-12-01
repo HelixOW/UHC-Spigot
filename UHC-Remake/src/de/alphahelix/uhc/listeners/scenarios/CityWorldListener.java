@@ -13,24 +13,24 @@ import java.util.Random;
 
 public class CityWorldListener extends SimpleListener {
 
-	public CityWorldListener(UHC uhc) {
-		super(uhc);
-	}
+    public CityWorldListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.CITYWORLD))
-			return;
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.CITYWORLD))
+            return;
 
-		for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			for(int slot = 0; slot < 36+9; slot++) {
-				p.getInventory().setItem(slot, new ItemStack(getRandomMaterial()));
-			}
-		}
-	}
-	
-	private Material getRandomMaterial() {
-		int index = new Random().nextInt(Material.values().length);
-		return Material.values()[index];
-	}
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            for (int slot = 0; slot < 36 + 9; slot++) {
+                p.getInventory().setItem(slot, new ItemStack(getRandomMaterial()));
+            }
+        }
+    }
+
+    private Material getRandomMaterial() {
+        int index = new Random().nextInt(Material.values().length);
+        return Material.values()[index];
+    }
 }

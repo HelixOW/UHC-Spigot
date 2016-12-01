@@ -13,31 +13,31 @@ import java.util.HashMap;
 
 public class BlockRushListener extends SimpleListener {
 
-	private HashMap<String, ArrayList<Material>> hasBeenMind = new HashMap<>();
+    private HashMap<String, ArrayList<Material>> hasBeenMind = new HashMap<>();
 
-	public BlockRushListener(UHC uhc) {
-		super(uhc);
-	}
+    public BlockRushListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onBreak(BlockBreakEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.BLOCK_RUSH))
-			return;
+    @EventHandler
+    public void onBreak(BlockBreakEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.BLOCK_RUSH))
+            return;
 
-		if (!hasBeenMind.containsKey(e.getPlayer().getName())) {
-			hasBeenMind.put(e.getPlayer().getName(), new ArrayList<Material>());
-			hasBeenMind.get(e.getPlayer().getName()).add(e.getBlock().getType());
+        if (!hasBeenMind.containsKey(e.getPlayer().getName())) {
+            hasBeenMind.put(e.getPlayer().getName(), new ArrayList<Material>());
+            hasBeenMind.get(e.getPlayer().getName()).add(e.getBlock().getType());
 
-			e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.GOLD_INGOT));
-		} else {
-			if (!hasBeenMind.get(e.getPlayer().getName()).contains(e.getBlock().getType())) {
-				hasBeenMind.get(e.getPlayer().getName()).add(e.getBlock().getType());
+            e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.GOLD_INGOT));
+        } else {
+            if (!hasBeenMind.get(e.getPlayer().getName()).contains(e.getBlock().getType())) {
+                hasBeenMind.get(e.getPlayer().getName()).add(e.getBlock().getType());
 
-				e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
-						new ItemStack(Material.GOLD_INGOT));
-			}
-		}
-	}
+                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
+                        new ItemStack(Material.GOLD_INGOT));
+            }
+        }
+    }
 }

@@ -12,28 +12,28 @@ import java.util.Random;
 
 public class FlowerPowerListener extends SimpleListener {
 
-	public FlowerPowerListener(UHC uhc) {
-		super(uhc);
-	}
+    public FlowerPowerListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onBreak(BlockBreakEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.FLOWER_POWER))
-			return;
+    @EventHandler
+    public void onBreak(BlockBreakEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.FLOWER_POWER))
+            return;
 
-		if (e.getBlock().getType().equals(Material.RED_ROSE) || e.getBlock().getType().equals(Material.YELLOW_FLOWER)) {
-			double r = Math.random();
+        if (e.getBlock().getType().equals(Material.RED_ROSE) || e.getBlock().getType().equals(Material.YELLOW_FLOWER)) {
+            double r = Math.random();
 
-			if (!(r < 0.2))
-				return;
-			e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(getRandomMaterial()));
-		}
-	}
+            if (!(r < 0.2))
+                return;
+            e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(getRandomMaterial()));
+        }
+    }
 
-	private Material getRandomMaterial() {
-		int index = new Random().nextInt(Material.values().length);
-		return Material.values()[index];
-	}
+    private Material getRandomMaterial() {
+        int index = new Random().nextInt(Material.values().length);
+        return Material.values()[index];
+    }
 }

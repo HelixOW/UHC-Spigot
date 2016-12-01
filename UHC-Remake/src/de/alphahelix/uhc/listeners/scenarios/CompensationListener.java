@@ -9,18 +9,18 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class CompensationListener extends SimpleListener {
 
-	public CompensationListener(UHC uhc) {
-		super(uhc);
-	}
+    public CompensationListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onDeath(PlayerDeathEvent e) {
-		if (!scenarioCheck(Scenarios.COMPENSATION))
-			return;
-		if (!(e.getEntity().getKiller() instanceof Player))
-			return;
-		
-		e.getEntity().getKiller().setMaxHealth(e.getEntity().getKiller().getMaxHealth() + (e.getEntity().getMaxHealth() / 4));
-		e.getEntity().getKiller().setHealth(e.getEntity().getKiller().getMaxHealth());
-	}
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+        if (!scenarioCheck(Scenarios.COMPENSATION))
+            return;
+        if (!(e.getEntity().getKiller() instanceof Player))
+            return;
+
+        e.getEntity().getKiller().setMaxHealth(e.getEntity().getKiller().getMaxHealth() + (e.getEntity().getMaxHealth() / 4));
+        e.getEntity().getKiller().setHealth(e.getEntity().getKiller().getMaxHealth());
+    }
 }

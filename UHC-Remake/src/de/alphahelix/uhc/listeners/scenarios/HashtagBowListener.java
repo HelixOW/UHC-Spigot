@@ -10,27 +10,27 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class HashtagBowListener extends SimpleListener {
 
-	public HashtagBowListener(UHC uhc) {
-		super(uhc);
-	}
+    public HashtagBowListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onHurt(EntityDamageByEntityEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.HASHTAGBOW))
-			return;
-		if (!(e.getEntity() instanceof Player))
-			return;
-		if (!(e.getDamager() instanceof Player))
-			return;
+    @EventHandler
+    public void onHurt(EntityDamageByEntityEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.HASHTAGBOW))
+            return;
+        if (!(e.getEntity() instanceof Player))
+            return;
+        if (!(e.getDamager() instanceof Player))
+            return;
 
-		Player dmger = (Player) e.getDamager();
+        Player dmger = (Player) e.getDamager();
 
-		if (dmger.getInventory().getItemInMainHand() == null)
-			return;
-		if (!dmger.getInventory().getItemInMainHand().getType().equals(Material.BOW))
-			e.setCancelled(true);
-	}
+        if (dmger.getInventory().getItemInMainHand() == null)
+            return;
+        if (!dmger.getInventory().getItemInMainHand().getType().equals(Material.BOW))
+            e.setCancelled(true);
+    }
 
 }

@@ -10,29 +10,29 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class NoSprintListener extends SimpleListener {
 
-	public NoSprintListener(UHC uhc) {
-		super(uhc);
-	}
+    public NoSprintListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onPlayerToggleSprint(PlayerToggleSprintEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.NO_SPRINT))
-			return;
+    @EventHandler
+    public void onPlayerToggleSprint(PlayerToggleSprintEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.NO_SPRINT))
+            return;
 
-		final Player p = e.getPlayer();
+        final Player p = e.getPlayer();
 
-		if (e.isSprinting()) {
-			final int foodlevel = p.getFoodLevel();
-			p.setFoodLevel(5);
+        if (e.isSprinting()) {
+            final int foodlevel = p.getFoodLevel();
+            p.setFoodLevel(5);
 
-			new BukkitRunnable() {
-				public void run() {
-					p.setFoodLevel(foodlevel);
-				}
-			}.runTaskLater(getUhc(), 20 * 2);
-		}
-	}
+            new BukkitRunnable() {
+                public void run() {
+                    p.setFoodLevel(foodlevel);
+                }
+            }.runTaskLater(getUhc(), 20 * 2);
+        }
+    }
 
 }

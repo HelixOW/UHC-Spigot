@@ -9,25 +9,25 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class EnderDragonRushListener extends SimpleListener {
 
-	private boolean first = true;
+    private boolean first = true;
 
-	public EnderDragonRushListener(UHC uhc) {
-		super(uhc);
-	}
+    public EnderDragonRushListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onPortal(PlayerPortalEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.ENDERDRAGON_RUSH))
-			return;
-		if (!e.getCause().equals(TeleportCause.END_PORTAL))
-			return;
+    @EventHandler
+    public void onPortal(PlayerPortalEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.ENDERDRAGON_RUSH))
+            return;
+        if (!e.getCause().equals(TeleportCause.END_PORTAL))
+            return;
 
-		if (first) {
-			e.getPlayer().setHealth(e.getPlayer().getMaxHealth());
-			first = false;
-		}
-	}
+        if (first) {
+            e.getPlayer().setHealth(e.getPlayer().getMaxHealth());
+            first = false;
+        }
+    }
 
 }

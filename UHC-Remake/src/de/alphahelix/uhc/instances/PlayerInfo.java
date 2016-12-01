@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.instances;
 
-import de.popokaka.alphalibary.UUID.UUIDFetcher;
+import de.alphahelix.alphalibary.UUID.UUIDFetcher;
 import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
@@ -12,17 +12,18 @@ public class PlayerInfo {
 
     private String name;
     private UUID uuid;
-    private long kills, deaths, coins, points;
+    private long kills, deaths, coins, points, wins;
     private long normalC, uncommonC, rareC, superrareC, epicC, legendaryC;
-    private String kits;
+    private String kits, achievements;
 
-    public PlayerInfo(OfflinePlayer p, long kills, long deaths, long coins, long points, long normalC, long uncommonC, long rareC, long superrareC, long epicC, long legendaryC, String kits) {
+    public PlayerInfo(OfflinePlayer p, long kills, long deaths, long coins, long points, long wins, long normalC, long uncommonC, long rareC, long superrareC, long epicC, long legendaryC, String kits, String achievements) {
         this.name = p.getName();
         this.uuid = UUIDFetcher.getUUID(p.getName());
         this.kills = kills;
         this.deaths = deaths;
         this.coins = coins;
         this.points = points;
+        this.wins = wins;
         this.normalC = normalC;
         this.uncommonC = uncommonC;
         this.rareC = rareC;
@@ -30,6 +31,7 @@ public class PlayerInfo {
         this.epicC = epicC;
         this.legendaryC = legendaryC;
         this.kits = kits;
+        this.achievements = achievements;
     }
 
     public String getName() {
@@ -78,6 +80,14 @@ public class PlayerInfo {
 
     public void setPoints(long points) {
         this.points = points;
+    }
+
+    public long getWins() {
+        return wins;
+    }
+
+    public void setWins(long wins) {
+        this.wins = wins;
     }
 
     public long getNormalC() {
@@ -134,5 +144,13 @@ public class PlayerInfo {
 
     public void setKits(String kits) {
         this.kits = kits;
+    }
+
+    public String getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(String achievements) {
+        this.achievements = achievements;
     }
 }

@@ -10,46 +10,46 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 
 public class NineSlotsListener extends SimpleListener {
 
-	public NineSlotsListener(UHC uhc) {
-		super(uhc);
-	}
+    public NineSlotsListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onPickUp(PlayerPickupItemEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.NINE_SLOTS))
-			return;
-		if (e.getPlayer().getInventory().firstEmpty() <= 8)
-			return;
+    @EventHandler
+    public void onPickUp(PlayerPickupItemEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.NINE_SLOTS))
+            return;
+        if (e.getPlayer().getInventory().firstEmpty() <= 8)
+            return;
 
-		e.setCancelled(true);
-	}
+        e.setCancelled(true);
+    }
 
-	@EventHandler
-	public void onCraft(CraftItemEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.NINE_SLOTS))
-			return;
+    @EventHandler
+    public void onCraft(CraftItemEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.NINE_SLOTS))
+            return;
 
-		if (e.getWhoClicked().getInventory().firstEmpty() <= 8)
-			return;
+        if (e.getWhoClicked().getInventory().firstEmpty() <= 8)
+            return;
 
-		e.setCancelled(true);
-	}
+        e.setCancelled(true);
+    }
 
-	@EventHandler
-	public void onClick(InventoryClickEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.NINE_SLOTS))
-			return;
-		if (e.getClickedInventory() == null)
-			return;
+    @EventHandler
+    public void onClick(InventoryClickEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.NINE_SLOTS))
+            return;
+        if (e.getClickedInventory() == null)
+            return;
 
-		if (e.getSlot() > 8 && e.getSlot() < 36 && !e.isShiftClick())
-			e.setCancelled(true);
-		
-	}
+        if (e.getSlot() > 8 && e.getSlot() < 36 && !e.isShiftClick())
+            e.setCancelled(true);
+
+    }
 }

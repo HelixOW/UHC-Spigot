@@ -18,11 +18,11 @@ public class WebCageListener extends SimpleListener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        if(!scenarioCheck(Scenarios.WEB_CAGE)) return;
+        if (!scenarioCheck(Scenarios.WEB_CAGE)) return;
 
         Location m = e.getEntity().getLocation();
 
-        for(int xz = 0; xz < 5; xz++) {
+        for (int xz = 0; xz < 5; xz++) {
             m.getWorld().getBlockAt(m.getBlockX() + xz, m.getBlockY() + xz, m.getBlockZ() + xz);
             m.getWorld().getBlockAt(m.getBlockX() - xz, m.getBlockY(), m.getBlockZ() - xz);
         }

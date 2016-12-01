@@ -1,8 +1,9 @@
 package de.alphahelix.uhc.util;
 
+import de.alphahelix.alphalibary.reflection.ReflectionUtil;
+import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Util;
-import de.popokaka.alphalibary.reflection.ReflectionUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -11,99 +12,128 @@ import java.lang.reflect.InvocationTargetException;
 
 public class HologramUtil extends Util {
 
-	public HologramUtil(UHC uhc) {
-		super(uhc);
-	}
+    public HologramUtil(UHC uhc) {
+        super(uhc);
+    }
 
-	public void createHologram(Player p, int id, double remove) {
-		Location loc = getRegister().getHologramFile().getLocationByID(id).subtract(0, remove, 0);
+    public void createHologram(Player p, int id, double remove) {
+        Location loc = getRegister().getHologramFile().getLocationByID(id).subtract(0, remove, 0);
 
-		String name = getRegister().getHologramFile().getHologramNameByID(id);
+        String name = getRegister().getHologramFile().getHologramNameByID(id);
 
-		Class<?> cWorld = ReflectionUtil.getNmsClass("World");
-		Class<?>[] param = { double.class, double.class, double.class, float.class, float.class };
+        Class<?> cWorld = ReflectionUtil.getNmsClass("World");
+        Class<?>[] param = {double.class, double.class, double.class, float.class, float.class};
 
-		Constructor<?> holoConstructor = null;
-		try {
-			holoConstructor = ReflectionUtil.getNmsClass("EntityArmorStand").getConstructor(cWorld);
-		} catch (NoSuchMethodException | SecurityException e2) {
-			e2.printStackTrace();
-		}
-		Class<?> cholo = ReflectionUtil.getNmsClass("EntityArmorStand");
-		try {
+        Constructor<?> holoConstructor = null;
+        try {
+            holoConstructor = ReflectionUtil.getNmsClass("EntityArmorStand").getConstructor(cWorld);
+        } catch (NoSuchMethodException | SecurityException e2) {
+            e2.printStackTrace();
+        }
+        Class<?> cholo = ReflectionUtil.getNmsClass("EntityArmorStand");
+        try {
 
-			Object hc = holoConstructor != null
-					? holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld())) : null;
+            Object hc = holoConstructor != null
+                    ? holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld())) : null;
 
-			name = name.replace("&", "§");
-			name = name.replace("[player]", p.getDisplayName());
-			name = name.replace("[kills]", Long.toString(getRegister().getStatsUtil().getKills(p)));
-			name = name.replace("[deaths]", Long.toString(getRegister().getStatsUtil().getDeaths(p)));
-			name = name.replace("[coins]", Long.toString(getRegister().getStatsUtil().getCoins(p)));
-			name = name.replace("[rank]", Long.toString(getRegister().getStatsUtil().getRank(p)));
+            name = name.replace("&", "§");
+            name = name.replace("[player]", p.getDisplayName());
+            name = name.replace("[kills]", Long.toString(getRegister().getStatsUtil().getKills(p)));
+            name = name.replace("[deaths]", Long.toString(getRegister().getStatsUtil().getDeaths(p)));
+            name = name.replace("[coins]", Long.toString(getRegister().getStatsUtil().getCoins(p)));
+            name = name.replace("[rank]", Long.toString(getRegister().getStatsUtil().getRank(p)));
 
-			cholo.getMethod("setLocation", param).invoke(hc, loc.getX(), loc.getY(), loc.getZ(), 0F, 0F);
-			cholo.getMethod("setInvisible", boolean.class).invoke(hc, true);
-			cholo.getMethod("setCustomName", String.class).invoke(hc, name);
-			cholo.getMethod("setCustomNameVisible", boolean.class).invoke(hc, true);
+            if (getUhc().isScenarios()) {
+                name = name.replace("[scenario]", getRegister().getScenarioFile().getCustomScenarioName(Scenarios.getScenario()));
+            } else {
+                name = name.replace("[scenario]", getRegister().getMessageFile().getColorString("Kit Mode"));
+            }
 
-			Constructor<?> conpacket = ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
-					.getConstructor(ReflectionUtil.getNmsClass("EntityLiving"));
-			Object packet = conpacket.newInstance(hc);
+            if (name.contains("show [kits]")) {
+                name = " ";
+                Location lastLocation = p.getLocation();
+                for (String kitName : getRegister().getStatsUtil().getKitsAsList(p)) {
+                    lastLocation = lastLocation.subtract(0, 0.2, 0);
+                    getRegister().getHologramFile().addHologram("[k]" + kitName, lastLocation, 0);
+                }
+            }
 
-			ReflectionUtil.sendPacket(p, packet);
+            cholo.getMethod("setLocation", param).invoke(hc, loc.getX(), loc.getY(), loc.getZ(), 0F, 0F);
+            cholo.getMethod("setInvisible", boolean.class).invoke(hc, true);
+            cholo.getMethod("setCustomName", String.class).invoke(hc, name);
+            cholo.getMethod("setCustomNameVisible", boolean.class).invoke(hc, true);
 
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | InstantiationException e1) {
-			e1.printStackTrace();
-		}
-	}
+            Constructor<?> conpacket = ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
+                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving"));
+            Object packet = conpacket.newInstance(hc);
 
-	public void showHologram(Player p) {
-		for (int id = 0; id < getRegister().getHologramFile().getHologramcount(); id++) {
+            ReflectionUtil.sendPacket(p, packet);
 
-			Location loc = getRegister().getHologramFile().getLocationByID(id);
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException | InstantiationException e1) {
+            e1.printStackTrace();
+        }
+    }
 
-			String name = getRegister().getHologramFile().getHologramNameByID(id);
+    public void showHologram(Player p) {
+        for (int id = 0; id < getRegister().getHologramFile().getHologramcount(); id++) {
 
-			Class<?> cWorld = ReflectionUtil.getNmsClass("World");
-			Class<?>[] param = { double.class, double.class, double.class, float.class, float.class };
+            Location loc = getRegister().getHologramFile().getLocationByID(id);
 
-			Constructor<?> holoConstructor = null;
-			try {
-				holoConstructor = ReflectionUtil.getNmsClass("EntityArmorStand").getConstructor(cWorld);
-			} catch (NoSuchMethodException | SecurityException e2) {
-				e2.printStackTrace();
-			}
-			Class<?> cholo = ReflectionUtil.getNmsClass("EntityArmorStand");
-			try {
+            String name = getRegister().getHologramFile().getHologramNameByID(id);
 
-				Object hc = holoConstructor != null
-						? holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld())) : null;
+            Class<?> cWorld = ReflectionUtil.getNmsClass("World");
+            Class<?>[] param = {double.class, double.class, double.class, float.class, float.class};
 
-				name = name.replace("&", "§");
-				name = name.replace("[player]", p.getDisplayName());
-				name = name.replace("[kills]", Long.toString(getRegister().getStatsUtil().getKills(p)));
-				name = name.replace("[deaths]", Long.toString(getRegister().getStatsUtil().getDeaths(p)));
-				name = name.replace("[coins]", Long.toString(getRegister().getStatsUtil().getCoins(p)));
-				name = name.replace("[rank]", Long.toString(getRegister().getStatsUtil().getRank(p)));
+            Constructor<?> holoConstructor = null;
+            try {
+                holoConstructor = ReflectionUtil.getNmsClass("EntityArmorStand").getConstructor(cWorld);
+            } catch (NoSuchMethodException | SecurityException e2) {
+                e2.printStackTrace();
+            }
+            Class<?> cholo = ReflectionUtil.getNmsClass("EntityArmorStand");
+            try {
 
-				cholo.getMethod("setLocation", param).invoke(hc, loc.getX(), loc.getY(), loc.getZ(), 0F, 0F);
-				cholo.getMethod("setInvisible", boolean.class).invoke(hc, true);
-				cholo.getMethod("setCustomName", String.class).invoke(hc, name);
-				cholo.getMethod("setCustomNameVisible", boolean.class).invoke(hc, true);
+                Object hc = holoConstructor != null
+                        ? holoConstructor.newInstance(ReflectionUtil.getWorldServer(loc.getWorld())) : null;
 
-				Constructor<?> conpacket = ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
-						.getConstructor(ReflectionUtil.getNmsClass("EntityLiving"));
-				Object packet = conpacket.newInstance(hc);
+                name = name.replace("&", "§");
+                name = name.replace("[player]", p.getDisplayName());
+                name = name.replace("[kills]", Long.toString(getRegister().getStatsUtil().getKills(p)));
+                name = name.replace("[deaths]", Long.toString(getRegister().getStatsUtil().getDeaths(p)));
+                name = name.replace("[coins]", Long.toString(getRegister().getStatsUtil().getCoins(p)));
+                name = name.replace("[rank]", Long.toString(getRegister().getStatsUtil().getRank(p)));
+                name = name.replace("show [kits]", "");
 
-				ReflectionUtil.sendPacket(p, packet);
+                if (getUhc().isScenarios()) {
+                    name = name.replace("[scenario]", getRegister().getScenarioFile().getCustomScenarioName(Scenarios.getScenario()));
+                } else {
+                    name = name.replace("[scenario]", getRegister().getMessageFile().getColorString("Kit Mode"));
+                }
 
-			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | InstantiationException e1) {
-				e1.printStackTrace();
-			}
-		}
-	}
+                if (name.startsWith("[k]")) {
+                    if (!getRegister().getStatsUtil().hasKit(getRegister().getKitsFile().getKit(name.replace("[k]", "").replace("§", "&")), p)) {
+                        continue;
+                    } else
+                        name = name.replace("[k]", "§7- ").replace("_", " ");
+                }
+
+                cholo.getMethod("setLocation", param).invoke(hc, loc.getX(), loc.getY(), loc.getZ(), 0F, 0F);
+                cholo.getMethod("setInvisible", boolean.class).invoke(hc, true);
+                cholo.getMethod("setCustomName", String.class).invoke(hc, name);
+                cholo.getMethod("setCustomNameVisible", boolean.class).invoke(hc, true);
+
+                Constructor<?> conpacket = ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
+                        .getConstructor(ReflectionUtil.getNmsClass("EntityLiving"));
+                Object packet = conpacket.newInstance(hc);
+
+                ReflectionUtil.sendPacket(p, packet);
+
+            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException | InstantiationException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
 
 }

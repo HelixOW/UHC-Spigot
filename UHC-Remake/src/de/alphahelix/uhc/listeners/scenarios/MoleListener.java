@@ -14,32 +14,32 @@ import org.bukkit.potion.PotionEffectType;
 
 public class MoleListener extends SimpleListener {
 
-	public MoleListener(UHC uhc) {
-		super(uhc);
-	}
+    public MoleListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.MOLE))
-			return;
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.MOLE))
+            return;
 
-		for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			p.getInventory().addItem(new ItemStack(Material.IRON_SPADE));
-			p.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
-			p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 99999, 2));
-		}
-	}
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            p.getInventory().addItem(new ItemStack(Material.IRON_SPADE));
+            p.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 99999, 2));
+        }
+    }
 
-	@EventHandler
-	public void onMove(PlayerMoveEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.MOLE))
-			return;
+    @EventHandler
+    public void onMove(PlayerMoveEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.MOLE))
+            return;
 
-		if (e.getTo().getBlockY() < 40) {
-			if (e.getPlayer().hasPotionEffect(PotionEffectType.BLINDNESS))
-				e.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
-		}
-	}
+        if (e.getTo().getBlockY() < 40) {
+            if (e.getPlayer().hasPotionEffect(PotionEffectType.BLINDNESS))
+                e.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
+        }
+    }
 }

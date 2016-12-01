@@ -13,20 +13,20 @@ import java.util.Random;
 
 public class CertainCircumstancesListener extends SimpleListener {
 
-	public CertainCircumstancesListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if(!scenarioCheck(Scenarios.CERTAIN_CIRCUMSTANCES)) return;
-		for(Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			p.getInventory().addItem(new ItemStack(getRandomMaterial()));
-		}
-	}
-	
-	private Material getRandomMaterial() {
-		int index = new Random().nextInt(Material.values().length);
-		return Material.values()[index];
-	}
+    public CertainCircumstancesListener(UHC uhc) {
+        super(uhc);
+    }
+
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.CERTAIN_CIRCUMSTANCES)) return;
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            p.getInventory().addItem(new ItemStack(getRandomMaterial()));
+        }
+    }
+
+    private Material getRandomMaterial() {
+        int index = new Random().nextInt(Material.values().length);
+        return Material.values()[index];
+    }
 }

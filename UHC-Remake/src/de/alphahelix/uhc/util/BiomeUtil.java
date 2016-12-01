@@ -1,53 +1,53 @@
 package de.alphahelix.uhc.util;
 
+import de.alphahelix.alphalibary.reflection.ReflectionUtil;
 import de.alphahelix.uhc.GState;
-import de.popokaka.alphalibary.reflection.ReflectionUtil;
 import org.bukkit.WorldCreator;
 
 import java.lang.reflect.Field;
 
 public class BiomeUtil {
 
-	/**
-	 * id's 0 = Ocean 10 = Frozen_Ocean 24 = Deep_Ozean 124 = Void
-	 */
+    /**
+     * id's 0 = Ocean 10 = Frozen_Ocean 24 = Deep_Ozean 124 = Void
+     */
 
-	public BiomeUtil() {
-		removeOceanFromBioms();
-	}
+    public BiomeUtil() {
+        removeOceanFromBioms();
+    }
 
-	private static void removeOceanFromBioms() {
-		try {
-			Object plainBiome = getBiomeFor("taiga");
+    private static void removeOceanFromBioms() {
+        try {
+            Object plainBiome = getBiomeFor("taiga");
 
-			Object registerID = ReflectionUtil.getNmsClass("BiomeBase").getDeclaredField("REGISTRY_ID").get(ReflectionUtil.getNmsClass("BiomeBase"));
-			Field a = ReflectionUtil.getNmsClass("RegistryMaterials").getDeclaredField("a");
-			a.setAccessible(true);
-			Object id = a.get(registerID);
+            Object registerID = ReflectionUtil.getNmsClass("BiomeBase").getDeclaredField("REGISTRY_ID").get(ReflectionUtil.getNmsClass("BiomeBase"));
+            Field a = ReflectionUtil.getNmsClass("RegistryMaterials").getDeclaredField("a");
+            a.setAccessible(true);
+            Object id = a.get(registerID);
 
-			Field c = ReflectionUtil.getNmsClass("RegistryID").getDeclaredField("d");
-			c.setAccessible(true);
-			Object[] array = (Object[]) c.get(id);
+            Field c = ReflectionUtil.getNmsClass("RegistryID").getDeclaredField("d");
+            c.setAccessible(true);
+            Object[] array = (Object[]) c.get(id);
 
-			array[0] = plainBiome;
-			array[10] = plainBiome;
-			array[24] = plainBiome;
+            array[0] = plainBiome;
+            array[10] = plainBiome;
+            array[24] = plainBiome;
 
-			Field b = ReflectionUtil.getNmsClass("RegistryID").getDeclaredField("d");
-			b.setAccessible(true);
-			b.set(id, array);
-			GState.setCurrentState(GState.LOBBY);
-		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-			e.printStackTrace();
-		}
-	}
+            Field b = ReflectionUtil.getNmsClass("RegistryID").getDeclaredField("d");
+            b.setAccessible(true);
+            b.set(id, array);
+            GState.setCurrentState(GState.LOBBY);
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public static void generatorWorld(String name) {
-		new WorldCreator(name).createWorld();
-	}
+    public static void generatorWorld(String name) {
+        new WorldCreator(name).createWorld();
+    }
 
-	private static Object getBiomeFor(String key) {
-		return ReflectionUtil.getDeclaredMethode("a", ReflectionUtil.getNmsClass("Biomes"), String.class).invoke(null, false, key);
-	}
+    private static Object getBiomeFor(String key) {
+        return ReflectionUtil.getDeclaredMethode("a", ReflectionUtil.getNmsClass("Biomes"), String.class).invoke(null, false, key);
+    }
 
 }

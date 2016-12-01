@@ -9,16 +9,16 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class BloodyLapisListener extends SimpleListener {
 
-	public BloodyLapisListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onMine(BlockBreakEvent e) {
-		if(e.isCancelled()) return;
-		if(!scenarioCheck(Scenarios.BLOODY_LAPIS)) return;
-		if(!e.getBlock().getType().equals(Material.LAPIS_ORE)) return;
-		
-		e.getPlayer().damage(2.0);
-	}
+    public BloodyLapisListener(UHC uhc) {
+        super(uhc);
+    }
+
+    @EventHandler
+    public void onMine(BlockBreakEvent e) {
+        if (e.isCancelled()) return;
+        if (!scenarioCheck(Scenarios.BLOODY_LAPIS)) return;
+        if (!e.getBlock().getType().equals(Material.LAPIS_ORE)) return;
+
+        e.getPlayer().damage(2.0);
+    }
 }

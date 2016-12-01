@@ -23,20 +23,20 @@ public class CraftableTeleportationListener extends SimpleListener {
 
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
-        if(e.isCancelled()) return;
-        if(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) return;
-        if(!scenarioCheck(Scenarios.CRAFTABLE_TELEPORTATION)) return;
+        if (e.isCancelled()) return;
+        if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) return;
+        if (!scenarioCheck(Scenarios.CRAFTABLE_TELEPORTATION)) return;
 
         Player p = e.getPlayer();
 
-        if(p.getInventory().getItemInMainHand().getType() != Material.ENDER_PEARL) return;
-        if(!p.getInventory().getItemInMainHand().hasItemMeta()) return;
-        if(!p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return;
-        if(Bukkit.getPlayer(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName()) == null) return;
+        if (p.getInventory().getItemInMainHand().getType() != Material.ENDER_PEARL) return;
+        if (!p.getInventory().getItemInMainHand().hasItemMeta()) return;
+        if (!p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return;
+        if (Bukkit.getPlayer(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName()) == null) return;
 
         Player t = Bukkit.getPlayer(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName());
 
-        if(!getRegister().getPlayerUtil().isSurivor(t)) return;
+        if (!getRegister().getPlayerUtil().isSurivor(t)) return;
 
         p.teleport(getRandomLocation(t.getLocation(), 25, 25, 25, 25));
     }

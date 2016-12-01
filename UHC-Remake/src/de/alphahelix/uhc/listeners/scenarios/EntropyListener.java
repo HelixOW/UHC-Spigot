@@ -8,15 +8,15 @@ import org.bukkit.event.EventHandler;
 
 public class EntropyListener extends SimpleListener {
 
-	public EntropyListener(UHC uhc) {
-		super(uhc);
-	}
+    public EntropyListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if(!scenarioCheck(Scenarios.ENTROPY)) return;
-		
-		getRegister().getEntropyTimer().startDrainingTimer();
-	}
-	
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.ENTROPY)) return;
+
+        getRegister().getEntropyTimer().startDrainingTimer();
+    }
+
 }

@@ -11,34 +11,34 @@ import org.bukkit.inventory.ItemStack;
 
 public class XtrAppleListener extends SimpleListener {
 
-	public XtrAppleListener(UHC uhc) {
-		super(uhc);
-	}
+    public XtrAppleListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onDecay(LeavesDecayEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.XTR_APPLE))
-			return;
+    @EventHandler
+    public void onDecay(LeavesDecayEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.XTR_APPLE))
+            return;
 
-		if (Math.random() < 0.4) {
-			e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.APPLE));
-		}
-	}
+        if (Math.random() < 0.4) {
+            e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.APPLE));
+        }
+    }
 
-	@EventHandler
-	public void onBreak(BlockBreakEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.XTR_APPLE))
-			return;
+    @EventHandler
+    public void onBreak(BlockBreakEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.XTR_APPLE))
+            return;
 
-		if (!(e.getBlock().getType().equals(Material.LEAVES) || e.getBlock().getType().equals(Material.LEAVES_2)))
-			return;
+        if (!(e.getBlock().getType().equals(Material.LEAVES) || e.getBlock().getType().equals(Material.LEAVES_2)))
+            return;
 
-		if (Math.random() < 0.4) {
-			e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.APPLE));
-		}
-	}
+        if (Math.random() < 0.4) {
+            e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.APPLE));
+        }
+    }
 }

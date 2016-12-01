@@ -14,32 +14,32 @@ import java.util.Random;
 
 public class RandomStarterItemsListener extends SimpleListener {
 
-	public RandomStarterItemsListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if(!scenarioCheck(Scenarios.RANDOM_STARTER_ITEMS)) return;
-		
-		for(Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			for(Material m : getItems()) {
-				p.getInventory().addItem(new ItemStack(m, new Random().nextInt(64)));
-			}
-		}
-	}
-	
-	private ArrayList<Material> getItems() {
-		ArrayList<Material> items = new ArrayList<>();
-		int amount = 10;
+    public RandomStarterItemsListener(UHC uhc) {
+        super(uhc);
+    }
 
-		for (Material m : Material.values()) {
-			if(amount <= 0) break;
-			if (Math.random() < 0.07) {
-				items.add(m);
-				amount--;
-			}
-		}
-		return items;
-	}
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.RANDOM_STARTER_ITEMS)) return;
+
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            for (Material m : getItems()) {
+                p.getInventory().addItem(new ItemStack(m, new Random().nextInt(64)));
+            }
+        }
+    }
+
+    private ArrayList<Material> getItems() {
+        ArrayList<Material> items = new ArrayList<>();
+        int amount = 10;
+
+        for (Material m : Material.values()) {
+            if (amount <= 0) break;
+            if (Math.random() < 0.07) {
+                items.add(m);
+                amount--;
+            }
+        }
+        return items;
+    }
 }

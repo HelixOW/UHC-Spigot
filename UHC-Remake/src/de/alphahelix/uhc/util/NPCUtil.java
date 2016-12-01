@@ -1,16 +1,16 @@
 package de.alphahelix.uhc.util;
 
 import com.mojang.authlib.GameProfile;
+import de.alphahelix.alphalibary.UUID.UUIDFetcher;
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.item.LeatherItemBuilder;
+import de.alphahelix.alphalibary.item.data.SkullData;
+import de.alphahelix.alphalibary.nms.REnumPlayerInfoAction;
+import de.alphahelix.alphalibary.reflection.PacketUtil;
+import de.alphahelix.alphalibary.reflection.ReflectionUtil;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.UHCTeam;
 import de.alphahelix.uhc.instances.Util;
-import de.popokaka.alphalibary.UUID.UUIDFetcher;
-import de.popokaka.alphalibary.item.ItemBuilder;
-import de.popokaka.alphalibary.item.LeatherItemBuilder;
-import de.popokaka.alphalibary.item.data.SkullData;
-import de.popokaka.alphalibary.nms.REnumPlayerInfoAction;
-import de.popokaka.alphalibary.reflection.PacketUtil;
-import de.popokaka.alphalibary.reflection.ReflectionUtil;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -202,7 +202,8 @@ public class NPCUtil extends Util {
 
         String name = getRegister().getStatsUtil().getPlayerByRank(rank).getName();
 
-        ItemStack head = new ItemBuilder(Material.SKULL_ITEM)
+        ItemStack head = new ItemBuilder
+                (Material.SKULL_ITEM)
                 .addItemData(new SkullData(getRegister().getStatsUtil().getPlayerByRank(rank).getName())).build();
         ItemStack chest, pants, boots;
         if (rank == 1) {

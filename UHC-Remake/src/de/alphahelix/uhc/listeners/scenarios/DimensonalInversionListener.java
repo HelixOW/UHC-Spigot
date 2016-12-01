@@ -9,15 +9,15 @@ import org.bukkit.event.EventHandler;
 
 public class DimensonalInversionListener extends SimpleListener {
 
-	public DimensonalInversionListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if(!scenarioCheck(Scenarios.DIMENSIONAL_INVERSION)) return;
-		for(Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			p.teleport(getRegister().getLocationsFile().getNetherArena());
-		}
-	}
+    public DimensonalInversionListener(UHC uhc) {
+        super(uhc);
+    }
+
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.DIMENSIONAL_INVERSION)) return;
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            p.teleport(getRegister().getLocationsFile().getNetherArena());
+        }
+    }
 }

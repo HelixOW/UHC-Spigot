@@ -14,23 +14,23 @@ import java.util.Random;
 
 public class KingsListener extends SimpleListener {
 
-	public KingsListener(UHC uhc) {
-		super(uhc);
-	}
+    public KingsListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.KINGS))
-			return;
-		if (getUhc().isTeams())
-			getRegister().getTeamManagerUtil().splitPlayersIntoTeams();
-		
-		for(UHCTeam team: getRegister().getTeamManagerUtil().getTeams()) {
-			Player king = team.getPlayers().get(new Random().nextInt(team.getPlayers().size()));
-			
-			king.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 99999, 2));
-			king.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 2));
-			king.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 2));
-		}
-	}
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.KINGS))
+            return;
+        if (getUhc().isTeams())
+            getRegister().getTeamManagerUtil().splitPlayersIntoTeams();
+
+        for (UHCTeam team : getRegister().getTeamManagerUtil().getTeams()) {
+            Player king = team.getPlayers().get(new Random().nextInt(team.getPlayers().size()));
+
+            king.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 99999, 2));
+            king.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 2));
+            king.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 2));
+        }
+    }
 }

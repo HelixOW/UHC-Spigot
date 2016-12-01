@@ -10,23 +10,23 @@ import org.bukkit.event.EventHandler;
 
 public class BlitzListener extends SimpleListener {
 
-	public BlitzListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if(!scenarioCheck(Scenarios.BLITZ)) return;
-		for(Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			p.setHealth(2.5);
-		}
-	}
-	
-	@EventHandler
-	public void onStart(DeathMatchStartEvent e) {
-		if(!scenarioCheck(Scenarios.BLITZ)) return;
-		for(Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			p.setHealth(20.0);
-		}
-	}
+    public BlitzListener(UHC uhc) {
+        super(uhc);
+    }
+
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.BLITZ)) return;
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            p.setHealth(2.5);
+        }
+    }
+
+    @EventHandler
+    public void onStart(DeathMatchStartEvent e) {
+        if (!scenarioCheck(Scenarios.BLITZ)) return;
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            p.setHealth(20.0);
+        }
+    }
 }

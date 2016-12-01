@@ -8,16 +8,16 @@ import org.bukkit.event.EventHandler;
 
 public class SkyHighListener extends SimpleListener {
 
-	public SkyHighListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.SKY_HIGH))
-			return;
+    public SkyHighListener(UHC uhc) {
+        super(uhc);
+    }
 
-		getRegister().getDeathmatchTimer().setTime((45 * 60) + getRegister().getTimerFile().getInt("Deathmatch warmup.length"));
-		getRegister().getFalloutTimer().startCooldown();
-	}
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.SKY_HIGH))
+            return;
+
+        getRegister().getDeathmatchTimer().setTime((45 * 60) + getRegister().getTimerFile().getInt("Deathmatch warmup.length"));
+        getRegister().getFalloutTimer().startCooldown();
+    }
 }

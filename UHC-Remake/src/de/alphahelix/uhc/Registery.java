@@ -21,1016 +21,1058 @@ import java.util.ArrayList;
 
 public class Registery {
 
-	private UHC uhc;
-	private ArrayList<Listener> listeners;
-	private ArrayList<EasyFile> easyFiles;
+    private UHC uhc;
+    private ArrayList<Listener> listeners;
+    private ArrayList<EasyFile> easyFiles;
 
-	private PlayerUtil playerUtil;
-	private StatsUtil statsUtil;
-	private TablistUtil tablistUtil;
-	private BorderUtil borderUtil;
-	private ScoreboardUtil scoreboardUtil;
-	private LobbyUtil lobbyUtil;
-	private TeamManagerUtil teamManagerUtil;
-	private WorldUtil worldUtil;
-	private HologramUtil hologramUtil;
-	private NPCUtil npcUtil;
-	private RankingUtil rankingUtil;
-	private SchematicManagerUtil schematicManagerUtil;
+    private PlayerUtil playerUtil;
+    private StatsUtil statsUtil;
+    private TablistUtil tablistUtil;
+    private BorderUtil borderUtil;
+    private ScoreboardUtil scoreboardUtil;
+    private LobbyUtil lobbyUtil;
+    private TeamManagerUtil teamManagerUtil;
+    private WorldUtil worldUtil;
+    private HologramUtil hologramUtil;
+    private NPCUtil npcUtil;
+    private RankingUtil rankingUtil;
+    private SchematicManagerUtil schematicManagerUtil;
 
-	private LobbyTimer lobbyTimer;
-	private GraceTimer graceTimer;
-	private WarmUpTimer warmUpTimer;
-	private DeathmatchTimer deathmatchTimer;
-	private StartDeathMatchTimer startDeathmatchTimer;
-	private RestartTimer restartTimer;
-	private BestPvETimer bestPvETimer;
-	private DamageCycleTimer damageCycleTimer;
-	private EntropyTimer entropyTimer;
-	private FalloutTimer falloutTimer;
-	private GoToHellTimer goToHellTimer;
-	private SkyHighTimer skyHighTimer;
+    private LobbyTimer lobbyTimer;
+    private GraceTimer graceTimer;
+    private WarmUpTimer warmUpTimer;
+    private DeathmatchTimer deathmatchTimer;
+    private StartDeathMatchTimer startDeathmatchTimer;
+    private RestartTimer restartTimer;
+    private BestPvETimer bestPvETimer;
+    private DamageCycleTimer damageCycleTimer;
+    private EntropyTimer entropyTimer;
+    private FalloutTimer falloutTimer;
+    private GoToHellTimer goToHellTimer;
+    private SkyHighTimer skyHighTimer;
 
-	private KitInventory kitInventory;
-	private ConfirmInventory confirmInventory;
-	private TeamInventory teamInventory;
-	private PreviewInventory previewInventory;
-	private CrateInventory crateInventory;
-	private ScenarioInventory scenarioInventory;
-	private ScenarioAdminInventory scenarioAdminInventory;
+    private KitInventory kitInventory;
+    private ConfirmInventory confirmInventory;
+    private TeamInventory teamInventory;
+    private PreviewInventory previewInventory;
+    private CrateInventory crateInventory;
+    private ScenarioInventory scenarioInventory;
+    private ScenarioAdminInventory scenarioAdminInventory;
+    private AchievementInventory achievementInventory;
 
-	private NormalCrateInventory normalCrateInventory;
-	private UnCommonCrateInventory unCommonCrateInventory;
-	private RareCrateInventory rareCrateInventory;
-	private SuperrareCrateInventory superrareCrateInventory;
-	private EpicCrateInventory epicCrateInventory;
-	private LegendaryCrateListener legendaryCrateInventory;
+    private NormalCrateInventory normalCrateInventory;
+    private UnCommonCrateInventory unCommonCrateInventory;
+    private RareCrateInventory rareCrateInventory;
+    private SuperrareCrateInventory superrareCrateInventory;
+    private EpicCrateInventory epicCrateInventory;
+    private LegendaryCrateListener legendaryCrateInventory;
 
-	private PlayerFile playerFile;
-	private MainOptionsFile mainOptionsFile;
-	private KitsFile kitsFile;
-	private StatsFile statsFile;
-	private MainMessageFile messageFile;
-	private ScenarioFile scenarioFile;
-	private TimerFile timerFile;
-	private UnitFile unitFile;
-	private TablistFile tablistFile;
-	private BorderFile borderFile;
-	private ScoreboardFile scoreboardFile;
-	private ConfirmFile confirmFile;
-	private LocationsFile locationsFile;
-	private StatusFile statusFile;
-	private ScoreboardConstructFile scoreboardConstructFile;
-	private TeamFile teamFile;
-	private SpectatorFile spectatorFile;
-	private DropsFile dropsFile;
-	private DeathmessageFile deathMessageFile;
-	private CraftingFile craftingFile;
-	private ScenarioHelpFile scenarioHelpFile;
-	private HologramFile hologramFile;
-	private MOTDFile mOTDFile;
-	private UHCCrateFile uhcCrateFile;
-	private LobbyFile lobbyFile;
+    private PlayerFile playerFile;
+    private MainOptionsFile mainOptionsFile;
+    private KitsFile kitsFile;
+    private StatsFile statsFile;
+    private MainMessageFile messageFile;
+    private ScenarioFile scenarioFile;
+    private TimerFile timerFile;
+    private UnitFile unitFile;
+    private TablistFile tablistFile;
+    private BorderFile borderFile;
+    private ScoreboardFile scoreboardFile;
+    private ConfirmFile confirmFile;
+    private LocationsFile locationsFile;
+    private StatusFile statusFile;
+    private ScoreboardConstructFile scoreboardConstructFile;
+    private TeamFile teamFile;
+    private SpectatorFile spectatorFile;
+    private DropsFile dropsFile;
+    private DeathmessageFile deathMessageFile;
+    private CraftingFile craftingFile;
+    private ScenarioHelpFile scenarioHelpFile;
+    private HologramFile hologramFile;
+    private MOTDFile mOTDFile;
+    private UHCCrateFile uhcCrateFile;
+    private LobbyFile lobbyFile;
+    private AchievementFile achievementFile;
+    private RanksFile ranksFile;
 
-	private KitChooseListener kitChooseListener;
-	private RegisterListener registerListener;
-	private EquipListener equipListener;
-	private ChatListener chatListener;
-	private TimerListener timerListener;
-	private ConfirmListener confirmListener;
-	private GStateListener GStateListener;
-	private TeamListener teamListener;
-	private SpectatorListener spectatorListener;
-	private GameEndsListener gameEndsListener;
-	private DeathListener deathListener;
-	private SchematicListener schematicListener;
-	private UHCCrateListener uhcCrateListener;
-	private ScenarioListener scenarioListener;
+    private KitChooseListener kitChooseListener;
+    private RegisterListener registerListener;
+    private EquipListener equipListener;
+    private ChatListener chatListener;
+    private TimerListener timerListener;
+    private ConfirmListener confirmListener;
+    private GStateListener GStateListener;
+    private TeamListener teamListener;
+    private SpectatorListener spectatorListener;
+    private GameEndsListener gameEndsListener;
+    private DeathListener deathListener;
+    private SchematicListener schematicListener;
+    private UHCCrateListener uhcCrateListener;
+    private ScenarioListener scenarioListener;
+    private AchievementListener achievementListener;
 
-	public Registery(UHC uhc) {
-		setUhc(uhc);
-		setListeners(new ArrayList<Listener>());
-		setEasyFiles(new ArrayList<EasyFile>());
-	}
+    public Registery(UHC uhc) {
+        setUhc(uhc);
+        setListeners(new ArrayList<Listener>());
+        setEasyFiles(new ArrayList<EasyFile>());
+    }
 
-	// Registering
+    // Registering
 
-	private void registerEvents() {
-		PluginManager pm = Bukkit.getPluginManager();
-		for (Listener listener : getListeners()) {
-			pm.registerEvents(listener, getUhc());
-		}
-	}
+    private void registerEvents() {
+        PluginManager pm = Bukkit.getPluginManager();
+        for (Listener listener : getListeners()) {
+            pm.registerEvents(listener, getUhc());
+        }
+    }
 
-	private void registerCommands() {
-		new StatsCommand(getUhc(), this, "stats", "Check your or others stats", "records");
-		new UHCAdminCommands(getUhc(), this, "uhcAdmin", "Manage some server configurations via commands.", "uhcA");
-		new UHCSetUpCommand(getUhc(), this, "uhcSetup", "Setup all of your options", "uhcS");
-		new StartCommand(getUhc(), this, "start", "Short or strech the lobby time.", "start");
-		new InfoCommand(getUhc(), this, "informations", "Get informations about the current scenario", "scenario", "infos");
-		new SchematicCommand(getUhc(), this, "schematic", "Create your own uhc schematics", "schem");
-	}
+    private void registerCommands() {
+        new StatsCommand(getUhc(), this, "stats", "Check your or others stats", "records");
+        new UHCAdminCommands(getUhc(), this, "uhcAdmin", "Manage some server configurations via commands.", "uhcA");
+        new UHCSetUpCommand(getUhc(), this, "uhcSetup", "Setup all of your options", "uhcS");
+        new StartCommand(getUhc(), this, "start", "Short or strech the lobby time.", "start");
+        new InfoCommand(getUhc(), this, "informations", "Get informations about the current scenario", "scenario", "infos");
+        new SchematicCommand(getUhc(), this, "schematic", "Create your own uhc schematics", "schem");
+    }
 
-	private void registerTeams() {
-		if (getTeamFile().getConfigurationSection("Teams") == null)
-			return;
+    private void registerTeams() {
+        if (getTeamFile().getConfigurationSection("Teams") == null)
+            return;
 
-		for (String t : getTeamFile().getConfigurationSection("Teams").getKeys(false)) {
-			t = "Teams." + t;
-			getTeamManagerUtil().registerTeam(getTeamFile().getColorString(t + ".name"),
-					getTeamFile().getColorString(t + ".prefix"), (byte) getTeamFile().getInt(t + ".data"),
-					getTeamFile().getInt(t + ".max Players"), getTeamFile().getInt(t + ".slot"),
-					getTeamFile().getBoolean(t + ".colored Name"), Color.fromRGB(getTeamFile().getInt(t + ".color.red"),
-							getTeamFile().getInt(t + ".color.green"), getTeamFile().getInt(t + ".color.blue")));
-		}
-	}
+        for (String t : getTeamFile().getConfigurationSection("Teams").getKeys(false)) {
+            t = "Teams." + t;
+            getTeamManagerUtil().registerTeam(getTeamFile().getColorString(t + ".name"),
+                    getTeamFile().getColorString(t + ".prefix"), (byte) getTeamFile().getInt(t + ".data"),
+                    getTeamFile().getInt(t + ".max Players"), getTeamFile().getInt(t + ".slot"),
+                    getTeamFile().getBoolean(t + ".colored Name"), Color.fromRGB(getTeamFile().getInt(t + ".color.red"),
+                            getTeamFile().getInt(t + ".color.green"), getTeamFile().getInt(t + ".color.blue")));
+        }
+    }
 
-	public void registerAll() {
+    public void registerAll() {
 
-		setPlayerFile(new PlayerFile(getUhc()));
-		setMainOptionsFile(new MainOptionsFile(getUhc()));
-		setKitsFile(new KitsFile(getUhc()));
-		setStatsFile(new StatsFile(getUhc()));
-		setMessageFile(new MainMessageFile(getUhc()));
-		setScenarioFile(new ScenarioFile(getUhc()));
-		setTimerFile(new TimerFile(getUhc()));
-		setUnitFile(new UnitFile(getUhc()));
-		setTablistFile(new TablistFile(getUhc()));
-		setBorderFile(new BorderFile(getUhc()));
-		setScoreboardFile(new ScoreboardFile(getUhc()));
-		setConfirmFile(new ConfirmFile(getUhc()));
-		setLocationsFile(new LocationsFile(getUhc()));
-		setStatusFile(new StatusFile(getUhc()));
-		setScoreboardConstructFile(new ScoreboardConstructFile(getUhc()));
-		setTeamFile(new TeamFile(getUhc()));
-		setSpectatorFile(new SpectatorFile(getUhc()));
-		setDropsFile(new DropsFile(getUhc()));
-		setDeathMessageFile(new DeathmessageFile(getUhc()));
-		setCraftingFile(new CraftingFile(getUhc()));
-		setScenarioHelpFile(new ScenarioHelpFile(getUhc()));
-		setHologramFile(new HologramFile(getUhc()));
-		setMOTDFile(new MOTDFile(getUhc()));
-		setUhcCrateFile(new UHCCrateFile(getUhc()));
-		setLobbyFile(new LobbyFile(getUhc()));
+        setPlayerFile(new PlayerFile(getUhc()));
+        setMainOptionsFile(new MainOptionsFile(getUhc()));
+        setKitsFile(new KitsFile(getUhc()));
+        setStatsFile(new StatsFile(getUhc()));
+        setMessageFile(new MainMessageFile(getUhc()));
+        setScenarioFile(new ScenarioFile(getUhc()));
+        setTimerFile(new TimerFile(getUhc()));
+        setUnitFile(new UnitFile(getUhc()));
+        setTablistFile(new TablistFile(getUhc()));
+        setBorderFile(new BorderFile(getUhc()));
+        setScoreboardFile(new ScoreboardFile(getUhc()));
+        setConfirmFile(new ConfirmFile(getUhc()));
+        setLocationsFile(new LocationsFile(getUhc()));
+        setStatusFile(new StatusFile(getUhc()));
+        setScoreboardConstructFile(new ScoreboardConstructFile(getUhc()));
+        setTeamFile(new TeamFile(getUhc()));
+        setSpectatorFile(new SpectatorFile(getUhc()));
+        setDropsFile(new DropsFile(getUhc()));
+        setDeathMessageFile(new DeathmessageFile(getUhc()));
+        setCraftingFile(new CraftingFile(getUhc()));
+        setScenarioHelpFile(new ScenarioHelpFile(getUhc()));
+        setHologramFile(new HologramFile(getUhc()));
+        setMOTDFile(new MOTDFile(getUhc()));
+        setUhcCrateFile(new UHCCrateFile(getUhc()));
+        setLobbyFile(new LobbyFile(getUhc()));
+        setAchievementFile(new AchievementFile(getUhc()));
+        setRanksFile(new RanksFile(getUhc()));
 
-		for (EasyFile easyFile : getEasyFiles()) {
-			easyFile.register(easyFile);
-		}
+        for (EasyFile easyFile : getEasyFiles()) {
+            easyFile.register(easyFile);
+        }
 
-		getUhc().setMySQLMode(getMainOptionsFile().getBoolean("MySQL"));
-		getUhc().setBunggeMode(getMainOptionsFile().getBoolean("Bungeecord"));
-		getUhc().setLobbyServer(getMainOptionsFile().getString("Bungeecord Fallbackserver"));
-		getUhc().setSoup(getMainOptionsFile().getBoolean("Soup"));
-		getUhc().setDebug(getMainOptionsFile().getBoolean("debugging"));
-		getUhc().setSpawnradius(getMainOptionsFile().getInt("Spawndispersal"));
-		getUhc().setStatusMOTD(getMainOptionsFile().getBoolean("Status MOTD"));
-		getUhc().setScenarios(getScenarioFile().getBoolean("Scenarios enabled"));
-		getUhc().setScenarioVoting(getScenarioFile().getBoolean("Scenario voting"));
-		getUhc().setKits(getKitsFile().getBoolean("Kits"));
-		getUhc().setTeams(getTeamFile().getBoolean("Teams enabled"));
-		getUhc().setTracker(getMainOptionsFile().getBoolean("Tracker.euip"));
-		getUhc().setTrackerName(getMainOptionsFile().getColorString("Tracker.name"));
-		getUhc().setLobbyAsSchematic(getMainOptionsFile().getBoolean("Lobby.as schematic"));
-		getUhc().setCrates(getUhcCrateFile().getBoolean("Crates"));
-		getUhc().setLobby(getLobbyFile().getBoolean("Lobby"));
-		getUhc().setPregen(getMainOptionsFile().getBoolean("Pregenerate World.enabled"));
-		getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
+        getUhc().setMySQLMode(getMainOptionsFile().getBoolean("MySQL"));
+        getUhc().setBunggeMode(getMainOptionsFile().getBoolean("Bungeecord"));
+        getUhc().setLobbyServer(getMainOptionsFile().getString("Bungeecord Fallbackserver"));
+        getUhc().setSoup(getMainOptionsFile().getBoolean("Soup"));
+        getUhc().setDebug(getMainOptionsFile().getBoolean("debugging"));
+        getUhc().setSpawnradius(getMainOptionsFile().getInt("Spawndispersal"));
+        getUhc().setStatusMOTD(getMainOptionsFile().getBoolean("Status MOTD"));
+        getUhc().setScenarios(getScenarioFile().getBoolean("Scenarios enabled"));
+        getUhc().setScenarioVoting(getScenarioFile().getBoolean("Scenario voting"));
+        getUhc().setKits(getKitsFile().getBoolean("Kits"));
+        getUhc().setTeams(getTeamFile().getBoolean("Teams enabled"));
+        getUhc().setTracker(getMainOptionsFile().getBoolean("Tracker.euip"));
+        getUhc().setTrackerName(getMainOptionsFile().getColorString("Tracker.name"));
+        getUhc().setLobbyAsSchematic(getMainOptionsFile().getBoolean("Lobby.as schematic"));
+        getUhc().setCrates(getUhcCrateFile().getBoolean("Crates"));
+        getUhc().setLobby(getLobbyFile().getBoolean("Lobby"));
+        getUhc().setPregen(getMainOptionsFile().getBoolean("Pregenerate World.enabled"));
+        getUhc().setRestartMessage(getMainOptionsFile().getColorString("Restartmessage"));
 
-		setPlayerUtil(new PlayerUtil(getUhc()));
-		setStatsUtil(new StatsUtil(getUhc()));
-		setTablistUtil(new TablistUtil(getUhc()));
-		setBorderUtil(new BorderUtil(getUhc()));
-		setScoreboardUtil(new ScoreboardUtil(getUhc()));
-		setLobbyUtil(new LobbyUtil(getUhc()));
-		setTeamManagerUtil(new TeamManagerUtil(getUhc()));
-		setWorldUtil(new WorldUtil(getUhc()));
-		setHologramUtil(new HologramUtil(getUhc()));
-		setNpcUtil(new NPCUtil(getUhc()));
-		setRankingUtil(new RankingUtil(getUhc()));
-		setSchematicManagerUtil(new SchematicManagerUtil(getUhc()));
+        setPlayerUtil(new PlayerUtil(getUhc()));
+        setStatsUtil(new StatsUtil(getUhc()));
+        setTablistUtil(new TablistUtil(getUhc()));
+        setBorderUtil(new BorderUtil(getUhc()));
+        setScoreboardUtil(new ScoreboardUtil(getUhc()));
+        setLobbyUtil(new LobbyUtil(getUhc()));
+        setTeamManagerUtil(new TeamManagerUtil(getUhc()));
+        setWorldUtil(new WorldUtil(getUhc()));
+        setHologramUtil(new HologramUtil(getUhc()));
+        setNpcUtil(new NPCUtil(getUhc()));
+        setRankingUtil(new RankingUtil(getUhc()));
+        setSchematicManagerUtil(new SchematicManagerUtil(getUhc()));
 
-		setKitInventory(new KitInventory(getUhc()));
-		setConfirmInventory(new ConfirmInventory(getUhc()));
-		setTeamInventory(new TeamInventory(getUhc()));
-		setPreviewInventory(new PreviewInventory(getUhc()));
-		setCrateInventory(new CrateInventory(getUhc()));
-		setScenarioInventory(new ScenarioInventory(getUhc()));
-		setScenarioAdminInventory(new ScenarioAdminInventory(getUhc()));
+        setKitInventory(new KitInventory(getUhc()));
+        setConfirmInventory(new ConfirmInventory(getUhc()));
+        setTeamInventory(new TeamInventory(getUhc()));
+        setPreviewInventory(new PreviewInventory(getUhc()));
+        setCrateInventory(new CrateInventory(getUhc()));
+        setScenarioInventory(new ScenarioInventory(getUhc()));
+        setScenarioAdminInventory(new ScenarioAdminInventory(getUhc()));
+        setAchievementInventory(new AchievementInventory(getUhc()));
 
-		setNormalCrateInventory(new NormalCrateInventory(getUhc()));
-		setUnCommonCrateInventory(new UnCommonCrateInventory(getUhc()));
-		setRareCrateInventory(new RareCrateInventory(getUhc()));
-		setSuperrareCrateInventory(new SuperrareCrateInventory(getUhc()));
-		setEpicCrateInventory(new EpicCrateInventory(getUhc()));
-		setLegendaryCrateInventory(new LegendaryCrateListener(getUhc()));
+        setNormalCrateInventory(new NormalCrateInventory(getUhc()));
+        setUnCommonCrateInventory(new UnCommonCrateInventory(getUhc()));
+        setRareCrateInventory(new RareCrateInventory(getUhc()));
+        setSuperrareCrateInventory(new SuperrareCrateInventory(getUhc()));
+        setEpicCrateInventory(new EpicCrateInventory(getUhc()));
+        setLegendaryCrateInventory(new LegendaryCrateListener(getUhc()));
 
-		setKitChooseListener(new KitChooseListener(getUhc()));
-		setRegisterListener(new RegisterListener(getUhc()));
-		setEquipListener(new EquipListener(getUhc()));
-		setChatListener(new ChatListener(getUhc()));
-		setTimerListener(new TimerListener(getUhc()));
-		setConfirmListener(new ConfirmListener(getUhc()));
-		setGStateListener(new GStateListener(getUhc()));
-		setTeamListener(new TeamListener(getUhc()));
-		setSpectatorListener(new SpectatorListener(getUhc()));
-		setGameEndsListener(new GameEndsListener(getUhc()));
-		setDeathListener(new DeathListener(getUhc()));
-		setSchematicListener(new SchematicListener(getUhc()));
-		setUhcCrateListener(new UHCCrateListener(getUhc()));
-		setScenarioListener(new ScenarioListener(getUhc()));
+        setKitChooseListener(new KitChooseListener(getUhc()));
+        setRegisterListener(new RegisterListener(getUhc()));
+        setEquipListener(new EquipListener(getUhc()));
+        setChatListener(new ChatListener(getUhc()));
+        setTimerListener(new TimerListener(getUhc()));
+        setConfirmListener(new ConfirmListener(getUhc()));
+        setGStateListener(new GStateListener(getUhc()));
+        setTeamListener(new TeamListener(getUhc()));
+        setSpectatorListener(new SpectatorListener(getUhc()));
+        setGameEndsListener(new GameEndsListener(getUhc()));
+        setDeathListener(new DeathListener(getUhc()));
+        setSchematicListener(new SchematicListener(getUhc()));
+        setUhcCrateListener(new UHCCrateListener(getUhc()));
+        setScenarioListener(new ScenarioListener(getUhc()));
+        setAchievementListener(new AchievementListener(getUhc()));
 
-		setLobbyTimer(new LobbyTimer(getUhc()));
-		setGraceTimer(new GraceTimer(getUhc()));
-		setWarmUpTimer(new WarmUpTimer(getUhc()));
-		setDeathmatchTimer(new DeathmatchTimer(getUhc()));
-		setStartDeathmatchTimer(new StartDeathMatchTimer(getUhc()));
-		setRestartTimer(new RestartTimer(getUhc()));
-		setBestPvETimer(new BestPvETimer(getUhc()));
-		setDamageCycleTimer(new DamageCycleTimer(getUhc()));
-		setEntropyTimer(new EntropyTimer(getUhc()));
-		setFalloutTimer(new FalloutTimer(getUhc()));
-		setGoToHellTimer(new GoToHellTimer(getUhc()));
-		setSkyHighTimer(new SkyHighTimer(getUhc()));
+        setLobbyTimer(new LobbyTimer(getUhc()));
+        setGraceTimer(new GraceTimer(getUhc()));
+        setWarmUpTimer(new WarmUpTimer(getUhc()));
+        setDeathmatchTimer(new DeathmatchTimer(getUhc()));
+        setStartDeathmatchTimer(new StartDeathMatchTimer(getUhc()));
+        setRestartTimer(new RestartTimer(getUhc()));
+        setBestPvETimer(new BestPvETimer(getUhc()));
+        setDamageCycleTimer(new DamageCycleTimer(getUhc()));
+        setEntropyTimer(new EntropyTimer(getUhc()));
+        setFalloutTimer(new FalloutTimer(getUhc()));
+        setGoToHellTimer(new GoToHellTimer(getUhc()));
+        setSkyHighTimer(new SkyHighTimer(getUhc()));
 
-		getBorderUtil().changeSize(getBorderFile().getInt("size"));
+        getBorderUtil().changeSize(getBorderFile().getInt("size"));
 
-		new ArmorListener(getUhc());
+        new ArmorListener(getUhc());
 
-		new HalfOreListener(getUhc());
-		new ArrowListener(getUhc());
-		new MonsterIncListener(getUhc());
-		new AppleFamineListener(getUhc());
-		new ArmorVHealthListener(getUhc());
-		new BackPackListener(getUhc());
-		new BareBonesListener(getUhc());
-		new BenchBlitzListener(getUhc());
-		new BestPvEListener(getUhc());
-		new BloodyLapisListener(getUhc());
-		new BiomeParanoiaListener(getUhc());
-		new BirdsListener(getUhc());
-		new BlitzListener(getUhc());
-		new BlockedListener(getUhc());
-		new BlockRushListener(getUhc());
-		new BloodyDiamondsListener(getUhc());
-		new HashtagBowListener(getUhc());
-		new BombersListener(getUhc());
-		new BowfighterListener(getUhc());
-		new CatsEyesListener(getUhc());
-		new CaptainsListener(getUhc());
-		new CertainCircumstancesListener(getUhc());
-		new ChickenListener(getUhc());
-		new CivilisationListener(getUhc());
-		new CityWorldListener(getUhc());
+        new HalfOreListener(getUhc());
+        new ArrowListener(getUhc());
+        new MonsterIncListener(getUhc());
+        new AppleFamineListener(getUhc());
+        new ArmorVHealthListener(getUhc());
+        new BackPackListener(getUhc());
+        new BareBonesListener(getUhc());
+        new BenchBlitzListener(getUhc());
+        new BestPvEListener(getUhc());
+        new BloodyLapisListener(getUhc());
+        new BiomeParanoiaListener(getUhc());
+        new BirdsListener(getUhc());
+        new BlitzListener(getUhc());
+        new BlockedListener(getUhc());
+        new BlockRushListener(getUhc());
+        new BloodyDiamondsListener(getUhc());
+        new HashtagBowListener(getUhc());
+        new BombersListener(getUhc());
+        new BowfighterListener(getUhc());
+        new CatsEyesListener(getUhc());
+        new CaptainsListener(getUhc());
+        new CertainCircumstancesListener(getUhc());
+        new ChickenListener(getUhc());
+        new CivilisationListener(getUhc());
+        new CityWorldListener(getUhc());
         new CraftableTeleportationListener(getUhc());
-		new CompensationListener(getUhc());
-		new DamageDogersListener(getUhc());
-		new DamageCycleListener(getUhc());
-		new DiamondlessListener(getUhc());
-		new DimensonalInversionListener(getUhc());
-		new DoubleOrNothingListener(getUhc());
-		new DungeonMazeListener(getUhc());
-		new EightLeggedFreaksListener(getUhc());
-		new EnderDanceListener(getUhc());
-		new EnderDragonRushListener(getUhc());
-		new EntropyListener(getUhc());
-		new ErraticPvPListener(getUhc());
-		new EveryRoseListener(getUhc());
-		new FalloutListener(getUhc());
-		new FlowerPowerListener(getUhc());
-		new FoodNeophobiaListener(getUhc());
-		new GoldenFleeceListener(getUhc());
-		new GoneFishingListener(getUhc());
-		new GoToHellListener(getUhc());
-		new GunsNRosesListener(getUhc());
-		new HealthDonorListener(getUhc());
-		new TheHobbitListener(getUhc());
+        new CompensationListener(getUhc());
+        new DamageDogersListener(getUhc());
+        new DamageCycleListener(getUhc());
+        new DiamondlessListener(getUhc());
+        new DimensonalInversionListener(getUhc());
+        new DoubleOrNothingListener(getUhc());
+        new DungeonMazeListener(getUhc());
+        new EightLeggedFreaksListener(getUhc());
+        new EnderDanceListener(getUhc());
+        new EnderDragonRushListener(getUhc());
+        new EntropyListener(getUhc());
+        new ErraticPvPListener(getUhc());
+        new EveryRoseListener(getUhc());
+        new FalloutListener(getUhc());
+        new FlowerPowerListener(getUhc());
+        new FoodNeophobiaListener(getUhc());
+        new GoldenFleeceListener(getUhc());
+        new GoneFishingListener(getUhc());
+        new GoToHellListener(getUhc());
+        new GunsNRosesListener(getUhc());
+        new HealthDonorListener(getUhc());
+        new TheHobbitListener(getUhc());
         new HorselessListener(getUhc());
-		new InventorsListener(getUhc());
-		new ItemHuntListener(getUhc());
-		new JackpotListener(getUhc());
-		new KingsListener(getUhc());
-		new LightsOutListener(getUhc());
-		new LiveWithRegretListener(getUhc());
-		new LucyInTheSkyWithDiamondsListener(getUhc());
-		new LongshotListener(getUhc());
-		new LootchestListener(getUhc());
-		new MoleListener(getUhc());
-		new NightmareModeListener(getUhc());
-		new NineSlotsListener(getUhc());
-		new NoFurnaceListener(getUhc());
-		new NoGoingBackListener(getUhc());
-		new NoNetherListener(getUhc());
-		new NoSprintListener(getUhc());
-		new NotShinyEnoughListener(getUhc());
-		new OneHealListener(getUhc());
-		new PopeyeListener(getUhc());
-		new PuppyPowerListener(getUhc());
-		new PvCListener(getUhc());
-		new PotentialPermanentListener(getUhc());
-		new PotionSwapListener(getUhc());
-		new PyrophobiaListener(getUhc());
-		new PyrotechnicsListener(getUhc());
-		new RandomStarterItemsListener(getUhc());
+        new InventorsListener(getUhc());
+        new ItemHuntListener(getUhc());
+        new JackpotListener(getUhc());
+        new KingsListener(getUhc());
+        new LightsOutListener(getUhc());
+        new LiveWithRegretListener(getUhc());
+        new LucyInTheSkyWithDiamondsListener(getUhc());
+        new LongshotListener(getUhc());
+        new LootchestListener(getUhc());
+        new MoleListener(getUhc());
+        new NightmareModeListener(getUhc());
+        new NineSlotsListener(getUhc());
+        new NoFurnaceListener(getUhc());
+        new NoGoingBackListener(getUhc());
+        new NoNetherListener(getUhc());
+        new NoSprintListener(getUhc());
+        new NotShinyEnoughListener(getUhc());
+        new OneHealListener(getUhc());
+        new PopeyeListener(getUhc());
+        new PuppyPowerListener(getUhc());
+        new PvCListener(getUhc());
+        new PotentialPermanentListener(getUhc());
+        new PotionSwapListener(getUhc());
+        new PyrophobiaListener(getUhc());
+        new PyrotechnicsListener(getUhc());
+        new RandomStarterItemsListener(getUhc());
         new RealTimeListener(getUhc());
-		new RiskyRetrievalListener(getUhc());
-		new SelectOresListener(getUhc());
-		new SharedHealthListener(getUhc());
-		new SheepLoversListener(getUhc());
-		new SkyHighListener(getUhc());
-		new SoulBrothersListener(getUhc());
-		new SwitcherooListener(getUhc());
-		new TeamInventoryListener(getUhc());
-		new TimberListener(getUhc());
-		new TripleOresListener(getUhc());
-		new TreeDropsListener(getUhc());
-		new UltraParanoidListener(getUhc());
-		new VeinMinerListener(getUhc());
-		new WebCageListener(getUhc());
-		new XtrAppleListener(getUhc());
-
-		registerCommands();
-		registerEvents();
-		registerTeams();
-
-		getUhcCrateFile().initRarerityContent();
-
-		getConfirmInventory().fillInventory();
-		getTeamInventory().fillInventory();
-		if (getUhc().isScenarios() && getUhc().isScenarioVoting()) {
-			getScenarioInventory().fillInventory();
-		}
-
-		if (getUhc().isScenarios() && !getUhc().isKits()) {
-			getUhc().setKits(false);
-			if (!getUhc().isScenarioVoting())
-				Scenarios.getRandomScenario();
-		} else if (getUhc().isKits()) {
-			getUhc().setKits(true);
-			getUhc().setScenarios(false);
-		}
-
-		getLocationsFile().initalizeLobbyAndArena();
-
-		new BukkitRunnable() {
-			public void run() {
-				getWorldUtil().createWorld();
-			}
-		}.runTaskLater(getUhc(), 5);
-
-		new BukkitRunnable() {
-			public void run() {
-				getWorldUtil().createNetherWorld();
-				if (getUhc().isPregen())
-					getWorldUtil().preGenerateWorld();
-				else
-					new BukkitRunnable() {
-						public void run() {
-							new BiomeUtil();
-						}
-					}.runTaskLater(getUhc(), 15);
-			}
-		}.runTaskLater(getUhc(), 5);
-	}
-
-	// Instance
-
-	public UHC getUhc() {
-		return uhc;
-	}
-
-	private void setUhc(UHC uhc) {
-		this.uhc = uhc;
-	}
-
-	// Listeners
-
-	public KitChooseListener getKitChooseListener() {
-		return kitChooseListener;
-	}
-
-	public void setKitChooseListener(KitChooseListener kitChooseListener) {
-		this.kitChooseListener = kitChooseListener;
-	}
-
-	public RegisterListener getRegisterListener() {
-		return registerListener;
-	}
-
-	public void setRegisterListener(RegisterListener registerListener) {
-		this.registerListener = registerListener;
-	}
-
-	public EquipListener getEquipListener() {
-		return equipListener;
-	}
-
-	public void setEquipListener(EquipListener equipListener) {
-		this.equipListener = equipListener;
-	}
-
-	public ChatListener getChatListener() {
-		return chatListener;
-	}
-
-	public void setChatListener(ChatListener chatListener) {
-		this.chatListener = chatListener;
-	}
+        new RiskyRetrievalListener(getUhc());
+        new SelectOresListener(getUhc());
+        new SharedHealthListener(getUhc());
+        new SheepLoversListener(getUhc());
+        new SkyHighListener(getUhc());
+        new SoulBrothersListener(getUhc());
+        new SwitcherooListener(getUhc());
+        new TeamInventoryListener(getUhc());
+        new TimberListener(getUhc());
+        new TripleOresListener(getUhc());
+        new TreeDropsListener(getUhc());
+        new UltraParanoidListener(getUhc());
+        new VeinMinerListener(getUhc());
+        new WebCageListener(getUhc());
+        new XtrAppleListener(getUhc());
+
+        registerCommands();
+        registerEvents();
+        registerTeams();
+
+        getUhcCrateFile().initRarerityContent();
+        getAchievementFile().registerAchievements();
+        getRanksFile().initRanks();
+
+        getConfirmInventory().fillInventory();
+        getTeamInventory().fillInventory();
+        if (getUhc().isScenarios() && getUhc().isScenarioVoting()) {
+            getScenarioInventory().fillInventory();
+        }
+
+        if (getUhc().isScenarios() && !getUhc().isKits()) {
+            getUhc().setKits(false);
+            if (!getUhc().isScenarioVoting())
+                Scenarios.getRandomScenario();
+        } else if (getUhc().isKits()) {
+            getUhc().setKits(true);
+            getUhc().setScenarios(false);
+        }
+
+        getLocationsFile().initalizeLobbyAndArena();
+
+        new BukkitRunnable() {
+            public void run() {
+                getWorldUtil().createWorld();
+            }
+        }.runTaskLater(getUhc(), 5);
+
+        new BukkitRunnable() {
+            public void run() {
+                getWorldUtil().createNetherWorld();
+                if (getUhc().isPregen())
+                    getWorldUtil().preGenerateWorld();
+                else
+                    new BukkitRunnable() {
+                        public void run() {
+                            new BiomeUtil();
+                        }
+                    }.runTaskLater(getUhc(), 15);
+            }
+        }.runTaskLater(getUhc(), 5);
+    }
+
+    // Instance
+
+    public UHC getUhc() {
+        return uhc;
+    }
+
+    private void setUhc(UHC uhc) {
+        this.uhc = uhc;
+    }
+
+    // Listeners
+
+    public KitChooseListener getKitChooseListener() {
+        return kitChooseListener;
+    }
+
+    public void setKitChooseListener(KitChooseListener kitChooseListener) {
+        this.kitChooseListener = kitChooseListener;
+    }
+
+    public RegisterListener getRegisterListener() {
+        return registerListener;
+    }
+
+    public void setRegisterListener(RegisterListener registerListener) {
+        this.registerListener = registerListener;
+    }
+
+    public EquipListener getEquipListener() {
+        return equipListener;
+    }
+
+    public void setEquipListener(EquipListener equipListener) {
+        this.equipListener = equipListener;
+    }
+
+    public ChatListener getChatListener() {
+        return chatListener;
+    }
 
-	public ArrayList<Listener> getListeners() {
-		return listeners;
-	}
+    public void setChatListener(ChatListener chatListener) {
+        this.chatListener = chatListener;
+    }
 
-	private void setListeners(ArrayList<Listener> arrayList) {
-		this.listeners = arrayList;
-	}
+    public ArrayList<Listener> getListeners() {
+        return listeners;
+    }
 
-	// Utils
+    private void setListeners(ArrayList<Listener> arrayList) {
+        this.listeners = arrayList;
+    }
 
-	public PlayerUtil getPlayerUtil() {
-		return playerUtil;
-	}
+    // Utils
 
-	public void setPlayerUtil(PlayerUtil playerUtil) {
-		this.playerUtil = playerUtil;
-	}
+    public PlayerUtil getPlayerUtil() {
+        return playerUtil;
+    }
 
-	public StatsUtil getStatsUtil() {
-		return statsUtil;
-	}
+    public void setPlayerUtil(PlayerUtil playerUtil) {
+        this.playerUtil = playerUtil;
+    }
 
-	public void setStatsUtil(StatsUtil statsUtil) {
-		this.statsUtil = statsUtil;
-	}
+    public StatsUtil getStatsUtil() {
+        return statsUtil;
+    }
 
-	// Files
+    public void setStatsUtil(StatsUtil statsUtil) {
+        this.statsUtil = statsUtil;
+    }
 
-	public PlayerFile getPlayerFile() {
-		return playerFile;
-	}
+    // Files
 
-	public ArrayList<EasyFile> getEasyFiles() {
-		return easyFiles;
-	}
+    public PlayerFile getPlayerFile() {
+        return playerFile;
+    }
 
-	private void setEasyFiles(ArrayList<EasyFile> easyFiles) {
-		this.easyFiles = easyFiles;
-	}
+    private void setPlayerFile(PlayerFile playerFile) {
+        this.playerFile = playerFile;
+    }
 
-	private void setPlayerFile(PlayerFile playerFile) {
-		this.playerFile = playerFile;
-	}
+    public ArrayList<EasyFile> getEasyFiles() {
+        return easyFiles;
+    }
 
-	public MainOptionsFile getMainOptionsFile() {
-		return mainOptionsFile;
-	}
+    private void setEasyFiles(ArrayList<EasyFile> easyFiles) {
+        this.easyFiles = easyFiles;
+    }
 
-	private void setMainOptionsFile(MainOptionsFile mainOptionsFile) {
-		this.mainOptionsFile = mainOptionsFile;
-	}
+    public MainOptionsFile getMainOptionsFile() {
+        return mainOptionsFile;
+    }
 
-	public KitsFile getKitsFile() {
-		return kitsFile;
-	}
+    private void setMainOptionsFile(MainOptionsFile mainOptionsFile) {
+        this.mainOptionsFile = mainOptionsFile;
+    }
 
-	private void setKitsFile(KitsFile kitsFile) {
-		this.kitsFile = kitsFile;
-	}
+    public KitsFile getKitsFile() {
+        return kitsFile;
+    }
 
-	public MainMessageFile getMessageFile() {
-		return messageFile;
-	}
+    private void setKitsFile(KitsFile kitsFile) {
+        this.kitsFile = kitsFile;
+    }
 
-	private void setMessageFile(MainMessageFile messageFile) {
-		this.messageFile = messageFile;
-	}
+    public MainMessageFile getMessageFile() {
+        return messageFile;
+    }
 
-	public ScenarioFile getScenarioFile() {
-		return scenarioFile;
-	}
+    private void setMessageFile(MainMessageFile messageFile) {
+        this.messageFile = messageFile;
+    }
 
-	public void setScenarioFile(ScenarioFile scenarioFile) {
-		this.scenarioFile = scenarioFile;
-	}
+    public ScenarioFile getScenarioFile() {
+        return scenarioFile;
+    }
 
-	public StatsFile getStatsFile() {
-		return statsFile;
-	}
+    public void setScenarioFile(ScenarioFile scenarioFile) {
+        this.scenarioFile = scenarioFile;
+    }
 
-	private void setStatsFile(StatsFile statsFile) {
-		this.statsFile = statsFile;
-	}
+    public StatsFile getStatsFile() {
+        return statsFile;
+    }
 
-	// Inventories
+    private void setStatsFile(StatsFile statsFile) {
+        this.statsFile = statsFile;
+    }
 
-	public KitInventory getKitInventory() {
-		return kitInventory;
-	}
+    // Inventories
 
-	public void setKitInventory(KitInventory kitInventory) {
-		this.kitInventory = kitInventory;
-	}
+    public KitInventory getKitInventory() {
+        return kitInventory;
+    }
 
-	public TimerFile getTimerFile() {
-		return timerFile;
-	}
+    public void setKitInventory(KitInventory kitInventory) {
+        this.kitInventory = kitInventory;
+    }
 
-	public void setTimerFile(TimerFile timerFile) {
-		this.timerFile = timerFile;
-	}
+    public TimerFile getTimerFile() {
+        return timerFile;
+    }
 
-	public LobbyTimer getLobbyTimer() {
-		return lobbyTimer;
-	}
+    public void setTimerFile(TimerFile timerFile) {
+        this.timerFile = timerFile;
+    }
 
-	public void setLobbyTimer(LobbyTimer lobbyTimer) {
-		this.lobbyTimer = lobbyTimer;
-	}
+    public LobbyTimer getLobbyTimer() {
+        return lobbyTimer;
+    }
 
-	public TimerListener getTimerListener() {
-		return timerListener;
-	}
+    public void setLobbyTimer(LobbyTimer lobbyTimer) {
+        this.lobbyTimer = lobbyTimer;
+    }
 
-	public void setTimerListener(TimerListener timerListener) {
-		this.timerListener = timerListener;
-	}
+    public TimerListener getTimerListener() {
+        return timerListener;
+    }
 
-	public UnitFile getUnitFile() {
-		return unitFile;
-	}
+    public void setTimerListener(TimerListener timerListener) {
+        this.timerListener = timerListener;
+    }
 
-	public void setUnitFile(UnitFile unitFile) {
-		this.unitFile = unitFile;
-	}
+    public UnitFile getUnitFile() {
+        return unitFile;
+    }
 
-	public TablistFile getTablistFile() {
-		return tablistFile;
-	}
+    public void setUnitFile(UnitFile unitFile) {
+        this.unitFile = unitFile;
+    }
 
-	public void setTablistFile(TablistFile tablistFile) {
-		this.tablistFile = tablistFile;
-	}
+    public TablistFile getTablistFile() {
+        return tablistFile;
+    }
 
-	public TablistUtil getTablistUtil() {
-		return tablistUtil;
-	}
+    public void setTablistFile(TablistFile tablistFile) {
+        this.tablistFile = tablistFile;
+    }
 
-	public void setTablistUtil(TablistUtil tablistUtil) {
-		this.tablistUtil = tablistUtil;
-	}
+    public TablistUtil getTablistUtil() {
+        return tablistUtil;
+    }
 
-	public BorderUtil getBorderUtil() {
-		return borderUtil;
-	}
+    public void setTablistUtil(TablistUtil tablistUtil) {
+        this.tablistUtil = tablistUtil;
+    }
 
-	public void setBorderUtil(BorderUtil borderUtil) {
-		this.borderUtil = borderUtil;
-	}
+    public BorderUtil getBorderUtil() {
+        return borderUtil;
+    }
 
-	public BorderFile getBorderFile() {
-		return borderFile;
-	}
+    public void setBorderUtil(BorderUtil borderUtil) {
+        this.borderUtil = borderUtil;
+    }
 
-	public void setBorderFile(BorderFile borderFile) {
-		this.borderFile = borderFile;
-	}
+    public BorderFile getBorderFile() {
+        return borderFile;
+    }
 
-	public ScoreboardUtil getScoreboardUtil() {
-		return scoreboardUtil;
-	}
+    public void setBorderFile(BorderFile borderFile) {
+        this.borderFile = borderFile;
+    }
 
-	public void setScoreboardUtil(ScoreboardUtil scoreboardUtil) {
-		this.scoreboardUtil = scoreboardUtil;
-	}
+    public ScoreboardUtil getScoreboardUtil() {
+        return scoreboardUtil;
+    }
 
-	public ScoreboardFile getScoreboardFile() {
-		return scoreboardFile;
-	}
+    public void setScoreboardUtil(ScoreboardUtil scoreboardUtil) {
+        this.scoreboardUtil = scoreboardUtil;
+    }
 
-	public void setScoreboardFile(ScoreboardFile scoreboardFile) {
-		this.scoreboardFile = scoreboardFile;
-	}
+    public ScoreboardFile getScoreboardFile() {
+        return scoreboardFile;
+    }
 
-	public ConfirmInventory getConfirmInventory() {
-		return confirmInventory;
-	}
+    public void setScoreboardFile(ScoreboardFile scoreboardFile) {
+        this.scoreboardFile = scoreboardFile;
+    }
 
-	public void setConfirmInventory(ConfirmInventory confirmInventory) {
-		this.confirmInventory = confirmInventory;
-	}
+    public ConfirmInventory getConfirmInventory() {
+        return confirmInventory;
+    }
 
-	public ConfirmFile getConfirmFile() {
-		return confirmFile;
-	}
+    public void setConfirmInventory(ConfirmInventory confirmInventory) {
+        this.confirmInventory = confirmInventory;
+    }
 
-	public void setConfirmFile(ConfirmFile confirmFile) {
-		this.confirmFile = confirmFile;
-	}
+    public ConfirmFile getConfirmFile() {
+        return confirmFile;
+    }
 
-	public ConfirmListener getConfirmListener() {
-		return confirmListener;
-	}
+    public void setConfirmFile(ConfirmFile confirmFile) {
+        this.confirmFile = confirmFile;
+    }
 
-	public void setConfirmListener(ConfirmListener confirmListener) {
-		this.confirmListener = confirmListener;
-	}
+    public ConfirmListener getConfirmListener() {
+        return confirmListener;
+    }
 
-	public LocationsFile getLocationsFile() {
-		return locationsFile;
-	}
+    public void setConfirmListener(ConfirmListener confirmListener) {
+        this.confirmListener = confirmListener;
+    }
 
-	public void setLocationsFile(LocationsFile locationsFile) {
-		this.locationsFile = locationsFile;
-	}
+    public LocationsFile getLocationsFile() {
+        return locationsFile;
+    }
 
-	public LobbyUtil getLobbyUtil() {
-		return lobbyUtil;
-	}
+    public void setLocationsFile(LocationsFile locationsFile) {
+        this.locationsFile = locationsFile;
+    }
 
-	public void setLobbyUtil(LobbyUtil lobbyUtil) {
-		this.lobbyUtil = lobbyUtil;
-	}
+    public LobbyUtil getLobbyUtil() {
+        return lobbyUtil;
+    }
 
-	public GStateListener getGStateListener() {
-		return GStateListener;
-	}
+    public void setLobbyUtil(LobbyUtil lobbyUtil) {
+        this.lobbyUtil = lobbyUtil;
+    }
 
-	public void setGStateListener(GStateListener GStateListener) {
-		this.GStateListener = GStateListener;
-	}
+    public GStateListener getGStateListener() {
+        return GStateListener;
+    }
 
-	public StatusFile getStatusFile() {
-		return statusFile;
-	}
+    public void setGStateListener(GStateListener GStateListener) {
+        this.GStateListener = GStateListener;
+    }
 
-	public void setStatusFile(StatusFile statusFile) {
-		this.statusFile = statusFile;
-	}
+    public StatusFile getStatusFile() {
+        return statusFile;
+    }
 
-	public ScoreboardConstructFile getScoreboardConstructFile() {
-		return scoreboardConstructFile;
-	}
+    public void setStatusFile(StatusFile statusFile) {
+        this.statusFile = statusFile;
+    }
 
-	public void setScoreboardConstructFile(ScoreboardConstructFile scoreboardConstructFile) {
-		this.scoreboardConstructFile = scoreboardConstructFile;
-	}
+    public ScoreboardConstructFile getScoreboardConstructFile() {
+        return scoreboardConstructFile;
+    }
 
-	public TeamManagerUtil getTeamManagerUtil() {
-		return teamManagerUtil;
-	}
+    public void setScoreboardConstructFile(ScoreboardConstructFile scoreboardConstructFile) {
+        this.scoreboardConstructFile = scoreboardConstructFile;
+    }
 
-	public void setTeamManagerUtil(TeamManagerUtil teamManagerUtil) {
-		this.teamManagerUtil = teamManagerUtil;
-	}
+    public TeamManagerUtil getTeamManagerUtil() {
+        return teamManagerUtil;
+    }
 
-	public TeamFile getTeamFile() {
-		return teamFile;
-	}
+    public void setTeamManagerUtil(TeamManagerUtil teamManagerUtil) {
+        this.teamManagerUtil = teamManagerUtil;
+    }
 
-	public void setTeamFile(TeamFile teamFile) {
-		this.teamFile = teamFile;
-	}
+    public TeamFile getTeamFile() {
+        return teamFile;
+    }
 
-	public TeamInventory getTeamInventory() {
-		return teamInventory;
-	}
+    public void setTeamFile(TeamFile teamFile) {
+        this.teamFile = teamFile;
+    }
 
-	public void setTeamInventory(TeamInventory teamInventory) {
-		this.teamInventory = teamInventory;
-	}
+    public TeamInventory getTeamInventory() {
+        return teamInventory;
+    }
 
-	public TeamListener getTeamListener() {
-		return teamListener;
-	}
+    public void setTeamInventory(TeamInventory teamInventory) {
+        this.teamInventory = teamInventory;
+    }
 
-	public void setTeamListener(TeamListener teamListener) {
-		this.teamListener = teamListener;
-	}
+    public TeamListener getTeamListener() {
+        return teamListener;
+    }
 
-	public GraceTimer getGraceTimer() {
-		return graceTimer;
-	}
+    public void setTeamListener(TeamListener teamListener) {
+        this.teamListener = teamListener;
+    }
 
-	public void setGraceTimer(GraceTimer graceTimer) {
-		this.graceTimer = graceTimer;
-	}
+    public GraceTimer getGraceTimer() {
+        return graceTimer;
+    }
 
-	public WarmUpTimer getWarmUpTimer() {
-		return warmUpTimer;
-	}
+    public void setGraceTimer(GraceTimer graceTimer) {
+        this.graceTimer = graceTimer;
+    }
 
-	public void setWarmUpTimer(WarmUpTimer warmUpTimer) {
-		this.warmUpTimer = warmUpTimer;
-	}
+    public WarmUpTimer getWarmUpTimer() {
+        return warmUpTimer;
+    }
 
-	public DeathmatchTimer getDeathmatchTimer() {
-		return deathmatchTimer;
-	}
+    public void setWarmUpTimer(WarmUpTimer warmUpTimer) {
+        this.warmUpTimer = warmUpTimer;
+    }
 
-	public void setDeathmatchTimer(DeathmatchTimer deathmatchTimer) {
-		this.deathmatchTimer = deathmatchTimer;
-	}
+    public DeathmatchTimer getDeathmatchTimer() {
+        return deathmatchTimer;
+    }
 
-	public StartDeathMatchTimer getStartDeathmatchTimer() {
-		return startDeathmatchTimer;
-	}
+    public void setDeathmatchTimer(DeathmatchTimer deathmatchTimer) {
+        this.deathmatchTimer = deathmatchTimer;
+    }
 
-	public void setStartDeathmatchTimer(StartDeathMatchTimer startDeathmatchTimer) {
-		this.startDeathmatchTimer = startDeathmatchTimer;
-	}
+    public StartDeathMatchTimer getStartDeathmatchTimer() {
+        return startDeathmatchTimer;
+    }
 
-	public SpectatorFile getSpectatorFile() {
-		return spectatorFile;
-	}
+    public void setStartDeathmatchTimer(StartDeathMatchTimer startDeathmatchTimer) {
+        this.startDeathmatchTimer = startDeathmatchTimer;
+    }
 
-	public void setSpectatorFile(SpectatorFile spectatorFile) {
-		this.spectatorFile = spectatorFile;
-	}
+    public SpectatorFile getSpectatorFile() {
+        return spectatorFile;
+    }
 
-	public SpectatorListener getSpectatorListener() {
-		return spectatorListener;
-	}
+    public void setSpectatorFile(SpectatorFile spectatorFile) {
+        this.spectatorFile = spectatorFile;
+    }
 
-	public void setSpectatorListener(SpectatorListener spectatorListener) {
-		this.spectatorListener = spectatorListener;
-	}
+    public SpectatorListener getSpectatorListener() {
+        return spectatorListener;
+    }
 
-	public DropsFile getDropsFile() {
-		return dropsFile;
-	}
+    public void setSpectatorListener(SpectatorListener spectatorListener) {
+        this.spectatorListener = spectatorListener;
+    }
 
-	public void setDropsFile(DropsFile dropsFile) {
-		this.dropsFile = dropsFile;
-	}
+    public DropsFile getDropsFile() {
+        return dropsFile;
+    }
 
-	public GameEndsListener getGameEndsListener() {
-		return gameEndsListener;
-	}
+    public void setDropsFile(DropsFile dropsFile) {
+        this.dropsFile = dropsFile;
+    }
 
-	public void setGameEndsListener(GameEndsListener gameEndsListener) {
-		this.gameEndsListener = gameEndsListener;
-	}
+    public GameEndsListener getGameEndsListener() {
+        return gameEndsListener;
+    }
 
-	public RestartTimer getRestartTimer() {
-		return restartTimer;
-	}
+    public void setGameEndsListener(GameEndsListener gameEndsListener) {
+        this.gameEndsListener = gameEndsListener;
+    }
 
-	public void setRestartTimer(RestartTimer restartTimer) {
-		this.restartTimer = restartTimer;
-	}
+    public RestartTimer getRestartTimer() {
+        return restartTimer;
+    }
 
-	public DeathmessageFile getDeathMessageFile() {
-		return deathMessageFile;
-	}
+    public void setRestartTimer(RestartTimer restartTimer) {
+        this.restartTimer = restartTimer;
+    }
 
-	public void setDeathMessageFile(DeathmessageFile deathMessageFile) {
-		this.deathMessageFile = deathMessageFile;
-	}
+    public DeathmessageFile getDeathMessageFile() {
+        return deathMessageFile;
+    }
 
-	public DeathListener getDeathListener() {
-		return deathListener;
-	}
+    public void setDeathMessageFile(DeathmessageFile deathMessageFile) {
+        this.deathMessageFile = deathMessageFile;
+    }
 
-	public void setDeathListener(DeathListener deathListener) {
-		this.deathListener = deathListener;
-	}
+    public DeathListener getDeathListener() {
+        return deathListener;
+    }
 
-	public WorldUtil getWorldUtil() {
-		return worldUtil;
-	}
+    public void setDeathListener(DeathListener deathListener) {
+        this.deathListener = deathListener;
+    }
 
-	public void setWorldUtil(WorldUtil worldUtil) {
-		this.worldUtil = worldUtil;
-	}
+    public WorldUtil getWorldUtil() {
+        return worldUtil;
+    }
 
-	public CraftingFile getCraftingFile() {
-		return craftingFile;
-	}
+    public void setWorldUtil(WorldUtil worldUtil) {
+        this.worldUtil = worldUtil;
+    }
 
-	public void setCraftingFile(CraftingFile craftingFile) {
-		this.craftingFile = craftingFile;
-	}
+    public CraftingFile getCraftingFile() {
+        return craftingFile;
+    }
 
-	public PreviewInventory getPreviewInventory() {
-		return previewInventory;
-	}
+    public void setCraftingFile(CraftingFile craftingFile) {
+        this.craftingFile = craftingFile;
+    }
 
-	public void setPreviewInventory(PreviewInventory previewInventory) {
-		this.previewInventory = previewInventory;
-	}
+    public PreviewInventory getPreviewInventory() {
+        return previewInventory;
+    }
 
-	public ScenarioHelpFile getScenarioHelpFile() {
-		return scenarioHelpFile;
-	}
+    public void setPreviewInventory(PreviewInventory previewInventory) {
+        this.previewInventory = previewInventory;
+    }
 
-	public void setScenarioHelpFile(ScenarioHelpFile scenarioHelpFile) {
-		this.scenarioHelpFile = scenarioHelpFile;
-	}
+    public ScenarioHelpFile getScenarioHelpFile() {
+        return scenarioHelpFile;
+    }
 
-	public BestPvETimer getBestPvETimer() {
-		return bestPvETimer;
-	}
+    public void setScenarioHelpFile(ScenarioHelpFile scenarioHelpFile) {
+        this.scenarioHelpFile = scenarioHelpFile;
+    }
 
-	public void setBestPvETimer(BestPvETimer bestPvETimer) {
-		this.bestPvETimer = bestPvETimer;
-	}
+    public BestPvETimer getBestPvETimer() {
+        return bestPvETimer;
+    }
 
-	public DamageCycleTimer getDamageCycleTimer() {
-		return damageCycleTimer;
-	}
+    public void setBestPvETimer(BestPvETimer bestPvETimer) {
+        this.bestPvETimer = bestPvETimer;
+    }
 
-	public void setDamageCycleTimer(DamageCycleTimer damageCycleTimer) {
-		this.damageCycleTimer = damageCycleTimer;
-	}
+    public DamageCycleTimer getDamageCycleTimer() {
+        return damageCycleTimer;
+    }
 
-	public EntropyTimer getEntropyTimer() {
-		return entropyTimer;
-	}
+    public void setDamageCycleTimer(DamageCycleTimer damageCycleTimer) {
+        this.damageCycleTimer = damageCycleTimer;
+    }
 
-	public void setEntropyTimer(EntropyTimer entropyTimer) {
-		this.entropyTimer = entropyTimer;
-	}
+    public EntropyTimer getEntropyTimer() {
+        return entropyTimer;
+    }
 
-	public FalloutTimer getFalloutTimer() {
-		return falloutTimer;
-	}
+    public void setEntropyTimer(EntropyTimer entropyTimer) {
+        this.entropyTimer = entropyTimer;
+    }
 
-	public void setFalloutTimer(FalloutTimer falloutTimer) {
-		this.falloutTimer = falloutTimer;
-	}
+    public FalloutTimer getFalloutTimer() {
+        return falloutTimer;
+    }
 
-	public GoToHellTimer getGoToHellTimer() {
-		return goToHellTimer;
-	}
+    public void setFalloutTimer(FalloutTimer falloutTimer) {
+        this.falloutTimer = falloutTimer;
+    }
 
-	public void setGoToHellTimer(GoToHellTimer goToHellTimer) {
-		this.goToHellTimer = goToHellTimer;
-	}
+    public GoToHellTimer getGoToHellTimer() {
+        return goToHellTimer;
+    }
 
-	public SkyHighTimer getSkyHighTimer() {
-		return skyHighTimer;
-	}
+    public void setGoToHellTimer(GoToHellTimer goToHellTimer) {
+        this.goToHellTimer = goToHellTimer;
+    }
 
-	public void setSkyHighTimer(SkyHighTimer skyHighTimer) {
-		this.skyHighTimer = skyHighTimer;
-	}
+    public SkyHighTimer getSkyHighTimer() {
+        return skyHighTimer;
+    }
 
-	public HologramFile getHologramFile() {
-		return hologramFile;
-	}
+    public void setSkyHighTimer(SkyHighTimer skyHighTimer) {
+        this.skyHighTimer = skyHighTimer;
+    }
 
-	public void setHologramFile(HologramFile hologramFile) {
-		this.hologramFile = hologramFile;
-	}
+    public HologramFile getHologramFile() {
+        return hologramFile;
+    }
 
-	public HologramUtil getHologramUtil() {
-		return hologramUtil;
-	}
+    public void setHologramFile(HologramFile hologramFile) {
+        this.hologramFile = hologramFile;
+    }
 
-	public void setHologramUtil(HologramUtil hologramUtil) {
-		this.hologramUtil = hologramUtil;
-	}
+    public HologramUtil getHologramUtil() {
+        return hologramUtil;
+    }
 
-	public NPCUtil getNpcUtil() {
-		return npcUtil;
-	}
+    public void setHologramUtil(HologramUtil hologramUtil) {
+        this.hologramUtil = hologramUtil;
+    }
 
-	public void setNpcUtil(NPCUtil npcUtil) {
-		this.npcUtil = npcUtil;
-	}
+    public NPCUtil getNpcUtil() {
+        return npcUtil;
+    }
 
-	public MOTDFile getMOTDFile() {
-		return mOTDFile;
-	}
+    public void setNpcUtil(NPCUtil npcUtil) {
+        this.npcUtil = npcUtil;
+    }
 
-	public void setMOTDFile(MOTDFile mOTDFile) {
-		this.mOTDFile = mOTDFile;
-	}
+    public MOTDFile getMOTDFile() {
+        return mOTDFile;
+    }
 
-	public RankingUtil getRankingUtil() {
-		return rankingUtil;
-	}
+    public void setMOTDFile(MOTDFile mOTDFile) {
+        this.mOTDFile = mOTDFile;
+    }
 
-	public void setRankingUtil(RankingUtil rankingUtil) {
-		this.rankingUtil = rankingUtil;
-	}
+    public RankingUtil getRankingUtil() {
+        return rankingUtil;
+    }
 
-	public SchematicManagerUtil getSchematicManagerUtil() {
-		return schematicManagerUtil;
-	}
+    public void setRankingUtil(RankingUtil rankingUtil) {
+        this.rankingUtil = rankingUtil;
+    }
 
-	public void setSchematicManagerUtil(SchematicManagerUtil schematicManagerUtil) {
-		this.schematicManagerUtil = schematicManagerUtil;
-	}
+    public SchematicManagerUtil getSchematicManagerUtil() {
+        return schematicManagerUtil;
+    }
 
-	public SchematicListener getSchematicListener() {
-		return schematicListener;
-	}
+    public void setSchematicManagerUtil(SchematicManagerUtil schematicManagerUtil) {
+        this.schematicManagerUtil = schematicManagerUtil;
+    }
 
-	public void setSchematicListener(SchematicListener schematicListener) {
-		this.schematicListener = schematicListener;
-	}
+    public SchematicListener getSchematicListener() {
+        return schematicListener;
+    }
 
-	public UHCCrateFile getUhcCrateFile() {
-		return uhcCrateFile;
-	}
+    public void setSchematicListener(SchematicListener schematicListener) {
+        this.schematicListener = schematicListener;
+    }
 
-	public void setUhcCrateFile(UHCCrateFile uhcCrateFile) {
-		this.uhcCrateFile = uhcCrateFile;
-	}
+    public UHCCrateFile getUhcCrateFile() {
+        return uhcCrateFile;
+    }
 
-	public CrateInventory getCrateInventory() {
-		return crateInventory;
-	}
+    public void setUhcCrateFile(UHCCrateFile uhcCrateFile) {
+        this.uhcCrateFile = uhcCrateFile;
+    }
 
-	public void setCrateInventory(CrateInventory crateInventory) {
-		this.crateInventory = crateInventory;
-	}
+    public CrateInventory getCrateInventory() {
+        return crateInventory;
+    }
 
-	public UHCCrateListener getUhcCrateListener() {
-		return uhcCrateListener;
-	}
+    public void setCrateInventory(CrateInventory crateInventory) {
+        this.crateInventory = crateInventory;
+    }
 
-	public void setUhcCrateListener(UHCCrateListener uhcCrateListener) {
-		this.uhcCrateListener = uhcCrateListener;
-	}
+    public UHCCrateListener getUhcCrateListener() {
+        return uhcCrateListener;
+    }
 
-	public NormalCrateInventory getNormalCrateInventory() {
-		return normalCrateInventory;
-	}
+    public void setUhcCrateListener(UHCCrateListener uhcCrateListener) {
+        this.uhcCrateListener = uhcCrateListener;
+    }
 
-	public void setNormalCrateInventory(NormalCrateInventory normalCrateInventory) {
-		this.normalCrateInventory = normalCrateInventory;
-	}
+    public NormalCrateInventory getNormalCrateInventory() {
+        return normalCrateInventory;
+    }
 
-	public UnCommonCrateInventory getUnCommonCrateInventory() {
-		return unCommonCrateInventory;
-	}
+    public void setNormalCrateInventory(NormalCrateInventory normalCrateInventory) {
+        this.normalCrateInventory = normalCrateInventory;
+    }
 
-	public void setUnCommonCrateInventory(UnCommonCrateInventory unCommonCrateInventory) {
-		this.unCommonCrateInventory = unCommonCrateInventory;
-	}
+    public UnCommonCrateInventory getUnCommonCrateInventory() {
+        return unCommonCrateInventory;
+    }
 
-	public RareCrateInventory getRareCrateInventory() {
-		return rareCrateInventory;
-	}
+    public void setUnCommonCrateInventory(UnCommonCrateInventory unCommonCrateInventory) {
+        this.unCommonCrateInventory = unCommonCrateInventory;
+    }
 
-	public void setRareCrateInventory(RareCrateInventory rareCrateInventory) {
-		this.rareCrateInventory = rareCrateInventory;
-	}
+    public RareCrateInventory getRareCrateInventory() {
+        return rareCrateInventory;
+    }
 
-	public SuperrareCrateInventory getSuperrareCrateInventory() {
-		return superrareCrateInventory;
-	}
+    public void setRareCrateInventory(RareCrateInventory rareCrateInventory) {
+        this.rareCrateInventory = rareCrateInventory;
+    }
 
-	public void setSuperrareCrateInventory(SuperrareCrateInventory superrareCrateInventory) {
-		this.superrareCrateInventory = superrareCrateInventory;
-	}
+    public SuperrareCrateInventory getSuperrareCrateInventory() {
+        return superrareCrateInventory;
+    }
 
-	public EpicCrateInventory getEpicCrateInventory() {
-		return epicCrateInventory;
-	}
+    public void setSuperrareCrateInventory(SuperrareCrateInventory superrareCrateInventory) {
+        this.superrareCrateInventory = superrareCrateInventory;
+    }
 
-	public void setEpicCrateInventory(EpicCrateInventory epicCrateInventory) {
-		this.epicCrateInventory = epicCrateInventory;
-	}
+    public EpicCrateInventory getEpicCrateInventory() {
+        return epicCrateInventory;
+    }
 
-	public LegendaryCrateListener getLegendaryCrateInventory() {
-		return legendaryCrateInventory;
-	}
+    public void setEpicCrateInventory(EpicCrateInventory epicCrateInventory) {
+        this.epicCrateInventory = epicCrateInventory;
+    }
 
-	public void setLegendaryCrateInventory(LegendaryCrateListener legendaryCrateInventory) {
-		this.legendaryCrateInventory = legendaryCrateInventory;
-	}
+    public LegendaryCrateListener getLegendaryCrateInventory() {
+        return legendaryCrateInventory;
+    }
 
-	public LobbyFile getLobbyFile() {
-		return lobbyFile;
-	}
+    public void setLegendaryCrateInventory(LegendaryCrateListener legendaryCrateInventory) {
+        this.legendaryCrateInventory = legendaryCrateInventory;
+    }
 
-	public void setLobbyFile(LobbyFile lobbyFile) {
-		this.lobbyFile = lobbyFile;
-	}
+    public LobbyFile getLobbyFile() {
+        return lobbyFile;
+    }
 
-	public ScenarioInventory getScenarioInventory() {
-		return scenarioInventory;
-	}
+    public void setLobbyFile(LobbyFile lobbyFile) {
+        this.lobbyFile = lobbyFile;
+    }
 
-	public void setScenarioInventory(ScenarioInventory scenarioInventory) {
-		this.scenarioInventory = scenarioInventory;
-	}
+    public ScenarioInventory getScenarioInventory() {
+        return scenarioInventory;
+    }
 
-	public ScenarioListener getScenarioListener() {
-		return scenarioListener;
-	}
+    public void setScenarioInventory(ScenarioInventory scenarioInventory) {
+        this.scenarioInventory = scenarioInventory;
+    }
 
-	public void setScenarioListener(ScenarioListener scenarioListener) {
-		this.scenarioListener = scenarioListener;
-	}
+    public ScenarioListener getScenarioListener() {
+        return scenarioListener;
+    }
 
-	public ScenarioAdminInventory getScenarioAdminInventory() {
-		return scenarioAdminInventory;
-	}
+    public void setScenarioListener(ScenarioListener scenarioListener) {
+        this.scenarioListener = scenarioListener;
+    }
 
-	public void setScenarioAdminInventory(ScenarioAdminInventory scenarioAdminInventory) {
-		this.scenarioAdminInventory = scenarioAdminInventory;
-	}
+    public ScenarioAdminInventory getScenarioAdminInventory() {
+        return scenarioAdminInventory;
+    }
+
+    public void setScenarioAdminInventory(ScenarioAdminInventory scenarioAdminInventory) {
+        this.scenarioAdminInventory = scenarioAdminInventory;
+    }
+
+    public AchievementFile getAchievementFile() {
+        return achievementFile;
+    }
+
+    public void setAchievementFile(AchievementFile achievementFile) {
+        this.achievementFile = achievementFile;
+    }
+
+    public AchievementListener getAchievementListener() {
+        return achievementListener;
+    }
+
+    public void setAchievementListener(AchievementListener achievementListener) {
+        this.achievementListener = achievementListener;
+    }
+
+    public AchievementInventory getAchievementInventory() {
+        return achievementInventory;
+    }
+
+    public void setAchievementInventory(AchievementInventory achievementInventory) {
+        this.achievementInventory = achievementInventory;
+    }
+
+    public RanksFile getRanksFile() {
+        return ranksFile;
+    }
+
+    public void setRanksFile(RanksFile ranksFile) {
+        this.ranksFile = ranksFile;
+    }
 }

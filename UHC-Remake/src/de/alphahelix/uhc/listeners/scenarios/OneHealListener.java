@@ -14,37 +14,37 @@ import java.util.ArrayList;
 
 public class OneHealListener extends SimpleListener {
 
-	private ArrayList<String> healed = new ArrayList<>();
+    private ArrayList<String> healed = new ArrayList<>();
 
-	public OneHealListener(UHC uhc) {
-		super(uhc);
-	}
+    public OneHealListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.ONE_HEAL))
-			return;
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.ONE_HEAL))
+            return;
 
-		for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			p.getInventory().addItem(new ItemStack(Material.GOLD_HOE));
-		}
-	}
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            p.getInventory().addItem(new ItemStack(Material.GOLD_HOE));
+        }
+    }
 
-	@EventHandler
-	public void onInteract(PlayerInteractEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.ONE_HEAL))
-			return;
-		if (healed.contains(e.getPlayer().getName()))
-			return;
-		if (!e.getAction().name().contains("RIGHT"))
-			return;
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.ONE_HEAL))
+            return;
+        if (healed.contains(e.getPlayer().getName()))
+            return;
+        if (!e.getAction().name().contains("RIGHT"))
+            return;
 
-		if (e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.GOLD_HOE)) {
-			healed.add(e.getPlayer().getName());
-			e.getPlayer().setHealth(20.0);
-			e.getPlayer().getInventory().remove(Material.GOLD_HOE);
-		}
-	}
+        if (e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.GOLD_HOE)) {
+            healed.add(e.getPlayer().getName());
+            e.getPlayer().setHealth(20.0);
+            e.getPlayer().getInventory().remove(Material.GOLD_HOE);
+        }
+    }
 }

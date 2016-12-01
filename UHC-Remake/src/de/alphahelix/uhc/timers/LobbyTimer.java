@@ -1,15 +1,15 @@
 package de.alphahelix.uhc.timers;
 
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.nms.SimpleActionBar;
+import de.alphahelix.alphalibary.nms.SimpleTitle;
+import de.alphahelix.alphalibary.utils.Cuboid;
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.Sounds;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
 import de.alphahelix.uhc.instances.Util;
-import de.popokaka.alphalibary.item.ItemBuilder;
-import de.popokaka.alphalibary.nms.SimpleActionBar;
-import de.popokaka.alphalibary.nms.SimpleTitle;
-import de.popokaka.alphalibary.utils.Cuboid;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -223,7 +223,7 @@ public class LobbyTimer extends Util {
                                                         .setIngameScoreboard(Bukkit.getPlayer(o));
                                             }
 
-                                            if(getRegister().getPlayerUtil().getAll().size() <= 1) {
+                                            if (getRegister().getPlayerUtil().getAll().size() <= 1) {
                                                 GState.setCurrentState(GState.END);
                                                 getRegister().getRestartTimer().startEndTimer();
                                             }

@@ -8,16 +8,16 @@ import org.bukkit.event.EventHandler;
 
 public class FalloutListener extends SimpleListener {
 
-	public FalloutListener(UHC uhc) {
-		super(uhc);
-	}
+    public FalloutListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.FALLOUT))
-			return;
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.FALLOUT))
+            return;
 
-		getRegister().getDeathmatchTimer().setTime((45 * 60) + getRegister().getTimerFile().getInt("Deathmatch warmup.length"));
-		getRegister().getFalloutTimer().startCooldown();
-	}
+        getRegister().getDeathmatchTimer().setTime((45 * 60) + getRegister().getTimerFile().getInt("Deathmatch warmup.length"));
+        getRegister().getFalloutTimer().startCooldown();
+    }
 }

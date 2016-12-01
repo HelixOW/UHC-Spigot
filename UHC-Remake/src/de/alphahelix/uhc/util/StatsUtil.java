@@ -1,18 +1,17 @@
 package de.alphahelix.uhc.util;
 
+import de.alphahelix.alphalibary.UUID.UUIDFetcher;
+import de.alphahelix.alphalibary.mysql.MySQLAPI;
+import de.alphahelix.alphalibary.mysql.MySQLManager;
 import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.UHCAchievements;
 import de.alphahelix.uhc.UHCCrateRarerity;
-import de.alphahelix.uhc.instances.Kit;
-import de.alphahelix.uhc.instances.PlayerInfo;
-import de.alphahelix.uhc.instances.UHCCrate;
-import de.alphahelix.uhc.instances.Util;
-import de.popokaka.alphalibary.UUID.UUIDFetcher;
-import de.popokaka.alphalibary.mysql.MySQLAPI;
-import de.popokaka.alphalibary.mysql.MySQLManager;
+import de.alphahelix.uhc.instances.*;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.sql.ResultSet;
 import java.util.*;
@@ -21,97 +20,373 @@ import java.util.logging.Level;
 
 public class StatsUtil extends Util {
 
+    private static HashMap<String, UHCRank> uhcRankHashMap = new HashMap<>();
+
+    private long k;
+    private long d;
+    private long w;
+    private long nc;
+    private long uc;
+    private long rc;
+    private long sc;
+    private long ec;
+    private long lc;
+
+    private BukkitTask pushKills;
+    private BukkitTask pushDeaths;
+    private BukkitTask pushWins;
+    private BukkitTask pushNormals;
+    private BukkitTask pushUncommons;
+    private BukkitTask pushRares;
+    private BukkitTask pushSuperrares;
+    private BukkitTask pushEpics;
+    private BukkitTask pushLegendarys;
+
     public StatsUtil(UHC uhc) {
         super(uhc);
     }
 
+    static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
+        SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<>((e1, e2) -> {
+            int res = e1.getValue().compareTo(e2.getValue());
+            return res != 0 ? res : 1;
+        });
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
+    }
+
+    // Kills
+
+    public void pushInformations(Player p) {
+        PlayerInfo playerInfo = getRegister().getPlayerUtil().getPlayerInfo(p);
+        getRegister().getPlayerUtil().removePlayerInfo(p);
+
+        k = getKills(p);
+        d = getDeaths(p);
+        w = getWins(p);
+
+        pushKills = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (k < playerInfo.getKills()) {
+                    addKill(p);
+                    k++;
+                } else
+                    pushKills.cancel();
+            }
+        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+        pushDeaths = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (d < playerInfo.getDeaths()) {
+                    addDeath(p);
+                    d++;
+                } else
+                    pushDeaths.cancel();
+            }
+        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+        pushWins = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (w < playerInfo.getWins()) {
+                    addWin(p);
+                    w++;
+                } else
+                    pushWins.cancel();
+            }
+        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+        if (getCoins(p) > playerInfo.getCoins()) {
+            removeCoins(p, (int) (getCoins(p) - playerInfo.getCoins()));
+        } else if (getCoins(p) < playerInfo.getCoins()) {
+            addCoins(p, (int) (playerInfo.getCoins() - getCoins(p)));
+        }
+
+        if (getPoints(p) > playerInfo.getPoints()) {
+            removePoints(p, (int) (getPoints(p) - playerInfo.getPoints()));
+        } else if (getPoints(p) < playerInfo.getPoints()) {
+            addPoints(p, (int) (playerInfo.getPoints() - getPoints(p)));
+        }
+
+        if (!getKitsAsString(p).equals(playerInfo.getKits())) {
+            for (String newKits : playerInfo.getKits().split(" ,")) {
+                if (newKits == null) continue;
+                if (newKits.equalsIgnoreCase("") || newKits.equalsIgnoreCase(" ")) continue;
+                if (getKitsAsList(p).contains(newKits)) continue;
+                else
+                    addKit(getRegister().getKitsFile().getKit(newKits), p);
+            }
+        }
+
+        nc = getCrateCount(UHCCrateRarerity.NORMAL, p);
+        uc = getCrateCount(UHCCrateRarerity.UNCOMMON, p);
+        rc = getCrateCount(UHCCrateRarerity.RARE, p);
+        sc = getCrateCount(UHCCrateRarerity.SUPERRARE, p);
+        ec = getCrateCount(UHCCrateRarerity.EPIC, p);
+        lc = getCrateCount(UHCCrateRarerity.LEGENDARY, p);
+
+        pushNormals = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (nc < playerInfo.getNormalC()) {
+                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.NORMAL), p);
+                    nc++;
+                } else if (nc > playerInfo.getNormalC()) {
+                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.NORMAL), p);
+                    nc--;
+                } else {
+                    pushNormals.cancel();
+                }
+            }
+        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+        pushUncommons = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (uc < playerInfo.getUncommonC()) {
+                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.UNCOMMON), p);
+                    uc++;
+                } else if (uc > playerInfo.getUncommonC()) {
+                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.UNCOMMON), p);
+                    uc--;
+                } else {
+                    pushUncommons.cancel();
+                }
+            }
+        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+        pushRares = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (rc < playerInfo.getRareC()) {
+                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.RARE), p);
+                    rc++;
+                } else if (rc > playerInfo.getRareC()) {
+                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.RARE), p);
+                    rc--;
+                } else {
+                    pushRares.cancel();
+                }
+            }
+        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+        pushSuperrares = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (sc < playerInfo.getSuperrareC()) {
+                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.SUPERRARE), p);
+                    sc++;
+                } else if (sc > playerInfo.getSuperrareC()) {
+                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.SUPERRARE), p);
+                    sc--;
+                } else {
+                    pushSuperrares.cancel();
+                }
+            }
+        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+        pushEpics = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (ec < playerInfo.getEpicC()) {
+                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.EPIC), p);
+                    ec++;
+                } else if (ec > playerInfo.getEpicC()) {
+                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.EPIC), p);
+                    ec--;
+                } else {
+                    pushEpics.cancel();
+                }
+            }
+        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+        pushLegendarys = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (lc < playerInfo.getLegendaryC()) {
+                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.LEGENDARY), p);
+                    lc++;
+                } else if (lc > playerInfo.getLegendaryC()) {
+                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.LEGENDARY), p);
+                    lc--;
+                } else {
+                    pushLegendarys.cancel();
+                }
+            }
+        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+    }
+
     public void pushInformations() {
-        for(String pp : getRegister().getPlayerUtil().getAll()) {
-            if(Bukkit.getPlayer(pp) == null) continue;
+        for (String pp : getRegister().getPlayerUtil().getAll()) {
+            if (Bukkit.getPlayer(pp) == null) continue;
             Player p = Bukkit.getPlayer(pp);
             PlayerInfo playerInfo = getRegister().getPlayerUtil().getPlayerInfo(p);
             getRegister().getPlayerUtil().removePlayerInfo(p);
 
-            long k = getKills(p);
-            long d = getDeaths(p);
+            k = getKills(p);
+            d = getDeaths(p);
+            w = getWins(p);
 
-            while(k < playerInfo.getKills()) {
-                addKill(p);
-            }
+            pushKills = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (k < playerInfo.getKills()) {
+                        addKill(p);
+                        k++;
+                    } else
+                        pushKills.cancel();
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
 
-            while (d < playerInfo.getDeaths()) {
-                addDeath(p);
-            }
+            pushDeaths = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (d < playerInfo.getDeaths()) {
+                        addDeath(p);
+                        d++;
+                    } else
+                        pushDeaths.cancel();
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
 
-            if(getCoins(p) > playerInfo.getCoins()) {
+            pushWins = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (w < playerInfo.getWins()) {
+                        addWin(p);
+                        w++;
+                    } else
+                        pushWins.cancel();
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+
+            if (getCoins(p) > playerInfo.getCoins()) {
                 removeCoins(p, (int) (getCoins(p) - playerInfo.getCoins()));
-            } else if(getCoins(p) < playerInfo.getCoins()) {
+            } else if (getCoins(p) < playerInfo.getCoins()) {
                 addCoins(p, (int) (playerInfo.getCoins() - getCoins(p)));
             }
 
-            if(getPoints(p) > playerInfo.getPoints()) {
+            if (getPoints(p) > playerInfo.getPoints()) {
                 removePoints(p, (int) (getPoints(p) - playerInfo.getPoints()));
-            } else if(getPoints(p) < playerInfo.getPoints()) {
+            } else if (getPoints(p) < playerInfo.getPoints()) {
                 addPoints(p, (int) (playerInfo.getPoints() - getPoints(p)));
             }
 
-            if(!getKitsAsString(p).equals(playerInfo.getKits())) {
-                for(String newKits : playerInfo.getKits().split(" ,")) {
-                    if(newKits == null) continue;
-                    if(newKits.equalsIgnoreCase("") || newKits.equalsIgnoreCase(" ")) continue;
-                    if(getKitsAsList(p).contains(newKits)) continue;
-                    else addKit(getRegister().getKitsFile().getKit(newKits), p);
+            System.out.println("SQL Kits = " + getKitsAsString(p) + " |&| " + playerInfo.getKits());
+
+            if (!getKitsAsString(p).equals(playerInfo.getKits())) {
+                for (String newKits : playerInfo.getKits().split(" ,")) {
+                    if (newKits == null) continue;
+                    if (newKits.equalsIgnoreCase("") || newKits.equalsIgnoreCase(" ")) continue;
+                    if (getKitsAsList(p).contains(newKits)) continue;
+                    else
+                        addKit(getRegister().getKitsFile().getKit(newKits), p);
                 }
             }
 
-            long normals = getCrateCount(UHCCrateRarerity.NORMAL, p);
-            long uncommons = getCrateCount(UHCCrateRarerity.UNCOMMON, p);
-            long rares = getCrateCount(UHCCrateRarerity.RARE, p);
-            long superrares = getCrateCount(UHCCrateRarerity.SUPERRARE, p);
-            long epics = getCrateCount(UHCCrateRarerity.EPIC, p);
-            long legendarys = getCrateCount(UHCCrateRarerity.LEGENDARY, p);
+            nc = getCrateCount(UHCCrateRarerity.NORMAL, p);
+            uc = getCrateCount(UHCCrateRarerity.UNCOMMON, p);
+            rc = getCrateCount(UHCCrateRarerity.RARE, p);
+            sc = getCrateCount(UHCCrateRarerity.SUPERRARE, p);
+            ec = getCrateCount(UHCCrateRarerity.EPIC, p);
+            lc = getCrateCount(UHCCrateRarerity.LEGENDARY, p);
 
-            while(normals != playerInfo.getNormalC()) {
-                if(normals < playerInfo.getNormalC())
-                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.NORMAL), p);
-                else
-                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.NORMAL), p);
-            }
-            while(uncommons != playerInfo.getUncommonC()) {
-                if(uncommons < playerInfo.getUncommonC())
-                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.UNCOMMON), p);
-                else
-                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.UNCOMMON), p);
-            }
-            while(rares != playerInfo.getRareC()) {
-                if(rares < playerInfo.getRareC())
-                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.RARE), p);
-                else
-                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.RARE), p);
-            }
-            while(superrares != playerInfo.getSuperrareC()) {
-                if(superrares < playerInfo.getSuperrareC())
-                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.SUPERRARE), p);
-                else
-                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.SUPERRARE), p);
-            }
-            while(epics != playerInfo.getEpicC()) {
-                if(epics < playerInfo.getEpicC())
-                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.EPIC), p);
-                else
-                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.EPIC), p);
-            }
-            while(legendarys != playerInfo.getLegendaryC()) {
-                if(legendarys < playerInfo.getLegendaryC())
-                    addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.LEGENDARY), p);
-                else
-                    removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.LEGENDARY), p);
-            }
+            pushNormals = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (nc < playerInfo.getNormalC()) {
+                        addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.NORMAL), p);
+                        nc++;
+                    } else if (nc > playerInfo.getNormalC()) {
+                        removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.NORMAL), p);
+                        nc--;
+                    } else {
+                        pushNormals.cancel();
+                    }
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
 
+            pushUncommons = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (uc < playerInfo.getUncommonC()) {
+                        addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.UNCOMMON), p);
+                        uc++;
+                    } else if (uc > playerInfo.getUncommonC()) {
+                        removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.UNCOMMON), p);
+                        uc--;
+                    } else {
+                        pushUncommons.cancel();
+                    }
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+            pushRares = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (rc < playerInfo.getRareC()) {
+                        addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.RARE), p);
+                        rc++;
+                    } else if (rc > playerInfo.getRareC()) {
+                        removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.RARE), p);
+                        rc--;
+                    } else {
+                        pushRares.cancel();
+                    }
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+            pushSuperrares = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (sc < playerInfo.getSuperrareC()) {
+                        addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.SUPERRARE), p);
+                        sc++;
+                    } else if (sc > playerInfo.getSuperrareC()) {
+                        removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.SUPERRARE), p);
+                        sc--;
+                    } else {
+                        pushSuperrares.cancel();
+                    }
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+            pushEpics = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (ec < playerInfo.getEpicC()) {
+                        addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.EPIC), p);
+                        ec++;
+                    } else if (ec > playerInfo.getEpicC()) {
+                        removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.EPIC), p);
+                        ec--;
+                    } else {
+                        pushEpics.cancel();
+                    }
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+
+            pushLegendarys = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (lc < playerInfo.getLegendaryC()) {
+                        addCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.LEGENDARY), p);
+                        lc++;
+                    } else if (lc > playerInfo.getLegendaryC()) {
+                        removeCrate(getRegister().getUhcCrateFile().getCrate(UHCCrateRarerity.LEGENDARY), p);
+                        lc--;
+                    } else {
+                        pushLegendarys.cancel();
+                    }
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
         }
     }
 
-    // Kills
+    // Deaths
 
     public long getKills(final OfflinePlayer p) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
@@ -129,8 +404,6 @@ public class StatsUtil extends Util {
         return getRegister().getPlayerFile()
                 .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kills");
     }
-
-    // Deaths
 
     public void addKill(final OfflinePlayer p) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
@@ -161,6 +434,8 @@ public class StatsUtil extends Util {
         }.runTaskLaterAsynchronously(getUhc(), 10);
     }
 
+    // Coins
+
     public long getDeaths(final OfflinePlayer p) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
             return getRegister().getPlayerUtil().getPlayerInfo(p).getDeaths();
@@ -177,8 +452,6 @@ public class StatsUtil extends Util {
         return getRegister().getPlayerFile()
                 .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".deaths");
     }
-
-    // Coins
 
     public void addDeath(final OfflinePlayer p) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
@@ -226,6 +499,8 @@ public class StatsUtil extends Util {
                 .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins");
     }
 
+    // Kits
+
     public void addCoins(final OfflinePlayer p, final int amount) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
             getRegister().getPlayerUtil().getPlayerInfo(p).setCoins(getCoins(p) + amount);
@@ -254,8 +529,6 @@ public class StatsUtil extends Util {
             }
         }.runTaskLaterAsynchronously(getUhc(), 10);
     }
-
-    // Kits
 
     public void removeCoins(final OfflinePlayer p, final int amount) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
@@ -336,6 +609,8 @@ public class StatsUtil extends Util {
         return playerKits;
     }
 
+    // Crates
+
     public void addKit(final Kit kit, final OfflinePlayer p) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
             getRegister().getPlayerUtil().getPlayerInfo(p).setKits(getKitsAsString(p) + kit.getName().replace("§", "&") + " ,");
@@ -352,7 +627,9 @@ public class StatsUtil extends Util {
                         getRegister().getPlayerFile().save();
                     }
                     MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Kits",
-                            getKitsAsString(p) + kit.getName().replace("§", "&") + " ,");
+                            getKitsAsString(p)
+                                    + kit.getName().replace("§", "&")
+                                    + " ,");
                     return;
                 }
                 getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".kits",
@@ -361,8 +638,6 @@ public class StatsUtil extends Util {
             }
         }.runTaskLaterAsynchronously(getUhc(), 10);
     }
-
-    // Crates
 
     public boolean hasKit(Kit k, OfflinePlayer p) {
         return getKitsAsList(p).contains(" " + k.getName().replace("§", "&"))
@@ -428,9 +703,6 @@ public class StatsUtil extends Util {
     }
 
     public void addCrate(final UHCCrate crate, final OfflinePlayer p) {
-        if (p.isOnline())
-            ((Player) p).sendMessage(getUhc().getPrefix() + getRegister().getMessageFile().getColorString("Crate dropped")
-                    .replace("[crate]", crate.getCrateRarerity().getPrefix() + crate.getName()));
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
             switch (crate.getCrateRarerity()) {
                 case NORMAL:
@@ -478,21 +750,29 @@ public class StatsUtil extends Util {
         }.runTaskLaterAsynchronously(getUhc(), 10);
     }
 
+    // Points
+
     public void removeCrate(final UHCCrate crate, final OfflinePlayer p) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
             switch (crate.getCrateRarerity()) {
                 case NORMAL:
                     getRegister().getPlayerUtil().getPlayerInfo(p).setNormalC(getCrateCount(UHCCrateRarerity.NORMAL, p) - 1);
+                    break;
                 case UNCOMMON:
                     getRegister().getPlayerUtil().getPlayerInfo(p).setUncommonC(getCrateCount(UHCCrateRarerity.UNCOMMON, p) - 1);
+                    break;
                 case RARE:
                     getRegister().getPlayerUtil().getPlayerInfo(p).setRareC(getCrateCount(UHCCrateRarerity.RARE, p) - 1);
+                    break;
                 case SUPERRARE:
                     getRegister().getPlayerUtil().getPlayerInfo(p).setSuperrareC(getCrateCount(UHCCrateRarerity.SUPERRARE, p) - 1);
+                    break;
                 case EPIC:
                     getRegister().getPlayerUtil().getPlayerInfo(p).setEpicC(getCrateCount(UHCCrateRarerity.EPIC, p) - 1);
+                    break;
                 case LEGENDARY:
                     getRegister().getPlayerUtil().getPlayerInfo(p).setLegendaryC(getCrateCount(UHCCrateRarerity.LEGENDARY, p) - 1);
+                    break;
             }
             return;
         }
@@ -534,8 +814,6 @@ public class StatsUtil extends Util {
         }.runTaskLaterAsynchronously(getUhc(), 10);
     }
 
-    // Points
-
     public boolean hasCrate(UHCCrate c, OfflinePlayer p) {
         return getCrateCount(c.getCrateRarerity(), p) >= 1;
     }
@@ -557,6 +835,8 @@ public class StatsUtil extends Util {
         return getRegister().getPlayerFile()
                 .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".points");
     }
+
+    // Rank
 
     public void addPoints(final OfflinePlayer p, final int amount) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
@@ -583,8 +863,6 @@ public class StatsUtil extends Util {
             }
         }.runTaskLaterAsynchronously(getUhc(), 10);
     }
-
-    // Rank
 
     public void removePoints(final OfflinePlayer p, final int amount) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
@@ -702,13 +980,141 @@ public class StatsUtil extends Util {
         return rank.containsKey(p.getName()) ? rank.get(p.getName()) + 1 : -1;
     }
 
-    static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
-        SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<>((e1, e2) -> {
-            int res = e1.getValue().compareTo(e2.getValue());
-            return res != 0 ? res : 1;
-        });
-        sortedEntries.addAll(map.entrySet());
-        return sortedEntries;
+    // wins
+
+    public long getWins(OfflinePlayer p) {
+        if (getRegister().getPlayerUtil().isInInfoMap(p)) {
+            return getRegister().getPlayerUtil().getPlayerInfo(p).getWins();
+        }
+        if (getUhc().isMySQLMode()) {
+            if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    "Wins") == null)
+                return getRegister().getPlayerFile()
+                        .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".wins");
+            String wins = MySQLManager
+                    .getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Wins").toString();
+            return Long.parseLong(wins);
+        }
+        return getRegister().getPlayerFile()
+                .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".wins");
+    }
+
+    public void addWin(final OfflinePlayer p) {
+        if (getRegister().getPlayerUtil().isInInfoMap(p)) {
+            getRegister().getPlayerUtil().getPlayerInfo(p).setWins(getWins(p) + 1);
+            return;
+        }
+        new BukkitRunnable() {
+            public void run() {
+                if (getUhc().isMySQLMode()) {
+                    if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                            "Wins") == null) {
+                        long wins = getRegister().getPlayerFile()
+                                .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".wins");
+                        getRegister().getPlayerFile()
+                                .set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".wins", wins + 1);
+                        getRegister().getPlayerFile().save();
+                    }
+                    MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Wins",
+                            Long.toString(getWins(p) + 1));
+                    return;
+                }
+                long wins = getRegister().getPlayerFile()
+                        .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".wins");
+                getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".wins",
+                        wins + 1);
+                getRegister().getPlayerFile().save();
+            }
+        }.runTaskLaterAsynchronously(getUhc(), 10);
+    }
+
+    // achievements
+
+    public String getAchievementsAsString(OfflinePlayer p) {
+        if (getRegister().getPlayerUtil().isInInfoMap(p)) {
+            return getRegister().getPlayerUtil().getPlayerInfo(p).getAchievements().replace("§", "&");
+        }
+        if (getUhc().isMySQLMode()) {
+            if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    "Achievements") == null) {
+                String achievement = getRegister().getPlayerFile()
+                        .getString("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".achievements");
+                return achievement.replace("§", "&");
+            }
+            String achievement = MySQLManager
+                    .getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Achievements").toString();
+            return achievement.replace("§", "&");
+        }
+        String achievement = getRegister().getPlayerFile()
+                .getString("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".achievements");
+        return achievement.replace("§", "&");
+    }
+
+    public ArrayList<String> getAchievementsAsList(OfflinePlayer p) {
+        ArrayList<String> playerAchievements = new ArrayList<>();
+        String achievement = getKitsAsString(p);
+
+        if (achievement == null)
+            return playerAchievements;
+        if (achievement.equals(""))
+            return playerAchievements;
+
+        String[] achievements = achievement.split(" ,");
+
+        for (String achievementName : achievements) {
+            playerAchievements.add(achievementName.replace("§", "&"));
+        }
+        return playerAchievements;
+    }
+
+    public void addAchievement(final UHCAchievements achievement, final OfflinePlayer p) {
+        if (getRegister().getPlayerUtil().isInInfoMap(p)) {
+            getRegister().getPlayerUtil().getPlayerInfo(p).setAchievements(getAchievementsAsString(p) + achievement.getName().replace("§", "&") + " ,");
+            return;
+        }
+        new BukkitRunnable() {
+            public void run() {
+                if (getUhc().isMySQLMode()) {
+                    if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                            "Achievements") == null) {
+                        getRegister().getPlayerFile().set(
+                                "Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".achievements",
+                                getAchievementsAsString(p) + achievement.getName().replace("§", "&") + " ,");
+                        getRegister().getPlayerFile().save();
+                    }
+                    MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Achievements",
+                            getAchievementsAsString(p)
+                                    + achievement.getName().replace("§", "&")
+                                    + " ,");
+                    return;
+                }
+                getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".achievements",
+                        getAchievementsAsString(p) + achievement.getName().replace("§", "&") + " ,");
+                getRegister().getPlayerFile().save();
+            }
+        }.runTaskLaterAsynchronously(getUhc(), 10);
+    }
+
+    public boolean hasAchievement(UHCAchievements achievement, OfflinePlayer p) {
+        return getAchievementsAsList(p).contains(" " + achievement.getName().replace("§", "&"))
+                || getAchievementsAsList(p).contains(" " + achievement.getName().replace("§", "&") + ",")
+                || getAchievementsAsList(p).contains("," + achievement.getName().replace("§", "&"))
+                || getAchievementsAsList(p).contains("," + achievement.getName().replace("§", "&") + " ")
+                || getAchievementsAsList(p).contains(achievement.getName().replace("§", "&") + ",")
+                || getAchievementsAsList(p).contains(achievement.getName().replace("§", "&"));
+    }
+
+    public void setUhcRank(UHCRank uhcRank, Player p) {
+        uhcRankHashMap.put(p.getName(), uhcRank);
+    }
+
+    public UHCRank getUHCRank(Player p) {
+        if (hasRank(p)) return uhcRankHashMap.get(p.getName());
+        return null;
+    }
+
+    public boolean hasRank(Player p) {
+        return uhcRankHashMap.containsKey(p.getName());
     }
 
     // sending Stats
@@ -723,7 +1129,9 @@ public class StatsUtil extends Util {
                 msg = msg.replace("[deaths]", Long.toString(getDeaths(p)));
                 msg = msg.replace("[coins]", Long.toString(getCoins(p)));
                 msg = msg.replace("[points]", Long.toString(getPoints(p)));
+                msg = msg.replace("[wins]", Long.toString(getWins(p)));
                 msg = msg.replace("[kits]", getKitsAsString(p));
+                msg = msg.replace("[achievements]", getAchievementsAsString(p));
 
                 toSend.sendMessage("§8---===XXX===---\n" + msg + "§8---===XXX===---");
             }

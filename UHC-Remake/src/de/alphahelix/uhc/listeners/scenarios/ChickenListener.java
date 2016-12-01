@@ -11,18 +11,18 @@ import org.bukkit.inventory.ItemStack;
 
 public class ChickenListener extends SimpleListener {
 
-	public ChickenListener(UHC uhc) {
-		super(uhc);
-	}
+    public ChickenListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.CHICKEN))
-			return;
-		
-		for(Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			p.setHealthScale(0.5);
-			p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
-		}
-	}
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.CHICKEN))
+            return;
+
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            p.setHealthScale(0.5);
+            p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
+        }
+    }
 }

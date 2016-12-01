@@ -8,16 +8,16 @@ import org.bukkit.event.EventHandler;
 
 public class DamageCycleListener extends SimpleListener {
 
-	public DamageCycleListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if(!scenarioCheck(Scenarios.DAMAGE_CYCLE)) return;
-		
-		getRegister().getDeathmatchTimer().setTime((45 * 60) + getRegister().getTimerFile().getInt("Deathmatch warmup.length"));
-		getRegister().getDamageCycleTimer().startCycleTimer();
-	}
-	
+    public DamageCycleListener(UHC uhc) {
+        super(uhc);
+    }
+
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.DAMAGE_CYCLE)) return;
+
+        getRegister().getDeathmatchTimer().setTime((45 * 60) + getRegister().getTimerFile().getInt("Deathmatch warmup.length"));
+        getRegister().getDamageCycleTimer().startCycleTimer();
+    }
+
 }

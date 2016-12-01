@@ -11,36 +11,34 @@ import org.bukkit.inventory.ItemStack;
 
 public class DiamondlessListener extends SimpleListener {
 
-	public DiamondlessListener(UHC uhc) {
-		super(uhc);
-	}
+    public DiamondlessListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.DIAMONDLESS))
-			return;
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.DIAMONDLESS))
+            return;
 
-		getRegister().getLocationsFile().getArena().getBlock().setType(Material.ENCHANTMENT_TABLE);
-	}
+        getRegister().getLocationsFile().getArena().getBlock().setType(Material.ENCHANTMENT_TABLE);
+    }
 
-	@EventHandler
-	public void onBreak(BlockBreakEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.DIAMONDLESS))
-			return;
+    @EventHandler
+    public void onBreak(BlockBreakEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.DIAMONDLESS))
+            return;
 
-		if (e.getBlock().getType().equals(Material.DIAMOND_ORE)) {
-			e.setCancelled(true);
-			e.getBlock().setType(Material.AIR);
-			if (Math.random() < 0.5) {
-				e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.ROTTEN_FLESH));
-			}
-		}
-
-		else if (Math.random() < 0.5 && e.getBlock().getType().equals(Material.GOLD_ORE)) {
-			e.setCancelled(true);
-			e.getBlock().setType(Material.AIR);
-		}
-	}
+        if (e.getBlock().getType().equals(Material.DIAMOND_ORE)) {
+            e.setCancelled(true);
+            e.getBlock().setType(Material.AIR);
+            if (Math.random() < 0.5) {
+                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.ROTTEN_FLESH));
+            }
+        } else if (Math.random() < 0.5 && e.getBlock().getType().equals(Material.GOLD_ORE)) {
+            e.setCancelled(true);
+            e.getBlock().setType(Material.AIR);
+        }
+    }
 }

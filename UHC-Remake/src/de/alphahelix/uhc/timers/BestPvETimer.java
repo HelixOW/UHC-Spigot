@@ -10,39 +10,39 @@ import java.util.ArrayList;
 
 public class BestPvETimer extends Util {
 
-	private static BukkitTask best;
+    private static BukkitTask best;
 
-	public BestPvETimer(UHC uhc) {
-		super(uhc);
-	}
+    public BestPvETimer(UHC uhc) {
+        super(uhc);
+    }
 
-	public void stopTimer() {
-		if (best != null)
-			best.cancel();
-		best = null;
-	}
+    public void stopTimer() {
+        if (best != null)
+            best.cancel();
+        best = null;
+    }
 
-	public boolean isRunning() {
-		return best != null;
-	}
+    public boolean isRunning() {
+        return best != null;
+    }
 
-	public void startBestTimer(final ArrayList<String> bestList) {
-		if (best != null) {
-			if (Bukkit.getScheduler().isCurrentlyRunning(best.getTaskId()))
-				return;
-			return;
-		}
+    public void startBestTimer(final ArrayList<String> bestList) {
+        if (best != null) {
+            if (Bukkit.getScheduler().isCurrentlyRunning(best.getTaskId()))
+                return;
+            return;
+        }
 
-		best = new BukkitRunnable() {
-			public void run() {
-				for (String pName : bestList) {
-					if (Bukkit.getPlayer(pName) == null)
-						continue;
-					if (Bukkit.getPlayer(pName).getHealth() == 20.0 || Bukkit.getPlayer(pName).getHealth() == 0.0)
-						continue;
-					Bukkit.getPlayer(pName).setHealth(Bukkit.getPlayer(pName).getHealth() + 1);
-				}
-			}
-		}.runTaskTimer(getUhc(), 0, (20 * 60) * 10);
-	}
+        best = new BukkitRunnable() {
+            public void run() {
+                for (String pName : bestList) {
+                    if (Bukkit.getPlayer(pName) == null)
+                        continue;
+                    if (Bukkit.getPlayer(pName).getHealth() == 20.0 || Bukkit.getPlayer(pName).getHealth() == 0.0)
+                        continue;
+                    Bukkit.getPlayer(pName).setHealth(Bukkit.getPlayer(pName).getHealth() + 1);
+                }
+            }
+        }.runTaskTimer(getUhc(), 0, (20 * 60) * 10);
+    }
 }

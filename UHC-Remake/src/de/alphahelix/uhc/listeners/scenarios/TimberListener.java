@@ -11,26 +11,26 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class TimberListener extends SimpleListener {
 
-	public TimberListener(UHC uhc) {
-		super(uhc);
-	}
+    public TimberListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onBlockBreak(BlockBreakEvent e) {
-		if(e.isCancelled()) return;
-		if(!scenarioCheck(Scenarios.TIMBER)) return;
-		
-		Block b = e.getBlock();
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        if (e.isCancelled()) return;
+        if (!scenarioCheck(Scenarios.TIMBER)) return;
 
-		if (b.getType() != Material.LOG && b.getType() != Material.LOG_2) {
-			return;
-		}
+        Block b = e.getBlock();
 
-		b = b.getRelative(BlockFace.UP);
+        if (b.getType() != Material.LOG && b.getType() != Material.LOG_2) {
+            return;
+        }
 
-		while (b.getType() == Material.LOG || b.getType() == Material.LOG_2) {
-			b.breakNaturally();
-			b = b.getRelative(BlockFace.UP);
-		}
-	}
+        b = b.getRelative(BlockFace.UP);
+
+        while (b.getType() == Material.LOG || b.getType() == Material.LOG_2) {
+            b.breakNaturally();
+            b = b.getRelative(BlockFace.UP);
+        }
+    }
 }

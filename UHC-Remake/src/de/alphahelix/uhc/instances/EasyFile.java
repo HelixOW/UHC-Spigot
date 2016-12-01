@@ -1,9 +1,9 @@
 package de.alphahelix.uhc.instances;
 
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import de.alphahelix.uhc.Registery;
 import de.alphahelix.uhc.UHC;
-import de.popokaka.alphalibary.file.SimpleFile;
-import de.popokaka.alphalibary.item.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,79 +12,79 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Logger;
 
-public abstract class EasyFile extends SimpleFile<UHC>{
-	
-	private Registery register;
+public abstract class EasyFile extends SimpleFile<UHC> {
 
-	public EasyFile(String name, UHC uhc) {
-		super("plugins/UHC", name, uhc);
-		setRegister(getPluginInstance().getRegister());
-		getRegister().getEasyFiles().add(this);
-	}
+    private Registery register;
 
-	public EasyFile(String path, String name, UHC uhc) {
-		super("plugins/UHC/" + path, name, uhc);
-		setRegister(getPluginInstance().getRegister());
-		getRegister().getEasyFiles().add(this);
-	}
+    public EasyFile(String name, UHC uhc) {
+        super("plugins/UHC", name, uhc);
+        setRegister(getPluginInstance().getRegister());
+        getRegister().getEasyFiles().add(this);
+    }
 
-	public abstract void addValues();
+    public EasyFile(String path, String name, UHC uhc) {
+        super("plugins/UHC/" + path, name, uhc);
+        setRegister(getPluginInstance().getRegister());
+        getRegister().getEasyFiles().add(this);
+    }
 
-	public void loadValues() {
-	}
+    public abstract void addValues();
 
-	public void register(EasyFile easy) {
-		easy.addValues();
-		easy.loadValues();
-	}
+    public void loadValues() {
+    }
 
-	public Material getMaterial(String path) {
-		return Material.getMaterial(getString(path).replace(" ", "_").toUpperCase());
-	}
+    public void register(EasyFile easy) {
+        easy.addValues();
+        easy.loadValues();
+    }
 
-	public SimpleFile<UHC> getFile() {
-		return this;
-	}
+    public Material getMaterial(String path) {
+        return Material.getMaterial(getString(path).replace(" ", "_").toUpperCase());
+    }
 
-	public ItemBuilder getItemBuilder(String path) {
-		String[] data = getString(path).split(";");
-		return new ItemBuilder(Material.getMaterial(data[0])).setAmount(Integer.parseInt(data[1]))
-				.setDamage(Short.parseShort(data[2]));
-	}
+    public SimpleFile<UHC> getFile() {
+        return this;
+    }
 
-	public void setItem(String path, ItemStack item) {
-		set(path, item.getType() + ";" + item.getAmount() + ";" + item.getDurability());
-		save();
-	}
+    public ItemBuilder getItemBuilder(String path) {
+        String[] data = getString(path).split(";");
+        return new ItemBuilder(Material.getMaterial(data[0])).setAmount(Integer.parseInt(data[1]))
+                .setDamage(Short.parseShort(data[2]));
+    }
 
-	public boolean configContains(String arg) {
-		boolean boo = false;
-		ArrayList<String> keys = new ArrayList<>();
-		keys.addAll(this.getKeys(false));
-		for (String key : keys)
-			if (key.equalsIgnoreCase(arg))
-				boo = true;
+    public void setItem(String path, ItemStack item) {
+        set(path, item.getType() + ";" + item.getAmount() + ";" + item.getDurability());
+        save();
+    }
 
-		return boo;
+    public boolean configContains(String arg) {
+        boolean boo = false;
+        ArrayList<String> keys = new ArrayList<>();
+        keys.addAll(this.getKeys(false));
+        for (String key : keys)
+            if (key.equalsIgnoreCase(arg))
+                boo = true;
 
-	}
+        return boo;
 
-	@SuppressWarnings("unchecked")
-	public <T> ArrayList<T> toList(T... args) {
-		ArrayList<T> toReturn = new ArrayList<>();
-		Collections.addAll(toReturn, args);
-		return toReturn;
-	}
+    }
 
-	public Registery getRegister() {
-		return register;
-	}
+    @SuppressWarnings("unchecked")
+    public <T> ArrayList<T> toList(T... args) {
+        ArrayList<T> toReturn = new ArrayList<>();
+        Collections.addAll(toReturn, args);
+        return toReturn;
+    }
 
-	private void setRegister(Registery register) {
-		this.register = register;
-	}
+    public Registery getRegister() {
+        return register;
+    }
 
-	public Logger getLog() {
-		return Bukkit.getLogger();
-	}
+    private void setRegister(Registery register) {
+        this.register = register;
+    }
+
+    public Logger getLog() {
+        return Bukkit.getLogger();
+    }
 }

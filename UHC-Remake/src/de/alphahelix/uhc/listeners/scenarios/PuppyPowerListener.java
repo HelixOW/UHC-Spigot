@@ -13,20 +13,20 @@ import org.bukkit.material.SpawnEgg;
 
 public class PuppyPowerListener extends SimpleListener {
 
-	public PuppyPowerListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if (!scenarioCheck(Scenarios.PUPPY_POWER))
-			return;
-		
-		ItemStack spawnEgg = new SpawnEgg(EntityType.WOLF).toItemStack(12);
+    public PuppyPowerListener(UHC uhc) {
+        super(uhc);
+    }
 
-		for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			p.getInventory().addItem(new ItemStack(Material.BONE , 64), new ItemStack(Material.ROTTEN_FLESH, 64), spawnEgg);
-		}
-	}
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.PUPPY_POWER))
+            return;
+
+        ItemStack spawnEgg = new SpawnEgg(EntityType.WOLF).toItemStack(12);
+
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            p.getInventory().addItem(new ItemStack(Material.BONE, 64), new ItemStack(Material.ROTTEN_FLESH, 64), spawnEgg);
+        }
+    }
 
 }

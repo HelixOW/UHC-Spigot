@@ -9,17 +9,17 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class BloodyDiamondsListener extends SimpleListener {
 
-	public BloodyDiamondsListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onMine(BlockBreakEvent e) {
-		if(e.isCancelled()) return;
-		if(!scenarioCheck(Scenarios.BLOODY_DIAMONDS)) return;
-		if(!e.getBlock().getType().equals(Material.DIAMOND_ORE)) return;
-		
-		e.getPlayer().damage(2.0);
-	}
-	
+    public BloodyDiamondsListener(UHC uhc) {
+        super(uhc);
+    }
+
+    @EventHandler
+    public void onMine(BlockBreakEvent e) {
+        if (e.isCancelled()) return;
+        if (!scenarioCheck(Scenarios.BLOODY_DIAMONDS)) return;
+        if (!e.getBlock().getType().equals(Material.DIAMOND_ORE)) return;
+
+        e.getPlayer().damage(2.0);
+    }
+
 }

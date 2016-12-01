@@ -10,17 +10,17 @@ import org.bukkit.inventory.ItemStack;
 
 public class SheepLoversListener extends SimpleListener {
 
-	public SheepLoversListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onShear(PlayerShearEntityEvent e) {
-		if(e.isCancelled()) return;
-		if(!scenarioCheck(Scenarios.SHEEP_LOVERS)) return;
-		
-		if(Math.random() < 0.05)
-			e.getPlayer().getWorld().dropItemNaturally(e.getEntity().getLocation(), new ItemStack(Material.GOLD_INGOT));
-	}
+    public SheepLoversListener(UHC uhc) {
+        super(uhc);
+    }
+
+    @EventHandler
+    public void onShear(PlayerShearEntityEvent e) {
+        if (e.isCancelled()) return;
+        if (!scenarioCheck(Scenarios.SHEEP_LOVERS)) return;
+
+        if (Math.random() < 0.05)
+            e.getPlayer().getWorld().dropItemNaturally(e.getEntity().getLocation(), new ItemStack(Material.GOLD_INGOT));
+    }
 
 }

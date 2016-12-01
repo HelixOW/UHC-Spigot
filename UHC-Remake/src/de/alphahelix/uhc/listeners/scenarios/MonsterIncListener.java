@@ -16,53 +16,53 @@ import java.util.Random;
 
 public class MonsterIncListener extends SimpleListener {
 
-	private ArrayList<Location> doors = new ArrayList<>();
-	private static Random r = new Random();
+    private static Random r = new Random();
+    private ArrayList<Location> doors = new ArrayList<>();
 
-	public MonsterIncListener(UHC uhc) {
-		super(uhc);
-	}
+    public MonsterIncListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onPlace(BlockPlaceEvent e) {
-		if (e.getBlockPlaced() == null)
-			return;
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.MONSTER_INC))
-			return;
-		
-		if (!(e.getBlockPlaced().getType().name().contains("DOOR")))
-			return;
-		
-		if (!doors.contains(e.getBlockPlaced().getLocation()))
-			doors.add(e.getBlockPlaced().getLocation());
-	}
+    @EventHandler
+    public void onPlace(BlockPlaceEvent e) {
+        if (e.getBlockPlaced() == null)
+            return;
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.MONSTER_INC))
+            return;
 
-	@EventHandler
-	public void onBreak(BlockBreakEvent e) {
-		if (!(e.getBlock().getState() instanceof Door))
-			return;
+        if (!(e.getBlockPlaced().getType().name().contains("DOOR")))
+            return;
 
-		if (doors.contains(e.getBlock().getLocation()))
-			doors.remove(e.getBlock().getLocation());
-	}
-	
-	@EventHandler
-	public void onMove(PlayerMoveEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.MONSTER_INC))
-			return;
-		if(doors.size() < 3) return;
+        if (!doors.contains(e.getBlockPlaced().getLocation()))
+            doors.add(e.getBlockPlaced().getLocation());
+    }
 
-		Player p = e.getPlayer();
-		Location door = doors.get(r.nextInt(doors.size()));
+    @EventHandler
+    public void onBreak(BlockBreakEvent e) {
+        if (!(e.getBlock().getState() instanceof Door))
+            return;
 
-		if (!(e.getTo().getBlockX() == door.getBlockX() && e.getTo().getBlockZ() == door.getBlockZ()
-				&& e.getTo().getBlockY() == door.getBlockY()))
-			return;
-		
-		p.teleport(door);
-	}
+        if (doors.contains(e.getBlock().getLocation()))
+            doors.remove(e.getBlock().getLocation());
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.MONSTER_INC))
+            return;
+        if (doors.size() < 3) return;
+
+        Player p = e.getPlayer();
+        Location door = doors.get(r.nextInt(doors.size()));
+
+        if (!(e.getTo().getBlockX() == door.getBlockX() && e.getTo().getBlockZ() == door.getBlockZ()
+                && e.getTo().getBlockY() == door.getBlockY()))
+            return;
+
+        p.teleport(door);
+    }
 }

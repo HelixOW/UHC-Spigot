@@ -10,29 +10,29 @@ import org.bukkit.event.inventory.CraftItemEvent;
 
 public class LightsOutListener extends SimpleListener {
 
-	public LightsOutListener(UHC uhc) {
-		super(uhc);
-	}
+    public LightsOutListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onCraft(CraftItemEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.LIGHTS_OUT))
-			return;
+    @EventHandler
+    public void onCraft(CraftItemEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.LIGHTS_OUT))
+            return;
 
-		if (e.getRecipe().getResult().getType().equals(Material.TORCH))
-			e.setCancelled(true);
-	}
+        if (e.getRecipe().getResult().getType().equals(Material.TORCH))
+            e.setCancelled(true);
+    }
 
-	@EventHandler
-	public void onPlace(BlockPlaceEvent e) {
-		if (e.isCancelled())
-			return;
-		if (!scenarioCheck(Scenarios.LIGHTS_OUT))
-			return;
+    @EventHandler
+    public void onPlace(BlockPlaceEvent e) {
+        if (e.isCancelled())
+            return;
+        if (!scenarioCheck(Scenarios.LIGHTS_OUT))
+            return;
 
-		if (e.getBlockPlaced().getType().equals(Material.TORCH))
-			e.setCancelled(true);
-	}
+        if (e.getBlockPlaced().getType().equals(Material.TORCH))
+            e.setCancelled(true);
+    }
 }

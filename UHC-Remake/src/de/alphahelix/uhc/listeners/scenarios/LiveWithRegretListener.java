@@ -11,18 +11,18 @@ import org.bukkit.potion.PotionEffectType;
 
 public class LiveWithRegretListener extends SimpleListener {
 
-	public LiveWithRegretListener(UHC uhc) {
-		super(uhc);
-	}
-	
-	@EventHandler
-	public void onEnd(LobbyEndEvent e) {
-		if(!scenarioCheck(Scenarios.LIVE_WITH_REGRET)) return;
-		
-		for(Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-			if(getRegister().getStatsUtil().getDeaths(p) > 0) {
-				p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 99999, 1));
-			}
-		}
-	}
+    public LiveWithRegretListener(UHC uhc) {
+        super(uhc);
+    }
+
+    @EventHandler
+    public void onEnd(LobbyEndEvent e) {
+        if (!scenarioCheck(Scenarios.LIVE_WITH_REGRET)) return;
+
+        for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
+            if (getRegister().getStatsUtil().getDeaths(p) > 0) {
+                p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 99999, 1));
+            }
+        }
+    }
 }

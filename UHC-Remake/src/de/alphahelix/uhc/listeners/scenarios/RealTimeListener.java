@@ -21,30 +21,30 @@ public class RealTimeListener extends SimpleListener {
         super(uhc);
     }
 
+    private static Integer getTime() {
+
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
+        String[] args = time.format(new Date()).split(":");
+        Integer hours = Integer.parseInt(args[0]) * 1000;
+        Integer minutes = Integer.parseInt(args[1]) * (1000 / 60);
+        return hours + minutes + 18000;
+
+
+    }
+
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if(!scenarioCheck(Scenarios.REAL_TIME)) return;
+        if (!scenarioCheck(Scenarios.REAL_TIME)) return;
         new BukkitRunnable() {
 
             @Override
             public void run() {
 
-                for(World w : Bukkit.getWorlds()) {
+                for (World w : Bukkit.getWorlds()) {
                     w.setTime(getTime());
                 }
 
             }
-        }.runTaskTimer(getUhc(), 0L, 20*6);
-    }
-
-    private static Integer getTime() {
-
-        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
-        String[] args = time.format(new Date()).split(":");
-        Integer hours = Integer.parseInt(args[0])*1000;
-        Integer minutes = Integer.parseInt(args[1])*(1000/60);
-        return hours+minutes+18000;
-
-
+        }.runTaskTimer(getUhc(), 0L, 20 * 6);
     }
 }

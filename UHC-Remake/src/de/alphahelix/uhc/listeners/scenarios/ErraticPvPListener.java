@@ -9,31 +9,31 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ErraticPvPListener extends SimpleListener {
 
-	public ErraticPvPListener(UHC uhc) {
-		super(uhc);
-	}
+    public ErraticPvPListener(UHC uhc) {
+        super(uhc);
+    }
 
-	@EventHandler
-	public void onStart(InGameStartEvent e) {
-		if (!scenarioCheck(Scenarios.ERRATIC_PVP))
-			return;
-		
-		int temp = 1;
-		
-		if(Math.random() < 0.5) {
-			temp = 3;
-		}
-		final int delay = temp;
+    @EventHandler
+    public void onStart(InGameStartEvent e) {
+        if (!scenarioCheck(Scenarios.ERRATIC_PVP))
+            return;
 
-		new BukkitRunnable() {
-			public void run() {
-				new BukkitRunnable() {
-					public void run() {
-						getRegister().getLocationsFile().getArena().getWorld().setPVP(!getRegister().getLocationsFile().getArena().getWorld().getPVP());
-					}
-				}.runTaskTimer(getUhc(), 0, (20 * 60) * delay);
-			}
-		}.runTaskLater(getUhc(), (20 * 60) * 25);
-	}
+        int temp = 1;
+
+        if (Math.random() < 0.5) {
+            temp = 3;
+        }
+        final int delay = temp;
+
+        new BukkitRunnable() {
+            public void run() {
+                new BukkitRunnable() {
+                    public void run() {
+                        getRegister().getLocationsFile().getArena().getWorld().setPVP(!getRegister().getLocationsFile().getArena().getWorld().getPVP());
+                    }
+                }.runTaskTimer(getUhc(), 0, (20 * 60) * delay);
+            }
+        }.runTaskLater(getUhc(), (20 * 60) * 25);
+    }
 
 }

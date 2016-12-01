@@ -212,7 +212,7 @@ public enum Sounds {
 
     public Sound bukkitSound() {
         if (resolvedSound != null) return resolvedSound;
-        
+
         try {
             return resolvedSound = Sound.valueOf(post19sound);
         } catch (IllegalArgumentException e) {

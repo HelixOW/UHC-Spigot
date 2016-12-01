@@ -19,17 +19,17 @@ public class HorselessListener extends SimpleListener {
 
     @EventHandler
     public void onSpawn(CreatureSpawnEvent e) {
-        if(e.isCancelled()) return;
-        if(!scenarioCheck(Scenarios.HORSELESS)) return;
+        if (e.isCancelled()) return;
+        if (!scenarioCheck(Scenarios.HORSELESS)) return;
 
-        if(e.getEntityType() == EntityType.HORSE) e.setCancelled(true);
+        if (e.getEntityType() == EntityType.HORSE) e.setCancelled(true);
     }
 
     @EventHandler
     public void onSpawn(EntitySpawnEvent e) {
-        if(e.isCancelled()) return;
-        if(!scenarioCheck(Scenarios.HORSELESS)) return;
+        if (e.isCancelled()) return;
+        if (!scenarioCheck(Scenarios.HORSELESS)) return;
 
-        if(e.getEntityType() == EntityType.HORSE) e.setCancelled(true);
+        if (e.getEntityType() == EntityType.HORSE) e.setCancelled(true);
     }
 }

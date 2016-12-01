@@ -6,63 +6,63 @@ import org.bukkit.inventory.ItemStack;
 
 public class Kit {
 
-	private int price;
-	private int guiSlot;
-	private String name;
-	private ItemStack guiBlock;
-	private Inventory inventory;
-	
-	public Kit(String name, int price, Inventory inventory, int guiSlot, ItemStack guiBlock) {
-		setName(name);
-		setPrice(price);
-		setGuiSlot(guiSlot);
-		setGuiBlock(guiBlock);
-		setInventory(inventory);
-	}
+    private int price;
+    private int guiSlot;
+    private String name;
+    private ItemStack guiBlock;
+    private Inventory inventory;
 
-	public void registerKit() {
-		UHC.getInstance().getRegister().getKitsFile().addKit(name, inventory, guiBlock.getType().name(),
-				guiSlot,
-				price);
-	}
-	
-	public int getPrice() {
-		return price;
-	}
+    public Kit(String name, int price, Inventory inventory, int guiSlot, ItemStack guiBlock) {
+        setName(name);
+        setPrice(price);
+        setGuiSlot(guiSlot);
+        setGuiBlock(guiBlock);
+        setInventory(inventory);
+    }
 
-	private void setPrice(int price) {
-		this.price = price;
-	}
+    public void registerKit() {
+        UHC.getInstance().getRegister().getKitsFile().addKit(name, inventory, guiBlock.getType().name(),
+                guiSlot,
+                price);
+    }
 
-	public int getGuiSlot() {
-		return guiSlot;
-	}
+    public int getPrice() {
+        return price;
+    }
 
-	private void setGuiSlot(int guiSlot) {
-		this.guiSlot = guiSlot;
-	}
+    private void setPrice(int price) {
+        this.price = price;
+    }
 
-	public String getName() {
-		return name.replace("&", "§");
-	}
+    public int getGuiSlot() {
+        return guiSlot;
+    }
 
-	private void setName(String name) {
-		this.name = name;
-	}
+    private void setGuiSlot(int guiSlot) {
+        this.guiSlot = guiSlot;
+    }
 
-	public ItemStack getGuiBlock() {
-		return guiBlock;
-	}
+    public String getName() {
+        return name.replace("&", "§");
+    }
 
-	private void setGuiBlock(ItemStack guiBlock) {
-		this.guiBlock = guiBlock;
-	}
+    private void setName(String name) {
+        this.name = name;
+    }
 
-	public Inventory getInventory() {
-		return inventory;
-	}
+    public ItemStack getGuiBlock() {
+        return guiBlock;
+    }
 
-	private void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
+    private void setGuiBlock(ItemStack guiBlock) {
+        this.guiBlock = guiBlock;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    private void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
 }
