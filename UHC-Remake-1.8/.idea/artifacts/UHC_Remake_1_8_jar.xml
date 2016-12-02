@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="UHC-Remake-1.8:jar">
-    <output-path>H:/servers/1.8-server/plugins</output-path>
-    <root id="archive" name="UHC-Remake-1.8.jar">
-      <element id="module-output" name="UHC-Remake-1.8" />
-    </root>
-  </artifact>
-</component>
