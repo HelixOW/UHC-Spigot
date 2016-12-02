@@ -21,7 +21,7 @@ You have an idea? Send it to me via SpigotMC @AlphaHelix.
 - 99 Scenarios, where if you enabled them 1 is played every round (see here [https://goo.gl/EzJip9] to have a list of them).
 - Scenario Voting
 - All messages are configureable.
-- Kills, deaths, coins, points, rank stats system.
+- Kills, deaths, coins, points, rank, games, wins, kill-death-rate stats system.
 - NPC (Non player character) who shows your stats above his head.
 - 2 Types of Backend (MySQL or File).
 - Custom MOTDs for different states of the game.
