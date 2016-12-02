@@ -130,67 +130,104 @@ public class NPCUtil extends Util {
         try {
             Class<?>[] param = {double.class, double.class, double.class, float.class, float.class};
             Location loc = getRegister().getLocationsFile().getStatsNPCLocation();
-            Object k = ReflectionUtil.getNmsClass("EntityArmorStand")
+            Object games = ReflectionUtil.getNmsClass("EntityArmorStand")
                     .getConstructor(ReflectionUtil.getNmsClass("World"))
                     .newInstance(ReflectionUtil.getWorldServer(p.getWorld()));
-            Object d = ReflectionUtil.getNmsClass("EntityArmorStand")
+            Object kills = ReflectionUtil.getNmsClass("EntityArmorStand")
                     .getConstructor(ReflectionUtil.getNmsClass("World"))
                     .newInstance(ReflectionUtil.getWorldServer(p.getWorld()));
-            Object c = ReflectionUtil.getNmsClass("EntityArmorStand")
+            Object deaths = ReflectionUtil.getNmsClass("EntityArmorStand")
                     .getConstructor(ReflectionUtil.getNmsClass("World"))
                     .newInstance(ReflectionUtil.getWorldServer(p.getWorld()));
-            Object po = ReflectionUtil.getNmsClass("EntityArmorStand")
+            Object killrate = ReflectionUtil.getNmsClass("EntityArmorStand")
                     .getConstructor(ReflectionUtil.getNmsClass("World"))
                     .newInstance(ReflectionUtil.getWorldServer(p.getWorld()));
-            Object r = ReflectionUtil.getNmsClass("EntityArmorStand")
+            Object wins = ReflectionUtil.getNmsClass("EntityArmorStand")
+                    .getConstructor(ReflectionUtil.getNmsClass("World"))
+                    .newInstance(ReflectionUtil.getWorldServer(p.getWorld()));
+            Object coins = ReflectionUtil.getNmsClass("EntityArmorStand")
+                    .getConstructor(ReflectionUtil.getNmsClass("World"))
+                    .newInstance(ReflectionUtil.getWorldServer(p.getWorld()));
+            Object points = ReflectionUtil.getNmsClass("EntityArmorStand")
+                    .getConstructor(ReflectionUtil.getNmsClass("World"))
+                    .newInstance(ReflectionUtil.getWorldServer(p.getWorld()));
+            Object rank = ReflectionUtil.getNmsClass("EntityArmorStand")
                     .getConstructor(ReflectionUtil.getNmsClass("World"))
                     .newInstance(ReflectionUtil.getWorldServer(p.getWorld()));
 
-            k.getClass().getMethod("setLocation", param).invoke(k, loc.getX(), loc.getY() + 0.9, loc.getZ(), 0F, 0F);
-            k.getClass().getMethod("setInvisible", boolean.class).invoke(k, true);
-            k.getClass().getMethod("setCustomName", String.class).invoke(k,
+            games.getClass().getMethod("setLocation", param).invoke(games, loc.getX(), loc.getY() + 1.5, loc.getZ(), 0F, 0F);
+            games.getClass().getMethod("setInvisible", boolean.class).invoke(games, true);
+            games.getClass().getMethod("setCustomName", String.class).invoke(games,
+                    getRegister().getStatsFile().getColorString("Games").replace("[games]",
+                            Long.toString(getRegister().getStatsUtil().getGames(p))));
+            games.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(games, true);
+
+            kills.getClass().getMethod("setLocation", param).invoke(kills, loc.getX(), loc.getY() + 1.3, loc.getZ(), 0F, 0F);
+            kills.getClass().getMethod("setInvisible", boolean.class).invoke(kills, true);
+            kills.getClass().getMethod("setCustomName", String.class).invoke(kills,
                     getRegister().getStatsFile().getColorString("Kills").replace("[kills]",
                             Long.toString(getRegister().getStatsUtil().getKills(p))));
-            k.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(k, true);
+            kills.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(kills, true);
 
-            d.getClass().getMethod("setLocation", param).invoke(d, loc.getX(), loc.getY() + 0.7, loc.getZ(), 0F, 0F);
-            d.getClass().getMethod("setInvisible", boolean.class).invoke(d, true);
-            d.getClass().getMethod("setCustomName", String.class).invoke(d,
+            deaths.getClass().getMethod("setLocation", param).invoke(deaths, loc.getX(), loc.getY() + 1.1, loc.getZ(), 0F, 0F);
+            deaths.getClass().getMethod("setInvisible", boolean.class).invoke(deaths, true);
+            deaths.getClass().getMethod("setCustomName", String.class).invoke(deaths,
                     getRegister().getStatsFile().getColorString("Deaths").replace("[deaths]",
                             Long.toString(getRegister().getStatsUtil().getDeaths(p))));
-            c.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(d, true);
+            deaths.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(kills, true);
 
-            c.getClass().getMethod("setLocation", param).invoke(c, loc.getX(), loc.getY() + 0.5, loc.getZ(), 0F, 0F);
-            c.getClass().getMethod("setInvisible", boolean.class).invoke(c, true);
-            c.getClass().getMethod("setCustomName", String.class).invoke(c,
+            killrate.getClass().getMethod("setLocation", param).invoke(killrate, loc.getX(), loc.getY() + 0.9, loc.getZ(), 0F, 0F);
+            killrate.getClass().getMethod("setInvisible", boolean.class).invoke(killrate, true);
+            killrate.getClass().getMethod("setCustomName", String.class).invoke(killrate,
+                    getRegister().getStatsFile().getColorString("KillDeathRate").replace("[kdr]",
+                            Double.toString(getRegister().getStatsUtil().getKillDeathRate(p))));
+            killrate.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(killrate, true);
+
+            wins.getClass().getMethod("setLocation", param).invoke(wins, loc.getX(), loc.getY() + 0.7, loc.getZ(), 0F, 0F);
+            wins.getClass().getMethod("setInvisible", boolean.class).invoke(wins, true);
+            wins.getClass().getMethod("setCustomName", String.class).invoke(wins,
+                    getRegister().getStatsFile().getColorString("Wins").replace("[wins]",
+                            Long.toString(getRegister().getStatsUtil().getWins(p))));
+            wins.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(wins, true);
+
+            coins.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(deaths, true);
+            coins.getClass().getMethod("setLocation", param).invoke(coins, loc.getX(), loc.getY() + 0.5, loc.getZ(), 0F, 0F);
+            coins.getClass().getMethod("setInvisible", boolean.class).invoke(coins, true);
+            coins.getClass().getMethod("setCustomName", String.class).invoke(coins,
                     getRegister().getStatsFile().getColorString("Coins").replace("[coins]",
                             Long.toString(getRegister().getStatsUtil().getCoins(p))));
-            c.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(c, true);
+            coins.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(coins, true);
 
-            po.getClass().getMethod("setLocation", param).invoke(po, loc.getX(), loc.getY() + 0.3, loc.getZ(), 0F, 0F);
-            po.getClass().getMethod("setInvisible", boolean.class).invoke(po, true);
-            po.getClass().getMethod("setCustomName", String.class).invoke(po,
+            points.getClass().getMethod("setLocation", param).invoke(points, loc.getX(), loc.getY() + 0.3, loc.getZ(), 0F, 0F);
+            points.getClass().getMethod("setInvisible", boolean.class).invoke(points, true);
+            points.getClass().getMethod("setCustomName", String.class).invoke(points,
                     getRegister().getStatsFile().getColorString("Points").replace("[points]",
                             Long.toString(getRegister().getStatsUtil().getPoints(p))));
-            po.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(po, true);
+            points.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(points, true);
 
-            r.getClass().getMethod("setLocation", param).invoke(r, loc.getX(), loc.getY() + 0.1, loc.getZ(), 0F, 0F);
-            r.getClass().getMethod("setInvisible", boolean.class).invoke(r, true);
-            r.getClass().getMethod("setCustomName", String.class).invoke(r,
+            rank.getClass().getMethod("setLocation", param).invoke(rank, loc.getX(), loc.getY() + 0.1, loc.getZ(), 0F, 0F);
+            rank.getClass().getMethod("setInvisible", boolean.class).invoke(rank, true);
+            rank.getClass().getMethod("setCustomName", String.class).invoke(rank,
                     getRegister().getStatsFile().getColorString("Rank").replace("[rank]",
                             Long.toString(getRegister().getStatsUtil().getRank(p))));
-            r.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(r, true);
+            rank.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(rank, true);
 
             ReflectionUtil.sendPacket(p, ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
-                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(k));
+                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(games));
             ReflectionUtil.sendPacket(p, ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
-                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(d));
+                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(kills));
             ReflectionUtil.sendPacket(p, ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
-                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(c));
+                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(deaths));
             ReflectionUtil.sendPacket(p, ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
-                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(po));
+                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(killrate));
             ReflectionUtil.sendPacket(p, ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
-                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(r));
+                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(wins));
+            ReflectionUtil.sendPacket(p, ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
+                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(coins));
+            ReflectionUtil.sendPacket(p, ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
+                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(points));
+            ReflectionUtil.sendPacket(p, ReflectionUtil.getNmsClass("PacketPlayOutSpawnEntityLiving")
+                    .getConstructor(ReflectionUtil.getNmsClass("EntityLiving")).newInstance(rank));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -22,6 +22,7 @@ public class StatsUtil extends Util {
 
     private static HashMap<String, UHCRank> uhcRankHashMap = new HashMap<>();
 
+    private long g;
     private long k;
     private long d;
     private long w;
@@ -32,6 +33,7 @@ public class StatsUtil extends Util {
     private long ec;
     private long lc;
 
+    private BukkitTask pushGames;
     private BukkitTask pushKills;
     private BukkitTask pushDeaths;
     private BukkitTask pushWins;
@@ -225,9 +227,21 @@ public class StatsUtil extends Util {
             PlayerInfo playerInfo = getRegister().getPlayerUtil().getPlayerInfo(p);
             getRegister().getPlayerUtil().removePlayerInfo(p);
 
+            g = getGames(p);
             k = getKills(p);
             d = getDeaths(p);
             w = getWins(p);
+
+            pushGames = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if(g < playerInfo.getGames()) {
+                        addGame(p);
+                        g++;
+                    } else
+                        pushGames.cancel();
+                }
+            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
 
             pushKills = new BukkitRunnable() {
                 @Override
@@ -386,7 +400,51 @@ public class StatsUtil extends Util {
         }
     }
 
-    // Deaths
+    public long getGames(final OfflinePlayer p) {
+        if (getRegister().getPlayerUtil().isInInfoMap(p)) {
+            return getRegister().getPlayerUtil().getPlayerInfo(p).getGames();
+        }
+        if (getUhc().isMySQLMode()) {
+            if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    "Games") == null)
+                return getRegister().getPlayerFile()
+                        .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".games");
+            String kills = MySQLManager
+                    .getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Games").toString();
+            return Long.parseLong(kills);
+        }
+        return getRegister().getPlayerFile()
+                .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".games");
+    }
+
+    public void addGame(final OfflinePlayer p) {
+        if (getRegister().getPlayerUtil().isInInfoMap(p)) {
+            getRegister().getPlayerUtil().getPlayerInfo(p).setGames(getGames(p) + 1);
+            return;
+        }
+        new BukkitRunnable() {
+            public void run() {
+                if (getUhc().isMySQLMode()) {
+                    if (MySQLManager.getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                            "Games") == null) {
+                        long games = getRegister().getPlayerFile()
+                                .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".games");
+                        getRegister().getPlayerFile()
+                                .set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".games", games + 1);
+                        getRegister().getPlayerFile().save();
+                    }
+                    MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Games",
+                            Long.toString(getGames(p) + 1));
+                    return;
+                }
+                long games = getRegister().getPlayerFile()
+                        .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".games");
+                getRegister().getPlayerFile().set("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".games",
+                        games + 1);
+                getRegister().getPlayerFile().save();
+            }
+        }.runTaskLaterAsynchronously(getUhc(), 10);
+    }
 
     public long getKills(final OfflinePlayer p) {
         if (getRegister().getPlayerUtil().isInInfoMap(p)) {
@@ -497,6 +555,11 @@ public class StatsUtil extends Util {
         }
         return getRegister().getPlayerFile()
                 .getLong("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".coins");
+    }
+
+    public double getKillDeathRate(OfflinePlayer p) {
+        if(getDeaths(p) == 0) return getKills(p);
+        return round((getKills(p) / getDeaths(p)), 2);
     }
 
     // Kits
@@ -1127,13 +1190,15 @@ public class StatsUtil extends Util {
                 msg = msg.replace("[rank]", Long.toString(getRank(p)));
                 msg = msg.replace("[kills]", Long.toString(getKills(p)));
                 msg = msg.replace("[deaths]", Long.toString(getDeaths(p)));
+                msg = msg.replace("[kdr]", Double.toString(getKillDeathRate(p)));
                 msg = msg.replace("[coins]", Long.toString(getCoins(p)));
                 msg = msg.replace("[points]", Long.toString(getPoints(p)));
                 msg = msg.replace("[wins]", Long.toString(getWins(p)));
+                msg = msg.replace("[games]", Long.toString(getGames(p)));
                 msg = msg.replace("[kits]", getKitsAsString(p));
                 msg = msg.replace("[achievements]", getAchievementsAsString(p));
 
-                toSend.sendMessage("§8---===XXX===---\n" + msg + "§8---===XXX===---");
+                toSend.sendMessage("§8---===XXX===---\n" + msg + "\n§8---===XXX===---");
             }
         }.runTaskLaterAsynchronously(getUhc(), 10);
     }

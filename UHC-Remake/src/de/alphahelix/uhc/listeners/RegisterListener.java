@@ -22,7 +22,7 @@ public class RegisterListener extends SimpleListener {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        PlayerInfo playerInfo = new PlayerInfo(p, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", "");
+        PlayerInfo playerInfo = new PlayerInfo(p, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", "");
         StatsUtil su = getRegister().getStatsUtil();
 
         if (getUhc().isMySQLMode()) {
@@ -30,6 +30,7 @@ public class RegisterListener extends SimpleListener {
                 MySQLManager.exUpdateQry(UUIDFetcher.getUUID(p.getName()).toString(), "Player", p.getName());
                 playerInfo = new PlayerInfo(
                         p,
+                        su.getGames(p),
                         su.getKills(p),
                         su.getDeaths(p),
                         su.getCoins(p),
@@ -47,6 +48,7 @@ public class RegisterListener extends SimpleListener {
                 MySQLManager.exInsertQry(
                         p.getName(),                                     //Playername
                         UUIDFetcher.getUUID(p.getName()).toString(),     //UUID
+                        "0",                                             //Games
                         "0",                                             //Kills
                         "0",                                             //Deaths
                         "0",                                             //Coins

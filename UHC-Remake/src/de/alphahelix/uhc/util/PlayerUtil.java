@@ -66,7 +66,7 @@ public class PlayerUtil extends Util {
     public PlayerInfo getPlayerInfo(OfflinePlayer p) {
         if (infos.containsKey(p.getName())) return infos.get(p.getName());
         else {
-            PlayerInfo playerInfo = new PlayerInfo(p, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", "");
+            PlayerInfo playerInfo = new PlayerInfo(p, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", "");
             setPlayerInfo(p, playerInfo);
             return playerInfo;
         }

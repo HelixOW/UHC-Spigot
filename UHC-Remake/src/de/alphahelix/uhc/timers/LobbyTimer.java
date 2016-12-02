@@ -214,6 +214,8 @@ public class LobbyTimer extends Util {
 
                                             getRegister().getPlayerUtil().addSurvivor(p);
 
+                                            getRegister().getStatsUtil().addGame(p);
+
                                             getRegister().getTablistUtil().sendTablist();
                                             getRegister().getScoreboardUtil().setIngameScoreboard(p);
                                             for (String o : getRegister().getPlayerUtil().getAll()) {

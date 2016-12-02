@@ -23,6 +23,7 @@ public class PlayerFile extends EasyFile {
         try {
             String uuid = UUIDFetcher.getUUID(p.getName()).toString();
             setDefault("Players." + uuid + ".name", p.getName());
+            setDefault("Players." + uuid + ".games", 0);
             setDefault("Players." + uuid + ".kills", 0);
             setDefault("Players." + uuid + ".deaths", 0);
             setDefault("Players." + uuid + ".coins", 0);

@@ -71,6 +71,7 @@ public class UHC extends AlphaPlugin implements PluginMessageListener {
                 MySQLManager.exCreateTableQry(
                         MySQLManager.createColumn("Player", 50),
                         MySQLManager.createColumn("UUID", 75),
+                        MySQLManager.createColumn("Games", 500),
                         MySQLManager.createColumn("Kills", 500),
                         MySQLManager.createColumn("Deaths", 500),
                         MySQLManager.createColumn("Coins", 500),

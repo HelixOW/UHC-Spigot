@@ -12,13 +12,14 @@ public class PlayerInfo {
 
     private String name;
     private UUID uuid;
-    private long kills, deaths, coins, points, wins;
+    private long games, kills, deaths, coins, points, wins;
     private long normalC, uncommonC, rareC, superrareC, epicC, legendaryC;
     private String kits, achievements;
 
-    public PlayerInfo(OfflinePlayer p, long kills, long deaths, long coins, long points, long wins, long normalC, long uncommonC, long rareC, long superrareC, long epicC, long legendaryC, String kits, String achievements) {
+    public PlayerInfo(OfflinePlayer p, long games, long kills, long deaths, long coins, long points, long wins, long normalC, long uncommonC, long rareC, long superrareC, long epicC, long legendaryC, String kits, String achievements) {
         this.name = p.getName();
         this.uuid = UUIDFetcher.getUUID(p.getName());
+        this.games = games;
         this.kills = kills;
         this.deaths = deaths;
         this.coins = coins;
@@ -48,6 +49,14 @@ public class PlayerInfo {
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public long getGames() {
+        return games;
+    }
+
+    public void setGames(long games) {
+        this.games = games;
     }
 
     public long getKills() {

@@ -1,5 +1,6 @@
 package de.alphahelix.alphalibary.mysql;
 
+import de.alphahelix.alphalibary.UUID.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import org.bukkit.entity.Player;
 
@@ -14,7 +15,7 @@ public class MySQLManager {
     private static final ArrayList<String> tablenames = new ArrayList<>();
 
     public static boolean containsPlayer(Player p) {
-        return getObjectConditionResult("UUID", de.alphahelix.alphalibary.UUID.UUIDFetcher.getUUID(p.getName()).toString(), "Kills") != null;
+        return getObjectConditionResult("UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kills") != null;
     }
 
     public static void exCreateTableQry(String... columns) {
@@ -38,10 +39,10 @@ public class MySQLManager {
         if (!MySQLManager.tableinfo.containsKey(tableinfo))
             MySQLManager.tableinfo.put("UHC", tableinfo);
 
-        if (de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected()) {
+        if (MySQLAPI.isConnected()) {
             try {
                 String qry = "CREATE TABLE IF NOT EXISTS " + "UHC" + " (" + tableinfo + ")";
-                PreparedStatement prepstate = de.alphahelix.alphalibary.mysql.MySQLAPI.getMySQLConnection().prepareStatement(qry);
+                PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
                 prepstate.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -51,11 +52,11 @@ public class MySQLManager {
 
     public static int getCountNumber(String database) {
         if (UHC.getInstance().isMySQLMode()) {
-            if (!de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected())
+            if (!MySQLAPI.isConnected())
                 return 0;
             try {
                 String qry = "SELECT COUNT FROM " + database;
-                PreparedStatement prepstate = de.alphahelix.alphalibary.mysql.MySQLAPI.getMySQLConnection().prepareStatement(qry);
+                PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
                 ResultSet rs = prepstate.executeQuery();
 
                 int in = 0;
@@ -75,10 +76,10 @@ public class MySQLManager {
     }
 
     public static void exRemoveQry(String table, String condition, String value) {
-        if (de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected()) {
+        if (MySQLAPI.isConnected()) {
             try {
                 String qry = "DELETE FROM " + table + " WHERE(" + condition + "='" + value + "')";
-                PreparedStatement prepstate = de.alphahelix.alphalibary.mysql.MySQLAPI.getMySQLConnection().prepareStatement(qry);
+                PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
                 prepstate.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -96,10 +97,10 @@ public class MySQLManager {
             builder.append(", '").append(str).append("'");
         }
 
-        if (de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected()) {
+        if (MySQLAPI.isConnected()) {
             try {
                 String qry = "INSERT INTO " + "UHC" + " VALUES (" + builder.toString().replaceFirst(", ", "") + ")";
-                PreparedStatement prepstate = de.alphahelix.alphalibary.mysql.MySQLAPI.getMySQLConnection().prepareStatement(qry);
+                PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
                 prepstate.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -108,10 +109,10 @@ public class MySQLManager {
     }
 
     public static ResultSet exOrderQry(String sel, String orderColumn) {
-        if (de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected()) {
+        if (MySQLAPI.isConnected()) {
             try {
                 String qry = "SELECT " + sel + " FROM " + "UHC" + " ORDER BY " + orderColumn + " asc";
-                PreparedStatement prepstate = de.alphahelix.alphalibary.mysql.MySQLAPI.getMySQLConnection().prepareStatement(qry);
+                PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
                 return prepstate.getResultSet();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -121,10 +122,10 @@ public class MySQLManager {
     }
 
     public static void exUpdateQry(String conditionvalue, String column, String updatevalue) {
-        if (de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected()) {
+        if (MySQLAPI.isConnected()) {
             try {
                 String qry = "UPDATE " + "UHC" + " SET " + column + "=? WHERE " + "UUID" + "=?";
-                PreparedStatement prepstate = de.alphahelix.alphalibary.mysql.MySQLAPI.getMySQLConnection().prepareStatement(qry);
+                PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
                 prepstate.setString(1, updatevalue);
                 prepstate.setString(2, conditionvalue);
                 prepstate.executeUpdate();
@@ -136,7 +137,7 @@ public class MySQLManager {
 
     // Name VARCHAR(234)
     public static String createColumn(String name, int size) {
-        return name + " " + de.alphahelix.alphalibary.mysql.MySQLDataType.VARCHAR.toString() + "(" + Integer.toString(size) + ")";
+        return name + " " + MySQLDataType.VARCHAR.toString() + "(" + Integer.toString(size) + ")";
     }
 
     private static int getColumnAmount() {
@@ -160,10 +161,10 @@ public class MySQLManager {
     }
 
     public static Object getObjectConditionResult(String condition, String value, String column) {
-        if (de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected()) {
+        if (MySQLAPI.isConnected()) {
             try {
                 String qry = "SELECT * FROM " + "UHC" + " WHERE (" + condition + "=?)";
-                PreparedStatement prepstate = de.alphahelix.alphalibary.mysql.MySQLAPI.getMySQLConnection().prepareStatement(qry);
+                PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
                 prepstate.setString(1, value);
                 ResultSet rs = prepstate.executeQuery();
                 if (rs == null) {
@@ -180,10 +181,10 @@ public class MySQLManager {
     }
 
     public static Object getObjectResult(String table, String column) {
-        if (de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected()) {
+        if (MySQLAPI.isConnected()) {
             try {
                 String qry = "SELECT * FROM " + table;
-                PreparedStatement prepstate = de.alphahelix.alphalibary.mysql.MySQLAPI.getMySQLConnection().prepareStatement(qry);
+                PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
                 ResultSet rs = prepstate.executeQuery();
                 while (rs.next()) {
                     return rs.getObject(column);
@@ -258,7 +259,7 @@ public class MySQLManager {
     }
 
     public static boolean existInColumn(String table, String columnname, String match) {
-        if (de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected()) {
+        if (MySQLAPI.isConnected()) {
             if (tableinfo.get(table) == null) {
                 return false;
             }
@@ -298,9 +299,9 @@ public class MySQLManager {
 
     private static ResultSet getResult(String qry) {
 
-        if (de.alphahelix.alphalibary.mysql.MySQLAPI.isConnected()) {
+        if (MySQLAPI.isConnected()) {
             try {
-                return de.alphahelix.alphalibary.mysql.MySQLAPI.getMySQLConnection().createStatement().executeQuery(qry);
+                return MySQLAPI.getMySQLConnection().createStatement().executeQuery(qry);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

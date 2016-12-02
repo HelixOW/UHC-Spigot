@@ -15,8 +15,10 @@ public class StatsFile extends EasyFile {
         setDefault("No Player", "&7The given Player doesn't exists.");
         setDefault("Name", "&6Name &7: &6[player]");
         setDefault("Rank", "&6Rank &7: &6[rank]");
+        setDefault("Games", "&6Games &7: &6[games]");
         setDefault("Kills", "&6Kills &7: &6[kills]");
         setDefault("Deaths", "&6Deaths &7: &6[deaths]");
+        setDefault("KillDeathRate", "&6KillDeathRate &7: &6[kdr]");
         setDefault("Coins", "&6Coins &7: &6[coins]");
         setDefault("Points", "&6Points &7: &6[points]");
         setDefault("Wins", "&6Wins &7: &6[wins]");
@@ -28,8 +30,10 @@ public class StatsFile extends EasyFile {
     public String getMessage() {
         return getColorString("Name") + "\n"
                 + getColorString("Rank") + "\n"
+                + getColorString("Games") + "\n"
                 + getColorString("Kills") + "\n"
                 + getColorString("Deaths") + "\n"
+                + getColorString("KillDeathRate") + "\n"
                 + getColorString("Coins") + "\n"
                 + getColorString("Points") + "\n"
                 + getColorString("Wins") + "\n"
