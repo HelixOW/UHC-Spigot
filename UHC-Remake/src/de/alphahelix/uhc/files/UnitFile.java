@@ -15,5 +15,4 @@ public class UnitFile extends EasyFile {
         setDefault("Minutes", "min");
         setDefault("Hours", "h");
     }
-
 }

@@ -1,7 +1,8 @@
 package de.alphahelix.uhc;
 
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,11 +45,12 @@ public enum UHCAchievements {
             description.add(2, " ");
         }
 
-        ItemMeta meta = icon.getItemMeta();
-        meta.setDisplayName(name);
-        meta.setLore(description);
-        icon.setItemMeta(meta);
-        return icon;
+        ItemBuilder ib = new ItemBuilder(icon.getType());
+
+        ib.setName(name).setLore(description.toArray(new String[description.size()]));
+        ib.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+
+        return ib.build();
     }
 
     public void setIcon(ItemStack icon) {

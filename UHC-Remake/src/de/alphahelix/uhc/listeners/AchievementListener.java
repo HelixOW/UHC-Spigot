@@ -19,7 +19,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * Created by AlphaHelixDev.
@@ -41,11 +40,7 @@ public class AchievementListener extends SimpleListener {
 
         final Player p = e.getPlayer();
 
-        new BukkitRunnable() {
-            public void run() {
-                getRegister().getAchievementInventory().openInventory(p);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 2);
+        getRegister().getAchievementInventory().openInventory(p);
     }
 
     @EventHandler

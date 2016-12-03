@@ -37,7 +37,6 @@ public class KitChooseListener extends SimpleListener {
                         + getRegister().getMainOptionsFile().getColorString("Warnings.Scenario Mode"));
                 return;
             }
-            getRegister().getKitInventory().fillInventory();
             getRegister().getKitInventory().openInventory(e.getPlayer());
         }
     }

@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 
 public class ConfirmInventory extends Util {
 
@@ -30,11 +31,11 @@ public class ConfirmInventory extends Util {
 
         getInv().setItem(11,
                 new ItemBuilder(Material.getMaterial(acceptMaterial[0])).setDamage(Short.parseShort(acceptMaterial[1]))
-                        .setName(getRegister().getConfirmFile().getColorString("Accept.name")).build());
+                        .setName(getRegister().getConfirmFile().getColorString("Accept.name")).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build());
 
         getInv().setItem(15,
                 new ItemBuilder(Material.getMaterial(denyMaterial[0])).setDamage(Short.parseShort(denyMaterial[1]))
-                        .setName(getRegister().getConfirmFile().getColorString("Denied.name")).build());
+                        .setName(getRegister().getConfirmFile().getColorString("Denied.name")).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build());
     }
 
     public void openInventory(Player p) {

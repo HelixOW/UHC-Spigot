@@ -118,15 +118,14 @@ public class UHCAdminCommands extends SimpleCommand<UHC, Registery> {
                     }
                 }
             }
-        } else if (args.length == 5) {
+        } else if (args.length == 4) {
             if (args[0].equalsIgnoreCase("createKit")) {
-                Kit kit = new Kit(args[1], Integer.parseInt(args[4]), p.getInventory(), Integer.parseInt(args[3]),
+                Kit kit = new Kit(args[1], Integer.parseInt(args[3]), p.getInventory(), 0,
                         new ItemStack(Material.getMaterial(args[2].toUpperCase())));
 
                 p.sendMessage(getPlugin().getPrefix() + "§7You have set the kit §a" + args[1] + " §7with GUI-block §a"
-                        + args[2] + "§7 on GUI-slot §a" + args[3] + "§7 and the price of §a" + args[4]);
+                        + args[2] + "§7 and the price of §a" + args[3]);
                 kit.registerKit();
-                getPlugin().getRegister().getKitInventory().fillInventory();
                 return true;
             }
         } else {
