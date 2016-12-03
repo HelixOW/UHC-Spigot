@@ -60,7 +60,7 @@ public abstract class EasyFile extends SimpleFile<UHC> {
     public boolean configContains(String arg) {
         boolean boo = false;
         ArrayList<String> keys = new ArrayList<>();
-        keys.addAll(this.getKeys(false));
+        keys.addAll(this.getKeys(true));
         for (String key : keys)
             if (key.equalsIgnoreCase(arg))
                 boo = true;

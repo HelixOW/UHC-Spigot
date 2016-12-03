@@ -559,7 +559,7 @@ public class StatsUtil extends Util {
 
     public double getKillDeathRate(OfflinePlayer p) {
         if(getDeaths(p) == 0) return getKills(p);
-        return round((getKills(p) / getDeaths(p)), 2);
+        return round((Double.valueOf(Long.toString(getKills(p))) / Double.valueOf(Long.toString(getDeaths(p)))), 3);
     }
 
     // Kits

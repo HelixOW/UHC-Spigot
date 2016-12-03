@@ -31,4 +31,8 @@ public class TablistUtil extends Util {
                             .replace("[gamestatus]", GState.getGameStateName()));
         }
     }
+
+    public void sortTablist(Player p) {
+        p.setPlayerListName(getRegister().getStatsUtil().getUHCRank(p).getPrefix() + p.getDisplayName());
+    }
 }

@@ -33,6 +33,9 @@ public class EquipListener extends SimpleListener {
         getRegister().getPlayerUtil().clearUp(p);
         getRegister().getPlayerUtil().addAll(p);
 
+        getRegister().getRanksFile().initRank(p);
+        getRegister().getTablistUtil().sortTablist(p);
+
         if (getRegister().getMainOptionsFile().getBoolean("Remove Attack Cooldown"))
             p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(32);
 
@@ -82,8 +85,6 @@ public class EquipListener extends SimpleListener {
         }.runTaskLaterAsynchronously(getUhc(), 20);
 
         p.getInventory().setItem(getRegister().getAchievementFile().getInt("Item.Slot"), getRegister().getAchievementFile().getItem());
-
-        getRegister().getRanksFile().initRank(p);
 
         if (getUhc().isScenarios()) {
             if (getUhc().isScenarioVoting())

@@ -29,27 +29,27 @@ public class RanksFile extends EasyFile {
         setDefault("Pro.min.kills", 25);
         setDefault("Pro.min.wins", 1);
         setDefault("Pro.min.points", 0);
-        setDefault("Pro.prefix", "&7{&0Pro} ");
+        setDefault("Pro.prefix", "&7{&0Pro&7} ");
 
         setDefault("Veteran.min.kills", 50);
         setDefault("Veteran.min.wins", 5);
         setDefault("Veteran.min.points", 0);
-        setDefault("Veteran.prefix", "&7{&6Veteran} ");
+        setDefault("Veteran.prefix", "&7{&6Veteran&7} ");
 
         setDefault("Expert.min.kills", 75);
         setDefault("Expert.min.wins", 10);
         setDefault("Expert.min.points", 0);
-        setDefault("Expert.prefix", "&7{&5Expert} ");
+        setDefault("Expert.prefix", "&7{&5Expert&7} ");
 
         setDefault("Master.min.kills", 100);
         setDefault("Master.min.wins", 25);
         setDefault("Master.min.points", 500);
-        setDefault("Master.prefix", "&7{&eMaster} ");
+        setDefault("Master.prefix", "&7{&eMaster&7} ");
 
         setDefault("Legend.min.kills", 150);
         setDefault("Legend.min.wins", 50);
         setDefault("Legend.min.points", 1500);
-        setDefault("Legend.prefix", "&7{&cLegend} ");
+        setDefault("Legend.prefix", "&7{&cLegend&7} ");
     }
 
     public void initRanks() {

@@ -133,6 +133,7 @@ public class Registery {
         new StartCommand(getUhc(), this, "start", "Short or strech the lobby time.", "start");
         new InfoCommand(getUhc(), this, "informations", "Get informations about the current scenario", "scenario", "infos");
         new SchematicCommand(getUhc(), this, "schematic", "Create your own uhc schematics", "schem");
+        new RanksCommand(getUhc(), this);
     }
 
     private void registerTeams() {

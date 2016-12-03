@@ -67,6 +67,23 @@ public class RegisterListener extends SimpleListener {
             }
         } else if (!getRegister().getPlayerFile().containsPlayer(p)) {
             getRegister().getPlayerFile().addPlayer(p);
+        } else {
+            playerInfo = new PlayerInfo(
+                    p,
+                    su.getGames(p),
+                    su.getKills(p),
+                    su.getDeaths(p),
+                    su.getCoins(p),
+                    su.getPoints(p),
+                    su.getWins(p),
+                    su.getCrateCount(UHCCrateRarerity.NORMAL, p),
+                    su.getCrateCount(UHCCrateRarerity.UNCOMMON, p),
+                    su.getCrateCount(UHCCrateRarerity.RARE, p),
+                    su.getCrateCount(UHCCrateRarerity.SUPERRARE, p),
+                    su.getCrateCount(UHCCrateRarerity.EPIC, p),
+                    su.getCrateCount(UHCCrateRarerity.LEGENDARY, p),
+                    su.getKitsAsString(p),
+                    su.getAchievementsAsString(p));
         }
         getRegister().getPlayerUtil().setPlayerInfo(p, playerInfo);
     }

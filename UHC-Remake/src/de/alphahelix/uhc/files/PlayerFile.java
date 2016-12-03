@@ -16,7 +16,7 @@ public class PlayerFile extends EasyFile {
     }
 
     public boolean containsPlayer(Player p) {
-        return configContains("Player." + UUIDFetcher.getUUID(p.getName()).toString() + ".name");
+        return configContains("Players." + UUIDFetcher.getUUID(p.getName()).toString() + ".name");
     }
 
     public void addPlayer(Player p) {

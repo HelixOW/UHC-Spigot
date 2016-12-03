@@ -267,8 +267,10 @@ public class SimpleFile<P extends AlphaPlugin> extends YamlConfiguration {
      */
     public void save() {
         try {
+            if(source == null) return;
             save(source);
-        } catch (IOException ignored) {
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
         }
     }
 

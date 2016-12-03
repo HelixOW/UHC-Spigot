@@ -11,6 +11,7 @@ import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class UHCAdminCommands extends SimpleCommand<UHC, Registery> {
 
@@ -62,6 +64,8 @@ public class UHCAdminCommands extends SimpleCommand<UHC, Registery> {
                     getPlugin().getRegister().getLobbyUtil().revokeBuildPermission(p);
                     p.sendMessage(getPlugin().getPrefix() + "§cRevoked §7build permission from yourself!");
                 }
+            } else if(args[0].equalsIgnoreCase("worlds")) {
+                p.sendMessage(getPlugin().getPrefix() + "The worlds are: \n" + getWorldnames());
             }
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("changeWorld")) {
@@ -143,5 +147,9 @@ public class UHCAdminCommands extends SimpleCommand<UHC, Registery> {
         ArrayList<String> suggetions = new ArrayList<>();
         suggetions.add("uhcAdmin");
         return suggetions;
+    }
+
+    private ArrayList<String> getWorldnames() {
+        return Bukkit.getWorlds().stream().map(World::getName).collect(Collectors.toCollection(ArrayList::new));
     }
 }
