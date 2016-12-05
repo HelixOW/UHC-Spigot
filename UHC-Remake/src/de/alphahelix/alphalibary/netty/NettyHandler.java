@@ -48,8 +48,8 @@ public class NettyHandler {
 
                     Method[] toInvoke = handler.getMethodesFor(msg.getClass());
 
-                    for (int i = 0; i < toInvoke.length; i++) {
-                        msg = toInvoke[i].invoke(handler, msg, p);
+                    for (Method aToInvoke : toInvoke) {
+                        msg = aToInvoke.invoke(handler, msg, p);
                     }
 
                 }

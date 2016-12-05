@@ -18,7 +18,7 @@ public class Scroller {
      * @param colourChar   The colour code character you're using (i.e. & or ?)
      */
     public Scroller(String message, int width, int spaceBetween, char colourChar) {
-        list = new ArrayList<String>();
+        list = new ArrayList<>();
 
         // Validation
         // String is too short for window
@@ -91,7 +91,7 @@ public class Scroller {
     }
 
     private StringBuilder getNext() {
-        return new StringBuilder(list.get(position++ % list.size()).substring(0));
+        return new StringBuilder(list.get(position++ % list.size()));
     }
 
 }

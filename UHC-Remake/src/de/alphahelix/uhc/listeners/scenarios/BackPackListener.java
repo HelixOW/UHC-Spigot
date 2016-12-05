@@ -34,16 +34,16 @@ public class BackPackListener extends SimpleListener {
 
         Player p = e.getPlayer();
 
-        if (p.getInventory().getItemInMainHand() == null)
+        if (p.getInventory().getItemInHand() == null)
             return;
-        if (!(p.getInventory().getItemInMainHand().hasItemMeta()
-                || p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()))
+        if (!(p.getInventory().getItemInHand().hasItemMeta()
+                || p.getInventory().getItemInHand().getItemMeta().hasDisplayName()))
             return;
 
         e.setCancelled(true);
 
-        if (!p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(p.getName())) {
-            p.openInventory(backpacks.get(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName()));
+        if (!p.getInventory().getItemInHand().getItemMeta().getDisplayName().equals(p.getName())) {
+            p.openInventory(backpacks.get(p.getInventory().getItemInHand().getItemMeta().getDisplayName()));
         } else {
             if (!backpacks.containsKey(p.getName())) {
                 backpacks.put(p.getName(), Bukkit.createInventory(null, 27,

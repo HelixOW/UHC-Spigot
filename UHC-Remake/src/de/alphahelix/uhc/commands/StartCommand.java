@@ -10,8 +10,8 @@ import java.util.List;
 
 public class StartCommand extends SimpleCommand<UHC, Registery> {
 
-    public StartCommand(UHC plugin, Registery r, String command, String description, String... aliases) {
-        super(plugin, r, command, description, aliases);
+    public StartCommand(UHC plugin, Registery r) {
+        super(plugin, r, "start", "Short or strech the lobby time.", "start");
     }
 
     @Override

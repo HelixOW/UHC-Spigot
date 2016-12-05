@@ -21,7 +21,7 @@ public class ItemBuilder {
     private int amount = 1;
     private short damage = 0;
     private List<String> lore = new ArrayList<>();
-    private boolean Unbreakable = false;
+    private boolean unbreakable = false;
 
     /**
      * Create a new ItemStack with the given {@code Material}
@@ -181,7 +181,7 @@ public class ItemBuilder {
      * @return the breakstatus of this ItemStack
      */
     public boolean isUnbreakable() {
-        return Unbreakable;
+        return unbreakable;
     }
 
     /**
@@ -190,7 +190,7 @@ public class ItemBuilder {
      * @param status if the item can break or nor
      */
     public ItemBuilder setUnbreakable(boolean status) {
-        this.Unbreakable = status;
+        this.unbreakable = status;
         return this;
     }
 

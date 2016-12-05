@@ -93,6 +93,8 @@ public class LocationsFile extends EasyFile {
         if (configContains("Arena")) {
             if (getLocation("Arena", true).build() != null)
                 isArenaDefaultWorld = false;
+            if (getLocation("Arena", true).build().getWorld() != null)
+                isArenaDefaultWorld = false;
             return getLocation("Arena", true).build();
         }
         if (Bukkit.getWorld("UHC") == null)

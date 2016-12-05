@@ -17,7 +17,7 @@ public enum ArmorType {
      * @param itemStack The ItemStack to parse the type of.
      * @return The parsed ArmorType. (null if none were found.)
      */
-    public final static ArmorType matchType(final ItemStack itemStack) {
+    public static ArmorType matchType(final ItemStack itemStack) {
         if (itemStack == null) {
             return null;
         }

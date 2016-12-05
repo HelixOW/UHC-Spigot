@@ -18,7 +18,7 @@ public class MainMessageFile extends EasyFile {
         setDefault("Kit Mode", "&7This UHC server is running in &cKits Mode.");
         setDefault("No Permissions", "&7You don't have &cpermissions &7to execute that command!");
         setDefault("Command not found", "&7Can't find the command :C. Try again!");
-        setDefault("Kit chosen", "&7You've §asuccessfully chosen &7the kit &8: &a[kit]§7!");
+        setDefault("Kit chosen", "&7You've &asuccessfully chosen &7the kit &8: &a[kit]&7!");
         setDefault("Not enough Coins", "&7You don't have &cenough &7coins to buy &7the kit &8: &a[kit]&7!");
         setDefault("Lobby time left info", "&aGame starts in &7[time] [unit]&8.");
         setDefault("Period of Peace time left info", "&aDamage in &7[time] [unit]&8.");
@@ -31,13 +31,13 @@ public class MainMessageFile extends EasyFile {
         setDefault("Team FFA", "&cGood Luck. You'll need it!");
         setDefault("End ended", "&cRestart&7!");
         setDefault("Winning message", "&7The player &a[player] &7has &awon UHC&7.");
-        setDefault("Not enough players", "§7There are §cnot enough §7players online. §cRestarting Timer&7.");
+        setDefault("Not enough players", "&7There are &cnot enough &7players online. &cRestarting Timer&7.");
         setDefault("Border has moved", "&7The Border has moved by &c[blocks] blocks&7!");
         setDefault("Picked team", "&7You've picked the team &b[team]&7!");
         setDefault("Team is full", "&7Sorry, but you &ccan't join &7this team!");
         setDefault("First crafted Item", "&7[player] has crafted a &a[item] &7for the first time.");
         setDefault("Crate dropped", "You just got a [crate] crate &7dropped!");
-        setDefault("Ranklist", "The ranks are: [ranks]");
+        setDefault("Ranklist", "&7The ranks are: [ranks]");
     }
 
 }

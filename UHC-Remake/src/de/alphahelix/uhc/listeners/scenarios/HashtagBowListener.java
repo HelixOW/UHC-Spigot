@@ -27,9 +27,9 @@ public class HashtagBowListener extends SimpleListener {
 
         Player dmger = (Player) e.getDamager();
 
-        if (dmger.getInventory().getItemInMainHand() == null)
+        if (dmger.getInventory().getItemInHand() == null)
             return;
-        if (!dmger.getInventory().getItemInMainHand().getType().equals(Material.BOW))
+        if (!dmger.getInventory().getItemInHand().getType().equals(Material.BOW))
             e.setCancelled(true);
     }
 

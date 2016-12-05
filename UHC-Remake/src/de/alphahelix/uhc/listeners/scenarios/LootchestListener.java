@@ -53,22 +53,22 @@ public class LootchestListener extends SimpleListener {
 
                 switch (i) {
                     case 0:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.IRON_PICKAXE));
+                        p.getInventory().setItemInHand(new ItemStack(Material.IRON_PICKAXE));
                         break;
                     case 1:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.APPLE, 2));
+                        p.getInventory().setItemInHand(new ItemStack(Material.APPLE, 2));
                         break;
                     case 2:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.COOKED_BEEF, 8));
+                        p.getInventory().setItemInHand(new ItemStack(Material.COOKED_BEEF, 8));
                         break;
                     case 3:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.CAKE));
+                        p.getInventory().setItemInHand(new ItemStack(Material.CAKE));
                         break;
                     case 4:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.RAW_FISH, 64, (short) 3));
+                        p.getInventory().setItemInHand(new ItemStack(Material.RAW_FISH, 64, (short) 3));
                         break;
                     case 5:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.DIRT, 32));
+                        p.getInventory().setItemInHand(new ItemStack(Material.DIRT, 32));
                         break;
                 }
                 return;
@@ -81,37 +81,37 @@ public class LootchestListener extends SimpleListener {
 
                 switch (i) {
                     case 0:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND));
+                        p.getInventory().setItemInHand(new ItemStack(Material.DIAMOND));
                         break;
                     case 1:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.GOLD_INGOT, 3));
+                        p.getInventory().setItemInHand(new ItemStack(Material.GOLD_INGOT, 3));
                         break;
                     case 2:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.IRON_INGOT, 5));
+                        p.getInventory().setItemInHand(new ItemStack(Material.IRON_INGOT, 5));
                         break;
                     case 3:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.BOW));
+                        p.getInventory().setItemInHand(new ItemStack(Material.BOW));
                         break;
                     case 4:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.ENCHANTMENT_TABLE));
+                        p.getInventory().setItemInHand(new ItemStack(Material.ENCHANTMENT_TABLE));
                         break;
                     case 5:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+                        p.getInventory().setItemInHand(new ItemStack(Material.DIAMOND_SWORD));
                         break;
                     case 6:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_HELMET));
+                        p.getInventory().setItemInHand(new ItemStack(Material.DIAMOND_HELMET));
                         break;
                     case 7:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_BOOTS));
+                        p.getInventory().setItemInHand(new ItemStack(Material.DIAMOND_BOOTS));
                         break;
                     case 8:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.ARROW, 32));
+                        p.getInventory().setItemInHand(new ItemStack(Material.ARROW, 32));
                         break;
                     case 9:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.TNT));
+                        p.getInventory().setItemInHand(new ItemStack(Material.TNT));
                         break;
                     case 10:
-                        p.getInventory().setItemInMainHand(new ItemStack(Material.FLINT_AND_STEEL));
+                        p.getInventory().setItemInHand(new ItemStack(Material.FLINT_AND_STEEL));
                         break;
                 }
             }

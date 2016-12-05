@@ -132,7 +132,7 @@ public class SpectatorListener extends SimpleListener {
         if (e.getClickedBlock() != null && e.getClickedBlock().getType().equals(Material.CHEST))
             e.setCancelled(true);
 
-        if (p.getInventory().getItemInMainHand().getType().equals(Material.getMaterial(UHC.getInstance().getRegister()
+        if (p.getInventory().getItemInHand().getType().equals(Material.getMaterial(UHC.getInstance().getRegister()
                 .getSpectatorFile().getString("Spectator.Item").replace(" ", "_").toUpperCase()))) {
 
             for (String pl : getRegister().getPlayerUtil().getSurvivors()) {

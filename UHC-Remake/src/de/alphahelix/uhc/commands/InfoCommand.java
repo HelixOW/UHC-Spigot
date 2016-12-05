@@ -11,8 +11,8 @@ import java.util.List;
 
 public class InfoCommand extends SimpleCommand<UHC, Registery> {
 
-    public InfoCommand(UHC plugin, Registery r, String command, String description, String... aliases) {
-        super(plugin, r, command, description, aliases);
+    public InfoCommand(UHC plugin, Registery r) {
+        super(plugin, r, "informations", "Get informations about the current scenario", "scenario", "infos");
     }
 
     @Override

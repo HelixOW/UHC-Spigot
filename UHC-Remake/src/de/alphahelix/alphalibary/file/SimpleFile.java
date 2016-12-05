@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SimpleFile<P extends AlphaPlugin> extends YamlConfiguration {
@@ -111,6 +112,21 @@ public class SimpleFile<P extends AlphaPlugin> extends YamlConfiguration {
         }
     }
 
+    public ArrayList<String> getColorStringList(String path) {
+        if(!configContains(path)) return new ArrayList<>();
+        if(!isList(path)) return new ArrayList<>();
+
+        try {
+            ArrayList<String> tR = new ArrayList<>();
+            for(String str : getStringList(path)) {
+                tR.add(str.replace("&", "§"));
+            }
+            return tR;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
     /**
      * Save a ItemStackArray inside an file
      *
@@ -170,8 +186,7 @@ public class SimpleFile<P extends AlphaPlugin> extends YamlConfiguration {
 
     public void setMaterialStringList(String path, String... array) {
         ArrayList<String> stacks = new ArrayList<>();
-        for (String is : array)
-            stacks.add(is);
+        Collections.addAll(stacks, array);
         set(path, stacks);
         save();
     }
@@ -182,8 +197,7 @@ public class SimpleFile<P extends AlphaPlugin> extends YamlConfiguration {
 
     public void setItemStackList(String path, ItemStack... array) {
         ArrayList<ItemStack> stacks = new ArrayList<>();
-        for (ItemStack is : array)
-            stacks.add(is);
+        Collections.addAll(stacks, array);
         set(path, stacks);
     }
 
@@ -312,10 +326,10 @@ public class SimpleFile<P extends AlphaPlugin> extends YamlConfiguration {
 
     public boolean configContains(String arg) {
         boolean boo = false;
-        ArrayList<String> keys = new ArrayList<String>();
+        ArrayList<String> keys = new ArrayList<>();
         keys.addAll(this.getKeys(false));
-        for (int i = 0; i < keys.size(); i++)
-            if (keys.get(i).equalsIgnoreCase(arg))
+        for (String key : keys)
+            if (key.equalsIgnoreCase(arg))
                 boo = true;
 
         return boo;

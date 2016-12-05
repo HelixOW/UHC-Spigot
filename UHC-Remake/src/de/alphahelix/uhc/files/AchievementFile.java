@@ -32,7 +32,7 @@ public class AchievementFile extends EasyFile {
         for (UHCAchievements uhcAchievements : UHCAchievements.values()) {
             List<String> save = new ArrayList<>();
 
-            save.add("§7Add your description here!");
+            save.add("&7Add your description here!");
 
             setDefault("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".name", "&7" + uhcAchievements.name().replace("_", " ").toLowerCase());
             setDefault("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".icon", "paper");
@@ -48,7 +48,7 @@ public class AchievementFile extends EasyFile {
         for (UHCAchievements uhcAchievements : UHCAchievements.values()) {
             uhcAchievements.setIcon(new ItemStack(Material.getMaterial(getString("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".icon").replace(" ", "_").toUpperCase())));
             uhcAchievements.setName(getColorString("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".name"));
-            uhcAchievements.setDesc(getStringList("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".description").toArray(new String[getStringList("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".description").size()]));
+            uhcAchievements.setDesc(getColorStringList("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".description").toArray(new String[getColorStringList("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".description").size()]));
         }
     }
 }

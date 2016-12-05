@@ -48,19 +48,10 @@ public class StatsUtil extends Util {
         super(uhc);
     }
 
-    static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
-        SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<>((e1, e2) -> {
-            int res = e1.getValue().compareTo(e2.getValue());
-            return res != 0 ? res : 1;
-        });
-        sortedEntries.addAll(map.entrySet());
-        return sortedEntries;
-    }
-
     // Kills
 
-    public void pushInformations(Player p) {
-        PlayerInfo playerInfo = getRegister().getPlayerUtil().getPlayerInfo(p);
+    public void pushInformations(final Player p) {
+        final PlayerInfo playerInfo = getRegister().getPlayerUtil().getPlayerInfo(p);
         getRegister().getPlayerUtil().removePlayerInfo(p);
 
         k = getKills(p);
@@ -116,7 +107,8 @@ public class StatsUtil extends Util {
             for (String newKits : playerInfo.getKits().split(" ,")) {
                 if (newKits == null) continue;
                 if (newKits.equalsIgnoreCase("") || newKits.equalsIgnoreCase(" ")) continue;
-                if (getKitsAsList(p).contains(newKits)) continue;
+                if (getKitsAsList(p).contains(newKits)) {
+                }
                 else
                     addKit(getRegister().getKitsFile().getKit(newKits), p);
             }
@@ -223,8 +215,8 @@ public class StatsUtil extends Util {
     public void pushInformations() {
         for (String pp : getRegister().getPlayerUtil().getAll()) {
             if (Bukkit.getPlayer(pp) == null) continue;
-            Player p = Bukkit.getPlayer(pp);
-            PlayerInfo playerInfo = getRegister().getPlayerUtil().getPlayerInfo(p);
+            final Player p = Bukkit.getPlayer(pp);
+            final PlayerInfo playerInfo = getRegister().getPlayerUtil().getPlayerInfo(p);
             getRegister().getPlayerUtil().removePlayerInfo(p);
 
             g = getGames(p);
@@ -235,7 +227,7 @@ public class StatsUtil extends Util {
             pushGames = new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if(g < playerInfo.getGames()) {
+                    if (g < playerInfo.getGames()) {
                         addGame(p);
                         g++;
                     } else
@@ -295,7 +287,8 @@ public class StatsUtil extends Util {
                 for (String newKits : playerInfo.getKits().split(" ,")) {
                     if (newKits == null) continue;
                     if (newKits.equalsIgnoreCase("") || newKits.equalsIgnoreCase(" ")) continue;
-                    if (getKitsAsList(p).contains(newKits)) continue;
+                    if (getKitsAsList(p).contains(newKits)) {
+                    }
                     else
                         addKit(getRegister().getKitsFile().getKit(newKits), p);
                 }
@@ -558,7 +551,7 @@ public class StatsUtil extends Util {
     }
 
     public double getKillDeathRate(OfflinePlayer p) {
-        if(getDeaths(p) == 0) return getKills(p);
+        if (getDeaths(p) == 0) return getKills(p);
         return round((Double.valueOf(Long.toString(getKills(p))) / Double.valueOf(Long.toString(getDeaths(p)))), 3);
     }
 
@@ -997,7 +990,7 @@ public class StatsUtil extends Util {
             points.put(playerName, getPoints(Bukkit.getOfflinePlayer(UUID.fromString(UUIDs))));
         }
 
-        SortedSet<Map.Entry<String, Long>> ss = entriesSortedByValues(points);
+        SortedSet<Map.Entry<String, Long>> ss = MapUtil.entriesSortedByValues(points);
 
         for (Entry<String, Long> name : ss) {
             rank.put(name.getValue(), name.getKey());
@@ -1035,7 +1028,7 @@ public class StatsUtil extends Util {
             points.put(playerName, getPoints(Bukkit.getOfflinePlayer(UUID.fromString(UUIDs))));
         }
 
-        SortedSet<Map.Entry<String, Long>> ss = entriesSortedByValues(points);
+        SortedSet<Entry<String, Long>> ss = MapUtil.entriesSortedByValues(points);
         for (Entry<String, Long> name : ss) {
             rank.put(name.getKey(), name.getValue());
         }

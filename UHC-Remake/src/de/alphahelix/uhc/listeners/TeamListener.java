@@ -37,7 +37,7 @@ public class TeamListener extends SimpleListener {
         if (!GState.isState(GState.LOBBY))
             return;
 
-        if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType()
+        if (p.getInventory().getItemInHand() != null && p.getInventory().getItemInHand().getType()
                 .equals(getRegister().getTeamManagerUtil().getTeamItem())) {
             getRegister().getTeamInventory().openInventory(p);
         }

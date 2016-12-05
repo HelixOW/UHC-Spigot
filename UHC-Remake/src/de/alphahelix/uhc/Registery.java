@@ -1,5 +1,6 @@
 package de.alphahelix.uhc;
 
+import de.alphahelix.alphalibary.reflection.ReflectionUtil;
 import de.alphahelix.uhc.commands.*;
 import de.alphahelix.uhc.events.armor.ArmorListener;
 import de.alphahelix.uhc.files.*;
@@ -127,12 +128,12 @@ public class Registery {
     }
 
     private void registerCommands() {
-        new StatsCommand(getUhc(), this, "stats", "Check your or others stats", "records");
-        new UHCAdminCommands(getUhc(), this, "uhcAdmin", "Manage some server configurations via commands.", "uhcA");
-        new UHCSetUpCommand(getUhc(), this, "uhcSetup", "Setup all of your options", "uhcS");
-        new StartCommand(getUhc(), this, "start", "Short or strech the lobby time.", "start");
-        new InfoCommand(getUhc(), this, "informations", "Get informations about the current scenario", "scenario", "infos");
-        new SchematicCommand(getUhc(), this, "schematic", "Create your own uhc schematics", "schem");
+        new StatsCommand(getUhc(), this);
+        new UHCAdminCommands(getUhc(), this);
+        new UHCSetUpCommand(getUhc(), this);
+        new StartCommand(getUhc(), this);
+        new InfoCommand(getUhc(), this);
+        new SchematicCommand(getUhc(), this);
         new RanksCommand(getUhc(), this);
     }
 
@@ -379,6 +380,10 @@ public class Registery {
             getUhc().setKits(true);
             getUhc().setScenarios(false);
         }
+
+        getUhc().setOneNine(ReflectionUtil.getVersion().contains("1_9")
+                || ReflectionUtil.getVersion().contains("1_10")
+                || ReflectionUtil.getVersion().contains("1_11"));
 
         getLocationsFile().initalizeLobbyAndArena();
 

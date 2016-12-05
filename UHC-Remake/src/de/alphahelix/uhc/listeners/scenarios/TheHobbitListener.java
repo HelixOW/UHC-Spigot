@@ -37,8 +37,8 @@ public class TheHobbitListener extends SimpleListener {
         if (!e.getAction().name().contains("RIGHT"))
             return;
 
-        if (e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.GOLD_NUGGET)) {
-            e.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+        if (e.getPlayer().getInventory().getItemInHand().getType().equals(Material.GOLD_NUGGET)) {
+            e.getPlayer().getInventory().setItemInHand(new ItemStack(Material.AIR));
             e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, (20 * 30), 1), true);
         }
     }

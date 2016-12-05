@@ -13,8 +13,8 @@ import java.util.List;
 
 public class StatsCommand extends SimpleCommand<UHC, Registery> {
 
-    public StatsCommand(UHC plugin, Registery r, String command, String description, String... aliases) {
-        super(plugin, r, command, description, aliases);
+    public StatsCommand(UHC plugin, Registery r) {
+        super(plugin, r, "stats", "Check your or others stats", "records");
     }
 
     @Override

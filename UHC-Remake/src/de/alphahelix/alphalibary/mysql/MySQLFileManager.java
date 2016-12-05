@@ -12,7 +12,7 @@ class MySQLFileManager {
     }
 
     private SimpleFile<AlphaPlugin> getMySQLFile() {
-        return new SimpleFile<AlphaPlugin>(MySQLAPI.getMySQLFilePath(), "mysql.uhc", plugin);
+        return new SimpleFile<>(MySQLAPI.getMySQLFilePath(), "mysql.uhc", plugin);
     }
 
     public void setStandardMySQL() {

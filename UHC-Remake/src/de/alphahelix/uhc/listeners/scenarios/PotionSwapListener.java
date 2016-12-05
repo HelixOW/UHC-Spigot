@@ -23,8 +23,9 @@ public class PotionSwapListener extends SimpleListener {
         for (PotionEffectType e : PotionEffectType.values()) {
             if (e == null)
                 continue;
-            if (e.equals(PotionEffectType.LEVITATION))
-                continue;
+            if (getUhc().isOneNine())
+                if (e == PotionEffectType.values()[25])
+                    continue;
             potionEffects.add(new PotionEffect(e, 9999999, 0));
         }
     }

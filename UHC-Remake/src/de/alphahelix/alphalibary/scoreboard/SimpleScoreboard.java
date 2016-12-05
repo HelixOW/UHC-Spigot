@@ -16,7 +16,6 @@ import org.bukkit.scoreboard.Team;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class SimpleScoreboard<P extends AlphaPlugin> {
 
@@ -62,12 +61,12 @@ public class SimpleScoreboard<P extends AlphaPlugin> {
     }
 
     private BoardLine getBoardLine(final int line) {
-        return boardLines.stream().filter(new Predicate<BoardLine>() {
-            @Override
-            public boolean test(BoardLine boardLine) {
-                return boardLine.getLine() == line;
+        for(BoardLine lines : boardLines) {
+            if(lines.getLine() == line) {
+                return lines;
             }
-        }).findFirst().orElse(null);
+        }
+        return null;
     }
 
     public void setValue(int line, String value, final String iden) {

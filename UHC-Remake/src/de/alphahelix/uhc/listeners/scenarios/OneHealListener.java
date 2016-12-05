@@ -41,7 +41,7 @@ public class OneHealListener extends SimpleListener {
         if (!e.getAction().name().contains("RIGHT"))
             return;
 
-        if (e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.GOLD_HOE)) {
+        if (e.getPlayer().getInventory().getItemInHand().getType().equals(Material.GOLD_HOE)) {
             healed.add(e.getPlayer().getName());
             e.getPlayer().setHealth(20.0);
             e.getPlayer().getInventory().remove(Material.GOLD_HOE);

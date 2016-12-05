@@ -1,6 +1,7 @@
 package de.alphahelix.uhc.listeners;
 
 import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.reflection.ReflectionUtil;
 import de.alphahelix.uhc.GState;
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
@@ -8,7 +9,6 @@ import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.instances.Spectator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -34,10 +34,21 @@ public class EquipListener extends SimpleListener {
         getRegister().getPlayerUtil().addAll(p);
 
         getRegister().getRanksFile().initRank(p);
+
         getRegister().getTablistUtil().sortTablist(p);
 
-        if (getRegister().getMainOptionsFile().getBoolean("Remove Attack Cooldown"))
-            p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(32);
+        if (getRegister().getMainOptionsFile().getBoolean("Remove Attack Cooldown")) {
+            if (ReflectionUtil.getVersion().contains("1_9")
+                    || ReflectionUtil.getVersion().contains("1_10")
+                    || ReflectionUtil.getVersion().contains("1_11"))
+                try {
+                    Class.forName("org.bukkit.attribute.AttributeInstance").getMethod("setBaseValue", double.class).invoke(p, 18);
+                    p.getClass().getMethod("getAttribute", Class.forName("org.bukkit.attribute.Attribute"))
+                            .getReturnType().getMethod("setBaseValue");
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+        }
 
         if (!GState.isState(GState.LOBBY)) {
             if (!getRegister().getPlayerUtil().isSurivor(p)) {

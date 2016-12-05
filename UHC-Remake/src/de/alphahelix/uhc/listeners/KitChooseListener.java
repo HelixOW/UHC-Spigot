@@ -24,13 +24,13 @@ public class KitChooseListener extends SimpleListener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
 
-        if (e.getPlayer().getInventory().getItemInMainHand() == null)
+        if (e.getPlayer().getInventory().getItemInHand() == null)
             return;
 
         if (!GState.isState(GState.LOBBY))
             return;
 
-        if (e.getPlayer().getInventory().getItemInMainHand().getType()
+        if (e.getPlayer().getInventory().getItemInHand().getType()
                 .equals(Material.getMaterial(getRegister().getKitsFile().getString("Kit.Item").replace(" ", "_")))) {
             if (!getUhc().isKits() && getUhc().isScenarios()) {
                 e.getPlayer().sendMessage(getUhc().getPrefix()

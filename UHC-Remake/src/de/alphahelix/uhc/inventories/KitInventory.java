@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class KitInventory extends Util {
 
@@ -19,7 +18,11 @@ public class KitInventory extends Util {
     }
 
     public void openInventory(Player p) {
-        ArrayList<ItemStack> stacks = getRegister().getKitsFile().getKits().stream().map(k -> new ItemBuilder(k.getGuiBlock().getType()).setLore(" ", "§e"+k.getPrice() + " Coins", " ", hasKit(p, k)).setName(k.getName()).build()).collect(Collectors.toCollection(ArrayList::new));
+
+        ArrayList<ItemStack> stacks = new ArrayList<>();
+        for(Kit k : getRegister().getKitsFile().getKits()) {
+            stacks.add(new ItemBuilder(k.getGuiBlock().getType()).setLore(" ", "§e"+k.getPrice() + " Coins", " ", hasKit(p, k)).setName(k.getName()).build());
+        }
         new SimpleMovingInventory(getUhc(), stacks, getRegister().getKitsFile().getColorString("GUI.Name"), p, ((getRegister().getKitsFile().getKits().size() / 9) + 1) * 18, getRegister().getKitsFile().getColorString("Preview GUI.Next page"),
                 getRegister().getKitsFile().getColorString("Preview GUI.Previous page"));
     }

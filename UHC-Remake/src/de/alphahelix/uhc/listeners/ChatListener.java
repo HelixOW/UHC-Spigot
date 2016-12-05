@@ -29,10 +29,13 @@ public class ChatListener extends SimpleListener {
         }
 
         if (GState.isState(GState.IN_GAME) || GState.isState(GState.PERIOD_OF_PEACE) || GState.isState(GState.END)) {
-            getRegister().getPlayerUtil().getSurvivors().stream().filter(survivor -> !e.getMessage().startsWith(getRegister().getTeamFile().getString("Team.Chat"))).forEach(survivor -> {
-                Bukkit.getPlayer(survivor)
-                        .sendMessage(getUhc().getPrefix() + getRegister().getStatsUtil().getUHCRank(p).getPrefix() + p.getDisplayName() + "§8: " + e.getMessage());
-            });
+            for (String survivor : getRegister().getPlayerUtil().getSurvivors()) {
+                if (!e.getMessage().startsWith(getRegister().getTeamFile().getString("Team.Chat"))) {
+                    if (Bukkit.getPlayer(survivor) != null) {
+                        Bukkit.getPlayer(survivor).sendMessage(getUhc().getPrefix() + getRegister().getStatsUtil().getUHCRank(p).getPrefix() + p.getDisplayName() + "§8: " + e.getMessage());
+                    }
+                }
+            }
         } else {
             for (String all : getRegister().getPlayerUtil().getAll()) {
                 Bukkit.getPlayer(all).sendMessage(getUhc().getPrefix() + getRegister().getStatsUtil().getUHCRank(p).getPrefix() + p.getDisplayName() + "§8: " + e.getMessage());

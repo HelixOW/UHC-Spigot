@@ -20,10 +20,16 @@ public class Spectator {
         p.setVelocity(p.getVelocity().setY(20D));
         p.setTotalExperience(0);
         p.setGameMode(GameMode.ADVENTURE);
-        p.setPlayerListName("§7[§4X§7] §c" + p.getDisplayName());
+        p.setPlayerListName("§7[§4X§7] §c" + p.getPlayerListName());
         p.setAllowFlight(true);
         p.setFlying(true);
-        p.setInvulnerable(true);
+        try {
+            if(UHC.getInstance().isOneNine()) {
+                Class.forName("org.bukkit.entity.Entity").getMethod("setInvulnerable", boolean.class).invoke(p, true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         new BukkitRunnable() {
             public void run() {
                 equipSpecStuff(p);

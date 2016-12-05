@@ -21,7 +21,7 @@ public class LeatherItemBuilder {
     private short damage = 0;
     private List<String> lore = new ArrayList<>();
     private HashMap<Enchantment, Integer> enchantments = new HashMap<>();
-    private boolean Unbreakable = false;
+    private boolean unbreakable = false;
     private Color color = Color.BLACK;
 
     /**
@@ -209,7 +209,7 @@ public class LeatherItemBuilder {
      * @return the breakstatus of this ItemStack
      */
     public boolean isUnbreakable() {
-        return Unbreakable;
+        return unbreakable;
     }
 
     /**
@@ -218,7 +218,7 @@ public class LeatherItemBuilder {
      * @param status if the item can break or nor
      */
     public LeatherItemBuilder setUnbreakable(boolean status) {
-        this.Unbreakable = status;
+        this.unbreakable = status;
         return this;
     }
 

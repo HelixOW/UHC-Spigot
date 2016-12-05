@@ -112,7 +112,7 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
 
     @Override
     public Map<String, Object> serialize() {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("worldName", this.worldName);
         map.put("x1", this.x1);
         map.put("y1", this.y1);
@@ -150,7 +150,7 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
      */
     public List<Block> getBlocks() {
         Iterator<Block> blockI = this.iterator();
-        List<Block> copy = new ArrayList<Block>();
+        List<Block> copy = new ArrayList<>();
         while (blockI.hasNext())
             copy.add(blockI.next());
         return copy;
@@ -391,9 +391,7 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
      * @return true if the Location is within this Cuboid, false otherwise
      */
     public boolean contains(Location l) {
-        if (!this.worldName.equals(l.getWorld().getName()))
-            return false;
-        return this.contains(l.getBlockX(), l.getBlockY(), l.getBlockZ());
+        return this.worldName.equals(l.getWorld().getName()) && this.contains(l.getBlockX(), l.getBlockY(), l.getBlockZ());
     }
 
     /**
@@ -576,7 +574,7 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
      * @return A list of Chunk objects
      */
     public List<Chunk> getChunks() {
-        List<Chunk> res = new ArrayList<Chunk>();
+        List<Chunk> res = new ArrayList<>();
 
         World w = this.getWorld();
         int x1 = this.getLowerX() & ~0xf;
@@ -624,7 +622,7 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
                             Chunk c = arrayOfChunk[i];
                             c.unload(true);
                         }
-                    } catch (Exception localException1) {
+                    } catch (Exception ignored) {
                     }
                     try {
                         ResourceBundle.clearCache();
@@ -683,8 +681,8 @@ public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializ
 
     @Override
     public String toString() {
-        return new String("Cuboid: " + this.worldName + "," + this.x1 + "," + this.y1 + "," + this.z1 + "=>" + this.x2
-                + "," + this.y2 + "," + this.z2);
+        return "Cuboid: " + this.worldName + "," + this.x1 + "," + this.y1 + "," + this.z1 + "=>" + this.x2
+                + "," + this.y2 + "," + this.z2;
     }
 
     public enum CuboidDirection {

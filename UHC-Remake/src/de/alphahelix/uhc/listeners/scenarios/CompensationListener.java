@@ -3,7 +3,6 @@ package de.alphahelix.uhc.listeners.scenarios;
 import de.alphahelix.uhc.Scenarios;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.SimpleListener;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
@@ -17,7 +16,7 @@ public class CompensationListener extends SimpleListener {
     public void onDeath(PlayerDeathEvent e) {
         if (!scenarioCheck(Scenarios.COMPENSATION))
             return;
-        if (!(e.getEntity().getKiller() instanceof Player))
+        if (!(e.getEntity().getKiller() != null))
             return;
 
         e.getEntity().getKiller().setMaxHealth(e.getEntity().getKiller().getMaxHealth() + (e.getEntity().getMaxHealth() / 4));

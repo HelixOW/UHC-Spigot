@@ -148,6 +148,7 @@ public class WorldUtil extends Util {
 
         getRegister().getLocationsFile().getArena().getWorld().save();
 
+
         Cuboid r = new Cuboid(getRegister().getLocationsFile().getArena().getWorld(), startx, 3, startz, endx, 200,
                 endz);
 

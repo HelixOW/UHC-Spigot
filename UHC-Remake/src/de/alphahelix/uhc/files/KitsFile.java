@@ -70,7 +70,7 @@ public class KitsFile extends EasyFile {
                 if (kitName.equals("GUI") || kitName.equals("Preview GUI") || kitName.equals("Kits") || kitName.equals("Kit"))
                     continue;
                 kits.add(getKit(kitName.replace("§", "&")));
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
         return kits;

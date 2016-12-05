@@ -107,7 +107,7 @@ public class NightmareModeListener extends SimpleListener {
             }
         } else if (event.getEntity() instanceof Zombie) {
             Skeleton skelly = event.getEntity().getWorld().spawn(event.getEntity().getLocation(), Skeleton.class);
-            skelly.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+            skelly.getEquipment().setItemInHand(new ItemStack(Material.STONE_SWORD));
             skelly.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1726272000, 0));
         } else if (event.getEntity() instanceof Spider) {
             Location loc = event.getEntity().getLocation();

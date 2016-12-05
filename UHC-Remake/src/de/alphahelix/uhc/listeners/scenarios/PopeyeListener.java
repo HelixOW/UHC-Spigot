@@ -37,8 +37,8 @@ public class PopeyeListener extends SimpleListener {
         if (!e.getAction().name().contains("RIGHT"))
             return;
 
-        if (e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.INK_SACK)
-                && e.getPlayer().getInventory().getItemInMainHand().getDurability() == 2) {
+        if (e.getPlayer().getInventory().getItemInHand().getType().equals(Material.INK_SACK)
+                && e.getPlayer().getInventory().getItemInHand().getDurability() == 2) {
             e.getPlayer().getInventory().remove(new ItemStack(Material.INK_SACK, 1, (short) 2));
             e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 5 * 20, 1));
         }

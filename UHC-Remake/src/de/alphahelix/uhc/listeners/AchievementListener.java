@@ -33,9 +33,9 @@ public class AchievementListener extends SimpleListener {
     public void onClick(PlayerInteractEvent e) {
         if (!GState.isState(GState.LOBBY))
             return;
-        if (e.getPlayer().getInventory().getItemInMainHand() == null)
+        if (e.getPlayer().getInventory().getItemInHand() == null)
             return;
-        if (!e.getPlayer().getInventory().getItemInMainHand().getType().equals(getRegister().getAchievementFile().getItem().getType()))
+        if (!e.getPlayer().getInventory().getItemInHand().getType().equals(getRegister().getAchievementFile().getItem().getType()))
             return;
 
         final Player p = e.getPlayer();

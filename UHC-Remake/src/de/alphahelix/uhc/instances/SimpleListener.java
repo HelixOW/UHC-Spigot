@@ -51,10 +51,7 @@ public abstract class SimpleListener implements Listener {
     }
 
     public boolean scenarioCheck(Scenarios s) {
-        if (!(GState.isState(GState.LOBBY) || GState.isState(GState.END))) {
-            return getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(s)) && Scenarios.isScenario(s);
-        }
-        return false;
+        return !(GState.isState(GState.LOBBY) || GState.isState(GState.END)) && getRegister().getScenarioFile().isEnabled(Scenarios.getRawScenarioName(s)) && Scenarios.isScenario(s);
     }
 
     public <T> void cooldown(int length, final T key, final List<T> cooldownList) {

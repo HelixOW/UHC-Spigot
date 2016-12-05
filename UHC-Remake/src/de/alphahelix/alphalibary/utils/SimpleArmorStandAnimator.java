@@ -31,12 +31,12 @@ public class SimpleArmorStandAnimator {
      * This is a map containing the already loaded frames. This way we don't
      * have to parse the same animation over and over.
      */
-    private static Map<String, Frame[]> animCache = new HashMap<String, Frame[]>();
+    private static Map<String, Frame[]> animCache = new HashMap<>();
     /**
      * This is a list with all the animator instances. This makes it easy to
      * update all the instances at one.
      */
-    private static Set<SimpleArmorStandAnimator> animators = new HashSet<SimpleArmorStandAnimator>();
+    private static Set<SimpleArmorStandAnimator> animators = new HashSet<>();
     /**
      * The armor stand to animate
      */
@@ -84,7 +84,7 @@ public class SimpleArmorStandAnimator {
             BufferedReader br = null;
             try {
                 br = new BufferedReader(new FileReader(aniFile));
-                String line = "";
+                String line;
                 // create the current frame variable
                 Frame currentFrame = null;
                 while ((line = br.readLine()) != null) {
@@ -365,7 +365,7 @@ public class SimpleArmorStandAnimator {
             }
         }
         // make sure that those frame weren't the last one
-        Frame res = null;
+        Frame res;
 
         if (maxFrame == null || minFrame == null) {
             if (maxFrame == null && minFrame != null) {

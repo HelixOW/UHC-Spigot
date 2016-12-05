@@ -13,15 +13,16 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class SimpleMovingInventory implements Listener {
 
-    private static HashMap<UUID, SimpleMovingInventory> users = new HashMap<UUID, SimpleMovingInventory>();
+    private static HashMap<UUID, SimpleMovingInventory> users = new HashMap<>();
     private String title;
     private String nextPageName = "§aNext!";
     private String previousPageName = "§cPrevious!";
-    private ArrayList<Inventory> pages = new ArrayList<Inventory>();
+    private ArrayList<Inventory> pages = new ArrayList<>();
     private int currpage = 0;
 
     public SimpleMovingInventory(Plugin pl, ArrayList<ItemStack> items, String name, Player p, int size, String nextPage, String prevPage) {
@@ -30,13 +31,13 @@ public class SimpleMovingInventory implements Listener {
         Inventory page = getBlankPage(name, size);
         this.nextPageName = nextPage;
         this.previousPageName = prevPage;
-        for (int i = 0; i < items.size(); i++) {
+        for (ItemStack item : items) {
             if (page.firstEmpty() == -1) {
                 pages.add(page);
                 page = getBlankPage(name, size);
-                page.addItem(items.get(i));
+                page.addItem(item);
             } else {
-                page.addItem(items.get(i));
+                page.addItem(item);
             }
         }
         pages.add(page);
@@ -74,7 +75,7 @@ public class SimpleMovingInventory implements Listener {
         Player p = (Player) event.getWhoClicked();
 
         if (event.getClickedInventory() == null) return;
-        if (event.getClickedInventory().getTitle() == title) event.setCancelled(true);
+        if (Objects.equals(event.getClickedInventory().getTitle(), title)) event.setCancelled(true);
 
         if (!SimpleMovingInventory.users.containsKey(p.getUniqueId()))
             return;
@@ -88,7 +89,6 @@ public class SimpleMovingInventory implements Listener {
         if (event.getCurrentItem().getItemMeta().getDisplayName().equals(this.nextPageName)) {
             event.setCancelled(true);
             if (inv.currpage >= inv.pages.size() - 1) {
-                return;
             } else {
                 inv.currpage += 1;
                 p.openInventory(inv.pages.get(inv.currpage));

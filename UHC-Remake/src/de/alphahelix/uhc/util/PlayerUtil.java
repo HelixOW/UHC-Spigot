@@ -39,10 +39,22 @@ public class PlayerUtil extends Util {
         p.setFlying(false);
         p.setFoodLevel(20);
         p.setGameMode(GameMode.SURVIVAL);
-        p.setGlowing(false);
+        try {
+            if(getUhc().isOneNine()) {
+                Class.forName("org.bukkit.entity.Entity").getMethod("setGlowing", boolean.class).invoke(p, true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         p.setMaxHealth(20.0);
         p.setHealth(20.0);
-        p.setInvulnerable(false);
+        try {
+            if(getUhc().isOneNine()) {
+                Class.forName("org.bukkit.entity.Entity").getMethod("setInvulnerable", boolean.class).invoke(p, true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         p.setLevel(0);
         p.setMaxHealth(20);
         p.setTotalExperience(0);

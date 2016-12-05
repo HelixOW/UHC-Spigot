@@ -164,10 +164,10 @@ public class GStateListener extends SimpleListener {
                 || e.getClickedBlock().getType().equals(Material.ENDER_CHEST))
             e.setCancelled(true);
 
-        if (e.getPlayer().getInventory().getItemInMainHand() != null
-                && e.getPlayer().getInventory().getItemInMainHand().hasItemMeta()
-                && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasDisplayName()
-                && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName()
+        if (e.getPlayer().getInventory().getItemInHand() != null
+                && e.getPlayer().getInventory().getItemInHand().hasItemMeta()
+                && e.getPlayer().getInventory().getItemInHand().getItemMeta().hasDisplayName()
+                && e.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName()
                 .equals(getRegister().getLobbyFile().getColorString("Item name"))) {
             if (getUhc().isBunggeMode()) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();

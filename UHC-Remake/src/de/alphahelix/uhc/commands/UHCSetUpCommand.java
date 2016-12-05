@@ -14,8 +14,8 @@ import java.util.List;
 
 public class UHCSetUpCommand extends SimpleCommand<UHC, Registery> {
 
-    public UHCSetUpCommand(UHC plugin, Registery r, String command, String description, String... aliases) {
-        super(plugin, r, command, description, aliases);
+    public UHCSetUpCommand(UHC plugin, Registery r) {
+        super(plugin, r, "uhcSetup", "Setup all of your options", "uhcS");
     }
 
     @Override

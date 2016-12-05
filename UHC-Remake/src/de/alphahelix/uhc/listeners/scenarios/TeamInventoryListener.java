@@ -53,7 +53,7 @@ public class TeamInventoryListener extends SimpleListener {
             return;
         if (!e.getAction().name().contains("RIGHT"))
             return;
-        if (!e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.ENDER_CHEST))
+        if (!e.getPlayer().getInventory().getItemInHand().getType().equals(Material.ENDER_CHEST))
             return;
 
         if (getRegister().getTeamManagerUtil().isInOneTeam(e.getPlayer()) != null) {
@@ -71,9 +71,9 @@ public class TeamInventoryListener extends SimpleListener {
             return;
         if (getRegister().getTeamManagerUtil().isInOneTeam(e.getPlayer()) == null)
             return;
-        if (e.getPlayer().getInventory().getItemInMainHand().hasItemMeta()
-                && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasDisplayName()
-                && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getDisplayName()
+        if (e.getPlayer().getInventory().getItemInHand().hasItemMeta()
+                && e.getPlayer().getInventory().getItemInHand().getItemMeta().hasDisplayName()
+                && e.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName()
                 .contains(getRegister().getTeamManagerUtil().isInOneTeam(e.getPlayer()).getName()))
             e.setBuild(true);
     }

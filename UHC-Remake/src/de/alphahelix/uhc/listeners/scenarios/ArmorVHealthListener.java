@@ -21,7 +21,7 @@ public class ArmorVHealthListener extends SimpleListener {
         if (!scenarioCheck(Scenarios.ARMOR_V_HEALTH))
             return;
 
-        ArmorBar bar = ArmorBar.getArmorBarByMaterial(p.getInventory().getItemInMainHand().getType());
+        ArmorBar bar = ArmorBar.getArmorBarByMaterial(p.getInventory().getItemInHand().getType());
 
         if ((p.getMaxHealth() - bar.getPoints()) <= 0)
             return;

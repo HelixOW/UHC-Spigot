@@ -20,12 +20,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 public class UHCAdminCommands extends SimpleCommand<UHC, Registery> {
 
-    public UHCAdminCommands(UHC plugin, Registery r, String command, String description, String... aliases) {
-        super(plugin, r, command, description, aliases);
+    public UHCAdminCommands(UHC plugin, Registery r) {
+        super(plugin, r, "uhcAdmin", "Manage some server configurations via commands.", "uhcA");
     }
 
     @Override
@@ -64,7 +63,7 @@ public class UHCAdminCommands extends SimpleCommand<UHC, Registery> {
                     getPlugin().getRegister().getLobbyUtil().revokeBuildPermission(p);
                     p.sendMessage(getPlugin().getPrefix() + "§cRevoked §7build permission from yourself!");
                 }
-            } else if(args[0].equalsIgnoreCase("worlds")) {
+            } else if (args[0].equalsIgnoreCase("worlds")) {
                 p.sendMessage(getPlugin().getPrefix() + "The worlds are: \n" + getWorldnames());
             }
         } else if (args.length == 2) {
@@ -150,6 +149,10 @@ public class UHCAdminCommands extends SimpleCommand<UHC, Registery> {
     }
 
     private ArrayList<String> getWorldnames() {
-        return Bukkit.getWorlds().stream().map(World::getName).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<String> worldNames = new ArrayList<>();
+        for (World w : Bukkit.getWorlds()) {
+            worldNames.add(w.getName());
+        }
+        return worldNames;
     }
 }

@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NettyListener {
 
-    public String packetName() default "";
+    String packetName() default "";
 
 }

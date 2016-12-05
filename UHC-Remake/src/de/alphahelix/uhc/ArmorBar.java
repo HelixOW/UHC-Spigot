@@ -31,7 +31,7 @@ public enum ArmorBar {
     DIAMOND_LEGGINGS(3),
     DIAMOND_BOOTS(2.5);
 
-    private double points;
+    private final double points;
 
     ArmorBar(double points) {
         this.points = points;

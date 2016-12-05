@@ -25,23 +25,9 @@ public class UHC extends AlphaPlugin implements PluginMessageListener {
     private static UHC instance;
 
     private Registery register;
-    private String consolePrefix;
-    private String lobbyServer;
-    private String restartMessage;
-    private String trackerName;
-    private boolean mySQLMode;
-    private boolean debug;
-    private boolean bunggeMode;
-    private boolean soup;
-    private boolean scenarios, scenarioVoting;
-    private boolean statusMOTD;
-    private boolean kits;
-    private boolean teams;
-    private boolean tracker;
-    private boolean lobbyAsSchematic;
-    private boolean crates;
-    private boolean lobby;
-    private boolean pregen;
+    private String consolePrefix, lobbyServer, restartMessage, trackerName;
+    private boolean mySQLMode, debug, bunggeMode, soup, scenarios, scenarioVoting, statusMOTD, kits;
+    private boolean teams, tracker, lobbyAsSchematic, crates, lobby, pregen, preOneNine;
     private int spawnradius;
     private Logger log;
 
@@ -338,5 +324,13 @@ public class UHC extends AlphaPlugin implements PluginMessageListener {
 
     public void setScenarioVoting(boolean scenarioVoting) {
         this.scenarioVoting = scenarioVoting;
+    }
+
+    public boolean isOneNine() {
+        return preOneNine;
+    }
+
+    public void setOneNine(boolean preOneNine) {
+        this.preOneNine = preOneNine;
     }
 }

@@ -29,12 +29,12 @@ public class CraftableTeleportationListener extends SimpleListener {
 
         Player p = e.getPlayer();
 
-        if (p.getInventory().getItemInMainHand().getType() != Material.ENDER_PEARL) return;
-        if (!p.getInventory().getItemInMainHand().hasItemMeta()) return;
-        if (!p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return;
-        if (Bukkit.getPlayer(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName()) == null) return;
+        if (p.getInventory().getItemInHand().getType() != Material.ENDER_PEARL) return;
+        if (!p.getInventory().getItemInHand().hasItemMeta()) return;
+        if (!p.getInventory().getItemInHand().getItemMeta().hasDisplayName()) return;
+        if (Bukkit.getPlayer(p.getInventory().getItemInHand().getItemMeta().getDisplayName()) == null) return;
 
-        Player t = Bukkit.getPlayer(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName());
+        Player t = Bukkit.getPlayer(p.getInventory().getItemInHand().getItemMeta().getDisplayName());
 
         if (!getRegister().getPlayerUtil().isSurivor(t)) return;
 

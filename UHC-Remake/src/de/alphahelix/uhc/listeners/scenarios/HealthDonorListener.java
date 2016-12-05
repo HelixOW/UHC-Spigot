@@ -22,7 +22,11 @@ public class HealthDonorListener extends SimpleListener {
             return;
 
         for (Player p : makeArray(getRegister().getPlayerUtil().getSurvivors())) {
-            p.getInventory().addItem(new ItemStack(Material.END_ROD));
+            if (getUhc().isOneNine()) {
+                p.getInventory().addItem(new ItemStack(Material.getMaterial("END_ROD")));
+            } else {
+                p.getInventory().addItem(new ItemStack(Material.DEAD_BUSH));
+            }
         }
     }
 
@@ -34,8 +38,13 @@ public class HealthDonorListener extends SimpleListener {
             return;
         if (!(e.getRightClicked() instanceof Player))
             return;
-        if (!e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.END_ROD))
-            return;
+        if (getUhc().isOneNine()) {
+            if (!e.getPlayer().getInventory().getItemInHand().getType().equals(Material.getMaterial("END_ROD")))
+                return;
+        } else {
+            if (!e.getPlayer().getInventory().getItemInHand().getType().equals(Material.DEAD_BUSH))
+                return;
+        }
         Player receiver = (Player) e.getRightClicked();
 
         if (receiver.getHealth() >= 19.5)

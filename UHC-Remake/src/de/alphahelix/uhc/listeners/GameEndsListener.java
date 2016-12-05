@@ -22,6 +22,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -157,7 +159,7 @@ public class GameEndsListener extends SimpleListener {
                 public void run() {
                     dead.getWorld().createExplosion(dead.getLocation().getX(), dead.getLocation().getY(),
                             dead.getLocation().getZ(), 10, false, true);
-                    cInv.getLocation().getBlock().setType(Material.AIR);
+                    dead.getLocation().getBlock().setType(Material.AIR);
                 }
             }.runTaskLater(getUhc(), 600);
         } else {
@@ -241,7 +243,15 @@ public class GameEndsListener extends SimpleListener {
                     villager.getEquipment().setArmorContents(p.getInventory().getArmorContents());
                     villager.setHealth(p.getHealth());
 
-                    villager.setAI(false);
+                    try {
+                        if (getUhc().isOneNine())
+                            Class.forName("org.bukkit.entity.LivingEntity").getMethod("setAI", boolean.class).invoke(villager, false);
+                        else {
+                            villager.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 255));
+                        }
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
 
                     playerLogOut.put(p.getName(), p.getLocation());
                     playerDummies.put(p.getName(), villager);

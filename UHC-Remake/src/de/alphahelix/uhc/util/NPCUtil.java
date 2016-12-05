@@ -27,7 +27,7 @@ public class NPCUtil extends Util {
         super(uhc);
     }
 
-    public void prepareNPC(Location loc, OfflinePlayer skin, Player toSend) {
+    public void prepareNPC(Location loc, OfflinePlayer skin, final Player toSend) {
         try {
             Class<?> nmsServerClass = ReflectionUtil.getNmsClass("MinecraftServer");
             Class<?> nmsWorldClass = ReflectionUtil.getNmsClass("World");
@@ -67,7 +67,7 @@ public class NPCUtil extends Util {
                     gp, 0, ReflectionUtil.getEnumGamemode(skin),
                     getRegister().getStatsFile().getColorString("StatsNPC"));
 
-            Object pPOPPlayerInfoDestory = PacketUtil.createPlayerInfoPacket(REnumPlayerInfoAction.REMOVE_PLAYER.getPlayerInfoAction(),
+            final Object pPOPPlayerInfoDestory = PacketUtil.createPlayerInfoPacket(REnumPlayerInfoAction.REMOVE_PLAYER.getPlayerInfoAction(),
                     gp, 0, ReflectionUtil.getEnumGamemode(skin),
                     getRegister().getStatsFile().getColorString("StatsNPC"));
 
@@ -86,23 +86,32 @@ public class NPCUtil extends Util {
             Field pitch = ReflectionUtil.getNmsClass("Entity").getField("pitch");
             Field lYaw = ReflectionUtil.getNmsClass("Entity").getField("lastYaw");
             Field lPitch = ReflectionUtil.getNmsClass("Entity").getField("lastPitch");
-            Field aP = ReflectionUtil.getNmsClass("EntityLiving").getField("aP");
-            Field aQ = ReflectionUtil.getNmsClass("EntityLiving").getField("aQ");
-            Field aO = ReflectionUtil.getNmsClass("EntityLiving").getField("aO");
+            Field aP = null;
+            Field aQ = null;
+            Field aO = null;
+            if (getUhc().isOneNine()) {
+                aP = ReflectionUtil.getNmsClass("EntityLiving").getField("aP");
+                aQ = ReflectionUtil.getNmsClass("EntityLiving").getField("aQ");
+                aO = ReflectionUtil.getNmsClass("EntityLiving").getField("aO");
+            }
 
             yaw.setAccessible(true);
             pitch.setAccessible(true);
             lYaw.setAccessible(true);
             lPitch.setAccessible(true);
-            aP.setAccessible(true);
-            aQ.setAccessible(true);
-            aO.setAccessible(true);
+            if (getUhc().isOneNine()) {
+                aP.setAccessible(true);
+                aQ.setAccessible(true);
+                aO.setAccessible(true);
+            }
 
             yaw.set(npc, loc.getYaw());
             pitch.set(npc, loc.getPitch());
-            aP.set(npc, (loc.getYaw() - 90));
-            aQ.set(npc, loc.getYaw());
-            aO.set(npc, loc.getYaw());
+            if (getUhc().isOneNine()) {
+                aP.set(npc, (loc.getYaw() - 90));
+                aQ.set(npc, loc.getYaw());
+                aO.set(npc, loc.getYaw());
+            }
 
             ReflectionUtil.sendPacket(toSend, pPOPlayerInfo);
             ReflectionUtil.sendPacket(toSend, pPONamedEntitySpawn);
@@ -112,6 +121,13 @@ public class NPCUtil extends Util {
                 @Override
                 public void run() {
                     ReflectionUtil.sendPacket(toSend, pPOPPlayerInfoDestory);
+                    if(!getUhc().isOneNine()) {
+                        GameProfile gameProfile = new GameProfile(UUIDFetcher.getUUID(toSend.getName()), toSend.getName());
+                        Object spawnPlayerBack = PacketUtil.createPlayerInfoPacket(REnumPlayerInfoAction.ADD_PLAYER.getPlayerInfoAction(),
+                                gameProfile, 0, ReflectionUtil.getEnumGamemode(toSend),
+                                toSend.getPlayerListName());
+                        ReflectionUtil.sendPacket(toSend, spawnPlayerBack);
+                    }
                 }
             }.runTaskLater(getUhc(), 20);
 
@@ -271,7 +287,13 @@ public class NPCUtil extends Util {
         as.setCustomName("§7" + Integer.toString(rank) + ".");
         as.setVisible(true);
         as.setGravity(false);
-        as.setGlowing(true);
+        try {
+            if (getUhc().isOneNine()) {
+                Class.forName("org.bukkit.entity.Entity").getMethod("setGlowing", boolean.class).invoke(as, true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         as.setCustomNameVisible(true);
 
         holo.setBasePlate(false);
