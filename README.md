@@ -1,7 +1,4 @@
 # UHC
-### Please notice that [Java 8](http://javadl.oracle.com/webapps/download/AutoDL?BundleId=216403) is required!!!
-[The 1.8 Version can be found here](https://www.spigotmc.org/resources/uhc-remake-bungeecord-1-8-1-9-mysql-support-holograms-titles-scoreboards-much-more.18997/download?version=117834). (1.8 doesn't contain all of those features & has some bugs left. Feel free to recode 1.8 and send it to me if you want. I'm not working on 1.8 anymore. Only 1.9+)
-
 You need help with setting up UHC? Don't hesitate to contact me on SpigotMC @AlphaHelix before giving a bad review.</br>
 You have an idea? Send it to me via SpigotMC @AlphaHelix.
 ***
