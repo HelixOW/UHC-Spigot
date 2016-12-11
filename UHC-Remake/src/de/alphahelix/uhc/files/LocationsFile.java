@@ -52,6 +52,17 @@ public class LocationsFile extends EasyFile {
                 }
             }
         }
+
+        if (getString("Arena") != null) {
+            if (!(getLocation("Arena", true) == null)) {
+                if (getLocation("Arena", true).build().getWorld() == null) {
+                    String[] values = getString("Arena").split(",");
+
+                    Bukkit.createWorld(new WorldCreator(values[3]));
+                }
+            }
+        }
+
         if (getString("Arena Nether") != null) {
             if (!(getLocation("Arena Nether", true) == null)) {
                 if (getLocation("Arena Nether", true).build().getWorld() == null) {
@@ -61,6 +72,7 @@ public class LocationsFile extends EasyFile {
                 }
             }
         }
+
         if (getString("Deathmatch") != null) {
             if (!(getLocation("Deathmatch", true) == null)) {
                 if (getLocation("Deathmatch", true).build().getWorld() == null) {
