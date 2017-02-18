@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
 import de.alphahelix.alphalibary.mysql.Database;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.UHCAchievements;
 import de.alphahelix.uhc.instances.Kit;
@@ -50,7 +50,7 @@ public class RegisterListener extends SimpleListener {
                 Database.exInsertQry(
                         "UHC",
                         p.getName(),                                     //Playername
-                        UUIDFetcher.getUUID(p.getName()).toString(),     //UUID
+                        UUIDFetcher.getUUID(p.getName()).toString(),     //uuid
                         "0",                                             //Games
                         "0",                                             //Kills
                         "0",                                             //Deaths

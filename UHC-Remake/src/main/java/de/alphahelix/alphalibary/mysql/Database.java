@@ -15,7 +15,7 @@
  */
 package de.alphahelix.alphalibary.mysql;
 
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -33,11 +33,11 @@ public class Database {
     private static final ArrayList<String> TABLENAMES = new ArrayList<>();
 
     public static boolean containsPlayer(String tableName, Player p) {
-        return getResult(tableName, "UUID", UUIDFetcher.getUUID(p).toString(), "UUID") != null;
+        return getResult(tableName, "uuid", UUIDFetcher.getUUID(p).toString(), "uuid") != null;
     }
 
     public static boolean containsPlayer(String tableName, OfflinePlayer p) {
-        return getResult(tableName, "UUID", UUIDFetcher.getUUID(p).toString(), "UUID") != null;
+        return getResult(tableName, "uuid", UUIDFetcher.getUUID(p).toString(), "uuid") != null;
     }
 
     public static void exCreateTableQry(String tableName, String... columns) {
@@ -122,7 +122,7 @@ public class Database {
     public static void update(String tableName, UUID uuid, String column, String updatevalue) {
         if (MySQLAPI.isConnected()) {
             try {
-                String qry = "UPDATE " + tableName + " SET " + column + "=? WHERE " + "UUID" + "=?";
+                String qry = "UPDATE " + tableName + " SET " + column + "=? WHERE " + "uuid" + "=?";
                 PreparedStatement prepstate = MySQLAPI.getMySQLConnection().prepareStatement(qry);
                 prepstate.setString(1, updatevalue);
                 prepstate.setString(2, uuid.toString());

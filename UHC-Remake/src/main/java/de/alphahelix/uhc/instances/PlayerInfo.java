@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.enums.UHCAchievements;
 import org.bukkit.OfflinePlayer;
 

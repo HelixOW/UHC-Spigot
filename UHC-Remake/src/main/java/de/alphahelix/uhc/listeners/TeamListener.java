@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.instances.SimpleListener;

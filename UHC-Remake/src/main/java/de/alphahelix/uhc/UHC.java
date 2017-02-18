@@ -67,7 +67,7 @@ public class UHC extends FakeAPI implements PluginMessageListener {
                 Database.exCreateTableQry(
                         "UHC",
                         Database.createColumn("Player"),
-                        Database.createColumn("UUID"),
+                        Database.createColumn("uuid"),
                         Database.createColumn("Games"),
                         Database.createColumn("Kills"),
                         Database.createColumn("Deaths"),

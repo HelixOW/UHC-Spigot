@@ -1,8 +1,8 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
 import de.alphahelix.alphalibary.mysql.Database;
 import de.alphahelix.alphalibary.mysql.MySQLAPI;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.UHCAchievements;
 import de.alphahelix.uhc.instances.*;
@@ -218,9 +218,9 @@ public class StatsUtil extends Util {
             return UHCRegister.getPlayerUtil().getPlayerInfo(p).getGames();
         }
         if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                     "Games") != null) {
-                return Long.parseLong(Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Games").toString());
+                return Long.parseLong(Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Games").toString());
             }
         }
         return UHCFileRegister.getPlayerFile().getGames(p);
@@ -234,7 +234,7 @@ public class StatsUtil extends Util {
         new BukkitRunnable() {
             public void run() {
                 if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                             "Games") != null) {
                         Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Games",
                                 Long.toString(getGames(p) + 1));
@@ -251,9 +251,9 @@ public class StatsUtil extends Util {
             return UHCRegister.getPlayerUtil().getPlayerInfo(p).getKills();
         }
         if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                     "Kills") != null) {
-                return Long.parseLong(Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kills").toString());
+                return Long.parseLong(Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Kills").toString());
             }
         }
         return UHCFileRegister.getPlayerFile().getKills(p);
@@ -267,7 +267,7 @@ public class StatsUtil extends Util {
         new BukkitRunnable() {
             public void run() {
                 if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                             "Kills") != null) {
                         Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Kills",
                                 Long.toString(getKills(p) + 1));
@@ -286,9 +286,9 @@ public class StatsUtil extends Util {
             return UHCRegister.getPlayerUtil().getPlayerInfo(p).getDeaths();
         }
         if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                     "Deaths") != null) {
-                return Long.parseLong(Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Deaths").toString());
+                return Long.parseLong(Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Deaths").toString());
             }
         }
         return UHCFileRegister.getPlayerFile().getDeaths(p);
@@ -302,7 +302,7 @@ public class StatsUtil extends Util {
         new BukkitRunnable() {
             public void run() {
                 if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                             "Deaths") != null) {
                         Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Deaths",
                                 Long.toString(getDeaths(p) + 1));
@@ -319,10 +319,10 @@ public class StatsUtil extends Util {
             return UHCRegister.getPlayerUtil().getPlayerInfo(p).getCoins();
         }
         if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                     "Coins") != null) {
                 String coins = Database
-                        .getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Coins").toString();
+                        .getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Coins").toString();
                 return Long.parseLong(coins);
             }
         }
@@ -345,7 +345,7 @@ public class StatsUtil extends Util {
             public void run() {
                 long coins = getCoins(p);
                 if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                             "Coins") != null) {
                         Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Coins",
                                 Long.toString(coins + amount));
@@ -365,7 +365,7 @@ public class StatsUtil extends Util {
             public void run() {
                 long coins = getCoins(p);
                 if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                             "Coins") != null) {
                         if (getCoins(p) - amount < 0)
                             Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Coins",
@@ -407,11 +407,11 @@ public class StatsUtil extends Util {
             if (Database.containsPlayer("UHC", p)) {
                 ArrayList<Kit> kits = new ArrayList<>();
 
-                if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kits").toString().equals("-")) {
+                if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Kits").toString().equals("-")) {
                     return kits;
                 }
 
-                for (String kit : Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Kits").toString().split(" ;")) {
+                for (String kit : Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Kits").toString().split(" ;")) {
                     kits.add(Kit.fromString(kit));
                 }
                 return kits;
@@ -468,7 +468,7 @@ public class StatsUtil extends Util {
             if (Database.containsPlayer("UHC", p)) {
                 ArrayList<String> crateNames = new ArrayList<>();
 
-                for (String crate : Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString().split(";")) {
+                for (String crate : Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString().split(";")) {
                     crateNames.add(crate);
                 }
 
@@ -485,7 +485,7 @@ public class StatsUtil extends Util {
         if (getUhc().isMySQLMode()) {
             if (Database.containsPlayer("UHC", p)) {
                 long count = 0;
-                String qCrates = Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString();
+                String qCrates = Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString();
 
                 for (String crateNames : qCrates.split(";")) {
                     if (Crate.getCrateByRawName(crateNames) == null) continue;
@@ -510,8 +510,8 @@ public class StatsUtil extends Util {
 
                         String crates;
 
-                        if (!Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString().equals("-")) {
-                            crates = Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString() + crate.getRawName() + ";";
+                        if (!Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString().equals("-")) {
+                            crates = Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString() + crate.getRawName() + ";";
                         } else {
                             crates = crate.getRawName() + ";";
                         }
@@ -535,8 +535,8 @@ public class StatsUtil extends Util {
             public void run() {
                 if (getUhc().isMySQLMode()) {
                     if (Database.containsPlayer("UHC", p)) {
-                        if (!Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").equals("-")) {
-                            String crates = Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString();
+                        if (!Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").equals("-")) {
+                            String crates = Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString();
 
                             if (crates.contains(crate.getRawName())) {
                                 crates = crates.replaceFirst(crate.getRawName() + ";", "");
@@ -562,10 +562,10 @@ public class StatsUtil extends Util {
             return UHCRegister.getPlayerUtil().getPlayerInfo(p).getPoints();
         }
         if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                     "Points") != null) {
                 String points = Database
-                        .getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Points").toString();
+                        .getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Points").toString();
                 return Long.parseLong(points);
             }
         }
@@ -582,7 +582,7 @@ public class StatsUtil extends Util {
         new BukkitRunnable() {
             public void run() {
                 if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                             "Points") != null) {
                         Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Points",
                                 Long.toString(getPoints(p) + amount));
@@ -602,7 +602,7 @@ public class StatsUtil extends Util {
             public void run() {
                 long points = getPoints(p);
                 if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                             "Points") != null) {
                         if (points - amount < 0)
                             Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Points",
@@ -627,7 +627,7 @@ public class StatsUtil extends Util {
         if (getUhc().isMySQLMode()) {
             try {
                 ResultSet rs = MySQLAPI.getMySQLConnection().createStatement()
-                        .executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
+                        .executeQuery("SELECT " + "uuid" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
 
                 ResultSet counts = MySQLAPI.getMySQLConnection().createStatement()
                         .executeQuery("SELECT COUNT(*) FROM UHC");
@@ -640,7 +640,7 @@ public class StatsUtil extends Util {
 
                 while (rs.next()) {
                     in--;
-                    rank.put(in, rs.getString("UUID"));
+                    rank.put(in, rs.getString("uuid"));
                 }
 
                 return Bukkit.getOfflinePlayer(UUID.fromString(rank.get(r)));
@@ -671,7 +671,7 @@ public class StatsUtil extends Util {
         if (getUhc().isMySQLMode()) {
             try {
                 ResultSet rs = MySQLAPI.getMySQLConnection().createStatement()
-                        .executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
+                        .executeQuery("SELECT " + "uuid" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
 
                 ResultSet counts = MySQLAPI.getMySQLConnection().createStatement()
                         .executeQuery("SELECT COUNT(*) FROM UHC");
@@ -714,9 +714,9 @@ public class StatsUtil extends Util {
             return UHCRegister.getPlayerUtil().getPlayerInfo(p).getWins();
         }
         if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                     "Wins") != null)
-                return Long.parseLong(Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Wins").toString());
+                return Long.parseLong(Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Wins").toString());
         }
         return UHCFileRegister.getPlayerFile().getWins(p);
     }
@@ -729,7 +729,7 @@ public class StatsUtil extends Util {
         new BukkitRunnable() {
             public void run() {
                 if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                             "Wins") != null) {
                         Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Wins",
                                 Long.toString(getWins(p) + 1));
@@ -767,11 +767,11 @@ public class StatsUtil extends Util {
             if (Database.containsPlayer("UHC", p)) {
                 ArrayList<UHCAchievements> achievements = new ArrayList<>();
 
-                if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Achievements").toString().equals("-")) {
+                if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Achievements").toString().equals("-")) {
                     return achievements;
                 }
 
-                for (String achievement : Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(), "Achievements").toString().split(" ;")) {
+                for (String achievement : Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Achievements").toString().split(" ;")) {
                     achievements.add(UHCAchievements.fromString(achievement));
                 }
                 return achievements;
@@ -788,7 +788,7 @@ public class StatsUtil extends Util {
         new BukkitRunnable() {
             public void run() {
                 if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "UUID", UUIDFetcher.getUUID(p.getName()).toString(),
+                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
                             "Achievements") != null) {
                         Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Achievements", getAchievementsAsString(p));
                         return;

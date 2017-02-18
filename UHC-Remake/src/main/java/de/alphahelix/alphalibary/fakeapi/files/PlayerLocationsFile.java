@@ -16,10 +16,10 @@
 
 package de.alphahelix.alphalibary.fakeapi.files;
 
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
 import de.alphahelix.alphalibary.fakeapi.FakeAPI;
 import de.alphahelix.alphalibary.fakeapi.instances.FakePlayer;
 import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;

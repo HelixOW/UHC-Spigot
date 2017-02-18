@@ -1,7 +1,7 @@
 package de.alphahelix.uhc;
 
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
 import de.alphahelix.alphalibary.mysql.MySQLAPI;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
@@ -45,7 +45,7 @@ public class Ranking extends Util {
                 try {
                     ResultSet rs;
                     rs = MySQLAPI.getMySQLConnection().createStatement()
-                            .executeQuery("SELECT " + "UUID" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
+                            .executeQuery("SELECT " + "uuid" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
 
                     ResultSet counts = MySQLAPI.getMySQLConnection().createStatement()
                             .executeQuery("SELECT COUNT(*) FROM UHC");
@@ -58,7 +58,7 @@ public class Ranking extends Util {
 
                     while (rs.next()) {
                         in--;
-                        rank.put(in, rs.getString("UUID"));
+                        rank.put(in, rs.getString("uuid"));
                     }
 
                     LinkedList<Location> locs = new LinkedList<>();

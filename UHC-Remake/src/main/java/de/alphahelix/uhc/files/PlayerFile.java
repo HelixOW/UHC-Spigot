@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
 import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.UHCAchievements;
 import de.alphahelix.uhc.instances.Crate;

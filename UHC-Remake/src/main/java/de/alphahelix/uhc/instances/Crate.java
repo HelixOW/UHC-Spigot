@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
 import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;

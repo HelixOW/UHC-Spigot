@@ -17,7 +17,6 @@
 package de.alphahelix.alphalibary.fakeapi.utils;
 
 import com.mojang.authlib.GameProfile;
-import de.alphahelix.alphalibary.UUID.UUIDFetcher;
 import de.alphahelix.alphalibary.fakeapi.FakeAPI;
 import de.alphahelix.alphalibary.fakeapi.Register;
 import de.alphahelix.alphalibary.fakeapi.instances.FakePlayer;
@@ -29,6 +28,7 @@ import de.alphahelix.alphalibary.nms.REnumPlayerInfoAction;
 import de.alphahelix.alphalibary.reflection.PacketUtil;
 import de.alphahelix.alphalibary.reflection.ReflectionUtil;
 import de.alphahelix.alphalibary.utils.MinecraftVersion;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
