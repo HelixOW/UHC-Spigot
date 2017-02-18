@@ -1,5 +1,8 @@
 Version 2.9:
-    +
+    + own crates
+    + mysql improvements
+    + bug fixes
+    + git repo now has every class
 
 Version 2.8.1:
     + important bugfix!
