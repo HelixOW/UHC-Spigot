@@ -1,20 +1,16 @@
 package de.alphahelix.uhc.timers;
 
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-public class EntropyTimer extends Util {
+public class EntropyTimer {
 
     private static BukkitTask draining;
-
-    public EntropyTimer(UHC uhc) {
-        super(uhc);
-    }
 
     public void stopTimer() {
         if (draining != null)
@@ -35,17 +31,13 @@ public class EntropyTimer extends Util {
 
         draining = new BukkitRunnable() {
             public void run() {
-                for (String pName : UHCRegister.getPlayerUtil().getSurvivors()) {
-                    if (Bukkit.getPlayer(pName) == null) continue;
-                    Player p = Bukkit.getPlayer(pName);
-
-                    if (p.getLevel() == 0) {
+                for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
+                    if (p.getLevel() == 0)
                         p.setHealth(20.0);
-                    } else {
+                    else
                         p.setLevel(p.getLevel() - 1);
-                    }
                 }
             }
-        }.runTaskTimer(getUhc(), 0, (20 * 60) * 10);
+        }.runTaskTimer(UHC.getInstance(), 0, (20 * 60) * 10);
     }
 }

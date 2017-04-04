@@ -1,9 +1,8 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.alphalibary.reflection.ReflectionUtil;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.reflection.ReflectionUtil;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import net.md_5.bungee.api.ChatColor;
@@ -13,12 +12,13 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ScenarioFile extends SimpleFile<UHC> {
+public class ScenarioFile extends SimpleFile {
 
-    private ArrayList<Material> added = new ArrayList<>();
+    private static final Random RANDOM = new Random();
+    private static final ArrayList<Material> ADDED = new ArrayList<>();
 
-    public ScenarioFile(UHC uhc) {
-        super("scenario.uhc", uhc);
+    public ScenarioFile() {
+        super("scenario.uhc");
     }
 
     @Override
@@ -77,7 +77,7 @@ public class ScenarioFile extends SimpleFile<UHC> {
     }
 
     public ItemStack getScenarioItem(Scenarios s) {
-        return getInventoryItem("Scenarios." + Scenarios.getRawScenarioName(s) + ".icon").getItemStack();
+        return new ItemBuilder(getInventoryItem("Scenarios." + Scenarios.getRawScenarioName(s) + ".icon").getItemStack()).setName(getCustomScenarioName(s)).build();
     }
 
     public Scenarios getScenarioByItem(ItemStack s) {
@@ -105,7 +105,7 @@ public class ScenarioFile extends SimpleFile<UHC> {
     }
 
     private Material getRandomMaterial() {
-        int index = new Random().nextInt(Material.values().length);
+        int index = RANDOM.nextInt(Material.values().length);
         if (!ReflectionUtil.getVersion().contains("1_8")) {
             while (Material.values()[index].equals(Material.AIR)
                     || Material.values()[index].equals(Material.BURNING_FURNACE)
@@ -140,8 +140,8 @@ public class ScenarioFile extends SimpleFile<UHC> {
                     || Material.values()[index].equals(Material.WATER)
                     || Material.values()[index].equals(Material.STATIONARY_LAVA)
                     || Material.values()[index].equals(Material.LAVA)
-                    || added.contains(Material.values()[index]))
-                index = new Random().nextInt(Material.values().length);
+                    || ADDED.contains(Material.values()[index]))
+                index = RANDOM.nextInt(Material.values().length);
         } else {
             while (Material.values()[index].equals(Material.AIR)
                     || Material.values()[index].equals(Material.BURNING_FURNACE)
@@ -170,18 +170,18 @@ public class ScenarioFile extends SimpleFile<UHC> {
                     || Material.values()[index].equals(Material.WATER)
                     || Material.values()[index].equals(Material.STATIONARY_LAVA)
                     || Material.values()[index].equals(Material.LAVA)
-                    || added.contains(Material.values()[index]))
-                index = new Random().nextInt(Material.values().length);
+                    || ADDED.contains(Material.values()[index]))
+                index = RANDOM.nextInt(Material.values().length);
         }
 
-        added.add(Material.values()[index]);
+        ADDED.add(Material.values()[index]);
         return Material.values()[index];
     }
 
-    public static class ScenarioHelpFile extends SimpleFile<UHC> {
+    public static class ScenarioHelpFile extends SimpleFile {
 
-        public ScenarioHelpFile(UHC uhc) {
-            super("scenariohelp.uhc", uhc);
+        public ScenarioHelpFile() {
+            super("scenariohelp.uhc");
         }
 
         @Override

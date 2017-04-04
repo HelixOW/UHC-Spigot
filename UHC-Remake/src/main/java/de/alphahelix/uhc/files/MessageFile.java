@@ -1,7 +1,6 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.instances.Crate;
 import de.alphahelix.uhc.instances.Kit;
@@ -9,10 +8,10 @@ import de.alphahelix.uhc.instances.UHCTeam;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class MessageFile extends SimpleFile<UHC> {
+public class MessageFile extends SimpleFile {
 
-    public MessageFile(UHC uhc) {
-        super("messages.uhc", uhc);
+    public MessageFile() {
+        super("messages.uhc");
     }
 
     @Override
@@ -42,9 +41,34 @@ public class MessageFile extends SimpleFile<UHC> {
         setDefault("Picked team", "&7You've picked the team &b[team]&7!");
         setDefault("Team is full", "&7Sorry, but you &ccan't join &7this team!");
         setDefault("First crafted item", "&7[player] has crafted a &a[item] &7for the first time.");
-        setDefault("Crate dropped", "You just got a [crate] crate &7dropped!");
+        setDefault("Crate dropped", "&7You just got a [crate] crate &7dropped!");
+        setDefault("Coins added", "&7You just got &a[amount] Coins&7!");
+        setDefault("Points added", "&7You just got &a[amount] Points&7!");
+        setDefault("Kit added", "&7You just got the &a[kit]&7 Kit!");
         setDefault("Ranklist", "&7The ranks are: [ranks]");
         setDefault("Achievement unlocked", "&7You just unlocked the achievement &8: &a[achievement]");
+        setDefault("No reward for rank", "&7Your current rank doesn't have any rewards.");
+        setDefault("Reward cooldown", "&7You have to wait &c[time] &7more to get the &anext &7reward!");
+    }
+
+    public String getNoReward() {
+        return getColorString("No reward for rank");
+    }
+
+    public String getRewardCooldown(String time) {
+        return getColorString("Reward cooldown").replace("[time]", time);
+    }
+
+    public String getKitAdded(Kit k) {
+        return getColorString("Kit added").replace("[kit]", k.getName());
+    }
+
+    public String getCoinsAdded(String added) {
+        return getColorString("Coins added").replace("[amount]", added);
+    }
+
+    public String getPointsAdded(String added) {
+        return getColorString("Points added").replace("[amount]", added);
     }
 
     public String getJoin() {
@@ -61,10 +85,6 @@ public class MessageFile extends SimpleFile<UHC> {
 
     public String getScenariomode() {
         return getColorString("Scenariomode");
-    }
-
-    public String getKitmode() {
-        return getColorString("Kitmode");
     }
 
     public String getNoPermissions() {

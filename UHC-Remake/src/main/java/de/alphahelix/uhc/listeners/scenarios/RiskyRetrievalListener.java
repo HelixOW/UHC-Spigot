@@ -1,10 +1,9 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCFileRegister;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
@@ -15,24 +14,20 @@ public class RiskyRetrievalListener extends SimpleListener {
 
     private Chest rr;
 
-    public RiskyRetrievalListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.RISKY_RETRIEVAL))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.RISKY_RETRIEVAL))
             return;
 
-        UHCFileRegister.getLocationsFile().getArena().getBlock().setType(Material.CHEST);
-        rr = (Chest) UHCFileRegister.getLocationsFile().getArena().getBlock().getState();
+        Bukkit.getWorld("UHC").getSpawnLocation().getBlock().setType(Material.CHEST);
+        rr = (Chest) Bukkit.getWorld("UHC").getSpawnLocation().getBlock().getState();
     }
 
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.RISKY_RETRIEVAL))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.RISKY_RETRIEVAL))
             return;
 
         if (e.getBlock().getType().equals(Material.GOLD_ORE) || e.getBlock().getType().equals(Material.DIAMOND_ORE)) {

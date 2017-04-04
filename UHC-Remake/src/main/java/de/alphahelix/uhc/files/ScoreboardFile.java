@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
 
-public class ScoreboardFile extends SimpleFile<UHC> {
+public class ScoreboardFile extends SimpleFile {
 
-    public ScoreboardFile(UHC uhc) {
-        super("scoreboard.uhc", uhc);
+    public ScoreboardFile() {
+        super("scoreboard.uhc");
     }
 
     public boolean isLobbyShow(String part) {
@@ -76,6 +75,8 @@ public class ScoreboardFile extends SimpleFile<UHC> {
         setDefault("Ingame.show.time infos", true);
         setDefault("Ingame.show.bar", true);
 
+        setDefault("Ingame.message.identifier ([i])", "&7>");
+
         setDefault("Ingame.title", "&7> &cIngame &7<");
         setDefault("Ingame.message.alive", " &aAlive &7> [alive]");
         setDefault("Ingame.message.specs", " &cSpecs &7> [specs]");
@@ -92,10 +93,10 @@ public class ScoreboardFile extends SimpleFile<UHC> {
         setDefault("Ingame.message.bar", "&7=------------=");
     }
 
-    public static class ScoreboardConstructFile extends SimpleFile<UHC> {
+    public static class ScoreboardConstructFile extends SimpleFile {
 
-        public ScoreboardConstructFile(UHC uhc) {
-            super("scoreboardConstruction.uhc", uhc);
+        public ScoreboardConstructFile() {
+            super("scoreboardConstruction.uhc");
         }
 
         public int getLobbyLines() {

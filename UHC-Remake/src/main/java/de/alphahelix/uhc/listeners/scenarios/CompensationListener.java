@@ -1,20 +1,15 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class CompensationListener extends SimpleListener {
 
-    public CompensationListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        if (!scenarioCheck(Scenarios.COMPENSATION))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.COMPENSATION))
             return;
         if (!(e.getEntity().getKiller() != null))
             return;

@@ -1,10 +1,10 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,16 +15,12 @@ import org.bukkit.potion.PotionEffectType;
 
 public class MoleListener extends SimpleListener {
 
-    public MoleListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.MOLE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.MOLE))
             return;
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             p.getInventory().addItem(new ItemStack(Material.IRON_SPADE));
             p.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
             p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 99999, 2));
@@ -35,7 +31,7 @@ public class MoleListener extends SimpleListener {
     public void onMove(PlayerMoveEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.MOLE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.MOLE))
             return;
 
         if (e.getTo().getBlockY() < 40) {

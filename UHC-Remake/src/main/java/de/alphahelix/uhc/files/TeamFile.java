@@ -1,18 +1,17 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphaapi.item.ItemBuilder;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
 
-public class TeamFile extends SimpleFile<UHC> {
+public class TeamFile extends SimpleFile {
 
-    public TeamFile(UHC uhc) {
-        super("teams.uhc", uhc);
+    public TeamFile() {
+        super("teams.uhc");
     }
 
     public void addValues() {

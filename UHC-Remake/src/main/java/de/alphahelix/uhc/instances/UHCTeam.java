@@ -2,7 +2,8 @@ package de.alphahelix.uhc.instances;
 
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.ScoreboardUtil;
+import de.alphahelix.uhc.util.TeamManagerUtil;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,7 +31,7 @@ public class UHCTeam {
         this.isColoredName = isColoredName;
         this.color = color;
         this.players = new ArrayList<>();
-        UHCRegister.getTeamManagerUtil().addTeam(this);
+        TeamManagerUtil.addTeam(this);
     }
 
     public byte getColorData() {
@@ -89,10 +90,10 @@ public class UHCTeam {
             players.add(p);
             if (isColoredName)
                 setColoredName(p);
-            UHCRegister.getScoreboardUtil().updateTeam(p, this);
-            p.sendMessage(UHC.getInstance().getPrefix() + UHCFileRegister.getMessageFile().getPickedTeam(this));
+            ScoreboardUtil.updateTeam(p, this);
+            p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getPickedTeam(this));
         } else {
-            p.sendMessage(UHC.getInstance().getPrefix()
+            p.sendMessage(UHC.getPrefix()
                     + UHCFileRegister.getMessageFile().getTeamIsFull());
         }
     }

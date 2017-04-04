@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.commands;
 
-import de.alphahelix.alphalibary.command.SimpleCommand;
+import de.alphahelix.alphaapi.command.SimpleCommand;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
@@ -9,10 +9,10 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class StartCommand extends SimpleCommand<UHC> {
+public class StartCommand extends SimpleCommand {
 
-    public StartCommand(UHC plugin) {
-        super(plugin, "start", "Short or strech the lobby time.");
+    public StartCommand() {
+        super("start", "Short or strech the lobby time.");
     }
 
     @Override
@@ -23,7 +23,7 @@ public class StartCommand extends SimpleCommand<UHC> {
         Player p = (Player) cs;
 
         if (!(p.hasPermission("uhc.start") || p.hasPermission("uhc.admin"))) {
-            p.sendMessage(getPlugin().getPrefix() + UHCFileRegister.getMessageFile().getNoPermissions());
+            p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getNoPermissions());
             return true;
         }
 
@@ -32,7 +32,7 @@ public class StartCommand extends SimpleCommand<UHC> {
         } else if (args.length == 1) {
             UHCRegister.getLobbyTimer().changeTime(Integer.parseInt(args[0]));
         } else {
-            p.sendMessage(getPlugin().getPrefix() + UHCFileRegister.getMessageFile().getCommandNotFound());
+            p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getCommandNotFound());
         }
 
         return true;

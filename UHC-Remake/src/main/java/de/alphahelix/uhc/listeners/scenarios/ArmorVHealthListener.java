@@ -1,24 +1,19 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.ArmorBar;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.armor.ArmorEquipEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
 public class ArmorVHealthListener extends SimpleListener {
 
-    public ArmorVHealthListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEquip1(ArmorEquipEvent e) {
         Player p = e.getPlayer();
 
-        if (!scenarioCheck(Scenarios.ARMOR_V_HEALTH))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.ARMOR_V_HEALTH))
             return;
 
         ArmorBar bar = ArmorBar.getArmorBarByMaterial(p.getInventory().getItemInHand().getType());

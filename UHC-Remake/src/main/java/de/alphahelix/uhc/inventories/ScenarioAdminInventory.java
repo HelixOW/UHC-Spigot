@@ -1,9 +1,7 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.alphalibary.inventorys.SimpleMovingInventory;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.inventorys.SimpleMovingInventory;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,11 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScenarioAdminInventory extends Util {
-
-    public ScenarioAdminInventory(UHC uhc) {
-        super(uhc);
-    }
+public class ScenarioAdminInventory {
 
     public void fillInventory(Player p) {
         ArrayList<ItemStack> stacks = new ArrayList<>();
@@ -39,7 +33,6 @@ public class ScenarioAdminInventory extends Util {
         }
 
         new SimpleMovingInventory(
-                getUhc(),
                 p,
                 9 * 5,
                 stacks,

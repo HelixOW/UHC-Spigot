@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.commands;
 
-import de.alphahelix.alphalibary.command.SimpleCommand;
+import de.alphahelix.alphaapi.command.SimpleCommand;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.register.UHCFileRegister;
@@ -9,19 +9,19 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class InfoCommand extends SimpleCommand<UHC> {
+public class InfoCommand extends SimpleCommand {
 
-    public InfoCommand(UHC plugin) {
-        super(plugin, "informations", "Get informations about the current scenario", "scenario", "infos");
+    public InfoCommand() {
+        super("informations", "Get informations about the current scenario", "scenario", "infos");
     }
 
     @Override
     public boolean execute(CommandSender cs, String label, String[] args) {
 
-        if (getPlugin().isScenarios())
-            cs.sendMessage(getPlugin().getPrefix() + UHCFileRegister.getScenarioFile().getCustomScenarioName(Scenarios.getScenario()) + ChatColor.DARK_GRAY + ": " + UHCFileRegister.getScenarioHelpFile().getScenarioDescriptionAsOneString(Scenarios.getScenario()));
+        if (UHC.isScenarios())
+            cs.sendMessage(UHC.getPrefix() + UHCFileRegister.getScenarioFile().getCustomScenarioName(Scenarios.getScenario()) + ChatColor.DARK_GRAY + ": " + UHCFileRegister.getScenarioHelpFile().getScenarioDescriptionAsOneString(Scenarios.getScenario()));
         else {
-            cs.sendMessage(getPlugin().getPrefix()
+            cs.sendMessage(UHC.getPrefix()
                     + UHCFileRegister.getMessageFile().getScenariomode());
         }
         return true;

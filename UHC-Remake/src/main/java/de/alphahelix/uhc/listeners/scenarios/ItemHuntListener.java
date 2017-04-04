@@ -1,11 +1,11 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,16 +18,12 @@ public class ItemHuntListener extends SimpleListener {
 
     private HashMap<String, ArrayList<String>> lists = new HashMap<>();
 
-    public ItemHuntListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.ITEM_HUNT))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.ITEM_HUNT))
             return;
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             ArrayList<String> list = getItems();
             String[] lore = list.toArray(new String[list.size()]);
             p.getInventory().addItem(new ItemBuilder(Material.PAPER).setLore(lore).build());
@@ -38,7 +34,7 @@ public class ItemHuntListener extends SimpleListener {
     @EventHandler
     public void onOpen(PlayerPickupItemEvent e) {
         if (e.isCancelled()) return;
-        if (!scenarioCheck(Scenarios.ITEM_HUNT)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.ITEM_HUNT)) return;
 
         if (lists.containsKey(e.getPlayer().getName())) {
             for (String mNames : lists.get(e.getPlayer().getName())) {

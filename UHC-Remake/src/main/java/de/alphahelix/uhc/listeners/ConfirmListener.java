@@ -1,18 +1,17 @@
 package de.alphahelix.uhc.listeners;
 
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.ScoreboardUtil;
+import de.alphahelix.uhc.util.StatsUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class ConfirmListener extends SimpleListener {
-
-    public ConfirmListener(UHC uhc) {
-        super(uhc);
-    }
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
@@ -36,13 +35,16 @@ public class ConfirmListener extends SimpleListener {
                 if (e.getCurrentItem().getItemMeta().getDisplayName()
                         .equals(UHCFileRegister.getConfirmFile().getItem(true).getItemStack().getItemMeta().getDisplayName())) {
 
-                    UHCRegister.getStatsUtil().removePoints(
-                            p,
+                    StatsUtil.removeCoins(
+                            UUIDFetcher.getUUID(p),
                             (int) UHCRegister.getKitChooseListener().getKitWhichPlayerWantToBuy(p).getPrice());
 
-                    UHCRegister.getStatsUtil().addKit(
-                            UHCRegister.getKitChooseListener().getKitWhichPlayerWantToBuy(p),
-                            p);
+                    ScoreboardUtil.updateCoins(p, StatsUtil.getCoins(UUIDFetcher.getUUID(p)));
+
+
+                    StatsUtil.addKits(
+                            UUIDFetcher.getUUID(p),
+                            UHCRegister.getKitChooseListener().getKitWhichPlayerWantToBuy(p));
 
                     String msg = UHCFileRegister.getMessageFile().getKitChosen(UHCRegister.getKitChooseListener().getKitWhichPlayerWantToBuy(p));
 
@@ -52,10 +54,10 @@ public class ConfirmListener extends SimpleListener {
 
                     e.getWhoClicked().closeInventory();
 
-                    UHCRegister.getScoreboardUtil().updateKit(
+                    ScoreboardUtil.updateKit(
                             p,
                             UHCRegister.getKitChooseListener().getKitWhichPlayerWantToBuy(p));
-                    e.getWhoClicked().sendMessage(getUhc().getPrefix() + msg);
+                    e.getWhoClicked().sendMessage(UHC.getPrefix() + msg);
 
                 } else if (e.getCurrentItem().getItemMeta().getDisplayName()
                         .equals(UHCFileRegister.getConfirmFile().getItem(false).getItemStack().getItemMeta().getDisplayName())) {

@@ -1,16 +1,17 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import org.bukkit.Effect;
 
-public class BorderFile extends SimpleFile<UHC> {
+public class BorderFile extends SimpleFile {
 
-    public BorderFile(UHC uhc) {
-        super("border.uhc", uhc);
+    public BorderFile() {
+        super("border.uhc");
     }
 
     @Override
     public void addValues() {
+        setDefault("effect", Effect.MOBSPAWNER_FLAMES.name());
         setDefault("damage (hearts)", 2);
         setDefault("delay (min)", 10);
         setDefault("moving distance", 500);
@@ -36,5 +37,9 @@ public class BorderFile extends SimpleFile<UHC> {
 
     public boolean doShrinking() {
         return getBoolean("shrinks");
+    }
+
+    public Effect getEffect() {
+        return Effect.getByName(getString("effect"));
     }
 }

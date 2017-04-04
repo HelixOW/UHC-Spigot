@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,15 +9,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class LongshotListener extends SimpleListener {
 
-    public LongshotListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.LONGSHOTS) || scenarioCheck(Scenarios.REWARDING_LONGSHOTS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.LONGSHOTS) || Scenarios.isPlayedAndEnabled(Scenarios.REWARDING_LONGSHOTS))
             return;
         if (!(e.getDamager() instanceof Arrow) || !(e.getEntity() instanceof Player)) {
             return;

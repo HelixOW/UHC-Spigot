@@ -1,11 +1,9 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphalibary.nms.SimpleTitle;
+import de.alphahelix.alphaapi.nms.SimpleTitle;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Sounds;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -16,24 +14,20 @@ import org.bukkit.util.Vector;
 
 import java.util.Random;
 
-public class BorderUtil extends Util {
+public class BorderUtil {
 
-    private int size;
-    private Location arena;
-    private BukkitTask message;
+    private static int size;
+    private static Location arena;
+    private static BukkitTask message;
 
-    public BorderUtil(UHC uhc) {
-        super(uhc);
-    }
-
-    public int getSize() {
+    public static int getSize() {
         return size;
     }
 
-    public void createBorder() {
+    public static void createBorder() {
         new BukkitRunnable() {
             public void run() {
-                for (String pName : UHCRegister.getPlayerUtil().getAll()) {
+                for (String pName : PlayerUtil.getAll()) {
                     if (Bukkit.getPlayer(pName) == null) continue;
                     Player p = Bukkit.getPlayer(pName);
 
@@ -58,11 +52,11 @@ public class BorderUtil extends Util {
                     }
                 }
             }
-        }.runTaskTimer(getUhc(), 0L, 20);
+        }.runTaskTimer(UHC.getInstance(), 0L, 20);
 
         new BukkitRunnable() {
             public void run() {
-                for (String pName : UHCRegister.getPlayerUtil().getAll()) {
+                for (String pName : PlayerUtil.getAll()) {
                     if (Bukkit.getPlayer(pName) == null) continue;
                     Player p = Bukkit.getPlayer(pName);
 
@@ -78,9 +72,9 @@ public class BorderUtil extends Util {
                                         if (loc.distance(arena) > size && loc.distance(arena) < size + 1) {
                                             if (r.nextInt(20 + 1) == 0) {
                                                 for (int i = 0; i < 10; i++) {
-                                                    p.getWorld().playEffect(loc, Effect.MOBSPAWNER_FLAMES, 1);
-                                                    p.getWorld().playEffect(loc, Effect.MOBSPAWNER_FLAMES, 1);
-                                                    p.getWorld().playEffect(loc, Effect.MOBSPAWNER_FLAMES, 1);
+                                                    p.getWorld().playEffect(loc, UHCFileRegister.getBorderFile().getEffect(), 1);
+                                                    p.getWorld().playEffect(loc, UHCFileRegister.getBorderFile().getEffect(), 1);
+                                                    p.getWorld().playEffect(loc, UHCFileRegister.getBorderFile().getEffect(), 1);
                                                 }
                                             }
                                         }
@@ -114,47 +108,42 @@ public class BorderUtil extends Util {
                     }
                 }
             }
-        }.runTaskTimer(getUhc(), 0, 20);
+        }.runTaskTimer(UHC.getInstance(), 0, 20);
     }
 
-    public void changeSize(int newSize) {
+    public static void changeSize(int newSize) {
         size = newSize;
     }
 
-    public void setArena(Location spawn) {
+    public static void setArena(Location spawn) {
         arena = spawn;
     }
 
-    public void setMovingListener() {
-
+    public static void setMovingListener() {
         if (!UHCFileRegister.getBorderFile().doShrinking())
             return;
         if (message != null)
             return;
 
-        new BukkitRunnable() {
+        message = new BukkitRunnable() {
             public void run() {
-                message = new BukkitRunnable() {
-                    public void run() {
-                        changeSize(size - UHCFileRegister.getBorderFile().getMovingDistance());
+                changeSize(size - UHCFileRegister.getBorderFile().getMovingDistance());
 
-                        for (String pname : UHCRegister.getPlayerUtil().getAll()) {
-                            if (Bukkit.getPlayer(pname) == null) continue;
-                            Player p = Bukkit.getPlayer(pname);
+                for (String pname : PlayerUtil.getAll()) {
+                    if (Bukkit.getPlayer(pname) == null) continue;
+                    Player p = Bukkit.getPlayer(pname);
 
-                            UHCRegister.getScoreboardUtil().updateBorder(p);
-                            SimpleTitle.sendTitle(p, " ",
-                                    UHCFileRegister.getMessageFile().getBorderHasMoved().replace("[blocks]",
-                                            Integer.toString(UHCFileRegister.getBorderFile().getMovingDistance())),
-                                    1, 2, 1);
-                            p.sendMessage(getUhc().getPrefix()
-                                    + UHCFileRegister.getMessageFile().getBorderHasMoved().replace("[blocks]",
-                                    Integer.toString(UHCFileRegister.getBorderFile().getMovingDistance())));
+                    ScoreboardUtil.updateBorder(p);
+                    SimpleTitle.sendTitle(p, " ",
+                            UHCFileRegister.getMessageFile().getBorderHasMoved().replace("[blocks]",
+                                    Integer.toString(UHCFileRegister.getBorderFile().getMovingDistance())),
+                            1, 2, 1);
+                    p.sendMessage(UHC.getPrefix()
+                            + UHCFileRegister.getMessageFile().getBorderHasMoved().replace("[blocks]",
+                            Integer.toString(UHCFileRegister.getBorderFile().getMovingDistance())));
 
-                        }
-                    }
-                }.runTaskTimer(getUhc(), 0, ((UHCFileRegister.getBorderFile().getDelay() * 20) * 60));
+                }
             }
-        }.runTaskLater(getUhc(), ((UHCFileRegister.getBorderFile().getDelay() * 20) * 60));
+        }.runTaskTimer(UHC.getInstance(), ((UHCFileRegister.getBorderFile().getDelay() * 20) * 60), ((UHCFileRegister.getBorderFile().getDelay() * 20) * 60));
     }
 }

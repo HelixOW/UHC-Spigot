@@ -1,15 +1,15 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphaapi.file.SimpleFile;
 import de.alphahelix.uhc.UHC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldCreator;
 
-public class LocationsFile extends SimpleFile<UHC> {
+public class LocationsFile extends SimpleFile {
 
-    public LocationsFile(UHC uhc) {
-        super("locations.uhc", uhc);
+    public LocationsFile() {
+        super("locations.uhc");
     }
 
     public void addArmorStand(Location loc, String name) {
@@ -20,6 +20,11 @@ public class LocationsFile extends SimpleFile<UHC> {
         setLocation("StatsNPC", loc);
     }
 
+    public void addRewardsNPC(Location loc) {
+        setLocation("RewardsNPC", loc);
+
+    }
+
     public void addRankingArmorStand(Location loc, int rank) {
         setLocation("Rankings." + rank, loc);
     }
@@ -28,14 +33,10 @@ public class LocationsFile extends SimpleFile<UHC> {
         override("ArmorStands." + name, null);
     }
 
-    public void removeRankingArmorstand(int rank) {
-        override("Rankings.Armorstands." + rank, null);
-    }
-
     public Location getLobby() {
         if (configContains("Lobby")) {
-            if (getPluginInstance().isLobbyAsSchematic()) {
-                return getArena().clone().add(0, 140, 0);
+            if (UHC.isLobbyAsSchematic()) {
+                return Bukkit.getWorld("UHC").getSpawnLocation().clone().add(0, 140, 0);
             } else {
                 return getLocation("Lobby");
             }
@@ -48,33 +49,6 @@ public class LocationsFile extends SimpleFile<UHC> {
 
     public void setLobby(Location loc) {
         setLocation("Lobby", loc);
-    }
-
-    public Location getArena() {
-        if (configContains("Arena")) {
-            return getLocation("Arena");
-        } else if (Bukkit.getWorld("UHC") == null) {
-            Bukkit.createWorld(new WorldCreator("UHC"));
-        }
-        return Bukkit.getWorld("UHC").getHighestBlockAt(Bukkit.getWorld("UHC").getSpawnLocation()).getLocation();
-    }
-
-    public void setArena(Location loc) {
-        loc.setWorld(Bukkit.getWorld("UHC"));
-        setLocation("Arena", loc);
-    }
-
-    public Location getNetherArena() {
-        if (configContains("Arena Nether")) {
-            return getLocation("Arena Nether");
-        } else if (Bukkit.getWorld("UHC-Nether") == null)
-            Bukkit.createWorld(new WorldCreator("UHC-Nether"));
-        return Bukkit.getWorld("UHC-Nether").getSpawnLocation();
-    }
-
-    public void setNetherArena(Location loc) {
-        loc.setWorld(Bukkit.getWorld("UHC-Nether"));
-        setLocation("Arena Nether", loc);
     }
 
     public Location getDeathmatch() {
@@ -95,17 +69,20 @@ public class LocationsFile extends SimpleFile<UHC> {
         if (configContains("StatsNPC")) {
             return getLocation("StatsNPC");
         }
-        return Bukkit.getWorlds().get(0).getSpawnLocation();
+        return null;
+    }
+
+    public Location getRewardNPCLocation() {
+        if (configContains("RewardsNPC")) {
+            return getLocation("RewardsNPC");
+        }
+        return null;
     }
 
     public Location getRankingArmorstandLocation(int rank) {
-        if (contains("Rankings.Armorstands." + rank)) {
-            return getLocation("Rankings.Armorstands." + rank);
+        if (configContains("Rankings." + rank)) {
+            return getLocation("Rankings." + rank);
         }
         return Bukkit.getWorlds().get(0).getSpawnLocation();
-    }
-
-    @Override
-    public void addValues() {
     }
 }

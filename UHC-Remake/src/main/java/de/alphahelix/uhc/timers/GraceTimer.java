@@ -1,172 +1,77 @@
 package de.alphahelix.uhc.timers;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.alphalibary.nms.SimpleActionBar;
-import de.alphahelix.alphalibary.nms.SimpleTitle;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.nms.SimpleActionBar;
+import de.alphahelix.alphaapi.nms.SimpleTitle;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Sounds;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
-import org.bukkit.Bukkit;
+import de.alphahelix.uhc.util.PlayerUtil;
+import de.alphahelix.uhc.util.ScoreboardUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
-public class GraceTimer extends Util {
+public class GraceTimer extends AbstractTimer {
 
-    private static BukkitTask timer;
-    private static BukkitTask grace;
-    private int time;
-    private double min;
-    private double h;
-    private boolean hourSend = false;
+    @Override
+    public void startTimer() {
+        if (!GState.isState(GState.PERIOD_OF_PEACE)) return;
+        if (isRunning()) return;
 
-    public GraceTimer(UHC uhc) {
-        super(uhc);
-    }
+        stopTimer();
 
-    public void stopTimer() {
-        if (timer != null)
-            timer.cancel();
-        timer = null;
-        if (grace != null)
-            grace.cancel();
-        grace = null;
-        resetTime();
-    }
+        setSecondTimer(() -> {
+            if (getSeconds() > 0) {
+                setSeconds(getSeconds() - 1);
 
-    public double getMinTime() {
-        return min;
-    }
+                for (Player p : Util.makePlayerArray(PlayerUtil.getAll())) {
+                    String time = (getMinTime() >= 1 ? UHCFileRegister.getMessageFile().getTimeLeftInfo(Util.round(getMinTime(), 1), UHCFileRegister.getUnitFile().getMinutes()) : UHCFileRegister.getMessageFile().getTimeLeftInfo(Util.round(getSeconds(), 1), UHCFileRegister.getUnitFile().getSeconds()));
 
-    public double getHourTime() {
-        return calcHours(time);
-    }
 
-    public String getTime() {
-        if (getHourTime() > 1 && getMinTime() > 60 && time > 60)
-            return Double.toString(round(getHourTime(), 1)) + UHCFileRegister.getUnitFile().getHours();
-        else if (getHourTime() < 1 && getMinTime() < 60 && time > 60)
-            return Double.toString(round(getMinTime(), 1)) + UHCFileRegister.getUnitFile().getMinutes();
-        else
-            return Integer.toString(time) + UHCFileRegister.getUnitFile().getSeconds();
-    }
+                    ScoreboardUtil.updateTime(p);
 
-    public void setTime(int t) {
-        time = t;
-    }
+                    if (getMinTime() % 5 == 0 && getSeconds() > 10 && getSeconds() != 0) {
+                        p.sendMessage(UHC.getPrefix() + time);
+                        SimpleTitle.sendTitle(p, " ", time, 1, 2, 1);
+                        p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
+                    }
 
-    public boolean isRunning() {
-        return timer != null;
-    }
+                    if (getSeconds() < 10 && getSeconds() != 0) {
+                        p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
 
-    public void startGraceTimer() {
-        if (!GState.isState(GState.PERIOD_OF_PEACE))
-            return;
+                        SimpleActionBar.send(p, UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
+                        p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
+                    }
 
-        if (timer != null) {
-            if (Bukkit.getScheduler().isCurrentlyRunning(timer.getTaskId()))
-                return;
-            return;
-        }
+                    if (getSeconds() == 0) {
+                        p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getEnd());
 
-        resetTime();
+                        SimpleActionBar.send(p, UHC.getPrefix() + UHCFileRegister.getMessageFile().getEnd());
 
-        timer = new BukkitRunnable() {
-            public void run() {
-                if (time > 0) {
-                    time--;
-
-                    grace = new BukkitRunnable() {
-                        private double h;
-
-                        public void run() {
-                            for (String pName : UHCRegister.getPlayerUtil().getAll()) {
-                                Player p = Bukkit.getPlayer(pName);
-
-                                if (p == null)
-                                    return;
-
-                                min = calcMin(time);
-                                h = calcHours(time);
-
-                                UHCRegister.getScoreboardUtil().updateTime(p);
-
-                                if ((h % 1 == 0 && !hourSend) && min > 60 && time != 0) {
-                                    hourSend = true;
-                                    p.sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile()
-                                            .getTimeLeftInfo(round(h, 1),
-                                                    (h >= 1 ? UHCFileRegister.getUnitFile().getHours()
-                                                            : UHCFileRegister.getUnitFile().getMinutes())));
-                                    SimpleTitle.sendTitle(p, getUhc().getPrefix(), getUhc().getPrefix() + UHCFileRegister.getMessageFile()
-                                                    .getTimeLeftInfo(round(h, 1),
-                                                            (h >= 1 ? UHCFileRegister.getUnitFile().getHours()
-                                                                    : UHCFileRegister.getUnitFile().getMinutes())),
-                                            1, 2, 1);
-                                    p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-                                    continue;
-                                }
-
-                                if (min % 5 == 0 && time > 10 && time != 0) {
-                                    p.sendMessage(
-                                            getUhc().getPrefix()
-                                                    + UHCFileRegister.getMessageFile().getTimeLeftInfo(round(min, 1), (min >= 1 ? UHCFileRegister.getUnitFile().getMinutes() : UHCFileRegister.getUnitFile().getSeconds())));
-                                    SimpleTitle.sendTitle(
-                                            p,
-                                            getUhc().getPrefix(),
-                                            UHCFileRegister.getMessageFile().getTimeLeftInfo(round(min, 1), (min >= 1 ? UHCFileRegister.getUnitFile().getMinutes() : UHCFileRegister.getUnitFile().getSeconds())),
-                                            1,
-                                            2,
-                                            1);
-                                    p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-                                } else if (time < 10 && time != 0) {
-                                    p.sendMessage(
-                                            getUhc().getPrefix()
-                                                    + UHCFileRegister.getMessageFile().getTimeLeftInfo(time, UHCFileRegister.getUnitFile().getSeconds()));
-
-                                    SimpleActionBar.send(p,
-                                            getUhc().getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(time, UHCFileRegister.getUnitFile().getSeconds()));
-                                    p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-                                } else if (time == 0) {
-                                    timer.cancel();
-
-                                    p.sendMessage(getUhc().getPrefix()
-                                            + UHCFileRegister.getMessageFile().getEnd());
-
-                                    SimpleActionBar.send(p, getUhc().getPrefix()
-                                            + UHCFileRegister.getMessageFile().getEnd());
-
-                                    for (String others : UHCRegister.getPlayerUtil().getAll()) {
-                                        if (Bukkit.getPlayer(others) == null) continue;
-                                        p.hidePlayer(Bukkit.getPlayer(others));
-                                    }
-
-                                    for (String alives : UHCRegister.getPlayerUtil().getSurvivors()) {
-                                        if (Bukkit.getPlayer(alives) == null) continue;
-                                        p.showPlayer(Bukkit.getPlayer(alives));
-                                    }
-                                    if (getUhc().isTracker())
-                                        p.getInventory().addItem(new ItemBuilder(Material.COMPASS)
-                                                .setName(getUhc().getTrackerName()).build());
-
-                                    GState.setCurrentState(GState.WARMUP);
-
-                                    UHCRegister.getWarmUpTimer().startWarmUpTimer();
-
-                                    grace.cancel();
-                                }
-                            }
+                        for (Player other : Util.makePlayerArray(PlayerUtil.getAll())) {
+                            p.hidePlayer(other);
                         }
-                    }.runTask(getUhc());
+
+                        for (Player alive : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
+                            p.showPlayer(alive);
+                        }
+
+                        if (UHC.isTracker())
+                            p.getInventory().addItem(new ItemBuilder(Material.COMPASS).setName(UHC.getTrackerName()).build());
+                    }
+                }
+
+                if (getSeconds() == 0) {
+                    stopTimer();
+
+                    GState.setCurrentState(GState.WARMUP);
+
+                    UHCRegister.getWarmUpTimer().startTimer();
                 }
             }
-        }.runTaskTimer(getUhc(), 0, 20);
-    }
-
-    private void resetTime() {
-        time = UHCFileRegister.getTimerFile().getInt("Period of peace.length");
+        });
     }
 }

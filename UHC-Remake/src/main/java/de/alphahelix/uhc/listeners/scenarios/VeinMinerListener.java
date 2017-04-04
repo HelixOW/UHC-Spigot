@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -12,15 +11,11 @@ import java.util.ArrayList;
 
 public class VeinMinerListener extends SimpleListener {
 
-    public VeinMinerListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.VEIN_MINER))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.VEIN_MINER))
             return;
         if (!e.getBlock().getType().name().contains("ORE"))
             return;

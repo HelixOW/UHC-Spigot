@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphaapi.item.ItemBuilder;
 import org.bukkit.Material;
 
-public class LobbyFile extends SimpleFile<UHC> {
+public class LobbyFile extends SimpleFile {
 
-    public LobbyFile(UHC uhc) {
-        super("lobby.uhc", uhc);
+    public LobbyFile() {
+        super("lobby.uhc");
     }
 
     @Override

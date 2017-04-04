@@ -1,10 +1,10 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,16 +15,12 @@ import org.bukkit.potion.PotionEffectType;
 
 public class PopeyeListener extends SimpleListener {
 
-    public PopeyeListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.POPEYE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.POPEYE))
             return;
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             p.getInventory().addItem(new ItemStack(Material.INK_SACK, 1, (short) 2));
         }
     }
@@ -33,7 +29,7 @@ public class PopeyeListener extends SimpleListener {
     public void onInteract(PlayerInteractEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.POPEYE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.POPEYE))
             return;
         if (!e.getAction().name().contains("RIGHT"))
             return;

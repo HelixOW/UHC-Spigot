@@ -1,12 +1,13 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.instances.UHCTeam;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
+import de.alphahelix.uhc.util.TeamManagerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,25 +22,21 @@ public class TeamInventoryListener extends SimpleListener {
 
     private static HashMap<String, Inventory> tInvs = new HashMap<>();
 
-    public TeamInventoryListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.TEAM_INVENTORY))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.TEAM_INVENTORY))
             return;
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
-            if (UHCRegister.getTeamManagerUtil().isInOneTeam(p) != null)
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
+            if (TeamManagerUtil.isInOneTeam(p) != null)
                 p.getInventory()
                         .addItem(new ItemBuilder(Material.ENDER_CHEST)
-                                .setName(UHCRegister.getTeamManagerUtil().isInOneTeam(p).getPrefix()
-                                        + UHCRegister.getTeamManagerUtil().isInOneTeam(p).getName())
+                                .setName(TeamManagerUtil.isInOneTeam(p).getPrefix()
+                                        + TeamManagerUtil.isInOneTeam(p).getName())
                                 .build());
         }
 
-        for (UHCTeam team : UHCRegister.getTeamManagerUtil().getTeams()) {
+        for (UHCTeam team : TeamManagerUtil.getTeams()) {
             tInvs.put(team.getName(), Bukkit.createInventory(null, 54, team.getPrefix() + team.getName()));
         }
     }
@@ -48,7 +45,7 @@ public class TeamInventoryListener extends SimpleListener {
     public void onClick(PlayerInteractEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.TEAM_INVENTORY))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.TEAM_INVENTORY))
             return;
         if (!e.hasItem())
             return;
@@ -57,10 +54,10 @@ public class TeamInventoryListener extends SimpleListener {
         if (!e.getPlayer().getInventory().getItemInHand().getType().equals(Material.ENDER_CHEST))
             return;
 
-        if (UHCRegister.getTeamManagerUtil().isInOneTeam(e.getPlayer()) != null) {
+        if (TeamManagerUtil.isInOneTeam(e.getPlayer()) != null) {
             e.setCancelled(true);
             e.getPlayer()
-                    .openInventory(tInvs.get(UHCRegister.getTeamManagerUtil().isInOneTeam(e.getPlayer()).getName()));
+                    .openInventory(tInvs.get(TeamManagerUtil.isInOneTeam(e.getPlayer()).getName()));
         }
     }
 
@@ -68,14 +65,14 @@ public class TeamInventoryListener extends SimpleListener {
     public void onPlace(BlockPlaceEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.TEAM_INVENTORY))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.TEAM_INVENTORY))
             return;
-        if (UHCRegister.getTeamManagerUtil().isInOneTeam(e.getPlayer()) == null)
+        if (TeamManagerUtil.isInOneTeam(e.getPlayer()) == null)
             return;
         if (e.getPlayer().getInventory().getItemInHand().hasItemMeta()
                 && e.getPlayer().getInventory().getItemInHand().getItemMeta().hasDisplayName()
                 && e.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName()
-                .contains(UHCRegister.getTeamManagerUtil().isInOneTeam(e.getPlayer()).getName()))
+                .contains(TeamManagerUtil.isInOneTeam(e.getPlayer()).getName()))
             e.setBuild(true);
     }
 }

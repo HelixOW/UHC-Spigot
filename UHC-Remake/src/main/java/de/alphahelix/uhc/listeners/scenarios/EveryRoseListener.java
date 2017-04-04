@@ -1,11 +1,11 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -13,16 +13,12 @@ import org.bukkit.event.EventHandler;
 
 public class EveryRoseListener extends SimpleListener {
 
-    public EveryRoseListener(UHC uhc) {
-        super(uhc);
-    }
-
 
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.EVERY_ROSE)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.EVERY_ROSE)) return;
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             p.getInventory().addItem(new ItemBuilder(Material.GOLD_CHESTPLATE).addEnchantment(Enchantment.THORNS, 3).build());
         }
     }

@@ -1,269 +1,180 @@
 package de.alphahelix.uhc.timers;
 
-import de.alphahelix.alphalibary.nms.SimpleActionBar;
-import de.alphahelix.alphalibary.nms.SimpleTitle;
-import de.alphahelix.alphalibary.utils.Cuboid;
+import de.alphahelix.alphaapi.nms.SimpleActionBar;
+import de.alphahelix.alphaapi.nms.SimpleTitle;
+import de.alphahelix.alphaapi.utils.Cuboid;
+import de.alphahelix.alphaapi.utils.Util;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.enums.Sounds;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.*;
+import de.alphahelix.uhc.util.schematic.SchematicManagerUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
-public class LobbyTimer extends Util {
+import java.util.UUID;
 
-    private static BukkitTask timer;
-    private static BukkitTask lobby;
+public class LobbyTimer extends AbstractTimer {
+
     private static boolean isAlreadyPasted;
-    private int time;
-    private double min;
 
-    public LobbyTimer(UHC uhc) {
-        super(uhc);
-    }
+    @Override
+    public void startTimer() {
+        if (!GState.isState(GState.LOBBY)) return;
+        if (isRunning()) return;
 
-    public void stopTimer() {
-        if (timer != null)
-            timer.cancel();
-        timer = null;
-        if (lobby != null)
-            lobby.cancel();
-        lobby = null;
-        resetTime();
-    }
+        stopTimer();
 
-    public boolean isRunning() {
-        return timer != null;
-    }
+        if (!isAlreadyPasted) {
+            isAlreadyPasted = true;
+            SchematicManagerUtil.load(UHCFileRegister.getOptionsFile().getLobbyFileName());
+            SchematicManagerUtil.paste(Bukkit.getWorld("UHC").getSpawnLocation().add(0, 140, 0));
+        }
 
-    public int getCurrentTimeInSeconds() {
-        return this.time;
-    }
-
-    public void startLobbyCountdown() {
-        if (GState.isState(GState.LOBBY)) {
-
-            if (timer != null) {
-                if (Bukkit.getScheduler().isCurrentlyRunning(timer.getTaskId()))
-                    return;
+        setSecondTimer(() -> {
+            if (PlayerUtil.getAll().size() < PlayerUtil.getMinimumPlayerCount()) {
+                Bukkit.broadcastMessage(UHC.getPrefix()
+                        + UHCFileRegister.getMessageFile().getNotEnoughPlayers());
+                stopTimer();
                 return;
             }
 
-            resetTime();
+            if (getSeconds() > 0) {
+                setSeconds(getSeconds() - 1);
 
-            if (!isAlreadyPasted) {
-                isAlreadyPasted = true;
-                UHCRegister.getSchematicManagerUtil()
-                        .load(UHCFileRegister.getOptionsFile().getLobbyFileName());
-                UHCRegister.getSchematicManagerUtil()
-                        .paste(UHCFileRegister.getLocationsFile().getArena().add(0, 140, 0));
-            }
+                if (getSeconds() == 0) {
+                    Bukkit.getPluginManager().callEvent(new LobbyEndEvent());
+                    if (UHC.isLobbyAsSchematic()) {
+                        World w = Bukkit.getWorld("UHC").getSpawnLocation().getWorld();
+                        Location l1 = new Location(w, -75, 155, -75);
+                        Location l2 = new Location(w, 75, 255, 75);
 
-            timer = new BukkitRunnable() {
-                public void run() {
-
-                    if (!(UHCRegister.getPlayerUtil().getAll().size() >= UHCRegister.getPlayerUtil()
-                            .getMinimumPlayerCount())) {
-                        resetTime();
-                        return;
+                        for (Block b : new Cuboid(l1, l2).getBlocks()) {
+                            if (b.getType().equals(Material.AIR))
+                                continue;
+                            b.setType(Material.AIR);
+                        }
                     }
 
-                    if (time > 0) {
-                        time--;
+                    Bukkit.getWorld("UHC").setGameRuleValue("naturalRegenration", "false");
 
-                        lobby = new BukkitRunnable() {
-                            private double h;
+                    BorderUtil.setArena(Bukkit.getWorld("UHC").getSpawnLocation());
 
-                            public void run() {
-                                if (UHCRegister.getPlayerUtil().getAll().size() >= UHCRegister.getPlayerUtil()
-                                        .getMinimumPlayerCount()) {
-                                    if (time == 0) {
-                                        new BukkitRunnable() {
-                                            public void run() {
-                                                Bukkit.getPluginManager().callEvent(new LobbyEndEvent());
-                                                if (getUhc().isLobbyAsSchematic()) {
-                                                    World w = UHCFileRegister.getLocationsFile().getArena().getWorld();
-                                                    Location l1 = new Location(w, -75, 155, -75);
-                                                    Location l2 = new Location(w, 75, 255, 75);
+                    BorderUtil.createBorder();
+                    BorderUtil.setMovingListener();
+                }
 
-                                                    for (Block b : new Cuboid(l1, l2).getBlocks()) {
-                                                        if (b.getType().equals(Material.AIR))
-                                                            continue;
-                                                        b.setType(Material.AIR);
-                                                    }
-                                                }
-                                            }
-                                        }.runTaskLater(getUhc(), 20);
-                                    } else if (time == 10) {
-                                        Scenarios.setPlayedScenario(
-                                                UHCRegister.getScenarioInventory().getScenarioWithMostVotes());
+                if (getSeconds() == 10) {
+                    if (UHC.isScenarioVoting())
+                        Scenarios.setPlayedScenario(
+                                UHCRegister.getScenarioInventory().getScenarioWithMostVotes());
+                }
+
+                for (Player p : Util.makePlayerArray(PlayerUtil.getAll())) {
+                    UUID id = UUIDFetcher.getUUID(p);
+                    String time = (getMinTime() >= 1 ? UHCFileRegister.getMessageFile().getTimeLeftInfo(Util.round(getMinTime(), 1), UHCFileRegister.getUnitFile().getMinutes()) : UHCFileRegister.getMessageFile().getTimeLeftInfo(Util.round(getSeconds(), 1), UHCFileRegister.getUnitFile().getSeconds()));
+
+                    p.setLevel((int) getSeconds());
+
+                    if (getSeconds() % 60 == 0 && getSeconds() > 10 && getSeconds() != 0) {
+                        p.sendMessage(UHC.getPrefix() + time);
+                        SimpleTitle.sendTitle(p,
+                                "",
+                                UHC.getPrefix() + time,
+                                1,
+                                2,
+                                1);
+                        p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
+                    }
+
+                    if (getSeconds() % 30 == 0 && !(getSeconds() % 60 == 0)) {
+                        p.sendMessage(UHC.getPrefix() + time);
+                        SimpleTitle.sendTitle(p,
+                                "",
+                                UHC.getPrefix() + time,
+                                1,
+                                2,
+                                1);
+                        p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
+                    }
+
+                    if (getSeconds() == 10) {
+                        if (UHC.isScenarios()) {
+                            ScoreboardUtil.updateScenario(p, Scenarios.getScenario());
+                            p.getInventory().setItem(
+                                    UHCFileRegister.getScenarioFile().getItem(null).getSlot(),
+                                    UHCFileRegister.getScenarioFile().getItem(Scenarios.getScenario()).getItemStack());
+                        }
+                    }
+
+                    if (getSeconds() < 10 && getSeconds() != 0) {
+                        p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
+                        SimpleActionBar.send(p, UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
+                        p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
+                    }
+
+                    if (getSeconds() == 0) {
+                        p.getInventory().clear();
+
+                        Location worldSpawn = Bukkit.getWorld("UHC").getSpawnLocation();
+                        Location playerSpawn = worldSpawn.getWorld()
+                                .getHighestBlockAt(UHC.getRandomLocation(worldSpawn,
+                                        worldSpawn.getBlockX() - UHC.getSpawnradius(),
+                                        worldSpawn.getBlockX() + UHC.getSpawnradius(),
+                                        worldSpawn.getBlockZ() - UHC.getSpawnradius(),
+                                        worldSpawn.getBlockZ() + UHC.getSpawnradius()))
+                                .getLocation();
+
+                        p.teleport(playerSpawn);
+
+                        p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1F, 0F);
+
+                        p.setGameMode(GameMode.SURVIVAL);
+
+                        PlayerUtil.addSurvivor(p);
+
+                        StatsUtil.addGames(id, 1);
+
+                        ScoreboardUtil.setIngameScoreboard(p);
+
+                        if (UHC.isKits()) {
+                            if (UHCFileRegister.getKitsFile().hasKit(p)) {
+                                for (ItemStack is : UHCFileRegister.getKitsFile().getPlayedKit(p).getItems()) {
+                                    if (is != null) {
+                                        p.getInventory().addItem(is);
                                     }
-                                    for (String pName : UHCRegister.getPlayerUtil().getAll()) {
-                                        Player p = Bukkit.getPlayer(pName);
-
-                                        if (p == null)
-                                            return;
-
-                                        min = calcMin(time);
-
-                                        p.setLevel(time);
-
-                                        if (min % 1 == 0 && time > 10 && time != 0) {
-                                            p.sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile()
-                                                    .getTimeLeftInfo(round(h, 1),
-                                                            (h >= 1 ? UHCFileRegister.getUnitFile().getHours()
-                                                                    : UHCFileRegister.getUnitFile().getMinutes())));
-                                            SimpleTitle.sendTitle(p, getUhc().getPrefix(), getUhc().getPrefix() + UHCFileRegister.getMessageFile()
-                                                            .getTimeLeftInfo(round(h, 1),
-                                                                    (h >= 1 ? UHCFileRegister.getUnitFile().getHours()
-                                                                            : UHCFileRegister.getUnitFile().getMinutes())),
-                                                    1, 2, 1);
-                                            p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-
-                                        }
-
-                                        if (time % 30 == 0 && !(min % 1 == 0)) {
-                                            p.sendMessage(
-                                                    getUhc().getPrefix()
-                                                            + UHCFileRegister.getMessageFile().getTimeLeftInfo(round(min, 1), (min >= 1 ? UHCFileRegister.getUnitFile().getMinutes() : UHCFileRegister.getUnitFile().getSeconds())));
-                                            SimpleTitle.sendTitle(
-                                                    p,
-                                                    getUhc().getPrefix(),
-                                                    UHCFileRegister.getMessageFile().getTimeLeftInfo(round(min, 1), (min >= 1 ? UHCFileRegister.getUnitFile().getMinutes() : UHCFileRegister.getUnitFile().getSeconds())),
-                                                    1,
-                                                    2,
-                                                    1);
-                                            p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-                                        }
-
-                                        if (time == 10) {
-                                            UHCRegister.getScoreboardUtil().updateScenario(p,
-                                                    Scenarios.getScenario());
-                                            p.getInventory().setItem(
-                                                    UHCFileRegister.getScenarioFile().getItem(null).getSlot(),
-                                                    UHCFileRegister.getScenarioFile().getItem(Scenarios.getScenario()).getItemStack());
-                                        }
-
-                                        if (time < 10 && time != 0) {
-                                            p.sendMessage(
-                                                    getUhc().getPrefix()
-                                                            + UHCFileRegister.getMessageFile().getTimeLeftInfo(time, UHCFileRegister.getUnitFile().getSeconds()));
-
-                                            SimpleActionBar.send(p,
-                                                    getUhc().getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(time, UHCFileRegister.getUnitFile().getSeconds()));
-                                            p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-                                        }
-
-                                        if (time == 0) {
-                                            timer.cancel();
-
-                                            p.getInventory().clear();
-
-                                            Location worldSpawn = UHCFileRegister.getLocationsFile().getArena();
-                                            Location playerSpawn = worldSpawn.getWorld()
-                                                    .getHighestBlockAt(getRandomLocation(worldSpawn,
-                                                            worldSpawn.getBlockX() - getUhc().getSpawnradius(),
-                                                            worldSpawn.getBlockX() + getUhc().getSpawnradius(),
-                                                            worldSpawn.getBlockZ() - getUhc().getSpawnradius(),
-                                                            worldSpawn.getBlockZ() + getUhc().getSpawnradius()))
-                                                    .getLocation();
-
-                                            p.teleport(playerSpawn);
-                                            UHCRegister.getBorderUtil().setArena(worldSpawn);
-
-                                            lobby.cancel();
-
-                                            p.playSound(p.getLocation(), Sounds.NOTE_PLING.bukkitSound(), 1F, 0F);
-                                            p.getWorld().setGameRuleValue("naturalRegenration", "false");
-
-                                            UHCRegister.getBorderUtil().createBorder();
-                                            UHCRegister.getBorderUtil().setMovingListener();
-
-                                            GState.setCurrentState(GState.PERIOD_OF_PEACE);
-                                            p.setGameMode(GameMode.SURVIVAL);
-
-                                            UHCRegister.getGraceTimer().startGraceTimer();
-
-                                            UHCRegister.getPlayerUtil().addSurvivor(p);
-
-                                            UHCRegister.getStatsUtil().addGame(p);
-
-                                            UHCRegister.getTablistUtil().sendTablist();
-                                            UHCRegister.getScoreboardUtil().setIngameScoreboard(p);
-                                            for (String o : UHCRegister.getPlayerUtil().getAll()) {
-                                                if (Bukkit.getPlayer(o) == null)
-                                                    continue;
-                                                UHCRegister.getScoreboardUtil()
-                                                        .setIngameScoreboard(Bukkit.getPlayer(o));
-                                            }
-
-                                            if (UHCRegister.getPlayerUtil().getAll().size() <= 1) {
-                                                GState.setCurrentState(GState.END);
-                                                UHCRegister.getRestartTimer().startEndTimer();
-                                            }
-
-                                            if (getUhc().isKits()) {
-                                                if (UHCFileRegister.getKitsFile().hasKit(p)) {
-                                                    for (ItemStack is : UHCFileRegister.getKitsFile().getPlayedKit(p).getItems()) {
-                                                        if (is != null) {
-                                                            p.getInventory().addItem(is);
-                                                        }
-                                                    }
-                                                }
-                                            }
-
-                                        }
-                                    }
-                                } else {
-                                    Bukkit.broadcastMessage(getUhc().getPrefix()
-                                            + UHCFileRegister.getMessageFile().getNotEnoughPlayers());
-                                    timer.cancel();
-                                    lobby.cancel();
-                                    resetTime();
                                 }
                             }
-                        }.runTask(getUhc());
+                        }
                     }
                 }
-            }.runTaskTimer(getUhc(), 0, 20);
-        }
-    }
 
-    private Location getRandomLocation(Location player, int Xminimum, int Xmaximum, int Zminimum, int Zmaximum) {
-        try {
-            World world = player.getWorld();
-            int randomZ = Zminimum + ((int) (Math.random() * ((Zmaximum - Zminimum) + 1)));
-            double x = Double.parseDouble(
-                    Integer.toString(Xminimum + ((int) (Math.random() * ((Xmaximum - Xminimum) + 1))))) + 0.5d;
-            double z = Double.parseDouble(Integer.toString(randomZ)) + 0.5d;
-            player.setY(200);
-            return new Location(world, x, player.getY(), z);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+                if (getSeconds() == 0) {
+                    stopTimer();
+                    GState.setCurrentState(GState.PERIOD_OF_PEACE);
 
-    public void changeTime() {
-        time = 10;
-    }
+                    UHCRegister.getGraceTimer().startTimer();
 
-    public void changeTime(int time) {
-        this.time = time;
-    }
+                    TablistUtil.sendTablist();
 
-    private void resetTime() {
-        time = UHCFileRegister.getTimerFile().getLenght(GState.LOBBY);
-        for (Player all : Bukkit.getOnlinePlayers()) {
-            all.setLevel(time);
-        }
+                    for (Player p : Util.makePlayerArray(PlayerUtil.getAll())) {
+                        ScoreboardUtil.setIngameScoreboard(p);
+                        p.setLevel(0);
+                    }
+
+                    if (PlayerUtil.getAll().size() <= 1) {
+                        GState.setCurrentState(GState.END);
+                        UHCRegister.getRestartTimer().startTimer();
+                    }
+                }
+            }
+        });
     }
 }

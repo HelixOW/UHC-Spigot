@@ -1,21 +1,16 @@
 package de.alphahelix.uhc.timers;
 
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Random;
 
-public class DamageCycleTimer extends Util {
+public class DamageCycleTimer {
 
     private static BukkitTask cycle;
-
-    public DamageCycleTimer(UHC uhc) {
-        super(uhc);
-    }
 
     public void stopTimer() {
         if (cycle != null)
@@ -36,14 +31,14 @@ public class DamageCycleTimer extends Util {
 
         cycle = new BukkitRunnable() {
             public void run() {
-                String pName = UHCRegister.getPlayerUtil().getSurvivors()
-                        .get(new Random().nextInt(UHCRegister.getPlayerUtil().getSurvivors().size()));
+                String pName = PlayerUtil.getSurvivors()
+                        .get(new Random().nextInt(PlayerUtil.getSurvivors().size()));
                 if (Bukkit.getPlayer(pName) == null)
                     return;
 
                 Bukkit.getPlayer(pName).damage(1);
             }
-        }.runTaskTimer(getUhc(), 0, (20 * 60) * 5);
+        }.runTaskTimer(UHC.getInstance(), 0, (20 * 60) * 5);
     }
 
 }

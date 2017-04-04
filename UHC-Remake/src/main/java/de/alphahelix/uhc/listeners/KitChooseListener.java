@@ -1,11 +1,14 @@
 package de.alphahelix.uhc.listeners;
 
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.instances.Kit;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.ScoreboardUtil;
+import de.alphahelix.uhc.util.StatsUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryAction;
@@ -13,14 +16,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class KitChooseListener extends SimpleListener {
 
     private HashMap<String, Kit> boughts = new HashMap<>();
-
-    public KitChooseListener(UHC uhc) {
-        super(uhc);
-    }
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
@@ -33,8 +33,8 @@ public class KitChooseListener extends SimpleListener {
 
         if (e.getPlayer().getInventory().getItemInHand().getType() == UHCFileRegister.getKitsFile().getItem().getItemStack().getType()) {
 
-            if (!getUhc().isKits() && getUhc().isScenarios()) {
-                e.getPlayer().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getScenariomode());
+            if (!UHC.isKits() && UHC.isScenarios()) {
+                e.getPlayer().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getScenariomode());
                 return;
             }
             UHCRegister.getKitInventory().openInventory(e.getPlayer());
@@ -55,6 +55,7 @@ public class KitChooseListener extends SimpleListener {
         e.setCancelled(true);
 
         Player p = (Player) e.getWhoClicked();
+        UUID id = UUIDFetcher.getUUID(p);
 
         for (Kit k : UHCFileRegister.getKitsFile().getKits()) {
 
@@ -66,20 +67,20 @@ public class KitChooseListener extends SimpleListener {
                             .getPlayedKit(p).getName().equals(k.getName())))
                         return;
 
-                    if (UHCRegister.getStatsUtil().hasKit(k, p)) {
+                    if (StatsUtil.hasKit(id, k)) {
                         String msg = UHCFileRegister.getMessageFile().getKitChosen(k);
 
                         UHCFileRegister.getKitsFile().setPlayedKit(p, k);
                         e.getWhoClicked().closeInventory();
 
-                        UHCRegister.getScoreboardUtil().updateKit(p, k);
-                        e.getWhoClicked().sendMessage(getUhc().getPrefix() + msg);
-                    } else if (UHCRegister.getStatsUtil().getCoins(p) >= k.getPrice()) {
+                        ScoreboardUtil.updateKit(p, k);
+                        e.getWhoClicked().sendMessage(UHC.getPrefix() + msg);
+                    } else if (StatsUtil.getCoins(id) >= k.getPrice()) {
                         boughts.put(e.getWhoClicked().getName(), k);
 
                         UHCRegister.getConfirmInventory().openInventory(p);
                     } else {
-                        e.getWhoClicked().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile()
+                        e.getWhoClicked().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile()
                                 .getNotEnoughCoins(k));
                         return;
                     }

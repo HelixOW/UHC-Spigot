@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -11,14 +10,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class SwitcherooListener extends SimpleListener {
 
-    public SwitcherooListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (e.isCancelled()) return;
-        if (!scenarioCheck(Scenarios.SWITCHEROO)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.SWITCHEROO)) return;
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
 

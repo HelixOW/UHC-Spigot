@@ -1,9 +1,7 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.item.ItemBuilder;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
@@ -16,7 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class ScenarioInventory extends Util {
+public class ScenarioInventory {
 
     private Inventory inv;
     private HashMap<String, Scenarios> votedFor = new HashMap<>(); // player ->
@@ -24,8 +22,7 @@ public class ScenarioInventory extends Util {
     private HashMap<Scenarios, Integer> votes = new HashMap<>(); // scenario ->
     // votes
 
-    public ScenarioInventory(UHC uhc) {
-        super(uhc);
+    public ScenarioInventory() {
         setInv(Bukkit.createInventory(null, 9, UHCFileRegister.getScenarioFile().getInventoryName()));
     }
 
@@ -66,7 +63,7 @@ public class ScenarioInventory extends Util {
     public Scenarios getScenarioWithMostVotes() {
         Scenarios[] array = votes.keySet().toArray(new Scenarios[votes.keySet().size()]);
 
-        if(array.length != 4) return Scenarios.MINECRAFT;
+        if (array.length != 4) return Scenarios.MINECRAFT;
 
         int[] k = {votes.get(array[0]), votes.get(array[1]), votes.get(array[2]), votes.get(array[3])};
 

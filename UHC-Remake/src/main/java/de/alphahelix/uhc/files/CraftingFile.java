@@ -1,7 +1,6 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -10,10 +9,10 @@ import org.bukkit.inventory.ShapedRecipe;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CraftingFile extends SimpleFile<UHC> {
+public class CraftingFile extends SimpleFile {
 
-    public CraftingFile(UHC uhc) {
-        super("recipes.uhc", uhc);
+    public CraftingFile() {
+        super("recipes.uhc");
     }
 
     @Override
@@ -21,7 +20,7 @@ public class CraftingFile extends SimpleFile<UHC> {
         setDefault("Golden Apple-0-1.Line.top", "g g g");
         setDefault("Golden Apple-0-1.Line.mid", "g S g");
         setDefault("Golden Apple-0-1.Line.bottom", "g g g");
-        setArgumentList("Golden Apple-0-1.variables", "g = gold ingot:0", "S = skull item:3");
+        addArgumentsToList("Golden Apple-0-1.variables", "g = gold ingot:0", "S = skull item:3");
     }
 
     public void registerAllCrafting() {
@@ -61,6 +60,7 @@ public class CraftingFile extends SimpleFile<UHC> {
         String bottom = getString(itemToCraft + ".Line.bottom").replace(" ", "");
 
         recipe.shape(top, mid, bottom);
+
 
         for (Character variable : variables) {
             recipe.setIngredient(variable, vars.get(variable).getData());

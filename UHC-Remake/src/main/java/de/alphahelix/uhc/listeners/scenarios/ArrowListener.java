@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,10 +13,6 @@ public class ArrowListener extends SimpleListener {
 
     private static ArrayList<String> hasShot = new ArrayList<>();
 
-    public ArrowListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onShot(ProjectileLaunchEvent e) {
         if (!(e.getEntity().getShooter() instanceof Player)) return;
@@ -26,7 +22,7 @@ public class ArrowListener extends SimpleListener {
         if (!(e.getEntity() instanceof Arrow)) return;
         if (hasShot.contains(p.getName())) return;
 
-        cooldown(5, p.getName(), hasShot);
+        Util.cooldown(5, p.getName(), hasShot);
 
         p.launchProjectile(Arrow.class);
         p.launchProjectile(Arrow.class);

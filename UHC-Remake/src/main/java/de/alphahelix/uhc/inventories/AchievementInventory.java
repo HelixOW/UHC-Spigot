@@ -1,10 +1,9 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.enums.UHCAchievements;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.StatsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -12,19 +11,18 @@ import org.bukkit.inventory.Inventory;
 /**
  * Created by AlphaHelixDev.
  */
-public class AchievementInventory extends Util {
+public class AchievementInventory {
 
     private static Inventory inventory;
 
-    public AchievementInventory(UHC uhc) {
-        super(uhc);
+    public AchievementInventory() {
         inventory = Bukkit.createInventory(null, ((UHCAchievements.values().length / 9) + 1) * 9, UHCFileRegister.getAchievementFile().getInventoryName());
     }
 
     public void openInventory(Player p) {
         for (int slot = 0; slot < getInventory().getSize(); slot++) {
             try {
-                getInventory().setItem(slot, UHCAchievements.values()[slot].getIcon(UHCRegister.getStatsUtil().hasAchievement(UHCAchievements.values()[slot], p)));
+                getInventory().setItem(slot, UHCAchievements.values()[slot].getIcon(StatsUtil.hasAchievement(UUIDFetcher.getUUID(p), UHCAchievements.values()[slot])));
             } catch (Exception ignore) {
             }
         }

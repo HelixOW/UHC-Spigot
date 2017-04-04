@@ -1,0 +1,183 @@
+JFDML JFormDesigner: "6.0.0.0.84" Java: "1.8.0_112-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"iconImage": new com.jformdesigner.model.SwingIcon( 1, "C:\\Code\\icon.png" )
+			"title": "Item"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblName"
+				"text": "Itemname"
+				"font": &Font0 new java.awt.Font( "Segoe UI", 0, 18 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 35
+				"y": 30
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtfldName"
+				"horizontalAlignment": 0
+				"font": new java.awt.Font( "Segoe UI", 0, 18 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 160
+				"y": 30
+				"width": 565
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Amount"
+				"font": &Font1 new java.awt.Font( "Segoe UI", 0, 18 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 35
+				"y": 140
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblType"
+				"text": "Itemtype"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 80
+				"height": 25
+				"x": 35
+				"y": 85
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtfldIType"
+				"font": new java.awt.Font( "Segoe UI", 0, 16 )
+				"horizontalAlignment": 0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 565
+				"height": 28
+				"x": 160
+				"y": 85
+			} )
+			add( new FormComponent( "javax.swing.JSlider" ) {
+				name: "sldrAmount"
+				"font": &Font2 new java.awt.Font( "Dialog", 0, 12 )
+				"maximum": 64
+				"minimum": 1
+				"majorTickSpacing": 3
+				"minorTickSpacing": 1
+				"value": 1
+				"paintLabels": true
+				"paintTicks": true
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 160
+				"y": 145
+				"width": 575
+				"height": 35
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelDMG"
+				"text": "Damage"
+				"font": #Font1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 70
+				"height": 25
+				"x": 35
+				"y": 195
+			} )
+			add( new FormComponent( "javax.swing.JSlider" ) {
+				name: "sldrDMG"
+				"font": #Font2
+				"maximum": 15
+				"majorTickSpacing": 1
+				"minorTickSpacing": 1
+				"value": 0
+				"paintLabels": true
+				"paintTicks": true
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 580
+				"height": 35
+				"x": 155
+				"y": 200
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelSLot"
+				"text": "Slot"
+				"font": #Font1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 70
+				"height": 25
+				"x": 35
+				"y": 260
+			} )
+			add( new FormComponent( "javax.swing.JSlider" ) {
+				name: "sldrSlot"
+				"font": #Font2
+				"maximum": 9
+				"minimum": 1
+				"majorTickSpacing": 1
+				"minorTickSpacing": 1
+				"value": 1
+				"paintLabels": true
+				"paintTicks": true
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 580
+				"height": 35
+				"x": 155
+				"y": 265
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnConfirm"
+				"text": "Confirm"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnConfirmActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 290
+				"y": 465
+				"width": 445
+				"height": 65
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblSpacer"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 0
+				"y": 525
+				"width": 760
+				"height": 35
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnEnchantments"
+				"text": "Enchantments"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnEnchantmentsActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 35
+				"y": 320
+				"width": 700
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnLore"
+				"text": "Lore"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnLoreActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 700
+				"height": 32
+				"x": 35
+				"y": 360
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnFlags"
+				"text": "Flags"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnFlagsActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 35
+				"y": 400
+				"width": 700
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnTypes"
+				"text": "All valid Types"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnTypesActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 220
+				"height": 60
+				"x": 40
+				"y": 465
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 86, 91 )
+			"size": new java.awt.Dimension( 610, 480 )
+		} )
+	}
+}

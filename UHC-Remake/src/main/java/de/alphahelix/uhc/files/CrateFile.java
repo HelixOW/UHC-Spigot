@@ -1,19 +1,18 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphaapi.item.ItemBuilder;
 import de.alphahelix.uhc.instances.Crate;
 import de.alphahelix.uhc.instances.Kit;
 import org.bukkit.Material;
 
 import java.util.Random;
 
-public class CrateFile extends SimpleFile<UHC> {
+public class CrateFile extends SimpleFile {
     private static final Random RANDOM = new Random();
 
-    public CrateFile(UHC plugin) {
-        super("crates.uhc", plugin);
+    public CrateFile() {
+        super("crates.uhc");
     }
 
     @Override
@@ -29,7 +28,7 @@ public class CrateFile extends SimpleFile<UHC> {
         setDefault("CustomCrates." + crate.getRawName() + ".display name", crate.getName());
         setDefault("CustomCrates." + crate.getRawName() + ".rarity value", crate.getRarity());
         setInventoryItem("CustomCrates." + crate.getRawName() + ".icon", crate.getIcon(), 0);
-        setBase64ArgumentList("CustomCrates." + crate.getRawName() + ".kits", crate.getKits().toArray(new Kit[crate.getKits().size()]));
+        addBase64ArgumentsToList("CustomCrates." + crate.getRawName() + ".kits", false, crate.getKits().toArray(new Kit[crate.getKits().size()]));
     }
 
     public Crate getRandomCrate() {
@@ -37,8 +36,8 @@ public class CrateFile extends SimpleFile<UHC> {
     }
 
     public void initCrates() {
-        if(!isConfigurationSection("CustomCrates")) return;
-        for(String cratesKeys : getConfigurationSection("CustomCrates").getKeys(false)) {
+        if (!isConfigurationSection("CustomCrates")) return;
+        for (String cratesKeys : getConfigurationSection("CustomCrates").getKeys(false)) {
             new Crate(
                     getColorString("CustomCrates." + cratesKeys + ".display name"),
                     getInt("CustomCrates." + cratesKeys + ".rarity value"),

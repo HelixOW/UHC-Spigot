@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -13,8 +12,7 @@ public class DamageDogersListener extends SimpleListener {
 
     private int amount = 0;
 
-    public DamageDogersListener(UHC uhc) {
-        super(uhc);
+    public DamageDogersListener() {
         amount = new Random().nextInt(25);
     }
 
@@ -22,7 +20,7 @@ public class DamageDogersListener extends SimpleListener {
     public void onHurt(EntityDamageEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.DAMAGE_DODGERS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.DAMAGE_DODGERS))
             return;
         if (!(e.getEntity() instanceof Player))
             return;

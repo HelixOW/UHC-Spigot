@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -15,15 +14,11 @@ public class BlockRushListener extends SimpleListener {
 
     private HashMap<String, ArrayList<Material>> hasBeenMind = new HashMap<>();
 
-    public BlockRushListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.BLOCK_RUSH))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BLOCK_RUSH))
             return;
 
         if (!hasBeenMind.containsKey(e.getPlayer().getName())) {

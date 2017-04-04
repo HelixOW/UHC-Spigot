@@ -1,158 +1,148 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphalibary.fakeapi.instances.FakeArmorstand;
-import de.alphahelix.alphalibary.fakeapi.utils.ArmorstandUtil;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.alphalibary.item.LeatherItemBuilder;
-import de.alphahelix.alphalibary.item.data.SkullData;
-import de.alphahelix.alphalibary.utils.MinecraftVersion;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.fakeapi.FakeAPI;
+import de.alphahelix.alphaapi.fakeapi.instances.FakeArmorstand;
+import de.alphahelix.alphaapi.fakeapi.instances.FakePlayer;
+import de.alphahelix.alphaapi.fakeapi.instances.NoSuchFakeEntityException;
+import de.alphahelix.alphaapi.fakeapi.utils.ArmorstandFakeUtil;
+import de.alphahelix.alphaapi.fakeapi.utils.PlayerFakeUtil;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.item.LeatherItemBuilder;
+import de.alphahelix.alphaapi.item.data.SkullData;
+import de.alphahelix.alphaapi.nms.REnumEquipSlot;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.instances.UHCTeam;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class NPCUtil extends Util {
+import java.util.UUID;
 
-    public NPCUtil(UHC uhc) {
-        super(uhc);
+public class NPCUtil {
+
+    public static void createRewardNPC(Location loc, Player toSend) {
+        PlayerFakeUtil.spawnTemporaryPlayer(toSend, loc, UHCFileRegister.getOptionsFile().getRewardPlayer(),
+                UHCFileRegister.getStatsFile().getColorString("RewardNPC"));
     }
 
-    public void prepareNPC(Location loc, OfflinePlayer skin, final Player toSend) {
-        de.alphahelix.alphalibary.fakeapi.utils.PlayerUtil.spawnTemporaryPlayer(toSend, loc, skin, UHCFileRegister.getStatsFile().getColorString("StatsNPC"));
+    public static void prepareNPC(Location loc, Player toSend) {
+        PlayerFakeUtil.spawnTemporaryPlayer(toSend, loc, toSend, UHCFileRegister.getStatsFile().getColorString("StatsNPC"));
         createStatsArmorStands(toSend);
     }
 
-    private void createStatsArmorStands(Player p) {
+    private static void createStatsArmorStands(Player p) {
         try {
             Location loc = UHCFileRegister.getLocationsFile().getStatsNPCLocation();
+            UUID id = UUIDFetcher.getUUID(p);
 
-            FakeArmorstand games = ArmorstandUtil.spawnTemporaryArmorstand(
+            FakeArmorstand games = ArmorstandFakeUtil.spawnTemporaryArmorstand(
                     p,
                     loc.clone(),
-                    UHCFileRegister.getStatsFile().getColorString("Games").replace("[games]", Long.toString(UHCRegister.getStatsUtil().getGames(p))));
+                    UHCFileRegister.getStatsFile().getColorString("Games").replace("[games]", Long.toString(StatsUtil.getGames(id))));
 
-            FakeArmorstand kills = ArmorstandUtil.spawnTemporaryArmorstand(
+            FakeArmorstand kills = ArmorstandFakeUtil.spawnTemporaryArmorstand(
                     p,
                     loc.clone(),
-                    UHCFileRegister.getStatsFile().getColorString("Kills").replace("[kills]", Long.toString(UHCRegister.getStatsUtil().getKills(p))));
+                    UHCFileRegister.getStatsFile().getColorString("Kills").replace("[kills]", Long.toString(StatsUtil.getKills(id))));
 
-            FakeArmorstand deaths = ArmorstandUtil.spawnTemporaryArmorstand(
+            FakeArmorstand deaths = ArmorstandFakeUtil.spawnTemporaryArmorstand(
                     p,
                     loc.clone(),
                     UHCFileRegister.getStatsFile().getColorString("Deaths").replace("[deaths]",
-                            Long.toString(UHCRegister.getStatsUtil().getDeaths(p))));
+                            Long.toString(StatsUtil.getDeaths(id))));
 
-            FakeArmorstand killrate = ArmorstandUtil.spawnTemporaryArmorstand(
+            FakeArmorstand killrate = ArmorstandFakeUtil.spawnTemporaryArmorstand(
                     p,
                     loc.clone(),
                     UHCFileRegister.getStatsFile().getColorString("KillDeathRate").replace("[kdr]",
-                            Double.toString(UHCRegister.getStatsUtil().getKillDeathRate(p))));
+                            Double.toString(StatsUtil.getKillDeathRate(id))));
 
-            FakeArmorstand wins = ArmorstandUtil.spawnTemporaryArmorstand(
+            FakeArmorstand wins = ArmorstandFakeUtil.spawnTemporaryArmorstand(
                     p,
                     loc.clone(),
                     UHCFileRegister.getStatsFile().getColorString("Wins").replace("[wins]",
-                            Long.toString(UHCRegister.getStatsUtil().getWins(p))));
+                            Long.toString(StatsUtil.getWins(id))));
 
-            FakeArmorstand coins = ArmorstandUtil.spawnTemporaryArmorstand(
+            FakeArmorstand coins = ArmorstandFakeUtil.spawnTemporaryArmorstand(
                     p,
                     loc.clone(),
                     UHCFileRegister.getStatsFile().getColorString("Coins").replace("[coins]",
-                            Long.toString(UHCRegister.getStatsUtil().getCoins(p))));
+                            Long.toString(StatsUtil.getCoins(id))));
 
-            FakeArmorstand points = ArmorstandUtil.spawnTemporaryArmorstand(
+            FakeArmorstand points = ArmorstandFakeUtil.spawnTemporaryArmorstand(
                     p,
                     loc.clone(),
                     UHCFileRegister.getStatsFile().getColorString("Points").replace("[points]",
-                            Long.toString(UHCRegister.getStatsUtil().getPoints(p))));
+                            Long.toString(StatsUtil.getPoints(id))));
 
-            FakeArmorstand rank = ArmorstandUtil.spawnTemporaryArmorstand(
+            FakeArmorstand rank = ArmorstandFakeUtil.spawnTemporaryArmorstand(
                     p,
                     loc.clone(),
                     UHCFileRegister.getStatsFile().getColorString("Rank").replace("[rank]",
-                            Long.toString(UHCRegister.getStatsUtil().getRank(p))));
+                            Long.toString(StatsUtil.getRank(id))));
 
-            ArmorstandUtil.moveArmorstand(p, 0, 0.1, 0, rank);
-            ArmorstandUtil.moveArmorstand(p, 0, 0.3, 0, points);
-            ArmorstandUtil.moveArmorstand(p, 0, 0.5, 0, coins);
-            ArmorstandUtil.moveArmorstand(p, 0, 0.7, 0, wins);
-            ArmorstandUtil.moveArmorstand(p, 0, 0.9, 0, killrate);
-            ArmorstandUtil.moveArmorstand(p, 0, 1.1, 0, deaths);
-            ArmorstandUtil.moveArmorstand(p, 0, 1.3, 0, kills);
-            ArmorstandUtil.moveArmorstand(p, 0, 1.5, 0, games);
+            ArmorstandFakeUtil.moveArmorstand(p, 0, 0.1, 0, rank);
+            ArmorstandFakeUtil.moveArmorstand(p, 0, 0.3, 0, points);
+            ArmorstandFakeUtil.moveArmorstand(p, 0, 0.5, 0, coins);
+            ArmorstandFakeUtil.moveArmorstand(p, 0, 0.7, 0, wins);
+            ArmorstandFakeUtil.moveArmorstand(p, 0, 0.9, 0, killrate);
+            ArmorstandFakeUtil.moveArmorstand(p, 0, 1.1, 0, deaths);
+            ArmorstandFakeUtil.moveArmorstand(p, 0, 1.3, 0, kills);
+            ArmorstandFakeUtil.moveArmorstand(p, 0, 1.5, 0, games);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void spawnRankingArmorStand(Location l, int rank) {
-        ArmorStand as = l.getWorld().spawn(l, ArmorStand.class);
-        ArmorStand holo = l.getWorld().spawn(l.subtract(0, 0.2, 0), ArmorStand.class);
+    public static void spawnRanking(Location l, int rank, Player p) {
+        String name = StatsUtil.getPlayernameByRank(rank);
 
-        String name = UHCRegister.getStatsUtil().getPlayerByRank(rank).getName();
+        FakePlayer ranked = PlayerFakeUtil.spawnTemporaryPlayer(p, l, Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(name)), "§7" + Integer.toString(rank) + ".");
+        ArmorstandFakeUtil.spawnTemporaryArmorstand(p, l.clone().add(0, 0.2, 0), "§7" + name);
 
-        ItemStack head = new ItemBuilder
-                (Material.SKULL_ITEM)
-                .addItemData(new SkullData(UHCRegister.getStatsUtil().getPlayerByRank(rank).getName())).build();
         ItemStack chest, pants, boots;
         if (rank == 1) {
-            chest = new LeatherItemBuilder(Material.LEATHER_CHESTPLATE).setColor(Color.fromRGB(255, 215, 0)).build();
-            pants = new LeatherItemBuilder(Material.LEATHER_LEGGINGS).setColor(Color.fromRGB(255, 215, 0)).build();
-            boots = new LeatherItemBuilder(Material.LEATHER_BOOTS).setColor(Color.fromRGB(255, 215, 0)).build();
+            chest = new ItemBuilder(Material.GOLD_CHESTPLATE).build();
+            pants = new ItemBuilder(Material.GOLD_LEGGINGS).build();
+            boots = new ItemBuilder(Material.GOLD_BOOTS).build();
         } else if (rank == 2) {
-            chest = new LeatherItemBuilder(Material.LEATHER_CHESTPLATE).setColor(Color.fromRGB(192, 192, 192)).build();
-            pants = new LeatherItemBuilder(Material.LEATHER_LEGGINGS).setColor(Color.fromRGB(192, 192, 192)).build();
-            boots = new LeatherItemBuilder(Material.LEATHER_BOOTS).setColor(Color.fromRGB(192, 192, 192)).build();
+            chest = new ItemBuilder(Material.IRON_CHESTPLATE).build();
+            pants = new ItemBuilder(Material.IRON_LEGGINGS).build();
+            boots = new ItemBuilder(Material.IRON_BOOTS).build();
         } else if (rank == 3) {
-            chest = new LeatherItemBuilder(Material.LEATHER_CHESTPLATE).setColor(Color.fromRGB(205, 127, 50)).build();
-            pants = new LeatherItemBuilder(Material.LEATHER_LEGGINGS).setColor(Color.fromRGB(205, 127, 50)).build();
-            boots = new LeatherItemBuilder(Material.LEATHER_BOOTS).setColor(Color.fromRGB(205, 127, 50)).build();
+            chest = new ItemBuilder(Material.LEATHER_CHESTPLATE).build();
+            pants = new ItemBuilder(Material.LEATHER_LEGGINGS).build();
+            boots = new ItemBuilder(Material.LEATHER_BOOTS).build();
         } else {
             chest = new LeatherItemBuilder(Material.LEATHER_CHESTPLATE).setColor(Color.WHITE).build();
             pants = new LeatherItemBuilder(Material.LEATHER_LEGGINGS).setColor(Color.WHITE).build();
             boots = new LeatherItemBuilder(Material.LEATHER_BOOTS).setColor(Color.WHITE).build();
         }
 
-        as.setHelmet(head);
-        as.setChestplate(chest);
-        as.setLeggings(pants);
-        as.setBoots(boots);
-
-        as.setBasePlate(false);
-        as.setArms(true);
-        as.setCustomName("§7" + Integer.toString(rank) + ".");
-        as.setVisible(true);
-        as.setGravity(false);
-        try {
-            if (MinecraftVersion.getServer() != MinecraftVersion.EIGHT) {
-                Class.forName("org.bukkit.entity.Entity").getMethod("setGlowing", boolean.class).invoke(as, true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        as.setCustomNameVisible(true);
-
-        holo.setBasePlate(false);
-        holo.setArms(false);
-        holo.setCustomName("§7" + name);
-        holo.setVisible(false);
-        holo.setGravity(false);
-        holo.setCustomNameVisible(true);
+        PlayerFakeUtil.equipPlayer(p, ranked, chest, REnumEquipSlot.CHESTPLATE);
+        PlayerFakeUtil.equipPlayer(p, ranked, pants, REnumEquipSlot.LEGGINGS);
+        PlayerFakeUtil.equipPlayer(p, ranked, boots, REnumEquipSlot.BOOTS);
 
         UHCFileRegister.getLocationsFile().addRankingArmorStand(l, rank);
     }
 
-    public void spawnArmorStand(Location l, String name) {
-        if (UHCRegister.getTeamManagerUtil().getTeamByName(name) == null)
+    public static void removeRankingArmorStand(int rank, Player p) {
+        try {
+            PlayerFakeUtil.removePlayer(p, FakeAPI.getFakePlayerByName(p, rank + "."));
+            ArmorstandFakeUtil.destroyArmorstand(p, FakeAPI.getFakeArmorstandByName(p, StatsUtil.getPlayernameByRank(rank)));
+        } catch (NoSuchFakeEntityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void spawnArmorStand(Location l, String name) {
+        if (TeamManagerUtil.getTeamByName(name) == null)
             return;
 
-        UHCTeam team = UHCRegister.getTeamManagerUtil().getTeamByName(name);
+        UHCTeam team = TeamManagerUtil.getTeamByName(name);
 
         ArmorStand as = l.getWorld().spawn(l, ArmorStand.class);
 
@@ -176,21 +166,10 @@ public class NPCUtil extends Util {
         UHCFileRegister.getLocationsFile().addArmorStand(l, name);
     }
 
-    public void removeArmorStand(Location l, String name) {
+    public static void removeArmorStand(Location l, String name) {
         for (Entity e : l.getWorld().getEntitiesByClass(ArmorStand.class)) {
             if (e.isCustomNameVisible() && ChatColor.stripColor(e.getCustomName()).equals(name)) {
                 UHCFileRegister.getLocationsFile().removeArmorStand(name);
-                e.remove();
-            }
-        }
-    }
-
-    public void removeRankingArmorStand(Location l, int rank) {
-        String name = ChatColor.stripColor(UHCRegister.getStatsUtil().getPlayerByRank(rank).getName());
-        for (Entity e : l.getWorld().getEntitiesByClass(ArmorStand.class)) {
-            if (e.isCustomNameVisible() && (ChatColor.stripColor(e.getCustomName()).equals(name)
-                    || ChatColor.stripColor(e.getCustomName()).equals(rank + "."))) {
-                UHCFileRegister.getLocationsFile().removeRankingArmorstand(rank);
                 e.remove();
             }
         }

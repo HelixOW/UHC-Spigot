@@ -1,10 +1,10 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,16 +18,12 @@ public class DungeonMazeListener extends SimpleListener {
 
     private HashMap<String, Integer> mined = new HashMap<>();
 
-    public DungeonMazeListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.DUNGEON_MAZE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.DUNGEON_MAZE))
             return;
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             p.getInventory().addItem(new ItemStack(Material.TORCH));
         }
     }
@@ -36,7 +32,7 @@ public class DungeonMazeListener extends SimpleListener {
     public void onMine(BlockBreakEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.DUNGEON_MAZE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.DUNGEON_MAZE))
             return;
 
         if (!e.getBlock().getType().equals(Material.STONE)) return;
@@ -56,7 +52,7 @@ public class DungeonMazeListener extends SimpleListener {
     public void onCraft(CraftItemEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.DUNGEON_MAZE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.DUNGEON_MAZE))
             return;
 
         if (e.getRecipe().getResult().getType().equals(Material.TORCH))

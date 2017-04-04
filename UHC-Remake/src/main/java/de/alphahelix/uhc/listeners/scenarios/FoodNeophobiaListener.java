@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -14,15 +13,11 @@ public class FoodNeophobiaListener extends SimpleListener {
 
     private HashMap<String, ItemStack> food = new HashMap<>();
 
-    public FoodNeophobiaListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onItemComsune(PlayerItemConsumeEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.FOOD_NEOPHOBIA))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.FOOD_NEOPHOBIA))
             return;
         if (e.getItem().getType().equals(Material.MILK_BUCKET) || e.getItem().getType().equals(Material.POTION))
             return;

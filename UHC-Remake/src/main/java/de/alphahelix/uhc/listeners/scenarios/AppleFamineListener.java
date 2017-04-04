@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -12,15 +11,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class AppleFamineListener extends SimpleListener {
 
-    public AppleFamineListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onDecay(LeavesDecayEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.APPLE_FAMINE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.APPLE_FAMINE))
             return;
 
         e.setCancelled(true);
@@ -38,7 +33,7 @@ public class AppleFamineListener extends SimpleListener {
     public void onBreak(BlockBreakEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.APPLE_FAMINE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.APPLE_FAMINE))
             return;
 
         if (!(e.getBlock().getType().equals(Material.LEAVES) || e.getBlock().getType().equals(Material.LEAVES_2)))

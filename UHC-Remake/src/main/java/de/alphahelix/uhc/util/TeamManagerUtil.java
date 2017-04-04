@@ -1,10 +1,7 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.UHCTeam;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -13,43 +10,29 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class TeamManagerUtil extends Util {
+public class TeamManagerUtil {
 
-    private ArrayList<UHCTeam> teams;
-    private int maxTeammember = 4;
-    private Material m;
+    private static ArrayList<UHCTeam> teams = new ArrayList<>();
+    private static int maxTeammember = 4;
+    private static Material m;
 
-    public TeamManagerUtil(UHC pl) {
-        super(pl);
-        teams = new ArrayList<>();
-        m = UHCFileRegister.getTeamFile().getContentMaterial();
-    }
-
-    public static TeamManagerUtil getTeamManager() {
-        return UHCRegister.getTeamManagerUtil();
-    }
-
-    public Material getIconMaterial() {
+    public static Material getIconMaterial() {
         return m;
     }
 
-    public void setIconMaterial(Material m) {
-        this.m = m;
+    public static void setIconMaterial(Material m) {
+        TeamManagerUtil.m = m;
     }
 
-    public ArrayList<UHCTeam> getTeams() {
+    public static ArrayList<UHCTeam> getTeams() {
         return teams;
     }
 
-    public int getMaxTeamMemberWhenNotSet() {
-        return maxTeammember;
-    }
-
-    public ItemStack getTeamItem() {
+    public static ItemStack getTeamItem() {
         return UHCFileRegister.getTeamFile().getItem().getItemStack();
     }
 
-    public UHCTeam getTeamByIcon(ItemStack icon, Material m) {
+    public static UHCTeam getTeamByIcon(ItemStack icon, Material m) {
         UHCTeam s = null;
         for (UHCTeam t : teams)
             if (t.getIcon(m).equals(icon))
@@ -57,18 +40,7 @@ public class TeamManagerUtil extends Util {
         return s;
     }
 
-    public UHCTeam getFullestTeam() {
-        UHCTeam t = null;
-        int i = -1;
-        for (UHCTeam h : teams)
-            if (i < h.getSize()) {
-                i = h.getSize();
-                t = h;
-            }
-        return t;
-    }
-
-    public UHCTeam getLowestTeam() {
+    public static UHCTeam getLowestTeam() {
         UHCTeam t = null;
         int i = Integer.MAX_VALUE;
         for (UHCTeam h : teams)
@@ -79,108 +51,82 @@ public class TeamManagerUtil extends Util {
         return t;
     }
 
-    public UHCTeam getPercentFullestTeam() {
-        UHCTeam t = null;
-        double i = -1;
-        for (UHCTeam h : teams)
-            if (i < (h.getSize() / (double) t.getMaxPlayer())) {
-                i = h.getSize();
-                t = h;
-            }
-        return t;
-    }
-
-    public UHCTeam getPercentLowestTeam() {
-        UHCTeam t = null;
-        double i = Integer.MAX_VALUE;
-        for (UHCTeam h : teams)
-            if (i > (h.getSize() / (double) t.getMaxPlayer())) {
-                i = h.getSize();
-                t = h;
-            }
-        return t;
-    }
-
-    public UHCTeam getTeamByName(String name) {
+    public static UHCTeam getTeamByName(String name) {
         for (UHCTeam t : teams)
             if (t.getName().equals(name))
                 return t;
         return null;
     }
 
-    public UHCTeam getTeamByPrefix(String prefix) {
+    public static UHCTeam getTeamByPrefix(String prefix) {
         for (UHCTeam t : teams)
             if (t.getPrefix().equals(prefix))
                 return t;
         return null;
     }
 
-    public UHCTeam getTeamByData(byte data) {
+    public static UHCTeam getTeamByData(byte data) {
         for (UHCTeam t : teams)
             if (t.getColorData() == data)
                 return t;
         return null;
     }
 
-    public UHCTeam getTeamByInvSlot(int invSlot) {
+    public static UHCTeam getTeamByInvSlot(int invSlot) {
         for (UHCTeam t : teams)
             if (t.getInvSlot() == invSlot)
                 return t;
         return null;
     }
 
-    public UHCTeam getTeamByPlayer(Player p) {
+    public static UHCTeam getTeamByPlayer(Player p) {
         for (UHCTeam t : teams)
             if (t.getPlayers().contains(p))
                 return t;
         return null;
     }
 
-    public int getTeamAmount() {
+    public static int getTeamAmount() {
         return teams.size();
     }
 
-    public void setMaxTeamMemberWhenNonSet(int maxPlayer) {
-        this.maxTeammember = maxPlayer;
-    }
-
-    public UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot, boolean isColoredName, Color c) {
+    public static UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot, boolean isColoredName, Color c) {
         return new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, isColoredName, c);
     }
 
-    public UHCTeam registerTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot,
-                                boolean isColoredName, Color c) {
+    public static UHCTeam registerTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot,
+                                       boolean isColoredName, Color c) {
         return new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, isColoredName, c);
     }
 
-    public UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot, Color c) {
+    public static UHCTeam registerTeam(String name, String prefix, byte colorData, int invSlot, Color c) {
         return new UHCTeam(name, prefix, colorData, maxTeammember, invSlot, true, c);
     }
 
-    public UHCTeam registerTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot, Color c) {
+    public static UHCTeam registerTeam(String name, String prefix, byte colorData, int maxPlayer, int invSlot, Color c) {
         return new UHCTeam(name, prefix, colorData, maxPlayer, invSlot, true, c);
     }
 
-    public void addTeam(UHCTeam team) {
+    public static void addTeam(UHCTeam team) {
         teams.add(team);
     }
 
-    public boolean existTeam(UHCTeam team) {
+    public static boolean existTeam(UHCTeam team) {
         return teams.contains(team);
     }
 
-    public UHCTeam isInOneTeam(Player p) {
+    public static UHCTeam isInOneTeam(Player p) {
         for (UHCTeam t : teams)
             if (t.isInTeam(p))
                 return t;
         return null;
     }
 
-    public boolean isSameTeam(Player p, Player p2) {
+    public static boolean isSameTeam(Player p, Player p2) {
         return isInOneTeam(p) != null && isInOneTeam(p2) != null && isInOneTeam(p).equals(isInOneTeam(p2));
     }
 
-    public void splitPlayersIntoTeams() {
+    public static void splitPlayersIntoTeams() {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (isInOneTeam(p) == null) {
                 getLowestTeam().addToTeam(p);

@@ -1,37 +1,20 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphalibary.utils.MinecraftVersion;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.enums.UHCAchievements;
-import de.alphahelix.uhc.instances.Crate;
-import de.alphahelix.uhc.instances.Kit;
-import de.alphahelix.uhc.instances.PlayerInfo;
-import de.alphahelix.uhc.instances.Util;
+import de.alphahelix.alphaapi.utils.MinecraftVersion;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.GameMode;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
-public class PlayerUtil extends Util {
+public class PlayerUtil {
 
-    private static HashMap<String, PlayerInfo> infos = new HashMap<>();
-    private LinkedList<String> all;
-    private LinkedList<String> survivors;
-    private LinkedList<String> deaths;
+    private static LinkedList<String> all = new LinkedList<>();
+    private static LinkedList<String> survivors = new LinkedList<>();
+    private static LinkedList<String> deaths = new LinkedList<>();
 
-    public PlayerUtil(UHC uhc) {
-        super(uhc);
-        setAll(new LinkedList<String>());
-        setSurvivors(new LinkedList<String>());
-        setDeads(new LinkedList<String>());
-    }
-
-    public void clearUp(Player p) {
+    public static void clearUp(Player p) {
         p.getInventory().clear();
         p.getEnderChest().clear();
         p.getEquipment().clear();
@@ -46,8 +29,8 @@ public class PlayerUtil extends Util {
         p.setFoodLevel(20);
         p.setGameMode(GameMode.SURVIVAL);
         try {
-            if(MinecraftVersion.getServer() != MinecraftVersion.EIGHT) {
-                Class.forName("org.bukkit.entity.Entity").getMethod("setGlowing", boolean.class).invoke(p, true);
+            if (MinecraftVersion.getServer() != MinecraftVersion.EIGHT) {
+                Class.forName("org.bukkit.entity.Entity").getMethod("setGlowing", boolean.class).invoke(p, false);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +38,7 @@ public class PlayerUtil extends Util {
         p.setMaxHealth(20.0);
         p.setHealth(20.0);
         try {
-            if(MinecraftVersion.getServer() != MinecraftVersion.EIGHT) {
+            if (MinecraftVersion.getServer() != MinecraftVersion.EIGHT) {
                 Class.forName("org.bukkit.entity.Entity").getMethod("setInvulnerable", boolean.class).invoke(p, true);
             }
         } catch (Exception e) {
@@ -69,43 +52,21 @@ public class PlayerUtil extends Util {
         }
     }
 
-    public void removePlayerInfo(OfflinePlayer p) {
-        infos.remove(p.getName());
-    }
-
-    public boolean isInInfoMap(OfflinePlayer p) {
-        return infos.containsKey(p.getName());
-    }
-
-    public void setPlayerInfo(OfflinePlayer p, PlayerInfo playerInfo) {
-        infos.put(p.getName(), playerInfo);
-        Crate.setCrates(p, playerInfo.getCrates());
-    }
-
-    public PlayerInfo getPlayerInfo(OfflinePlayer p) {
-        if (infos.containsKey(p.getName())) return infos.get(p.getName());
-        else {
-            PlayerInfo playerInfo = new PlayerInfo(p, 0, 0, 0, 0, 0, 0, new ArrayList<Kit>(), new ArrayList<UHCAchievements>(), "");
-            setPlayerInfo(p, playerInfo);
-            return playerInfo;
-        }
-    }
-
     //All Players
 
-    public LinkedList<String> getAll() {
+    public static LinkedList<String> getAll() {
         return all;
     }
 
-    private void setAll(LinkedList<String> all) {
-        this.all = all;
+    private static void setAll(LinkedList<String> all) {
+        PlayerUtil.all = all;
     }
 
-    public void addAll(Player p) {
+    public static void addAll(Player p) {
         if (!(all.contains(p.getName()))) all.add(p.getName());
     }
 
-    public void removeAll(Player p) {
+    public static void removeAll(Player p) {
         if (all.contains(p.getName())) all.remove(p.getName());
         removeSurvivor(p);
         removeDead(p);
@@ -113,79 +74,79 @@ public class PlayerUtil extends Util {
 
     //Living Players
 
-    public LinkedList<String> getSurvivors() {
+    public static LinkedList<String> getSurvivors() {
         return survivors;
     }
 
-    private void setSurvivors(LinkedList<String> survivors) {
-        this.survivors = survivors;
+    private static void setSurvivors(LinkedList<String> survivors) {
+        PlayerUtil.survivors = survivors;
     }
 
-    public void addSurvivor(Player p) {
+    public static void addSurvivor(Player p) {
         if (!(survivors.contains(p.getName()))) survivors.add(p.getName());
     }
 
-    public void addSurvivor(String name) {
+    public static void addSurvivor(String name) {
         if (!(survivors.contains(name))) survivors.add(name);
     }
 
-    public void removeSurvivor(Player p) {
+    public static void removeSurvivor(Player p) {
         if (survivors.contains(p.getName())) survivors.remove(p.getName());
     }
 
-    public void removeSurvivor(String name) {
+    public static void removeSurvivor(String name) {
         if (survivors.contains(name)) survivors.remove(name);
     }
 
-    public boolean isSurivor(Player p) {
+    public static boolean isSurivor(Player p) {
         return survivors.contains(p.getName());
     }
 
-    public boolean isSurvivor(String name) {
+    public static boolean isSurvivor(String name) {
         return survivors.contains(name);
     }
 
     //Death Players | Spectators |
 
-    public LinkedList<String> getDeads() {
+    public static LinkedList<String> getDeads() {
         return deaths;
     }
 
-    private void setDeads(LinkedList<String> deaths) {
-        this.deaths = deaths;
+    private static void setDeads(LinkedList<String> deaths) {
+        PlayerUtil.deaths = deaths;
     }
 
-    public void addDead(Player p) {
+    public static void addDead(Player p) {
         if (!(deaths.contains(p.getName()))) deaths.add(p.getName());
     }
 
-    public void removeDead(Player p) {
+    public static void removeDead(Player p) {
         if (deaths.contains(p.getName())) deaths.remove(p.getName());
     }
 
-    public void addDead(String name) {
+    public static void addDead(String name) {
         if (!(deaths.contains(name))) deaths.add(name);
     }
 
-    public void removeDead(String name) {
+    public static void removeDead(String name) {
         if (deaths.contains(name)) deaths.remove(name);
     }
 
-    public boolean isDead(Player p) {
+    public static boolean isDead(Player p) {
         return deaths.contains(p.getName());
     }
 
-    public boolean isDead(String name) {
+    public static boolean isDead(String name) {
         return deaths.contains(name);
     }
 
     //Other
 
-    public int getMinimumPlayerCount() {
-        return UHCFileRegister.getOptionsFile().getInt("Minimum players");
+    public static int getMinimumPlayerCount() {
+        return UHCFileRegister.getOptionsFile().getMinimumPlayers();
     }
 
-    public int getMaximumPlayerCount() {
-        return UHCFileRegister.getOptionsFile().getInt("Maximum players");
+    public static int getMaximumPlayerCount() {
+        return UHCFileRegister.getOptionsFile().getMaximumPlayers();
     }
 }

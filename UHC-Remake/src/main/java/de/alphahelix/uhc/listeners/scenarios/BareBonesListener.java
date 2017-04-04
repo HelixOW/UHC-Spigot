@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -14,17 +13,13 @@ import org.bukkit.util.Vector;
 
 public class BareBonesListener extends SimpleListener {
 
-    public BareBonesListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onPortalEnter(PlayerPortalEvent e) {
         if (e.isCancelled())
             return;
         if (!e.getCause().equals(TeleportCause.NETHER_PORTAL))
             return;
-        if (!scenarioCheck(Scenarios.BAREBONES))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BAREBONES))
             return;
 
         e.setCancelled(true);
@@ -35,7 +30,7 @@ public class BareBonesListener extends SimpleListener {
     public void onCraft(CraftItemEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.BAREBONES))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BAREBONES))
             return;
         Material res = e.getRecipe().getResult().getType();
 
@@ -47,7 +42,7 @@ public class BareBonesListener extends SimpleListener {
     public void onMine(BlockBreakEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.BAREBONES))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BAREBONES))
             return;
         if (!e.getBlock().getType().name().contains("ORE"))
             return;

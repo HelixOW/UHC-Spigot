@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,17 +18,13 @@ public class MonsterIncListener extends SimpleListener {
     private static Random r = new Random();
     private ArrayList<Location> doors = new ArrayList<>();
 
-    public MonsterIncListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
         if (e.getBlockPlaced() == null)
             return;
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.MONSTER_INC))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.MONSTER_INC))
             return;
 
         if (!(e.getBlockPlaced().getType().name().contains("DOOR")))
@@ -52,7 +47,7 @@ public class MonsterIncListener extends SimpleListener {
     public void onMove(PlayerMoveEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.MONSTER_INC))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.MONSTER_INC))
             return;
         if (doors.size() < 3) return;
 

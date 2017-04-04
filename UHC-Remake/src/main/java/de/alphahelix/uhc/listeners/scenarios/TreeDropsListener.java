@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.event.EventHandler;
@@ -12,15 +11,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class TreeDropsListener extends SimpleListener {
 
-    public TreeDropsListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onDecay(LeavesDecayEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.TREE_DROPS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.TREE_DROPS))
             return;
 
         double r = Math.random();
@@ -38,7 +33,7 @@ public class TreeDropsListener extends SimpleListener {
     public void onBreak(BlockBreakEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.TREE_DROPS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.TREE_DROPS))
             return;
 
         if (e.getBlock().getType().name().contains("LEAVES")) {

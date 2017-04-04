@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,15 +18,11 @@ import java.util.Random;
 
 public class NightmareModeListener extends SimpleListener {
 
-    public NightmareModeListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         if (event.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.NIGHTMARE_MODE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.NIGHTMARE_MODE))
             return;
         if (event.getEntity() instanceof Witch) {
             event.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1726272000, 4));
@@ -44,7 +39,7 @@ public class NightmareModeListener extends SimpleListener {
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.NIGHTMARE_MODE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.NIGHTMARE_MODE))
             return;
         if (event.getEntity() instanceof Zombie) {
             if (event.getCause() == DamageCause.FIRE || event.getCause() == DamageCause.FIRE_TICK) {
@@ -66,7 +61,7 @@ public class NightmareModeListener extends SimpleListener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.NIGHTMARE_MODE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.NIGHTMARE_MODE))
             return;
         if (event.getEntity() instanceof Player) {
             if (event.getDamager() instanceof Arrow) {
@@ -86,7 +81,7 @@ public class NightmareModeListener extends SimpleListener {
     public void onEntityExplode(EntityExplodeEvent event) {
         if (event.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.NIGHTMARE_MODE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.NIGHTMARE_MODE))
             return;
         if (event.getEntity() instanceof Creeper) {
             event.getEntity().getWorld().spawn(event.getEntity().getLocation(), Silverfish.class);
@@ -99,7 +94,7 @@ public class NightmareModeListener extends SimpleListener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-        if (!scenarioCheck(Scenarios.NIGHTMARE_MODE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.NIGHTMARE_MODE))
             return;
         if (event.getEntity() instanceof Creeper) {
             if ((new Random().nextInt(99) + 1) >= 50) {

@@ -1,32 +1,35 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphalibary.scoreboard.SimpleScoreboard;
+import de.alphahelix.alphaapi.scoreboard.SimpleScoreboard;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.instances.Kit;
 import de.alphahelix.uhc.instances.UHCTeam;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class ScoreboardUtil extends Util {
+import java.util.UUID;
+
+public class ScoreboardUtil {
 
     private static String iden;
 
-    public ScoreboardUtil(UHC uhc) {
-        super(uhc);
-        iden = UHCFileRegister.getScoreboardFile().getLobbyIdentifier();
+    public static void setIden(String iden) {
+        ScoreboardUtil.iden = iden;
     }
 
-    public void setLobbyScoreboard(Player p) {
+    public static void setLobbyScoreboard(Player p) {
         if (!UHCFileRegister.getScoreboardFile().isLobbyShow("scoreboard"))
             return;
 
-        SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), "uhc-lobby",
+        SimpleScoreboard ssb = new SimpleScoreboard("uhc-lobby",
                 UHCFileRegister.getScoreboardFile().getLobbyTitle(), iden);
         int max = UHCFileRegister.getScoreboardConstructFile().getLobbyLines();
+        UUID id = UUIDFetcher.getUUID(p);
 
         if (max > 16)
             max = 16;
@@ -41,7 +44,7 @@ public class ScoreboardUtil extends Util {
                     continue;
                 ssb.setValue(i,
                         UHCFileRegister.getScoreboardFile().getLobbyPart("kills")
-                                .replace("[kills]", Long.toString(UHCRegister.getStatsUtil().getKills(p)))
+                                .replace("[kills]", Long.toString(StatsUtil.getKills(id)))
                                 .replace("[i]", iden),
                         iden);
             } else if (lineValue.contains("[deaths]")) {
@@ -49,7 +52,7 @@ public class ScoreboardUtil extends Util {
                     continue;
                 ssb.setValue(i,
                         UHCFileRegister.getScoreboardFile().getLobbyPart("deaths")
-                                .replace("[deaths]", Long.toString(UHCRegister.getStatsUtil().getDeaths(p)))
+                                .replace("[deaths]", Long.toString(StatsUtil.getDeaths(id)))
                                 .replace("[i]", iden),
                         iden);
             } else if (lineValue.contains("[coins]")) {
@@ -57,7 +60,7 @@ public class ScoreboardUtil extends Util {
                     continue;
                 ssb.setValue(i,
                         UHCFileRegister.getScoreboardFile().getLobbyPart("coins")
-                                .replace("[coins]", Long.toString(UHCRegister.getStatsUtil().getCoins(p)))
+                                .replace("[coins]", Long.toString(StatsUtil.getCoins(id)))
                                 .replace("[i]", iden),
                         iden);
             } else if (lineValue.contains("[points]")) {
@@ -65,30 +68,30 @@ public class ScoreboardUtil extends Util {
                     continue;
                 ssb.setValue(i,
                         UHCFileRegister.getScoreboardFile().getLobbyPart("points")
-                                .replace("[points]", Long.toString(UHCRegister.getStatsUtil().getPoints(p)))
+                                .replace("[points]", Long.toString(StatsUtil.getPoints(id)))
                                 .replace("[i]", iden),
                         iden);
             } else if (lineValue.contains("[team]")) {
                 if (!UHCFileRegister.getScoreboardFile().isLobbyShow("team"))
                     continue;
-                if (UHCRegister.getTeamManagerUtil().isInOneTeam(p) == null) {
+                if (TeamManagerUtil.isInOneTeam(p) == null) {
                     ssb.setValue(i, UHCFileRegister.getScoreboardFile().getLobbyPart("team")
                             .replace("[team]", "-").replace("[i]", iden), iden);
                 }
             } else if (lineValue.contains("[kit]") || lineValue.contains("[scenario]")) {
-                if (getUhc().isKits() && !getUhc().isScenarios()) {
+                if (UHC.isKits() && !UHC.isScenarios()) {
                     if (!UHCFileRegister.getScoreboardFile().isLobbyShow("kit"))
                         continue;
                     ssb.setValue(i, UHCFileRegister.getScoreboardFile().getLobbyPart("kit")
                             .replace("[kit]", "-").replace("[i]", iden), iden);
-                } else if (getUhc().isScenarios()) {
+                } else if (UHC.isScenarios()) {
                     if (!UHCFileRegister.getScoreboardFile().isLobbyShow("scenario"))
                         continue;
 
                     ssb.setValue(i, UHCFileRegister.getScoreboardFile().getLobbyPart("scenario")
                             .replace("[scenario]", "-").replace("[i]", iden), iden);
 
-                    if (!getUhc().isScenarioVoting())
+                    if (!UHC.isScenarioVoting())
                         ssb.updateValue(i,
                                 UHCFileRegister.getScoreboardFile().getLobbyPart("scenario")
                                         .replace("[scenario]",
@@ -106,11 +109,11 @@ public class ScoreboardUtil extends Util {
             }
         }
 
-        p.setScoreboard(ssb.getScoreboard());
+        p.setScoreboard(ssb.buildScoreboard());
     }
 
-    public void updateScenario(Player p, Scenarios played) {
-        SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-lobby");
+    public static void updateScenario(Player p, Scenarios played) {
+        SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-lobby");
 
         int max = UHCFileRegister.getScoreboardConstructFile().getLobbyLines();
 
@@ -130,8 +133,8 @@ public class ScoreboardUtil extends Util {
         }
     }
 
-    public void updateKit(Player p, Kit k) {
-        SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-lobby");
+    public static void updateKit(Player p, Kit k) {
+        SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-lobby");
 
         int max = UHCFileRegister.getScoreboardConstructFile().getLobbyLines();
 
@@ -146,8 +149,24 @@ public class ScoreboardUtil extends Util {
         }
     }
 
-    public void updateTeam(Player p, UHCTeam t) {
-        SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-lobby");
+    public static void updateCoins(Player p, long coins) {
+        SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-lobby");
+
+        int max = UHCFileRegister.getScoreboardConstructFile().getLobbyLines();
+
+        if (max > 16)
+            max = 16;
+        for (int i = 1; i < max; i++) {
+            String lineValue = UHCFileRegister.getScoreboardConstructFile().getLobbyLine(i);
+            if (!lineValue.contains("[coins]"))
+                continue;
+            ssb.updateValue(i, UHCFileRegister.getScoreboardFile().getLobbyPart("coins")
+                    .replace("[coins]", Long.toString(coins)).replace("[i]", iden), iden);
+        }
+    }
+
+    public static void updateTeam(Player p, UHCTeam t) {
+        SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-lobby");
 
         int max = UHCFileRegister.getScoreboardConstructFile().getLobbyLines();
 
@@ -162,11 +181,13 @@ public class ScoreboardUtil extends Util {
         }
     }
 
-    public void setIngameScoreboard(Player p) {
+    public static void setIngameScoreboard(Player p) {
         if (!UHCFileRegister.getScoreboardFile().isIngameShow("scoreboard"))
             return;
 
-        SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), "uhc-ingame",
+        iden = UHCFileRegister.getScoreboardFile().getIngameIdentifier();
+
+        SimpleScoreboard ssb = new SimpleScoreboard("uhc-ingame",
                 UHCFileRegister.getScoreboardFile().getIngameTitle(), iden);
         int max = UHCFileRegister.getScoreboardConstructFile().getIngameLines();
 
@@ -186,7 +207,7 @@ public class ScoreboardUtil extends Util {
                 ssb.setValue(i,
                         UHCFileRegister.getScoreboardFile().getIngamePart("alive")
                                 .replace("[alive]",
-                                        Integer.toString(UHCRegister.getPlayerUtil().getSurvivors().size()))
+                                        Integer.toString(PlayerUtil.getSurvivors().size()))
                                 .replace("[i]", iden),
                         iden);
             } else if (lineValue.contains("[specs]")) {
@@ -194,13 +215,13 @@ public class ScoreboardUtil extends Util {
                     continue;
                 ssb.setValue(i,
                         UHCFileRegister.getScoreboardFile().getIngamePart("specs")
-                                .replace("[specs]", Integer.toString(UHCRegister.getPlayerUtil().getDeads().size()))
+                                .replace("[specs]", Integer.toString(PlayerUtil.getDeads().size()))
                                 .replace("[i]", iden),
                         iden);
             }
 
             if (lineValue.contains("[kit]") || lineValue.contains("[scenario]")) {
-                if (getUhc().isKits() && !getUhc().isScenarios()) {
+                if (UHC.isKits() && !UHC.isScenarios()) {
                     if (!UHCFileRegister.getScoreboardFile().isIngameShow("kit"))
                         continue;
 
@@ -215,7 +236,7 @@ public class ScoreboardUtil extends Util {
                                         .replace("[i]", iden),
                                 iden);
                     }
-                } else if (getUhc().isScenarios()) {
+                } else if (UHC.isScenarios()) {
                     if (!UHCFileRegister.getScoreboardFile().isIngameShow("scenario"))
                         continue;
 
@@ -235,7 +256,7 @@ public class ScoreboardUtil extends Util {
                 if (!UHCFileRegister.getScoreboardFile().isIngameShow("team"))
                     continue;
 
-                if (UHCRegister.getTeamManagerUtil().isInOneTeam(p) == null) {
+                if (TeamManagerUtil.isInOneTeam(p) == null) {
                     ssb.setValue(i, UHCFileRegister.getScoreboardFile().getIngamePart("team")
                             .replace("[team]", "-").replace("[i]", iden), iden);
                 } else {
@@ -245,8 +266,8 @@ public class ScoreboardUtil extends Util {
                     ssb.updateValue(i,
                             UHCFileRegister.getScoreboardFile().getIngamePart("team")
                                     .replace("[team]",
-                                            UHCRegister.getTeamManagerUtil().isInOneTeam(p).getPrefix()
-                                                    + UHCRegister.getTeamManagerUtil().isInOneTeam(p).getName())
+                                            TeamManagerUtil.isInOneTeam(p).getPrefix()
+                                                    + TeamManagerUtil.isInOneTeam(p).getName())
                                     .replace("[i]", iden),
                             iden);
                 }
@@ -254,8 +275,8 @@ public class ScoreboardUtil extends Util {
                 if (!UHCFileRegister.getScoreboardFile().isIngameShow("center"))
                     continue;
                 String v = UHCFileRegister.getScoreboardFile().getIngamePart("center")
-                        .replace("[center]", UHCFileRegister.getLocationsFile().getArena().getBlockX() + "/"
-                                + UHCFileRegister.getLocationsFile().getArena().getBlockZ())
+                        .replace("[center]", Bukkit.getWorld("UHC").getSpawnLocation().getBlockX() + "/"
+                                + Bukkit.getWorld("UHC").getSpawnLocation().getBlockZ())
                         .replace("[i]", iden);
 
                 ssb.setValue(i, v, iden);
@@ -263,7 +284,7 @@ public class ScoreboardUtil extends Util {
                 if (!UHCFileRegister.getScoreboardFile().isIngameShow("border"))
                     continue;
                 String v = UHCFileRegister.getScoreboardFile().getIngamePart("border")
-                        .replace("[border]", Integer.toString(UHCRegister.getBorderUtil().getSize()))
+                        .replace("[border]", Integer.toString(BorderUtil.getSize()))
                         .replace("[i]", iden);
 
                 ssb.setValue(i, v, iden);
@@ -273,25 +294,25 @@ public class ScoreboardUtil extends Util {
                 if (GState.isState(GState.PERIOD_OF_PEACE)) {
                     String v = UHCFileRegister.getScoreboardFile()
                             .getIngamePart("time infos.until damage")
-                            .replace("[time]", UHCRegister.getGraceTimer().getTime()).replace("[i]", iden);
+                            .replace("[time]", UHCRegister.getGraceTimer().getSecondsText()).replace("[i]", iden);
 
                     ssb.setValue(i, v, iden);
 
                 } else if (GState.isState(GState.WARMUP)) {
                     String v = UHCFileRegister.getScoreboardFile().getIngamePart("time infos.until pvp")
-                            .replace("[time]", UHCRegister.getWarmUpTimer().getTime()).replace("[i]", iden);
+                            .replace("[time]", UHCRegister.getWarmUpTimer().getSecondsText()).replace("[i]", iden);
 
                     ssb.setValue(i, v, iden);
                 } else if (GState.isState(GState.IN_GAME)) {
                     String v = UHCFileRegister.getScoreboardFile()
                             .getIngamePart("time infos.until deathmatch")
-                            .replace("[time]", UHCRegister.getDeathmatchTimer().getTime()).replace("[i]", iden);
+                            .replace("[time]", UHCRegister.getDeathmatchTimer().getSecondsText()).replace("[i]", iden);
 
                     ssb.setValue(i, v, iden);
                 } else if (GState.isState(GState.DEATHMATCH_WARMUP)) {
                     String v = UHCFileRegister.getScoreboardFile()
                             .getIngamePart("time infos.until deathmatch")
-                            .replace("[time]", UHCRegister.getStartDeathmatchTimer().getTime()).replace("[i]", iden);
+                            .replace("[time]", UHCRegister.getStartDeathMatchTimer().getSecondsText()).replace("[i]", iden);
 
                     ssb.setValue(i, v, iden);
                 } else if (GState.isState(GState.DEATHMATCH)) {
@@ -314,11 +335,11 @@ public class ScoreboardUtil extends Util {
             }
         }
 
-        p.setScoreboard(ssb.getScoreboard());
+        p.setScoreboard(ssb.buildScoreboard());
     }
 
-    public void updateAlive(Player p) {
-        SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-ingame");
+    public static void updateAlive(Player p) {
+        SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-ingame");
 
         int max = UHCFileRegister.getScoreboardConstructFile().getIngameLines();
 
@@ -332,14 +353,14 @@ public class ScoreboardUtil extends Util {
                 continue;
             ssb.setValue(i,
                     UHCFileRegister.getScoreboardFile().getIngamePart("alive")
-                            .replace("[alive]", Integer.toString(UHCRegister.getPlayerUtil().getSurvivors().size()))
+                            .replace("[alive]", Integer.toString(PlayerUtil.getSurvivors().size()))
                             .replace("[i]", iden),
                     iden);
         }
     }
 
-    public void updateSpecs(Player p) {
-        SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-ingame");
+    public static void updateSpecs(Player p) {
+        SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-ingame");
 
         int max = UHCFileRegister.getScoreboardConstructFile().getIngameLines();
 
@@ -353,14 +374,14 @@ public class ScoreboardUtil extends Util {
                 continue;
             ssb.setValue(i,
                     UHCFileRegister.getScoreboardFile().getIngamePart("specs")
-                            .replace("[specs]", Integer.toString(UHCRegister.getPlayerUtil().getDeads().size()))
+                            .replace("[specs]", Integer.toString(PlayerUtil.getDeads().size()))
                             .replace("[i]", iden),
                     iden);
         }
     }
 
-    public void updateTime(Player p) {
-        SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-ingame");
+    public static void updateTime(Player p) {
+        SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-ingame");
 
         int max = UHCFileRegister.getScoreboardConstructFile().getIngameLines();
 
@@ -375,26 +396,26 @@ public class ScoreboardUtil extends Util {
 
             if (GState.isState(GState.PERIOD_OF_PEACE)) {
                 String v = UHCFileRegister.getScoreboardFile().getIngamePart("time infos.until damage")
-                        .replace("[time]", UHCRegister.getGraceTimer().getTime()).replace("[i]", iden);
+                        .replace("[time]", UHCRegister.getGraceTimer().getSecondsText()).replace("[i]", iden);
 
                 ssb.setValue(i, v, iden);
 
             } else if (GState.isState(GState.WARMUP)) {
                 String v = UHCFileRegister.getScoreboardFile().getIngamePart("time infos.until pvp")
-                        .replace("[time]", UHCRegister.getWarmUpTimer().getTime()).replace("[i]", iden);
+                        .replace("[time]", UHCRegister.getWarmUpTimer().getSecondsText()).replace("[i]", iden);
 
                 ssb.setValue(i, v, iden);
 
             } else if (GState.isState(GState.IN_GAME)) {
                 String v = UHCFileRegister.getScoreboardFile()
                         .getIngamePart("time infos.until deathmatch")
-                        .replace("[time]", UHCRegister.getDeathmatchTimer().getTime()).replace("[i]", iden);
+                        .replace("[time]", UHCRegister.getDeathmatchTimer().getSecondsText()).replace("[i]", iden);
 
                 ssb.setValue(i, v, iden);
             } else if (GState.isState(GState.DEATHMATCH_WARMUP)) {
                 String v = UHCFileRegister.getScoreboardFile()
                         .getIngamePart("time infos.until deathmatch")
-                        .replace("[time]", UHCRegister.getStartDeathmatchTimer().getTime()).replace("[i]", iden);
+                        .replace("[time]", UHCRegister.getStartDeathMatchTimer().getSecondsText()).replace("[i]", iden);
 
                 ssb.setValue(i, v, iden);
             } else if (GState.isState(GState.DEATHMATCH)) {
@@ -410,8 +431,8 @@ public class ScoreboardUtil extends Util {
         }
     }
 
-    public void updateBorder(Player p) {
-        SimpleScoreboard<UHC> ssb = new SimpleScoreboard<>(getUhc(), p, "uhc-ingame");
+    public static void updateBorder(Player p) {
+        SimpleScoreboard ssb = new SimpleScoreboard(p, "uhc-ingame");
 
         int max = UHCFileRegister.getScoreboardConstructFile().getIngameLines();
 
@@ -425,7 +446,7 @@ public class ScoreboardUtil extends Util {
                 continue;
 
             String v = UHCFileRegister.getScoreboardFile().getIngamePart("border")
-                    .replace("[border]", Integer.toString(UHCRegister.getBorderUtil().getSize()))
+                    .replace("[border]", Integer.toString(BorderUtil.getSize()))
                     .replace("[i]", iden);
 
             ssb.setValue(i, v, iden);

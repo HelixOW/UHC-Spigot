@@ -1,10 +1,11 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,23 +24,19 @@ public class LucyInTheSkyWithDiamondsListener extends SimpleListener {
     private Player lucy;
     private boolean wasLucyDamaged;
 
-    public LucyInTheSkyWithDiamondsListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.LUCYS_IN_THE_SKY_WITH_DIAMONDS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.LUCYS_IN_THE_SKY_WITH_DIAMONDS))
             return;
 
-        lucy = Bukkit.getPlayer(UHCRegister.getPlayerUtil().getSurvivors()
-                .get(new Random().nextInt(UHCRegister.getPlayerUtil().getSurvivors().size())));
+        lucy = Bukkit.getPlayer(PlayerUtil.getSurvivors()
+                .get(new Random().nextInt(PlayerUtil.getSurvivors().size())));
         lucy.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 1));
         lucy.setAllowFlight(true);
-        UHCRegister.getPlayerUtil().removeSurvivor(lucy);
+        PlayerUtil.removeSurvivor(lucy);
         broadcastLucy();
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             p.getInventory().addItem(new ItemStack(Material.BOW), new ItemStack(Material.ARROW, 16));
         }
     }
@@ -53,7 +50,7 @@ public class LucyInTheSkyWithDiamondsListener extends SimpleListener {
         if (!(e.getDamager() instanceof Player))
             return;
 
-        if (!scenarioCheck(Scenarios.LUCYS_IN_THE_SKY_WITH_DIAMONDS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.LUCYS_IN_THE_SKY_WITH_DIAMONDS))
             return;
 
         Player dmg = (Player) e.getEntity();
@@ -70,7 +67,7 @@ public class LucyInTheSkyWithDiamondsListener extends SimpleListener {
                 public void run() {
                     wasLucyDamaged = false;
                 }
-            }.runTaskLaterAsynchronously(getUhc(), 20);
+            }.runTaskLaterAsynchronously(UHC.getInstance(), 20);
         }
     }
 
@@ -78,7 +75,7 @@ public class LucyInTheSkyWithDiamondsListener extends SimpleListener {
     public void onBreak(BlockBreakEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.LUCYS_IN_THE_SKY_WITH_DIAMONDS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.LUCYS_IN_THE_SKY_WITH_DIAMONDS))
             return;
 
         if (e.getPlayer().getName().equals(lucy.getName())) e.setCancelled(true);
@@ -87,11 +84,11 @@ public class LucyInTheSkyWithDiamondsListener extends SimpleListener {
     private void broadcastLucy() {
         new BukkitRunnable() {
             public void run() {
-                for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
-                    p.sendMessage(getUhc().getPrefix() + "Lucy :" + lucy.getLocation().getBlockX() + " / "
+                for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
+                    p.sendMessage(UHC.getPrefix() + "Lucy :" + lucy.getLocation().getBlockX() + " / "
                             + lucy.getLocation().getBlockZ());
                 }
             }
-        }.runTaskTimer(getUhc(), 0, 20 * 180);
+        }.runTaskTimer(UHC.getInstance(), 0, 20 * 180);
     }
 }

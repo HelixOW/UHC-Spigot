@@ -1,11 +1,13 @@
 package de.alphahelix.uhc.listeners;
 
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.UHCAchievements;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.StatsUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -22,14 +24,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.util.UUID;
+
 /**
  * Created by AlphaHelixDev.
  */
 public class AchievementListener extends SimpleListener {
-
-    public AchievementListener(UHC uhc) {
-        super(uhc);
-    }
 
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
@@ -65,25 +65,26 @@ public class AchievementListener extends SimpleListener {
     public void onKill(EntityDeathEvent e) {
         if (GState.isState(GState.LOBBY) || GState.isState(GState.END)) return;
         if (e.getEntity().getKiller() == null) return;
+        UUID id = UUIDFetcher.getUUID(e.getEntity().getKiller());
 
         if (e.getEntityType() == EntityType.ENDER_DRAGON) {
-            if (!UHCRegister.getStatsUtil().hasAchievement(UHCAchievements.DRAGON_SLAYER, e.getEntity().getKiller())) {
-                UHCRegister.getStatsUtil().addAchievement(UHCAchievements.DRAGON_SLAYER, e.getEntity().getKiller());
-                e.getEntity().getKiller().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.DRAGON_SLAYER.getName()));
+            if (!StatsUtil.hasAchievement(id, UHCAchievements.DRAGON_SLAYER)) {
+                StatsUtil.addAchievement(id, UHCAchievements.DRAGON_SLAYER);
+                e.getEntity().getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.DRAGON_SLAYER.getName()));
             }
 
         } else if (e.getEntityType() == EntityType.PLAYER) {
             if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE ||
                     e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK ||
                     e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.LAVA) {
-                if (!UHCRegister.getStatsUtil().hasAchievement(UHCAchievements.BURN_BABY_BURN, e.getEntity().getKiller())) {
-                    UHCRegister.getStatsUtil().addAchievement(UHCAchievements.BURN_BABY_BURN, e.getEntity().getKiller());
-                    e.getEntity().getKiller().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.BURN_BABY_BURN.getName()));
+                if (!StatsUtil.hasAchievement(id, UHCAchievements.BURN_BABY_BURN)) {
+                    StatsUtil.addAchievement(id, UHCAchievements.BURN_BABY_BURN);
+                    e.getEntity().getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.BURN_BABY_BURN.getName()));
                 }
             } else if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
-                if (!UHCRegister.getStatsUtil().hasAchievement(UHCAchievements.SENOR_BOOM_BOOM, e.getEntity().getKiller())) {
-                    UHCRegister.getStatsUtil().addAchievement(UHCAchievements.SENOR_BOOM_BOOM, e.getEntity().getKiller());
-                    e.getEntity().getKiller().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.SENOR_BOOM_BOOM.getName()));
+                if (!StatsUtil.hasAchievement(id, UHCAchievements.SENOR_BOOM_BOOM)) {
+                    StatsUtil.addAchievement(id, UHCAchievements.SENOR_BOOM_BOOM);
+                    e.getEntity().getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.SENOR_BOOM_BOOM.getName()));
                 }
             }
         }
@@ -93,11 +94,12 @@ public class AchievementListener extends SimpleListener {
     public void onKill(PlayerDeathEvent e) {
         if (GState.isState(GState.LOBBY) || GState.isState(GState.END)) return;
         if (e.getEntity().getKiller() == null) return;
+        UUID id = UUIDFetcher.getUUID(e.getEntity().getKiller());
 
-        if (UHCRegister.getStatsUtil().getKills(e.getEntity().getKiller()) >= 500) {
-            if (!UHCRegister.getStatsUtil().hasAchievement(UHCAchievements.SLAYER, e.getEntity().getKiller())) {
-                UHCRegister.getStatsUtil().addAchievement(UHCAchievements.SLAYER, e.getEntity().getKiller());
-                e.getEntity().getKiller().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.SLAYER.getName()));
+        if (StatsUtil.getKills(id) >= 500) {
+            if (!StatsUtil.hasAchievement(id, UHCAchievements.SLAYER)) {
+                StatsUtil.addAchievement(id, UHCAchievements.SLAYER);
+                e.getEntity().getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.SLAYER.getName()));
             }
         }
     }
@@ -107,10 +109,11 @@ public class AchievementListener extends SimpleListener {
         if (e.isCancelled()) return;
         if (GState.isState(GState.LOBBY) || GState.isState(GState.END)) return;
         if (e.getBlock().getType() != Material.DIAMOND_BLOCK) return;
+        UUID id = UUIDFetcher.getUUID(e.getPlayer());
 
-        if (!UHCRegister.getStatsUtil().hasAchievement(UHCAchievements.OMG_DIAMONDS, e.getPlayer())) {
-            UHCRegister.getStatsUtil().addAchievement(UHCAchievements.OMG_DIAMONDS, e.getPlayer());
-            e.getPlayer().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.OMG_DIAMONDS.getName()));
+        if (!StatsUtil.hasAchievement(id, UHCAchievements.OMG_DIAMONDS)) {
+            StatsUtil.addAchievement(id, UHCAchievements.OMG_DIAMONDS);
+            e.getPlayer().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.OMG_DIAMONDS.getName()));
         }
     }
 
@@ -118,11 +121,13 @@ public class AchievementListener extends SimpleListener {
     public void onPortal(PlayerPortalEvent e) {
         if (e.isCancelled()) return;
         if (GState.isState(GState.LOBBY) || GState.isState(GState.END)) return;
-        if (e.getCause().equals(PlayerTeleportEvent.TeleportCause.NETHER_PORTAL)) {
+        if (e.getCause() == PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) {
+            UUID id = UUIDFetcher.getUUID(e.getPlayer());
+
             if (e.getTo().getWorld().getEnvironment() == World.Environment.NETHER) {
-                if (!UHCRegister.getStatsUtil().hasAchievement(UHCAchievements.HIGHWAY_TO_HELL, e.getPlayer())) {
-                    UHCRegister.getStatsUtil().addAchievement(UHCAchievements.HIGHWAY_TO_HELL, e.getPlayer());
-                    e.getPlayer().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.HIGHWAY_TO_HELL.getName()));
+                if (!StatsUtil.hasAchievement(id, UHCAchievements.HIGHWAY_TO_HELL)) {
+                    StatsUtil.addAchievement(id, UHCAchievements.HIGHWAY_TO_HELL);
+                    e.getPlayer().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.HIGHWAY_TO_HELL.getName()));
                 }
             }
         }
@@ -137,9 +142,10 @@ public class AchievementListener extends SimpleListener {
                 e.getItem().getType().name().contains("LEGGINGS") ||
                 e.getItem().getType().name().contains("BOOTS"))) return;
 
-        if (!UHCRegister.getStatsUtil().hasAchievement(UHCAchievements.GLOWING_IN_THE_DARK, e.getEnchanter())) {
-            UHCRegister.getStatsUtil().addAchievement(UHCAchievements.GLOWING_IN_THE_DARK, e.getEnchanter());
-            e.getEnchanter().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.GLOWING_IN_THE_DARK.getName()));
+        UUID id = UUIDFetcher.getUUID(e.getEnchanter());
+        if (!StatsUtil.hasAchievement(id, UHCAchievements.GLOWING_IN_THE_DARK)) {
+            StatsUtil.addAchievement(id, UHCAchievements.GLOWING_IN_THE_DARK);
+            e.getEnchanter().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.GLOWING_IN_THE_DARK.getName()));
         }
     }
 }

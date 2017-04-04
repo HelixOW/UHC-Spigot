@@ -1,9 +1,9 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphalibary.utils.MinecraftVersion;
+import de.alphahelix.alphaapi.utils.MinecraftVersion;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -16,7 +16,7 @@ public class Spectator {
         Location l = p.getLocation();
         p.spigot().respawn();
         p.teleport(l);
-        UHCRegister.getPlayerUtil().clearUp(p);
+        PlayerUtil.clearUp(p);
         p.setCanPickupItems(false);
         p.setVelocity(p.getVelocity().setY(20D));
         p.setTotalExperience(0);
@@ -36,14 +36,14 @@ public class Spectator {
                 equipSpecStuff(p);
             }
         }.runTaskLater(UHC.getInstance(), 20);
-        for (String ig : UHCRegister.getPlayerUtil().getSurvivors()) {
+        for (String ig : PlayerUtil.getSurvivors()) {
             Bukkit.getPlayer(ig).hidePlayer(p);
         }
     }
 
     public Spectator(final Player p, Location l) {
         p.teleport(l);
-        UHCRegister.getPlayerUtil().clearUp(p);
+        PlayerUtil.clearUp(p);
         p.setCanPickupItems(false);
         p.setVelocity(p.getVelocity().setY(20D));
         p.setTotalExperience(0);
@@ -56,7 +56,7 @@ public class Spectator {
                 equipSpecStuff(p);
             }
         }.runTaskLater(UHC.getInstance(), 20);
-        for (String ig : UHCRegister.getPlayerUtil().getSurvivors()) {
+        for (String ig : PlayerUtil.getSurvivors()) {
             Bukkit.getPlayer(ig).hidePlayer(p);
         }
     }

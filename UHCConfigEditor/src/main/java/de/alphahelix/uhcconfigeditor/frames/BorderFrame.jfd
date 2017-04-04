@@ -1,0 +1,14 @@
+JFDML JFormDesigner: "6.0.0.0.84" Java: "1.8.0_112-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"title": "Border"
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 110, 144 )
+			"size": new java.awt.Dimension( 586, 300 )
+		} )
+	}
+}

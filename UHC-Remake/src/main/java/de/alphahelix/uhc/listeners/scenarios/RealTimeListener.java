@@ -1,9 +1,9 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
@@ -17,24 +17,17 @@ import java.util.Date;
  */
 public class RealTimeListener extends SimpleListener {
 
-    public RealTimeListener(UHC uhc) {
-        super(uhc);
-    }
-
     private static Integer getTime() {
-
         SimpleDateFormat time = new SimpleDateFormat("HH:mm");
         String[] args = time.format(new Date()).split(":");
         Integer hours = Integer.parseInt(args[0]) * 1000;
         Integer minutes = Integer.parseInt(args[1]) * (1000 / 60);
         return hours + minutes + 18000;
-
-
     }
 
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.REAL_TIME)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.REAL_TIME)) return;
         new BukkitRunnable() {
 
             @Override
@@ -45,6 +38,6 @@ public class RealTimeListener extends SimpleListener {
                 }
 
             }
-        }.runTaskTimer(getUhc(), 0L, 20 * 6);
+        }.runTaskTimer(UHC.getInstance(), 0L, 20 * 6);
     }
 }

@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
 
-public class UnitFile extends SimpleFile<UHC> {
+public class UnitFile extends SimpleFile {
 
-    public UnitFile(UHC uhc) {
-        super("units.uhc", uhc);
+    public UnitFile() {
+        super("units.uhc");
     }
 
     @Override
@@ -14,6 +13,7 @@ public class UnitFile extends SimpleFile<UHC> {
         setDefault("Seconds", "sec");
         setDefault("Minutes", "min");
         setDefault("Hours", "h");
+        setDefault("Days", "d");
     }
 
     public String getSeconds() {
@@ -26,5 +26,9 @@ public class UnitFile extends SimpleFile<UHC> {
 
     public String getHours() {
         return getString("Hours");
+    }
+
+    public String getDays() {
+        return getString("Days");
     }
 }

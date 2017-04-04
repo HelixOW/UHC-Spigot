@@ -1,210 +1,87 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphalibary.utils.Cuboid;
+import de.alphahelix.alphaapi.utils.Cuboid;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
+import org.apache.commons.io.FileDeleteStrategy;
 import org.bukkit.*;
-import org.bukkit.World.Environment;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 
-public class WorldUtil extends Util {
+public class WorldUtil {
 
-    private World tr;
-    private File path = null;
-    private String name = "";
+    private static World arenaWorld;
 
-    public WorldUtil(UHC uhc) {
-        super(uhc);
-    }
-
-    private void unloadWorld(World world) {
-        if (world != null) {
-            Bukkit.getServer().unloadWorld(world, false);
-        }
-    }
-
-    private void deleteWorld(File path) {
-        if (path.exists()) {
-            File files[] = path.listFiles();
-            for (int i = 0; i < (files != null ? files.length : 0); i++) {
-                if (files[i].isDirectory()) {
-                    deleteWorld(files[i]);
-                } else {
-                    files[i].delete();
-                }
+    private static void deleteWorld(String world) {
+        if (Bukkit.getServer().unloadWorld(world, false)) {
+            try {
+                FileDeleteStrategy.FORCE.delete(new File("./UHC"));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
 
-    public void createWorld() {
-        if (UHCFileRegister.getLocationsFile().getArena() == null) {
-            if (UHCFileRegister.getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.URBAN))) {
-                if (Scenarios.isScenario(Scenarios.URBAN)) {
-                    tr = Bukkit.createWorld(new WorldCreator("UHC").type(WorldType.FLAT));
-                    tr.setDifficulty(Difficulty.HARD);
+    public static void createWorld() {
+        deleteWorld("UHC");
 
-                    if (getUhc().isPregen()) {
-                        preGenerateWorld();
-                    }
+        UHCFileRegister.getLocationsFile().getLobby();
 
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            new BiomeUtil();
-                        }
-                    }.runTaskLater(getUhc(), 20);
+        WorldCreator c = new WorldCreator("UHC");
 
-                    return;
-                }
-            } else if (UHCFileRegister.getScenarioFile()
-                    .isEnabled(Scenarios.getRawScenarioName(Scenarios.VAST_TRACK_O_MOUNTAIN))) {
-                if (Scenarios.isScenario(Scenarios.VAST_TRACK_O_MOUNTAIN)) {
-                    tr = Bukkit.createWorld(new WorldCreator("UHC").type(WorldType.AMPLIFIED));
-                    tr.setDifficulty(Difficulty.HARD);
-                    if (getUhc().isPregen()) {
-                        preGenerateWorld();
-                    }
-
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            new BiomeUtil();
-                        }
-                    }.runTaskLater(getUhc(), 20);
-
-                    return;
-                }
-            }
-
-            tr = Bukkit.createWorld(new WorldCreator("UHC"));
-            tr.setDifficulty(Difficulty.HARD);
-            if (getUhc().isPregen()) {
-                preGenerateWorld();
-            }
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    new BiomeUtil();
-                }
-            }.runTaskLater(getUhc(), 20);
-
-            return;
-
+        if (Scenarios.isPlayedAndEnabled(Scenarios.URBAN)) {
+            c = new WorldCreator("UHC").type(WorldType.FLAT);
+        } else if (Scenarios.isPlayedAndEnabled(Scenarios.VAST_TRACK_O_MOUNTAIN)) {
+            c = new WorldCreator("UHC").type(WorldType.AMPLIFIED);
         }
 
+        arenaWorld = Bukkit.createWorld(c);
 
-        path = UHCFileRegister.getLocationsFile().getArena().getWorld().getWorldFolder();
-        name = UHCFileRegister.getLocationsFile().getArena().getWorld().getName();
+        arenaWorld.setDifficulty(Difficulty.HARD);
 
-        new BukkitRunnable() {
-            public void run() {
-                unloadWorld(UHCFileRegister.getLocationsFile().getArena().getWorld());
-            }
-        }.runTaskLater(getUhc(), 5);
-
-        new BukkitRunnable() {
-            public void run() {
-
-                deleteWorld(path);
-
-                if (UHCFileRegister.getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.URBAN))) {
-                    if (Scenarios.isScenario(Scenarios.URBAN))
-                        tr = Bukkit.createWorld(new WorldCreator(name).type(WorldType.FLAT));
-                    else
-                        tr = Bukkit.createWorld(new WorldCreator(name));
-                } else if (UHCFileRegister.getScenarioFile()
-                        .isEnabled(Scenarios.getRawScenarioName(Scenarios.VAST_TRACK_O_MOUNTAIN))) {
-                    if (Scenarios.isScenario(Scenarios.VAST_TRACK_O_MOUNTAIN))
-                        tr = Bukkit.createWorld(new WorldCreator(name).type(WorldType.AMPLIFIED));
-                    else
-                        tr = Bukkit.createWorld(new WorldCreator(name));
-                } else
-                    tr = Bukkit.createWorld(new WorldCreator(name));
-
-                tr.setDifficulty(Difficulty.HARD);
-                if (getUhc().isPregen()) {
-                    preGenerateWorld();
-                }
-
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        new BiomeUtil();
-                    }
-                }.runTaskLater(getUhc(), 20);
-
-            }
-        }.runTaskLater(getUhc(), 10);
-    }
-
-    public World createNetherWorld() {
-        if (!UHCFileRegister.getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.DIMENSIONAL_INVERSION)))
-            return UHCFileRegister.getLocationsFile().getArena().getWorld();
-        if (!Scenarios.isScenario(Scenarios.DIMENSIONAL_INVERSION))
-            return UHCFileRegister.getLocationsFile().getArena().getWorld();
-
-        if (UHCFileRegister.getLocationsFile().getNetherArena() == null) {
-            tr = Bukkit.createWorld(new WorldCreator("UHC-Nether").environment(Environment.NETHER));
-
-            tr.setDifficulty(Difficulty.HARD);
-            if (getUhc().isPregen()) {
-                preGenerateWorld();
-            }
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    new BiomeUtil();
-                }
-            }.runTaskLater(getUhc(), 20);
-
-            return tr;
-        }
-        path = UHCFileRegister.getLocationsFile().getNetherArena().getWorld().getWorldFolder();
-        name = UHCFileRegister.getLocationsFile().getNetherArena().getWorld().getName();
-
-        unloadWorld(UHCFileRegister.getLocationsFile().getNetherArena().getWorld());
-        deleteWorld(path);
-
-        tr = Bukkit.createWorld(new WorldCreator(name).environment(Environment.NETHER));
-
-        tr.setDifficulty(Difficulty.HARD);
-        if (getUhc().isPregen()) {
+        if (UHC.isPregen()) {
             preGenerateWorld();
         }
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                new BiomeUtil();
-            }
-        }.runTaskLater(getUhc(), 20);
-
-        return tr;
+        BiomeUtil.removeBiomes();
     }
 
-    public void preGenerateWorld() {
-        int startx = UHCFileRegister.getLocationsFile().getArena().getBlockX()
+    public static void createNetherWorld() {
+        WorldCreator c = new WorldCreator("UHC-Nether");
+
+        if (Scenarios.isPlayedAndEnabled(Scenarios.URBAN)) {
+            c = new WorldCreator("UHC-Nether").type(WorldType.FLAT);
+        } else if (Scenarios.isPlayedAndEnabled(Scenarios.VAST_TRACK_O_MOUNTAIN)) {
+            c = new WorldCreator("UHC-Nether").type(WorldType.AMPLIFIED);
+        }
+
+        arenaWorld = Bukkit.createWorld(c);
+
+        arenaWorld.setDifficulty(Difficulty.HARD);
+
+        if (UHC.isPregen()) {
+            preGenerateWorld();
+        }
+
+        BiomeUtil.removeBiomes();
+    }
+
+    private static void preGenerateWorld() {
+        int startx = Bukkit.getWorld("UHC").getSpawnLocation().getBlockX()
                 - (UHCFileRegister.getOptionsFile().getPregenerateWorldSize() / 2);
-        int startz = UHCFileRegister.getLocationsFile().getArena().getBlockZ()
+        int startz = Bukkit.getWorld("UHC").getSpawnLocation().getBlockZ()
                 - -(UHCFileRegister.getOptionsFile().getPregenerateWorldSize() / 2);
-        int endx = UHCFileRegister.getLocationsFile().getArena().getBlockX()
+        int endx = Bukkit.getWorld("UHC").getSpawnLocation().getBlockX()
                 + (UHCFileRegister.getOptionsFile().getPregenerateWorldSize() / 2);
-        int endz = UHCFileRegister.getLocationsFile().getArena().getBlockZ()
+        int endz = Bukkit.getWorld("UHC").getSpawnLocation().getBlockZ()
                 + (UHCFileRegister.getOptionsFile().getPregenerateWorldSize() / 2);
 
         long start = System.currentTimeMillis();
 
-        UHCFileRegister.getLocationsFile().getArena().getWorld().save();
-
-
-        Cuboid r = new Cuboid(UHCFileRegister.getLocationsFile().getArena().getWorld(), startx, 3, startz, endx, 200,
+        Cuboid r = new Cuboid(Bukkit.getWorld("UHC"), startx, 3, startz, endx, 200,
                 endz);
 
         try {
@@ -217,7 +94,7 @@ public class WorldUtil extends Util {
         long minutes = seconds / 60L;
 
         new BiomeUtil();
-        UHC.getInstance().getLog().log(Level.INFO,
+        UHC.getLog().log(Level.INFO,
                 "Generating done! (" + duration + "ms, =" + seconds + "s, =" + minutes + "m)");
     }
 }

@@ -1,13 +1,12 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
 import de.alphahelix.uhc.enums.GState;
 
-public class TimerFile extends SimpleFile<UHC> {
+public class TimerFile extends SimpleFile {
 
-    public TimerFile(UHC uhc) {
-        super("timers.uhc", uhc);
+    public TimerFile() {
+        super("timers.uhc");
     }
 
     @Override

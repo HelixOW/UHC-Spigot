@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,10 +13,6 @@ public class HalfOreListener extends SimpleListener {
 
     private static ArrayList<String> miners = new ArrayList<>();
 
-    public HalfOreListener(UHC uhc) {
-        super(uhc);
-    }
-
     private boolean hasMined(Player p) {
         return miners.contains(p.getName());
     }
@@ -28,7 +23,7 @@ public class HalfOreListener extends SimpleListener {
 
         if (e.isCancelled()) return;
 
-        if (!scenarioCheck(Scenarios.HALF_ORES)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.HALF_ORES)) return;
 
         if (!e.getBlock().getType().name().contains("ORE")) return;
 

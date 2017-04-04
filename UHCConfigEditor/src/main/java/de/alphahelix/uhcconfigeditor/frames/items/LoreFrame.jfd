@@ -1,0 +1,75 @@
+JFDML JFormDesigner: "6.0.0.0.84" Java: "1.8.0_112-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"title": "Lore"
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "table1"
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
+						add( new java.util.Vector {
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+						} )
+					}, new java.util.Vector {
+						add( "Lines" )
+					}, new java.util.Vector {
+						add( class java.lang.String )
+					}, new java.util.Vector {
+						add( null )
+					}, new java.util.Vector {
+						add( new com.jformdesigner.model.SwingTableColumn( null, 0, 0, 0, false ) )
+					} )
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 0
+				"y": 0
+				"width": 500
+				"height": 300
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnConfirm"
+				"text": "Confirm"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnConfirmActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 250
+				"height": 32
+				"x": 240
+				"y": 305
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 264, 168 )
+			"size": new java.awt.Dimension( 400, 300 )
+		} )
+	}
+}

@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphalibary.inventorys.SimpleMovingInventory;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.alphalibary.item.data.SkullData;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.SimpleListener;
+import de.alphahelix.alphaapi.inventorys.SimpleMovingInventory;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.item.data.SkullData;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -29,15 +28,11 @@ public class SpectatorListener extends SimpleListener {
 
     private static ArrayList<ItemStack> skulls = new ArrayList<>();
 
-    public SpectatorListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
 
-        if (UHCRegister.getPlayerUtil().isDead(p)) {
+        if (PlayerUtil.isDead(p)) {
             for (Entity near : p.getNearbyEntities(6, 6, 6)) {
                 if (near instanceof Player) {
                     Vector v = p.getLocation().getDirection().add(new Vector(-1, 2, -1));
@@ -50,7 +45,7 @@ public class SpectatorListener extends SimpleListener {
 
     @EventHandler
     public void onExp(PlayerExpChangeEvent e) {
-        if (UHCRegister.getPlayerUtil().isDead(e.getPlayer())) {
+        if (PlayerUtil.isDead(e.getPlayer())) {
             e.setAmount(0);
             e.getPlayer().getWorld().spawnEntity(e.getPlayer().getLocation().subtract(0, 5, 0),
                     EntityType.EXPERIENCE_ORB);
@@ -64,7 +59,7 @@ public class SpectatorListener extends SimpleListener {
             return;
 
         Player p = (Player) e.getEntity();
-        if (UHCRegister.getPlayerUtil().isDead(p))
+        if (PlayerUtil.isDead(p))
             e.setCancelled(true);
     }
 
@@ -73,7 +68,7 @@ public class SpectatorListener extends SimpleListener {
 
         Player p = (Player) e.getEntity();
 
-        if (UHCRegister.getPlayerUtil().isDead(p)) {
+        if (PlayerUtil.isDead(p)) {
             e.setCancelled(true);
         }
     }
@@ -83,7 +78,7 @@ public class SpectatorListener extends SimpleListener {
 
         Player p = e.getPlayer();
 
-        if (UHCRegister.getPlayerUtil().isDead(p)) {
+        if (PlayerUtil.isDead(p)) {
             e.setCancelled(true);
         }
     }
@@ -94,14 +89,14 @@ public class SpectatorListener extends SimpleListener {
         if (!(e.getDamager() instanceof Player))
             return;
 
-        if (UHCRegister.getPlayerUtil().isDead((Player) e.getDamager())) {
+        if (PlayerUtil.isDead((Player) e.getDamager())) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onInteract(PlayerInteractAtEntityEvent e) {
-        if (UHCRegister.getPlayerUtil().isDead(e.getPlayer())) {
+        if (PlayerUtil.isDead(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
@@ -111,14 +106,14 @@ public class SpectatorListener extends SimpleListener {
 
         Player p = e.getPlayer();
 
-        if (UHCRegister.getPlayerUtil().isDead(p)) {
+        if (PlayerUtil.isDead(p)) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onTrack(EntityTargetLivingEntityEvent e) {
-        if (((e.getTarget() instanceof Player)) && (UHCRegister.getPlayerUtil().isDead((Player) e.getTarget()))) {
+        if (((e.getTarget() instanceof Player)) && (PlayerUtil.isDead((Player) e.getTarget()))) {
             e.setCancelled(true);
         }
     }
@@ -128,14 +123,14 @@ public class SpectatorListener extends SimpleListener {
 
         Player p = e.getPlayer();
 
-        if (UHCRegister.getPlayerUtil().isSurivor(p))
+        if (PlayerUtil.isSurivor(p))
             return;
 
         if (e.getClickedBlock() != null && e.getClickedBlock().getType().equals(Material.CHEST))
             e.setCancelled(true);
 
         if (p.getInventory().getItemInHand().getType() == UHCFileRegister.getSpectatorFile().getItem().getItemStack().getType()) {
-            for (String pl : UHCRegister.getPlayerUtil().getSurvivors()) {
+            for (String pl : PlayerUtil.getSurvivors()) {
 
                 ItemStack item = new ItemBuilder(Material.SKULL_ITEM).setDamage((short) 3)
                         .setName("§l§o" + Bukkit.getPlayer(pl).getDisplayName()).addItemData(new SkullData(pl)).build();
@@ -144,9 +139,8 @@ public class SpectatorListener extends SimpleListener {
             }
 
             new SimpleMovingInventory(
-                    getUhc(),
                     p,
-                    ((UHCRegister.getPlayerUtil().getSurvivors().size() / 9) + 1) * 18,
+                    ((PlayerUtil.getSurvivors().size() / 9) + 1) * 18,
                     skulls,
                     UHCFileRegister.getSpectatorFile().getInventoryName(),
                     UHCFileRegister.getKitsFile().getNextItem().getItemStack(),

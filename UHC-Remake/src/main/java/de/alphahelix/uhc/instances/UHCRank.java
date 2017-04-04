@@ -1,6 +1,16 @@
 package de.alphahelix.uhc.instances;
 
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.uhc.UHC;
+import de.alphahelix.uhc.register.UHCFileRegister;
+import de.alphahelix.uhc.util.StatsUtil;
+import de.alphahelix.uhc.util.TimeUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.UUID;
 
 /**
  * Created by AlphaHelixDev.
@@ -11,13 +21,17 @@ public class UHCRank {
     private String prefix;
     private String name;
     private long minWins, minKills, minPoints;
+    private String rewardcooldowntime;
+    private String rewardCommand;
 
-    public UHCRank(String prefix, String name, long minWins, long minKills, long minPoints) {
+    public UHCRank(String prefix, String name, long minWins, long minKills, long minPoints, String rewardCommand, String rewardcooldowntime) {
         this.prefix = prefix;
         this.name = name;
         this.minWins = minWins;
         this.minKills = minKills;
         this.minPoints = minPoints;
+        this.rewardCommand = rewardCommand;
+        this.rewardcooldowntime = rewardcooldowntime;
     }
 
     public static ArrayList<UHCRank> getRanks() {
@@ -26,10 +40,6 @@ public class UHCRank {
 
     public String getPrefix() {
         return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
     }
 
     public String getName() {
@@ -44,23 +54,48 @@ public class UHCRank {
         return minWins;
     }
 
-    public void setMinWins(long minWins) {
-        this.minWins = minWins;
-    }
-
     public long getMinKills() {
         return minKills;
-    }
-
-    public void setMinKills(long minKills) {
-        this.minKills = minKills;
     }
 
     public long getMinPoints() {
         return minPoints;
     }
 
-    public void setMinPoints(long minPoints) {
-        this.minPoints = minPoints;
+    public String getRewardCommand() {
+        return rewardCommand;
+    }
+
+    public String getRewardcooldowntime() {
+        return rewardcooldowntime;
+    }
+
+    public int getRewardCooldownTime() {
+        if (getRewardcooldowntime().equalsIgnoreCase("hour")) {
+            return Calendar.HOUR_OF_DAY;
+        } else if (getRewardcooldowntime().equalsIgnoreCase("day")) {
+            return Calendar.DAY_OF_MONTH;
+        } else if (getRewardcooldowntime().equalsIgnoreCase("week")) {
+            return Calendar.WEEK_OF_MONTH;
+        } else if (getRewardcooldowntime().equalsIgnoreCase("month")) {
+            return Calendar.MONTH;
+        } else {
+            return Calendar.MILLISECOND;
+        }
+    }
+
+    public void rewardPlayer(Player p) {
+        UUID id = UUIDFetcher.getUUID(p);
+        if (StatsUtil.canClaimReward(id)) {
+            if (getRewardCommand().equalsIgnoreCase("-")) {
+                p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getNoReward());
+                return;
+            }
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), getRewardCommand().replace("[player]", p.getName()));
+
+            StatsUtil.setNextRewardTime(id);
+        } else {
+            p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getRewardCooldown(TimeUtil.getRemainingTimeTillNextReward(StatsUtil.getNextReward(id))));
+        }
     }
 }

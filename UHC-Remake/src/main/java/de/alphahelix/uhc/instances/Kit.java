@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphalibary.utils.SerializationUtil;
+import de.alphahelix.alphaapi.utils.SerializationUtil;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,6 +19,10 @@ public class Kit implements Serializable {
         setPrice(price);
         setGuiBlock(guiBlock);
         setItems(items);
+    }
+
+    public static Kit fromString(String json) {
+        return SERIALIZER.deserialize(SerializationUtil.stringToJson(json));
     }
 
     public void registerKit() {
@@ -64,9 +68,5 @@ public class Kit implements Serializable {
 
     public String serialize() {
         return SerializationUtil.jsonToString(SERIALIZER.serialize(this));
-    }
-
-    public static Kit fromString(String json) {
-        return SERIALIZER.deserialize(SerializationUtil.stringToJson(json));
     }
 }

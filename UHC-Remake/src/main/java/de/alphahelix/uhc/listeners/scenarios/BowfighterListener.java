@@ -1,10 +1,10 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -15,13 +15,9 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 public class BowfighterListener extends SimpleListener {
 
-    public BowfighterListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.BOWFIGHTERS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BOWFIGHTERS))
             return;
         ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
@@ -30,7 +26,7 @@ public class BowfighterListener extends SimpleListener {
 
         book.setItemMeta(meta);
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             p.getInventory().addItem(new ItemStack(Material.ARROW), new ItemStack(Material.STRING, 2),
                     book);
         }
@@ -40,7 +36,7 @@ public class BowfighterListener extends SimpleListener {
     public void onCraft(CraftItemEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.BOWFIGHTERS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BOWFIGHTERS))
             return;
 
         if (e.getRecipe().getResult().getType().name().contains("SWORD")

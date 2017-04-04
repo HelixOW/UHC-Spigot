@@ -1,8 +1,6 @@
 package de.alphahelix.uhc.util.schematic;
 
-import de.alphahelix.alphalibary.utils.Cuboid;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
+import de.alphahelix.alphaapi.utils.Cuboid;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,16 +11,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-public class SchematicManagerUtil extends Util {
+public class SchematicManagerUtil {
 
-    private HashMap<String, ArrayList<String>> schematics = new HashMap<>();
-    private HashMap<String, Location> loc1 = new HashMap<>(), loc2 = new HashMap<>();
+    private static HashMap<String, ArrayList<String>> schematics = new HashMap<>();
+    private static HashMap<String, Location> loc1 = new HashMap<>(), loc2 = new HashMap<>();
 
-    public SchematicManagerUtil(UHC uhc) {
-        super(uhc);
-    }
-
-    public boolean load(String name, Player p) {
+    public static boolean load(String name, Player p) {
         if (!new File("plugins/UHC/schematics", name + ".uhcSchem").exists()) return false;
         ArrayList<String> list = getStringListFromFile(name);
         if (list != null && list.size() > 0) {
@@ -32,7 +26,7 @@ public class SchematicManagerUtil extends Util {
         return false;
     }
 
-    public void load(String name) {
+    public static void load(String name) {
         if (!new File("plugins/UHC/schematics", name + ".uhcSchem").exists()) return;
         ArrayList<String> list = getStringListFromFile(name);
         if (list != null && list.size() > 0) {
@@ -40,7 +34,7 @@ public class SchematicManagerUtil extends Util {
         }
     }
 
-    public ArrayList<String> getStringListFromFile(String filename) {
+    public static ArrayList<String> getStringListFromFile(String filename) {
         ArrayList<String> list = new ArrayList<>();
         try {
             File f = new File("plugins/UHC/schematics", filename + ".uhcSchem");
@@ -57,7 +51,7 @@ public class SchematicManagerUtil extends Util {
         return list;
     }
 
-    public boolean save(String filename, ArrayList<String> list) {
+    public static boolean save(String filename, ArrayList<String> list) {
 
         File f = new File("plugins/UHC/schematics", filename + ".uhcSchem");
         if (f.exists())
@@ -81,7 +75,7 @@ public class SchematicManagerUtil extends Util {
         return false;
     }
 
-    public ArrayList<String> convertToStringlist(ArrayList<Block> blocks, Location start) {
+    public static ArrayList<String> convertToStringlist(ArrayList<Block> blocks, Location start) {
         ArrayList<String> list = new ArrayList<>();
 
         for (Block b : blocks) {
@@ -90,16 +84,16 @@ public class SchematicManagerUtil extends Util {
         return list;
     }
 
-    public HashMap<String, ArrayList<String>> getSchematics() {
+    public static HashMap<String, ArrayList<String>> getSchematics() {
         return schematics;
     }
 
-    public ArrayList<Block> getBlocks(Location l1, Location l2) {
+    public static ArrayList<Block> getBlocks(Location l1, Location l2) {
         return (ArrayList<Block>) new Cuboid(l1, l2).getBlocks();
     }
 
     @SuppressWarnings("deprecation")
-    public boolean paste(Player p) {
+    public static boolean paste(Player p) {
         if (schematics.containsKey(p.getName())) {
             Location loc = p.getTargetBlock((Set<Material>) null, 40).getLocation().add(0, 1, 0);
             for (String str : schematics.get(p.getName())) {
@@ -118,7 +112,7 @@ public class SchematicManagerUtil extends Util {
     }
 
     @SuppressWarnings("deprecation")
-    public void paste(Location loc) {
+    public static void paste(Location loc) {
         if (schematics.containsKey("UHCSpigot")) {
             for (String str : schematics.get("UHCSpigot")) {
                 String[] s = str.split(":");
@@ -133,13 +127,13 @@ public class SchematicManagerUtil extends Util {
         }
     }
 
-    public boolean delete(String filename) {
+    public static boolean delete(String filename) {
         File f = new File("plugins/UHC/schematics", filename + ".uhcSchem");
         return f.exists() && f.delete();
     }
 
     @SuppressWarnings("deprecation")
-    public String convertToString(Block b, Location start) {
+    public static String convertToString(Block b, Location start) {
         int diffX = b.getX() - start.getBlockX();
         int diffY = b.getY() - start.getBlockY();
         int diffZ = b.getZ() - start.getBlockZ();
@@ -147,20 +141,20 @@ public class SchematicManagerUtil extends Util {
         return diffX + ":" + diffY + ":" + diffZ + ":" + b.getType().name() + ":" + b.getData();
     }
 
-    public void putFirstLocation(Player p, Location l) {
+    public static void putFirstLocation(Player p, Location l) {
         loc1.put(p.getName(), l);
     }
 
-    public void putSecondLocation(Player p, Location l) {
+    public static void putSecondLocation(Player p, Location l) {
         loc2.put(p.getName(), l);
     }
 
-    public Location getFirstLocation(Player p) {
+    public static Location getFirstLocation(Player p) {
         if (loc1.containsKey(p.getName())) return loc1.get(p.getName());
         return null;
     }
 
-    public Location getSecondLocation(Player p) {
+    public static Location getSecondLocation(Player p) {
         if (loc2.containsKey(p.getName())) return loc2.get(p.getName());
         return null;
     }

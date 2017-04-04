@@ -1,493 +1,469 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphalibary.mysql.Database;
-import de.alphahelix.alphalibary.mysql.MySQLAPI;
-import de.alphahelix.alphalibary.uuid.UUIDFetcher;
+import de.alphahelix.alphaapi.mysql.MySQLDatabase;
+import de.alphahelix.alphaapi.utils.Util;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.UHCAchievements;
-import de.alphahelix.uhc.instances.*;
+import de.alphahelix.uhc.instances.Crate;
+import de.alphahelix.uhc.instances.Kit;
+import de.alphahelix.uhc.instances.PlayerInfo;
+import de.alphahelix.uhc.instances.UHCRank;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Map.Entry;
-import java.util.logging.Level;
 
-public class StatsUtil extends Util {
+public class StatsUtil {
 
-    private static HashMap<String, UHCRank> uhcRankHashMap = new HashMap<>();
+    private static final MySQLDatabase DATABASE = UHC.getDB();
+    private static final HashMap<UUID, UHCRank> UHC_RANKS = new HashMap<>();
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yy HH:mm");
 
-    private long g;
-    private long k;
-    private long d;
-    private long w;
-
-    private BukkitTask pushGames;
-    private BukkitTask pushKills;
-    private BukkitTask pushDeaths;
-    private BukkitTask pushWins;
-    private BukkitTask pushCrates;
-
-    public StatsUtil(UHC uhc) {
-        super(uhc);
+    public static String getListAsString(List<?> list) {
+        return list.toString().replace("[", "").replace("]", "").replace(", ", " ;");
     }
 
-    // Kills
-
-    public void pushInformations(final Player p) {
-        final PlayerInfo playerInfo = UHCRegister.getPlayerUtil().getPlayerInfo(p);
-        UHCRegister.getPlayerUtil().removePlayerInfo(p);
-
-        k = getKills(p);
-        d = getDeaths(p);
-        w = getWins(p);
-
-        pushKills = new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (k < playerInfo.getKills()) {
-                    addKill(p);
-                    k++;
-                } else
-                    pushKills.cancel();
-            }
-        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
-
-        pushDeaths = new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (d < playerInfo.getDeaths()) {
-                    addDeath(p);
-                    d++;
-                } else
-                    pushDeaths.cancel();
-            }
-        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
-
-        pushWins = new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (w < playerInfo.getWins()) {
-                    addWin(p);
-                    w++;
-                } else
-                    pushWins.cancel();
-            }
-        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
-
-        if (getCoins(p) > playerInfo.getCoins()) {
-            removeCoins(p, (int) (getCoins(p) - playerInfo.getCoins()));
-        } else if (getCoins(p) < playerInfo.getCoins()) {
-            addCoins(p, (int) (playerInfo.getCoins() - getCoins(p)));
+    public static long getKills(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getKills();
         }
 
-        if (getPoints(p) > playerInfo.getPoints()) {
-            removePoints(p, (int) (getPoints(p) - playerInfo.getPoints()));
-        } else if (getPoints(p) < playerInfo.getPoints()) {
-            addPoints(p, (int) (playerInfo.getPoints() - getPoints(p)));
-        }
-
-        if (!getKitsAsString(p).equals(playerInfo.getKits())) {
-            for (Kit newKits : playerInfo.getKits()) {
-                if (newKits != null) {
-                    if (!getKitsAsList(p).contains(newKits)) {
-                        addKit(newKits, p);
-                    }
-                }
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                return Long.parseLong(DATABASE.getResult("uuid", id.toString(), "Kills").toString());
             }
         }
-
-        pushCrates = new BukkitRunnable() {
-            public void run() {
-                for (Crate c : Crate.getCrateArrayList()) {
-                    if (getCrateCount(c, p) < playerInfo.getCrateCount(c)) {
-                        addCrate(c, p);
-                    } else if (getCrateCount(c, p) > playerInfo.getCrateCount(c)) {
-                        removeCrate(c, p);
-                    } else {
-                        pushCrates.cancel();
-                    }
-                }
-            }
-        }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+        return UHCFileRegister.getPlayerFile().getKills(id);
     }
 
-    public void pushInformations() {
-        for (String pp : UHCRegister.getPlayerUtil().getAll()) {
-            if (Bukkit.getPlayer(pp) == null) continue;
-            final Player p = Bukkit.getPlayer(pp);
-            final PlayerInfo playerInfo = UHCRegister.getPlayerUtil().getPlayerInfo(p);
-            UHCRegister.getPlayerUtil().removePlayerInfo(p);
-
-            g = getGames(p);
-            k = getKills(p);
-            d = getDeaths(p);
-            w = getWins(p);
-
-            pushGames = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (g < playerInfo.getGames()) {
-                        addGame(p);
-                        g++;
-                    } else
-                        pushGames.cancel();
-                }
-            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
-
-            pushKills = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (k < playerInfo.getKills()) {
-                        addKill(p);
-                        k++;
-                    } else
-                        pushKills.cancel();
-                }
-            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
-
-            pushDeaths = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (d < playerInfo.getDeaths()) {
-                        addDeath(p);
-                        d++;
-                    } else
-                        pushDeaths.cancel();
-                }
-            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
-
-            pushWins = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (w < playerInfo.getWins()) {
-                        addWin(p);
-                        w++;
-                    } else
-                        pushWins.cancel();
-                }
-            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
-
-
-            if (getCoins(p) > playerInfo.getCoins()) {
-                removeCoins(p, (int) (getCoins(p) - playerInfo.getCoins()));
-            } else if (getCoins(p) < playerInfo.getCoins()) {
-                addCoins(p, (int) (playerInfo.getCoins() - getCoins(p)));
-            }
-
-            if (getPoints(p) > playerInfo.getPoints()) {
-                removePoints(p, (int) (getPoints(p) - playerInfo.getPoints()));
-            } else if (getPoints(p) < playerInfo.getPoints()) {
-                addPoints(p, (int) (playerInfo.getPoints() - getPoints(p)));
-            }
-
-            if (!getKitsAsString(p).equals(playerInfo.getKits())) {
-                for (Kit newKits : playerInfo.getKits()) {
-                    if (newKits != null) {
-                        if (!getKitsAsList(p).contains(newKits)) {
-                            addKit(newKits, p);
-                        }
-                    }
-                }
-            }
-
-            pushCrates = new BukkitRunnable() {
-                public void run() {
-                    for (Crate c : Crate.getCrateArrayList()) {
-                        if (getCrateCount(c, p) < playerInfo.getCrateCount(c)) {
-                            addCrate(c, p);
-                        } else if (getCrateCount(c, p) > playerInfo.getCrateCount(c)) {
-                            removeCrate(c, p);
-                        } else {
-                            pushCrates.cancel();
-                        }
-                    }
-                }
-            }.runTaskTimerAsynchronously(getUhc(), 0, 20);
+    public static long getDeaths(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getDeaths();
         }
-    }
 
-    public long getGames(final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return UHCRegister.getPlayerUtil().getPlayerInfo(p).getGames();
-        }
-        if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                    "Games") != null) {
-                return Long.parseLong(Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Games").toString());
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                return Long.parseLong(DATABASE.getResult("uuid", id.toString(), "Deaths").toString());
             }
         }
-        return UHCFileRegister.getPlayerFile().getGames(p);
+        return UHCFileRegister.getPlayerFile().getDeaths(id);
     }
 
-    public void addGame(final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).setGames(getGames(p) + 1);
-            return;
-        }
-        new BukkitRunnable() {
-            public void run() {
-                if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                            "Games") != null) {
-                        Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Games",
-                                Long.toString(getGames(p) + 1));
-                    }
-                }
-                long games = getGames(p);
-                UHCFileRegister.getPlayerFile().setGames(p, games + 1);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
+    public static double getKillDeathRate(UUID id) {
+        if (getDeaths(id) == 0) return getKills(id);
+        return Util.round((Double.valueOf(Long.toString(getKills(id))) / Double.valueOf(Long.toString(getDeaths(id)))), 3);
     }
 
-    public long getKills(final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return UHCRegister.getPlayerUtil().getPlayerInfo(p).getKills();
+    public static long getCoins(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getCoins();
         }
-        if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                    "Kills") != null) {
-                return Long.parseLong(Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Kills").toString());
+
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                return Long.parseLong(DATABASE.getResult("uuid", id.toString(), "Coins").toString());
             }
         }
-        return UHCFileRegister.getPlayerFile().getKills(p);
+        return UHCFileRegister.getPlayerFile().getCoins(id);
     }
 
-    public void addKill(final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).setKills(getKills(p) + 1);
-            return;
+    public static long getPoints(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getPoints();
         }
-        new BukkitRunnable() {
-            public void run() {
-                if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                            "Kills") != null) {
-                        Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Kills",
-                                Long.toString(getKills(p) + 1));
-                    }
-                }
-                long kills = getKills(p);
-                UHCFileRegister.getPlayerFile().setKills(p, kills + 1);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
-    }
 
-    // Coins
-
-    public long getDeaths(final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return UHCRegister.getPlayerUtil().getPlayerInfo(p).getDeaths();
-        }
-        if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                    "Deaths") != null) {
-                return Long.parseLong(Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Deaths").toString());
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                return Long.parseLong(DATABASE.getResult("uuid", id.toString(), "Points").toString());
             }
         }
-        return UHCFileRegister.getPlayerFile().getDeaths(p);
+        return UHCFileRegister.getPlayerFile().getPoints(id);
     }
 
-    public void addDeath(final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).setDeaths(getDeaths(p) + 1);
-            return;
+    public static long getWins(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getWins();
         }
-        new BukkitRunnable() {
-            public void run() {
-                if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                            "Deaths") != null) {
-                        Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Deaths",
-                                Long.toString(getDeaths(p) + 1));
-                    }
-                }
-                long deaths = getDeaths(p);
-                UHCFileRegister.getPlayerFile().setDeaths(p, deaths + 1);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
-    }
 
-    public long getCoins(final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return UHCRegister.getPlayerUtil().getPlayerInfo(p).getCoins();
-        }
-        if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                    "Coins") != null) {
-                String coins = Database
-                        .getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Coins").toString();
-                return Long.parseLong(coins);
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                return Long.parseLong(DATABASE.getResult("uuid", id.toString(), "Wins").toString());
             }
         }
-        return UHCFileRegister.getPlayerFile().getCoins(p);
+        return UHCFileRegister.getPlayerFile().getWins(id);
     }
 
-    public double getKillDeathRate(OfflinePlayer p) {
-        if (getDeaths(p) == 0) return getKills(p);
-        return round((Double.valueOf(Long.toString(getKills(p))) / Double.valueOf(Long.toString(getDeaths(p)))), 3);
-    }
-
-    // Kits
-
-    public void addCoins(final OfflinePlayer p, final int amount) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).setCoins(getCoins(p) + amount);
-            return;
+    public static long getGames(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getGames();
         }
-        new BukkitRunnable() {
-            public void run() {
-                long coins = getCoins(p);
-                if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                            "Coins") != null) {
-                        Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Coins",
-                                Long.toString(coins + amount));
-                    }
-                }
-                UHCFileRegister.getPlayerFile().setCoins(p, coins + amount);
+
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                return Long.parseLong(DATABASE.getResult("uuid", id.toString(), "Games").toString());
             }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
+        }
+        return UHCFileRegister.getPlayerFile().getGames(id);
     }
 
-    public void removeCoins(final OfflinePlayer p, final int amount) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).setCoins(getCoins(p) - amount);
-            return;
+    public static ArrayList<Kit> getKitList(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getKits();
         }
-        new BukkitRunnable() {
-            public void run() {
-                long coins = getCoins(p);
-                if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                            "Coins") != null) {
-                        if (getCoins(p) - amount < 0)
-                            Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Coins",
-                                    Long.toString(0));
-                        else
-                            Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Coins",
-                                    Long.toString(coins - amount));
-                    }
-                }
-                if (coins - amount < 0)
-                    UHCFileRegister.getPlayerFile().setCoins(p, 0);
-                else
-                    UHCFileRegister.getPlayerFile().setCoins(p, coins - amount);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
-    }
 
-    public String getKitsAsString(OfflinePlayer p) {
-        String kits = "";
-        for (Kit k : getKitsAsList(p)) {
-            kits = kits + k.serialize() + " ;";
-        }
-        return kits;
-    }
-
-    public String getKitsAsReadableString(OfflinePlayer p) {
-        String kits = "";
-        for (Kit k : getKitsAsList(p)) {
-            kits = kits + k.getName() + " ;";
-        }
-        return kits;
-    }
-
-    public List<Kit> getKitsAsList(OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return UHCRegister.getPlayerUtil().getPlayerInfo(p).getKits();
-        }
-        if (getUhc().isMySQLMode()) {
-            if (Database.containsPlayer("UHC", p)) {
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
                 ArrayList<Kit> kits = new ArrayList<>();
 
-                if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Kits").toString().equals("-")) {
+                if (DATABASE.getResult("uuid", id.toString(), "Kits").toString().equals("-")) {
                     return kits;
                 }
 
-                for (String kit : Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Kits").toString().split(" ;")) {
+                for (String kit : DATABASE.getResult("uuid", id.toString(), "Kits").toString().split(" ;")) {
                     kits.add(Kit.fromString(kit));
                 }
                 return kits;
             }
         }
-        return UHCFileRegister.getPlayerFile().getKits(p);
+        return UHCFileRegister.getPlayerFile().getKits(id);
     }
 
-    // Crates
-
-    public void addKit(final Kit kit, final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).addKit(kit);
-            return;
+    public static String getKitsAsReadableString(UUID id) {
+        String kits = "";
+        for (Kit k : getKitList(id)) {
+            kits = kits + k.getName() + " ;";
         }
+        return kits;
+    }
+
+    public static ArrayList<UHCAchievements> getAchievementList(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getAchievements();
+        }
+
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                ArrayList<UHCAchievements> achievements = new ArrayList<>();
+
+                if (DATABASE.getResult("uuid", id.toString(), "Achievements").toString().equals("-")) {
+                    return achievements;
+                }
+
+                for (String achievement : DATABASE.getResult("uuid", id.toString(), "Achievements").toString().split(" ;")) {
+                    achievements.add(UHCAchievements.fromString(achievement));
+                }
+                return achievements;
+            }
+        }
+        return UHCFileRegister.getPlayerFile().getAchievements(id);
+    }
+
+    public static String getAchievementsAsReadableString(UUID id) {
+        String achievement = "";
+        for (UHCAchievements uhcAchievements : getAchievementList(id)) {
+            achievement = achievement + uhcAchievements.getName() + " ;";
+        }
+        return achievement;
+    }
+
+    public static List<String> getCratesList(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getCrates();
+        }
+
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                List<String> crateNames = new ArrayList<>();
+
+                if (DATABASE.getResult("uuid", id.toString(), "Crates").toString().equals("-")) {
+                    return crateNames;
+                }
+
+                for (String crateName : DATABASE.getResult("uuid", id.toString(), "Crates").toString().split(";")) {
+                    crateNames.add(crateName);
+                }
+                return crateNames;
+            }
+        }
+        return UHCFileRegister.getPlayerFile().getCrates(id);
+    }
+
+    public static Date getNextReward(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return PlayerInfo.getPlayerInfo(id).getNextReward();
+        }
+
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                String sdf = DATABASE.getResult("uuid", id.toString(), "NextReward").toString();
+
+                try {
+                    return SDF.parse(sdf);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return new Date();
+                }
+            }
+        }
+        return UHCFileRegister.getPlayerFile().getNextReward(id);
+    }
+
+    public static void setNextRewardTime(final UUID id) {
+        if (getUHCRank(id) == null) return;
+
         new BukkitRunnable() {
             public void run() {
-                if (getUhc().isMySQLMode()) {
-                    if (Database.containsPlayer("UHC", p)) {
-                        Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Kits", getKitsAsString(p) + kit.serialize() + " ;");
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "NextReward",
+                                new SimpleDateFormat("dd/MM/yy HH:mm").format(TimeUtil.increaseDate(getUHCRank(id).getRewardCooldownTime())));
                     }
                 }
-                UHCFileRegister.getPlayerFile().addKit(p, kit);
+                UHCFileRegister.getPlayerFile().setNextReward(id);
             }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 10);
     }
 
-    public boolean hasKit(Kit k, OfflinePlayer p) {
-        return getKitsAsString(p).contains(k.serialize());
-    }
-
-    public List<String> getCratesAsList(OfflinePlayer p) {
-        ArrayList<String> names = new ArrayList<>();
-        for (String name : getCratesAsArray(p)) {
-            names.add(name);
-        }
-        return names;
-    }
-
-    public String getCratesAsString(OfflinePlayer p) {
-        String crates = "";
-        for (String name : getCratesAsArray(p)) {
-            crates += name + ";";
-        }
-        return crates;
-    }
-
-    public String[] getCratesAsArray(OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return UHCRegister.getPlayerUtil().getPlayerInfo(p).getCrates().split(";");
+    public static void addKill(final UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).addKill(1);
+            return;
         }
 
-        if (getUhc().isMySQLMode()) {
-            if (Database.containsPlayer("UHC", p)) {
-                ArrayList<String> crateNames = new ArrayList<>();
-
-                for (String crate : Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString().split(";")) {
-                    crateNames.add(crate);
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Kills", Long.toString(getKills(id) + 1));
+                    }
                 }
-
-                return crateNames.toArray(new String[crateNames.size()]);
+                UHCFileRegister.getPlayerFile().addKills(id, 1);
             }
-        }
-        return UHCFileRegister.getPlayerFile().getCrates(p).toArray(new String[UHCFileRegister.getPlayerFile().getCrates(p).size()]);
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
     }
 
-    public long getCrateCount(Crate crate, OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return Crate.getCrateCount(crate, p);
+    public static void addDeath(UUID id) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).addDeath(1);
+            return;
         }
-        if (getUhc().isMySQLMode()) {
-            if (Database.containsPlayer("UHC", p)) {
-                long count = 0;
-                String qCrates = Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString();
 
-                for (String crateNames : qCrates.split(";")) {
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Deaths", Long.toString(getDeaths(id) + 1));
+                    }
+                }
+                UHCFileRegister.getPlayerFile().addDeaths(id, 1);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void addCoins(final UUID id, final long amount) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).addCoins(amount);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Coins", Long.toString(getCoins(id) + amount));
+                    }
+                }
+                UHCFileRegister.getPlayerFile().addCoins(id, amount);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void removeCoins(final UUID id, final long amount) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).removeCoins(amount);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        if (getCoins(id) - amount <= 0) {
+                            DATABASE.update(id, "Coins", "0");
+                        } else {
+                            DATABASE.update(id, "Coins", Long.toString(getCoins(id) - amount));
+                        }
+                    }
+                }
+                UHCFileRegister.getPlayerFile().removeCoins(id, amount);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void addPoints(final UUID id, final long amount) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).addPoints(amount);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Points", Long.toString(getPoints(id) + amount));
+                    }
+                }
+                UHCFileRegister.getPlayerFile().addPoints(id, amount);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void removePoints(final UUID id, final long amount) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).removePoints(amount);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        if (getCoins(id) - amount <= 0) {
+                            DATABASE.update(id, "Points", "0");
+                        } else {
+                            DATABASE.update(id, "Points", Long.toString(getPoints(id) - amount));
+                        }
+                    }
+                }
+                UHCFileRegister.getPlayerFile().removePoints(id, amount);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void addWins(final UUID id, final long amount) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).addWin(amount);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Wins", Long.toString(getWins(id) + amount));
+                    }
+                }
+                UHCFileRegister.getPlayerFile().addWins(id, amount);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void addGames(final UUID id, final long amount) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).addGame(amount);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Games", Long.toString(getGames(id) + amount));
+                    }
+                }
+                UHCFileRegister.getPlayerFile().addGames(id, amount);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void addKits(final UUID id, final Kit kit) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).addKits(kit);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Kits", getListAsString(getKitList(id)) + kit.serialize() + " ;");
+                    }
+                }
+                UHCFileRegister.getPlayerFile().addKits(id, kit);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void addAchievement(final UUID id, final UHCAchievements achievement) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).addAchievement(achievement);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Achievements", getListAsString(getAchievementList(id)) + achievement.toString() + " ;");
+                    }
+                }
+                UHCFileRegister.getPlayerFile().addAchievemetns(id, achievement);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void addCrate(final UUID id, final Crate crate) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).addCrate(crate);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Crates", getListAsString(getCratesList(id)) + crate.getRawName() + " ;");
+                    }
+                }
+                UHCFileRegister.getPlayerFile().addCrate(id, crate);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static void removeCrate(final UUID id, final Crate crate) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            PlayerInfo.getPlayerInfo(id).removeCrate(crate);
+            return;
+        }
+
+        new BukkitRunnable() {
+            public void run() {
+                if (UHC.isMySQLMode()) {
+                    if (DATABASE.containsPlayer(id)) {
+                        DATABASE.update(id, "Crates", getListAsString(getCratesList(id)).replaceFirst(crate.getRawName() + " ;", ""));
+                    }
+                }
+                UHCFileRegister.getPlayerFile().removeCrate(id, crate);
+            }
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 5);
+    }
+
+    public static long getCrateCount(UUID id, Crate crate) {
+        if (PlayerInfo.getPlayerInfo(id) != null) {
+            return Crate.getCrateCount(crate, Bukkit.getOfflinePlayer(id));
+        }
+
+        if (UHC.isMySQLMode()) {
+            if (DATABASE.containsPlayer(id)) {
+                long count = 0;
+                String qCrates = DATABASE.getResult("uuid", id.toString(), "Crates").toString();
+
+                for (String crateNames : qCrates.split(" ;")) {
                     if (Crate.getCrateByRawName(crateNames) == null) continue;
                     if (Crate.getCrateByRawName(crateNames).equals(crate))
                         count++;
@@ -495,347 +471,100 @@ public class StatsUtil extends Util {
                 return count;
             }
         }
-        return UHCFileRegister.getPlayerFile().getCrate(p, crate);
+        return UHCFileRegister.getPlayerFile().getCrateCount(id, crate);
     }
 
-    public void addCrate(final Crate crate, final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).addCrate(crate.getRawName());
-            return;
+    public static long getRank(UUID uuid) {
+        HashMap<UUID, Long> points = new HashMap<>();
+
+        for (UUID id : getOfflinePlayers()) {
+            points.put(id, getPoints(id));
         }
-        new BukkitRunnable() {
-            public void run() {
-                if (getUhc().isMySQLMode()) {
-                    if (Database.containsPlayer("UHC", p)) {
 
-                        String crates;
+        Map<UUID, Long> ss = MapUtil.sortByValue(points);
 
-                        if (!Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString().equals("-")) {
-                            crates = Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString() + crate.getRawName() + ";";
-                        } else {
-                            crates = crate.getRawName() + ";";
-                        }
+        int pos = ss.size();
 
-                        Database.update("UHC", UUIDFetcher.getUUID(p), "Crates", crates);
-                    }
-                }
-                UHCFileRegister.getPlayerFile().removeCrate(p, crate);
+        for (UUID id : ss.keySet()) {
+            if (!id.equals(uuid)) pos--;
+            else break;
+        }
+
+        return pos;
+    }
+
+    public static String getPlayernameByRank(long r) {
+        HashMap<Long, String> rank = new HashMap<>();
+
+        for (UUID id : getOfflinePlayers()) {
+            rank.put(getRank(id), UUIDFetcher.getName(id));
+        }
+
+        return rank.get(r);
+    }
+
+    private static List<UUID> getOfflinePlayers() {
+        ArrayList<UUID> ids = new ArrayList<>();
+        if (UHC.isMySQLMode()) {
+            for (String uuid : UHC.getDB().getList("UUID")) {
+                ids.add(UUID.fromString(uuid));
             }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
-    }
-
-    // Points
-
-    public void removeCrate(final Crate crate, final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).removeCrate(crate);
-            return;
-        }
-        new BukkitRunnable() {
-            public void run() {
-                if (getUhc().isMySQLMode()) {
-                    if (Database.containsPlayer("UHC", p)) {
-                        if (!Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").equals("-")) {
-                            String crates = Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Crates").toString();
-
-                            if (crates.contains(crate.getRawName())) {
-                                crates = crates.replaceFirst(crate.getRawName() + ";", "");
-                            }
-
-                            if(crates.isEmpty() || crates.equals(" ")) crates = "-";
-
-                            Database.update("UHC", UUIDFetcher.getUUID(p), "Crates", crates);
-                        }
-                    }
-                }
-                UHCFileRegister.getPlayerFile().removeCrate(p, crate);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
-    }
-
-    public boolean hasCrate(Crate c, OfflinePlayer p) {
-        return getCrateCount(c, p) > 0;
-    }
-
-    public long getPoints(OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return UHCRegister.getPlayerUtil().getPlayerInfo(p).getPoints();
-        }
-        if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                    "Points") != null) {
-                String points = Database
-                        .getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Points").toString();
-                return Long.parseLong(points);
+        } else {
+            for (String uuid : UHCFileRegister.getPlayerFile().getUUIDS()) {
+                ids.add(UUID.fromString(uuid));
             }
         }
-        return UHCFileRegister.getPlayerFile().getPoints(p);
+        return ids;
     }
 
-    // Rank
-
-    public void addPoints(final OfflinePlayer p, final int amount) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).setPoints(getPoints(p) + amount);
-            return;
-        }
-        new BukkitRunnable() {
-            public void run() {
-                if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                            "Points") != null) {
-                        Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Points",
-                                Long.toString(getPoints(p) + amount));
-                    }
-                }
-                UHCFileRegister.getPlayerFile().setPoints(p, getPoints(p) + amount);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
-    }
-
-    public void removePoints(final OfflinePlayer p, final int amount) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).setPoints(getPoints(p) - amount);
-            return;
-        }
-        new BukkitRunnable() {
-            public void run() {
-                long points = getPoints(p);
-                if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                            "Points") != null) {
-                        if (points - amount < 0)
-                            Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Points",
-                                    Integer.toString(0));
-                        else
-                            Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Points",
-                                    Long.toString(points - amount));
-                    }
-                }
-                if (points - amount < 0)
-                    UHCFileRegister.getPlayerFile().setPoints(p, 0);
-                else
-                    UHCFileRegister.getPlayerFile().setPoints(p, points - amount);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
-    }
-
-    public OfflinePlayer getPlayerByRank(long r) {
-        TreeMap<String, Long> points = new TreeMap<>();
-        TreeMap<Long, String> rank = new TreeMap<>();
-
-        if (getUhc().isMySQLMode()) {
-            try {
-                ResultSet rs = MySQLAPI.getMySQLConnection().createStatement()
-                        .executeQuery("SELECT " + "uuid" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
-
-                ResultSet counts = MySQLAPI.getMySQLConnection().createStatement()
-                        .executeQuery("SELECT COUNT(*) FROM UHC");
-
-                long in = 1;
-
-                while (counts.next()) {
-                    in++;
-                }
-
-                while (rs.next()) {
-                    in--;
-                    rank.put(in, rs.getString("uuid"));
-                }
-
-                return Bukkit.getOfflinePlayer(UUID.fromString(rank.get(r)));
-            } catch (Exception e) {
-                if (getUhc().isDebug())
-                    getLog().log(Level.SEVERE, "Something went during loading the stats. Skipping...", e.getMessage());
-                return Bukkit.getOfflinePlayer(UUIDFetcher.getUUID("AlphaHelix"));
-            }
-        }
-        for (String UUIDs : UHCFileRegister.getPlayerFile().getConfigurationSection("Players").getKeys(false)) {
-            String playerName = UUIDFetcher.getName(UUID.fromString(UUIDs));
-            points.put(playerName, getPoints(Bukkit.getOfflinePlayer(UUID.fromString(UUIDs))));
-        }
-
-        SortedSet<Map.Entry<String, Long>> ss = MapUtil.entriesSortedByValues(points);
-
-        for (Entry<String, Long> name : ss) {
-            rank.put(name.getValue(), name.getKey());
-        }
-
-        return Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(rank.get(r)));
-    }
-
-    public long getRank(OfflinePlayer p) {
-        TreeMap<String, Long> points = new TreeMap<>();
-        TreeMap<String, Long> rank = new TreeMap<>();
-
-        if (getUhc().isMySQLMode()) {
-            try {
-                ResultSet rs = MySQLAPI.getMySQLConnection().createStatement()
-                        .executeQuery("SELECT " + "uuid" + " FROM " + "UHC" + " ORDER BY " + "Points" + " asc");
-
-                ResultSet counts = MySQLAPI.getMySQLConnection().createStatement()
-                        .executeQuery("SELECT COUNT(*) FROM UHC");
-
-                long in = 1;
-
-                while (counts.next()) {
-                    in++;
-                }
-
-                while (rs.next()) {
-                    in--;
-                    rank.put(p.getName(), in);
-                }
-
-                return rank.get(p.getName());
-            } catch (Exception e) {
-                if (getUhc().isDebug())
-                    getLog().log(Level.SEVERE, "Something went during loading the stats. Skipping...", e.getMessage());
-                return -1;
-            }
-        }
-        for (String UUIDs : UHCFileRegister.getPlayerFile().getConfigurationSection("Players").getKeys(false)) {
-            String playerName = UUIDFetcher.getName(UUID.fromString(UUIDs));
-            points.put(playerName, getPoints(Bukkit.getOfflinePlayer(UUID.fromString(UUIDs))));
-        }
-
-        SortedSet<Entry<String, Long>> ss = MapUtil.entriesSortedByValues(points);
-        for (Entry<String, Long> name : ss) {
-            rank.put(name.getKey(), name.getValue());
-        }
-
-        return rank.containsKey(p.getName()) ? rank.get(p.getName()) + 1 : -1;
-    }
-
-    // wins
-
-    public long getWins(OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return UHCRegister.getPlayerUtil().getPlayerInfo(p).getWins();
-        }
-        if (getUhc().isMySQLMode()) {
-            if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                    "Wins") != null)
-                return Long.parseLong(Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Wins").toString());
-        }
-        return UHCFileRegister.getPlayerFile().getWins(p);
-    }
-
-    public void addWin(final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).setWins(getWins(p) + 1);
-            return;
-        }
-        new BukkitRunnable() {
-            public void run() {
-                if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                            "Wins") != null) {
-                        Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Wins",
-                                Long.toString(getWins(p) + 1));
-                        return;
-                    }
-                }
-                UHCFileRegister.getPlayerFile().setWins(p, getWins(p) + 1);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
-    }
-
-    // achievements
-
-    public String getAchievementsAsString(OfflinePlayer p) {
-        String achievements = "";
-        for (UHCAchievements a : getAchievementsAsList(p)) {
-            achievements = achievements + a.toString() + " ;";
-        }
-        return achievements;
-    }
-
-    public String getAchievementsAsReadableString(OfflinePlayer p) {
-        String achievements = "";
-        for (UHCAchievements a : getAchievementsAsList(p)) {
-            achievements = achievements + a.getName() + " ;";
-        }
-        return achievements;
-    }
-
-    public List<UHCAchievements> getAchievementsAsList(OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            return UHCRegister.getPlayerUtil().getPlayerInfo(p).getAchievements();
-        }
-        if (getUhc().isMySQLMode()) {
-            if (Database.containsPlayer("UHC", p)) {
-                ArrayList<UHCAchievements> achievements = new ArrayList<>();
-
-                if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Achievements").toString().equals("-")) {
-                    return achievements;
-                }
-
-                for (String achievement : Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(), "Achievements").toString().split(" ;")) {
-                    achievements.add(UHCAchievements.fromString(achievement));
-                }
-                return achievements;
-            }
-        }
-        return UHCFileRegister.getPlayerFile().getAchievements(p);
-    }
-
-    public void addAchievement(final UHCAchievements achievement, final OfflinePlayer p) {
-        if (UHCRegister.getPlayerUtil().isInInfoMap(p)) {
-            UHCRegister.getPlayerUtil().getPlayerInfo(p).addAchievement(achievement);
-            return;
-        }
-        new BukkitRunnable() {
-            public void run() {
-                if (getUhc().isMySQLMode()) {
-                    if (Database.getResult("UHC", "uuid", UUIDFetcher.getUUID(p.getName()).toString(),
-                            "Achievements") != null) {
-                        Database.update("UHC", UUIDFetcher.getUUID(p.getName()), "Achievements", getAchievementsAsString(p));
-                        return;
-                    }
-                }
-                UHCFileRegister.getPlayerFile().addAchievement(p, achievement);
-            }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
-    }
-
-    public boolean hasAchievement(UHCAchievements achievement, OfflinePlayer p) {
-        return getAchievementsAsList(p).contains(achievement);
-    }
-
-    public void setUhcRank(UHCRank uhcRank, Player p) {
-        uhcRankHashMap.put(p.getName(), uhcRank);
-    }
-
-    public UHCRank getUHCRank(Player p) {
-        if (hasRank(p)) return uhcRankHashMap.get(p.getName());
+    public static UHCRank getUHCRank(UUID id) {
+        if (hasRank(id)) return UHC_RANKS.get(id);
         return null;
     }
 
-    public boolean hasRank(Player p) {
-        return uhcRankHashMap.containsKey(p.getName());
+    public static void setUhcRank(UUID id, UHCRank uhcRank) {
+        UHC_RANKS.put(id, uhcRank);
     }
 
-    // sending Stats
+    public static boolean hasRank(UUID id) {
+        return UHC_RANKS.containsKey(id);
+    }
 
-    public void sendStats(final Player toSend, final OfflinePlayer p) {
+    public static boolean canClaimReward(UUID id) {
+        return TimeUtil.getDateDiff(getNextReward(id)) <= 0;
+    }
+
+    public static boolean hasAchievement(UUID id, UHCAchievements achievement) {
+        return getAchievementList(id).contains(achievement);
+    }
+
+    public static boolean hasKit(UUID id, Kit k) {
+        return getKitList(id).contains(k);
+    }
+
+    public static boolean hasCrate(UUID id, Crate c) {
+        return getCrateCount(id, c) > 0;
+    }
+
+    public static void sendStats(Player toSend, UUID id) {
         new BukkitRunnable() {
             public void run() {
+
                 String msg = UHCFileRegister.getStatsFile().getMessage();
-                msg = msg.replace("[player]", p.getName());
-                msg = msg.replace("[rank]", Long.toString(getRank(p)));
-                msg = msg.replace("[kills]", Long.toString(getKills(p)));
-                msg = msg.replace("[deaths]", Long.toString(getDeaths(p)));
-                msg = msg.replace("[kdr]", Double.toString(getKillDeathRate(p)));
-                msg = msg.replace("[coins]", Long.toString(getCoins(p)));
-                msg = msg.replace("[points]", Long.toString(getPoints(p)));
-                msg = msg.replace("[wins]", Long.toString(getWins(p)));
-                msg = msg.replace("[games]", Long.toString(getGames(p)));
-                msg = msg.replace("[kits]", getKitsAsReadableString(p));
-                msg = msg.replace("[achievements]", getAchievementsAsReadableString(p));
+                msg = msg.replace("[player]", UUIDFetcher.getName(id));
+                msg = msg.replace("[rank]", Long.toString(getRank(id)));
+                msg = msg.replace("[kills]", Long.toString(getKills(id)));
+                msg = msg.replace("[deaths]", Long.toString(getDeaths(id)));
+                msg = msg.replace("[kdr]", Double.toString(getKillDeathRate(id)));
+                msg = msg.replace("[coins]", Long.toString(getCoins(id)));
+                msg = msg.replace("[points]", Long.toString(getPoints(id)));
+                msg = msg.replace("[wins]", Long.toString(getWins(id)));
+                msg = msg.replace("[games]", Long.toString(getGames(id)));
+                msg = msg.replace("[kits]", getKitsAsReadableString(id));
+                msg = msg.replace("[achievements]", getAchievementsAsReadableString(id));
 
                 toSend.sendMessage("§8---===XXX===---\n" + msg + "\n§8---===XXX===---");
             }
-        }.runTaskLaterAsynchronously(getUhc(), 10);
+        }.runTaskLaterAsynchronously(UHC.getInstance(), 10);
     }
 }

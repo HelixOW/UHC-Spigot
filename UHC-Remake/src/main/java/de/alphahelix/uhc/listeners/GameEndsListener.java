@@ -1,18 +1,20 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphalibary.nms.SimpleTitle;
-import de.alphahelix.alphalibary.utils.MinecraftVersion;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.nms.SimpleTitle;
+import de.alphahelix.alphaapi.utils.Util;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.enums.UHCAchievements;
 import de.alphahelix.uhc.instances.Crate;
-import de.alphahelix.uhc.instances.SimpleListener;
+import de.alphahelix.uhc.instances.PlayerDummie;
 import de.alphahelix.uhc.instances.Spectator;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.*;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.EntityType;
@@ -24,87 +26,77 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.UUID;
 
 public class GameEndsListener extends SimpleListener {
 
     private Inventory cInv = null;
-    private HashMap<String, Location> playerLogOut = new HashMap<>();
-    private HashMap<String, Villager> playerDummies = new HashMap<>();
-    private HashMap<String, PlayerInventory> playerInv = new HashMap<>();
     private String winnerName = "AlphaHelix";
-
-    public GameEndsListener(UHC uhc) {
-        super(uhc);
-    }
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        final Player dead = e.getEntity();
+        Player dead = e.getEntity();
+        UUID deadID = UUIDFetcher.getUUID(dead);
 
         e.setDeathMessage(null);
 
-        for (String other : UHCRegister.getPlayerUtil().getAll()) {
-            if (Bukkit.getPlayer(other) == null)
-                return;
-            if (e.getEntity().getLastDamageCause() == null) {
-                Bukkit.getPlayer(other)
-                        .sendMessage(UHCFileRegister.getDeathmessageFile().getMessage(null)
-                                .replace("[player]", e.getEntity().getCustomName()).replace("[entity]",
-                                        UHCFileRegister.getDeathmessageFile().getIsAMob()));
-            }
-            if (e.getEntity().getLastDamageCause().getCause() == null) {
-                Bukkit.getPlayer(other)
-                        .sendMessage(UHCFileRegister.getDeathmessageFile().getMessage(null)
-                                .replace("[player]", e.getEntity().getCustomName()).replace("[entity]",
-                                        UHCFileRegister.getDeathmessageFile().getIsAMob()));
-            }
-            Bukkit.getPlayer(other)
-                    .sendMessage(UHCFileRegister.getDeathmessageFile()
-                            .getMessage(e.getEntity().getLastDamageCause().getCause())
-                            .replace("[player]", e.getEntity().getCustomName())
-                            .replace("[entity]", (e.getEntity().getKiller() == null
-                                    ? UHCFileRegister.getDeathmessageFile().getIsAMob()
-                                    : e.getEntity().getKiller().getName())));
+        for (Player p : Util.makePlayerArray(PlayerUtil.getAll())) {
+            if (e.getEntity().getLastDamageCause() == null)
+                p.sendMessage(UHCFileRegister.getDeathmessageFile().getMessage(null)
+                        .replace("[player]", e.getEntity().getCustomName()).replace("[entity]",
+                                UHCFileRegister.getDeathmessageFile().getIsAMob()));
+            if (e.getEntity().getLastDamageCause().getCause() == null)
+                p.sendMessage(UHCFileRegister.getDeathmessageFile().getMessage(null)
+                        .replace("[player]", e.getEntity().getCustomName()).replace("[entity]",
+                                UHCFileRegister.getDeathmessageFile().getIsAMob()));
+            else
+                p.sendMessage(UHCFileRegister.getDeathmessageFile()
+                        .getMessage(e.getEntity().getLastDamageCause().getCause())
+                        .replace("[player]", e.getEntity().getCustomName())
+                        .replace("[entity]", (e.getEntity().getKiller() == null
+                                ? UHCFileRegister.getDeathmessageFile().getIsAMob()
+                                : e.getEntity().getKiller().getName())));
         }
 
-        UHCRegister.getPlayerUtil().removeSurvivor(dead);
-        UHCRegister.getPlayerUtil().addDead(dead);
+        PlayerUtil.removeSurvivor(dead);
+        PlayerUtil.addDead(dead);
 
         new Spectator(dead);
 
         dead.getWorld().strikeLightning(dead.getLocation());
 
-        UHCRegister.getTablistUtil().sendTablist();
+        TablistUtil.sendTablist();
 
         if (dead.getKiller() != null && dead.getKiller() instanceof Player) {
-            UHCRegister.getStatsUtil().addKill(dead.getKiller());
-            UHCRegister.getStatsUtil().addPoints(dead.getKiller(),
+
+            UUID id = UUIDFetcher.getUUID(dead.getKiller());
+
+            StatsUtil.addKill(id);
+            StatsUtil.addPoints(
+                    id,
                     UHCFileRegister.getOptionsFile().getPointsOnKill());
-            UHCRegister.getStatsUtil().addCoins(dead.getKiller(),
+            StatsUtil.addCoins(
+                    id,
                     UHCFileRegister.getOptionsFile().getCoinssOnKill());
 
-            if (getUhc().isCrates()) {
+            if (UHC.isCrates()) {
 
                 Crate c = UHCFileRegister.getCrateFile().getRandomCrate();
 
                 if (Math.random() <= c.getRarity()) {
-                    UHCRegister.getStatsUtil().addCrate(c, dead.getKiller());
+                    StatsUtil.addCrate(id, c);
                     if (dead.getKiller().isOnline())
-                        dead.getKiller().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getCrateDropped(c));
+                        dead.getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getCrateDropped(c));
                 }
             }
         }
 
-        UHCRegister.getStatsUtil().addDeath(dead);
-        UHCRegister.getStatsUtil().removePoints(dead, UHCFileRegister.getOptionsFile().getPointsOnDeath());
-        UHCRegister.getStatsUtil().addCoins(dead, UHCFileRegister.getOptionsFile().getCoinsOnDeath());
+        StatsUtil.addDeath(deadID);
+        StatsUtil.removePoints(deadID, UHCFileRegister.getOptionsFile().getPointsOnDeath());
+        StatsUtil.addCoins(deadID, UHCFileRegister.getOptionsFile().getCoinsOnDeath());
 
         if (!UHCFileRegister.getOptionsFile().getCommandOnKill().equals(""))
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
@@ -115,16 +107,14 @@ public class GameEndsListener extends SimpleListener {
                     UHCFileRegister.getOptionsFile().getCommandOnDeath().replace("[player]", dead.getName())
                             .replace("[killer]", (dead.getKiller() == null ? "" : dead.getKiller().getName())));
 
-        for (String other : UHCRegister.getPlayerUtil().getAll()) {
-            if (Bukkit.getPlayer(other) == null)
-                continue;
-            UHCRegister.getScoreboardUtil().updateAlive(Bukkit.getPlayer(other));
-            UHCRegister.getScoreboardUtil().updateSpecs(Bukkit.getPlayer(other));
+        for (Player p : Util.makePlayerArray(PlayerUtil.getAll())) {
+            ScoreboardUtil.updateAlive(p);
+            ScoreboardUtil.updateSpecs(p);
         }
 
         ArrayList<ItemStack> dropList = new ArrayList<>();
 
-        if (scenarioCheck(Scenarios.KILLSWITCH)) {
+        if (Scenarios.isPlayedAndEnabled(Scenarios.KILLSWITCH)) {
             if (dead.getKiller() instanceof Player) {
                 dead.getKiller().getInventory().clear();
                 dead.getKiller().getInventory().setContents(dead.getInventory().getContents());
@@ -146,7 +136,7 @@ public class GameEndsListener extends SimpleListener {
                 dropList.add(drops);
         }
 
-        if (scenarioCheck(Scenarios.BAREBONES)) {
+        if (Scenarios.isPlayedAndEnabled(Scenarios.BAREBONES)) {
             dropList = new ArrayList<>();
 
             dropList.add(new ItemStack(Material.DIAMOND, 1));
@@ -155,7 +145,7 @@ public class GameEndsListener extends SimpleListener {
             dropList.add(new ItemStack(Material.STRING, 2));
         }
 
-        if (scenarioCheck(Scenarios.TIME_BOMB)) {
+        if (Scenarios.isPlayedAndEnabled(Scenarios.TIME_BOMB)) {
             for (ItemStack td : dropList) {
                 cInv.addItem(td);
             }
@@ -165,7 +155,7 @@ public class GameEndsListener extends SimpleListener {
                             dead.getLocation().getZ(), 10, false, true);
                     dead.getLocation().getBlock().setType(Material.AIR);
                 }
-            }.runTaskLater(getUhc(), 600);
+            }.runTaskLater(UHC.getInstance(), 600);
         } else {
             for (ItemStack td : dropList) {
                 if (UHCFileRegister.getDropsFile().isDeathchest()) {
@@ -176,56 +166,55 @@ public class GameEndsListener extends SimpleListener {
             }
         }
 
-        if (scenarioCheck(Scenarios.ZOMBIES)) {
+        if (Scenarios.isPlayedAndEnabled(Scenarios.ZOMBIES)) {
             dead.getWorld().spawnEntity(dead.getLocation(), EntityType.ZOMBIE);
         }
 
-        if (getUhc().isTeams() && UHCRegister.getTeamManagerUtil().isInOneTeam(dead) != null)
-            if (UHCRegister.getPlayerUtil().getSurvivors()
-                    .size() <= (UHCRegister.getTeamManagerUtil().isInOneTeam(dead).getPlayers().size()))
+        if (UHC.isTeams() && TeamManagerUtil.isInOneTeam(dead) != null)
+            if (PlayerUtil.getSurvivors()
+                    .size() <= (TeamManagerUtil.isInOneTeam(dead).getPlayers().size()))
                 UHCRegister.getTeamListener().setFFA();
 
-        if (UHCRegister.getPlayerUtil().getSurvivors().size() == 4)
-            UHCRegister.getDeathmatchTimer().startDeathMatchTimer();
+        if (PlayerUtil.getSurvivors().size() == 4)
+            UHCRegister.getDeathmatchTimer().startTimer();
 
-        if (UHCRegister.getPlayerUtil().getSurvivors().size() <= 1) {
+        if (PlayerUtil.getSurvivors().size() <= 1) {
 
             GState.setCurrentState(GState.END);
 
-            if (UHCRegister.getPlayerUtil().getSurvivors().size() == 0) {
-
+            if (PlayerUtil.getSurvivors().size() == 0) {
                 Bukkit.reload();
                 return;
             }
 
-            setWinnerName(UHCRegister.getPlayerUtil().getSurvivors().get(0));
-            for (String pName : UHCRegister.getPlayerUtil().getAll()) {
-                Bukkit.getPlayer(pName).sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile()
+            setWinnerName(PlayerUtil.getSurvivors().get(0));
+            for (Player p : Util.makePlayerArray(PlayerUtil.getAll())) {
+                p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile()
                         .getWin(Bukkit.getPlayer(getWinnerName())));
-                SimpleTitle
-                        .sendTitle(Bukkit.getPlayer(pName),
-                                " ", getUhc().getPrefix() + UHCFileRegister.getMessageFile()
-                                        .getWin(Bukkit.getPlayer(getWinnerName())),
-                                2, 2, 2);
+                SimpleTitle.sendTitle(p,
+                        " ", UHC.getPrefix() + UHCFileRegister.getMessageFile()
+                                .getWin(Bukkit.getPlayer(getWinnerName())),
+                        2, 2, 2);
             }
 
-            UHCRegister.getStatsUtil().addWin(Bukkit.getPlayer(getWinnerName()));
+            StatsUtil.addWins(UUIDFetcher.getUUID(getWinnerName()), 1);
+            StatsUtil.addCoins(UUIDFetcher.getUUID(getWinnerName()), UHCFileRegister.getOptionsFile().getCoinsOnWin());
 
-            if (UHCRegister.getStatsUtil().getWins(Bukkit.getPlayer(getWinnerName())) == 50) {
-                if (!UHCRegister.getStatsUtil().hasAchievement(UHCAchievements.WINNER, Bukkit.getPlayer(getWinnerName()))) {
-                    UHCRegister.getStatsUtil().addAchievement(UHCAchievements.WINNER, Bukkit.getPlayer(getWinnerName()));
-                    Bukkit.getPlayer(getWinnerName()).sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.WINNER.getName()));
+            if (StatsUtil.getWins(UUIDFetcher.getUUID(getWinnerName())) == 50) {
+                if (!StatsUtil.hasAchievement(UUIDFetcher.getUUID(getWinnerName()), UHCAchievements.WINNER)) {
+                    StatsUtil.addAchievement(UUIDFetcher.getUUID(getWinnerName()), UHCAchievements.WINNER);
+                    Bukkit.getPlayer(getWinnerName()).sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getAchievementUnlocked().replace("[achievement]", UHCAchievements.WINNER.getName()));
                 }
             }
 
-            UHCRegister.getStatsUtil().addPoints(Bukkit.getPlayer(getWinnerName()),
+            StatsUtil.addPoints(UUIDFetcher.getUUID(getWinnerName()),
                     UHCFileRegister.getOptionsFile().getPointsOnWin());
 
             if (!UHCFileRegister.getOptionsFile().getCommandOnWin().equals(""))
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), UHCFileRegister.getOptionsFile()
                         .getCommandOnWin().replace("[player]", getWinnerName()));
 
-            UHCRegister.getRestartTimer().startEndTimer();
+            UHCRegister.getRestartTimer().startTimer();
         }
     }
 
@@ -233,77 +222,51 @@ public class GameEndsListener extends SimpleListener {
     public void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
 
-        boolean isSpec = UHCRegister.getPlayerUtil().isDead(p);
-        UHCRegister.getTablistUtil().sendTablist();
+        boolean isSpec = PlayerUtil.isDead(p);
+        TablistUtil.sendTablist();
 
         if (!(GState.isState(GState.LOBBY) || GState.isState(GState.END))) {
             if (!isSpec) {
-                if (!(UHCRegister.getPlayerUtil().getSurvivors().size() <= 2)) {
-                    Villager villager = (Villager) p.getWorld().spawnEntity(p.getLocation(), EntityType.VILLAGER);
-
-                    villager.setCustomNameVisible(true);
-                    villager.setCustomName(p.getName());
-
-                    villager.getEquipment().setArmorContents(p.getInventory().getArmorContents());
-                    villager.setHealth(p.getHealth());
-
-                    try {
-                        if (MinecraftVersion.getServer() != MinecraftVersion.EIGHT)
-                            Class.forName("org.bukkit.entity.LivingEntity").getMethod("setAI", boolean.class).invoke(villager, false);
-                        else {
-                            villager.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 255));
-                        }
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-
-                    playerLogOut.put(p.getName(), p.getLocation());
-                    playerDummies.put(p.getName(), villager);
-                    playerInv.put(p.getName(), p.getInventory());
+                if (!(PlayerUtil.getSurvivors().size() <= 2)) {
+                    new PlayerDummie(p);
                 }
             }
 
-            for (String other : UHCRegister.getPlayerUtil().getAll()) {
-                if (Bukkit.getPlayer(other) == null)
-                    continue;
-                UHCRegister.getScoreboardUtil().updateAlive(Bukkit.getPlayer(other));
-                UHCRegister.getScoreboardUtil().updateSpecs(Bukkit.getPlayer(other));
+            for (Player other : Util.makePlayerArray(PlayerUtil.getAll())) {
+                ScoreboardUtil.updateAlive(other);
+                ScoreboardUtil.updateSpecs(other);
             }
 
-            if (UHCRegister.getPlayerUtil().getSurvivors().size() <= 1) {
+            if (PlayerUtil.getSurvivors().size() <= 1) {
                 GState.setCurrentState(GState.END);
 
-                for (String other : UHCRegister.getPlayerUtil().getSurvivors()) {
-                    if (Bukkit.getPlayer(other) == null)
-                        continue;
-                    UHCRegister.getPlayerUtil().removeAll(Bukkit.getPlayer(other));
+                for (Player other : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
+                    PlayerUtil.removeAll(other);
                 }
 
-                if (UHCRegister.getPlayerUtil().getSurvivors().size() == 0) {
-
+                if (PlayerUtil.getSurvivors().size() == 0) {
                     Bukkit.reload();
                     return;
                 }
 
-                setWinnerName(UHCRegister.getPlayerUtil().getSurvivors().get(0));
-                for (String pName : UHCRegister.getPlayerUtil().getAll()) {
-                    Bukkit.getPlayer(pName).sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile()
+                setWinnerName(PlayerUtil.getSurvivors().get(0));
+                for (Player other : Util.makePlayerArray(PlayerUtil.getAll())) {
+                    other.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile()
                             .getWin(Bukkit.getPlayer(getWinnerName())));
-                    SimpleTitle
-                            .sendTitle(Bukkit.getPlayer(pName), " ",
-                                    getUhc().getPrefix() + UHCFileRegister.getMessageFile()
-                                            .getWin(Bukkit.getPlayer(getWinnerName())),
-                                    2, 2, 2);
+                    SimpleTitle.sendTitle(other, " ",
+                            UHC.getPrefix() + UHCFileRegister.getMessageFile()
+                                    .getWin(Bukkit.getPlayer(getWinnerName())),
+                            2, 2, 2);
                 }
 
-                UHCRegister.getStatsUtil().addPoints(Bukkit.getPlayer(getWinnerName()),
+                StatsUtil.addPoints(UUIDFetcher.getUUID(getWinnerName()),
                         UHCFileRegister.getOptionsFile().getPointsOnWin());
 
                 if (!UHCFileRegister.getOptionsFile().getCommandOnWin().equals(""))
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), UHCFileRegister.getOptionsFile()
                             .getCommandOnWin().replace("[player]", getWinnerName()));
 
-                UHCRegister.getRestartTimer().startEndTimer();
+                UHCRegister.getRestartTimer().startTimer();
             }
         }
     }
@@ -322,23 +285,5 @@ public class GameEndsListener extends SimpleListener {
 
     public void setWinnerName(String winnerName) {
         this.winnerName = winnerName;
-    }
-
-    public Location getLogOutLocation(Player p) {
-        if (playerLogOut.containsKey(p.getName()))
-            return playerLogOut.get(p.getName());
-        return p.getWorld().getSpawnLocation();
-    }
-
-    public Villager getPlayerDummie(Player p) {
-        if (playerDummies.containsKey(p.getName()))
-            return playerDummies.get(p.getName());
-        return null;
-    }
-
-    public PlayerInventory getPlayerInv(Player p) {
-        if (playerInv.containsKey(p.getName()))
-            return playerInv.get(p.getName());
-        return p.getInventory();
     }
 }

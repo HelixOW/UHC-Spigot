@@ -1,12 +1,13 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Sounds;
 import de.alphahelix.uhc.instances.Crate;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.StatsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,12 +21,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Random;
 
-public class CrateOpenInventory extends SimpleListener<UHC> {
+public class CrateOpenInventory extends SimpleListener {
 
     private static final HashMap<String, Thread> THREADS = new HashMap<>();
 
-    public CrateOpenInventory(UHC uhc) {
-        super(uhc);
+    public CrateOpenInventory() {
+        super();
     }
 
     @SuppressWarnings("deprecation")
@@ -125,18 +126,19 @@ public class CrateOpenInventory extends SimpleListener<UHC> {
                         p.playSound(p.getLocation(), Sounds.LEVEL_UP.bukkitSound(), 1F, 0F);
                         p.updateInventory();
 
-                        if (!UHCRegister.getStatsUtil().hasKit(
-                                UHCFileRegister.getKitsFile().getKit(won.getItemMeta().getDisplayName()), p))
+                        if (!StatsUtil.hasKit(
+                                UUIDFetcher.getUUID(p),
+                                UHCFileRegister.getKitsFile().getKit(won.getItemMeta().getDisplayName())))
 
-                            UHCRegister.getStatsUtil().addKit(UHCFileRegister.getKitsFile()
-                                    .getKit(won.getItemMeta().getDisplayName()), p);
+                            StatsUtil.addKits(UUIDFetcher.getUUID(p),
+                                    UHCFileRegister.getKitsFile().getKit(won.getItemMeta().getDisplayName()));
 
                         new BukkitRunnable() {
                             public void run() {
                                 THREADS.remove(p.getName());
                                 p.closeInventory();
                             }
-                        }.runTaskLaterAsynchronously(getPluginInstance(), 20 * 3);
+                        }.runTaskLaterAsynchronously(UHC.getInstance(), 20 * 3);
                     }
                 });
 

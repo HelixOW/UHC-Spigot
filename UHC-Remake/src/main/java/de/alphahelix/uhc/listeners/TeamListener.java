@@ -1,12 +1,13 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphalibary.uuid.UUIDFetcher;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.enums.GState;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.instances.UHCTeam;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
+import de.alphahelix.uhc.util.TeamManagerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,10 +25,6 @@ public class TeamListener extends SimpleListener {
 
     private static boolean isFFA = false;
 
-    public TeamListener(UHC uhc) {
-        super(uhc);
-    }
-
     public void setFFA() {
         isFFA = true;
     }
@@ -40,7 +37,7 @@ public class TeamListener extends SimpleListener {
             return;
 
         if (p.getInventory().getItemInHand() != null && p.getInventory().getItemInHand().getType()
-                .equals(UHCRegister.getTeamManagerUtil().getTeamItem())) {
+                .equals(TeamManagerUtil.getTeamItem().getType())) {
             UHCRegister.getTeamInventory().openInventory(p);
         }
     }
@@ -51,18 +48,18 @@ public class TeamListener extends SimpleListener {
             return;
         if (e.getEntity() instanceof Villager && e.getEntity().isCustomNameVisible()
                 && e.getDamager() instanceof Player) {
-            if (UHCRegister.getTeamManagerUtil().isSameTeam(
+            if (TeamManagerUtil.isSameTeam(
                     (Player) Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())),
                     (Player) e.getDamager()))
-                if (UHCRegister.getPlayerUtil().getSurvivors().size() > UHCRegister.getTeamManagerUtil()
+                if (PlayerUtil.getSurvivors().size() > TeamManagerUtil
                         .isInOneTeam(
                                 (Player) Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())))
                         .getSize())
                     if (!isFFA)
                         e.setCancelled(true);
         } else if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
-            if (UHCRegister.getTeamManagerUtil().isSameTeam((Player) e.getEntity(), (Player) e.getDamager()))
-                if (UHCRegister.getPlayerUtil().getSurvivors().size() > UHCRegister.getTeamManagerUtil()
+            if (TeamManagerUtil.isSameTeam((Player) e.getEntity(), (Player) e.getDamager()))
+                if (PlayerUtil.getSurvivors().size() > TeamManagerUtil
                         .isInOneTeam((Player) e.getEntity()).getSize())
                     if (!isFFA)
                         e.setCancelled(true);
@@ -71,23 +68,21 @@ public class TeamListener extends SimpleListener {
 
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
-        if (UHCRegister.getTeamManagerUtil() == null)
-            return;
         if (e.getPlayer() == null)
             return;
-        if (GState.isState(GState.LOBBY))
-            if (UHCRegister.getTeamManagerUtil().isInOneTeam(e.getPlayer()) == null)
-                return;
-        if (!UHCRegister.getTeamManagerUtil()
-                .existTeam(UHCRegister.getTeamManagerUtil().isInOneTeam(e.getPlayer())))
+        if (!GState.isState(GState.LOBBY)) return;
+        if (TeamManagerUtil.isInOneTeam(e.getPlayer()) == null)
             return;
-        UHCRegister.getTeamManagerUtil().isInOneTeam(e.getPlayer()).removeTeam(e.getPlayer());
+        if (!TeamManagerUtil
+                .existTeam(TeamManagerUtil.isInOneTeam(e.getPlayer())))
+            return;
+        TeamManagerUtil.isInOneTeam(e.getPlayer()).removeTeam(e.getPlayer());
     }
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        Material m = UHCRegister.getTeamManagerUtil().getIconMaterial();
+        Material m = TeamManagerUtil.getIconMaterial();
 
         if (e.getClickedInventory() == null)
             return;
@@ -98,14 +93,14 @@ public class TeamListener extends SimpleListener {
 
         e.setCancelled(true);
         if (e.getCurrentItem().getType().equals(m)) {
-            if (UHCRegister.getTeamManagerUtil()
-                    .existTeam(UHCRegister.getTeamManagerUtil().getTeamByIcon(e.getCurrentItem(), m))) {
-                UHCTeam team = UHCRegister.getTeamManagerUtil().getTeamByIcon(e.getCurrentItem(), m);
+            if (TeamManagerUtil
+                    .existTeam(TeamManagerUtil.getTeamByIcon(e.getCurrentItem(), m))) {
+                UHCTeam team = TeamManagerUtil.getTeamByIcon(e.getCurrentItem(), m);
 
                 if (team == null)
                     return;
 
-                UHCTeam is = UHCRegister.getTeamManagerUtil().isInOneTeam(p);
+                UHCTeam is = TeamManagerUtil.isInOneTeam(p);
 
                 if (is != null)
                     is.removeTeam(p);
@@ -134,11 +129,11 @@ public class TeamListener extends SimpleListener {
             return;
         e.setCancelled(true);
 
-        if (UHCRegister.getTeamManagerUtil()
+        if (TeamManagerUtil
                 .getTeamByName(ChatColor.stripColor(e.getRightClicked().getCustomName())) == null)
             return;
 
-        UHCRegister.getTeamManagerUtil().getTeamByName(ChatColor.stripColor(e.getRightClicked().getCustomName()))
+        TeamManagerUtil.getTeamByName(ChatColor.stripColor(e.getRightClicked().getCustomName()))
                 .addToTeam(e.getPlayer());
     }
 }

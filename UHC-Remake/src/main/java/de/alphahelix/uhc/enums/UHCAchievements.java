@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.enums;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.alphalibary.utils.SerializationUtil;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.utils.SerializationUtil;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -34,6 +34,10 @@ public enum UHCAchievements implements Serializable {
         this.icon = icon;
         this.name = name;
         this.desc = desc;
+    }
+
+    public static UHCAchievements fromString(String json) {
+        return SERIALIZER.deserialize(SerializationUtil.stringToJson(json));
     }
 
     public ItemStack getIcon(boolean unlocked) {
@@ -80,9 +84,5 @@ public enum UHCAchievements implements Serializable {
     @Override
     public String toString() {
         return SerializationUtil.jsonToString(SERIALIZER.serialize(this));
-    }
-
-    public static UHCAchievements fromString(String json) {
-        return SERIALIZER.deserialize(SerializationUtil.stringToJson(json));
     }
 }

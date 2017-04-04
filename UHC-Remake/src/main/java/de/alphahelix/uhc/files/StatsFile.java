@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
 
-public class StatsFile extends SimpleFile<UHC> {
+public class StatsFile extends SimpleFile {
 
-    public StatsFile(UHC uhc) {
-        super("statsMessages.uhc", uhc);
+    public StatsFile() {
+        super("statsMessages.uhc");
     }
 
     @Override
@@ -25,6 +24,7 @@ public class StatsFile extends SimpleFile<UHC> {
         setDefault("Kits", "&6Kits &7: &6[kits]");
         setDefault("Achievements", "&6Achievements &7: &6[achievements]");
         setDefault("StatsNPC", "&5Stats");
+        setDefault("RewardNPC", "&6Rewards");
     }
 
     public String getMessage() {

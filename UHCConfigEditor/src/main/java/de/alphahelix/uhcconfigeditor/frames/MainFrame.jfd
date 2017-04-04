@@ -1,0 +1,237 @@
+JFDML JFormDesigner: "6.0.0.0.84" Java: "1.8.0_112-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"title": "UHC Config Editor"
+			"iconImage": new com.jformdesigner.model.SwingIcon( 1, "C:\\Code\\icon.png" )
+			"defaultCloseOperation": 2
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnBorder"
+				"text": "Border"
+				"font": &Font0 new java.awt.Font( "Segoe UI", 0, 16 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 195
+				"y": 20
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnConfirm"
+				"text": "Confirm"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 350
+				"y": 20
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnCrates"
+				"text": "Crates"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 510
+				"y": 20
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnDeathmsg"
+				"text": "Deathmessages"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 140
+				"height": 75
+				"x": 670
+				"y": 20
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnDrops"
+				"text": "Drops"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 840
+				"y": 20
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnKits"
+				"text": "Kits"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 35
+				"y": 125
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnLobby"
+				"text": "Lobby"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 195
+				"y": 125
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnMessages"
+				"text": "Messages"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 350
+				"y": 125
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnMOTD"
+				"text": "MOTD"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 510
+				"y": 125
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnGeneral"
+				"text": "General"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 675
+				"y": 130
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnRanks"
+				"text": "Ranks"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 840
+				"y": 130
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnRecipes"
+				"text": "Recipes"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 40
+				"y": 230
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnScenarios"
+				"text": "Scenarios"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 195
+				"y": 230
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnScoreboard"
+				"text": "Scoreboard"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 350
+				"y": 230
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnSpectator"
+				"text": "Spectator"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 510
+				"y": 230
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnStats"
+				"text": "Statsmessages"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 135
+				"height": 75
+				"x": 675
+				"y": 230
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnStatus"
+				"text": "Status"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 840
+				"y": 230
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnTab"
+				"font": #Font0
+				"text": "Tablist"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 195
+				"y": 330
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnTeams"
+				"font": #Font0
+				"text": "Teams"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 350
+				"y": 330
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnTimers"
+				"font": #Font0
+				"text": "Timers"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 510
+				"y": 330
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnUnits"
+				"font": #Font0
+				"text": "Units"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 680
+				"y": 330
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnAchievements"
+				"text": "Achievements"
+				"font": #Font0
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAchievementsActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 75
+				"x": 35
+				"y": 20
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 5, 82 )
+			"size": new java.awt.Dimension( 821, 379 )
+		} )
+	}
+}

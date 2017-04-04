@@ -2,12 +2,13 @@ package de.alphahelix.uhc.listeners;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import de.alphahelix.alphalibary.utils.LocationUtil;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.LocationUtil;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.LobbyUtil;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -23,22 +24,30 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class GStateListener extends SimpleListener {
 
     private Location lobbyCorner1, lobbyCorner2;
 
-    public GStateListener(UHC uhc) {
-        super(uhc);
+    public GStateListener() {
         lobbyCorner1 = UHCFileRegister.getLocationsFile().getLobby().clone().subtract(75, 50, 75);
         lobbyCorner2 = UHCFileRegister.getLocationsFile().getLobby().clone().add(75, 50, 75);
     }
 
     @EventHandler
+    public void onLoad(WorldLoadEvent e) {
+        if (e.getWorld().getName().equals("UHC"))
+            GState.setCurrentState(GState.LOBBY);
+    }
+
+    @EventHandler
     public void onPing(ServerListPingEvent e) {
-        if (!UHCFileRegister.getOptionsFile().isStatusMOTD())
+        if (!UHC.isStatusMOTD())
             return;
+
+        if (GState.getCurrentState() == null) return;
 
         e.setMotd(UHCFileRegister.getMotdFile().getMOTD(GState.getCurrentState()));
     }
@@ -50,9 +59,9 @@ public class GStateListener extends SimpleListener {
         if (e.getTo().getBlockX() == e.getFrom().getBlockX() && e.getTo().getBlockY() == e.getFrom().getBlockY()
                 && e.getTo().getBlockZ() == e.getFrom().getBlockZ())
             return;
-        if (UHCRegister.getLobbyUtil().hasBuildPermission(e.getPlayer()))
+        if (LobbyUtil.hasBuildPermission(e.getPlayer()))
             return;
-        if (!getUhc().isLobbyAsSchematic())
+        if (!UHC.isLobbyAsSchematic())
             return;
 
         if (!LocationUtil.isInside(e.getTo(), lobbyCorner1, lobbyCorner2)) {
@@ -63,21 +72,12 @@ public class GStateListener extends SimpleListener {
     @EventHandler
     public void onLogin(AsyncPlayerPreLoginEvent e) {
         if (GState.isState(GState.END)) {
-            e.disallow(Result.KICK_WHITELIST, getUhc().getRestartMessage());
+            e.disallow(Result.KICK_WHITELIST, UHC.getRestartMessage());
             return;
         }
 
-        if (UHCRegister.getPlayerUtil().getMaximumPlayerCount() <= UHCRegister.getPlayerUtil().getAll().size())
+        if (PlayerUtil.getMaximumPlayerCount() <= PlayerUtil.getAll().size())
             e.disallow(Result.KICK_FULL, UHCFileRegister.getMessageFile().getFull());
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
-
-        p.teleport(UHCFileRegister.getLocationsFile().getLobby().clone().add(0, 2, 0));
-
-        UHCRegister.getTablistUtil().sendTablist();
     }
 
     @EventHandler
@@ -106,7 +106,7 @@ public class GStateListener extends SimpleListener {
 
         if (!GState.isState(GState.LOBBY))
             return;
-        if (UHCRegister.getLobbyUtil().hasBuildPermission((Player) e.getWhoClicked()))
+        if (LobbyUtil.hasBuildPermission((Player) e.getWhoClicked()))
             return;
         if (e.getClickedInventory().getType().equals(InventoryType.PLAYER))
             e.setCancelled(true);
@@ -124,7 +124,7 @@ public class GStateListener extends SimpleListener {
     public void onBlockInvOpen(InventoryOpenEvent e) {
         if (!GState.isState(GState.LOBBY))
             return;
-        if (UHCRegister.getLobbyUtil().hasBuildPermission((Player) e.getPlayer()))
+        if (LobbyUtil.hasBuildPermission((Player) e.getPlayer()))
             return;
         if (!(e.getInventory().getType().equals(InventoryType.CHEST)
                 || e.getInventory().getType().equals(InventoryType.ENDER_CHEST))) {
@@ -138,7 +138,7 @@ public class GStateListener extends SimpleListener {
             return;
         if (e.getClickedBlock() == null)
             return;
-        if (UHCRegister.getLobbyUtil().hasBuildPermission(e.getPlayer())) return;
+        if (LobbyUtil.hasBuildPermission(e.getPlayer())) return;
 
         if (e.getClickedBlock().getType().equals(Material.CHEST)
                 || e.getClickedBlock().getType().equals(Material.ENDER_CHEST))
@@ -149,13 +149,13 @@ public class GStateListener extends SimpleListener {
                 && e.getPlayer().getInventory().getItemInHand().getItemMeta().hasDisplayName()
                 && e.getPlayer().getInventory().getItemInHand().getItemMeta().getDisplayName()
                 .equals(UHCFileRegister.getLobbyFile().getItem().getItemStack().getItemMeta().getDisplayName())) {
-            if (getUhc().isBunggeMode()) {
+            if (UHC.isBunggeMode()) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
                 out.writeUTF("Connect");
-                out.writeUTF(getUhc().getLobbyServer());
+                out.writeUTF(UHC.getLobbyServer());
 
-                e.getPlayer().sendPluginMessage(getUhc(), "BungeeCord", out.toByteArray());
+                e.getPlayer().sendPluginMessage(UHC.getInstance(), "BungeeCord", out.toByteArray());
             }
         }
     }
@@ -163,7 +163,7 @@ public class GStateListener extends SimpleListener {
     @EventHandler
     public void onCollect(PlayerPickupItemEvent e) {
         if (GState.isState(GState.LOBBY)) {
-            if (UHCRegister.getLobbyUtil().hasBuildPermission(e.getPlayer()))
+            if (LobbyUtil.hasBuildPermission(e.getPlayer()))
                 return;
             e.setCancelled(true);
         }
@@ -212,6 +212,7 @@ public class GStateListener extends SimpleListener {
 
     @EventHandler
     public void onEntityHurt(EntityDamageByEntityEvent e) {
+        System.out.println("-> " + GState.getCurrentState());
         if (!(e.getDamager() instanceof Player))
             return;
         if (e.getEntity() instanceof Player) {
@@ -224,8 +225,7 @@ public class GStateListener extends SimpleListener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
-
-        if (UHCRegister.getLobbyUtil().hasBuildPermission(e.getPlayer()))
+        if (LobbyUtil.hasBuildPermission(e.getPlayer()))
             return;
         if (GState.isState(GState.LOBBY) || GState.isState(GState.END)) {
             e.setCancelled(true);
@@ -234,8 +234,9 @@ public class GStateListener extends SimpleListener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
-        if (UHCRegister.getLobbyUtil().hasBuildPermission(e.getPlayer()))
+        if (LobbyUtil.hasBuildPermission(e.getPlayer())) {
             return;
+        }
         if (GState.isState(GState.LOBBY) || GState.isState(GState.END)) {
             e.setCancelled(true);
         }
@@ -244,7 +245,7 @@ public class GStateListener extends SimpleListener {
     @EventHandler
     public void onDrop(PlayerDropItemEvent e) {
         if (GState.isState(GState.LOBBY)) {
-            if (UHCRegister.getLobbyUtil().hasBuildPermission(e.getPlayer()))
+            if (LobbyUtil.hasBuildPermission(e.getPlayer()))
                 return;
             e.setCancelled(true);
         }

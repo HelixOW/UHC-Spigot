@@ -1,14 +1,19 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import com.mojang.authlib.GameProfile;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.utils.GameProfileBuilder;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import org.bukkit.Material;
 
-public class OptionsFile extends SimpleFile<UHC> {
+import java.io.IOException;
+import java.util.UUID;
 
-    public OptionsFile(UHC uhc) {
-        super("options.uhc", uhc);
+public class OptionsFile extends SimpleFile {
+
+    public OptionsFile() {
+        super("options.uhc");
     }
 
     public void addValues() {
@@ -20,20 +25,19 @@ public class OptionsFile extends SimpleFile<UHC> {
         setDefault("Bungeecord", false);
         setDefault("Bungeecord fallbackserver", "lobby");
         setDefault("MySQL", false);
-        setDefault("Soup", false);
         setDefault("Debug", true);
 
         setDefault("Spawndispersal", 20);
 
         setDefault("Remove attack cooldown", true);
 
-        setDefault("Pregenerate world.enabled", true);
+        setDefault("Pregenerate world.enabled", false);
         setDefault("Pregenerate world.size", 1000);
 
         setDefault("Tracker.equip", true);
         setInventoryItem("Tracker.item", new ItemBuilder(Material.COMPASS).setName("§dTracker").build(), 1);
 
-        setDefault("Lobby.as schematic", true);
+        setDefault("Lobby.as schematic", false);
         setDefault("Lobby.filename", "lobby");
         setMaterial("Lobby.spawnblock.type", Material.DIAMOND_BLOCK);
         setDefault("Lobby.spawnblock.lower", 5);
@@ -54,6 +58,17 @@ public class OptionsFile extends SimpleFile<UHC> {
         setDefault("Command.kill", "");
         setDefault("Command.death", "");
         setDefault("Command.win", "");
+
+        setDefault("Reward skin", "Zealock");
+    }
+
+    public GameProfile getRewardPlayer() {
+        try {
+            return GameProfileBuilder.fetch(UUIDFetcher.getUUID(getString("Reward skin")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new GameProfile(UUID.randomUUID(), "");
+        }
     }
 
     public String getPrefix() {
@@ -78,10 +93,6 @@ public class OptionsFile extends SimpleFile<UHC> {
 
     public boolean isMySQL() {
         return getBoolean("MySQL");
-    }
-
-    public boolean isSoup() {
-        return getBoolean("Soup");
     }
 
     public boolean isDebug() {
@@ -174,15 +185,5 @@ public class OptionsFile extends SimpleFile<UHC> {
 
     public String getCommandOnWin() {
         return getString("Command.win");
-    }
-
-    public void loadValues() {
-        getPluginInstance().setPrefix(getPrefix());
-        getPluginInstance().setBunggeMode(isBungeecord());
-        getPluginInstance().setLobbyServer(getBungeecordFallbackserver());
-        getPluginInstance().setMySQLMode(isMySQL());
-        getPluginInstance().setSoup(isSoup());
-        getPluginInstance().setSpawnradius(getSpawndispersal());
-        getPluginInstance().setStatusMOTD(isStatusMOTD());
     }
 }

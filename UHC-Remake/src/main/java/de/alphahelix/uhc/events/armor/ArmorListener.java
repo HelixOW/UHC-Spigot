@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.events.armor;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.events.armor.ArmorEquipEvent.EquipMethod;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,10 +22,6 @@ import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ArmorListener extends SimpleListener {
-
-    public ArmorListener(UHC uhc) {
-        super(uhc);
-    }
 
     @EventHandler
     public final void onInventoryClick(final InventoryClickEvent e) {

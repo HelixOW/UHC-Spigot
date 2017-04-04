@@ -1,12 +1,11 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphalibary.reflection.ReflectionUtil;
-import de.alphahelix.alphalibary.utils.MinecraftVersion;
-import de.alphahelix.uhc.enums.GState;
-import org.bukkit.WorldCreator;
+import de.alphahelix.alphaapi.reflection.ReflectionUtil;
+import de.alphahelix.alphaapi.utils.MinecraftVersion;
+import de.alphahelix.uhc.UHC;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 public class BiomeUtil {
 
@@ -14,8 +13,13 @@ public class BiomeUtil {
      * id's 0 = Ocean 10 = Frozen_Ocean 24 = Deep_Ozean 124 = Void
      */
 
-    public BiomeUtil() {
-        removeOceanFromBioms();
+    static void removeBiomes() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                removeOceanFromBioms();
+            }
+        }.runTaskLater(UHC.getInstance(), 20);
     }
 
     private static void removeOceanFromBioms() {
@@ -63,25 +67,9 @@ public class BiomeUtil {
             } catch (Exception ignore) {
             }
         }
-        GState.setCurrentState(GState.LOBBY);
-    }
-
-    public static void generatorWorld(String name) {
-        new WorldCreator(name).createWorld();
     }
 
     private static Object getBiomeFor(String key) {
         return ReflectionUtil.getDeclaredMethod("a", ReflectionUtil.getNmsClass("Biomes"), String.class).invoke(null, false, key);
     }
-
-    private static void setFinalStatic(Field field, Object newValue) throws Exception {
-        field.setAccessible(true);
-
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-        field.set(null, newValue);
-    }
-
 }

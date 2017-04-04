@@ -1,13 +1,12 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
 import de.alphahelix.uhc.enums.GState;
 
-public class MOTDFile extends SimpleFile<UHC> {
+public class MOTDFile extends SimpleFile {
 
-    public MOTDFile(UHC uhc) {
-        super("motd.uhc", uhc);
+    public MOTDFile() {
+        super("motd.uhc");
     }
 
     @Override

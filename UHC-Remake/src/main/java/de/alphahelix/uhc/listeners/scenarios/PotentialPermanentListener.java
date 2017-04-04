@@ -1,11 +1,11 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.enums.Sounds;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,18 +18,14 @@ import java.lang.reflect.InvocationTargetException;
 
 public class PotentialPermanentListener extends SimpleListener {
 
-    public PotentialPermanentListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onend(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.POTENTIAL_PERMANENT))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.POTENTIAL_PERMANENT))
             return;
 
         PotionEffect effect = new PotionEffect(PotionEffectType.ABSORPTION, Short.MAX_VALUE, 4);
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             p.addPotionEffect(effect);
             p.setMaxHealth(20.0);
         }
@@ -39,7 +35,7 @@ public class PotentialPermanentListener extends SimpleListener {
     public void onPlayerItemConsume(PlayerItemConsumeEvent event) {
         if (event.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.POTENTIAL_PERMANENT))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.POTENTIAL_PERMANENT))
             return;
 
         Player player = event.getPlayer();

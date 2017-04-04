@@ -1,11 +1,12 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,25 +18,21 @@ import java.util.Random;
 
 public class LootchestListener extends SimpleListener {
 
-    public LootchestListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.LOOTCRATES))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.LOOTCRATES))
             return;
 
         new BukkitRunnable() {
             public void run() {
-                for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+                for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
                     int i = new Random().nextInt(2);
 
                     p.getInventory().addItem(new ItemBuilder(i == 0 ? Material.ENDER_CHEST : Material.CHEST)
                             .setName("§aLootcrate §7: §a" + (i == 0 ? "2" : "1")).build());
                 }
             }
-        }.runTaskTimer(getUhc(), 10800, 12000);
+        }.runTaskTimer(UHC.getInstance(), 10800, 12000);
     }
 
     @EventHandler

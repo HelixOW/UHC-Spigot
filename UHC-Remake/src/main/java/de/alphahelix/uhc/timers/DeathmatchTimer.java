@@ -1,166 +1,66 @@
 package de.alphahelix.uhc.timers;
 
-import de.alphahelix.alphalibary.nms.SimpleActionBar;
-import de.alphahelix.alphalibary.nms.SimpleTitle;
+import de.alphahelix.alphaapi.nms.SimpleActionBar;
+import de.alphahelix.alphaapi.nms.SimpleTitle;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Sounds;
 import de.alphahelix.uhc.events.timers.InGameStartEvent;
-import de.alphahelix.uhc.instances.Util;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
+import de.alphahelix.uhc.util.ScoreboardUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
-public class DeathmatchTimer extends Util {
+public class DeathmatchTimer extends AbstractTimer {
 
-    private static BukkitTask timer, deathmatch;
-    private int time;
-    private double min, h;
-    private boolean hourSend, customTime;
+    @Override
+    public void startTimer() {
+        if (!GState.isState(GState.IN_GAME)) return;
+        if (isRunning()) return;
 
-    public DeathmatchTimer(UHC uhc) {
-        super(uhc);
-    }
-
-    public void stopTimer() {
-        if (timer != null)
-            timer.cancel();
-        timer = null;
-        if (deathmatch != null)
-            deathmatch.cancel();
-        deathmatch = null;
         resetTime();
-    }
-
-    private double getMinTime() {
-        return min;
-    }
-
-    private double getHourTime() {
-        return calcHours(time);
-    }
-
-    public String getTime() {
-        if (getHourTime() > 1 && getMinTime() > 60 && time > 60)
-            return Double.toString(round(getHourTime(), 1)) + UHCFileRegister.getUnitFile().getHours();
-        else if (getHourTime() < 1 && getMinTime() < 60 && time > 60)
-            return Double.toString(round(getMinTime(), 1)) + UHCFileRegister.getUnitFile().getMinutes();
-        else
-            return Integer.toString(time) + UHCFileRegister.getUnitFile().getSeconds();
-    }
-
-    public void setTime(int t) {
-        time = t;
-        customTime = true;
-    }
-
-    public boolean isRunning() {
-        return timer != null;
-    }
-
-    public void startDeathMatchTimer() {
-        if (!GState.isState(GState.IN_GAME))
-            return;
-
-        if (timer != null) {
-            if (Bukkit.getScheduler().isCurrentlyRunning(timer.getTaskId()))
-                return;
-            return;
-        }
-        if (!customTime)
-            resetTime();
 
         Bukkit.getPluginManager().callEvent(new InGameStartEvent());
 
-        timer = new BukkitRunnable() {
-            public void run() {
-                if (time > 0) {
-                    time--;
+        setSecondTimer(() -> {
+            if (getSeconds() > 0) {
+                setSeconds(getSeconds() - 1);
 
-                    deathmatch = new BukkitRunnable() {
-                        public void run() {
-                            for (String pName : UHCRegister.getPlayerUtil().getAll()) {
-                                Player p = Bukkit.getPlayer(pName);
+                for (Player p : Util.makePlayerArray(PlayerUtil.getAll())) {
+                    String time = (getMinTime() >= 1 ? UHCFileRegister.getMessageFile().getTimeLeftInfo(Util.round(getMinTime(), 1), UHCFileRegister.getUnitFile().getMinutes()) : UHCFileRegister.getMessageFile().getTimeLeftInfo(Util.round(getSeconds(), 1), UHCFileRegister.getUnitFile().getSeconds()));
 
-                                if (p == null)
-                                    return;
+                    ScoreboardUtil.updateTime(p);
 
-                                min = calcMin(time);
-                                h = calcHours(time);
+                    if (getMinTime() % 5 == 0 && getSeconds() > 10 && getSeconds() != 0) {
+                        p.sendMessage(UHC.getPrefix() + time);
+                        SimpleTitle.sendTitle(p, UHC.getPrefix(), time, 1, 2, 1);
+                        p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
+                    }
 
-                                UHCRegister.getScoreboardUtil().updateTime(p);
+                    if (getSeconds() < 10 && getSeconds() != 0) {
+                        p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
+                        SimpleActionBar.send(p, UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
+                        p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
+                    }
 
-                                if ((h % 1 == 0 && !hourSend) && min > 60 && time != 0) {
-                                    hourSend = true;
-                                    p.sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile()
-                                            .getTimeLeftInfo(round(h, 1),
-                                                    (h >= 1 ? UHCFileRegister.getUnitFile().getHours()
-                                                            : UHCFileRegister.getUnitFile().getMinutes())));
-                                    SimpleTitle.sendTitle(
-                                            p,
-                                            getUhc().getPrefix(),
-                                            getUhc().getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(round(h, 1), (h >= 1 ? UHCFileRegister.getUnitFile().getHours() : UHCFileRegister.getUnitFile().getMinutes())),
-                                            1,
-                                            2,
-                                            1);
+                    if (getSeconds() == 0) {
+                        p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getEnd());
+                        SimpleActionBar.send(p, UHC.getPrefix() + UHCFileRegister.getMessageFile().getEnd());
+                        p.teleport(UHCFileRegister.getLocationsFile().getDeathmatch());
+                    }
+                }
 
-                                    p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-                                    continue;
-                                }
+                if (getSeconds() == 0) {
+                    stopTimer();
 
-                                if (min % 5 == 0 && time > 10 && time != 0) {
+                    GState.setCurrentState(GState.DEATHMATCH_WARMUP);
 
-                                    p.sendMessage(
-                                            getUhc().getPrefix()
-                                                    + UHCFileRegister.getMessageFile().getTimeLeftInfo(round(min, 1), (min >= 1 ? UHCFileRegister.getUnitFile().getMinutes() : UHCFileRegister.getUnitFile().getSeconds())));
-
-                                   SimpleTitle.sendTitle(
-                                           p,
-                                           getUhc().getPrefix(),
-                                           UHCFileRegister.getMessageFile().getTimeLeftInfo(round(min, 1), (min >= 1 ? UHCFileRegister.getUnitFile().getMinutes() : UHCFileRegister.getUnitFile().getSeconds())),
-                                           1,
-                                           2,
-                                           1);
-
-                                    p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-                                } else if (time < 10 && time != 0) {
-
-                                    p.sendMessage(
-                                            getUhc().getPrefix()
-                                                    + UHCFileRegister.getMessageFile().getTimeLeftInfo(time, UHCFileRegister.getUnitFile().getSeconds()));
-
-                                    SimpleActionBar.send(p,
-                                            getUhc().getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(time, UHCFileRegister.getUnitFile().getSeconds()));
-                                    p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
-                                } else if (time == 0) {
-                                    timer.cancel();
-
-                                    p.sendMessage(getUhc().getPrefix()
-                                            + UHCFileRegister.getMessageFile().getEnd());
-
-                                    SimpleActionBar.send(p, getUhc().getPrefix()
-                                            + UHCFileRegister.getMessageFile().getEnd());
-
-                                    p.teleport(UHCFileRegister.getLocationsFile().getDeathmatch());
-
-                                    GState.setCurrentState(GState.DEATHMATCH_WARMUP);
-
-                                    UHCRegister.getStartDeathmatchTimer().startDeathMatchTimer();
-
-                                    deathmatch.cancel();
-                                }
-                            }
-                        }
-                    }.runTask(getUhc());
+                    UHCRegister.getStartDeathMatchTimer().startTimer();
                 }
             }
-        }.runTaskTimer(getUhc(), 0, 20);
-    }
-
-    private void resetTime() {
-        time = UHCFileRegister.getTimerFile().getLenght(GState.DEATHMATCH_WARMUP);
+        });
     }
 }

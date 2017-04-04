@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphaapi.item.ItemBuilder;
 import de.alphahelix.uhc.enums.UHCAchievements;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -10,10 +9,10 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Created by AlphaHelixDev.
  */
-public class AchievementFile extends SimpleFile<UHC> {
+public class AchievementFile extends SimpleFile {
 
-    public AchievementFile(UHC plugin) {
-        super("achievements.uhc", plugin);
+    public AchievementFile() {
+        super("achievements.uhc");
     }
 
     @Override
@@ -26,7 +25,7 @@ public class AchievementFile extends SimpleFile<UHC> {
         for (UHCAchievements uhcAchievements : UHCAchievements.values()) {
             setDefault("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".name", "&7" + uhcAchievements.name().replace("_", " ").toLowerCase());
             setDefault("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".icon", "paper");
-            setArgumentList("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".description", "&7Add your description here.");
+            addArgumentsToList("Achievements." + uhcAchievements.name().replace("_", " ").toLowerCase() + ".description", "&7Add your description here.");
         }
     }
 

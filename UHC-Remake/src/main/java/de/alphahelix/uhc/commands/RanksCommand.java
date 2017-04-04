@@ -1,7 +1,6 @@
 package de.alphahelix.uhc.commands;
 
-import de.alphahelix.alphalibary.command.SimpleCommand;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.command.SimpleCommand;
 import de.alphahelix.uhc.instances.UHCRank;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.command.CommandSender;
@@ -11,10 +10,10 @@ import java.util.List;
 /**
  * Created by AlphaHelixDev.
  */
-public class RanksCommand extends SimpleCommand<UHC> {
+public class RanksCommand extends SimpleCommand {
 
-    public RanksCommand(UHC plugin) {
-        super(plugin, "ranks", "See all ranks!", "rank");
+    public RanksCommand() {
+        super("ranks", "See all ranks!", "rank");
     }
 
     @Override
@@ -30,12 +29,12 @@ public class RanksCommand extends SimpleCommand<UHC> {
 
     private String filterEachRank() {
         String ranks = "";
-        for(UHCRank rank : UHCRank.getRanks()) {
+        for (UHCRank rank : UHCRank.getRanks()) {
             ranks = ranks + "\n"
-                        + "  " + rank.getPrefix() + "\n"
-                        + "    " + UHCFileRegister.getStatsFile().getColorString("Kills").replace("[kills]", Long.toString(rank.getMinKills())) + "\n"
-                        + "    " + UHCFileRegister.getStatsFile().getColorString("Wins").replace("[wins]", Long.toString(rank.getMinWins())) + "\n"
-                        + "    " + UHCFileRegister.getStatsFile().getColorString("Points").replace("[points]", Long.toString(rank.getMinPoints()));
+                    + "  " + rank.getPrefix() + "\n"
+                    + "    " + UHCFileRegister.getStatsFile().getColorString("Kills").replace("[kills]", Long.toString(rank.getMinKills())) + "\n"
+                    + "    " + UHCFileRegister.getStatsFile().getColorString("Wins").replace("[wins]", Long.toString(rank.getMinWins())) + "\n"
+                    + "    " + UHCFileRegister.getStatsFile().getColorString("Points").replace("[points]", Long.toString(rank.getMinPoints()));
         }
         return ranks;
     }

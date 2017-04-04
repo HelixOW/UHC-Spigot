@@ -1,14 +1,13 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphaapi.item.ItemBuilder;
 import org.bukkit.Material;
 
-public class SpectatorFile extends SimpleFile<UHC> {
+public class SpectatorFile extends SimpleFile {
 
-    public SpectatorFile(UHC uhc) {
-        super("spectator.uhc", uhc);
+    public SpectatorFile() {
+        super("spectator.uhc");
     }
 
     @Override

@@ -1,20 +1,21 @@
 package de.alphahelix.uhc.commands;
 
-import de.alphahelix.alphalibary.command.SimpleCommand;
-import de.alphahelix.alphalibary.uuid.UUIDFetcher;
+import de.alphahelix.alphaapi.command.SimpleCommand;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.StatsUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class StatsCommand extends SimpleCommand<UHC> {
+public class StatsCommand extends SimpleCommand {
 
-    public StatsCommand(UHC plugin) {
-        super(plugin, "stats", "Check your or others stats", "records");
+    public StatsCommand() {
+        super("stats", "Check your or others stats", "records");
     }
 
     @Override
@@ -22,18 +23,18 @@ public class StatsCommand extends SimpleCommand<UHC> {
         if (!(cs instanceof Player)) return true;
 
         if (args.length == 0) {
-            UHCRegister.getStatsUtil().sendStats((Player) cs, (Player) cs);
+            StatsUtil.sendStats((Player) cs, UUIDFetcher.getUUID((OfflinePlayer) cs));
             return true;
         }
         if (args.length == 1) {
             if (Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(args[0])) == null) {
-                cs.sendMessage(getPlugin().getPrefix() + UHCFileRegister.getStatsFile().getNoPlayerMessage());
+                cs.sendMessage(UHC.getPrefix() + UHCFileRegister.getStatsFile().getNoPlayerMessage());
                 return true;
             }
-            UHCRegister.getStatsUtil().sendStats((Player) cs, Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(args[0])));
+            StatsUtil.sendStats((Player) cs, UUIDFetcher.getUUID(args[0]));
             return true;
         } else {
-            cs.sendMessage(getPlugin().getPrefix() + UHCFileRegister.getStatsFile().getErrorMessage());
+            cs.sendMessage(UHC.getPrefix() + UHCFileRegister.getStatsFile().getErrorMessage());
         }
 
         return true;

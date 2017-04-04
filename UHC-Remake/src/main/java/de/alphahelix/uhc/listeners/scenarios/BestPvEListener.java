@@ -1,10 +1,11 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -16,18 +17,14 @@ public class BestPvEListener extends SimpleListener {
 
     private ArrayList<String> best = new ArrayList<>();
 
-    public BestPvEListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.BEST_PVE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BEST_PVE))
             return;
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             best.add(p.getName());
         }
-        UHCRegister.getBestPvETimer().startBestTimer(best);
+        UHCRegister.getBestPveTimer().startBestTimer(best);
     }
 
     @EventHandler
@@ -36,7 +33,7 @@ public class BestPvEListener extends SimpleListener {
             return;
         if (!(e.getEntity() instanceof Player))
             return;
-        if (!scenarioCheck(Scenarios.BEST_PVE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BEST_PVE))
             return;
 
         Player p = (Player) e.getEntity();
@@ -47,7 +44,7 @@ public class BestPvEListener extends SimpleListener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        if (!scenarioCheck(Scenarios.BEST_PVE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BEST_PVE))
             return;
         if (e.getEntity().getKiller() == null)
             return;

@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.event.EventHandler;
@@ -14,15 +13,11 @@ public class EnderDanceListener extends SimpleListener {
 
     private ArrayList<String> alreadyHealed = new ArrayList<>();
 
-    public EnderDanceListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.ENDER_DANCE))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.ENDER_DANCE))
             return;
 
         if (e.getBlockPlaced().getType().equals(Material.JUKEBOX)) {

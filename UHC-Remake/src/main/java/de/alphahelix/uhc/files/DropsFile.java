@@ -1,7 +1,6 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class DropsFile extends SimpleFile<UHC> {
+public class DropsFile extends SimpleFile {
 
-    public DropsFile(UHC uhc) {
-        super("drops.uhc", uhc);
+    public DropsFile() {
+        super("drops.uhc");
     }
 
     @Override

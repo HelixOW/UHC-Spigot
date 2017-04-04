@@ -1,12 +1,12 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,15 +21,11 @@ public class BackPackListener extends SimpleListener {
     // Player -> BackPack
     private HashMap<String, Inventory> backpacks = new HashMap<>();
 
-    public BackPackListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.BACKPACKS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BACKPACKS))
             return;
         if (!e.getAction().name().contains("RIGHT"))
             return;
@@ -61,10 +57,10 @@ public class BackPackListener extends SimpleListener {
 
     @EventHandler
     public void onStart(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.BACKPACKS))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.BACKPACKS))
             return;
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             p.getInventory().addItem(new ItemBuilder(Material.TRAPPED_CHEST).setName(p.getName()).build());
         }
     }

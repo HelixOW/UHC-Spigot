@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -15,15 +14,11 @@ public class SelectOresListener extends SimpleListener {
     private HashMap<String, Integer> g = new HashMap<>();
     private HashMap<String, Integer> i = new HashMap<>();
 
-    public SelectOresListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.RISKY_RETRIEVAL))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.RISKY_RETRIEVAL))
             return;
 
         if (e.getBlock().getType().equals(Material.GOLD_ORE)) {

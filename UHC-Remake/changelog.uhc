@@ -3,6 +3,10 @@ Version 2.9:
     + mysql improvements
     + bug fixes
     + git repo now has every class
+    + pregen is now default false
+    + Kings of the Sky Scenario is now playable
+    + general code improvements / code cleanup
+    - custom Arenas
 
 Version 2.8.1:
     + important bugfix!

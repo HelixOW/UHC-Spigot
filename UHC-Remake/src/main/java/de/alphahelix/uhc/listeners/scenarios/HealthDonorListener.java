@@ -1,11 +1,11 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphalibary.utils.MinecraftVersion;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.MinecraftVersion;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,16 +14,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class HealthDonorListener extends SimpleListener {
 
-    public HealthDonorListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.HEALTH_DONOR))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.HEALTH_DONOR))
             return;
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             if (MinecraftVersion.getServer() != MinecraftVersion.EIGHT) {
                 p.getInventory().addItem(new ItemStack(Material.getMaterial("END_ROD")));
             } else {
@@ -36,7 +32,7 @@ public class HealthDonorListener extends SimpleListener {
     public void onClick(PlayerInteractAtEntityEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.HEALTH_DONOR))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.HEALTH_DONOR))
             return;
         if (!(e.getRightClicked() instanceof Player))
             return;

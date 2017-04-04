@@ -1,21 +1,18 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphaapi.item.ItemBuilder;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-public class ConfirmInventory extends Util {
+public class ConfirmInventory {
 
     private Inventory i;
 
-    public ConfirmInventory(UHC uhc) {
-        super(uhc);
+    public ConfirmInventory() {
         setInventory(Bukkit.createInventory(null, 27, UHCFileRegister.getConfirmFile().getInventoryName()));
     }
 

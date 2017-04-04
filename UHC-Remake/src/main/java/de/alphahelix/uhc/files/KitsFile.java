@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphalibary.file.SimpleFile;
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphaapi.item.ItemBuilder;
 import de.alphahelix.uhc.instances.Kit;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,12 +12,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 
-public class KitsFile extends SimpleFile<UHC> {
+public class KitsFile extends SimpleFile {
 
     private HashMap<String, Kit> kits = new HashMap<>();
 
-    public KitsFile(UHC uhc) {
-        super("kits.uhc", uhc);
+    public KitsFile() {
+        super("kits.uhc");
     }
 
     @Override
@@ -78,7 +77,7 @@ public class KitsFile extends SimpleFile<UHC> {
     public ArrayList<Kit> getKits() {
         ArrayList<Kit> kits = new ArrayList<>();
 
-        if(!isConfigurationSection("Custom Kits")) return kits;
+        if (!isConfigurationSection("Custom Kits")) return kits;
 
         for (String names : getConfigurationSection("Custom Kits").getKeys(false)) {
             kits.add(getKit(names));
@@ -88,6 +87,10 @@ public class KitsFile extends SimpleFile<UHC> {
 
     public void setPlayedKit(Player p, Kit k) {
         kits.put(p.getName(), k);
+    }
+
+    public void removePlayedKit(Player p) {
+        kits.remove(p.getName());
     }
 
     public Kit getPlayedKit(Player p) {

@@ -1,0 +1,174 @@
+JFDML JFormDesigner: "6.0.0.0.84" Java: "1.8.0_112-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"iconImage": new com.jformdesigner.model.SwingIcon( 1, "C:\\Code\\icon.png" )
+			"title": "Achievements"
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnItem"
+				"text": "Item"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "alphaButton1ActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 25
+				"y": 25
+				"width": 710
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblSpacer"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 760
+				"height": 5
+				"x": 5
+				"y": 400
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblGUIName"
+				"text": "GUI name"
+				"horizontalAlignment": 0
+				"font": &Font0 new java.awt.Font( "Segoe UI", 0, 18 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 25
+				"y": 75
+				"width": 120
+				"height": 35
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtFldGUIName"
+				"horizontalAlignment": 0
+				"font": &Font1 new java.awt.Font( "Segoe UI", 0, 18 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 165
+				"y": 75
+				"width": 570
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblGUIName2"
+				"text": "Achieved? True"
+				"horizontalAlignment": 0
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 120
+				"height": 35
+				"x": 25
+				"y": 125
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtFldAchievedYes"
+				"horizontalAlignment": 0
+				"font": #Font1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 570
+				"height": 33
+				"x": 165
+				"y": 125
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtFldAchievedFalse"
+				"horizontalAlignment": 0
+				"font": #Font1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 570
+				"height": 33
+				"x": 165
+				"y": 165
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblGUIName3"
+				"text": "Achieved? False"
+				"horizontalAlignment": 0
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 35
+				"x": 25
+				"y": 165
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "tblAchievements"
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
+						add( new java.util.Vector {
+							add( "Slayer" )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( "Winner" )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( "Dragon Slayer" )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( "OMG Diamonds" )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( "Burn Baby Burn" )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( "Highway to Hell" )
+							add( null )
+							add( null )
+							add( null )
+						} )
+					}, new java.util.Vector {
+						add( "Config name" )
+						add( "Name" )
+						add( "Icon (Type)" )
+						add( "Description" )
+					}, new java.util.Vector {
+						add( class java.lang.String )
+						add( null )
+						add( class java.lang.String )
+						add( class java.lang.String )
+					}, new java.util.Vector {
+						add( false )
+						add( null )
+						add( null )
+						add( null )
+					}, new java.util.Vector {
+						add( new com.jformdesigner.model.SwingTableColumn( null, 100, 0, 0, false ) )
+						add( new com.jformdesigner.model.SwingTableColumn( null, 120, 0, 0, false ) )
+						add( new com.jformdesigner.model.SwingTableColumn( null, 120, 0, 0, false ) )
+						add( new com.jformdesigner.model.SwingTableColumn( null, 280, 0, 0, false ) )
+					} )
+					"font": new java.awt.Font( "Segoe UI", 0, 16 )
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 20
+				"y": 215
+				"height": 120
+				"width": 720
+			} )
+			add( new FormComponent( "de.alphahelix.uhcconfigeditor.AlphaButton" ) {
+				name: "btnConfirm"
+				"text": "Confirm"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnConfirmActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 720
+				"height": 37
+				"x": 20
+				"y": 350
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 125, 120 )
+			"size": new java.awt.Dimension( 619, 350 )
+		} )
+	}
+}

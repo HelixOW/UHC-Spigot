@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -11,14 +10,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class TimberListener extends SimpleListener {
 
-    public TimberListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.isCancelled()) return;
-        if (!scenarioCheck(Scenarios.TIMBER)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.TIMBER)) return;
 
         Block b = e.getBlock();
 

@@ -2,14 +2,15 @@ package de.alphahelix.uhc;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import de.alphahelix.alphalibary.fakeapi.FakeAPI;
-import de.alphahelix.alphalibary.mysql.Database;
-import de.alphahelix.alphalibary.mysql.MySQLAPI;
+import de.alphahelix.alphaapi.AlphaAPI;
+import de.alphahelix.alphaapi.mysql.MySQLAPI;
+import de.alphahelix.alphaapi.mysql.MySQLDatabase;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -25,15 +26,16 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UHC extends FakeAPI implements PluginMessageListener {
+public class UHC extends AlphaAPI implements PluginMessageListener {
 
+    private static MySQLDatabase database;
     private static UHC instance;
 
-    private String consolePrefix, lobbyServer, restartMessage, trackerName;
-    private boolean mySQLMode, debug, bunggeMode, soup, scenarios, scenarioVoting, statusMOTD, kits;
-    private boolean teams, tracker, lobbyAsSchematic, crates, lobby, pregen;
-    private int spawnradius;
-    private Logger log;
+    private static String consolePrefix, prefix, lobbyServer, restartMessage, trackerName;
+    private static boolean mySQLMode, debug, bunggeMode, scenarios, scenarioVoting, statusMOTD, kits;
+    private static boolean teams, tracker, lobbyAsSchematic, crates, lobby, pregen;
+    private static int spawnradius;
+    private static Logger log;
 
     public static UHC getInstance() {
         return instance;
@@ -43,8 +45,188 @@ public class UHC extends FakeAPI implements PluginMessageListener {
         instance = plugin;
     }
 
+    public static MySQLDatabase getDB() {
+        return database;
+    }
+
+    public static Location getRandomLocation(Location player, int Xminimum, int Xmaximum, int Zminimum, int Zmaximum) {
+        try {
+            World world = player.getWorld();
+            int randomZ = Zminimum + ((int) (Math.random() * ((Zmaximum - Zminimum) + 1)));
+            double x = Double.parseDouble(
+                    Integer.toString(Xminimum + ((int) (Math.random() * ((Xmaximum - Xminimum) + 1))))) + 0.5d;
+            double z = Double.parseDouble(Integer.toString(randomZ)) + 0.5d;
+            player.setY(200);
+            return new Location(world, x, player.getY(), z);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getConsolePrefix() {
+        return consolePrefix;
+    }
+
+    public static void setConsolePrefix(String consolePrefix) {
+        UHC.consolePrefix = consolePrefix;
+    }
+
+    public static String getPrefix() {
+        return prefix;
+    }
+
+    public static void setPrefix(String prefix) {
+        UHC.prefix = prefix;
+    }
+
+    public static String getLobbyServer() {
+        return lobbyServer;
+    }
+
+    public static void setLobbyServer(String lobbyServer) {
+        UHC.lobbyServer = lobbyServer;
+    }
+
+    public static String getRestartMessage() {
+        return restartMessage;
+    }
+
+    public static void setRestartMessage(String restartMessage) {
+        UHC.restartMessage = restartMessage;
+    }
+
+    public static String getTrackerName() {
+        return trackerName;
+    }
+
+    public static void setTrackerName(String trackerName) {
+        UHC.trackerName = trackerName;
+    }
+
+    public static boolean isMySQLMode() {
+        return mySQLMode;
+    }
+
+    public static void setMySQLMode(boolean mySQLMode) {
+        UHC.mySQLMode = mySQLMode;
+    }
+
+    public static boolean isDebug() {
+        return debug;
+    }
+
+    public static void setDebug(boolean debug) {
+        UHC.debug = debug;
+    }
+
+    public static boolean isBunggeMode() {
+        return bunggeMode;
+    }
+
+    public static void setBunggeMode(boolean bunggeMode) {
+        UHC.bunggeMode = bunggeMode;
+    }
+
+    public static boolean isScenarios() {
+        return scenarios;
+    }
+
+    public static void setScenarios(boolean scenarios) {
+        UHC.scenarios = scenarios;
+    }
+
+    public static boolean isScenarioVoting() {
+        return scenarioVoting;
+    }
+
+    public static void setScenarioVoting(boolean scenarioVoting) {
+        UHC.scenarioVoting = scenarioVoting;
+    }
+
+    public static boolean isStatusMOTD() {
+        return statusMOTD;
+    }
+
+    public static void setStatusMOTD(boolean statusMOTD) {
+        UHC.statusMOTD = statusMOTD;
+    }
+
+    public static boolean isKits() {
+        return kits;
+    }
+
+    public static void setKits(boolean kits) {
+        UHC.kits = kits;
+    }
+
+    public static boolean isTeams() {
+        return teams;
+    }
+
+    public static void setTeams(boolean teams) {
+        UHC.teams = teams;
+    }
+
+    public static boolean isTracker() {
+        return tracker;
+    }
+
+    public static void setTracker(boolean tracker) {
+        UHC.tracker = tracker;
+    }
+
+    public static boolean isLobbyAsSchematic() {
+        return lobbyAsSchematic;
+    }
+
+    public static void setLobbyAsSchematic(boolean lobbyAsSchematic) {
+        UHC.lobbyAsSchematic = lobbyAsSchematic;
+    }
+
+    public static boolean isCrates() {
+        return crates;
+    }
+
+    public static void setCrates(boolean crates) {
+        UHC.crates = crates;
+    }
+
+    public static boolean isLobby() {
+        return lobby;
+    }
+
+    public static void setLobby(boolean lobby) {
+        UHC.lobby = lobby;
+    }
+
+    public static boolean isPregen() {
+        return pregen;
+    }
+
+    public static void setPregen(boolean pregen) {
+        UHC.pregen = pregen;
+    }
+
+    public static int getSpawnradius() {
+        return spawnradius;
+    }
+
+    public static void setSpawnradius(int spawnradius) {
+        UHC.spawnradius = spawnradius;
+    }
+
+    public static Logger getLog() {
+        return log;
+    }
+
+    public static void setLog(Logger log) {
+        UHC.log = log;
+    }
+
     @Override
     public void onLoad() {
+        super.onLoad();
         for (World world : Bukkit.getWorlds())
             world.setAutoSave(false);
     }
@@ -52,38 +234,25 @@ public class UHC extends FakeAPI implements PluginMessageListener {
     @Override
     public void onEnable() {
         super.onEnable();
+
         this.setInstance(this);
-        this.setLog();
-        this.setConsolePrefix("[" + this.getName() + "] ");
-        this.setRestartMessage("");
+        setLog(Bukkit.getLogger());
+        setConsolePrefix("[" + this.getName() + "] ");
 
         UHCRegister.registerAll();
 
         GState.setCurrentState(GState.END);
 
         if (isMySQLMode()) {
-            try {
-                MySQLAPI.initMySQLAPI(getPluginInstance());
-                Database.exCreateTableQry(
-                        "UHC",
-                        Database.createColumn("Player"),
-                        Database.createColumn("uuid"),
-                        Database.createColumn("Games"),
-                        Database.createColumn("Kills"),
-                        Database.createColumn("Deaths"),
-                        Database.createColumn("Coins"),
-                        Database.createColumn("Points"),
-                        Database.createColumn("Wins"),
-                        Database.createColumn("Kits"),
-                        Database.createColumn("Achievements"),
-                        Database.createColumn("Crates"));
-            } catch (Exception e) {
-                if (isDebug())
-                    log.log(Level.WARNING,
-                            getConsolePrefix() + "Wasn't able to connect to a database. Using file backend now.");
-                e.printStackTrace();
-                setMySQLMode(false);
+            for (MySQLAPI api : MySQLAPI.getMysqlDBs()) {
+                api.initMySQLAPI();
+                database = new MySQLDatabase("UHC", api.getDatabase());
             }
+
+            database.create(
+                    database.createColumn("Player", MySQLAPI.MySQLDataType.VARCHAR, 50),
+                    database.createColumn("UUID", MySQLAPI.MySQLDataType.VARCHAR, 50),
+                    database.createColumn("Infos", MySQLAPI.MySQLDataType.TEXT, 5000000));
         }
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(getInstance(), "BungeeCord");
@@ -109,16 +278,17 @@ public class UHC extends FakeAPI implements PluginMessageListener {
 
         registerCrafting();
 
-        UHCRegister.getRankingUtil().updateArmorStands();
-
         log.log(Level.INFO, getConsolePrefix() + "UHC by AlphaHelix successfully loaded and enabled.");
     }
 
     @Override
     public void onDisable() {
+        super.onDisable();
         if (isMySQLMode()) {
             try {
-                MySQLAPI.closeMySQLConnection();
+                for (MySQLAPI api : MySQLAPI.getMysqlDBs()) {
+                    api.closeMySQLConnection();
+                }
             } catch (SQLException e) {
                 log.log(Level.WARNING, getConsolePrefix() + "The MySQL connection wasn't closed correctly.",
                         e.getMessage());
@@ -155,170 +325,10 @@ public class UHC extends FakeAPI implements PluginMessageListener {
                     Bukkit.addRecipe(sr);
                 }
             }
-        }.runTaskLater(getInstance(), 80);
+        }.runTaskLaterAsynchronously(getInstance(), 2);
     }
 
     @Override
     public void onPluginMessageReceived(String arg0, Player arg1, byte[] arg2) {
-    }
-
-    public boolean isMySQLMode() {
-        return mySQLMode;
-    }
-
-    public void setMySQLMode(boolean mySQL) {
-        mySQLMode = mySQL;
-    }
-
-    public boolean isDebug() {
-        return debug;
-    }
-
-    public void setDebug(boolean debug) {
-        this.debug = debug;
-    }
-
-    public Logger getLog() {
-        return log;
-    }
-
-    private void setLog() {
-        this.log = Bukkit.getLogger();
-    }
-
-    public boolean isBunggeMode() {
-        return bunggeMode;
-    }
-
-    public void setBunggeMode(boolean bunggeMode) {
-        this.bunggeMode = bunggeMode;
-    }
-
-    public String getLobbyServer() {
-        return lobbyServer;
-    }
-
-    public void setLobbyServer(String lobbyServer) {
-        this.lobbyServer = lobbyServer;
-    }
-
-    public String getRestartMessage() {
-        return restartMessage;
-    }
-
-    public void setRestartMessage(String restartMessage) {
-        this.restartMessage = restartMessage;
-    }
-
-    public String getConsolePrefix() {
-        return consolePrefix;
-    }
-
-    private void setConsolePrefix(String consolePrefix) {
-        this.consolePrefix = consolePrefix;
-    }
-
-    public boolean isSoup() {
-        return soup;
-    }
-
-    public void setSoup(boolean soup) {
-        this.soup = soup;
-    }
-
-    public boolean isScenarios() {
-        return scenarios;
-    }
-
-    public void setScenarios(boolean scenarios) {
-        this.scenarios = scenarios;
-    }
-
-    public boolean isStatusMOTD() {
-        return statusMOTD;
-    }
-
-    public void setStatusMOTD(boolean statusMOTD) {
-        this.statusMOTD = statusMOTD;
-    }
-
-    public int getSpawnradius() {
-        return spawnradius;
-    }
-
-    public void setSpawnradius(int spawnradius) {
-        this.spawnradius = spawnradius;
-    }
-
-    public boolean isKits() {
-        return kits;
-    }
-
-    public void setKits(boolean kits) {
-        this.kits = kits;
-    }
-
-    public boolean isTeams() {
-        return teams;
-    }
-
-    public void setTeams(boolean teams) {
-        this.teams = teams;
-    }
-
-    public boolean isTracker() {
-        return tracker;
-    }
-
-    public void setTracker(boolean tracker) {
-        this.tracker = tracker;
-    }
-
-    public String getTrackerName() {
-        return trackerName;
-    }
-
-    public void setTrackerName(String trackerName) {
-        this.trackerName = trackerName;
-    }
-
-    public boolean isLobbyAsSchematic() {
-        return lobbyAsSchematic;
-    }
-
-    public void setLobbyAsSchematic(boolean lobbyAsSchematic) {
-        this.lobbyAsSchematic = lobbyAsSchematic;
-    }
-
-    public boolean isCrates() {
-        return crates;
-    }
-
-    public void setCrates(boolean crates) {
-        this.crates = crates;
-    }
-
-    public boolean isLobby() {
-        return lobby;
-    }
-
-    public void setLobby(boolean lobby) {
-        this.lobby = lobby;
-    }
-
-    public boolean isPregen() {
-        return pregen;
-    }
-
-    public void setPregen(boolean pregen) {
-        this.pregen = pregen;
-    }
-
-    public boolean isScenarioVoting() {
-        return scenarioVoting;
-    }
-
-    public void setScenarioVoting(boolean scenarioVoting) {
-        this.scenarioVoting = scenarioVoting;
     }
 }

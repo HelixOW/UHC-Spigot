@@ -1,0 +1,4 @@
+name: UHCConfigEditor
+version: ${project.version}
+main: de.alphahelix.uhcconfigeditor.UHCConfigEditor
+authors: [AlphaHelix]

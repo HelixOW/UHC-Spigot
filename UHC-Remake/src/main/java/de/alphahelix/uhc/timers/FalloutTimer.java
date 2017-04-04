@@ -1,24 +1,18 @@
 package de.alphahelix.uhc.timers;
 
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.UHC;
-import de.alphahelix.uhc.instances.Util;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-public class FalloutTimer extends Util {
+public class FalloutTimer {
 
-    private static BukkitTask cooldown, damage;
-
-    public FalloutTimer(UHC uhc) {
-        super(uhc);
-    }
+    private static BukkitTask damage;
 
     public void stopTimer() {
-        if (cooldown != null)
-            cooldown.cancel();
-        cooldown = null;
         if (damage != null)
             damage.cancel();
         damage = null;
@@ -28,36 +22,21 @@ public class FalloutTimer extends Util {
         return damage != null;
     }
 
-    public void startCooldown() {
-        if (cooldown != null) {
-            if (Bukkit.getScheduler().isCurrentlyRunning(cooldown.getTaskId()))
-                return;
-            return;
-        }
-
-        cooldown = new BukkitRunnable() {
-            public void run() {
-                startDamageTimer();
-            }
-        }.runTaskLaterAsynchronously(getUhc(), (20 * 60) * 45);
-    }
-
-    private void startDamageTimer() {
-        if (damage != null) {
+    public void startDamageTimer() {
+        if (isRunning()) {
             if (Bukkit.getScheduler().isCurrentlyRunning(damage.getTaskId()))
                 return;
             return;
         }
+
         damage = new BukkitRunnable() {
             public void run() {
-                for (String pName : UHCRegister.getPlayerUtil().getSurvivors()) {
-                    if (Bukkit.getPlayer(pName) == null)
-                        continue;
-                    if (Bukkit.getPlayer(pName).getLocation().getBlockY() > 60)
-                        Bukkit.getPlayer(pName).damage(1.0);
+                for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
+                    if (p.getLocation().getBlockY() > 60)
+                        p.damage(1.0);
                 }
             }
-        }.runTaskTimer(getUhc(), 0, (20 * 30));
+        }.runTaskTimer(UHC.getInstance(), (20 * 60) * 45, (20 * 30));
     }
 
 }

@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
@@ -20,14 +19,10 @@ import java.util.Random;
 
 public class PyrophobiaListener extends SimpleListener {
 
-    public PyrophobiaListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onPlayerBucketFill(PlayerBucketFillEvent e) {
         if (e.isCancelled()) return;
-        if (!scenarioCheck(Scenarios.PYROPHOBIA)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.PYROPHOBIA)) return;
         if (e.getItemStack().getType() == Material.WATER_BUCKET) {
             e.setItemStack(new ItemStack(Material.BUCKET));
             e.setCancelled(true);
@@ -39,7 +34,7 @@ public class PyrophobiaListener extends SimpleListener {
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent e) {
         if (e.isCancelled()) return;
-        if (!scenarioCheck(Scenarios.PYROPHOBIA)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.PYROPHOBIA)) return;
         IgniteCause cause = e.getCause();
 
         if (cause == IgniteCause.LAVA)
@@ -51,14 +46,14 @@ public class PyrophobiaListener extends SimpleListener {
     @EventHandler
     public void CreatureSpawnEvent(CreatureSpawnEvent e) {
         if (e.isCancelled()) return;
-        if (!scenarioCheck(Scenarios.PYROPHOBIA)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.PYROPHOBIA)) return;
         e.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 1726272000, 2));
     }
 
     @EventHandler
     public void LeavesDecayEvent(LeavesDecayEvent e) {
         if (e.isCancelled()) return;
-        if (!scenarioCheck(Scenarios.PYROPHOBIA)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.PYROPHOBIA)) return;
         Random r = new Random();
 
         if (r.nextInt(100) < 2) {

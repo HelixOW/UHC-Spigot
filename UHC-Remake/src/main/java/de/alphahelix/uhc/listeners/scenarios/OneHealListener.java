@@ -1,10 +1,10 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.utils.Util;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;
-import de.alphahelix.uhc.instances.SimpleListener;
-import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,16 +17,12 @@ public class OneHealListener extends SimpleListener {
 
     private ArrayList<String> healed = new ArrayList<>();
 
-    public OneHealListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onEnd(LobbyEndEvent e) {
-        if (!scenarioCheck(Scenarios.ONE_HEAL))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.ONE_HEAL))
             return;
 
-        for (Player p : makeArray(UHCRegister.getPlayerUtil().getSurvivors())) {
+        for (Player p : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
             p.getInventory().addItem(new ItemStack(Material.GOLD_HOE));
         }
     }
@@ -35,7 +31,7 @@ public class OneHealListener extends SimpleListener {
     public void onInteract(PlayerInteractEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.ONE_HEAL))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.ONE_HEAL))
             return;
         if (healed.contains(e.getPlayer().getName()))
             return;

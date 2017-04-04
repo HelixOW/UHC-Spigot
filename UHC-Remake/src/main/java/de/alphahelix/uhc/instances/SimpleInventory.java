@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphaapi.item.ItemBuilder;
 import de.alphahelix.uhc.UHC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

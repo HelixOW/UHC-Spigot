@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Material;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
@@ -11,14 +10,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class GoldenFleeceListener extends SimpleListener {
 
-    public GoldenFleeceListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onSpawn(EntitySpawnEvent e) {
         if (e.isCancelled()) return;
-        if (!scenarioCheck(Scenarios.GOLDEN_FLEECE)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.GOLDEN_FLEECE)) return;
 
         if (e.getEntity() instanceof Skeleton) {
             if (Math.random() < 0.4) {

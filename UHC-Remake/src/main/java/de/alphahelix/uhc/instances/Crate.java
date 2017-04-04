@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphalibary.item.ItemBuilder;
-import de.alphahelix.alphalibary.uuid.UUIDFetcher;
+import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -57,9 +57,9 @@ public class Crate implements Serializable {
         if (CRATE_AMOUNTS.containsKey(UUIDFetcher.getUUID(p))) {
             CRATE_AMOUNTS.put(
                     UUIDFetcher.getUUID(p),
-                    CRATE_AMOUNTS.get(UUIDFetcher.getUUID(p)) + c.getRawName() + ";");
+                    CRATE_AMOUNTS.get(UUIDFetcher.getUUID(p)) + c.getRawName() + " ;");
         } else {
-            CRATE_AMOUNTS.put(UUIDFetcher.getUUID(p), c.getRawName() + ";");
+            CRATE_AMOUNTS.put(UUIDFetcher.getUUID(p), c.getRawName() + " ;");
         }
     }
 
@@ -68,7 +68,7 @@ public class Crate implements Serializable {
         if (getCrateCount(c, p) >= 1) {
             CRATE_AMOUNTS.put(
                     UUIDFetcher.getUUID(p),
-                    CRATE_AMOUNTS.get(UUIDFetcher.getUUID(p)).replaceFirst(c.getRawName() + ";", ""));
+                    CRATE_AMOUNTS.get(UUIDFetcher.getUUID(p)).replaceFirst(c.getRawName() + " ;", ""));
         } else {
             CRATE_AMOUNTS.remove(UUIDFetcher.getUUID(p));
         }
@@ -80,7 +80,7 @@ public class Crate implements Serializable {
         }
         long amount = 0;
 
-        for (String crates : CRATE_AMOUNTS.get(UUIDFetcher.getUUID(p)).split(";")) {
+        for (String crates : CRATE_AMOUNTS.get(UUIDFetcher.getUUID(p)).split(" ;")) {
             if (getCrateByRawName(crates) == null) continue;
             if (!getCrateByRawName(crates).equals(crate)) continue;
             amount += 1;

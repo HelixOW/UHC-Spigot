@@ -1,8 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -13,15 +12,11 @@ public class NoGoingBackListener extends SimpleListener {
 
     ArrayList<String> went = new ArrayList<>();
 
-    public NoGoingBackListener(UHC uhc) {
-        super(uhc);
-    }
-
     @EventHandler
     public void onPortal(PlayerPortalEvent e) {
         if (e.isCancelled())
             return;
-        if (!scenarioCheck(Scenarios.NO_GOING_BACK))
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.NO_GOING_BACK))
             return;
 
         if (e.getCause().equals(TeleportCause.NETHER_PORTAL)) {

@@ -18,6 +18,15 @@ public enum Scenarios {
         return toCompare == played;
     }
 
+    public static boolean isPlayedAndEnabled(Scenarios toCompare) {
+        if (UHCFileRegister.getScenarioFile().isEnabled(Scenarios.getRawScenarioName(toCompare))) {
+            if (Scenarios.isScenario(toCompare)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static Scenarios getScenario() {
         return played;
     }

@@ -1,24 +1,16 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphaapi.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
-import de.alphahelix.uhc.instances.SimpleListener;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-/**
- * Created by AlphaHelixDev.
- */
 public class WebCageListener extends SimpleListener {
-
-    public WebCageListener(UHC uhc) {
-        super(uhc);
-    }
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        if (!scenarioCheck(Scenarios.WEB_CAGE)) return;
+        if (!Scenarios.isPlayedAndEnabled(Scenarios.WEB_CAGE)) return;
 
         Location m = e.getEntity().getLocation();
 

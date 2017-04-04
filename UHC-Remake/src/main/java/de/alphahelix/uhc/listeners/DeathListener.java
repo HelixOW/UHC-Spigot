@@ -1,14 +1,17 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphalibary.nms.SimpleTitle;
-import de.alphahelix.alphalibary.uuid.UUIDFetcher;
+import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphaapi.nms.SimpleTitle;
+import de.alphahelix.alphaapi.utils.Util;
+import de.alphahelix.alphaapi.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.instances.Crate;
-import de.alphahelix.uhc.instances.SimpleListener;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
+import de.alphahelix.uhc.util.PlayerUtil;
+import de.alphahelix.uhc.util.StatsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -22,14 +25,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class DeathListener extends SimpleListener {
 
     private List<ItemStack> dropList = new ArrayList<>();
-
-    public DeathListener(UHC uhc) {
-        super(uhc);
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(final EntityDeathEvent e) {
@@ -40,10 +40,10 @@ public class DeathListener extends SimpleListener {
 
         if (e.getEntity() instanceof Villager && e.getEntity().isCustomNameVisible()) {
             e.getDrops().clear();
-            UHCRegister.getPlayerUtil().removeSurvivor(e.getEntity().getCustomName());
-            UHCRegister.getPlayerUtil().addDead(e.getEntity().getCustomName());
+            PlayerUtil.removeSurvivor(e.getEntity().getCustomName());
+            PlayerUtil.addDead(e.getEntity().getCustomName());
 
-            for (String other : UHCRegister.getPlayerUtil().getAll()) {
+            for (String other : PlayerUtil.getAll()) {
                 if (Bukkit.getPlayer(other) == null)
                     return;
                 Bukkit.getPlayer(other)
@@ -69,31 +69,34 @@ public class DeathListener extends SimpleListener {
             }
 
             if (e.getEntity().getKiller() != null && e.getEntity().getKiller() instanceof Player) {
-                UHCRegister.getStatsUtil().addKill(e.getEntity().getKiller());
-                UHCRegister.getStatsUtil().addPoints(e.getEntity().getKiller(),
+                UUID id = UUIDFetcher.getUUID(e.getEntity().getKiller());
+                StatsUtil.addKill(id);
+                StatsUtil.addPoints(id,
                         UHCFileRegister.getOptionsFile().getPointsOnKill());
-                UHCRegister.getStatsUtil().addCoins(e.getEntity().getKiller(),
+                StatsUtil.addCoins(id,
                         UHCFileRegister.getOptionsFile().getCoinssOnKill());
 
-                if (getUhc().isCrates()) {
+                if (UHC.isCrates()) {
                     Crate c = UHCFileRegister.getCrateFile().getRandomCrate();
 
                     if (Math.random() <= c.getRarity()) {
-                        UHCRegister.getStatsUtil().addCrate(c, e.getEntity().getKiller());
+                        StatsUtil.addCrate(id, c);
 
                         if (e.getEntity().getKiller().isOnline())
-                            e.getEntity().getKiller().sendMessage(getUhc().getPrefix() + UHCFileRegister.getMessageFile().getCrateDropped(c));
+                            e.getEntity().getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getCrateDropped(c));
                     }
                 }
             }
 
-            UHCRegister.getStatsUtil()
-                    .addDeath(Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())));
-            UHCRegister.getStatsUtil().removePoints(
-                    Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())),
+            StatsUtil.addDeath(
+                    UUIDFetcher.getUUID(e.getEntity().getCustomName()));
+
+            StatsUtil.removePoints(
+                    UUIDFetcher.getUUID(e.getEntity().getCustomName()),
                     UHCFileRegister.getOptionsFile().getPointsOnDeath());
-            UHCRegister.getStatsUtil().addCoins(
-                    Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())),
+
+            StatsUtil.removeCoins(
+                    UUIDFetcher.getUUID(e.getEntity().getCustomName()),
                     UHCFileRegister.getOptionsFile().getCoinsOnDeath());
 
             if (!UHCFileRegister.getOptionsFile().getCommandOnKill().equals(""))
@@ -107,30 +110,30 @@ public class DeathListener extends SimpleListener {
                         .replace("[killer]",
                                 (e.getEntity().getKiller() == null ? "" : e.getEntity().getKiller().getName())));
 
-            if (UHCRegister.getPlayerUtil().getSurvivors().size() <= 1) {
+            if (PlayerUtil.getSurvivors().size() <= 1) {
 
                 GState.setCurrentState(GState.END);
 
-                if (UHCRegister.getPlayerUtil().getSurvivors().size() == 0) {
+                if (PlayerUtil.getSurvivors().size() == 0) {
 
-                    UHCRegister.getRestartTimer().startEndTimer();
+                    UHCRegister.getRestartTimer().startTimer();
                     return;
                 }
 
-                UHCRegister.getGameEndsListener().setWinnerName(UHCRegister.getPlayerUtil().getSurvivors().get(0));
-                for (String pName : UHCRegister.getPlayerUtil().getAll()) {
+                UHCRegister.getGameEndsListener().setWinnerName(PlayerUtil.getSurvivors().get(0));
+                for (String pName : PlayerUtil.getAll()) {
                     Bukkit.getPlayer(pName)
-                            .sendMessage(getUhc().getPrefix()
+                            .sendMessage(UHC.getPrefix()
                                     + UHCFileRegister.getMessageFile().getWin(Bukkit.getPlayer(UHCRegister.getGameEndsListener().getWinnerName())));
 
                     SimpleTitle.sendTitle(Bukkit.getPlayer(pName), " ",
-                            getUhc().getPrefix()
+                            UHC.getPrefix()
                                     + UHCFileRegister.getMessageFile().getWin(Bukkit.getPlayer(UHCRegister.getGameEndsListener().getWinnerName())),
                             2, 2, 2);
                 }
 
-                UHCRegister.getStatsUtil().addPoints(
-                        Bukkit.getPlayer(UHCRegister.getGameEndsListener().getWinnerName()),
+                StatsUtil.addPoints(
+                        UUIDFetcher.getUUID(UHCRegister.getGameEndsListener().getWinnerName()),
                         UHCFileRegister.getOptionsFile().getPointsOnWin());
 
                 if (!UHCFileRegister.getOptionsFile().getCommandOnWin().equals(""))
@@ -138,12 +141,12 @@ public class DeathListener extends SimpleListener {
                             UHCFileRegister.getOptionsFile().getCommandOnWin().replace("[player]",
                                     UHCRegister.getGameEndsListener().getWinnerName()));
 
-                UHCRegister.getRestartTimer().startEndTimer();
+                UHCRegister.getRestartTimer().startTimer();
             }
 
         } else {
             if (e.getEntity() instanceof Player) {
-                for (String other : UHCRegister.getPlayerUtil().getAll()) {
+                for (String other : PlayerUtil.getAll()) {
                     if (Bukkit.getPlayer(other) == null)
                         return;
                     Bukkit.getPlayer(other)
@@ -221,7 +224,7 @@ public class DeathListener extends SimpleListener {
         // Bald Chicken
 
         if (e.getEntity() instanceof Chicken) {
-            if (scenarioCheck(Scenarios.BALD_CHICKEN)) {
+            if (Scenarios.isPlayedAndEnabled(Scenarios.BALD_CHICKEN)) {
                 ItemStack tr = null;
                 for (ItemStack drop : dropList) {
                     if (drop.getType().equals(Material.FEATHER))
@@ -231,7 +234,7 @@ public class DeathListener extends SimpleListener {
                     dropList.remove(tr);
             }
         } else if (e.getEntity() instanceof Skeleton) {
-            if (scenarioCheck(Scenarios.BALD_CHICKEN)) {
+            if (Scenarios.isPlayedAndEnabled(Scenarios.BALD_CHICKEN)) {
                 ItemStack tr = null;
                 for (ItemStack drop : dropList) {
                     if (drop.getType().equals(Material.ARROW))
@@ -246,7 +249,7 @@ public class DeathListener extends SimpleListener {
         // BareBones
 
         if (e.getEntity() instanceof Villager && e.getEntity().isCustomNameVisible()) {
-            if (scenarioCheck(Scenarios.BAREBONES)) {
+            if (Scenarios.isPlayedAndEnabled(Scenarios.BAREBONES)) {
                 dropList = new ArrayList<>();
 
                 dropList.add(new ItemStack(Material.DIAMOND, 1));
@@ -258,20 +261,20 @@ public class DeathListener extends SimpleListener {
 
         // Beta Zombie
         if (e.getEntity() instanceof Zombie)
-            if (scenarioCheck(Scenarios.BETA_ZOMBIE))
+            if (Scenarios.isPlayedAndEnabled(Scenarios.BETA_ZOMBIE))
                 dropList.add(new ItemStack(Material.FEATHER));
 
         // Bombers
-        if (scenarioCheck(Scenarios.BOMBERS))
+        if (Scenarios.isPlayedAndEnabled(Scenarios.BOMBERS))
             dropList.add(new ItemStack(Material.TNT));
 
         // Golden Fleece
         if (e.getEntity() instanceof Sheep) {
-            if (scenarioCheck(Scenarios.GOLDEN_FLEECE)) {
+            if (Scenarios.isPlayedAndEnabled(Scenarios.GOLDEN_FLEECE)) {
                 if (random < 0.6) {
-                    dropList.add(makeArray(new ItemStack(Material.IRON_INGOT), new ItemStack(Material.GOLD_INGOT),
+                    dropList.add(Util.makeArray(new ItemStack(Material.IRON_INGOT), new ItemStack(Material.GOLD_INGOT),
                             new ItemStack(Material.DIAMOND))[new Random().nextInt(
-                            makeArray(new ItemStack(Material.IRON_INGOT), new ItemStack(Material.GOLD_INGOT),
+                            Util.makeArray(new ItemStack(Material.IRON_INGOT), new ItemStack(Material.GOLD_INGOT),
                                     new ItemStack(Material.DIAMOND)).length)]);
                 }
             }
@@ -279,7 +282,7 @@ public class DeathListener extends SimpleListener {
 
         // Sheep Lovers
         if (e.getEntity() instanceof Sheep) {
-            if (scenarioCheck(Scenarios.SHEEP_LOVERS)) {
+            if (Scenarios.isPlayedAndEnabled(Scenarios.SHEEP_LOVERS)) {
                 dropList.clear();
                 dropList.add(new ItemStack(Material.RAW_BEEF, UHCFileRegister.getDropsFile().getRandomInteger(1, 3)));
             }
