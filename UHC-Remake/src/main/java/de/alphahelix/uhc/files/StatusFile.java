@@ -1,12 +1,12 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 import de.alphahelix.uhc.enums.GState;
 
 public class StatusFile extends SimpleFile {
 
     public StatusFile() {
-        super("status.uhc");
+        super("plugins/UHC-Remake","status.uhc");
     }
 
     @Override

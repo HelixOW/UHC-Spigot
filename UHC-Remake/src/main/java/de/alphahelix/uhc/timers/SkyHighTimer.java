@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.timers;
 
-import de.alphahelix.alphaapi.utils.Util;
+import de.alphahelix.alphalibary.utils.Util;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;

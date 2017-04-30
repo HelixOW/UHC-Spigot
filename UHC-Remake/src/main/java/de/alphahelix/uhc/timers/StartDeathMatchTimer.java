@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.timers;
 
-import de.alphahelix.alphaapi.nms.SimpleActionBar;
-import de.alphahelix.alphaapi.utils.Util;
+import de.alphahelix.alphalibary.nms.SimpleActionBar;
+import de.alphahelix.alphalibary.utils.Util;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Sounds;
@@ -37,8 +37,6 @@ public class StartDeathMatchTimer extends AbstractTimer {
                     }
 
                     if (getSeconds() < 10 && getSeconds() != 0) {
-                        p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
-
                         SimpleActionBar.send(p, UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
                         p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
                     }

@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphaapi.utils.MinecraftVersion;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.utils.MinecraftVersion;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -47,6 +47,8 @@ public class PlayerDummie {
         this.dummie = villager;
         this.inv = p.getInventory();
 
+        System.out.println(villager.getLocation());
+
         if(getDummie(id) != null) dummies.remove(getDummie(id));
 
         dummies.add(this);
@@ -67,6 +69,11 @@ public class PlayerDummie {
         for(ItemStack is : pd.getInv()) {
             if(is != null)
                 pd.getLocation().getWorld().dropItemNaturally(pd.getLocation().clone().add(0, 1, 0), is);
+        }
+
+        for(PotionEffect effect : pd.getDummie().getActivePotionEffects()) {
+            if(effect.getAmplifier() == 255) continue;
+            p.addPotionEffect(effect);
         }
 
         p.setHealth(pd.getDummie().getHealth());

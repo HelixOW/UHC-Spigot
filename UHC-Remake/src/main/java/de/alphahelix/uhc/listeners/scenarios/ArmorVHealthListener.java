@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphalibary.listener.SimpleListener;
 import de.alphahelix.uhc.enums.ArmorBar;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.armor.ArmorEquipEvent;

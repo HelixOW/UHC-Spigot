@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
-import de.alphahelix.alphaapi.utils.Util;
+import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphalibary.utils.Util;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

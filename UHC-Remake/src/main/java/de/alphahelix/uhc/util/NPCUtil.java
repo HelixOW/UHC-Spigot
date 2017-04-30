@@ -1,16 +1,16 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphaapi.fakeapi.FakeAPI;
-import de.alphahelix.alphaapi.fakeapi.instances.FakeArmorstand;
-import de.alphahelix.alphaapi.fakeapi.instances.FakePlayer;
-import de.alphahelix.alphaapi.fakeapi.instances.NoSuchFakeEntityException;
-import de.alphahelix.alphaapi.fakeapi.utils.ArmorstandFakeUtil;
-import de.alphahelix.alphaapi.fakeapi.utils.PlayerFakeUtil;
-import de.alphahelix.alphaapi.item.ItemBuilder;
-import de.alphahelix.alphaapi.item.LeatherItemBuilder;
-import de.alphahelix.alphaapi.item.data.SkullData;
-import de.alphahelix.alphaapi.nms.REnumEquipSlot;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.fakeapi.FakeAPI;
+import de.alphahelix.alphalibary.fakeapi.instances.FakeArmorstand;
+import de.alphahelix.alphalibary.fakeapi.instances.FakePlayer;
+import de.alphahelix.alphalibary.fakeapi.instances.NoSuchFakeEntityException;
+import de.alphahelix.alphalibary.fakeapi.utils.ArmorstandFakeUtil;
+import de.alphahelix.alphalibary.fakeapi.utils.PlayerFakeUtil;
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.item.LeatherItemBuilder;
+import de.alphahelix.alphalibary.item.data.SkullData;
+import de.alphahelix.alphalibary.nms.REnumEquipSlot;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.instances.UHCTeam;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.*;

@@ -2,8 +2,8 @@ package de.alphahelix.uhc.listeners;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import de.alphahelix.alphaapi.listener.SimpleListener;
-import de.alphahelix.alphaapi.utils.LocationUtil;
+import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphalibary.utils.LocationUtil;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.register.UHCFileRegister;
@@ -44,9 +44,7 @@ public class GStateListener extends SimpleListener {
 
     @EventHandler
     public void onPing(ServerListPingEvent e) {
-        if (!UHC.isStatusMOTD())
-            return;
-
+        if (!UHC.isStatusMOTD()) return;
         if (GState.getCurrentState() == null) return;
 
         e.setMotd(UHCFileRegister.getMotdFile().getMOTD(GState.getCurrentState()));
@@ -212,7 +210,6 @@ public class GStateListener extends SimpleListener {
 
     @EventHandler
     public void onEntityHurt(EntityDamageByEntityEvent e) {
-        System.out.println("-> " + GState.getCurrentState());
         if (!(e.getDamager() instanceof Player))
             return;
         if (e.getEntity() instanceof Player) {

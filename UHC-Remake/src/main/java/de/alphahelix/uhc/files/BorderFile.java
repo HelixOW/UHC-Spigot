@@ -1,12 +1,12 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 import org.bukkit.Effect;
 
 public class BorderFile extends SimpleFile {
 
     public BorderFile() {
-        super("border.uhc");
+        super("plugins/UHC-Remake","border.uhc");
     }
 
     @Override

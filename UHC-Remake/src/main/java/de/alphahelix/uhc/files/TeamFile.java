@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class TeamFile extends SimpleFile {
 
     public TeamFile() {
-        super("teams.uhc");
+        super("plugins/UHC-Remake","teams.uhc");
     }
 
     public void addValues() {
@@ -50,7 +50,7 @@ public class TeamFile extends SimpleFile {
     }
 
     public Location getTeamMemberNPC(String teamName, int pos) {
-        return getLocation("Teams." + teamName + ".locations." + pos);
+        return getLocation("Teams." + teamName + ".locations." + pos, true);
     }
 
     public void addTeam(String name, String prefix, int maxPlayer, int data, int slot, boolean colored, Color c,

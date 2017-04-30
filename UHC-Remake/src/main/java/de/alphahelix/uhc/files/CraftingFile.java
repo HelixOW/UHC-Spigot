@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class CraftingFile extends SimpleFile {
 
     public CraftingFile() {
-        super("recipes.uhc");
+        super("plugins/UHC-Remake","recipes.uhc");
     }
 
     @Override

@@ -1,13 +1,13 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import org.bukkit.Material;
 
 public class LobbyFile extends SimpleFile {
 
     public LobbyFile() {
-        super("lobby.uhc");
+        super("plugins/UHC-Remake","lobby.uhc");
     }
 
     @Override

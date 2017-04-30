@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

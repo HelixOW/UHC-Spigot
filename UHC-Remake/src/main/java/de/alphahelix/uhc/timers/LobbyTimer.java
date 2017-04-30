@@ -1,10 +1,11 @@
 package de.alphahelix.uhc.timers;
 
-import de.alphahelix.alphaapi.nms.SimpleActionBar;
-import de.alphahelix.alphaapi.nms.SimpleTitle;
-import de.alphahelix.alphaapi.utils.Cuboid;
-import de.alphahelix.alphaapi.utils.Util;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.nms.SimpleActionBar;
+import de.alphahelix.alphalibary.nms.SimpleTitle;
+import de.alphahelix.alphalibary.utils.Cuboid;
+import de.alphahelix.alphalibary.utils.LocationUtil;
+import de.alphahelix.alphalibary.utils.Util;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;
@@ -115,7 +116,6 @@ public class LobbyTimer extends AbstractTimer {
                     }
 
                     if (getSeconds() < 10 && getSeconds() != 0) {
-                        p.sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
                         SimpleActionBar.send(p, UHC.getPrefix() + UHCFileRegister.getMessageFile().getTimeLeftInfo(getSeconds(), UHCFileRegister.getUnitFile().getSeconds()));
                         p.playSound(p.getLocation(), Sounds.NOTE_BASS.bukkitSound(), 1F, 0F);
                     }
@@ -125,7 +125,7 @@ public class LobbyTimer extends AbstractTimer {
 
                         Location worldSpawn = Bukkit.getWorld("UHC").getSpawnLocation();
                         Location playerSpawn = worldSpawn.getWorld()
-                                .getHighestBlockAt(UHC.getRandomLocation(worldSpawn,
+                                .getHighestBlockAt(LocationUtil.getRandomLocation(worldSpawn,
                                         worldSpawn.getBlockX() - UHC.getSpawnradius(),
                                         worldSpawn.getBlockX() + UHC.getSpawnradius(),
                                         worldSpawn.getBlockZ() - UHC.getSpawnradius(),

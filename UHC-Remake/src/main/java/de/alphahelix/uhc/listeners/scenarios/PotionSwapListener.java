@@ -1,8 +1,8 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
-import de.alphahelix.alphaapi.utils.MinecraftVersion;
-import de.alphahelix.alphaapi.utils.Util;
+import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphalibary.utils.MinecraftVersion;
+import de.alphahelix.alphalibary.utils.Util;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.events.timers.LobbyEndEvent;

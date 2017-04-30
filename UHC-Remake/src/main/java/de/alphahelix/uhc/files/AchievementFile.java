@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import de.alphahelix.uhc.enums.UHCAchievements;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 public class AchievementFile extends SimpleFile {
 
     public AchievementFile() {
-        super("achievements.uhc");
+        super("plugins/UHC-Remake","achievements.uhc");
     }
 
     @Override

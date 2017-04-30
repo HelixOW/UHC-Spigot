@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphalibary.listener.SimpleListener;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;

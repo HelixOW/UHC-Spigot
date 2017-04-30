@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 import de.alphahelix.uhc.UHC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -9,7 +9,7 @@ import org.bukkit.WorldCreator;
 public class LocationsFile extends SimpleFile {
 
     public LocationsFile() {
-        super("locations.uhc");
+        super("plugins/UHC-Remake","locations.uhc");
     }
 
     public void addArmorStand(Location loc, String name) {
@@ -38,7 +38,7 @@ public class LocationsFile extends SimpleFile {
             if (UHC.isLobbyAsSchematic()) {
                 return Bukkit.getWorld("UHC").getSpawnLocation().clone().add(0, 140, 0);
             } else {
-                return getLocation("Lobby");
+                return getLocation("Lobby", true);
             }
         } else if (Bukkit.getWorld("Lobby") == null) {
             Bukkit.createWorld(new WorldCreator("Lobby"));
@@ -53,7 +53,7 @@ public class LocationsFile extends SimpleFile {
 
     public Location getDeathmatch() {
         if (configContains("Deathmatch")) {
-            return getLocation("Deathmatch");
+            return getLocation("Deathmatch", true);
         }
         if (Bukkit.getWorld("UHC") == null)
             Bukkit.createWorld(new WorldCreator("UHC"));
@@ -67,21 +67,21 @@ public class LocationsFile extends SimpleFile {
 
     public Location getStatsNPCLocation() {
         if (configContains("StatsNPC")) {
-            return getLocation("StatsNPC");
+            return getLocation("StatsNPC", true);
         }
         return null;
     }
 
     public Location getRewardNPCLocation() {
         if (configContains("RewardsNPC")) {
-            return getLocation("RewardsNPC");
+            return getLocation("RewardsNPC", true);
         }
         return null;
     }
 
     public Location getRankingArmorstandLocation(int rank) {
         if (configContains("Rankings." + rank)) {
-            return getLocation("Rankings." + rank);
+            return getLocation("Rankings." + rank, true);
         }
         return Bukkit.getWorlds().get(0).getSpawnLocation();
     }

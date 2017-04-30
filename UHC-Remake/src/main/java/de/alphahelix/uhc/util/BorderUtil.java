@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphaapi.nms.SimpleTitle;
+import de.alphahelix.alphalibary.nms.SimpleTitle;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Sounds;
 import de.alphahelix.uhc.register.UHCFileRegister;

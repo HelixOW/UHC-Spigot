@@ -1,13 +1,14 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
-import de.alphahelix.alphaapi.nms.SimpleTitle;
-import de.alphahelix.alphaapi.utils.Util;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphalibary.nms.SimpleTitle;
+import de.alphahelix.alphalibary.utils.Util;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.instances.Crate;
+import de.alphahelix.uhc.instances.PlayerDummie;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
 import de.alphahelix.uhc.util.PlayerUtil;
@@ -43,16 +44,13 @@ public class DeathListener extends SimpleListener {
             PlayerUtil.removeSurvivor(e.getEntity().getCustomName());
             PlayerUtil.addDead(e.getEntity().getCustomName());
 
-            for (String other : PlayerUtil.getAll()) {
-                if (Bukkit.getPlayer(other) == null)
-                    return;
-                Bukkit.getPlayer(other)
-                        .sendMessage(UHCFileRegister.getDeathmessageFile()
-                                .getMessage(e.getEntity().getLastDamageCause().getCause())
-                                .replace("[player]", e.getEntity().getCustomName())
-                                .replace("[entity]", (e.getEntity().getKiller() == null
-                                        ? UHCFileRegister.getDeathmessageFile().getIsAMob()
-                                        : e.getEntity().getKiller().getName())));
+            for (Player other : Util.makePlayerArray(PlayerUtil.getAll())) {
+                other.sendMessage(UHCFileRegister.getDeathmessageFile()
+                        .getMessage(e.getEntity().getLastDamageCause().getCause())
+                        .replace("[player]", e.getEntity().getCustomName())
+                        .replace("[entity]", (e.getEntity().getKiller() == null
+                                ? UHCFileRegister.getDeathmessageFile().getIsAMob()
+                                : e.getEntity().getKiller().getName())));
             }
 
             for (final ItemStack drops : UHCFileRegister.getDropsFile().getDrop("Player")) {
@@ -68,6 +66,10 @@ public class DeathListener extends SimpleListener {
                 }
             }
 
+            for (ItemStack items : PlayerDummie.getDummie(UUIDFetcher.getUUID(e.getEntity().getCustomName())).getInv()) {
+                dropList.add(items);
+            }
+
             if (e.getEntity().getKiller() != null && e.getEntity().getKiller() instanceof Player) {
                 UUID id = UUIDFetcher.getUUID(e.getEntity().getKiller());
                 StatsUtil.addKill(id);
@@ -79,12 +81,13 @@ public class DeathListener extends SimpleListener {
                 if (UHC.isCrates()) {
                     Crate c = UHCFileRegister.getCrateFile().getRandomCrate();
 
-                    if (Math.random() <= c.getRarity()) {
-                        StatsUtil.addCrate(id, c);
+                    if (c != null)
+                        if (Math.random() <= c.getRarity()) {
+                            StatsUtil.addCrate(id, c);
 
-                        if (e.getEntity().getKiller().isOnline())
-                            e.getEntity().getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getCrateDropped(c));
-                    }
+                            if (e.getEntity().getKiller().isOnline())
+                                e.getEntity().getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getCrateDropped(c));
+                        }
                 }
             }
 
@@ -110,6 +113,8 @@ public class DeathListener extends SimpleListener {
                         .replace("[killer]",
                                 (e.getEntity().getKiller() == null ? "" : e.getEntity().getKiller().getName())));
 
+            System.out.println(PlayerUtil.getSurvivors().size());
+
             if (PlayerUtil.getSurvivors().size() <= 1) {
 
                 GState.setCurrentState(GState.END);
@@ -121,12 +126,11 @@ public class DeathListener extends SimpleListener {
                 }
 
                 UHCRegister.getGameEndsListener().setWinnerName(PlayerUtil.getSurvivors().get(0));
-                for (String pName : PlayerUtil.getAll()) {
-                    Bukkit.getPlayer(pName)
-                            .sendMessage(UHC.getPrefix()
-                                    + UHCFileRegister.getMessageFile().getWin(Bukkit.getPlayer(UHCRegister.getGameEndsListener().getWinnerName())));
+                for (Player other : Util.makePlayerArray(PlayerUtil.getAll())) {
+                    other.sendMessage(UHC.getPrefix()
+                            + UHCFileRegister.getMessageFile().getWin(Bukkit.getPlayer(UHCRegister.getGameEndsListener().getWinnerName())));
 
-                    SimpleTitle.sendTitle(Bukkit.getPlayer(pName), " ",
+                    SimpleTitle.sendTitle(other, " ",
                             UHC.getPrefix()
                                     + UHCFileRegister.getMessageFile().getWin(Bukkit.getPlayer(UHCRegister.getGameEndsListener().getWinnerName())),
                             2, 2, 2);
@@ -146,17 +150,14 @@ public class DeathListener extends SimpleListener {
 
         } else {
             if (e.getEntity() instanceof Player) {
-                for (String other : PlayerUtil.getAll()) {
-                    if (Bukkit.getPlayer(other) == null)
-                        return;
-                    Bukkit.getPlayer(other)
-                            .sendMessage(UHCFileRegister.getDeathmessageFile()
-                                    .getMessage(e.getEntity().getLastDamageCause() == null ? DamageCause.SUICIDE
-                                            : e.getEntity().getLastDamageCause().getCause())
-                                    .replace("[player]", e.getEntity().getName())
-                                    .replace("[entity]", (e.getEntity().getKiller() == null
-                                            ? UHCFileRegister.getDeathmessageFile().getColorString("[entity] is a mob")
-                                            : e.getEntity().getKiller().getName())));
+                for (Player other : Util.makePlayerArray(PlayerUtil.getAll())) {
+                    other.sendMessage(UHCFileRegister.getDeathmessageFile()
+                            .getMessage(e.getEntity().getLastDamageCause() == null ? DamageCause.SUICIDE
+                                    : e.getEntity().getLastDamageCause().getCause())
+                            .replace("[player]", e.getEntity().getName())
+                            .replace("[entity]", (e.getEntity().getKiller() == null
+                                    ? UHCFileRegister.getDeathmessageFile().getColorString("[entity] is a mob")
+                                    : e.getEntity().getKiller().getName())));
                 }
             } else if (e.getEntity() instanceof Pig) {
                 e.getDrops().clear();
@@ -289,6 +290,7 @@ public class DeathListener extends SimpleListener {
         }
 
         for (ItemStack is : dropList) {
+            if(is == null) continue;
             e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), is);
         }
     }

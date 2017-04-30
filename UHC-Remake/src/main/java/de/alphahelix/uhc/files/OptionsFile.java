@@ -1,10 +1,10 @@
 package de.alphahelix.uhc.files;
 
 import com.mojang.authlib.GameProfile;
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.item.ItemBuilder;
-import de.alphahelix.alphaapi.utils.GameProfileBuilder;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.utils.GameProfileBuilder;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import org.bukkit.Material;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.UUID;
 public class OptionsFile extends SimpleFile {
 
     public OptionsFile() {
-        super("options.uhc");
+        super("plugins/UHC-Remake","options.uhc");
     }
 
     public void addValues() {

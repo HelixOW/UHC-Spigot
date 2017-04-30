@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.alphaapi.inventorys.SimpleMovingInventory;
+import de.alphahelix.alphalibary.inventorys.SimpleMovingInventory;
 import de.alphahelix.uhc.instances.Kit;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.entity.Player;

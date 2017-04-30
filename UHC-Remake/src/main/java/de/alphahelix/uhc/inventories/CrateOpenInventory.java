@@ -1,8 +1,8 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.alphaapi.item.ItemBuilder;
-import de.alphahelix.alphaapi.listener.SimpleListener;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Sounds;
 import de.alphahelix.uhc.instances.Crate;

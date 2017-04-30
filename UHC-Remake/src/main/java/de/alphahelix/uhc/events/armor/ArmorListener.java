@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.events.armor;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphalibary.listener.SimpleListener;
 import de.alphahelix.uhc.events.armor.ArmorEquipEvent.EquipMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

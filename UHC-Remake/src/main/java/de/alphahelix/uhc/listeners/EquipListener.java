@@ -1,10 +1,10 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphaapi.fakeapi.events.FakePlayerClickEvent;
-import de.alphahelix.alphaapi.listener.SimpleListener;
-import de.alphahelix.alphaapi.nms.REnumHand;
-import de.alphahelix.alphaapi.utils.MinecraftVersion;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.fakeapi.events.FakePlayerClickEvent;
+import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphalibary.nms.REnumHand;
+import de.alphahelix.alphalibary.utils.MinecraftVersion;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;

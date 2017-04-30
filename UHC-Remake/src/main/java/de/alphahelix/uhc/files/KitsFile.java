@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import de.alphahelix.uhc.instances.Kit;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,7 +17,7 @@ public class KitsFile extends SimpleFile {
     private HashMap<String, Kit> kits = new HashMap<>();
 
     public KitsFile() {
-        super("kits.uhc");
+        super("plugins/UHC-Remake","kits.uhc");
     }
 
     @Override

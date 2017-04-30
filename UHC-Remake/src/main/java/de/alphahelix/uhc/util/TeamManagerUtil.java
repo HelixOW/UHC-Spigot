@@ -5,6 +5,7 @@ import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -115,14 +116,14 @@ public class TeamManagerUtil {
         return teams.contains(team);
     }
 
-    public static UHCTeam isInOneTeam(Player p) {
+    public static UHCTeam isInOneTeam(OfflinePlayer p) {
         for (UHCTeam t : teams)
             if (t.isInTeam(p))
                 return t;
         return null;
     }
 
-    public static boolean isSameTeam(Player p, Player p2) {
+    public static boolean isSameTeam(OfflinePlayer p, OfflinePlayer p2) {
         return isInOneTeam(p) != null && isInOneTeam(p2) != null && isInOneTeam(p).equals(isInOneTeam(p2));
     }
 

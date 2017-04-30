@@ -1,8 +1,8 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphaapi.mysql.MySQLDatabase;
-import de.alphahelix.alphaapi.utils.Util;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.mysql.MySQLDatabase;
+import de.alphahelix.alphalibary.utils.Util;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.UHCAchievements;
 import de.alphahelix.uhc.instances.Crate;
@@ -10,7 +10,6 @@ import de.alphahelix.uhc.instances.Kit;
 import de.alphahelix.uhc.instances.PlayerInfo;
 import de.alphahelix.uhc.instances.UHCRank;
 import de.alphahelix.uhc.register.UHCFileRegister;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -418,6 +417,7 @@ public class StatsUtil {
     }
 
     public static void addCrate(final UUID id, final Crate crate) {
+        Crate.addCrate(crate, id);
         if (PlayerInfo.getPlayerInfo(id) != null) {
             PlayerInfo.getPlayerInfo(id).addCrate(crate);
             return;
@@ -436,6 +436,7 @@ public class StatsUtil {
     }
 
     public static void removeCrate(final UUID id, final Crate crate) {
+        Crate.removeCrate(crate, id);
         if (PlayerInfo.getPlayerInfo(id) != null) {
             PlayerInfo.getPlayerInfo(id).removeCrate(crate);
             return;
@@ -455,7 +456,7 @@ public class StatsUtil {
 
     public static long getCrateCount(UUID id, Crate crate) {
         if (PlayerInfo.getPlayerInfo(id) != null) {
-            return Crate.getCrateCount(crate, Bukkit.getOfflinePlayer(id));
+            return Crate.getCrateCount(crate, id);
         }
 
         if (UHC.isMySQLMode()) {

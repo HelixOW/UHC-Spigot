@@ -1,13 +1,13 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import org.bukkit.Material;
 
 public class ConfirmFile extends SimpleFile {
 
     public ConfirmFile() {
-        super("confirm.uhc");
+        super("plugins/UHC-Remake","confirm.uhc");
     }
 
     @Override

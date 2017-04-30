@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphaapi.utils.MinecraftVersion;
+import de.alphahelix.alphalibary.utils.MinecraftVersion;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -58,10 +58,6 @@ public class PlayerUtil {
         return all;
     }
 
-    private static void setAll(LinkedList<String> all) {
-        PlayerUtil.all = all;
-    }
-
     public static void addAll(Player p) {
         if (!(all.contains(p.getName()))) all.add(p.getName());
     }
@@ -76,10 +72,6 @@ public class PlayerUtil {
 
     public static LinkedList<String> getSurvivors() {
         return survivors;
-    }
-
-    private static void setSurvivors(LinkedList<String> survivors) {
-        PlayerUtil.survivors = survivors;
     }
 
     public static void addSurvivor(Player p) {
@@ -110,10 +102,6 @@ public class PlayerUtil {
 
     public static LinkedList<String> getDeads() {
         return deaths;
-    }
-
-    private static void setDeads(LinkedList<String> deaths) {
-        PlayerUtil.deaths = deaths;
     }
 
     public static void addDead(Player p) {

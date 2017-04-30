@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.util.schematic;
 
-import de.alphahelix.alphaapi.utils.Cuboid;
+import de.alphahelix.alphalibary.utils.Cuboid;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

@@ -6,6 +6,8 @@ Version 2.9:
     + pregen is now default false
     + Kings of the Sky Scenario is now playable
     + general code improvements / code cleanup
+    + If player leaves a villager will be spawned.
+    + Chatspam has been reduced
     - custom Arenas
 
 Version 2.8.1:

@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphaapi.utils.MinecraftVersion;
+import de.alphahelix.alphalibary.utils.MinecraftVersion;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.util.PlayerUtil;

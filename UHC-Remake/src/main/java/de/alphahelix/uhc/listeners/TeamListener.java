@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.instances.UHCTeam;
 import de.alphahelix.uhc.register.UHCFileRegister;
@@ -49,11 +49,10 @@ public class TeamListener extends SimpleListener {
         if (e.getEntity() instanceof Villager && e.getEntity().isCustomNameVisible()
                 && e.getDamager() instanceof Player) {
             if (TeamManagerUtil.isSameTeam(
-                    (Player) Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())),
+                    Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())),
                     (Player) e.getDamager()))
                 if (PlayerUtil.getSurvivors().size() > TeamManagerUtil
-                        .isInOneTeam(
-                                (Player) Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())))
+                        .isInOneTeam(Bukkit.getOfflinePlayer(UUIDFetcher.getUUID(e.getEntity().getCustomName())))
                         .getSize())
                     if (!isFFA)
                         e.setCancelled(true);

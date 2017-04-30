@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.util.StatsUtil;

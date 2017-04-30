@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphaapi.utils.SerializationUtil;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.utils.SerializationUtil;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.enums.UHCAchievements;
 import de.alphahelix.uhc.util.TimeUtil;
 import org.bukkit.Bukkit;

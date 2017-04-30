@@ -1,11 +1,11 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 
 public class TablistFile extends SimpleFile {
 
     public TablistFile() {
-        super("tablist.uhc");
+        super("plugins/UHC-Remake","tablist.uhc");
     }
 
     @Override

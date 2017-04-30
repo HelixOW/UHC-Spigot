@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,7 +11,7 @@ import java.util.Random;
 public class DropsFile extends SimpleFile {
 
     public DropsFile() {
-        super("drops.uhc");
+        super("plugins/UHC-Remake","drops.uhc");
     }
 
     @Override

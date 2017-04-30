@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.register;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 import de.alphahelix.uhc.files.*;
 
 public class UHCFileRegister {

@@ -1,8 +1,8 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.item.ItemBuilder;
-import de.alphahelix.alphaapi.reflection.ReflectionUtil;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.reflection.ReflectionUtil;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import net.md_5.bungee.api.ChatColor;
@@ -18,7 +18,7 @@ public class ScenarioFile extends SimpleFile {
     private static final ArrayList<Material> ADDED = new ArrayList<>();
 
     public ScenarioFile() {
-        super("scenario.uhc");
+        super("plugins/UHC-Remake","scenario.uhc");
     }
 
     @Override
@@ -181,7 +181,7 @@ public class ScenarioFile extends SimpleFile {
     public static class ScenarioHelpFile extends SimpleFile {
 
         public ScenarioHelpFile() {
-            super("scenariohelp.uhc");
+            super("plugins/UHC-Remake","scenariohelp.uhc");
         }
 
         @Override

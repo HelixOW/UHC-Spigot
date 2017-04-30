@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.commands;
 
-import de.alphahelix.alphaapi.command.SimpleCommand;
-import de.alphahelix.alphaapi.fakeapi.utils.ArmorstandFakeUtil;
+import de.alphahelix.alphalibary.command.SimpleCommand;
+import de.alphahelix.alphalibary.fakeapi.utils.ArmorstandFakeUtil;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;

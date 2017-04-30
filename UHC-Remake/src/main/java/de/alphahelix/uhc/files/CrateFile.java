@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import de.alphahelix.uhc.instances.Crate;
 import de.alphahelix.uhc.instances.Kit;
 import org.bukkit.Material;
@@ -12,7 +12,7 @@ public class CrateFile extends SimpleFile {
     private static final Random RANDOM = new Random();
 
     public CrateFile() {
-        super("crates.uhc");
+        super("plugins/UHC-Remake","crates.uhc");
     }
 
     @Override
@@ -32,6 +32,7 @@ public class CrateFile extends SimpleFile {
     }
 
     public Crate getRandomCrate() {
+        if(Crate.getCrateArrayList().isEmpty()) return null;
         return Crate.getCrateArrayList().get(RANDOM.nextInt(Crate.getCrateArrayList().size()));
     }
 

@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
-import de.alphahelix.uhc.UHC;
+import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphalibary.utils.LocationUtil;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;
@@ -30,6 +30,6 @@ public class CraftableTeleportationListener extends SimpleListener {
 
         if (!PlayerUtil.isSurivor(t)) return;
 
-        p.teleport(UHC.getRandomLocation(t.getLocation(), 25, 25, 25, 25));
+        p.teleport(LocationUtil.getRandomLocation(t.getLocation(), 25, 25, 25, 25));
     }
 }

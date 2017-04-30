@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.apache.commons.lang3.ArrayUtils;

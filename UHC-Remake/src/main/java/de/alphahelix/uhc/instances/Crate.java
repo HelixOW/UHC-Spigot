@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphaapi.item.ItemBuilder;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -53,34 +53,30 @@ public class Crate implements Serializable {
         CRATE_AMOUNTS.put(UUIDFetcher.getUUID(p), crates);
     }
 
-    public static void addCrate(Crate c, OfflinePlayer p) {
-        if (CRATE_AMOUNTS.containsKey(UUIDFetcher.getUUID(p))) {
-            CRATE_AMOUNTS.put(
-                    UUIDFetcher.getUUID(p),
-                    CRATE_AMOUNTS.get(UUIDFetcher.getUUID(p)) + c.getRawName() + " ;");
+    public static void addCrate(Crate c, UUID id) {
+        if (CRATE_AMOUNTS.containsKey(id)) {
+            CRATE_AMOUNTS.put(id, CRATE_AMOUNTS.get(id) + c.getRawName() + " ;");
         } else {
-            CRATE_AMOUNTS.put(UUIDFetcher.getUUID(p), c.getRawName() + " ;");
+            CRATE_AMOUNTS.put(id, c.getRawName() + " ;");
         }
     }
 
-    public static void removeCrate(Crate c, OfflinePlayer p) {
-        if (!CRATE_AMOUNTS.containsKey(UUIDFetcher.getUUID(p))) return;
-        if (getCrateCount(c, p) >= 1) {
-            CRATE_AMOUNTS.put(
-                    UUIDFetcher.getUUID(p),
-                    CRATE_AMOUNTS.get(UUIDFetcher.getUUID(p)).replaceFirst(c.getRawName() + " ;", ""));
+    public static void removeCrate(Crate c, UUID id) {
+        if (!CRATE_AMOUNTS.containsKey(id)) return;
+        if (getCrateCount(c, id) >= 1) {
+            CRATE_AMOUNTS.put(id, CRATE_AMOUNTS.get(id).replaceFirst(c.getRawName() + " ;", ""));
         } else {
-            CRATE_AMOUNTS.remove(UUIDFetcher.getUUID(p));
+            CRATE_AMOUNTS.remove(id);
         }
     }
 
-    public static long getCrateCount(Crate crate, OfflinePlayer p) {
-        if (!CRATE_AMOUNTS.containsKey(UUIDFetcher.getUUID(p))) {
+    public static long getCrateCount(Crate crate, UUID id) {
+        if (!CRATE_AMOUNTS.containsKey(id)) {
             return 0;
         }
         long amount = 0;
 
-        for (String crates : CRATE_AMOUNTS.get(UUIDFetcher.getUUID(p)).split(" ;")) {
+        for (String crates : CRATE_AMOUNTS.get(id).split(" ;")) {
             if (getCrateByRawName(crates) == null) continue;
             if (!getCrateByRawName(crates).equals(crate)) continue;
             amount += 1;
@@ -89,8 +85,8 @@ public class Crate implements Serializable {
         return amount;
     }
 
-    public static boolean hasCrate(Crate c, OfflinePlayer p) {
-        return getCrateCount(c, p) >= 1;
+    public static boolean hasCrate(Crate c, UUID id) {
+        return getCrateCount(c, id) >= 1;
     }
 
     public void registerCrate() {

@@ -188,8 +188,8 @@ public class UHCRegister {
         UHC.setSpawnradius(UHCFileRegister.getOptionsFile().getSpawndispersal());
         UHC.setStatusMOTD(UHCFileRegister.getOptionsFile().isStatusMOTD());
         UHC.setScenarios(UHCFileRegister.getScenarioFile().isEnabled());
-        UHC.getInstance().setScenarioVoting(UHCFileRegister.getScenarioFile().isVoting());
-        UHC.getInstance().setKits(UHCFileRegister.getKitsFile().isKitmode());
+        UHC.setScenarioVoting(UHCFileRegister.getScenarioFile().isVoting());
+        UHC.setKits(UHCFileRegister.getKitsFile().isKitmode());
         UHC.setTeams(UHCFileRegister.getTeamFile().isEnabled());
         UHC.setTracker(UHCFileRegister.getOptionsFile().isTrackerEquip());
         UHC.setTrackerName(UHCFileRegister.getOptionsFile().getTrackerItem().getItemStack().getItemMeta().getDisplayName());

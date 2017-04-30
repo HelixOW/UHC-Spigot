@@ -1,11 +1,11 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 
 public class ScoreboardFile extends SimpleFile {
 
     public ScoreboardFile() {
-        super("scoreboard.uhc");
+        super("plugins/UHC-Remake","scoreboard.uhc");
     }
 
     public boolean isLobbyShow(String part) {
@@ -96,7 +96,7 @@ public class ScoreboardFile extends SimpleFile {
     public static class ScoreboardConstructFile extends SimpleFile {
 
         public ScoreboardConstructFile() {
-            super("scoreboardConstruction.uhc");
+            super("plugins/UHC-Remake","scoreboardConstruction.uhc");
         }
 
         public int getLobbyLines() {

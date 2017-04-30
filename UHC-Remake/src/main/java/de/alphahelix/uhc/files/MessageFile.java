@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.instances.Crate;
 import de.alphahelix.uhc.instances.Kit;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public class MessageFile extends SimpleFile {
 
     public MessageFile() {
-        super("messages.uhc");
+        super("plugins/UHC-Remake","messages.uhc");
     }
 
     @Override

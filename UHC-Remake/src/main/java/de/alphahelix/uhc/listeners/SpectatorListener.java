@@ -1,9 +1,9 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphaapi.inventorys.SimpleMovingInventory;
-import de.alphahelix.alphaapi.item.ItemBuilder;
-import de.alphahelix.alphaapi.item.data.SkullData;
-import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphalibary.inventorys.SimpleMovingInventory;
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.item.data.SkullData;
+import de.alphahelix.alphalibary.listener.SimpleListener;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.util.PlayerUtil;
 import org.bukkit.Bukkit;
@@ -54,7 +54,6 @@ public class SpectatorListener extends SimpleListener {
 
     @EventHandler
     public void onDmg(EntityDamageEvent e) {
-
         if (!(e.getEntity() instanceof Player))
             return;
 
@@ -85,7 +84,6 @@ public class SpectatorListener extends SimpleListener {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent e) {
-
         if (!(e.getDamager() instanceof Player))
             return;
 

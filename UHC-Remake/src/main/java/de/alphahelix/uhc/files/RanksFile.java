@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.file.SimpleFile;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.instances.UHCRank;
 import de.alphahelix.uhc.util.StatsUtil;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class RanksFile extends SimpleFile {
 
     public RanksFile() {
-        super("ranks.uhc");
+        super("plugins/UHC-Remake","ranks.uhc");
     }
 
     @Override

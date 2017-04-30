@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphaapi.reflection.ReflectionUtil;
-import de.alphahelix.alphaapi.utils.MinecraftVersion;
+import de.alphahelix.alphalibary.reflection.ReflectionUtil;
+import de.alphahelix.alphalibary.utils.MinecraftVersion;
 import de.alphahelix.uhc.UHC;
 import org.bukkit.scheduler.BukkitRunnable;
 

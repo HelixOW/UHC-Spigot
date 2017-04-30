@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.instances;
 
-import de.alphahelix.alphaapi.utils.SerializationUtil;
+import de.alphahelix.alphalibary.utils.SerializationUtil;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.inventory.ItemStack;
 

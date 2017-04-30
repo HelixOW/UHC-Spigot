@@ -1,9 +1,9 @@
 package de.alphahelix.uhc.listeners;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
-import de.alphahelix.alphaapi.nms.SimpleTitle;
-import de.alphahelix.alphaapi.utils.Util;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.listener.SimpleListener;
+import de.alphahelix.alphalibary.nms.SimpleTitle;
+import de.alphahelix.alphalibary.utils.Util;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;
@@ -86,11 +86,12 @@ public class GameEndsListener extends SimpleListener {
 
                 Crate c = UHCFileRegister.getCrateFile().getRandomCrate();
 
-                if (Math.random() <= c.getRarity()) {
-                    StatsUtil.addCrate(id, c);
-                    if (dead.getKiller().isOnline())
-                        dead.getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getCrateDropped(c));
-                }
+                if (c != null)
+                    if (Math.random() <= c.getRarity()) {
+                        StatsUtil.addCrate(id, c);
+                        if (dead.getKiller().isOnline())
+                            dead.getKiller().sendMessage(UHC.getPrefix() + UHCFileRegister.getMessageFile().getCrateDropped(c));
+                    }
             }
         }
 
@@ -227,8 +228,10 @@ public class GameEndsListener extends SimpleListener {
 
         if (!(GState.isState(GState.LOBBY) || GState.isState(GState.END))) {
             if (!isSpec) {
-                if (!(PlayerUtil.getSurvivors().size() <= 2)) {
+                if (PlayerUtil.getSurvivors().size() > 1) { //TODO: Change to 2
                     new PlayerDummie(p);
+                } else {
+                    PlayerUtil.removeAll(p);
                 }
             }
 
@@ -239,10 +242,6 @@ public class GameEndsListener extends SimpleListener {
 
             if (PlayerUtil.getSurvivors().size() <= 1) {
                 GState.setCurrentState(GState.END);
-
-                for (Player other : Util.makePlayerArray(PlayerUtil.getSurvivors())) {
-                    PlayerUtil.removeAll(other);
-                }
 
                 if (PlayerUtil.getSurvivors().size() == 0) {
                     Bukkit.reload();

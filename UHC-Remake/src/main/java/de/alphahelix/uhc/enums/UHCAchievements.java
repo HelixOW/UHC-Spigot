@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.enums;
 
-import de.alphahelix.alphaapi.item.ItemBuilder;
-import de.alphahelix.alphaapi.utils.SerializationUtil;
+import de.alphahelix.alphalibary.item.ItemBuilder;
+import de.alphahelix.alphalibary.utils.SerializationUtil;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;

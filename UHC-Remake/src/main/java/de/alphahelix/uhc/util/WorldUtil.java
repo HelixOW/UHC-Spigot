@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphaapi.utils.Cuboid;
+import de.alphahelix.alphalibary.utils.Cuboid;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.register.UHCFileRegister;
@@ -9,7 +9,6 @@ import org.bukkit.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class WorldUtil {
 
@@ -94,7 +93,6 @@ public class WorldUtil {
         long minutes = seconds / 60L;
 
         new BiomeUtil();
-        UHC.getLog().log(Level.INFO,
-                "Generating done! (" + duration + "ms, =" + seconds + "s, =" + minutes + "m)");
+        System.out.println(UHC.getConsolePrefix() + "Generating done! (" + duration + "ms, =" + seconds + "s, =" + minutes + "m)");
     }
 }

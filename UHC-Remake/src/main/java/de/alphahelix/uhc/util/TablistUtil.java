@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphaapi.nms.SimpleTablist;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.nms.SimpleTablist;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.Bukkit;

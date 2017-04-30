@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.commands;
 
-import de.alphahelix.alphaapi.command.SimpleCommand;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.command.SimpleCommand;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.instances.Crate;
 import de.alphahelix.uhc.instances.Kit;

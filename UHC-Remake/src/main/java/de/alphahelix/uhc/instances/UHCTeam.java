@@ -6,6 +6,7 @@ import de.alphahelix.uhc.util.ScoreboardUtil;
 import de.alphahelix.uhc.util.TeamManagerUtil;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class UHCTeam {
 
     private String name, prefix;
-    private ArrayList<Player> players;
+    private ArrayList<OfflinePlayer> players;
     private byte colorData;
     private int maxPlayer;
     private int invSlot;
@@ -55,8 +56,7 @@ public class UHCTeam {
         return name;
     }
 
-    public ArrayList<Player> getPlayers() {
-
+    public ArrayList<OfflinePlayer> getPlayers() {
         return players;
     }
 
@@ -69,7 +69,7 @@ public class UHCTeam {
         return maxPlayer;
     }
 
-    public boolean isInTeam(Player p) {
+    public boolean isInTeam(OfflinePlayer p) {
         return players.contains(p);
     }
 
@@ -105,7 +105,7 @@ public class UHCTeam {
 
     public ArrayList<String> getPlayerName() {
         ArrayList<String> playerName = new ArrayList<>();
-        for (Player p : players) {
+        for (OfflinePlayer p : players) {
             playerName.add(p.getName());
         }
         return playerName;
@@ -113,7 +113,7 @@ public class UHCTeam {
 
     public ArrayList<String> getColoredPlayerName() {
         ArrayList<String> playerName = new ArrayList<>();
-        for (Player p : players) {
+        for (OfflinePlayer p : players) {
             playerName.add(prefix + p.getName());
         }
         return playerName;

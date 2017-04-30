@@ -1,7 +1,7 @@
 package de.alphahelix.uhc.util;
 
-import de.alphahelix.alphaapi.scoreboard.SimpleScoreboard;
-import de.alphahelix.alphaapi.uuid.UUIDFetcher;
+import de.alphahelix.alphalibary.scoreboard.SimpleScoreboard;
+import de.alphahelix.alphalibary.uuid.UUIDFetcher;
 import de.alphahelix.uhc.UHC;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;

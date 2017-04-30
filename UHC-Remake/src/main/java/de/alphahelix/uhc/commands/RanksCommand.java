@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.commands;
 
-import de.alphahelix.alphaapi.command.SimpleCommand;
+import de.alphahelix.alphalibary.command.SimpleCommand;
 import de.alphahelix.uhc.instances.UHCRank;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import org.bukkit.command.CommandSender;

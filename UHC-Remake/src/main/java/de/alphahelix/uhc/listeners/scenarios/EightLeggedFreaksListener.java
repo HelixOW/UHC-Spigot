@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.listeners.scenarios;
 
-import de.alphahelix.alphaapi.listener.SimpleListener;
+import de.alphahelix.alphalibary.listener.SimpleListener;
 import de.alphahelix.uhc.enums.Scenarios;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;

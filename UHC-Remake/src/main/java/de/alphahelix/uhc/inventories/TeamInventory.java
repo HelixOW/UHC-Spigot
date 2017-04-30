@@ -1,6 +1,6 @@
 package de.alphahelix.uhc.inventories;
 
-import de.alphahelix.alphaapi.item.ItemBuilder;
+import de.alphahelix.alphalibary.item.ItemBuilder;
 import de.alphahelix.uhc.instances.UHCTeam;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.util.TeamManagerUtil;

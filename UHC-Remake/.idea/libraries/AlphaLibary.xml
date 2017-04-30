@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="AlphaLibary">
+    <CLASSES>
+      <root url="jar://C:/Code/apis/AlphaLibary.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="https://alphahelixdev.github.io/alphalibary/docs/index.html" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://C:/Code/Projects/Spigot/AlphaLibary/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

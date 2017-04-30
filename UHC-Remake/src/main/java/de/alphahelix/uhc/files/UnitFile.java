@@ -1,11 +1,11 @@
 package de.alphahelix.uhc.files;
 
-import de.alphahelix.alphaapi.file.SimpleFile;
+import de.alphahelix.alphalibary.file.SimpleFile;
 
 public class UnitFile extends SimpleFile {
 
     public UnitFile() {
-        super("units.uhc");
+        super("plugins/UHC-Remake","units.uhc");
     }
 
     @Override

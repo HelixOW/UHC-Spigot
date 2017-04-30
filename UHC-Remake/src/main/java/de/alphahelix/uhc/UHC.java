@@ -2,31 +2,27 @@ package de.alphahelix.uhc;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import de.alphahelix.alphaapi.AlphaAPI;
-import de.alphahelix.alphaapi.mysql.MySQLAPI;
-import de.alphahelix.alphaapi.mysql.MySQLDatabase;
+import de.alphahelix.alphalibary.mysql.MySQLAPI;
+import de.alphahelix.alphalibary.mysql.MySQLDatabase;
 import de.alphahelix.uhc.enums.GState;
 import de.alphahelix.uhc.enums.Scenarios;
 import de.alphahelix.uhc.register.UHCFileRegister;
 import de.alphahelix.uhc.register.UHCRegister;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class UHC extends AlphaAPI implements PluginMessageListener {
+public class UHC extends JavaPlugin implements PluginMessageListener {
 
     private static MySQLDatabase database;
     private static UHC instance;
@@ -35,7 +31,6 @@ public class UHC extends AlphaAPI implements PluginMessageListener {
     private static boolean mySQLMode, debug, bunggeMode, scenarios, scenarioVoting, statusMOTD, kits;
     private static boolean teams, tracker, lobbyAsSchematic, crates, lobby, pregen;
     private static int spawnradius;
-    private static Logger log;
 
     public static UHC getInstance() {
         return instance;
@@ -47,21 +42,6 @@ public class UHC extends AlphaAPI implements PluginMessageListener {
 
     public static MySQLDatabase getDB() {
         return database;
-    }
-
-    public static Location getRandomLocation(Location player, int Xminimum, int Xmaximum, int Zminimum, int Zmaximum) {
-        try {
-            World world = player.getWorld();
-            int randomZ = Zminimum + ((int) (Math.random() * ((Zmaximum - Zminimum) + 1)));
-            double x = Double.parseDouble(
-                    Integer.toString(Xminimum + ((int) (Math.random() * ((Xmaximum - Xminimum) + 1))))) + 0.5d;
-            double z = Double.parseDouble(Integer.toString(randomZ)) + 0.5d;
-            player.setY(200);
-            return new Location(world, x, player.getY(), z);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public static String getConsolePrefix() {
@@ -216,27 +196,11 @@ public class UHC extends AlphaAPI implements PluginMessageListener {
         UHC.spawnradius = spawnradius;
     }
 
-    public static Logger getLog() {
-        return log;
-    }
-
-    public static void setLog(Logger log) {
-        UHC.log = log;
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        for (World world : Bukkit.getWorlds())
-            world.setAutoSave(false);
-    }
-
     @Override
     public void onEnable() {
         super.onEnable();
 
         this.setInstance(this);
-        setLog(Bukkit.getLogger());
         setConsolePrefix("[" + this.getName() + "] ");
 
         UHCRegister.registerAll();
@@ -247,6 +211,7 @@ public class UHC extends AlphaAPI implements PluginMessageListener {
             for (MySQLAPI api : MySQLAPI.getMysqlDBs()) {
                 api.initMySQLAPI();
                 database = new MySQLDatabase("UHC", api.getDatabase());
+                break;
             }
 
             database.create(
@@ -257,9 +222,7 @@ public class UHC extends AlphaAPI implements PluginMessageListener {
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(getInstance(), "BungeeCord");
 
-        if (isDebug())
-            log.log(Level.INFO,
-                    getConsolePrefix() + "Successfully kicked " + Bukkit.getOnlinePlayers().size() + " Players.");
+        int players = 0;
 
         for (Player toKick : Bukkit.getOnlinePlayers()) {
             if (isBunggeMode()) {
@@ -272,13 +235,18 @@ public class UHC extends AlphaAPI implements PluginMessageListener {
             } else {
                 toKick.kickPlayer(getPrefix() + getRestartMessage());
             }
+            players++;
         }
+
+        if (isDebug())
+            System.out.println(getConsolePrefix() + "Successfully kicked " + players + " players.");
+
 
         new File("plugins/UHC-Remake/schematics").mkdirs();
 
         registerCrafting();
 
-        log.log(Level.INFO, getConsolePrefix() + "UHC by AlphaHelix successfully loaded and enabled.");
+        System.out.println(getConsolePrefix() + "UHC by AlphaHelix successfully loaded and enabled.");
     }
 
     @Override
@@ -290,25 +258,25 @@ public class UHC extends AlphaAPI implements PluginMessageListener {
                     api.closeMySQLConnection();
                 }
             } catch (SQLException e) {
-                log.log(Level.WARNING, getConsolePrefix() + "The MySQL connection wasn't closed correctly.",
-                        e.getMessage());
+                System.out.println(getConsolePrefix() + "The MySQL connection wasn't closed correctly.");
+                e.printStackTrace();
             }
         }
-        log.log(Level.INFO, getConsolePrefix() + "UHC by AlphaHelix successfully unloaded and disabled.");
+        System.out.println("UHC by AlphaHelix successfully unloaded and disabled.");
     }
 
     private void registerCrafting() {
         UHCFileRegister.getCraftingFile().registerAllCrafting();
+
         if (isDebug())
-            log.log(Level.INFO, getConsolePrefix() + "registered crafting recipes.");
+            System.out.println(getConsolePrefix() + "registered crafting recipes.");
 
         new BukkitRunnable() {
             public void run() {
                 if (UHCFileRegister.getScenarioFile().isEnabled(Scenarios.getRawScenarioName(Scenarios.MOUNTAINEERING))) {
                     Iterator<Recipe> recipes = Bukkit.recipeIterator();
-                    Recipe r;
                     while (recipes.hasNext()) {
-                        r = recipes.next();
+                        Recipe r = recipes.next();
 
                         if (r != null && r.getResult().getType().equals(Material.ENCHANTMENT_TABLE))
                             recipes.remove();
