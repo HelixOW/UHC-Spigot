@@ -1,0 +1,6 @@
+name: UHC Remastered
+version: ${project.version}
+main: de.alphahelix.uhcremastered.UHCRemastered
+depend: [AlphaLibary]
+authors: [AlphaHelix]
+website: https://alphahelixdev.github.io
